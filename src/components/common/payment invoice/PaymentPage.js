@@ -14,6 +14,7 @@ import ViewPdf from "../Retaineragreement/viewPdf";
 import { Link } from "react-router-dom";
 import { HiOutlineInboxIn } from "react-icons/hi";
 import ReceiveAmountModal from "../../forms/admin/ReceiveAmountModal";
+import CommonRetainerAgreementDate from "../Retaineragreement/CommonRetainerAgreementDate";
 const Payment_Page = (props) => {
   const [openAddPaymentForm, setOpenAddPaymentForm] = useState(false);
   const [openRecPaymentForm, setOpenRecPaymentForm] = useState(false);
@@ -299,7 +300,7 @@ const Payment_Page = (props) => {
                     </td>
                     <td>
                       <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                        <span className="p-1"><ConvertTime _date={item.due_date} format={"DD MMMM, YYYY"} /></span>
+                        <span className="p-1"><CommonRetainerAgreementDate _date={item.due_date} format={"DD MMMM, YYYY"} /></span>
                       </p>
                     </td>
                     <td className=" py-5">

@@ -81,7 +81,7 @@ const AlbertaPnpPdf = () => {
         };
         convertBlob();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [blobData]);
+    }, [!blobData]);
     let components = (
         <View style={{ height: "auto" }}>
             <View style={{ padding: "10px 20px" }}>
@@ -518,8 +518,7 @@ const AlbertaPnpPdf = () => {
                                 </View>
                                 <View style={styles.cell}>
                                     <Text>
-                                        <br />
-                                    </Text>
+                                        {"/n"}                                    </Text>
                                 </View>
                                 <View style={styles.cell}>
                                     <Text>Non-refundable</Text>
@@ -539,7 +538,7 @@ const AlbertaPnpPdf = () => {
                                         Stage 2 (Invitation To Apply) Filling out
                                         the forms, information verification and
                                         completeness check, preparing the
-                                        application package. Either EE or PNP charges will be for one stream
+                                        application package. Either EE or PNP charges will be for one stream
                                         {'\n'}{'\n'}
                                         Payment is due before final submission of application.
                                         Provide proof of submission to the client
@@ -1716,6 +1715,7 @@ const AlbertaPnpPdf = () => {
             }
         >
             {({ blob, url, loading, error }) => {
+                console.log(blob)
                 setBlobData(blob);
                 // Do whatever you need with blob here
                 return (

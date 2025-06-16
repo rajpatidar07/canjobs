@@ -263,7 +263,7 @@ const EmailList = ({
                                   email.subject === "undefined" ? (
                                   <p className="font-size-4 mb-0">N/A</p>
                                 ) : (
-                                  <div title="Emil Preview">
+                                  <div title="Email Preview">
                                     {email.IsRead === true ? (
                                       email.subject.includes("=?UTF-8?Q?") ? (
                                         decodeEmailSubject(email.subject)

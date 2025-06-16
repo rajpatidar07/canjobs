@@ -301,7 +301,7 @@ export default function SendEmailAgreement({
   const [fileBase, setFileBase] = useState("");
   const [loading, setLoading] = useState(false);
   const initialFormState = {
-    subject: `Retainer Agreement of ${felidData.type.replace(/\b\w/g, char => char.toUpperCase())}`,
+    subject: `${(felidData.agreement_subject ? felidData.agreement_subject : felidData.type).replace(/\b\w/g, char => char.toUpperCase())}`,
     email: felidData.client_email,
     adminemail: emails,
     description: `<!DOCTYPE html>
@@ -370,7 +370,7 @@ export default function SendEmailAgreement({
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="font-size:x-small;">&copy; 2023 Canpathways</td>
+                                    <td style="font-size:x-small;">&copy; 2025 Canpathways</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -456,7 +456,8 @@ export default function SendEmailAgreement({
         });
         let data = {
           send_date: new Date(),
-          id: felidData.id
+          id: felidData.id,
+          agreement_subject: state.subject
         }
         let res = await AddUpdateAgreement(data);
         if (res) {

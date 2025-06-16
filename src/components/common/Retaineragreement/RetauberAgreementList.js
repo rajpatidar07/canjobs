@@ -115,7 +115,7 @@ export default function RetauberAgreementList({
     // Call the function when the component first renders
     getAgreeFelidData();
     let timer;
-    timer = setTimeout(() => {
+    timer = apicall ? 0 : setTimeout(() => {
       // Function to be executed after 20 seconds when apicall is true because document update's take time
       getAgreeFelidData();
       // Reset the state to false
@@ -131,7 +131,7 @@ export default function RetauberAgreementList({
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
     setDeleteID(e.id);
-    setDeleteName(e.type);
+    setDeleteName(e.agreement_subject || e.type);
     setDeleteAlert(true);
   };
   /*To cancel the delete alert box */
@@ -259,7 +259,7 @@ export default function RetauberAgreementList({
                           </div>
                         }
                       </td>
-                      <td className="text-capitalize ">{data.type || "N/A"}</td>
+                      <td className="text-capitalize ">{data?.agreement_subject ? data.agreement_subject : data.type || "N/A"}</td>
                       <td className="text-capitalize ">
                         {data.send_date ? moment(data.send_date).format("DD-MM-YYYY") : "N/A"}
                       </td>
@@ -405,11 +405,11 @@ export default function RetauberAgreementList({
                             title="RCIC Sign"
                           >
                             {console.log(data?.signature_status === "2"
-                                ? false
-                                : data?.rcic_signature
-                                  ? true
-                                  : true,data?.signature_status
-                                  ,index+1)}
+                              ? false
+                              : data?.rcic_signature
+                                ? true
+                                : true, data?.signature_status
+                              , index + 1)}
                             <span className="text-gray px-2">
                               <FaFileSignature />
                             </span>
