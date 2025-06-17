@@ -475,8 +475,8 @@ const AlbertaPnpPdf = () => {
                                 rates and may change anytime on or before submission.
                             </Text>
                         </View>
-                        <View style={{ height: 185 }}></View>
-                        <View style={[styles.table, { marginTop: 60 }]}>
+                        <View style={{ height: 155 }}></View>
+                        <View style={[styles.table, { marginTop: 65 }]}>
                             <View style={styles.row}>
                                 <View style={styles.cell}>
                                     <Text style={{ color: "blue" }}>
@@ -518,7 +518,7 @@ const AlbertaPnpPdf = () => {
                                 </View>
                                 <View style={styles.cell}>
                                     <Text>
-                                        {"/n"}                                    </Text>
+                                        {"\n"}                                    </Text>
                                 </View>
                                 <View style={styles.cell}>
                                     <Text>Non-refundable</Text>
