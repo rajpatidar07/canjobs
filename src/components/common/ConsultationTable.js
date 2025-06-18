@@ -210,7 +210,6 @@ function ConsultationTable(props) {
       filebseList.push(updatedFile);
     }
     if (type && type === "update") {
-      console.log(item)
       handleUpdate(filebseList, item, "document")
     } else {
       setState(prevState => ({
