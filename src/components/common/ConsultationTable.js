@@ -66,6 +66,7 @@ function ConsultationTable(props) {
   const [showConsultationModal, setShowConsultationModal] = useState(NotifiTaskId);
   const [taskId, setTaskId] = useState(NotifiTaskId);
   const [isLoading, setIsLoading] = useState(false);
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [columnName, setColumnName] = useState("updated_at");
   const [sortOrder, setSortOrder] = useState("DESC");
   const [ConsultationId, setConsultationId] = useState(NotificationConsultationId);
@@ -155,7 +156,7 @@ function ConsultationTable(props) {
   };
   const { state, setState, setErrors, onInputChange, errors, validate } = useValidation(initialFormState, validators);
   /*On change function to upload bulk document in 1 array*/
-  const handleDocumentChange = async (event, id) => {
+  const handleDocumentChange = async (event, item, type) => {
     const files = event.target.files;
 
     // Check the number of files selected
@@ -208,11 +209,15 @@ function ConsultationTable(props) {
       // Add the updated file to the file list
       filebseList.push(updatedFile);
     }
-
-    setState(prevState => ({
-      ...prevState,
-      document: filebseList
-    }));
+    if (type && type === "update") {
+      console.log(item)
+      handleUpdate(filebseList, item, "document")
+    } else {
+      setState(prevState => ({
+        ...prevState,
+        document: filebseList
+      }));
+    }
 
   };
   const handleAdd = async (e, data) => {
@@ -220,6 +225,7 @@ function ConsultationTable(props) {
       e.preventDefault();
     }
     if (validate()) {
+      setIsButtonLoading(true)
       try {
         let res = await AddUpdateConsultation(state);
         if (res.data.status === 1 || res.data.status === "1") {
@@ -227,6 +233,7 @@ function ConsultationTable(props) {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
+          setIsButtonLoading(false)
           setApiCall(true);
           setState(initialFormState);
           setConsultationId(null);
@@ -235,11 +242,12 @@ function ConsultationTable(props) {
         }
       } catch (error) {
         console.error(error);
+        setIsButtonLoading(false)
         toast.error("Error saving Consultation");
         setErrors("")
       }
     } else {
-      setIsLoading(false);
+      setIsButtonLoading(false);
 
     }
   };
@@ -250,7 +258,12 @@ function ConsultationTable(props) {
     let data;
     if (field === "person" || field === "manager") {
       data = item
-    } else { data = { ...item, [field]: e.target.value }; }
+    } else {
+      data = {
+        ...item,
+        [field]: field === "document" ? e : e.target.value
+      };
+    }
 
     try {
       let res = await AddUpdateConsultation(data);
@@ -260,10 +273,10 @@ function ConsultationTable(props) {
           autoClose: 1000,
         });
         setApiCall(true);
+        setErrors("");
         setState(initialFormState);
         setConsultationId(null);
         props.setShowAddForm(false);
-        setErrors("");
       }
     } catch (error) {
       console.error(error);
@@ -556,12 +569,14 @@ function ConsultationTable(props) {
                             className="mt-5"
                             htmlFor="document"
                             style={{ cursor: "pointer" }}
+                            title="Upload document"
+
                           >
                             <span className="fas fa-upload text-gray"></span>
                           </label>
                         </td>
                         <td style={{ minWidth: "50px", textAlign: "center" }}>
-                          {isLoading ? (
+                          {isButtonLoading ? (
                             <button className="btn-sm btn-primary" type="button" disabled>
                               <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                               <span className="sr-only">Loading...</span>
@@ -816,7 +831,7 @@ function ConsultationTable(props) {
                             />
                           </td>
                           <td >
-                            <button
+                            {item.document_id ? <button
                               className="btn btn-outline-info action_btn "
                               disabled={!item.document_id}
                               onClick={() => {
@@ -829,7 +844,27 @@ function ConsultationTable(props) {
                               <span className="text-gray px-2">
                                 <FaEye />
                               </span>
-                            </button>
+                            </button> :
+                              <>
+                                <input
+                                  type="file"
+                                  name="document"
+                                  id={`document-${item.id}`}
+                                  onChange={(e) => {
+                                    handleDocumentChange(e, item, "update")
+                                  }}
+                                  className="form-control d-none"
+                                  accept=".pdf,.doc,.docx,.jpg,.png"
+                                />
+                                <label
+                                  className="mt-5"
+                                  htmlFor={`document-${item.id}`}
+                                  style={{ cursor: "pointer" }}
+                                  title="Upload document"
+                                >
+                                  <span className="fas fa-upload text-gray"></span>
+                                </label>
+                              </>}
                           </td>
                           <td className={""} style={{ minWidth: "150px" }}>  <button
                             className="btn btn-outline-info action_btn "

@@ -366,49 +366,49 @@ const ThreeColumnRerainerAgreement = () => {
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>3.2</Text>
                                 <Text style={{ flex: 1 }}>
-                                    The Client understands that he/she must be accurate and honest in the information he/she provides and that any misrepresentations or omissions may void this Agreement, or seriously affect the outcome of the application or the retention of any immigration status he/she may obtain. The RCIC’s obligations under the Retainer Agreement are null and void if the Client knowingly provides any inaccurate, misleading, or false material information. The Client’s financial obligations remain.
+                                    The Client understands that he/she must be accurate and honest in the information he/she provides and that any misrepresentations or omissions may void this Agreement, or seriously affect the outcome of the application or the retention of any immigration status he/she may obtain. The RCIC's obligations under the Retainer Agreement are null and void if the Client knowingly provides any inaccurate, misleading, or false material information. The Client's financial obligations remain.
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>3.3</Text>
                                 <Text style={{ flex: 1 }}>
                                     Client is informed that RCIC might obtain assistance from other professionals or services.
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>3.4</Text>
                                 <Text style={{ flex: 1 }}>
                                     Client understands that RCIC should not be held responsible for visa outcome as RCIC cannot guarantee the decision of IRCC. If IRCC policy or rules change before/during or after the application submission and the client is deemed ineligible, RCIC should not be held responsible for that.
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>3.5</Text>
                                 <Text style={{ flex: 1 }}>
                                     In the event Immigration, Refugees and Citizenship Canada (IRCC) or Employment and Social Development Canada (ESDC) or Provincial Government Administrator or processing Visa Office should contact the Client directly, the Client is instructed to notify the RCIC immediately.
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>3.6</Text>
                                 <Text style={{ flex: 1 }}>
                                     The Client is to immediately advise the RCIC of any change in the marital, family, or civil status or change of physical address or contact information for any person included in the application.
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>3.7</Text>
                                 <Text style={{ flex: 1 }}>
                                     In the event of a Joint Retainer Agreement, the Clients agree that the RCIC must share information among all clients, as required. Furthermore, if a conflict develops that cannot be resolved, the RCIC cannot continue to act for both or all of the Clients and may have to withdraw completely from representation.
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>3.8</Text>
                                 <Text style={{ flex: 1 }}>
                                     All necessary information and documentation in English or French, or with an English or French translation, if in any other language, with a certified English translation, according to the timeline recommended by RCIC. In the event documents are not provided or the client fails to contact the RCIC in spite of the request made by RCIC on the email provided by the client in the retainer agreement, before the due date mentioned (which is within 30 days from the retainer signed, or earlier also depending upon the requirements of the case) the RCIC can close the file after notifying the client in advance about the non-responsiveness. An administrative fee of CAD$ 300.00 plus taxes should be paid by the client to close the file. All pending fees are due and are to be paid by the client and if there is any unused money with RCIC, it should be refunded to the client if applicable.
@@ -444,7 +444,7 @@ const ThreeColumnRerainerAgreement = () => {
                             </View>
                         </View>
                     </View>
-                    <View data-list-text="4." style={{ marginTop: 220, }}>
+                    <View data-list-text="4." style={{ marginTop: 10, }}>
                         <Text style={[styles.definition, { fontWeight: 600 }]}>
                             4. Payment Schedule
                         </Text>
@@ -462,7 +462,6 @@ const ThreeColumnRerainerAgreement = () => {
                                     ))}
                                 </View>
                             ))}
-
                             {[
                                 ["Professional Fees", felidData ? felidData?.professional_fees : ""],
                                 ["Disbursement", ""],
@@ -483,8 +482,6 @@ const ThreeColumnRerainerAgreement = () => {
                                 </View>
                             ))}
                         </View>
-
-
                         <Text style={{ marginTop: 15, paddingLeft: 10 }}>
                             Invoice Frequency: The RCIC must provide an Invoice to the Client
                         </Text>
@@ -492,7 +489,6 @@ const ThreeColumnRerainerAgreement = () => {
                             Note: The courier charges and Government fees based on current
                             rates and may change anytime on or before submission.
                         </Text>
-
                         <View style={{ marginTop: 10, backgroundColor: '#fff', padding: 8 }}>
                             {/* Table Header */}
                             <View style={{ flexDirection: 'row', borderWidth: 1, borderColor: '#000000', borderBottom: "none", orderLeft: "none", }}>
@@ -510,15 +506,13 @@ const ThreeColumnRerainerAgreement = () => {
                                             padding: 4,
                                             borderRightWidth: i === arr.length - 1 ? 0 : 1,
                                             borderColor: '#000000',
-                                        }}
-                                    >
+                                        }}>
                                         <Text style={{ fontSize: 6, fontWeight: 'bold', color: 'blue' }}>
                                             {title}
                                         </Text>
                                     </View>
                                 ))}
                             </View>
-
                             {/* Stage 1 */}
                             <View style={{ flexDirection: 'row', borderWidth: 1, borderColor: '#000000', borderBottom: "none" }}>
                                 <View style={{ flex: 1, padding: 4, borderRightWidth: 1, borderColor: '#000000' }}>
@@ -543,7 +537,6 @@ const ThreeColumnRerainerAgreement = () => {
                                     </Text>
                                 </View>
                             </View>
-
                             {/* Stage 2 */}
                             <View style={{ flexDirection: 'row', borderWidth: 1, borderColor: '#000000', borderBottom: "none" }}>
                                 <View style={{ flex: 1, padding: 4, borderRightWidth: 1, borderColor: '#000000' }}>
@@ -570,7 +563,6 @@ const ThreeColumnRerainerAgreement = () => {
                                     </Text>
                                 </View>
                             </View>
-
                             {/* Stage 3 */}
                             <View style={{ flexDirection: 'row', borderWidth: 1, borderColor: '#000000' }}>
                                 <View style={{ flex: 1, padding: 4, borderRightWidth: 1, borderColor: '#000000' }}>
@@ -598,7 +590,6 @@ const ThreeColumnRerainerAgreement = () => {
                                 </View>
                             </View>
                         </View>
-
                         <View style={{ marginTop: 15, paddingLeft: 10 }}>
                             <View>
                                 <Text style={{ fontWeight: "bold" }}>
@@ -610,7 +601,6 @@ const ThreeColumnRerainerAgreement = () => {
                                 </Text>
                             </View>
                         </View>
-
                         <View id="l5" style={{ paddingLeft: 10 }}>
                             <Text style={{ marginTop: 15 }}>Note:<Text style={styles.textunderline}>
                                 {felidData?.note || "There will be an additional fee, or a new fee arrangement will be agreed upon for government's any further request for additional information/documentation of up to $1000.00 such as updating the forms, asking for immigration status update, documents related to marital status change, procedural fairness response or preparing and submitting statutory declarations, affidavits etc."}
@@ -671,7 +661,6 @@ const ThreeColumnRerainerAgreement = () => {
                             For Clients Located INSIDE Canada, we receive the following
                             payment options:
                         </Text>
-
                         <View id="l6">
                             <View style={{ marginLeft: 30, marginTop: 15 }} data-list-text="o">
                                 <Text>
@@ -707,7 +696,6 @@ const ThreeColumnRerainerAgreement = () => {
                                     charges will be applicable if the client is willing to pay by
                                     this method.
                                 </Text>
-
                             </View>
                         </View>
                         <Text style={{ marginTop: 15, paddingLeft: 10 }}>
@@ -757,8 +745,7 @@ const ThreeColumnRerainerAgreement = () => {
                                 style={{
                                     color: "#010101",
                                     marginTop: 10,
-                                }}
-                            >
+                                }}>
                                 If the account requires recovery/collection action, in order to
                                 recover any fees, a surcharge equivalent to the
                                 recovery/collection fee incurred will be applied on the Total
@@ -805,7 +792,6 @@ const ThreeColumnRerainerAgreement = () => {
                             </View>
                             <View style={{ marginTop: 8, marginLeft: 30 }} data-list-text="">
                                 <Text>
-
                                     •  Hiding information or submission of false documents
                                 </Text>
                             </View>
@@ -818,7 +804,6 @@ const ThreeColumnRerainerAgreement = () => {
                                 </Text>
                             </View>
                         </View>
-
                         <Text style={{ marginTop: 15, paddingLeft: 10 }}>
                             If application is refused because of an error or omission on the
                             part of the RCIC or the professional staff, Unused and/or unearned
@@ -945,7 +930,6 @@ const ThreeColumnRerainerAgreement = () => {
                             by the confidentiality requirements of Article 8 of the Code of
                             Professional Ethics.
                         </Text>
-
                         <Text style={{ marginTop: 15, paddingLeft: 10 }}>
                             The Client agrees to the use of electronic communication and
                             storage of confidential information. The RCIC will use his/her
@@ -983,7 +967,6 @@ const ThreeColumnRerainerAgreement = () => {
                     </View>
                     <View data-list-text="13.">
                         <Text style={[styles.definition]}>13. Change Policy</Text>
-
                         <Text style={{ marginTop: 10, paddingLeft: 10 }}>
                             The Client acknowledges that if the RCIC is asked to act on the
                             Client’s behalf on matters other than those outlined above in the
@@ -994,7 +977,6 @@ const ThreeColumnRerainerAgreement = () => {
                             citizenship-related applications, the Agreement can be modified
                             accordingly.
                         </Text>
-
                         <Text style={{ marginTop: 15, paddingLeft: 10 }}>
                             This Agreement may only be altered or amended when such changes
                             are made in writing and executed by the parties hereto. All
@@ -1015,7 +997,6 @@ const ThreeColumnRerainerAgreement = () => {
                                     of tasks identified under section 2 of this agreement.
                                 </Text>
                             </View>
-
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>14.2</Text>
                                 <Text style={{ flex: 1 }}>
@@ -1042,7 +1023,6 @@ const ThreeColumnRerainerAgreement = () => {
                                     be paid by the Client to the RCIC.
                                 </Text>
                             </View>
-
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>15.2</Text>
                                 <Text style={{ flex: 1 }}>
@@ -1058,13 +1038,13 @@ const ThreeColumnRerainerAgreement = () => {
                                     be paid by the Client to the RCIC.
                                 </Text>
                             </View>
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>15.3</Text>
                                 <Text style={{ flex: 1 }}>
                                     At the time of withdrawal or discharge, the RCIC must
                                     provide the Client with an invoice detailing all services that
                                     have been rendered or accounting for the time that has been
-                                    spent on the Client’sfile.
+                                    spent on the Client's file.
                                 </Text>
                             </View>
                         </View>
@@ -1107,98 +1087,84 @@ const ThreeColumnRerainerAgreement = () => {
                                     The Client expressly authorizes the RCIC to act on his/her behalf to the extent of the specific functions which the RCIC was retained to perform, as per Section 2 hereof.
                                 </Text>
                             </View>
-
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.2</Text>
                                 <Text style={{ flex: 1 }}>
                                     This Agreement constitutes the entire agreement between the parties with respect to the subject matter here of and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, of the parties except as specifically set forth herein.
                                 </Text>
                             </View>
-
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.3</Text>
                                 <Text style={{ flex: 1 }}>
                                     This Agreement shall be binding upon the parties hereto and their respective heirs, administrators, successors, and permitted assigns.
                                 </Text>
                             </View>
-
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.4</Text>
                                 <Text style={{ flex: 1 }}>
                                     The Costs enumerated in this Agreement are to be paid by the Client.
                                 </Text>
                             </View>
-
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.5</Text>
                                 <Text style={{ flex: 1 }}>
                                     This Agreement may only be altered or amended when such changes are made in writing and executed by the parties hereto. All changes and/or edits must be initialed and dated by both the Member and the Client. Any substantial changes to this Agreement may require that the parties enter into a new Retainer Agreement.
                                 </Text>
                             </View>
-
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.6</Text>
                                 <Text style={{ flex: 1 }}>
                                     The Client may, after a Retainer Agreement is signed, appoint a Designate to act on their behalf when dealing with the RCIC. A Designate must not be compensated by the Client or the RCIC for acting in the capacity of a Designate.
                                 </Text>
                             </View>
-
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.7</Text>
                                 <Text style={{ flex: 1 }}>
                                     The provisions of this Agreement shall be deemed severable. If any provision of this Agreement shall be held unenforceable by any court of competent jurisdiction, such provision shall be severed from this Agreement, and the remaining provisions shall remain in full force and effect.
                                 </Text>
                             </View>
-
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.8</Text>
                                 <Text style={{ flex: 1 }}>
                                     The headings utilized in this Agreement are for convenience only and are not to be construed in any way as additions to or limitations of the covenants and agreements contained in this Agreement.
                                 </Text>
                             </View>
-
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.9</Text>
                                 <Text style={{ flex: 1 }}>
                                     Each of the parties hereto must do and execute or cause to be done or executed all such further and other things, acts, deeds, documents, and assurances as may be necessary or reasonably required to carry out the intent and purpose of this Agreement fully and effectively.
                                 </Text>
                             </View>
-
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.10</Text>
                                 <Text style={{ flex: 1 }}>
                                     The Client acknowledges that he/she has had sufficient time to review this Agreement and has been given an opportunity to obtain independent legal advice and translation prior to the execution and delivery of this Agreement.
                                 </Text>
                             </View>
-
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.11</Text>
                                 <Text style={{ flex: 1 }}>
                                     In the event the Client did not seek independent legal advice prior to signing this Agreement, he/she did so voluntarily without any undue pressure and agrees that the failure to obtain independent legal advice must not be used as a defense to the enforcement of obligations created by this Agreement.
                                 </Text>
                             </View>
-
                             <View style={{ marginTop: 40, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.12</Text>
                                 <Text style={{ flex: 1 }}>
                                     Furthermore, the Client acknowledges that he/she has received a copy of this Agreement and agrees to be bound by its terms.
                                 </Text>
                             </View>
-
                             <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.13</Text>
                                 <Text style={{ flex: 1 }}>
                                     The Client acknowledges that RCIC is not responsible if the application was submitted on time as per IRCC before midnight UTC but submission confirmation from IRCC received the next day in UTC. RCIC must not be held accountable for any further implication including but not limited to missing deadline, status expiry due to this IRCC online system error.
                                 </Text>
                             </View>
-
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.14</Text>
                                 <Text style={{ flex: 1 }}>
                                     The client is aware that IRCC processing time and approvals are not in RCIC’s control and timeline frames provided to the client is according to IRCC’s website.
                                 </Text>
                             </View>
-
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.15</Text>
                                 <Text style={{ flex: 1 }}>
@@ -1206,7 +1172,6 @@ const ThreeColumnRerainerAgreement = () => {
                                 </Text>
                             </View>
                         </View>
-
                     </View>
                     <View
                         data-list-text="19."
@@ -1241,7 +1206,7 @@ const ThreeColumnRerainerAgreement = () => {
                             RETAINER AGREEMENT
                         </Text>
                     </View>
-                    <View style={{ marginTop: 50 }}>
+                    <View style={{ marginTop: 100 }}>
                         {/* Contact Information Header */}
                         <View>
                             {/* Contact Information Header */}
@@ -1261,7 +1226,6 @@ const ThreeColumnRerainerAgreement = () => {
                                                 </Text>
                                             </View>
                                         </View>
-
                                     </View>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -1274,7 +1238,6 @@ const ThreeColumnRerainerAgreement = () => {
                                         </View>
                                     </View>
                                 </View>
-
                                 <View style={styles.clientForm}>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -1288,7 +1251,6 @@ const ThreeColumnRerainerAgreement = () => {
                                                 </Text>
                                             </View>
                                         </View>
-
                                     </View>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -1301,7 +1263,6 @@ const ThreeColumnRerainerAgreement = () => {
                                         </View>
                                     </View>
                                 </View>
-
                                 <View style={styles.clientForm}>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -1337,7 +1298,6 @@ const ThreeColumnRerainerAgreement = () => {
                                     </View>
                                 </View>
                             </View>
-
                             {/* RCIC Information */}
                             <Text style={[styles.textBold, { marginLeft: 12 }]}>RCIC</Text>
                             <View style={{ width: "100%" }}>
@@ -1363,7 +1323,6 @@ const ThreeColumnRerainerAgreement = () => {
                                         </View>
                                     </View>
                                 </View>
-
                                 <View style={styles.clientForm}>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -1386,7 +1345,6 @@ const ThreeColumnRerainerAgreement = () => {
                                         </View>
                                     </View>
                                 </View>
-
                                 <View style={styles.clientForm}>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -1414,13 +1372,11 @@ const ThreeColumnRerainerAgreement = () => {
                                 </View>
                             </View>
                         </View>
-
                         {/* Agreement Signature */}
                         <Text style={{ marginTop: 30 }}>
                             IN WITNESS Where of this Agreement has been duly executed by the parties
                             hereto on the date first above written.
                         </Text>
-
                         <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 20 }}>
                             {/* Signature of Client */}
                             <View style={{ width: "50%", padding: 10 }}>
@@ -1436,7 +1392,6 @@ const ThreeColumnRerainerAgreement = () => {
                                     {familyJsonArray[0]?.client_first_name || ""} {familyJsonArray[0]?.client_last_name || ""}
                                 </Text>
                                 <Text style={{ textAlign: "center" }}>Name of Client</Text>
-
                                 <Text style={[{ textAlign: "center", marginTop: 10, borderBottom: "1px solid black", }]}>
                                     {familyJsonArray[0]?.date_signature_client &&
                                         familyJsonArray[0]?.date_signature_client !== "0000-00-00 00:00:00" &&
@@ -1446,7 +1401,6 @@ const ThreeColumnRerainerAgreement = () => {
                                 </Text>
                                 <Text style={{ textAlign: "center" }}>Date</Text>
                             </View>
-
                             {/* Signature of RCIC */}
                             <View style={{ width: "50%", padding: 10 }}>
                                 <RCICSignatureFunction isPdf={true} felidData={felidData} />
@@ -1456,7 +1410,6 @@ const ThreeColumnRerainerAgreement = () => {
                                     Harpreet Kaur
                                 </Text>
                                 <Text style={{ textAlign: "center" }}>Name of RCIC</Text>
-
                                 <Text style={[{ borderBottom: "1px solid black", textAlign: "center", marginTop: 10, width: "100%" }]}>
                                     {felidData?.date_signature_rcic &&
                                         felidData?.date_signature_rcic !== "0000-00-00 00:00:00" &&
@@ -1467,13 +1420,10 @@ const ThreeColumnRerainerAgreement = () => {
                                 <Text style={{ textAlign: "center" }}>Date</Text>
                             </View>
                         </View>
-
                     </View>
                 </View>
-
-
             </View>
-            <View style={{ marginTop: 70 }}>
+            <View style={{ marginTop: 90 }}>
                 <Text style={[{ textAlign: "center", }, styles.definition]}>
                     AUTHORIZATION
                 </Text>
@@ -1583,7 +1533,6 @@ const ThreeColumnRerainerAgreement = () => {
                             time frame the consultant, the firm or the Government of Canada will not be held responsible.
                         </Text>
                     </View>
-
                 </View>
                 <View style={{ marginTop: 20 }}>
                     <Text style={{ flex: 1 }}>
@@ -1644,7 +1593,6 @@ const ThreeColumnRerainerAgreement = () => {
                                 }
                             />
                             {components}
-
                             <View
                                 fixed
                                 style={{
@@ -1703,12 +1651,9 @@ const ThreeColumnRerainerAgreement = () => {
                                         <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                                         <View>
                                             {felidData?.initial ? (
-                                                <View
-
-                                                >
+                                                <View>
                                                     <InitialFunction felidData={felidData} isPdf={true} />
                                                 </View>
-
                                             ) : (
                                                 <View
                                                     style={{

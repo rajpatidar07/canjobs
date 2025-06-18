@@ -572,7 +572,7 @@ const ExpressEntryPdf = () => {
               </View>
             </View>
           </View>
-          <View data-list-text="4." style={{ marginTop: 160 }}>
+          <View data-list-text="4." style={{ marginTop: 170 }}>
             <Text style={[styles.definition, { fontWeight: 600 }]}>
               4. Payment Schedule
             </Text>
@@ -665,7 +665,7 @@ const ExpressEntryPdf = () => {
             <View style={{ height: 205 }}>
               <Text></Text>
             </View>
-            <View style={[styles.table, { marginTop: 57 }]}>
+            <View style={[styles.table, { marginTop: 67 }]}>
               <View style={styles.row}>
                 <View style={styles.cell}>
                   <Text style={{ color: "blue" }}>
@@ -1500,7 +1500,7 @@ const ExpressEntryPdf = () => {
               RETAINER AGREEMENT
             </Text>
           </View>
-          <View style={{ marginTop: 15 }}>
+          <View style={{ marginTop: 20 }}>
             <View>
               {/* Contact Information Header */}
               <Text style={[{ fontWeight: "600" }, styles.definition]}>
@@ -1773,7 +1773,7 @@ const ExpressEntryPdf = () => {
 
           </View>
         </View>
-        <View style={{ marginTop: 110 }}>
+        <View style={{ marginTop: 60 }}>
           <Text style={[{ textAlign: "center" }, styles.definition]}>
             AUTHORIZATION
           </Text>

@@ -218,7 +218,7 @@ const RecruitmentAgrement = () => {
               </Text>
             </Text>
           </View>
-          <View style={{ marginTop: 100 }}>
+          <View style={{ marginTop: 140 }}>
             <View>{"\n"}{"\n"}
               {/* Contact Information Header */}
               <Text style={[{ fontWeight: "600" }, styles.definition]}>
@@ -469,11 +469,10 @@ const RecruitmentAgrement = () => {
                   I have read and understood all the terms and steps in the retainer letter above and I agree to all the terms mentioned And for so doing, this document shall constitute good and sufficient authority and declaration
                 </Text>
               </View>
-              <View style={{ width: "100%", marginTop: 100 }}>
+              <View style={{ width: "100%", marginTop: 101 }}>
                 { }
                 {/* Client Section */}
-                <View style={[styles.clientForm, { alignItems: "center", paddingHorizontal: 10 }]}>
-
+                <View style={[styles.clientForm, { alignItems: "center", paddingHorizontal: 10, }]}>
                   {/* Client Name */}
                   <View style={[styles.clientFormChild, { marginBottom: 20, marginTop: 2 }]}>
                     <Text
@@ -525,7 +524,6 @@ const RecruitmentAgrement = () => {
                     <Text style={{ marginBottom: 30, textAlign: "center" }}>Date</Text>
                   </View>
                 </View>
-
                 {/* RCIC Section */}
                 <View style={{ width: "100%", marginTop: 15 }}>
                   <View style={[styles.clientForm, { marginTop: 20, paddingHorizontal: 10 }]}>
@@ -577,13 +575,9 @@ const RecruitmentAgrement = () => {
                   </View>
                 </View>
               </View>
-
-
             </View>
-
           </View>
         </View>
-
       </View>
     </View>
   );

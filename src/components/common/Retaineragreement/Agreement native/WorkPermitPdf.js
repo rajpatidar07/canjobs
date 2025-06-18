@@ -1189,7 +1189,7 @@ const WorkPermitPdf = () => {
               RETAINER AGREEMENT
             </Text>
           </View>
-          <View style={{ marginTop: 60 }}>
+          <View style={{ marginTop: 80 }}>
             {/* Contact Information Header */}
             <View>
               {/* Contact Information Header */}
@@ -1464,7 +1464,7 @@ const WorkPermitPdf = () => {
           </View>
 
         </View>
-        <View style={{ marginTop: 30 }}>
+        <View style={{ marginTop: 50 }}>
           <Text style={[{ textAlign: "center", }, styles.definition]}>
             AUTHORIZATION
           </Text>

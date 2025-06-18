@@ -97,7 +97,7 @@ const PaymentTable = (props) => {
     let data = { id };
 
     if (["user_id", "referred_by_id", "manager_id"].includes(field)) {
-      const [idValue, typeValue] = (field === "user_id" || field === "manager_id" || field === "referred_by_id" ? (e ? e.value : null) : e.target.value).split(",");
+      const [idValue, typeValue] = (field === "user_id" || field === "manager_id" || field === "referred_by_id" ? (e ? e.value : null) : e.target.value)?.split(",");
       data = { ...data, [field]: idValue, [`${field.replace("_id", "_type")}`]: typeValue };
     } else {
       data[field] = e.target.value;
@@ -367,7 +367,7 @@ const PaymentTable = (props) => {
                     (paymentRecordsList || []).map((record, index) => (
                       <tr key={index}>
                         <td>
-                          <SelectBox options={(props.employeeEmployerlist.map((option) => ({
+                          <SelectBox options={props.employeeEmployerlist?(props.employeeEmployerlist?.map((option) => ({
                             value: option.employee_id
                               ? `${option.employee_id},employee`
                               : option.company_id
@@ -378,7 +378,7 @@ const PaymentTable = (props) => {
                               : option.company_id
                                 ? option.company_name + " (Client)"
                                 : option.title + " (Applicant Type)" || "unknown user",
-                          })) || [])}
+                          })) || []):[]}
                             selectedValue={record.user_id + "," + record.user_type}
                             onChange={(e) => {
                               handleUpdateChange(e, record.id, "user_id")

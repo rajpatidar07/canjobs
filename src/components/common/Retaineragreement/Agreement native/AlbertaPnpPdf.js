@@ -386,12 +386,14 @@ const AlbertaPnpPdf = () => {
                         <Text style={[styles.definition, { fontWeight: 600 }]}>
                             4. Payment Schedule
                         </Text>
-                        <View style={{ paddingLeft: 10 }}>
-                            <Text>Billing method: The Client will be billed by [flat fee with
-                                payment by milestones]. Payment Terms and Conditions</Text>
+                        <View style={{ marginTop: 15, paddingLeft: 10 }}>
+                            <Text>
+                                Billing method: The Client will be billed by [flat fee with
+                                payment by milestones]. Payment Terms and Conditions
+                            </Text>
                         </View>
                         <View
-                            style={[styles.table, { textAlign: "center", marginTop: 5, }]}
+                            style={[styles.table, { textAlign: "center", marginTop: 10 }]}
                         >
                             <View style={styles.row}>
                                 <View style={[styles.cell, styles.headerCell]}>
@@ -406,7 +408,6 @@ const AlbertaPnpPdf = () => {
                                     <Text>Professional Fees</Text>
                                 </View>
                                 <View style={styles.cell}>
-
                                     <Text>{felidData?.professional_fees}</Text>
                                 </View>
                             </View>
@@ -430,11 +431,9 @@ const AlbertaPnpPdf = () => {
                             </View>
                             <View style={styles.row}>
                                 <View style={styles.cell}>
-
                                     <Text>Administrative fee [as required]</Text>
                                 </View>
                                 <View style={styles.cell}>
-
                                     <Text>{felidData?.administrative_fee}</Text>
                                 </View>
                             </View>
@@ -443,8 +442,7 @@ const AlbertaPnpPdf = () => {
                                     <Text>ApplicableTaxes: %</Text>
                                 </View>
                                 <View style={styles.cell}>
-
-                                    <Text>{felidData?.application_fees}</Text>
+                                    <Text>{felidData?.application_fees || ""}</Text>
                                 </View>
                             </View>
                             <View style={styles.row}>
@@ -452,7 +450,6 @@ const AlbertaPnpPdf = () => {
                                     <Text>Balance (Paid at time of filing):</Text>
                                 </View>
                                 <View style={styles.cell}>
-
                                     <Text>{felidData?.balance}</Text>
                                 </View>
                             </View>
@@ -461,22 +458,24 @@ const AlbertaPnpPdf = () => {
                                     <Text style={{ color: "red" }}>Total Cost</Text>
                                 </View>
                                 <View style={styles.cell}>
-
                                     <Text>{felidData?.total_cost}</Text>
                                 </View>
                             </View>
                         </View>
                         <View>
                             <Text style={{ marginTop: 15, paddingLeft: 10 }}>
-                                Invoice Frequency: The RCIC must provide an Invoice to the Client
+                                Invoice Frequency: The RCIC must provide an Invoice to the
+                                Client
                             </Text>
                             <Text style={{ marginTop: 15, paddingLeft: 10 }}>
                                 Note: The courier charges and Government fees based on current
                                 rates and may change anytime on or before submission.
                             </Text>
                         </View>
-                        <View style={{ height: 155 }}></View>
-                        <View style={[styles.table, { marginTop: 65 }]}>
+                        <View style={{ height: 205 }}>
+                            <Text></Text>
+                        </View>
+                        <View style={[styles.table, { marginTop: 67 }]}>
                             <View style={styles.row}>
                                 <View style={styles.cell}>
                                     <Text style={{ color: "blue" }}>
@@ -505,20 +504,27 @@ const AlbertaPnpPdf = () => {
                                 </View>
                             </View>
                             <View style={styles.row}>
-                                <View style={[styles.cell, { height: "280px" }]}>
+                                <View style={[styles.cell, { height: "auto" }]}>
                                     <Text>
-                                        <Text style={{ marginTop: 10, fontSize: "10px" }}>
-                                            Stage 1 (Worker Expression of Interest)
-                                            Completes upon signing the retainer
-                                            and sharing the checklists and intake
-                                            sheet with client and data gathering and
-                                            submitting EOI
+                                        <Text
+                                            style={{
+                                                marginTop: 10,
+                                                marginBottom: 10,
+                                                fontSize: "10px",
+                                            }}
+                                        >
+                                            Stage 1 (Worker Expression of Interest
+                                            and creating of EE Profile) Completes
+                                            upon signing the retainer and sharing
+                                            the checklists and intake sheet with client
+                                            and data gathering and submitting EOI
                                         </Text>
                                     </Text>
                                 </View>
                                 <View style={styles.cell}>
                                     <Text>
-                                        {"\n"}                                    </Text>
+                                        <br />
+                                    </Text>
                                 </View>
                                 <View style={styles.cell}>
                                     <Text>Non-refundable</Text>
@@ -534,29 +540,36 @@ const AlbertaPnpPdf = () => {
                             </View>
                             <View style={styles.row}>
                                 <View style={styles.cell}>
-                                    <Text style={{ marginTop: 10, marginBottom: 15, fontSize: "10px" }}>
+                                    <Text
+                                        style={{
+                                            marginTop: 10,
+                                            marginBottom: 15,
+                                            fontSize: "10px",
+                                        }}
+                                    >
                                         Stage 2 (Invitation To Apply) Filling out
                                         the forms, information verification and
                                         completeness check, preparing the
-                                        application package. Either EE or PNP charges will be for one stream
-                                        {'\n'}{'\n'}
-                                        Payment is due before final submission of application.
-                                        Provide proof of submission to the client
+                                        application package. Either EE or PNP charges will be for one stream
+                                        {"\n"}
+                                        Payment is due before final submission of
+                                        application.Provide proof of submission to
+                                        the client.
+
                                     </Text>
                                 </View>
                                 <View style={styles.cell}></View>
                                 <View style={[styles.cell, { fontSize: "10px" }]}>
                                     <Text>Non-refundable</Text>
                                     <Text style={{ marginTop: 10, marginBottom: 28 }}>
-                                        All payments made are nonrefundable
-                                        and total service
+                                        All payments made are nonrefundable and total service
                                         charges to be collected
                                         regardless, whether the client/
                                         s withdraw from the file at
                                         this stage. The government
                                         fee and courier charges
                                         must be paid apart from
-                                        professional fees payment scheduled at this stage
+                                        professional fees payment
                                     </Text>
                                 </View>
                                 <View style={[styles.cell, { fontSize: "10px" }]}>
@@ -572,8 +585,7 @@ const AlbertaPnpPdf = () => {
                         <View style={{ marginTop: 15, paddingLeft: 10 }}>
                             <View>
                                 <Text style={{ fontWeight: "bold" }}>
-
-                                    Total Amount: (Non-Refundable) (Paid at signing of contract and sharing of checklist for Worker Expression of Interest):
+                                    Total Amount:(Non-Refundable) (Paid at signing of contract and sharing of checklist):
                                 </Text>
                                 :
                                 <Text style={styles.textunderline}>
@@ -582,67 +594,67 @@ const AlbertaPnpPdf = () => {
                             </View>
                             <View>
                                 <Text style={{ fontWeight: "bold" }}>
-                                    Balance (Non-Refundable) (Paid at time of filing for Invitation To Apply):
+                                    Balance (Non-Refundable) (Paid at time of filing for Invitation To Apply)
                                 </Text>
                                 :
                                 <Text style={styles.textunderline}>
                                     {felidData?.balance_paid_at_time_of_filing}
                                 </Text>
                                 {"\n"}
-                                <Text >(Government Application Fees to be paid separately at the time of application and is not included in Service Charges)</Text>
+                                <Text>(Government Application Fees to be paid separately at the time of application and is not included in Service Charges)</Text>
                             </View>
                         </View>
                         <View id="l5" style={{ paddingLeft: 10 }}>
-                            <Text style={{ marginTop: 15 }}>Note: <Text style={styles.textunderline}>
-                                {felidData?.note}
+                            <Text style={{ marginTop: 50 }}>Note: <Text style={styles.textunderline}>
+                                {felidData?.note || "               "}
                             </Text></Text>
                             <View >
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
+                                <View style={{ flexDirection: "row" }}>
+                                    <Text style={{ width: 20, fontWeight: "bold" }}>•</Text>
                                     <Text style={{ flex: 1 }}>
                                         There will be an additional fee, or a new fee arrangement
                                         will be agreed upon for government’s any further request for
-                                        additional information/documentation of up to $1000.00 such as
-                                        updating the forms, asking for immigration status update,
+                                        additional information/documentation of up to $1000.00 such
+                                        as updating the forms, asking for immigration status update,
                                         documents related to marital status change, procedural
                                         fairness response or preparing and submitting statutory
                                         declarations, affidavits etc.
                                     </Text>
                                 </View>
-                                <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                                    <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
+                                <View style={{ marginTop: 20, flexDirection: "row" }}>
+                                    <Text style={{ width: 20, fontWeight: "bold" }}>•</Text>
                                     <Text style={{ flex: 1 }}>
                                         If a fee has been quoted in this Retainer, then, while the
                                         RCIC expects that his fee will not exceed the
                                     </Text>
                                 </View>
-                                <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                                    <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
+                                <View style={{ marginTop: 20, flexDirection: "row" }}>
+                                    <Text style={{ width: 20, fontWeight: "bold" }}>•</Text>
                                     <Text style={{ flex: 1 }}>
                                         The RCIC reserves the right to alter the amount of the final
-                                        account to reflect the remaining balance of the fees owed plus
-                                        any Disbursements and fees for additional services to which
-                                        the parties previously agreed.
+                                        account to reflect the remaining balance of the fees owed
+                                        plus any Disbursements and fees for additional services to
+                                        which the parties previously agreed.
                                     </Text>
                                 </View>
-                                <View style={{ marginTop: 30, flexDirection: 'row' }}>
-                                    <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
+                                <View style={{ marginTop: 30, flexDirection: "row" }}>
+                                    <Text style={{ width: 20, fontWeight: "bold" }}>•</Text>
                                     <Text style={{ flex: 1 }}>
                                         For application delayed or abandoned beyond 90 days, client
                                         is subjected to $350 fee plus applicable taxes to resume the
                                         file.
                                     </Text>
                                 </View>
-                                <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                                    <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
+                                <View style={{ marginTop: 20, flexDirection: "row" }}>
+                                    <Text style={{ width: 20, fontWeight: "bold" }}>•</Text>
                                     <Text style={{ flex: 1 }}>
                                         Full services charges to be paid by client if client decided
                                         to withdraw/discharge representation at second/last stage of
                                         application.
                                     </Text>
                                 </View>
-                                <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                                    <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
+                                <View style={{ marginTop: 20, flexDirection: "row" }}>
+                                    <Text style={{ width: 20, fontWeight: "bold" }}>•</Text>
                                     <Text style={{ flex: 1 }}>
                                         Fees charges by Canadian government for application
                                         processing has to be paid by client.
@@ -1232,7 +1244,7 @@ const AlbertaPnpPdf = () => {
                     </View>
                     <View style={{}}>
                         {/* Contact Information Header */}
-                        <View>
+                        <View style={{marginTop:30}}>
                             {/* Contact Information Header */}
                             <Text style={[{ fontWeight: "600" }, styles.definition]}>
                                 21. Contact Information
@@ -1504,7 +1516,7 @@ const AlbertaPnpPdf = () => {
                     </View>
 
                 </View>
-                <View style={{ marginTop: 50 }}>
+                <View style={{ marginTop: 60 }}>
                     <Text style={[{ textAlign: "center", }, styles.definition]}>
                         AUTHORIZATION
                     </Text>
@@ -1837,7 +1849,7 @@ const styles = StyleSheet.create({
     },
     cell: {
         flex: 1,
-        padding: 10,
+        padding: 8,
         borderRight: "1px solid #333",
     },
     headerCell: {

@@ -1,11 +1,12 @@
 # Deploy on live
-Date:17-06-25(staging)
+Date:17-06-25(staging)18/06/25(on live)
 1. Add text for the invoice and state in the payment invoice; fix the time zone.
 2. Add conditions to include the subject in the Retainer Agreement.
 3. Update the copyright year in all emails.
 4. Update the email template for the RCIC signed agreement mail.
 5. Resolve the issue with the notification for agreements signed by clients.
 6. Resolve the issue with the received date.
+7. 
 
 Date:10-06-25
 1. Set the Canadian time zone for consultations.
