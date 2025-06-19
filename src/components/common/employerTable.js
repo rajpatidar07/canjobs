@@ -298,7 +298,6 @@ export default function EmployerTable(props) {
                   (employerData || []).map((empdata) => (
                     <tr className="" key={empdata.company_id}>
                       <td className=" py-5">
-                        {console.log(empdata)}
                         {(empdata.is_monday_data === 1 || empdata.is_monday_data === "1") && (
                           <MondayBadge />
                         )}

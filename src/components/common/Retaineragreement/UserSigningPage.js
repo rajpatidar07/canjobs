@@ -26,6 +26,7 @@ import HtmlRenewalApplication from './Html/HtmlRenewalApplication';
 import HtmlMoeThanOneApplicant from './Html/HtmlMoeThanOneApplicant';
 import ThreeColumnRetainerAgreement from "./Html/THreeColumnRetainerAgreement";
 import AlbertaPNPAndFederalPR from './Html/AlbertaPNPAndFederalPR'
+import WorkPermitApplicationTwoStage from './Html/WorkPermitApplicationTwoStage'
 export default function UserSigningPage() {
     const [loader, setLoader] = useState(false)
     // const [pdf, setPdf] = useState(false)
@@ -211,8 +212,14 @@ export default function UserSigningPage() {
                                                                                                             page={"user"}
                                                                                                             felidData={felidData}
                                                                                                             emp_user_type={emp_user_type}
-                                                                                                            addSign={addSign} />
-                                                                                                        : null}
+                                                                                                            addSign={addSign} /> :
+                                                                                                        type === "work permit application-2 stage"
+                                                                                                            ? < WorkPermitApplicationTwoStage
+                                                                                                                page={"user"}
+                                                                                                                felidData={felidData}
+                                                                                                                emp_user_type={emp_user_type}
+                                                                                                                addSign={addSign} />
+                                                                                                            : null}
 
                     <div className='d-flex justify-content-center mt-5'>
                         <button className="btn btn-primary text-decoration-none" onClick={(e) => addSign(e, "final")}>

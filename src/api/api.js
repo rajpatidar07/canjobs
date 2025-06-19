@@ -1047,7 +1047,7 @@ export const SendReplyCommit = async (
   id,
   docName
 ) => {
-  console.log(senderEmail, "  id =>", id, "DocUserType", DocUserType, "type:", type, "senderType", senderType)
+  // console.log(senderEmail, "  id =>", id, "DocUserType", DocUserType, "type:", type, "senderType", senderType)
   //   "doc_id =>", data.doc_id,
   // "task_id =>", data.task_id,
   // "sender_id =>", senderId,
@@ -2662,7 +2662,7 @@ export const GetPreviewAttchmentEmail = async (emailType, id) => {
 /*Api to read email */
 
 export const ReadEmail = async (page, limit, search, email) => {
-  console.log(email)
+  // console.log(email)
   const response = await axios.post(
     // `http://192.168.29.92/canjobs_latest/common/readEmail`,
     // `${API_URL}canjobs_latest/common/readEmail`,
@@ -2685,7 +2685,7 @@ export const ReadEmail = async (page, limit, search, email) => {
 };
 /*Api to read Sent email */
 export const ReadSentEmail = async (page, limit, search, email) => {
-  console.log(email, "lll")
+  // console.log(email, "lll")
   const response = await axios.post(
     // `http://192.168.29.92/canjobs_latest/common/readSentEmail`,
     // `${API_URL}canjobs_latest/common/readSentEmail`,
@@ -3521,7 +3521,8 @@ export const AddSharePointDOcument = async (
     "/work_permit",
     "/alberta_pnp",
     "/three_column",
-    "/agreeone"
+    "/agreeone",
+    "/work_permit_application_2_stage"
   ];
   // console.log(formData)
   if (Token || allowedPaths.includes(window.location.pathname)) {

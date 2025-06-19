@@ -133,19 +133,19 @@ export default function FolderList({
                             //   console.log(item["@microsoft.graph.downloadUrl"])
                             //   window.open(item.webUrl, '_blank');
 
-                            //   // if (userAgent.includes("Chrome") && vendor.includes("Google")) {
-                            //   //   console.log("Browser: Google Chrome");
-                            //   // } else if (userAgent.includes("Firefox")) {
-                            //   //   console.log("Browser: Mozilla Firefox");
-                            //   // } else if (userAgent.includes("Safari") && vendor.includes("Apple")) {
-                            //   //   console.log("Browser: Safari");
-                            //   // } else if (userAgent.includes("Edg")) {
-                            //   //   console.log("Browser: Microsoft Edge");
-                            //   // } else if (userAgent.includes("Trident") || userAgent.includes("MSIE")) {
-                            //   //   console.log("Browser: Internet Explorer");
-                            //   // } else {
-                            //   //   console.log("Browser: Unknown");
-                            //   // }
+                            //   if (userAgent.includes("Chrome") && vendor.includes("Google")) {
+                            //     console.log("Browser: Google Chrome");
+                            //   } else if (userAgent.includes("Firefox")) {
+                            //     console.log("Browser: Mozilla Firefox");
+                            //   } else if (userAgent.includes("Safari") && vendor.includes("Apple")) {
+                            //     console.log("Browser: Safari");
+                            //   } else if (userAgent.includes("Edg")) {
+                            //     console.log("Browser: Microsoft Edge");
+                            //   } else if (userAgent.includes("Trident") || userAgent.includes("MSIE")) {
+                            //     console.log("Browser: Internet Explorer");
+                            //   } else {
+                            //     console.log("Browser: Unknown");
+                            //   }
                             // } else {
                             setDocPreview(true);
                             setDocSingleDate(item);
@@ -547,7 +547,6 @@ export default function FolderList({
                                 Delete {isFolder ? "Folder" : "File"}
                               </Link>
                             </li>
-                            {console.log(item)}
                             <li
                               className={
                                 ((item.folder && userType === "admin") ||

@@ -54,7 +54,6 @@ export function ClientSignatureFunction({ felidData, familyJsonArray, page, isPd
       />
     )
   }
-  console.log(signature)
   // HTML (React DOM) Version
   const signatureContent = isBase64Image
     ? `<img src="${signature}" alt="${clientName}" style="max-height: 50px;">`

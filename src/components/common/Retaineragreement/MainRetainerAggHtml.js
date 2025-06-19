@@ -25,6 +25,7 @@ import HtmlMoeThanOneApplicant from "./Html/HtmlMoeThanOneApplicant";
 import EmployerRetainerAgreement from "./Html/EmployerRetainerAgreement";
 import ThreeColumnRetainerAgreement from "./Html/THreeColumnRetainerAgreement";
 import AlbertaPNPAndFederalPR from "./Html/AlbertaPNPAndFederalPR";
+import WorkPermitApplicationTwoStage from "./Html/WorkPermitApplicationTwoStage";
 export default function MainRetainerAggHtml({
   setApicall,
   close,
@@ -134,7 +135,9 @@ export default function MainRetainerAggHtml({
                       ? "/work_permit"
                       : agreementData.type === "Alberta PNP and federal PR"
                         ? '/alberta_pnp'
-                        : `/agreeone`;
+                        : agreementData.type === "work permit application-2 stage"
+                          ? '/work_permit_application_2_stage'
+                          : `/agreeone`;
       localStorage.setItem("agreementStateData", JSON.stringify(stateData));
       // Open the new page in a new tab
       window.open(newPageUrl, "_blank");
@@ -297,7 +300,15 @@ export default function MainRetainerAggHtml({
                     felidData={felidData}
                     emp_user_type={emp_user_type}
                     addSign={""} />
-                  : null}
+                  :
+                  agreementData.type === "work permit application-2 stage" ?
+                    <WorkPermitApplicationTwoStage
+                      page={"admin"}
+                      userData={userData}
+                      felidData={felidData}
+                      emp_user_type={emp_user_type}
+                      addSign={""} />
+                    : null}
         {/* <button
           className={
             felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  "btn btn-primary my-2" : "d-none"

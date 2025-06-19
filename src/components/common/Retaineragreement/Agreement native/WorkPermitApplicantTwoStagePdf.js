@@ -18,14 +18,14 @@ import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import { AddDocIdToAGreementApiFun } from "../CommonThings/AddDocIdToAGreementApiFun";
 // import { toast } from "react-toastify";
 
-const AlbertaPnpPdf = () => {
+const WorkPermitApplicantTwoStagePdf = () => {
     const [blobData, setBlobData] = useState();
     const data = localStorage.getItem("agreementStateData");
     const {
         felidData,
         user_id,
         emp_user_type,
-        folderId: folderID /*, code*/,
+        folderId: folderID,
         email_for
     } = JSON.parse(data) || {};
     const familyJsonArray = felidData?.family_json || []
@@ -80,12 +80,12 @@ const AlbertaPnpPdf = () => {
         };
         convertBlob();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [!blobData]);
+    }, [blobData]);
     let components = (
         <View style={{ height: "auto" }}>
             <View style={{ padding: "10px 20px" }}>
                 <Text
-                    style={{ textAlign: "center", fontSize: "24px", marginBottom: 15 }}
+                    style={{ textAlign: "center", fontSize: "24px", marginBottom: 15, color: '#000000' }}
                 >
                     RETAINER AGREEMENT
                 </Text>
@@ -115,10 +115,10 @@ const AlbertaPnpPdf = () => {
                         <Text style={[{ borderBottom: "1px solid black", minWidth: "50px", }, styles.textunderline]}> {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <CommonRetainerAgreementDate _date={felidData?.agreement_date} format={"MMMM"} />}
                             {"  "}
                         </Text>
-                        {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <CommonRetainerAgreementDate _date={felidData?.agreement_date} format={"YYYY"} />}between
+                        {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <CommonRetainerAgreementDate _date={felidData?.agreement_date} format={"YYYY"} />} between
                         Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
                         “RCIC”), RCIC Membership Number
-                        <Text style={styles.textunderline}> R533393</Text>,{"\n"} Phone number
+                        <Text style={styles.textunderline}> R533393</Text>, {"\n"}Phone number
                         <Text style={styles.textunderline}> 4038885308 </Text> , Email
                         <Link
                             src="mailto:info@canpathways.ca"
@@ -126,7 +126,7 @@ const AlbertaPnpPdf = () => {
                             target="_blank"
                         >   info@canpathways.ca </Link> located at
                         <Text style={styles.textunderline}>
-                            {" "}   Hopewell Pl NE #310 Calgary, AB T1Y 7J7,
+                            {" "} 2618 Hopewell Pl NE #310, Calgary, AB T1Y 7J7,
                         </Text>
                         <Text style={styles.textunderline}></Text> Canada and Client
                         <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
@@ -139,7 +139,7 @@ const AlbertaPnpPdf = () => {
 
                             {" " + (felidData?.client_address || "        ")}
                         </Text>
-                        ,{'\n'} Email
+                        , {"\n"}Email
                         <Text style={styles.textunderline} className="para_gap">
 
                             {" " + (felidData?.client_email || "     ")}
@@ -181,9 +181,11 @@ const AlbertaPnpPdf = () => {
                                 </Text>
                                 <Text style={{ flex: 1 }}>
                                     Date of birth:
+
                                     {item.client_date_of_birth
                                         ? <Text style={{ textDecoration: 'underline' }}><CommonRetainerAgreementDate _date={item.client_date_of_birth} format={"DD-MM-YYYY"} /></Text>
                                         : '_________________'}
+
                                 </Text>
                             </View>
                         ))}
@@ -209,7 +211,7 @@ const AlbertaPnpPdf = () => {
                         Agreement, the parties agree as follows:
                     </Text>
                 </View>
-                <View id="l1" style={{ marginBottom: 15 }}>
+                <View id="l1">
                     <View data-list-text="1.">
                         <Text style={[styles.definition, { fontWeight: 600 }]}>
                             1. Definitions
@@ -512,11 +514,9 @@ const AlbertaPnpPdf = () => {
                                                 fontSize: "10px",
                                             }}
                                         >
-                                            Stage 1 (Worker Expression of Interest
-                                            and creating of EE Profile) Completes
-                                            upon signing the retainer and sharing
-                                            the checklists and intake sheet with client
-                                            and data gathering and submitting EOI
+                                            Step 1 Completes upon signing the
+                                            retainer and sharing the checklists and
+                                            intake sheet with client and data gathering
                                         </Text>
                                     </Text>
                                 </View>
@@ -546,14 +546,12 @@ const AlbertaPnpPdf = () => {
                                             fontSize: "10px",
                                         }}
                                     >
-                                        Stage 2 (Invitation To Apply) Filling out
-                                        the forms, information verification and
-                                        completeness check, preparing the
-                                        application package. Either EE or PNP charges will be for one stream
-                                        {"\n"}
+                                        Step 2 Filling out the forms, information
+                                        verification and completeness check,
+                                        preparing the application package{"/n"}
                                         Payment is due before final submission of
-                                        application.Provide proof of submission to
-                                        the client.
+                                        application.{"/n"}
+                                        Provide proof of submission to the client.
 
                                     </Text>
                                 </View>
@@ -561,7 +559,8 @@ const AlbertaPnpPdf = () => {
                                 <View style={[styles.cell, { fontSize: "10px" }]}>
                                     <Text>Non-refundable</Text>
                                     <Text style={{ marginTop: 10, marginBottom: 28 }}>
-                                        All payments made are nonrefundable and total service
+                                        Non-refundable
+                                        All payments made are non-refundable and total service
                                         charges to be collected
                                         regardless, whether the client/
                                         s withdraw from the file at
@@ -569,6 +568,7 @@ const AlbertaPnpPdf = () => {
                                         fee and courier charges
                                         must be paid apart from
                                         professional fees payment
+                                        scheduled at this stage
                                     </Text>
                                 </View>
                                 <View style={[styles.cell, { fontSize: "10px" }]}>
@@ -600,11 +600,11 @@ const AlbertaPnpPdf = () => {
                                     {felidData?.balance_paid_at_time_of_filing}
                                 </Text>
                                 {"\n"}
-                                <Text>(Government Application Fees to be paid separately at the time of application and is not included in Service Charges)</Text>
+                                <Text>(NOTE: Applicable Government Fees to be charged separately and not included in service charges)</Text>
                             </View>
                         </View>
                         <View id="l5" style={{ paddingLeft: 10 }}>
-                            <Text style={{ marginTop: 50 }}>Note: <Text style={styles.textunderline}>
+                            <Text style={{ marginTop: 10 }}>Note: <Text style={styles.textunderline}>
                                 {felidData?.note || "               "}
                             </Text></Text>
                             <View >
@@ -828,11 +828,11 @@ const AlbertaPnpPdf = () => {
                                 Client File Management Regulation
                             </Text>
                             , the {" "}
-                            <Text style={styles.textunderline}>
-                                Client Account Regulation{" "}
+                            <Text style={[styles.textunderline, { paddingRight: 2 }]}>
+                                Client Account Regulation
                             </Text>
                             and the {" "}
-                            <Text style={styles.textunderline}>
+                            <Text style={[styles.textunderline, { paddingRight: 2 }]}>
                                 Retainer Agreement Regulation
                             </Text> {" "}
                             and in the following manner:
@@ -1144,42 +1144,42 @@ const AlbertaPnpPdf = () => {
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.7</Text>
                                 <Text style={{ flex: 1 }}>
                                     The provisions of this Agreement shall be deemed severable. If any provision of this Agreement shall be held unenforceable by any court of competent jurisdiction, such provision shall be severed from this Agreement, and the remaining provisions shall remain in full force and effect.
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.8</Text>
                                 <Text style={{ flex: 1 }}>
                                     The headings utilized in this Agreement are for convenience only and are not to be construed in any way as additions to or limitations of the covenants and agreements contained in this Agreement.
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.9</Text>
                                 <Text style={{ flex: 1 }}>
                                     Each of the parties hereto must do and execute or cause to be done or executed all such further and other things, acts, deeds, documents, and assurances as may be necessary or reasonably required to carry out the intent and purpose of this Agreement fully and effectively.
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.10</Text>
                                 <Text style={{ flex: 1 }}>
                                     The Client acknowledges that he/she has had sufficient time to review this Agreement and has been given an opportunity to obtain independent legal advice and translation prior to the execution and delivery of this Agreement.
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.11</Text>
                                 <Text style={{ flex: 1 }}>
                                     In the event the Client did not seek independent legal advice prior to signing this Agreement, he/she did so voluntarily without any undue pressure and agrees that the failure to obtain independent legal advice must not be used as a defense to the enforcement of obligations created by this Agreement.
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 40, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.12</Text>
                                 <Text style={{ flex: 1 }}>
                                     Furthermore, the Client acknowledges that he/she has received a copy of this Agreement and agrees to be bound by its terms.
@@ -1193,14 +1193,14 @@ const AlbertaPnpPdf = () => {
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.14</Text>
                                 <Text style={{ flex: 1 }}>
                                     The client is aware that IRCC processing time and approvals are not in RCIC’s control and timeline frames provided to the client is according to IRCC’s website.
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.15</Text>
                                 <Text style={{ flex: 1 }}>
                                     The Client acknowledges that he/she has requested that the Agreement be written in the English language and that English is the binding language.
@@ -1212,7 +1212,7 @@ const AlbertaPnpPdf = () => {
                     <View
                         data-list-text="19."
                         style={{
-                            marginTop: 10,
+                            marginTop: 25,
                             fontWeight: "300",
                             flexDirection: "row"
                         }}
@@ -1229,7 +1229,7 @@ const AlbertaPnpPdf = () => {
                     <View
                         data-list-text="20."
                         style={{
-                            marginTop: 15,
+                            marginTop: 30,
                             fontWeight: "300",
                             flexDirection: "row"
                         }}
@@ -1241,9 +1241,9 @@ const AlbertaPnpPdf = () => {
                             RETAINER AGREEMENT
                         </Text>
                     </View>
-                    <View style={{}}>
+                    <View style={{ marginTop: familyJsonArray[0]?.date_signature_client ? 90 : 130 }}>
                         {/* Contact Information Header */}
-                        <View style={{marginTop:30}}>
+                        <View>
                             {/* Contact Information Header */}
                             <Text style={[{ fontWeight: "600" }, styles.definition]}>
                                 21. Contact Information
@@ -1512,10 +1512,11 @@ const AlbertaPnpPdf = () => {
                                 </View>
                             </View>
                         </View>
+
                     </View>
 
                 </View>
-                <View style={{ marginTop: 60 }}>
+                <View style={{ marginTop: 130 }}>
                     <Text style={[{ textAlign: "center", }, styles.definition]}>
                         AUTHORIZATION
                     </Text>
@@ -1582,7 +1583,7 @@ const AlbertaPnpPdf = () => {
                         <View style={{ marginTop: 17, flexDirection: 'row' }}>
                             <Text style={{ width: 20, fontWeight: 'bold' }}>4</Text>
                             <Text style={{ flex: 1 }}>
-                                In the event the Immigration office responsible should contact the Client directly, the Clientis instructed to
+                                In the event the Immigration office responsible should contact the Client directly, the Client is instructed to
                                 notify the RCIC immediately
                             </Text>
                         </View>
@@ -1594,7 +1595,7 @@ const AlbertaPnpPdf = () => {
                                 part of this agreement
                             </Text>
                         </View>
-                        <View style={{ marginTop: 10, flexDirection: 'row' }}>
+                        <View style={{ marginTop: 17, flexDirection: 'row' }}>
                             <Text style={{ width: 20, fontWeight: 'bold' }}>6</Text>
                             <Text style={{ flex: 1 }}>
                                 I undertake to inform the consultant, the firm or the Government of Canada of any change in marital or civic status
@@ -1665,8 +1666,8 @@ const AlbertaPnpPdf = () => {
                             <View style={styles.clientFormChild}>
                                 <Text style={{ margin: 0, marginBottom: 15, width: "100%", borderBottom: "1px solid black" }}>
                                     {!familyJsonArray[0]?.date_signature_client ||
-                                        familyJsonArray[0]?.date_signature_client ===
-                                        "0000-00-00 00:00:00"
+                                        familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00" ||
+                                        familyJsonArray[0]?.date_signature_client === "0000-00-00"
                                         ? " "
                                         : <CommonRetainerAgreementDate _date={familyJsonArray[0]?.date_signature_client} format={"DD-MM-YYYY"} />}
                                 </Text>
@@ -1705,19 +1706,22 @@ const AlbertaPnpPdf = () => {
                             >
                                 <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                                 <View>
-                                    {felidData?.initial ? (
-                                        <InitialFunction felidData={felidData} isPdf={true} />
+                                    <View
 
-                                    ) : (
-                                        <View
-                                            style={{
-                                                display: "inline-block",
-                                                width: 100,
-                                                height: 50,
-                                                border: "1px solid #ccc",
-                                            }}
-                                        />
-                                    )}
+                                    >
+                                        {felidData?.initial ? (
+                                            <InitialFunction felidData={felidData} isPdf={true} />
+                                        ) : (
+                                            <View
+                                                style={{
+                                                    display: "inline-block",
+                                                    width: 100,
+                                                    height: 50,
+                                                    border: "1px solid #ccc",
+                                                }}
+                                            />
+                                        )}
+                                    </View>
                                 </View>
                             </View>
                         </View>
@@ -1775,7 +1779,6 @@ const AlbertaPnpPdf = () => {
         </BlobProvider >
     );
 };
-
 const styles = StyleSheet.create({
     page: {
         padding: 30,
@@ -1879,5 +1882,4 @@ const styles = StyleSheet.create({
     },
 });
 
-
-export default AlbertaPnpPdf;
+export default WorkPermitApplicantTwoStagePdf;

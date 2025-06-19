@@ -846,6 +846,7 @@ const filterjson = {
     "employer renewal stream",
     // "more than one applicant",//do not have full retainer agreement details(uncomment krna he code tho *)
     "three column",
+    "work permit application-2 stage"
   ]
   ,
   "program_discipline_category": [

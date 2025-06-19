@@ -217,9 +217,7 @@ export default function SharePointDocument({
       data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
       data.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     ) {
-      console.log(data)
       let res = await ConvertPPT(data)
-      console.log(res)
       if (res) {
         setConvertedDoc(res);
       } else {
@@ -233,7 +231,6 @@ export default function SharePointDocument({
       if (data["@microsoft.graph.downloadUrl"]) {
         try {
           let res = await ConvertAnyFileToPdf(data);
-          console.log(res);
           if (res) {
             setConvertedDoc(`data:application/pdf;base64,${res}`);
           } else {
@@ -248,7 +245,6 @@ export default function SharePointDocument({
       }
     }
     else {
-      console.log(data.file.mimeType)
       setDocPreview(false);
       setConvertedDoc("");
       window.open(data.webUrl);
@@ -1098,7 +1094,6 @@ export default function SharePointDocument({
                       </Dropdown>
                     </>
                   )}
-                  {console.log(docSingleDate)}
                   <>
                     {openNoteForm
                       ? <DocumentsNotes

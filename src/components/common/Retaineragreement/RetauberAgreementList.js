@@ -330,7 +330,7 @@ export default function RetauberAgreementList({
                             </span>
                           </button>
                           <button
-                            className={`btn btn-outline-info action_btn ${data.type === "recruitment services agreement" || data.type === "initial consultation" || data.type === "employer renewal stream" || data.type === "employers" || data.type === "three column" || data.type === "express entry" || data.type === "Alberta PNP and federal PR" || data.type === "work permit" ? "d-none" : ""}`}
+                            className={`btn btn-outline-info action_btn ${data.type === "recruitment services agreement" || data.type === "initial consultation" || data.type === "employer renewal stream" || data.type === "employers" || data.type === "three column" || data.type === "express entry" || data.type === "Alberta PNP and federal PR" || data.type === "work permit" || data.type === "work permit application-2 stage" ? "d-none" : ""}`}
                             onClick={() => {
                               setOpenAddClientFeilds(true);
                               setAgreementData(data);
@@ -404,12 +404,6 @@ export default function RetauberAgreementList({
                             }
                             title="RCIC Sign"
                           >
-                            {console.log(data?.signature_status === "2"
-                              ? false
-                              : data?.rcic_signature
-                                ? true
-                                : true, data?.signature_status
-                              , index + 1)}
                             <span className="text-gray px-2">
                               <FaFileSignature />
                             </span>

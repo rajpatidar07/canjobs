@@ -209,7 +209,6 @@ const DocumentsNotes = (props) => {
     const [editorState, setEditorState] = useState(
         EditorState.createWithContent(contentState)
     );
-    console.log(props?.docSingleDate, "hjgd")
     /*Function to Add note to the api */
     const exportToTextFile = async (e) => {
         e.preventDefault()

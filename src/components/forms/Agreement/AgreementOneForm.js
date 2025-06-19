@@ -335,7 +335,9 @@ const AgreementOneForm = ({
                         ? '/alberta_pnp'
                         : agreementType === "three column"
                           ? "/three_column"
-                          : `/agreeone`;
+                          : agreementType === "work permit application-2 stage" ?
+                            "/work_permit_application_2_stage"
+                            : `/agreeone`;
               localStorage.setItem(
                 "agreementStateData",
                 JSON.stringify(stateData)
@@ -416,7 +418,6 @@ const AgreementOneForm = ({
     "date_signature_client": "",
     "client_date_of_birth": ""
   });
-  console.log(SigningUserType)
   return (
     <Modal
       show={show}
@@ -833,7 +834,7 @@ const AgreementOneForm = ({
               ))}
             <div
               className={
-                openSignature === "yes" || agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" || agreementType === "three column" || agreementType === "Alberta PNP and federal PR" || agreementType === "express entry" || agreementType === "work permit" || SigningUserType === "employee" || SigningUserType === "company" ? "d-none" : "form-group col-md-12 "
+                openSignature === "yes" || agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" || agreementType === "three column" || agreementType === "Alberta PNP and federal PR" || agreementType === "express entry" || agreementType === "work permit" || agreementType === "work permit application-2 stage" || SigningUserType === "employee" || SigningUserType === "company" ? "d-none" : "form-group col-md-12 "
               }
             >
               <h3 className="font-size-4 text-black-2 line-height-reset">

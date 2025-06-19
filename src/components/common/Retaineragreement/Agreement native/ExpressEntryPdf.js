@@ -140,7 +140,6 @@ const ExpressEntryPdf = () => {
           `${felidData?.type.replaceAll(" ", "_") + `_${felidData?.id}`}.pdf`,
           { type: "application/pdf" }
         );
-        console.log('file = >', file)
         try {
           let res = await AddSharePointDOcument(
             user_id,

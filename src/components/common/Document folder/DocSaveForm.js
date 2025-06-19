@@ -17,7 +17,6 @@ export default function DocSaveForm({
   isDocPrivate,
   setIsDocPrivate
 }) {
-  console.log()
   let userType = localStorage.getItem("userType")
   /*Function to remove the file from the selected file list */
   const removeFile = (fileName) => {

@@ -273,7 +273,6 @@ function Addfollowup(props) {
     const updatedUserTypes = newUserTypeArray.join(",");
 
     // Call the API to update the document
-    console.log(assigned_by_type,"pppp")
     try {
       setIsApiCall(true)
       let res = await SendReplyCommit(
@@ -573,7 +572,6 @@ function Addfollowup(props) {
   };
   // USER FOLLOW UP PROFILE UPDATE SUBMIT BUTTON
   const onAminFollowClick = async (event) => {
-    console.log("add,err", errors, state)
     event.preventDefault();
     if (validate()) {
       setLoading(true);
@@ -654,7 +652,6 @@ function Addfollowup(props) {
 
   /*Function to update comment */
   const OnHandleUpdateCommentStatus = async (originalData, status) => {
-    console.log("update")
     const {
       assigned_to,
       subject_description,
@@ -728,7 +725,6 @@ function Addfollowup(props) {
     };
 
     // console.log("Updated Selected Admins:", filteredSelectedAdmins);
-    console.log(updatedData);
 
     // Call API to update
     try {
@@ -1496,7 +1492,6 @@ function Addfollowup(props) {
                         state.id
                           ? OnHandleUpdateCommentStatus(state)
                           : onAminFollowClick(e);
-                        console.log(state.id)
                       }}
                       className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                       type="button"

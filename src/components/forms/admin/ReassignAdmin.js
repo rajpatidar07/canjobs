@@ -83,7 +83,6 @@ function ReassignAdmin(props) {
         if (validate()) {
             setLoading(true);
             try {
-                console.log(props?.adminData, state)
                 const response = await ReassignAdminApi(state);
                 if (response.status === 1) {
                     toast.success("Admin Deleted and Re assigned Updated successfully", {

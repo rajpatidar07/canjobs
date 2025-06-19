@@ -121,6 +121,7 @@ import AdminMain from "../admin/AdminMain";
 import CommonAdminExtraLinkSetting from "../admin/CommonAdminExtraLinkSetting";
 import ManageConsultation from "../admin/ManageConsultation";
 import CommonDailyPage from "./CommonDailyPage";
+import WorkPermitApplicantTwoStagePdf from "./Retaineragreement/Agreement native/WorkPermitApplicantTwoStagePdf";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const path = location.pathname;
@@ -236,6 +237,7 @@ function MainLayout() {
         <Route exact path="/linkedin" component={LinkedInCallback} />
         <Route exact path="/signagreement" element={<UserSigningPage />} />
         <Route path="/agreeone" element={<ExpressEntryPdf />} />
+        <Route path="/work_permit_application_2_stage" element={<WorkPermitApplicantTwoStagePdf />} />
         <Route
           path="/initial_consultation"
           element={<InitialConsultationAgreement />}

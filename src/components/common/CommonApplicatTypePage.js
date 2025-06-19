@@ -360,7 +360,6 @@ export default function CommonApplicatTypePage() {
               </div>
             ) : (
               <div>
-                {console.log(docId ? docParentId : applicantTypeFolderId, docId, docParentId, applicantTypeFolderId)}
                 <ApplicantTypeDocuments
                   emp_user_type={"applicant_type"}
                   user_id={applicantTypeIdForApi}

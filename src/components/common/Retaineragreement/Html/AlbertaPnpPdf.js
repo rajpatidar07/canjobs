@@ -47,7 +47,6 @@ const AlbertaPnpPdf = () => {
                     `${felidData?.type.replace(" ", "_") + `_${felidData?.id}`}.pdf`,
                     { type: "application/pdf" }
                 );
-                console.log('file = >', file)
                 try {
                     let res = await AddSharePointDOcument(
                         user_id,
