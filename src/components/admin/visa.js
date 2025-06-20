@@ -183,7 +183,8 @@ export default function Visa() {
                   <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Visa Country:</p>
                     <div className="select_div">
-                      <SelectBox options={(FilterJson.location.map((option) => ({
+                      <SelectBox
+Width={"yes"} options={(FilterJson.location.map((option) => ({
                         value: option.country,
                         label: option.country,
                       })) || [])}
@@ -200,7 +201,8 @@ export default function Visa() {
                   <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Visa Status:</p>
                     <div className="select_div">
-                      <SelectBox options={(FilterJson.visa_status.map((option) => ({
+                      <SelectBox
+Width={"yes"} options={(FilterJson.visa_status.map((option) => ({
                         value: option,
                         label: option,
                       })) || [])}
@@ -217,7 +219,8 @@ export default function Visa() {
                   <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Application type:</p>
                     <div className="select_div">
-                      <SelectBox options={(applicantTypeList.map((option) => ({
+                      <SelectBox
+Width={"yes"} options={(applicantTypeList.map((option) => ({
                         value: option.id,
                         label: option.title,
                       })) || [])}

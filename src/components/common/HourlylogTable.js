@@ -381,7 +381,8 @@ function Hourlylogtable(props) {
                                                     )}
                                                 </td>
                                                 <td style={{ minWidth: "150px" }}>
-                                                    <SelectBox options={(props.adminList.map((option) => ({
+                                                    <SelectBox
+Width={"yes"} options={(props.adminList.map((option) => ({
                                                         value: option.admin_id,
                                                         label: option.name,
                                                     })) || [])}
@@ -554,7 +555,8 @@ function Hourlylogtable(props) {
                                                                     {/* Hour Log of Admin (Manager) */}
                                                                     <td style={{ minWidth: "150px" }}>
                                                                         {editRowId === item.hour_log_of_admin ? (
-                                                                            <SelectBox options={(props.adminList.map((option) => ({
+                                                                            <SelectBox
+Width={"yes"} options={(props.adminList.map((option) => ({
                                                                                 value: option.admin_id,
                                                                                 label: option.name,
                                                                             })) || [])}

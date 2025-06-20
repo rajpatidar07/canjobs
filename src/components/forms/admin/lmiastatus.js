@@ -323,6 +323,7 @@ function LmiaStatus(props) {
                 Lmia Status <span className="text-danger">*</span>:
               </label>
               <SelectBox
+Width={"yes"}
                 options={(FilterJson.lmia_status || [])
                   .map((status, i) => {
                     const shouldInclude = props.job === "yes" || i > 2;

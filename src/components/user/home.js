@@ -88,6 +88,7 @@ function EmployeeHomePage() {
                   <div className="pr-0 pl-0 col-md-3 col-lg-3 mb-5 position-relative">
                     <div className="">
                       <SelectBox
+Width={"yes"}
                         options={(Json.Skill || []).map((data) => ({
                           value: data.value,
                           label: data.value,
@@ -103,6 +104,7 @@ function EmployeeHomePage() {
                   <div className="pr-0 pl-0 col-md-3 col-lg-3 mb-5">
                     <div className="">
                       <SelectBox
+Width={"yes"}
                         options={(filterjson.job_type || []).map((job_type) => ({
                           value: job_type,
                           label: job_type,
@@ -118,6 +120,7 @@ function EmployeeHomePage() {
                   <div className="pr-0 pl-0 col-md-3 col-lg-3 mb-5">
                     <div className="">
                       <SelectBox
+Width={"yes"}
                         options={(Object.keys(states) || []).map((job) => ({
                           value: job,
                           label: job,

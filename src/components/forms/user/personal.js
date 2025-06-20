@@ -925,6 +925,7 @@ function PersonalDetails(props) {
                     </label>
                     <div className={errors.currently_located_country ? "border border-danger rounded" : ""}>
                       <SelectBox
+Width={"yes"}
                         options={(FilterJson.location || []).map((item) => ({
                           value: item.country,
                           label: item.country,
@@ -1162,6 +1163,7 @@ function PersonalDetails(props) {
                     </label>
                     <div className={errors.interested_in_id ? "border border-danger rounded" : ""}>
                       <SelectBox
+Width={"yes"}
                         options={applicantTypeList
                           .filter(item => item.level === "0" && ![
                             "test typw",
@@ -1206,6 +1208,7 @@ function PersonalDetails(props) {
                       </label>
                       <div className={errors.interested_in_id ? "border border-danger rounded" : ""}>
                         <SelectBox
+Width={"yes"}
                           options={(applicantTypeList || [])
                             .filter(item => item.level === "1" && item.parent_id === main)
                             .map(item => ({
@@ -1238,6 +1241,7 @@ function PersonalDetails(props) {
                       </label>
                       <div className={errors.interested_in_id ? "border border-danger rounded" : ""}>
                         <SelectBox
+Width={"yes"}
                           options={(applicantTypeList || [])
                             .filter(item => item.level === "2" && item.parent_id === sub)
                             .map(item => ({
@@ -1271,6 +1275,7 @@ function PersonalDetails(props) {
                       Experience:
                     </label>
                     <SelectBox
+Width={"yes"}
                       options={(FilterJson.experience || []).map((ex) => ({
                         value: ex,
                         label: `${ex}${ex.toLowerCase() === "fresher" || ex.toLowerCase() === "other" ? "" : " Years"}`
@@ -1344,6 +1349,7 @@ function PersonalDetails(props) {
                       Candidate Status:
                     </label>
                     <SelectBox
+Width={"yes"}
                       options={(FilterJson.canadian_candidate_work_status || []).map((item) => ({
                         value: item,
                         label: item,
@@ -1399,6 +1405,7 @@ function PersonalDetails(props) {
                       <div className={errors.reffer_by ? "border border-danger rounded" : ""}>
 
                         <SelectBox
+Width={"yes"}
                           options={agentList.map((item) => ({
                             value: item.id,
                             label: item.u_id,
@@ -1474,6 +1481,7 @@ function PersonalDetails(props) {
                       }
                     /> */}
                     <SelectBox
+Width={"yes"}
                       options={(admiinList || []).map((item) => ({
                         value: item.admin_id,
                         label: item.name,

@@ -93,6 +93,7 @@ export default function RetainerAgreement(props) {
                 Sub categories  : <span className="text-danger">*</span>
               </label>
               <SelectBox
+Width={"yes"}
                 options={(filterjson.Rerainer_Agreement_subCategories || []).map((item, index) => ({
                   value: item,
                   label: item,

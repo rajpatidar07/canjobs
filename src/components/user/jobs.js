@@ -67,6 +67,7 @@ function JobSearch() {
                   <div className="search-filter from-group d-flex align-items-center justify-content-center job_search_filter">
                     <div className="col-md-2 col-lg-2 mb-5">
                       <SelectBox
+Width={"yes"}
                         options={(Json.Category || []).map((cat) => ({
                           value: cat.id,
                           label: cat.value,
@@ -80,6 +81,7 @@ function JobSearch() {
                     </div>
                     <div className="col-md-2 col-lg-2 mb-5">
                       <SelectBox
+Width={"yes"}
                         options={(Json.Skill || []).map((data) => ({
                           value: data.value,
                           label: data.value,
@@ -93,6 +95,7 @@ function JobSearch() {
                     </div>
                     <div className="col-md-2 col-lg-2 mb-5">
                       <SelectBox
+Width={"yes"}
                         options={(Object.keys(states) || []).map((job) => ({
                           value: job,
                           label: job,
@@ -106,6 +109,7 @@ function JobSearch() {
                     </div>
                     <div className="col-md-2 col-lg-2 mb-5">
                       <SelectBox
+Width={"yes"}
                         options={(FilterJson.job_type || []).map((job_type) => ({
                           value: job_type,
                           label: job_type,

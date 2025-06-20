@@ -75,14 +75,14 @@ function AddAgent(props) {
                 ? "Cannot use special character "
                 : "",
     ],
-    // email: [
-    //   (value) =>
-    //     value === "" || value.trim() === ""
-    //       ? "Email is required"
-    //       : /\S+@\S+\.\S+/.test(value)
-    //       ? null
-    //       : "Email is invalid",
-    // ],
+    email: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Email is required"
+          : /\S+@\S+\.\S+/.test(value)
+          ? null
+          : "Email is invalid",
+    ],
     password: [
       (value) =>
         state.id || state.agent_id || props.agentId
@@ -620,6 +620,7 @@ function AddAgent(props) {
                   Assigned To: {/* <span className="text-danger">*</span> */}
                 </label>
                 <SelectBox
+Width={"yes"}
                                 options={admiinList ?
                                   admiinList.map((option) => ({
                                     value: option.admin_id,

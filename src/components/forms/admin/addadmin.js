@@ -17,7 +17,7 @@ function Addadmin(props) {
   const [imgError, setImgError] = useState("");
   let [already, setAlready] = useState("");
   let [loading, setLoading] = useState(false);
-
+  let admin_type = localStorage.getItem("admin_type")
   /* Functionality to close the modal */
   const close = () => {
     setState(initialFormState);
@@ -359,14 +359,16 @@ function Addadmin(props) {
                 </span>
               )}
             </div>
-            <div className="form-group ">
+            {console.log(state.admin_id && (admin_type !== "admin" && admin_type !== "super-admin") ? "d-none" : "form-group ",(admin_type !== "admin" && admin_type !== "super-admin"),admin_type)}
+            <div className={state.admin_id && (admin_type !== "admin" && admin_type !== "super-admin") ? "d-none" : "form-group "}>
               <label
                 htmlFor="admin_type"
                 className="font-size-4 text-black-2  line-height-reset"
               >
                 Admin Type <span className="text-danger">*</span> :
-              </label> 
+              </label>
               <SelectBox
+                Width={"yes"}
                 options={filterjson ?
                   filterjson.admintype.map((option) => ({
                     value: option,

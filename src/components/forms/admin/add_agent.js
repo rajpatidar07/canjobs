@@ -65,14 +65,14 @@ function AddNewAgent(props) {
           ? "Cannot use special character "
           : "",
     ],
-    // email: [
-    //   (value) =>
-    //     value === "" || value.trim() === ""
-    //       ? "Email is required"
-    //       : /\S+@\S+\.\S+/.test(value)
-    //       ? null
-    //       : "Email is invalid",
-    // ],
+    email: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Email is required"
+          : /\S+@\S+\.\S+/.test(value)
+          ? null
+          : "Email is invalid",
+    ],
     // password: [
     //   (value) =>
     //     state.agent_id
@@ -208,6 +208,7 @@ function AddNewAgent(props) {
   // USER agent PROFILE UPDATE SUBMIT BUTTON
   const onAgentProfileUpdateClick = async (event) => {
     event.preventDefault();
+    console.log(errors)
     if (validate()) {
       setLoading(true);
       try {

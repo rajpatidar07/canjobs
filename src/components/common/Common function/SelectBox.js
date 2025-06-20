@@ -7,7 +7,7 @@ export default function SelectBox(props) {
   ) || null;
 
   return (
-    <div style={{ minWidth: '100%' }}>
+    <div style={{ minWidth: props.Width === "yes" ? '100%' : null }}>
       <Select
         options={props.options}
         name={props.type}

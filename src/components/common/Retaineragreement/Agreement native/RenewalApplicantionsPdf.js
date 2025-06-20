@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     color: "#000000"
   },
   section: {
-    marginBottom: 10,
+    marginBottom: 5,
     marginTop: 10,
   },
   underline: {
@@ -201,6 +201,7 @@ const RenewalApplicantionsPdf = () => {
               )}{" "}
               (here in after called the "Client")
             </Text>
+            <Text>  • Name of Business {felidData?.business_name ?<Text style={[{ borderBottomWidth: 1, borderBottomColor: "black" }, styles.underline]}>{felidData?.business_name}</Text> : "____________________________"}(here in after called the "Client")</Text>
             <Text>
               • Business Address:{" "}
               {felidData?.client_address ? <Text style={[{ borderBottomWidth: 1, borderBottomColor: "black", textTransform: "capitalize" }, styles.underline]}>{felidData?.client_address}</Text> : "____________________________"}
@@ -255,7 +256,7 @@ const RenewalApplicantionsPdf = () => {
                 "Advise the client on required documents for the application.",
                 "Act in the best interests of the Client within the limits of Canadian law.",
                 "Guide the Client through the application process and review all documents for accuracy.",
-                "Submit the Client’s application package to the appropriate offices.",
+                "Submit the Client's application package to the appropriate offices.",
                 "Provide updates on application progress.",
                 "Handle all correspondence with the Rural Community on behalf of the Client.",
                 "Liaise between the Canadian government and the Client.",

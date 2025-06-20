@@ -187,10 +187,11 @@ const ManageHourlyLog = () => {
                 <div className={"col  form_group "}>
                   <p className="input_label">Filter by Day</p>
                   <div className="select_div">
-                    <SelectBox options={filterData && filterData.days ? filterData.days.map((option) => ({
-                      value: option.value,
-                      label: option.value,
-                    })) : []}
+                    <SelectBox
+                      Width={"yes"} options={filterData && filterData.days ? filterData.days.map((option) => ({
+                        value: option.id,
+                        label: option.value,
+                      })) : []}
                       selectedValue={dayFilterValue}
                       onChange={(e) => {
                         setDayFilterValue(e ? e.value : null);

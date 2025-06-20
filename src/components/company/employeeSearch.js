@@ -58,6 +58,7 @@ function EmployeeSearch() {
               <div className="search-filter from-group row job_search_filter">
                 <div className="col-md-3 col-lg-3 mb-5">
                    <SelectBox
+Width={"yes"}
                   options={Json?
                     Json.Skill.map((option) => ({
                       value: option.value,
@@ -71,6 +72,7 @@ function EmployeeSearch() {
                 </div>
                 <div className="col-md-3 col-lg-3 mb-5">
                      <SelectBox
+Width={"yes"}
                   options={
                     FilterJson.experience.map((option) => ({
                       value: option,
@@ -84,6 +86,7 @@ function EmployeeSearch() {
                 </div>
                 <div className="col-md-3 col-lg-3 mb-5">
                   <SelectBox
+Width={"yes"}
                   options={
                     FilterJson.interested.map((option) => ({
                       value: option,

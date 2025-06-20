@@ -314,7 +314,7 @@ export default function AddTaskForm(props) {
           props.setApiCall(true);
         }
       }
-    } catch (error) { }
+    } catch (error) { console.log(error) }
   };
   return (
     <form className="mt-6 mb-0 task_dashboard_form">
@@ -373,6 +373,7 @@ export default function AddTaskForm(props) {
             Priority
           </label>
           <SelectBox
+            Width={"yes"}
             options={priority ?
               priority.map((option) => ({
                 value: option.id,
@@ -388,6 +389,7 @@ export default function AddTaskForm(props) {
           <label
             htmlFor="userId" className="font-size-3 text-black-2  line-height-reset ">Applicant/Applicant Type/Client:</label>
           <SelectBox
+            Width={"yes"}
             options={(props.employee_employer_applicantType_list || []).map((item) => {
               const value = item.employee_id
                 ? `${item.employee_id},employee`
@@ -429,6 +431,7 @@ export default function AddTaskForm(props) {
             {/* Status Dropdown and Add Button */}
             <div className="d-flex  align-items-center mb-2">
               <SelectBox
+                Width={"no"}
                 options={(status || []).map((user) => ({
                   value: user.id,
                   label: user.value,
@@ -504,6 +507,7 @@ export default function AddTaskForm(props) {
             Group by
           </label>
           <SelectBox
+            Width={"yes"}
             options={(groupBy || []).map((user) => ({
               value: user.id,
               label:
@@ -554,6 +558,7 @@ export default function AddTaskForm(props) {
             Admin
           </label>
           <SelectBox
+            Width={"yes"}
             options={(AdminList || []).map((user) => ({
               value: user.admin_id,
               label: user.name,

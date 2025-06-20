@@ -202,7 +202,7 @@ export default function JobTable(props) {
     props.search,
     props.pageNo,
     sortOrder,
-    // props.company,
+    props.company,
     props.filter_by_time,
     apiCall,
     props.apiCall,

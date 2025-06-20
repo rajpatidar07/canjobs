@@ -182,7 +182,8 @@ export default function ManageTask() {
               </div>
               <div className="col px-1 form_group mb-3">
                 <p className="input_label">Filter by Assign to admin:</p>
-                <SelectBox options={adminList ? adminList.map((option) => ({
+                <SelectBox
+Width={"yes"} options={adminList ? adminList.map((option) => ({
                   value: option.admin_id + "," + option.admin_type,
                   label: option.name,
                 })) : []}
@@ -200,7 +201,8 @@ export default function ManageTask() {
               </div>
               <div className="col px-1 form_group mb-3">
                 <p className="input_label">Filter by Assign by admin:</p>
-                <SelectBox options={adminList ? adminList.map((option) => ({
+                <SelectBox
+Width={"yes"} options={adminList ? adminList.map((option) => ({
                   value: option.admin_id + "," + option.admin_type,
                   label: option.name,
                 })) : []}
@@ -218,7 +220,8 @@ export default function ManageTask() {
               </div>
               <div className="col px-1 form_group mb-3">
                 <p className="input_label">Filter by Applicant/Client:</p>
-                <SelectBox options={employeeList ? employeeList.map((option) => ({
+                <SelectBox
+Width={"yes"} options={employeeList ? employeeList.map((option) => ({
                   value: option.employee_id
                     ? `${option.employee_id},employee`
                     : option.company_id
@@ -245,7 +248,8 @@ export default function ManageTask() {
               </div>
               <div className="col px-1 form_group mb-3">
                 <p className="input_label">Filter by Applicant Type:</p>
-                <SelectBox options={applicantTypeList ? applicantTypeList.map((option) => ({
+                <SelectBox
+Width={"yes"} options={applicantTypeList ? applicantTypeList.map((option) => ({
                   value: `${option.id},applicant_type`,
                   label: option.title,
                 })) : []}
@@ -262,7 +266,8 @@ export default function ManageTask() {
                 />  </div>
               <div className="col px-1 form_group mb-3">
                 <p className="input_label">Filter by Status:</p>
-                <SelectBox options={statusList ? statusList.map((option) => ({
+                <SelectBox
+Width={"yes"} options={statusList ? statusList.map((option) => ({
                   value: `${option.id}`,
                   label: option.value,
                 })) : []}

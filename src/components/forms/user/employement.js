@@ -430,7 +430,8 @@ function EmployementDetails(props) {
                 </label>
                 <div className="position-relative">
                   <div className={errors.industry ? "border border-danger rounded" : ""}>
-                    <SelectBox options={(IndustryList || []).map((course) => ({
+                    <SelectBox
+Width={"yes"} options={(IndustryList || []).map((course) => ({
                       value: course.value,
                       label: course.value,
                     }))}

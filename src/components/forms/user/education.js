@@ -314,6 +314,7 @@ function Education(props) {
                   }
                 >
                   <SelectBox
+Width={"yes"}
                     options={(FilterJson.qualification || []).map((data) => ({
                       value: data,
                       label: data,
@@ -355,6 +356,7 @@ function Education(props) {
                   }
                 >
                   <SelectBox
+Width={"yes"}
                     options={(EducationList || []).map((course) => ({
                       value: course.value,
                       label: course.value,
@@ -425,6 +427,7 @@ function Education(props) {
                     }
                   >
                     <SelectBox
+Width={"yes"}
                       options={(FilterJson.location || []).map((data) => ({
                         value: data.country,
                         label: data.country,

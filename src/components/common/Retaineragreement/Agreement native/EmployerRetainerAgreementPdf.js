@@ -203,6 +203,7 @@ const EmployerRetainerAgreementPdf = () => {
               )}{" "}
               (here in after called the "Client")
             </Text>
+            <Text>  • Name of Business {felidData?.business_name ?<Text style={[{ borderBottomWidth: 1, borderBottomColor: "black" }, styles.underline]}>{felidData?.business_name}</Text> : "____________________________"}(here in after called the "Client")</Text>
             <Text>
               • Business Address:{" "}
               {felidData?.client_address ? <Text style={[{ borderBottomWidth: 1, borderBottomColor: "black" }, styles.underline]}>{felidData?.client_address}</Text> : "____________________________"}

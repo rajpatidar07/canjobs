@@ -207,13 +207,15 @@ export default function CommonApplicatTypePage() {
                 <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
                   Applicant's Type:
                 </label>
-                <SelectBox options={(applicantTypeList.map((option) => ({
-                  value: option.id,
-                  label: option.title,
-                })) || [])}
+                <SelectBox
+                  Width={"yes"}
+                  options={(applicantTypeList.filter((item) => item.level === "0").map((option) => ({
+                    value: option.id,
+                    label: option.title,
+                  })) || [])}
                   selectedValue={main}
                   onChange={(e) => {
-                    onInputChange(e) 
+                    onInputChange(e)
                   }}
                   type={"main"}
                 />
@@ -224,12 +226,13 @@ export default function CommonApplicatTypePage() {
                   <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
                     Sub Type:
                   </label>
-                  <SelectBox options={(applicantTypeList
-                    .filter(item => item.level === "1" && item.parent_id === main)
-                    .map((option) => ({
-                      value: option.id,
-                      label: option.title,
-                    })) || [])}
+                  <SelectBox
+                    Width={"yes"} options={(applicantTypeList
+                      .filter(item => item.level === "1" && item.parent_id === main)
+                      .map((option) => ({
+                        value: option.id,
+                        label: option.title,
+                      })) || [])}
                     selectedValue={sub}
                     onChange={(e) => {
                       onInputChange(e)

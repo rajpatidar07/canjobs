@@ -346,8 +346,8 @@ const ManageDailyCallLog = () => {
                 className="btn btn-primary"
                 onClick={() => {
                   setSelectedAdminId("");
-                  setSelectedAdminId("");
                   setSearchQuery("");
+                  setSearchCandidate("")
                 }}
               >
                 Reset

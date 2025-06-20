@@ -280,6 +280,7 @@ const MentionAdminInDoc = ({
             ))}
           </select> */}
            <SelectBox
+Width={"yes"}
                             options={adminList.map((option) => ({
                               value: option.admin_id,
                               label: option.name

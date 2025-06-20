@@ -229,6 +229,7 @@ export default function VisaStatus(props) {
                   : "text-capitalize"
               }>
                 <SelectBox
+Width={"yes"}
                   options={(FilterJson.visa_status || []).map((item) => ({
                     value: item,
                     label: item,
@@ -259,6 +260,7 @@ export default function VisaStatus(props) {
               </label>
               <div className="text-capitalize">
                 <SelectBox
+Width={"yes"}
                   options={(FilterJson.location || []).map((item) => ({
                     value: item.country,
                     label: item.country,

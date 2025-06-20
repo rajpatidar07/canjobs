@@ -43,7 +43,8 @@ export default function CommentBox({
           <div className={"col mr-2 p-0 form_group"}>
             <p className="input_label">Filter by Admin:</p>
             <div className="select_div">
-              <SelectBox options={(allAdmin.map((option) => ({
+              <SelectBox
+Width={"yes"} options={(allAdmin.map((option) => ({
                 value: option.admin_id,
                 label: option.name,
               })) || [])}

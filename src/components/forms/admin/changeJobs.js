@@ -6,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { GetAllJobs, ApplyJob } from "../../../api/api";
 // import SelectBox from "../../common/select";
 // import { Select, Button } from "antd"; // "3.26.7" worked
-import Select from "react-select";
 import SelectBox from "../../common/Common function/SelectBox";
 function ChangeJob(props) {
   let [apiCall, setApiCall] = useState(props.apiCall);
@@ -125,24 +124,13 @@ function ChangeJob(props) {
               >
                 Jobs <span className="text-danger">*</span> :
               </label>
-              <Select
-                options={state || ""}
-                onChange={onSelectChange}
-                id="job_id"
-                styles={{
-                  control: (base) => ({
-                    ...base,
-                    boxShadow: "none",
-                  }),
-                }}
-              />
               <SelectBox
+                Width={"yes"}
                 options={state || []}
-                selectedValue={""}
+                selectedValue={JobId}
                 onChange={onSelectChange}
                 type="job_id"
               />
-
               <small className="text-danger">{alredyApplied}</small>
             </div>
             <div className="form-group text-center">

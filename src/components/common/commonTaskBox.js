@@ -947,7 +947,8 @@ export default function CommentTaskBox(props) {
                     <div className="row m-0 p-0">
                         <div className={props.taskType === "document" ? "col ml-2 p-0 form_group" : "d-none"}>
                             <div className="select_div">
-                                <SelectBox options={(adminList.map((option) => ({
+                                <SelectBox
+Width={"yes"} options={(adminList.map((option) => ({
                                     value: option.admin_id,
                                     label: option.name,
                                 })) || [])}

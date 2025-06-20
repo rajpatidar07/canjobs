@@ -68,6 +68,7 @@ function DemoJob() {
                                 <div className="search-filter from-group d-flex align-items-center justify-content-center job_search_filter">
                                     <div className="col-md-4 col-lg-4 mb-5">
                                         <SelectBox
+Width={"yes"}
                                             options={(Json.Skill || []).map((data) => ({
                                                 value: data.value,
                                                 label: data.value,
@@ -81,6 +82,7 @@ function DemoJob() {
                                     </div>
                                     <div className="col-md-4 col-lg-4 mb-5">
                                         <SelectBox
+Width={"yes"}
                                             options={(filterjson.job_type || []).map((job_type) => ({
                                                 value: job_type,
                                                 label: job_type,

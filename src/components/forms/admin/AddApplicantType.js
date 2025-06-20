@@ -205,6 +205,7 @@ export default function AddApplicantType(props) {
                                 Select Applicant Type :
                             </label>
                             <SelectBox
+Width={"yes"}
                                                             options={applicantTypeList ?
                                                               applicantTypeList?.filter((item) => item.level === (0 || "0")).map((option) => ({
                                                                 value: option.id,
@@ -251,6 +252,7 @@ export default function AddApplicantType(props) {
                                 Select Sub Type :
                             </label>
                              <SelectBox
+Width={"yes"}
                                                             options={applicantTypeList ?
                                                               applicantTypeList?.filter((item) => item.parent_id === state.selectedParent).map((option) => ({
                                                                 value: option.id,

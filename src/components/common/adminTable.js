@@ -124,7 +124,7 @@ export default function AdminTable({
 
                   <th
                     scope="col"
-                    className="border-0 font-size-4 font-weight-normal"
+                    className={page === "manager list" ? "d-none" : "border-0 font-size-4 font-weight-normal"}
                     title="Active"
                   >
                     Active
@@ -294,7 +294,7 @@ export default function AdminTable({
                           </Link>
                         )}
                       </th>
-                      <th><button title={admin.is_active === ("1" || 1) ? "Deactivate" : "Active"} onClick={(e) => OntoggleActiveStatus(e, admin.is_active === ("1" || 1) ? 0 : 1, admin)} style={{ fontSize: '24px', border: 'none', background: 'none' }}>
+                      <th className={page === "manager list" ? "d-none" : ""}><button title={admin.is_active === ("1" || 1) ? "Deactivate" : "Active"} onClick={(e) => OntoggleActiveStatus(e, admin.is_active === ("1" || 1) ? 0 : 1, admin)} style={{ fontSize: '24px', border: 'none', background: 'none' }}>
                         {admin.is_active === ("1" || 1) ? <FaToggleOn color="green" /> : <FaToggleOff color="gray" />}
                       </button></th>
                       <th className="">

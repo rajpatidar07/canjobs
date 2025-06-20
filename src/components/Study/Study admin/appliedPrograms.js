@@ -162,6 +162,7 @@ export default function AppliedPrograms(props) {
                   <div className="col p-1 form_group mb-3">
                     <p className="input_label">Search by admin:</p>
                     <SelectBox
+Width={"yes"}
                       options={(adminList || []).map((item) => ({
                         value: item.admin_id + "," + item.admin_type,
                         label: item.name,
@@ -186,6 +187,7 @@ export default function AppliedPrograms(props) {
                   <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Student:</p>
                     <SelectBox
+Width={"yes"}
                       options={(employeeList || []).map((item) => ({
                         value: item.employee_id,
                         label: item.name || "unknown user",

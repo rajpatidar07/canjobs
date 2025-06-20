@@ -26,7 +26,7 @@ const AgreementOneForm = ({
 
   const initialClientState = {
     client_first_name:
-      emp_user_type === "employee" ? userData?.name?.split(" ")[0] : "",
+      emp_user_type === "employee" ? userData?.name?.split(" ")[0] : userData?.contact_person_name?.split(" ")[0],
     client_last_name:
       emp_user_type === "employee" ? userData?.name?.split(" ")[1] : "",
     client_signature: "",
@@ -87,6 +87,7 @@ const AgreementOneForm = ({
     family_json: [initialClientState],
     client_first_name:
       emp_user_type === "employee" ? userData?.name : userData?.company_name,
+    business_name: userData?.company_name || "",
   };
   const validators = {
     family_json: {
@@ -131,7 +132,6 @@ const AgreementOneForm = ({
   useEffect(() => {
     if (felidData) {
       const updatedState = { ...initialFormState };
-
       // Parse the family_json field
       if (felidData?.family_json) {
         try {
@@ -150,6 +150,11 @@ const AgreementOneForm = ({
         ) {
           updatedState[key] = felidData[key];
         }
+      }
+
+      // Preserve business_name if felidData.business_name is empty or missing
+      if (!felidData.business_name || felidData.business_name.trim() === "") {
+        updatedState.business_name = userData?.company_name || "";
       }
 
       setState(updatedState);
@@ -287,7 +292,6 @@ const AgreementOneForm = ({
         }
         return client;
       });
-      console.log("first", filteredState)
       try {
         let res = await AddUpdateAgreement(filteredState);
         if (
@@ -751,6 +755,15 @@ const AgreementOneForm = ({
                       "Note",
                     display: "",
                     name: "note",
+                    type: "text",
+                    disabled: false
+                  },
+
+                  {
+                    label:
+                      "Business Name",
+                    display: agreementType === "employers" || agreementType === "employer renewal stream" ? "" : "d-none",
+                    name: "business_name",
                     type: "text",
                     disabled: false
                   },

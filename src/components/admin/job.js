@@ -198,10 +198,11 @@ function Job(props) {
                   >
                     <p className="input_label">Filter by Job Category:</p>
                     <div className="select_div">
-                      <SelectBox options={Json && Json?.Category ? Json?.Category.map((option) => ({
-                        value: option.value,
-                        label: option.value,
-                      })) : []}
+                      <SelectBox
+                        Width={"yes"} options={Json && Json?.Category ? Json?.Category.map((option) => ({
+                          value: option.id,
+                          label: option.value,
+                        })) : []}
                         selectedValue={categoryFilterValue}
                         onChange={(e) => {
                           setCategoryFilterValue(e ? e.value : null);
@@ -220,10 +221,11 @@ function Job(props) {
                   >
                     <p className="input_label">Filter by Job Type:</p>
                     <div className="select_div">
-                      <SelectBox options={(FilterJson.job_type.map((option) => ({
-                        value: option,
-                        label: option,
-                      })) || [])}
+                      <SelectBox
+                        Width={"yes"} options={(FilterJson.job_type.map((option) => ({
+                          value: option,
+                          label: option,
+                        })) || [])}
                         selectedValue={jobSwapFilterValue}
                         onChange={(e) => {
                           console.log(e)
@@ -243,10 +245,11 @@ function Job(props) {
                   >
                     <p className="input_label">Filter by Job Skill:</p>
                     <div className="select_div">
-                      <SelectBox options={(Skill.map((option) => ({
-                        value: option.value,
-                        label: option.value,
-                      })) || [])}
+                      <SelectBox
+                        Width={"yes"} options={(Skill.map((option) => ({
+                          value: option.value,
+                          label: option.value,
+                        })) || [])}
                         selectedValue={SkillFilterValue}
                         onChange={(e) => {
                           setSkillFilterValue(e ? e.value : null);
@@ -265,10 +268,11 @@ function Job(props) {
                   >
                     <p className="input_label">Filter by Job Location:</p>
                     <div className="select_div">
-                      <SelectBox options={(FilterJson.location.map((option) => ({
-                        value: option.country,
-                        label: option.country,
-                      })) || [])}
+                      <SelectBox
+                        Width={"yes"} options={(FilterJson.location.map((option) => ({
+                          value: option.country,
+                          label: option.country,
+                        })) || [])}
                         selectedValue={locationFilterValue}
                         onChange={(e) => {
                           setLocationFilterValue(e ? e.value : null);

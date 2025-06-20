@@ -237,6 +237,7 @@ const PaymentInvoiceForm = (props) => {
                     Customer
                   </label>
                   <SelectBox
+Width={"yes"}
                     options={(props.employee_employer_list || []).map((item) => {
                       const value = item.employee_id
                         ? `${item.employee_id},employee`
@@ -351,6 +352,7 @@ const PaymentInvoiceForm = (props) => {
                     className={`text-capitalize ${showTermsInput ? "" : "flex-grow-1 me-2"}`}
                   >
                     <SelectBox
+Width={"yes"}
                       options={(json?.payment_invoice_terms || []).map((item) => ({
                         value: item.id,
                         label: item.value,

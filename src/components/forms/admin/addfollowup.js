@@ -26,10 +26,10 @@ import ViewAdminBox from "../../common/ViewAdminBox";
 import CommentReplyBox from "../../common/CommentReplyBox"
 import determineBackgroundColor from "../../common/Common function/DetermineBackgroundColour";
 import MarkReadTask from "../../common/Common function/MarkReadTask";
-import { ContentState, convertFromHTML, EditorState } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { stateToHTML } from "draft-js-export-html";
+// import { ContentState, convertFromHTML, EditorState } from 'draft-js';
+// import { Editor } from 'react-draft-wysiwyg';
+// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+// import { stateToHTML } from "draft-js-export-html";
 function Addfollowup(props) {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -381,12 +381,12 @@ function Addfollowup(props) {
     setErrors,
     validate,
   } = useValidation(initialFormState, validators);
-  const [editorState, setEditorState] = useState(state.subject_description || EditorState.createEmpty() || "");
+  // const [editorState, setEditorState] = useState(state.subject_description || EditorState.createEmpty() || "");
 
   /* Functionality to close the modal */
   const close = () => {
     setState(initialFormState);
-    setEditorState(EditorState.createEmpty() || "")
+    // setEditorState(EditorState.createEmpty() || "")
     setErrors("");
     setLoading(false);
     // setSelectedAdmin([])
@@ -640,7 +640,7 @@ function Addfollowup(props) {
           setApiCall(true);
           setSelectedAdmin([]);
           setState(initialFormState);
-          setEditorState(EditorState.createEmpty() || "")
+          // setEditorState(EditorState.createEmpty() || "")
           return close();
         }
       } catch (err) {
@@ -740,7 +740,7 @@ function Addfollowup(props) {
         setSelectedAdmin([]);
         setState(initialFormState);
         setApiCall(true);
-        setEditorState(EditorState.createEmpty() || "")
+        // setEditorState(EditorState.createEmpty() || "")
       }
     } catch (err) {
       console.log(err);
@@ -771,7 +771,7 @@ function Addfollowup(props) {
         setState(initialFormState);
         setDeleteAlert(false);
         setApiCall(true);
-        setEditorState(EditorState.createEmpty() || "")
+        // setEditorState(EditorState.createEmpty() || "")
       }
     } catch (err) {
       console.log(err);
@@ -944,17 +944,17 @@ function Addfollowup(props) {
       console.log(err);
     }
   };
-  const handleEditorChange = (newEditorState) => {
-    setEditorState(newEditorState);
+  // const handleEditorChange = (newEditorState) => {
+  //   setEditorState(newEditorState);
 
-    // ✅ Convert editor content to HTML using stateToHTML
-    const htmlContent = stateToHTML(newEditorState.getCurrentContent());
+  //   // ✅ Convert editor content to HTML using stateToHTML
+  //   const htmlContent = stateToHTML(newEditorState.getCurrentContent());
 
-    setState((prevState) => ({
-      ...prevState,
-      subject_description: htmlContent,
-    }));
-  };
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     subject_description: htmlContent,
+  //   }));
+  // };
   let content = (
     <>
       {/* <ModalSidebar
@@ -1126,8 +1126,8 @@ function Addfollowup(props) {
                                     onClick={() => {
                                       // Merge current state with res and admin_id
                                       setState(res);
-                                      setEditorState(EditorState.createWithContent(ContentState.createFromBlockArray(
-                                        convertFromHTML(res.subject_description))))
+                                      //  setEditorState(EditorState.createWithContent(ContentState.createFromBlockArray(
+                                      //   convertFromHTML(res.subject_description))))
                                       setFilteredEmails([]);
                                       setSelectedAdmin(
                                         res?.assined_to_user_id
@@ -1174,6 +1174,7 @@ function Addfollowup(props) {
                               <span className="font-size-2"><b>Subject: </b>{res.subject}</span>
                               <div
                                 className="font-size-3"
+                                style={{ whiteSpace: 'pre-wrap' }}
                                 dangerouslySetInnerHTML={{
                                   __html: res.subject_description,
                                 }}
@@ -1374,7 +1375,7 @@ function Addfollowup(props) {
                         state={state}
                         page={"FollowUp"}
                       /> */}
-                      {/* <textarea
+                      <textarea
                         type="text"
                         value={state.subject_description || ""}
                         onChange={handleInputChange}
@@ -1385,13 +1386,13 @@ function Addfollowup(props) {
                           }`}
                         rows={4}
                         style={{ outline: 0 }}
-                      ></textarea> */}
-                      <Editor
+                      ></textarea>
+                      {/* <Editor
                         editorState={editorState || ""}
                         onEditorStateChange={handleEditorChange}
                         toolbarHidden={true}
                         editorStyle={{ border: '1px solid #ddd', minHeight: '200px' }}
-                      />
+                      /> */}
 
 
                       {dropdownVisible && filteredEmails.length > 0 ? (
@@ -1506,7 +1507,7 @@ function Addfollowup(props) {
                           props.skip();
                         } else {
                           setState(initialFormState);
-                          setEditorState(EditorState.createEmpty() || "")
+                          // setEditorState(EditorState.createEmpty() || "")
                           setSelectedAdmin([]);
                           setLoading(false);
                         }

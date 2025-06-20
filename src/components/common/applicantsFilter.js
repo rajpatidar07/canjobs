@@ -269,7 +269,8 @@ export default function ApplicantsFilter({
       >
         <p className="input_label">Filter by Partner</p>
         <div className="select_div">
-          <SelectBox options={(AgentList.map((option) => ({
+          <SelectBox
+Width={"yes"} options={(AgentList.map((option) => ({
             value: option.id,
             label: option.name,
           })) || [])}
@@ -293,7 +294,8 @@ export default function ApplicantsFilter({
       >
         <p className="input_label">Filter by status</p>
         <div className="select_div">
-          <SelectBox options={(filterjson.employee_status.map((option, index) => ({
+          <SelectBox
+Width={"yes"} options={(filterjson.employee_status.map((option, index) => ({
             value: index + 1,
             label: option,
           })) || [])}
@@ -315,7 +317,8 @@ export default function ApplicantsFilter({
       >
         <p className="input_label">Filter by Admin:</p>
         <div className="select_div">
-          <SelectBox options={(AdminList.map((option, index) => ({
+          <SelectBox
+Width={"yes"} options={(AdminList.map((option, index) => ({
             value: option.admin_id,
             label: option.name,
           })) || [])}
@@ -337,7 +340,8 @@ export default function ApplicantsFilter({
       >
         <p className="input_label">Filter by type:</p>
         <div className="select_div">
-          <SelectBox options={(applicantTypeList.map((option) => ({
+          <SelectBox
+Width={"yes"} options={(applicantTypeList.map((option) => ({
             value: option.id,
             label: option.title,
           })) || [])}
@@ -392,7 +396,8 @@ export default function ApplicantsFilter({
       >
         <p className="input_label">Filter by Sub Type:</p>
         <div className="select_div">
-          <SelectBox options={(applicantTypeList
+          <SelectBox
+Width={"yes"} options={(applicantTypeList
             .filter((item) =>
               pageName === "employee"
                 ? item.level === "1"

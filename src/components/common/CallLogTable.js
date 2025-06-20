@@ -330,7 +330,8 @@ function Calllogtable(props) {
                                                     </td>
 
                                                     <td style={{ minWidth: "150px" }}>
-                                                        <SelectBox options={(props.adminList.map((option) => ({
+                                                        <SelectBox
+Width={"yes"} options={(props.adminList.map((option) => ({
                                                             value: option.admin_id,
                                                             label: option.name,
                                                         })) || [])}
@@ -499,7 +500,8 @@ function Calllogtable(props) {
 
                                                         {/* Call Answered By */}
                                                         <td style={{ minWidth: "150px" }}>
-                                                            <SelectBox options={(props.adminList.map((option) => ({
+                                                            <SelectBox
+Width={"yes"} options={(props.adminList.map((option) => ({
                                                                 value: option.admin_id,
                                                                 label: option.name,
                                                             })) || [])}

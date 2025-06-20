@@ -127,6 +127,7 @@ function SearchForm({ setSearch, setJobLocation, setCategoryFilterValue }) {
                   })}{" "}
                 </select> */}
                 <SelectBox
+Width={"yes"}
                   options={state ? state?.country : []}
                   type={"country"}
                   selectedValue={state.country_value}

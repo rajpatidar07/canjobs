@@ -1241,7 +1241,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                             RETAINER AGREEMENT
                         </Text>
                     </View>
-                    <View style={{ marginTop: familyJsonArray[0]?.date_signature_client ? 90 : 130 }}>
+                    <View style={{ marginTop: familyJsonArray[0]?.date_signature_client ? 130 : 200 }}>
                         {/* Contact Information Header */}
                         <View>
                             {/* Contact Information Header */}
@@ -1516,16 +1516,15 @@ const WorkPermitApplicantTwoStagePdf = () => {
                     </View>
 
                 </View>
-                <View style={{ marginTop: 130 }}>
+                <View style={{ marginTop: familyJsonArray[0]?.date_signature_client ? 120 : 130 }}>
                     <Text style={[{ textAlign: "center", }, styles.definition]}>
                         AUTHORIZATION
                     </Text>
                     <Text style={{ marginTop: 15 }}>
-                        I {" "}
+                        I 
                         <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
                             {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
-                        </Text>
-                        {" "} ( here in after referred to as the “client”), here by authorize and
+                        </Text> ( here in after referred to as the “client”), here by authorize and
                         appoint Harpreet kaur (here in after referred to as the “RCIC” with a
                         CICC# R533393), of CAN Pathways Immigration consultancy
                         ltd.,(here in after referred to as the “firm”), to represent me in my

@@ -212,18 +212,19 @@ const PaymentTable = (props) => {
                   {props.showAddForm && (
                     <tr>
                       <td>
-                        <SelectBox options={(props.employeeEmployerlist.map((option) => ({
-                          value: option.employee_id
-                            ? `${option.employee_id},employee`
-                            : option.company_id
-                              ? `${option.company_id},employer`
-                              : `${option.id},applicant_type`,
-                          label: option.employee_id
-                            ? option.name + " (Candidate)"
-                            : option.company_id
-                              ? option.company_name + " (Client)"
-                              : option.title + " (Applicant Type)" || "unknown user",
-                        })) || [])}
+                        <SelectBox
+                          Width={"yes"} options={(props.employeeEmployerlist.map((option) => ({
+                            value: option.employee_id
+                              ? `${option.employee_id},employee`
+                              : option.company_id
+                                ? `${option.company_id},employer`
+                                : `${option.id},applicant_type`,
+                            label: option.employee_id
+                              ? option.name + " (Candidate)"
+                              : option.company_id
+                                ? option.company_name + " (Client)"
+                                : option.title + " (Applicant Type)" || "unknown user",
+                          })) || [])}
                           selectedValue={state.user_id + "," + state.user_type}
                           onChange={(e) => {
                             const [user_id, user_type] = e ? e.value.split(",") : "";
@@ -244,10 +245,11 @@ const PaymentTable = (props) => {
                       <td>
                         {" "}
                         <td style={{ minWidth: "150px" }}>
-                          <SelectBox options={(props.adminList.map((option) => ({
-                            value: `${option.admin_id},${option.admin_type}`,
-                            label: `${option.name} (${option.admin_type})`,
-                          })) || [])}
+                          <SelectBox
+                            Width={"yes"} options={(props.adminList.map((option) => ({
+                              value: `${option.admin_id},${option.admin_type}`,
+                              label: `${option.name} (${option.admin_type})`,
+                            })) || [])}
                             selectedValue={state.referred_by_id + "," + state.referred_by_type}
                             onChange={(e) => {
                               const [referred_by_id, referred_by_type] = e ? e.value.split(",") : "";
@@ -262,10 +264,11 @@ const PaymentTable = (props) => {
                         </td>
                       </td>
                       <td>
-                        <SelectBox options={(props.adminList.map((option) => ({
-                          value: `${option.admin_id},${option.admin_type}`,
-                          label: `${option.name} (${option.admin_type})`,
-                        })) || [])}
+                        <SelectBox
+                          Width={"yes"} options={(props.adminList.map((option) => ({
+                            value: `${option.admin_id},${option.admin_type}`,
+                            label: `${option.name} (${option.admin_type})`,
+                          })) || [])}
                           selectedValue={state.manager_id + "," + state.manager_type}
                           onChange={(e) => {
                             const [manager_id, manager_type] = e ? e.value.split(",") : "";
@@ -367,18 +370,19 @@ const PaymentTable = (props) => {
                     (paymentRecordsList || []).map((record, index) => (
                       <tr key={index}>
                         <td>
-                          <SelectBox options={props.employeeEmployerlist?(props.employeeEmployerlist?.map((option) => ({
-                            value: option.employee_id
-                              ? `${option.employee_id},employee`
-                              : option.company_id
-                                ? `${option.company_id},employer`
-                                : `${option.id},applicant_type`,
-                            label: option.employee_id
-                              ? option.name + " (Candidate)"
-                              : option.company_id
-                                ? option.company_name + " (Client)"
-                                : option.title + " (Applicant Type)" || "unknown user",
-                          })) || []):[]}
+                          <SelectBox
+                            Width={"yes"} options={props.employeeEmployerlist ? (props.employeeEmployerlist?.map((option) => ({
+                              value: option.employee_id
+                                ? `${option.employee_id},employee`
+                                : option.company_id
+                                  ? `${option.company_id},employer`
+                                  : `${option.id},applicant_type`,
+                              label: option.employee_id
+                                ? option.name + " (Candidate)"
+                                : option.company_id
+                                  ? option.company_name + " (Client)"
+                                  : option.title + " (Applicant Type)" || "unknown user",
+                            })) || []) : []}
                             selectedValue={record.user_id + "," + record.user_type}
                             onChange={(e) => {
                               handleUpdateChange(e, record.id, "user_id")
@@ -387,10 +391,11 @@ const PaymentTable = (props) => {
                           />
                         </td>
                         <td>
-                          <SelectBox options={(props.adminList.map((option) => ({
-                            value: `${option.admin_id},${option.admin_type}`,
-                            label: `${option.name} (${option.admin_type})`,
-                          })) || [])}
+                          <SelectBox
+                            Width={"yes"} options={(props.adminList.map((option) => ({
+                              value: `${option.admin_id},${option.admin_type}`,
+                              label: `${option.name} (${option.admin_type})`,
+                            })) || [])}
                             selectedValue={record.referred_by_id + "," + record.referred_by_type}
                             onChange={(e) => {
                               handleUpdateChange(e, record.id, "referred_by_id")
@@ -399,10 +404,11 @@ const PaymentTable = (props) => {
                           />
                         </td>
                         <td>
-                          <SelectBox options={(props.adminList.map((option) => ({
-                            value: `${option.admin_id},${option.admin_type}`,
-                            label: `${option.name} (${option.admin_type})`,
-                          })) || [])}
+                          <SelectBox
+                            Width={"yes"} options={(props.adminList.map((option) => ({
+                              value: `${option.admin_id},${option.admin_type}`,
+                              label: `${option.name} (${option.admin_type})`,
+                            })) || [])}
                             selectedValue={record.manager_id + "," + record.manager_type}
                             onChange={(e) => {
                               handleUpdateChange(e, record.id, "manager_id")
@@ -429,7 +435,7 @@ const PaymentTable = (props) => {
                           {" "}
                           <TableInput
                             value={record.duplicate_payment}
-                            onChange={(e) => handleUpdateChange(e, record.id, "payment_status")}
+                            onChange={(e) => handleUpdateChange(e, record.id, "duplicate_payment")}
                             type="number"
                             id="duplicate_payment"
                             name="duplicate_payment"

@@ -445,7 +445,8 @@ function ConsultationTable(props) {
                           {errors.email && <span className="text-danger font-size-3">{errors.email}</span>}
                         </td>
                         <td style={{ minWidth: "150px" }}>
-                          <SelectBox options={(props.adminList
+                          <SelectBox
+Width={"yes"} options={(props.adminList
                             .filter((i) => i.admin_type === "super-admin").map((option) => ({
                               value: `${option.admin_id},${option.admin_type}`,
                               label: option.name,
@@ -463,7 +464,8 @@ function ConsultationTable(props) {
                           />
                         </td>
                         <td style={{ minWidth: "150px" }}>
-                          <SelectBox options={(props.adminList
+                          <SelectBox
+Width={"yes"} options={(props.adminList
                             .filter((i) => i.admin_type === "super-admin").map((option) => ({
                               value: `${option.admin_id},${option.admin_type}`,
                               label: option.name,
@@ -671,7 +673,8 @@ function ConsultationTable(props) {
                           </td>
                           <td style={{ minWidth: "150px" }}>
                             {editField.rowId === item.id && editField.field === "manager" ? (
-                              <SelectBox options={(props.adminList
+                              <SelectBox
+Width={"yes"} options={(props.adminList
                                 .filter((i) => i.admin_type === "super-admin").map((option) => ({
                                   value: `${option.admin_id},${option.admin_type}`,
                                   label: option.name,
@@ -709,7 +712,8 @@ function ConsultationTable(props) {
 
                           <td style={{ minWidth: "150px" }}>
                             {editField.rowId === item.id && editField.field === "person" ? (
-                              <SelectBox options={(props.adminList
+                              <SelectBox
+Width={"yes"} options={(props.adminList
                                 .filter((i) => i.admin_type === "super-admin").map((option) => ({
                                   value: `${option.admin_id},${option.admin_type}`,
                                   label: option.name,

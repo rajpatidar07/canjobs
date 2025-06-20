@@ -65,7 +65,10 @@ const HtmlRenewalApplication = ({
         ? ` <span class="border-bottom border-dark text-capitalize "style="min-width: 300px">${userData?.name}</span>` ||
         ""
         : "_____________________"}(here in after called the "Client")</span></li>
-            <li>Name of Business: <span class="text-dark" style="min-width: 300px;">___________________________________(here in after called the "Client")</span></li>
+            <li>Name of Business: <span class="text-dark border-bottom border-dark" style="min-width: 300px;">${felidData?.business_name ? felidData?.business_name
+                  : emp_user_type === "employee"
+                    ? "                    "
+                    : userData?.company_name}</span>(here in after called the "Client")</li>
             <li>Business Address: <span class="text-dark text-capitalize" >${felidData?.client_address
       ? ` <span class="border-bottom border-dark" style="min-width: 300px;">${felidData?.client_address}</span>`
       : emp_user_type === "employer"

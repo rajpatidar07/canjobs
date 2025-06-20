@@ -248,7 +248,8 @@ function ManageAdmin() {
                     <div className="col p-1 form_group mb-3">
                       <p className="input_label">Filter by Admin:</p>
                       <div className="select_div">
-                        <SelectBox options={(FilterJson.admintype.map((option) => ({
+                        <SelectBox
+Width={"yes"} options={(FilterJson.admintype.map((option) => ({
                           value: option,
                           label: option,
                         })) || [])}
