@@ -423,7 +423,6 @@ export default function PartnerDetails({ setLoginCondition }) {
                                       {data.u_id}
                                     </span>
                                   </p>
-
                                   <hr className="my-3" />
                                   <div className="position-relative">
                                     {data.country && (

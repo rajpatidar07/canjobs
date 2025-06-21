@@ -85,7 +85,7 @@ function ManageJobs() {
                     <div className=" search-filter from-group row">
                       <div className="col-md-3 col-6 mb-5 filter_input_div">
                         <SelectBox
-Width={"yes"}
+                          Width={"yes"}
                           options={filter ?
                             filter.Category.map((option) => ({
                               value: option.id,
@@ -98,8 +98,8 @@ Width={"yes"}
                         />
                       </div>
                       <div className="col-md-3 col-6 mb-5 filter_input_div">
-                         <SelectBox
-Width={"yes"}
+                        <SelectBox
+                          Width={"yes"}
                           options={FilterJson ?
                             FilterJson.keyskill.map((option) => ({
                               value: option,
@@ -113,7 +113,7 @@ Width={"yes"}
                       </div>
                       <div className="col-md-3 col-6 mb-5 filter_input_div">
                         <SelectBox
-Width={"yes"}
+                          Width={"yes"}
                           options={FilterJson ?
                             FilterJson.job_type.map((option) => ({
                               value: option,
@@ -127,7 +127,7 @@ Width={"yes"}
                       </div>
                       <div className="col-md-3 col-6 mb-5 filter_input_div">
                         <SelectBox
-Width={"yes"}
+                          Width={"yes"}
                           options={States ?
                             Object.keys(States).map((option) => ({
                               value: option,

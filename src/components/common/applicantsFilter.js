@@ -270,10 +270,10 @@ export default function ApplicantsFilter({
         <p className="input_label">Filter by Partner</p>
         <div className="select_div">
           <SelectBox
-Width={"yes"} options={(AgentList.map((option) => ({
-            value: option.id,
-            label: option.name,
-          })) || [])}
+            Width={"yes"} options={(AgentList.map((option) => ({
+              value: option.id,
+              label: option.name,
+            })) || [])}
             selectedValue={agentFilterValue}
             onChange={(e) => {
               setAgentFilterValue(e ? e.value : null);
@@ -295,10 +295,10 @@ Width={"yes"} options={(AgentList.map((option) => ({
         <p className="input_label">Filter by status</p>
         <div className="select_div">
           <SelectBox
-Width={"yes"} options={(filterjson.employee_status.map((option, index) => ({
-            value: index + 1,
-            label: option,
-          })) || [])}
+            Width={"yes"} options={(filterjson.employee_status.map((option, index) => ({
+              value: index + 1,
+              label: option,
+            })) || [])}
             selectedValue={statustFilterValue}
             onChange={(e) => {
               setStatustFilterValue(e ? e.value : null);
@@ -318,10 +318,10 @@ Width={"yes"} options={(filterjson.employee_status.map((option, index) => ({
         <p className="input_label">Filter by Admin:</p>
         <div className="select_div">
           <SelectBox
-Width={"yes"} options={(AdminList.map((option, index) => ({
-            value: option.admin_id,
-            label: option.name,
-          })) || [])}
+            Width={"yes"} options={(AdminList.map((option, index) => ({
+              value: option.admin_id,
+              label: option.name,
+            })) || [])}
             selectedValue={adminFilterValue}
             onChange={(e) => {
               setAdminFilterValue(e ? e.value : null);
@@ -341,10 +341,10 @@ Width={"yes"} options={(AdminList.map((option, index) => ({
         <p className="input_label">Filter by type:</p>
         <div className="select_div">
           <SelectBox
-Width={"yes"} options={(applicantTypeList.map((option) => ({
-            value: option.id,
-            label: option.title,
-          })) || [])}
+            Width={"yes"} options={(applicantTypeList.map((option) => ({
+              value: option.id,
+              label: option.title,
+            })) || [])}
             selectedValue={interestFilterValue}
             onChange={(e) => {
               setinterestFilterValue(e ? e.value : null);
@@ -397,15 +397,15 @@ Width={"yes"} options={(applicantTypeList.map((option) => ({
         <p className="input_label">Filter by Sub Type:</p>
         <div className="select_div">
           <SelectBox
-Width={"yes"} options={(applicantTypeList
-            .filter((item) =>
-              pageName === "employee"
-                ? item.level === "1"
-                : item.level === "1" && item.parent_id === applicantTypeId
-            ).map((option) => ({
-              value: option.id,
-              label: option.title,
-            })) || [])}
+            Width={"yes"} options={(applicantTypeList
+              .filter((item) =>
+                pageName === "employee"
+                  ? item.level === "1"
+                  : item.level === "1" && item.parent_id === applicantTypeId
+              ).map((option) => ({
+                value: option.id,
+                label: option.title,
+              })) || [])}
             selectedValue={categoryFilterValue}
             onChange={(e) => {
               setCategoryFilterValue(e ? e.value : null);

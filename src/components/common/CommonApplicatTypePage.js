@@ -45,8 +45,9 @@ export default function CommonApplicatTypePage() {
   const [folderApiCall, setFolderApiCall] = useState(false);
   const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
   const [applicantTypeList, setApplicantTypeList] = useState([]);
-  const [main, setMain] = useState('');
-  const [sub, setSub] = useState('');
+  const [main, setMain] = useState(sId || state.applicantType || localApplicantTypeId
+  );
+  const [sub, setSub] = useState(sCId || state.applicantTypeChild || localApplicantTypeChildId);
   const [applicantTypeId, setApplicantTypeId] = useState(
     sId || state.applicantType || localApplicantTypeId
   );
@@ -133,7 +134,7 @@ export default function CommonApplicatTypePage() {
     getApplicanTypeApi(admin_type === "super-admin" ? "" : admin_id)
       .then((res) => {
         setApplicantTypeList(res.data.data);
-        if (!applicantTypeIdForApi) {
+        if (!applicantTypeIdForApi && !targetId) {
           setApplicantTypeIdForApi(res.data.data[0]?.id)
           setMain(res.data.data[0]?.id)
           setApplicantTypeFolderId(res.data.data[0]?.doc_folder_id);

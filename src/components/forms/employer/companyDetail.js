@@ -339,7 +339,7 @@ function CompanyDetails(props) {
                 </label>
                 <div className={errors.industry ? "border border-danger rounded" : ""}>
                   <SelectBox
-Width={"yes"}
+                    Width={"yes"}
                     options={(Industry || []).map((industry) => ({
                       value: industry.value,
                       label: industry.value,

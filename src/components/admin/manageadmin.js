@@ -249,10 +249,10 @@ function ManageAdmin() {
                       <p className="input_label">Filter by Admin:</p>
                       <div className="select_div">
                         <SelectBox
-Width={"yes"} options={(FilterJson.admintype.map((option) => ({
-                          value: option,
-                          label: option,
-                        })) || [])}
+                          Width={"yes"} options={(FilterJson.admintype.map((option) => ({
+                            value: option,
+                            label: option,
+                          })) || [])}
                           selectedValue={typeFilterValue}
                           onChange={(e) => {
                             console.log(e)
@@ -326,9 +326,9 @@ Width={"yes"} options={(FilterJson.admintype.map((option) => ({
 
                           <div className=" mb-0">
                             {managerData.name === null ||
-                            managerData.name === undefined ||
-                            managerData.name === "undefined" ||
-                            managerData.name === "" ? (
+                              managerData.name === undefined ||
+                              managerData.name === "undefined" ||
+                              managerData.name === "" ? (
                               <p className="font-size-3  mb-0">N/A</p>
                             ) : (
                               <h5 className="m-0 text-black-3 font-weight-bold text-capitalize">
@@ -414,9 +414,9 @@ Width={"yes"} options={(FilterJson.admintype.map((option) => ({
                           onClick={
                             addTeamListShow === true
                               ? () => {
-                                  setAddTeamListShow(false);
-                                  setExecutiveApiCall(true);
-                                }
+                                setAddTeamListShow(false);
+                                setExecutiveApiCall(true);
+                              }
                               : () => setAddTeamListShow(true)
                           }
                           title={

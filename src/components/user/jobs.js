@@ -36,7 +36,7 @@ function JobSearch() {
     JsonData();
   }, [categoryFilterValue, SkillFilterValue, jobSwapFilterValue, jobLocation]);
   // eslint-disable-next-line no-use-before-define
-  /*Function to Rest the feilds */
+  /*Function to Rest the felids */ 
   let onReset = () => {
     setCategoryFilterValue("");
     setSkillFilterValue("");
@@ -47,7 +47,6 @@ function JobSearch() {
     <>
       <div className="site-wrapper overflow-hidden ">
         <EmployeeHeader />
-
         {/* <!-- Main Content Start --> */}
         <div className="bg-black-2 mt-15 mt-lg-18 pt-18 pt-lg-13 pb-13">
           <div className="container">
@@ -63,11 +62,11 @@ function JobSearch() {
           <div className="container">
             <div className="row ">
               <div className="col-12 col-lg-10 col-xl-12 text-center">
-                <form className="mb-8" action="/">
+                <form className="mb-8" >
                   <div className="search-filter from-group d-flex align-items-center justify-content-center job_search_filter">
                     <div className="col-md-2 col-lg-2 mb-5">
                       <SelectBox
-Width={"yes"}
+                        Width={"yes"}
                         options={(Json.Category || []).map((cat) => ({
                           value: cat.id,
                           label: cat.value,
@@ -81,7 +80,7 @@ Width={"yes"}
                     </div>
                     <div className="col-md-2 col-lg-2 mb-5">
                       <SelectBox
-Width={"yes"}
+                        Width={"yes"}
                         options={(Json.Skill || []).map((data) => ({
                           value: data.value,
                           label: data.value,
@@ -95,7 +94,7 @@ Width={"yes"}
                     </div>
                     <div className="col-md-2 col-lg-2 mb-5">
                       <SelectBox
-Width={"yes"}
+                        Width={"yes"}
                         options={(Object.keys(states) || []).map((job) => ({
                           value: job,
                           label: job,
@@ -109,7 +108,7 @@ Width={"yes"}
                     </div>
                     <div className="col-md-2 col-lg-2 mb-5">
                       <SelectBox
-Width={"yes"}
+                        Width={"yes"}
                         options={(FilterJson.job_type || []).map((job_type) => ({
                           value: job_type,
                           label: job_type,

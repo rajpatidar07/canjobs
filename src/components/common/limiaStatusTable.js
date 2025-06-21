@@ -363,10 +363,10 @@ export default function LimiaStatusTable(props) {
                   <p className="input_label">Filter by LMIA status:</p>
                   <div className="select_div">
                     <SelectBox
-Width={"yes"} options={(FilterJson.lmia_status.map((option) => ({
-                      value: option,
-                      label: option,
-                    })) || [])}
+                      Width={"yes"} options={(FilterJson.lmia_status.map((option) => ({
+                        value: option,
+                        label: option,
+                      })) || [])}
                       selectedValue={limiaFilterValue}
                       onChange={(e) => {
                         setLimailter(e ? e.value : null);

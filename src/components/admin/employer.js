@@ -141,7 +141,7 @@ function Employer() {
                     <p className="input_label">Filter by Corporation:</p>
                     <div className="select_div">
                       <SelectBox
-Width={"yes"} options={Corporation}
+                        Width={"yes"} options={Corporation}
                         selectedValue={corporationFilterValue}
                         onChange={(e) => {
                           setcorporationFilterValue(e ? e.value : null)
@@ -155,7 +155,7 @@ Width={"yes"} options={Corporation}
                     <p className="input_label">Filter by Industry:</p>
                     <div className="select_div">
                       <SelectBox
-Width={"yes"} options={Industry}
+                        Width={"yes"} options={Industry}
                         selectedValue={industryFilterValue}
                         onChange={(e) => {
                           setIndutryFilterValue(e ? e.value : null)

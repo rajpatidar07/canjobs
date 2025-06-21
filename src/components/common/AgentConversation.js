@@ -305,7 +305,7 @@ export default function AgentConversation({
                   ? agent_id
                   : employee_id
             }
-            loginusertype={user_type === "admin" ? "admin" : user_type}
+            loginusertype={user_type === "admin" ? admin_type : user_type}
             recordsPerPage={recordsPerPage}
             setRecordsPerPage={setRecordsPerPage}
           />

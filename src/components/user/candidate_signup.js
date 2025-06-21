@@ -534,7 +534,7 @@ export default function CandidateSignup(props) {
                     : "text-capitalize"
                 }>
                   <SelectBox
-Width={"yes"}
+                    Width={"yes"}
                     type="reffer_by"
                     onChange={(selected) => {
                       onInputChange({ target: { name: "reffer_by", value: selected?.value } });

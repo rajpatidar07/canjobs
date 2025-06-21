@@ -446,11 +446,11 @@ function ConsultationTable(props) {
                         </td>
                         <td style={{ minWidth: "150px" }}>
                           <SelectBox
-Width={"yes"} options={(props.adminList
-                            .filter((i) => i.admin_type === "super-admin").map((option) => ({
-                              value: `${option.admin_id},${option.admin_type}`,
-                              label: option.name,
-                            })) || [])}
+                            Width={"yes"} options={(props.adminList
+                              .filter((i) => i.admin_type === "super-admin").map((option) => ({
+                                value: `${option.admin_id},${option.admin_type}`,
+                                label: option.name,
+                              })) || [])}
                             selectedValue={`${state.manager_id},${state.manager_type}`}
                             onChange={(e) => {
                               const [id, type] = e ? e.value.split(",") : null;
@@ -465,11 +465,11 @@ Width={"yes"} options={(props.adminList
                         </td>
                         <td style={{ minWidth: "150px" }}>
                           <SelectBox
-Width={"yes"} options={(props.adminList
-                            .filter((i) => i.admin_type === "super-admin").map((option) => ({
-                              value: `${option.admin_id},${option.admin_type}`,
-                              label: option.name,
-                            })) || [])}
+                            Width={"yes"} options={(props.adminList
+                              .filter((i) => i.admin_type === "super-admin").map((option) => ({
+                                value: `${option.admin_id},${option.admin_type}`,
+                                label: option.name,
+                              })) || [])}
                             selectedValue={`${state.person_admin_id},${state.person_admin_type}`}
                             onChange={(e) => {
                               const [id, type] = e ? e.value.split(",") : null;
@@ -674,11 +674,11 @@ Width={"yes"} options={(props.adminList
                           <td style={{ minWidth: "150px" }}>
                             {editField.rowId === item.id && editField.field === "manager" ? (
                               <SelectBox
-Width={"yes"} options={(props.adminList
-                                .filter((i) => i.admin_type === "super-admin").map((option) => ({
-                                  value: `${option.admin_id},${option.admin_type}`,
-                                  label: option.name,
-                                })) || [])}
+                                Width={"yes"} options={(props.adminList
+                                  .filter((i) => i.admin_type === "super-admin").map((option) => ({
+                                    value: `${option.admin_id},${option.admin_type}`,
+                                    label: option.name,
+                                  })) || [])}
                                 selectedValue={item.manager_id && item.manager_type
                                   ? `${item.manager_id},${item.manager_type}`
                                   : ""}
@@ -713,11 +713,11 @@ Width={"yes"} options={(props.adminList
                           <td style={{ minWidth: "150px" }}>
                             {editField.rowId === item.id && editField.field === "person" ? (
                               <SelectBox
-Width={"yes"} options={(props.adminList
-                                .filter((i) => i.admin_type === "super-admin").map((option) => ({
-                                  value: `${option.admin_id},${option.admin_type}`,
-                                  label: option.name,
-                                })) || [])}
+                                Width={"yes"} options={(props.adminList
+                                  .filter((i) => i.admin_type === "super-admin").map((option) => ({
+                                    value: `${option.admin_id},${option.admin_type}`,
+                                    label: option.name,
+                                  })) || [])}
                                 selectedValue={item.person_admin_id && item.person_admin_type
                                   ? `${item.person_admin_id},${item.person_admin_type}`
                                   : ""}

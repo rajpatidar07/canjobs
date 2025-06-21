@@ -80,8 +80,8 @@ function AddAgent(props) {
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     password: [
       (value) =>
@@ -620,17 +620,17 @@ function AddAgent(props) {
                   Assigned To: {/* <span className="text-danger">*</span> */}
                 </label>
                 <SelectBox
-Width={"yes"}
-                                options={admiinList ?
-                                  admiinList.map((option) => ({
-                                    value: option.admin_id,
-                                    label: option.name,
-                                  }))
-                                  : []}
-                                type={"assigned_by"}
-                                selectedValue={state.assigned_by}
-                                onChange={(e) => { setState({ ...state, assigned_by: e ? e.value : "" }) }}
-                              />
+                  Width={"yes"}
+                  options={admiinList ?
+                    admiinList.map((option) => ({
+                      value: option.admin_id,
+                      label: option.name,
+                    }))
+                    : []}
+                  type={"assigned_by"}
+                  selectedValue={state.assigned_by}
+                  onChange={(e) => { setState({ ...state, assigned_by: e ? e.value : "" }) }}
+                />
                 {/* <span
                       className="btn btn-sm btn-secondary"
                       onClick={() => setShowAdminMOdal(true)}

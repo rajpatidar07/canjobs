@@ -133,7 +133,7 @@ function ReassignAdmin(props) {
                             </label>
                             {console.log(AdminOption, AdminOption?.Admin)}
                             <SelectBox
-Width={"yes"}
+                                Width={"yes"}
                                 options={AdminOption ? AdminOption?.Admin : []} // Remove null entries
                                 type="admin"
                                 selectedValue={state.replace_admin_id || ""}

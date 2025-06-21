@@ -925,7 +925,7 @@ function PersonalDetails(props) {
                     </label>
                     <div className={errors.currently_located_country ? "border border-danger rounded" : ""}>
                       <SelectBox
-Width={"yes"}
+                        Width={"yes"}
                         options={(FilterJson.location || []).map((item) => ({
                           value: item.country,
                           label: item.country,
@@ -1163,7 +1163,7 @@ Width={"yes"}
                     </label>
                     <div className={errors.interested_in_id ? "border border-danger rounded" : ""}>
                       <SelectBox
-Width={"yes"}
+                        Width={"yes"}
                         options={applicantTypeList
                           .filter(item => item.level === "0" && ![
                             "test typw",
@@ -1208,7 +1208,7 @@ Width={"yes"}
                       </label>
                       <div className={errors.interested_in_id ? "border border-danger rounded" : ""}>
                         <SelectBox
-Width={"yes"}
+                          Width={"yes"}
                           options={(applicantTypeList || [])
                             .filter(item => item.level === "1" && item.parent_id === main)
                             .map(item => ({
@@ -1241,7 +1241,7 @@ Width={"yes"}
                       </label>
                       <div className={errors.interested_in_id ? "border border-danger rounded" : ""}>
                         <SelectBox
-Width={"yes"}
+                          Width={"yes"}
                           options={(applicantTypeList || [])
                             .filter(item => item.level === "2" && item.parent_id === sub)
                             .map(item => ({
@@ -1275,7 +1275,7 @@ Width={"yes"}
                       Experience:
                     </label>
                     <SelectBox
-Width={"yes"}
+                      Width={"yes"}
                       options={(FilterJson.experience || []).map((ex) => ({
                         value: ex,
                         label: `${ex}${ex.toLowerCase() === "fresher" || ex.toLowerCase() === "other" ? "" : " Years"}`
@@ -1349,7 +1349,7 @@ Width={"yes"}
                       Candidate Status:
                     </label>
                     <SelectBox
-Width={"yes"}
+                      Width={"yes"}
                       options={(FilterJson.canadian_candidate_work_status || []).map((item) => ({
                         value: item,
                         label: item,
@@ -1405,7 +1405,7 @@ Width={"yes"}
                       <div className={errors.reffer_by ? "border border-danger rounded" : ""}>
 
                         <SelectBox
-Width={"yes"}
+                          Width={"yes"}
                           options={agentList.map((item) => ({
                             value: item.id,
                             label: item.u_id,
@@ -1481,7 +1481,7 @@ Width={"yes"}
                       }
                     /> */}
                     <SelectBox
-Width={"yes"}
+                      Width={"yes"}
                       options={(admiinList || []).map((item) => ({
                         value: item.admin_id,
                         label: item.name,

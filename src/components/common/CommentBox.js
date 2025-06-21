@@ -44,10 +44,10 @@ export default function CommentBox({
             <p className="input_label">Filter by Admin:</p>
             <div className="select_div">
               <SelectBox
-Width={"yes"} options={(allAdmin.map((option) => ({
-                value: option.admin_id,
-                label: option.name,
-              })) || [])}
+                Width={"yes"} options={(allAdmin.map((option) => ({
+                  value: option.admin_id,
+                  label: option.name,
+                })) || [])}
                 selectedValue={adminid}
                 onChange={(e) => {
                   setAdminId(e ? e.value : null);

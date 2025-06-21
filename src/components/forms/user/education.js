@@ -314,7 +314,7 @@ function Education(props) {
                   }
                 >
                   <SelectBox
-Width={"yes"}
+                    Width={"yes"}
                     options={(FilterJson.qualification || []).map((data) => ({
                       value: data,
                       label: data,
@@ -356,7 +356,7 @@ Width={"yes"}
                   }
                 >
                   <SelectBox
-Width={"yes"}
+                    Width={"yes"}
                     options={(EducationList || []).map((course) => ({
                       value: course.value,
                       label: course.value,
@@ -427,7 +427,7 @@ Width={"yes"}
                     }
                   >
                     <SelectBox
-Width={"yes"}
+                      Width={"yes"}
                       options={(FilterJson.location || []).map((data) => ({
                         value: data.country,
                         label: data.country,

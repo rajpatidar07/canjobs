@@ -184,10 +184,10 @@ export default function Visa() {
                     <p className="input_label">Filter by Visa Country:</p>
                     <div className="select_div">
                       <SelectBox
-Width={"yes"} options={(FilterJson.location.map((option) => ({
-                        value: option.country,
-                        label: option.country,
-                      })) || [])}
+                        Width={"yes"} options={(FilterJson.location.map((option) => ({
+                          value: option.country,
+                          label: option.country,
+                        })) || [])}
                         selectedValue={VisaCountryFilter}
                         onChange={(e) => {
                           setVisaCountryFilter(e ? e.value : null);
@@ -202,10 +202,10 @@ Width={"yes"} options={(FilterJson.location.map((option) => ({
                     <p className="input_label">Filter by Visa Status:</p>
                     <div className="select_div">
                       <SelectBox
-Width={"yes"} options={(FilterJson.visa_status.map((option) => ({
-                        value: option,
-                        label: option,
-                      })) || [])}
+                        Width={"yes"} options={(FilterJson.visa_status.map((option) => ({
+                          value: option,
+                          label: option,
+                        })) || [])}
                         selectedValue={VisStatusFilterValue}
                         onChange={(e) => {
                           setVisStatusFilterValue(e ? e.value : null);
@@ -220,10 +220,10 @@ Width={"yes"} options={(FilterJson.visa_status.map((option) => ({
                     <p className="input_label">Filter by Application type:</p>
                     <div className="select_div">
                       <SelectBox
-Width={"yes"} options={(applicantTypeList.map((option) => ({
-                        value: option.id,
-                        label: option.title,
-                      })) || [])}
+                        Width={"yes"} options={(applicantTypeList.map((option) => ({
+                          value: option.id,
+                          label: option.title,
+                        })) || [])}
                         selectedValue={IntrestedFilterValue}
                         onChange={(e) => {
                           setIntrestedFilterValue(e ? e.value : null);

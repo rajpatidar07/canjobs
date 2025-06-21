@@ -948,10 +948,10 @@ export default function CommentTaskBox(props) {
                         <div className={props.taskType === "document" ? "col ml-2 p-0 form_group" : "d-none"}>
                             <div className="select_div">
                                 <SelectBox
-Width={"yes"} options={(adminList.map((option) => ({
-                                    value: option.admin_id,
-                                    label: option.name,
-                                })) || [])}
+                                    Width={"yes"} options={(adminList.map((option) => ({
+                                        value: option.admin_id,
+                                        label: option.name,
+                                    })) || [])}
                                     selectedValue={""}
                                     onChange={(e) => {
                                         Getcomments("", e ? e.value : null)

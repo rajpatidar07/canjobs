@@ -160,7 +160,7 @@ function AddCategory(props) {
                 Category Type <span className="text-danger">*</span> :
               </label>
               <SelectBox
-Width={"yes"}
+                Width={"yes"}
                 options={(catType || [])
                   .filter((data) => data.parent_id === "0")
                   .map((data) => ({

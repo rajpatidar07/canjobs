@@ -273,7 +273,7 @@ function ProgramListSection() {
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">State/Province</label>
                                     <SelectBox
-Width={"yes"}
+                                        Width={"yes"}
                                         options={(uniqueStates || []).map((item) => ({
                                             value: item,
                                             label: item,
@@ -290,7 +290,7 @@ Width={"yes"}
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">City</label>
                                     <SelectBox
-Width={"yes"}
+                                        Width={"yes"}
                                         options={(uniqueCities || []).map((item) => ({
                                             value: item,
                                             label: item,
@@ -307,7 +307,7 @@ Width={"yes"}
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">College Name</label>
                                     <SelectBox
-Width={"yes"}
+                                        Width={"yes"}
                                         options={(uniqueColleges || []).map((item) => ({
                                             value: item,
                                             label: item,
@@ -333,7 +333,7 @@ Width={"yes"}
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">Program Discipline Category</label>
                                     <SelectBox
-Width={"yes"}
+                                        Width={"yes"}
                                         options={(filterjson.program_discipline_category || []).map((item) => ({
                                             value: item,
                                             label: item,
@@ -350,7 +350,7 @@ Width={"yes"}
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">Program Sub Category</label>
                                     <SelectBox
-Width={"yes"}
+                                        Width={"yes"}
                                         options={(filterjson.program_discipline_sub_category || []).map((item) => ({
                                             value: item,
                                             label: item,
@@ -376,7 +376,7 @@ Width={"yes"}
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">Intake Month Season</label>
                                     <SelectBox
-Width={"yes"}
+                                        Width={"yes"}
                                         options={(filterjson.programs_intake_month || []).map((item) => ({
                                             value: item,
                                             label: item,
@@ -392,7 +392,7 @@ Width={"yes"}
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">Ilets Entry Criteria</label>
                                     <SelectBox
-Width={"yes"}
+                                        Width={"yes"}
                                         options={(filterjson.programs_ilets_entry_criteria || []).map((item) => ({
                                             value: item,
                                             label: item,
@@ -408,7 +408,7 @@ Width={"yes"}
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">GPA Entry criteria(%)</label>
                                     <SelectBox
-Width={"yes"}
+                                        Width={"yes"}
                                         options={(filterjson.programs_gpa_entry_criteria || []).map((item) => ({
                                             value: item,
                                             label: item,
@@ -424,7 +424,7 @@ Width={"yes"}
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">Education Entry Criteria</label>
                                     <SelectBox
-Width={"yes"}
+                                        Width={"yes"}
                                         options={(filterjson.programs_education_entry_criteria || []).map((item) => ({
                                             value: item,
                                             label: item,
@@ -440,7 +440,7 @@ Width={"yes"}
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">Math Requirement</label>
                                     <SelectBox
-Width={"yes"}
+                                        Width={"yes"}
                                         id="mathFilter"
                                         options={(filterjson.programs_math_requirement || []).map((item) => ({
                                             value: item,
@@ -457,7 +457,7 @@ Width={"yes"}
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">English Requirement</label>
                                     <SelectBox
-Width={"yes"}
+                                        Width={"yes"}
                                         id="englishFilter"
                                         options={(filterjson.programs_english_requirement || []).map((item) => ({
                                             value: item,

@@ -94,7 +94,7 @@ export default function ApplicantsStatusModal(props) {
               Status <span className="text-danger">*</span> :
             </label>
             <SelectBox
-Width={"yes"}
+              Width={"yes"}
               options={(FilterJson.employee_status || []).map((item, index) => ({
                 value: String(index + 1),
                 label: item,

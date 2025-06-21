@@ -1018,7 +1018,7 @@ export default function CommentSection({
                   })}
                 </select> */}
                 <SelectBox
-Width={"yes"}
+                  Width={"yes"}
                   options={allAdmin.map((option) => ({
                     value: option.admin_id,
                     label: option.name

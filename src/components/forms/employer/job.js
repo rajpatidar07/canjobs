@@ -128,13 +128,13 @@ function AddJobModal(props) {
     ],
     role_category: [
       (value) =>
-        value === "" 
+        value === ""
           ? "No of vacancies is required"
           : null,
     ],
     job_category_id: [
       (value) =>
-        value === ""  ? "Job category is required" : null,
+        value === "" ? "Job category is required" : null,
     ],
     company_id: [(value) => (value === "" ? "Client is required" : null)],
     // salary: [
@@ -336,7 +336,7 @@ function AddJobModal(props) {
                   <div className="position-relative">
                     <div className={errors.company_id ? "border border-danger rounded" : ""}>
                       <SelectBox
-Width={"yes"}
+                        Width={"yes"}
                         options={(Company || [])
                           .filter((com) => com.company_name !== null)
                           .map((com) => ({
@@ -438,7 +438,7 @@ Width={"yes"}
                 <div className="position-relative">
                   <div className={errors.job_category_id ? "border border-danger rounded" : ""}>
                     <SelectBox
-Width={"yes"}
+                      Width={"yes"}
                       options={(Json.Category || [])
                         .filter((cat) => cat.value !== null)
                         .map((cat) => ({
@@ -513,7 +513,7 @@ Width={"yes"}
                 <div className="position-relative">
                   <div className={errors.experience_required ? "border border-danger rounded" : ""}>
                     <SelectBox
-Width={"yes"}
+                      Width={"yes"}
                       options={(FilterJson.experience || []).map((exp, i) => ({
                         value: exp,
                         label: exp === "fresher" || exp === "Other" ? exp : `${exp} Years`,
@@ -580,7 +580,7 @@ Width={"yes"}
                 </label>
                 <div className={errors.location ? "border border-danger rounded" : ""}>
                   <SelectBox
-Width={"yes"}
+                    Width={"yes"}
                     options={(Object.keys(states) || []).map((state) => ({
                       value: state,
                       label: state,
@@ -618,7 +618,7 @@ Width={"yes"}
                     City:
                   </label>
                   <SelectBox
-Width={"yes"}
+                    Width={"yes"}
                     options={(states[state.location] || []).map((city) => ({
                       value: city,
                       label: city,
@@ -957,7 +957,7 @@ Width={"yes"}
                 <div className={" position-relative"}>
                   <div className={errors.job_type ? "border border-danger rounded" : ""}>
                     <SelectBox
-Width={"yes"}
+                      Width={"yes"}
                       options={(FilterJson.job_type || []).map((job_type) => ({
                         value: job_type,
                         label: job_type,
@@ -997,7 +997,7 @@ Width={"yes"}
                 <div className="position-relative">
                   <div className={errors.education ? "border border-danger rounded" : ""}>
                     <SelectBox
-Width={"yes"}
+                      Width={"yes"}
                       options={(Json.Education || []).map((education) => ({
                         value: education.value,
                         label: education.value,
@@ -1037,7 +1037,7 @@ Width={"yes"}
                 <div className="position-relative">
                   <div className={errors.language ? "border border-danger rounded" : ""}>
                     <SelectBox
-Width={"yes"}
+                      Width={"yes"}
                       options={(Json.Language || []).map((lang) => ({
                         value: lang.value,
                         label: lang.value,
@@ -1077,7 +1077,7 @@ Width={"yes"}
                 <div className="position-relative">
                   <div className={errors.keyskill ? "border border-danger rounded" : ""}>
                     <SelectBox
-Width={"yes"}
+                      Width={"yes"}
                       options={(Json.Skill || []).map((data) => ({
                         value: data.value,
                         label: data.value,

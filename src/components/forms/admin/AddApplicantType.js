@@ -205,17 +205,17 @@ export default function AddApplicantType(props) {
                                 Select Applicant Type :
                             </label>
                             <SelectBox
-Width={"yes"}
-                                                            options={applicantTypeList ?
-                                                              applicantTypeList?.filter((item) => item.level === (0 || "0")).map((option) => ({
-                                                                value: option.id,
-                                                                label: option.title,
-                                                              }))
-                                                              : []}
-                                                            type={"selectedParent"}
-                                                            selectedValue={state.selectedParent}
-                                                            onChange={(e) => { setState({ ...state, selectedParent: e ? e.value : "" }) }}
-                                                          />
+                                Width={"yes"}
+                                options={applicantTypeList ?
+                                    applicantTypeList?.filter((item) => item.level === (0 || "0")).map((option) => ({
+                                        value: option.id,
+                                        label: option.title,
+                                    }))
+                                    : []}
+                                type={"selectedParent"}
+                                selectedValue={state.selectedParent}
+                                onChange={(e) => { setState({ ...state, selectedParent: e ? e.value : "" }) }}
+                            />
                         </div>
                         <div classNme="form-group col-12">
                             <label
@@ -251,18 +251,18 @@ Width={"yes"}
                             >
                                 Select Sub Type :
                             </label>
-                             <SelectBox
-Width={"yes"}
-                                                            options={applicantTypeList ?
-                                                              applicantTypeList?.filter((item) => item.parent_id === state.selectedParent).map((option) => ({
-                                                                value: option.id,
-                                                                label: option.title,
-                                                              }))
-                                                              : []}
-                                                            type={"selectedChild"}
-                                                            selectedValue={state.selectedChild}
-                                                            onChange={(e) => { setState({ ...state, selectedChild: e ? e.value : "" }) }}
-                                                          />
+                            <SelectBox
+                                Width={"yes"}
+                                options={applicantTypeList ?
+                                    applicantTypeList?.filter((item) => item.parent_id === state.selectedParent).map((option) => ({
+                                        value: option.id,
+                                        label: option.title,
+                                    }))
+                                    : []}
+                                type={"selectedChild"}
+                                selectedValue={state.selectedChild}
+                                onChange={(e) => { setState({ ...state, selectedChild: e ? e.value : "" }) }}
+                            />
                         </div>
                     </div>
                     <div className="form-group text-center">

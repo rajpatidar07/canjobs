@@ -331,10 +331,10 @@ function Calllogtable(props) {
 
                                                     <td style={{ minWidth: "150px" }}>
                                                         <SelectBox
-Width={"yes"} options={(props.adminList.map((option) => ({
-                                                            value: option.admin_id,
-                                                            label: option.name,
-                                                        })) || [])}
+                                                            Width={"yes"} options={(props.adminList.map((option) => ({
+                                                                value: option.admin_id,
+                                                                label: option.name,
+                                                            })) || [])}
                                                             selectedValue={state.call_ans_by}
                                                             onChange={(e) => {
                                                                 setState({ ...state, call_ans_by: e ? e.value : null });
@@ -501,10 +501,10 @@ Width={"yes"} options={(props.adminList.map((option) => ({
                                                         {/* Call Answered By */}
                                                         <td style={{ minWidth: "150px" }}>
                                                             <SelectBox
-Width={"yes"} options={(props.adminList.map((option) => ({
-                                                                value: option.admin_id,
-                                                                label: option.name,
-                                                            })) || [])}
+                                                                Width={"yes"} options={(props.adminList.map((option) => ({
+                                                                    value: option.admin_id,
+                                                                    label: option.name,
+                                                                })) || [])}
                                                                 selectedValue={item.call_ans_by}
                                                                 onChange={(e) => {
                                                                     handleUpdateChange(e, item.id, "call_ans_by")

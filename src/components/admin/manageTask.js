@@ -183,10 +183,10 @@ export default function ManageTask() {
               <div className="col px-1 form_group mb-3">
                 <p className="input_label">Filter by Assign to admin:</p>
                 <SelectBox
-Width={"yes"} options={adminList ? adminList.map((option) => ({
-                  value: option.admin_id + "," + option.admin_type,
-                  label: option.name,
-                })) : []}
+                  Width={"yes"} options={adminList ? adminList.map((option) => ({
+                    value: option.admin_id + "," + option.admin_type,
+                    label: option.name,
+                  })) : []}
                   selectedValue={adminId + "," + adminType}
                   onChange={(e) => {
                     setAdminId(e ? e.value.split(",")[0] : null);
@@ -202,10 +202,10 @@ Width={"yes"} options={adminList ? adminList.map((option) => ({
               <div className="col px-1 form_group mb-3">
                 <p className="input_label">Filter by Assign by admin:</p>
                 <SelectBox
-Width={"yes"} options={adminList ? adminList.map((option) => ({
-                  value: option.admin_id + "," + option.admin_type,
-                  label: option.name,
-                })) : []}
+                  Width={"yes"} options={adminList ? adminList.map((option) => ({
+                    value: option.admin_id + "," + option.admin_type,
+                    label: option.name,
+                  })) : []}
                   selectedValue={byAdminId + "," + byAdminType}
                   onChange={(e) => {
                     setByAdminId(e ? e.value.split(",")[0] : null);
@@ -221,19 +221,19 @@ Width={"yes"} options={adminList ? adminList.map((option) => ({
               <div className="col px-1 form_group mb-3">
                 <p className="input_label">Filter by Applicant/Client:</p>
                 <SelectBox
-Width={"yes"} options={employeeList ? employeeList.map((option) => ({
-                  value: option.employee_id
-                    ? `${option.employee_id},employee`
-                    : option.company_id
-                      ? `${option.company_id},employer`
-                      : `${option.id},applicant_type`,
-                  label: option.employee_id
-                    ? (option.name + " (Candidate)")
-                    : option.company_id
-                      ? option.company_name + " (Client)"
-                      : option.title + " (Applicant Type)" ||
-                      "unknown user",
-                })) : []}
+                  Width={"yes"} options={employeeList ? employeeList.map((option) => ({
+                    value: option.employee_id
+                      ? `${option.employee_id},employee`
+                      : option.company_id
+                        ? `${option.company_id},employer`
+                        : `${option.id},applicant_type`,
+                    label: option.employee_id
+                      ? (option.name + " (Candidate)")
+                      : option.company_id
+                        ? option.company_name + " (Client)"
+                        : option.title + " (Applicant Type)" ||
+                        "unknown user",
+                  })) : []}
                   selectedValue={userId + "," + userType}
                   onChange={(e) => {
                     setUserId(e ? e.value.split(",")[0] : null);
@@ -249,10 +249,10 @@ Width={"yes"} options={employeeList ? employeeList.map((option) => ({
               <div className="col px-1 form_group mb-3">
                 <p className="input_label">Filter by Applicant Type:</p>
                 <SelectBox
-Width={"yes"} options={applicantTypeList ? applicantTypeList.map((option) => ({
-                  value: `${option.id},applicant_type`,
-                  label: option.title,
-                })) : []}
+                  Width={"yes"} options={applicantTypeList ? applicantTypeList.map((option) => ({
+                    value: `${option.id},applicant_type`,
+                    label: option.title,
+                  })) : []}
                   selectedValue={userId + "," + userType}
                   onChange={(e) => {
                     setUserId(e ? e.value.split(",")[0] : null);
@@ -267,10 +267,10 @@ Width={"yes"} options={applicantTypeList ? applicantTypeList.map((option) => ({
               <div className="col px-1 form_group mb-3">
                 <p className="input_label">Filter by Status:</p>
                 <SelectBox
-Width={"yes"} options={statusList ? statusList.map((option) => ({
-                  value: `${option.id}`,
-                  label: option.value,
-                })) : []}
+                  Width={"yes"} options={statusList ? statusList.map((option) => ({
+                    value: `${option.id}`,
+                    label: option.value,
+                  })) : []}
                   selectedValue={status}
                   onChange={(e) => {
                     setStatus(e ? e.value.split(",")[0] : null);

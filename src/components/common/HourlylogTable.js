@@ -382,10 +382,10 @@ function Hourlylogtable(props) {
                                                 </td>
                                                 <td style={{ minWidth: "150px" }}>
                                                     <SelectBox
-Width={"yes"} options={(props.adminList.map((option) => ({
-                                                        value: option.admin_id,
-                                                        label: option.name,
-                                                    })) || [])}
+                                                        Width={"yes"} options={(props.adminList.map((option) => ({
+                                                            value: option.admin_id,
+                                                            label: option.name,
+                                                        })) || [])}
                                                         selectedValue={state.hour_log_of_admin}
                                                         onChange={(e) => {
                                                             setState((prev) => ({
@@ -556,10 +556,10 @@ Width={"yes"} options={(props.adminList.map((option) => ({
                                                                     <td style={{ minWidth: "150px" }}>
                                                                         {editRowId === item.hour_log_of_admin ? (
                                                                             <SelectBox
-Width={"yes"} options={(props.adminList.map((option) => ({
-                                                                                value: option.admin_id,
-                                                                                label: option.name,
-                                                                            })) || [])}
+                                                                                Width={"yes"} options={(props.adminList.map((option) => ({
+                                                                                    value: option.admin_id,
+                                                                                    label: option.name,
+                                                                                })) || [])}
                                                                                 selectedValue={item.hour_log_of_admin}
                                                                                 onChange={(e) => {
                                                                                     handleUpdateChange(e, item.id, "hour_log_of_admin")

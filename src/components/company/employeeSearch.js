@@ -57,46 +57,46 @@ function EmployeeSearch() {
             <form className="mb-8" action="/">
               <div className="search-filter from-group row job_search_filter">
                 <div className="col-md-3 col-lg-3 mb-5">
-                   <SelectBox
-Width={"yes"}
-                  options={Json?
-                    Json.Skill.map((option) => ({
-                      value: option.value,
-                      label: option.value,
-                    })):[]
-                  }
-                  type={"skill"}
-                  selectedValue={SkillFilterValue}
-                  onChange={(e) => { setSkillFilterValue(e ? e.value : "") }}
-                />
-                </div>
-                <div className="col-md-3 col-lg-3 mb-5">
-                     <SelectBox
-Width={"yes"}
-                  options={
-                    FilterJson.experience.map((option) => ({
-                      value: option,
-                      label: option,
-                    }))
-                  }
-                  type={"experience"}
-                  selectedValue={jobExp}
-                  onChange={(e) => { setJobExp(e ? e.value : "") }}
-                />
+                  <SelectBox
+                    Width={"yes"}
+                    options={Json ?
+                      Json.Skill.map((option) => ({
+                        value: option.value,
+                        label: option.value,
+                      })) : []
+                    }
+                    type={"skill"}
+                    selectedValue={SkillFilterValue}
+                    onChange={(e) => { setSkillFilterValue(e ? e.value : "") }}
+                  />
                 </div>
                 <div className="col-md-3 col-lg-3 mb-5">
                   <SelectBox
-Width={"yes"}
-                  options={
-                    FilterJson.interested.map((option) => ({
-                      value: option,
-                      label: option,
-                    }))
-                  }
-                  type={"interested"}
-                  selectedValue={jobSwapFilterValue}
-                  onChange={(e) => { setJobSwapFilterValue(e ? e.value : "") }}
-                />
+                    Width={"yes"}
+                    options={
+                      FilterJson.experience.map((option) => ({
+                        value: option,
+                        label: option,
+                      }))
+                    }
+                    type={"experience"}
+                    selectedValue={jobExp}
+                    onChange={(e) => { setJobExp(e ? e.value : "") }}
+                  />
+                </div>
+                <div className="col-md-3 col-lg-3 mb-5">
+                  <SelectBox
+                    Width={"yes"}
+                    options={
+                      FilterJson.interested.map((option) => ({
+                        value: option,
+                        label: option,
+                      }))
+                    }
+                    type={"interested"}
+                    selectedValue={jobSwapFilterValue}
+                    onChange={(e) => { setJobSwapFilterValue(e ? e.value : "") }}
+                  />
                 </div>
                 <div className="col-md-3 col-lg-3 mb-5">
                   <select

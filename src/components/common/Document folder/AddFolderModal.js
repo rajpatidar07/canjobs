@@ -182,7 +182,7 @@ export default function AddFolderModal(props) {
                   </Dropdown.Menu>
                 </Dropdown> */}
                 <SelectBox
-Width={"yes"}
+                  Width={"yes"}
                   options={[
                     ...DocTypeData.map((option) => ({
                       value: option,

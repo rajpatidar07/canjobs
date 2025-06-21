@@ -72,6 +72,8 @@ const MessageList = ({ data, loginuser, loginusertype, recordsPerPage, setRecord
                 : "sent"
                 }`}
             >
+              {console.log(message.task_creator_user_id === loginuser &&
+                message.task_creator_user_type === loginusertype, message.task_creator_user_id, loginuser, "type", message.task_creator_user_type, loginusertype)}
               <div className="message-content font-size-3">
                 {title === "" || iconSrc === "" ? (
                   message.subject_description === "" ||

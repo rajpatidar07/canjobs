@@ -279,16 +279,16 @@ const MentionAdminInDoc = ({
               </option>
             ))}
           </select> */}
-           <SelectBox
-Width={"yes"}
-                            options={adminList.map((option) => ({
-                              value: option.admin_id,
-                              label: option.name
-                            }))}
-                            type={"admin"}
-                            selectedValue={""}
-                            onChange={(e) => handleUserSelect( e ? e.value : "")}
-                          />
+          <SelectBox
+            Width={"yes"}
+            options={adminList.map((option) => ({
+              value: option.admin_id,
+              label: option.name
+            }))}
+            type={"admin"}
+            selectedValue={""}
+            onChange={(e) => handleUserSelect(e ? e.value : "")}
+          />
           <div className="d-flex justify-content-center p-1">
             <button
               onClick={() => OnMentionAdmin()}

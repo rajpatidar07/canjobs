@@ -213,7 +213,7 @@ function Skills(props) {
               <div className={`w-100 text-capitalize ${errors.skill ? "border border-danger" : ""}`}
               >
                 <SelectBox
-Width={"yes"}
+                  Width={"yes"}
                   options={(SkillOption && SkillOption.skill) || []}
                   type="skill"
                   id="skill"
