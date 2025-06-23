@@ -571,7 +571,10 @@ const ExpressEntryPdf = () => {
               </View>
             </View>
           </View>
-          <View data-list-text="4." style={{ marginTop: 170 }}>
+          <View data-list-text="4." style={{
+            marginTop: felidData.initial ? felidData.date_signature_rcic
+              ? 130 : 160 : 170
+          }}>
             <Text style={[styles.definition, { fontWeight: 600 }]}>
               4. Payment Schedule
             </Text>
@@ -664,7 +667,12 @@ const ExpressEntryPdf = () => {
             <View style={{ height: 205 }}>
               <Text></Text>
             </View>
-            <View style={[styles.table, { marginTop: 67 }]}>
+            <View style={[styles.table, {
+              marginTop:
+                felidData.initial ?
+                     50
+                  : 67
+            }]}>
               <View style={styles.row}>
                 <View style={styles.cell}>
                   <Text style={{ color: "blue" }}>
@@ -774,7 +782,7 @@ const ExpressEntryPdf = () => {
             <View style={{ marginTop: 15, paddingLeft: 10 }}>
               <View>
                 <Text style={{ fontWeight: "bold" }}>
-                 TotalAmount:(Non-Refundable) (Paid at signing of contract and sharing of checklist):
+                  TotalAmount:(Non-Refundable) (Paid at signing of contract and sharing of checklist):
                 </Text>
                 :
                 <Text style={styles.textunderline}>
@@ -783,7 +791,7 @@ const ExpressEntryPdf = () => {
               </View>
               <View>
                 <Text style={{ fontWeight: "bold" }}>
-                 Balance (Non-Refundable) (Paid at time of filing for Invitation To Apply)
+                  Balance (Non-Refundable) (Paid at time of filing for Invitation To Apply)
                 </Text>
                 :
                 <Text style={styles.textunderline}>
@@ -1487,7 +1495,7 @@ const ExpressEntryPdf = () => {
           <View
             data-list-text="20."
             style={{
-              marginTop: 20,
+              marginTop: 10,
               fontWeight: "300",
               flexDirection: "row",
             }}
@@ -1499,7 +1507,7 @@ const ExpressEntryPdf = () => {
               RETAINER AGREEMENT
             </Text>
           </View>
-          <View style={{ marginTop: 20 }}>
+          <View style={{ marginTop: 40 }}>
             <View>
               {/* Contact Information Header */}
               <Text style={[{ fontWeight: "600" }, styles.definition]}>
@@ -1821,7 +1829,7 @@ const ExpressEntryPdf = () => {
             <View style={{ marginTop: 17, flexDirection: "row" }}>
               <Text style={{ width: 20, fontWeight: "bold" }}>1</Text>
               <Text style={{ flex: 1 }}>
-                I confirm that neither I nor any other family members included
+                I affirm that neither I nor any other family members included
                 in my application have presented or will present at any future
                 date, false and misleading information to either the consultant,
                 the firm or to the government of Canada.
@@ -1830,7 +1838,7 @@ const ExpressEntryPdf = () => {
             <View style={{ marginTop: 17, flexDirection: "row" }}>
               <Text style={{ width: 20, fontWeight: "bold" }}>2</Text>
               <Text style={{ flex: 1 }}>
-                I confirm that neither I nor any other family members included
+                I affirm that neither I nor any other family members included
                 in my application have presented or will present at any future
                 date, false and misleading information to either the consultant,
                 the firm or to the government of Canada.
@@ -1839,7 +1847,7 @@ const ExpressEntryPdf = () => {
             <View style={{ marginTop: 17, flexDirection: "row" }}>
               <Text style={{ width: 20, fontWeight: "bold" }}>3</Text>
               <Text style={{ flex: 1 }}>
-                I confirm that it is my responsibility to ensure the
+                I affirm that it is my responsibility to ensure the
                 co-operation of my relatives/employers/educational institutes as
                 needed
               </Text>

@@ -1241,7 +1241,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                             RETAINER AGREEMENT
                         </Text>
                     </View>
-                    <View style={{ marginTop: familyJsonArray[0]?.date_signature_client ? 130 : 200 }}>
+                    <View style={{ marginTop:  200 }}>
                         {/* Contact Information Header */}
                         <View>
                             {/* Contact Information Header */}
@@ -1557,7 +1557,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                         <View style={{ marginTop: 17, flexDirection: 'row' }}>
                             <Text style={{ width: 20, fontWeight: 'bold' }}>1</Text>
                             <Text style={{ flex: 1 }}>
-                                I confirm that neither I nor any other family members included
+                                I affirm that neither I nor any other family members included
                                 in my application have presented or will present at any future
                                 date, false and misleading information to either the consultant,
                                 the firm or to the government of Canada.
@@ -1566,7 +1566,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                         <View style={{ marginTop: 17, flexDirection: 'row' }}>
                             <Text style={{ width: 20, fontWeight: 'bold' }}>2</Text>
                             <Text style={{ flex: 1 }}>
-                                I confirm  that neither I nor any other family members included
+                                I affirm  that neither I nor any other family members included
                                 in my application have presented or will present at any future
                                 date, false and misleading information to either the consultant,
                                 the firm or to the government of Canada.
@@ -1575,7 +1575,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                         <View style={{ marginTop: 17, flexDirection: 'row' }}>
                             <Text style={{ width: 20, fontWeight: 'bold' }}>3</Text>
                             <Text style={{ flex: 1 }}>
-                                I confirm that it is my responsibility to ensure the co-operation of my relatives/employers/educational institutes as
+                                I affirm that it is my responsibility to ensure the co-operation of my relatives/employers/educational institutes as
                                 needed
                             </Text>
                         </View>

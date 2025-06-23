@@ -291,7 +291,7 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
     
             <h5>Declaration</h5>
             <ol>
-                <li>I confirm that neither I nor any other representatives included in my application have presented or will present at any future date, false and misleading information to either the Recruiter, the firm or to the government of Canada</li>
+                <li>I affirm that neither I nor any other representatives included in my application have presented or will present at any future date, false and misleading information to either the Recruiter, the firm or to the government of Canada</li>
                 <li>I understand that The Recruiter's obligations under the Engagement are null and void if the Client knowingly provides any inaccurate, misleading or false material information.</li>
                 <li>I agree that if my application is refused hecause I neglected to provide the required documents or information within the notified time frame or fail to show up at the time of interview, selection or training period the Recruiter, the firm or the Employer will not be held responsible</li>
             </ol>

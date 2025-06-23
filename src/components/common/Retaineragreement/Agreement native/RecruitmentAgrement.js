@@ -447,7 +447,7 @@ const RecruitmentAgrement = () => {
                 <View style={{ marginTop: 17, flexDirection: 'row' }}>
                   <Text style={{ width: 20, fontWeight: 'bold' }}>1</Text>
                   <Text style={{ flex: 1 }}>
-                    I confirm that neither I nor any other representatives included in my application have presented or will present at any future date, false and misleading information to either the Recruiter, the firm or to the government of Canada.
+                    I affirm that neither I nor any other representatives included in my application have presented or will present at any future date, false and misleading information to either the Recruiter, the firm or to the government of Canada.
                   </Text>
                 </View>
                 <View style={{ marginTop: 17, flexDirection: 'row' }}>
@@ -468,7 +468,7 @@ const RecruitmentAgrement = () => {
                   I have read and understood all the terms and steps in the retainer letter above and I agree to all the terms mentioned And for so doing, this document shall constitute good and sufficient authority and declaration
                 </Text>
               </View>
-              <View style={{ width: "100%", marginTop: 101 }}>
+              <View style={{ width: "100%", marginTop: 102 }}>
                 { }
                 {/* Client Section */}
                 <View style={[styles.clientForm, { alignItems: "center", paddingHorizontal: 10, }]}>

@@ -1372,7 +1372,7 @@ export default function EmployerRetainerAgreement({ page,
               <ol id="l13">
                 <li data-list-text="1.">
                   <p>
-                    I confirm that neither I nor any other family members
+                    I affirm that neither I nor any other family members
                     included in my
                     application have presented or will present at any future
                     date, false
@@ -1383,7 +1383,7 @@ export default function EmployerRetainerAgreement({ page,
                 </li>
                 <li data-list-text="2.">
                   <p>
-                    I confirm that neither I nor any other family members
+                    I affirm that neither I nor any other family members
                     included in my
                     application have presented or will present at any future
                     date,
@@ -1394,7 +1394,7 @@ export default function EmployerRetainerAgreement({ page,
                 </li>
                 <li data-list-text="3.">
                   <p>
-                    I confirm that it is my responsibility to ensure the
+                    I affirm that it is my responsibility to ensure the
                     co-operation of
                     my relatives/employers/educational institutes as needed.
                   </p>

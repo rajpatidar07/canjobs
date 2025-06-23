@@ -1,4 +1,10 @@
 # Deploy on live
+Date: 23/06/25
+1. Create the new Retainer Agreement for Work permit application for 2 stages.
+2. Add business fields to the renewal application and employer retainer agreement.
+3. Resolve the issue of mentioning the admin in notes for employees and employers.
+Date:19/06/25
+1. Fix the issue with the invoice date in the payment invoice email template for users, and also add the invoice number.
 Date:17-06-25(staging)18/06/25(on live)
 1. Add text for the invoice and state in the payment invoice; fix the time zone.
 2. Add conditions to include the subject in the Retainer Agreement.

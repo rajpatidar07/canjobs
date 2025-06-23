@@ -489,7 +489,7 @@ const ThreeColumnRerainerAgreement = () => {
                             Note: The courier charges and Government fees based on current
                             rates and may change anytime on or before submission.
                         </Text>
-                        <View style={{ marginTop: 10, backgroundColor: '#fff', padding: 8 }}>
+                        <View style={{ marginTop: 25, backgroundColor: '#fff', padding: 8 }}>
                             {/* Table Header */}
                             <View style={{ flexDirection: 'row', borderWidth: 1, borderColor: '#000000', borderBottom: "none", orderLeft: "none", }}>
                                 {[
@@ -1465,7 +1465,7 @@ const ThreeColumnRerainerAgreement = () => {
                     <View style={{ marginTop: 17, flexDirection: 'row' }}>
                         <Text style={{ width: 20, fontWeight: 'bold' }}>1</Text>
                         <Text style={{ flex: 1 }}>
-                            I confirm that neither I nor any other family members included
+                            I affirm that neither I nor any other family members included
                             in my application have presented or will present at any future
                             date, false and misleading information to either the consultant,
                             the firm or to the government of Canada.
@@ -1474,7 +1474,7 @@ const ThreeColumnRerainerAgreement = () => {
                     <View style={{ marginTop: 17, flexDirection: 'row' }}>
                         <Text style={{ width: 20, fontWeight: 'bold' }}>2</Text>
                         <Text style={{ flex: 1 }}>
-                            I confirm  that neither I nor any other family members included
+                            I affirm  that neither I nor any other family members included
                             in my application have presented or will present at any future
                             date, false and misleading information to either the consultant,
                             the firm or to the government of Canada.
@@ -1483,7 +1483,7 @@ const ThreeColumnRerainerAgreement = () => {
                     <View style={{ marginTop: 17, flexDirection: 'row' }}>
                         <Text style={{ width: 20, fontWeight: 'bold' }}>3</Text>
                         <Text style={{ flex: 1 }}>
-                            I confirm that it is my responsibility to ensure the co-operation of my relatives/employers/educational institutes as
+                            I affirm that it is my responsibility to ensure the co-operation of my relatives/employers/educational institutes as
                             needed
                         </Text>
                     </View>

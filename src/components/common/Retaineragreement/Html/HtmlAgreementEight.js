@@ -1300,7 +1300,7 @@ services that have been rendered or accounting for the time that has been spent 
       <ol id="l13">
         <li data-list-text="1.">
           <p>
-            I confirm that neither I nor any other family members included in my
+            I affirm that neither I nor any other family members included in my
             application have presented or will present at any future date, false
             and misleading information to either the consultant, the firm or to
             the government of Canada.
@@ -1308,7 +1308,7 @@ services that have been rendered or accounting for the time that has been spent 
         </li>
         <li data-list-text="2.">
           <p>
-            I confirm that neither I nor any other family members included in my
+            I affirm that neither I nor any other family members included in my
             application have presented or will present at any future date,
             fraudulently obtained or forged documents to either the consultant,
             the firm or to the government of Canada.
@@ -1316,7 +1316,7 @@ services that have been rendered or accounting for the time that has been spent 
         </li>
         <li data-list-text="3.">
           <p>
-            I confirm that it is my responsibility to ensure the co-operation of
+            I affirm that it is my responsibility to ensure the co-operation of
             my relatives/employers/educational institutes as needed.
           </p>
         </li>
