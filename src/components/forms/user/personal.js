@@ -297,14 +297,13 @@ function PersonalDetails(props) {
 
   // USER PERSONAL DETAIL SUBMIT BUTTON
   async function onUserPersonalDetailClick(event) {
-    console.log(errors, validate(), imgError)
     event.preventDefault();
     if (validate() && imgError === "") {
       setLoading(true);
       try {
         let data = {
           ...state,
-          contact_no: state.contact_no.replace(/\s+/g, '')// condition set to remove white space from contact number
+          contact_no: state.contact_no.replace(/\s+/g, '') // condition set to remove white space from contact number
         }
         const responseData = await AddEmployeeDetails(data);
         if (responseData.message === "Employee data inserted successfully") {
