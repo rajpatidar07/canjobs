@@ -424,8 +424,7 @@ function EmployementDetails(props) {
               <div className="form-group col-md-6">
                 <label
                   htmlFor="industry"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
                   Industry:
                 </label>
                 <div className="position-relative">
