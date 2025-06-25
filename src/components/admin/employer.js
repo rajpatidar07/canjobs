@@ -5,7 +5,7 @@ import EmployerProfile from "../company/profile";
 import CompanyDetails from "../forms/employer/companyDetail";
 import EmployerTable from "../common/employerTable";
 import { GetFilter } from "../../api/api";
-import CommonThreeDots from "../common/commonThreeDots";
+import CommonThreeDots from  "../common/Common function/commonThreeDots";
 import SelectBox from "../common/Common function/SelectBox";
 
 function Employer() {

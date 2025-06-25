@@ -18,7 +18,7 @@ import Executivelist from "../common/executivelist";
 import { BsEnvelope } from "react-icons/bs";
 import { BiPhoneCall } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import CommonThreeDots from "../common/commonThreeDots";
+import CommonThreeDots from  "../common/Common function/commonThreeDots";
 function ManageAdmin() {
   /*data and id state */
   let [apiCall, setApiCall] = useState(false);

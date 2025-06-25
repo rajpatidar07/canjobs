@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import { BsChat, BsFileEarmarkWord, BsThreeDots } from "react-icons/bs";
 // import { GrLineChart } from 'react-icons/gr'
 // import { HiOutlineBell } from 'react-icons/hi2'
-import ExportExcelButton from "./exportExcelButton";
+import ExportExcelButton from "../exportExcelButton";
 import { Link } from "react-router-dom";
 import { FiFilePlus, FiFolderPlus } from "react-icons/fi";
-import AddFolderModal from "./Document folder/AddFolderModal";
+import AddFolderModal from "../Document folder/AddFolderModal";
 import { toast } from "react-toastify";
-import { AddSharePointDOcument } from "../../api/api";
-import CreateExcelSheet from "./Document folder/CreateExcelSheet";
+import { AddSharePointDOcument } from "../../../api/api";
+import CreateExcelSheet from "../Document folder/CreateExcelSheet";
 import { AiTwotoneFileExcel } from "react-icons/ai";
-import CreateWordFile from "../forms/user/CreateWordFile";
+import CreateWordFile from "../../forms/user/CreateWordFile";
 export default function CommonThreeDots(props) {
   let [isOpen, setIsOpen] = useState(false);
   let [openFolderModal, setOPenFolderModal] = useState(false);
@@ -142,6 +142,7 @@ export default function CommonThreeDots(props) {
         close={() => setOpenWordFile(false)} />
       <div
         className="position-relative d-inline-block header-btn-devider ml-auto ml-lg-5 pl-2 d-xs-flex align-items-center"
+        style={{ zIndex: 99 }}
         onMouseEnter={() => setIsOpen(true)}
         onClick={() => setIsOpen(true)}
       >

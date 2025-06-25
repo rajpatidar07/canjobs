@@ -15,7 +15,7 @@ import AdminListTaskTable from "../common/AdminListTaskTabel";
 import CustomButton from "../common/button";
 import AddTaskForm from "../forms/admin/addTaskForm";
 import { Link, useLocation } from "react-router-dom";
-import CommonThreeDots from "../common/commonThreeDots";
+import CommonThreeDots from  "../common/Common function/commonThreeDots";
 import { CiSearch } from "react-icons/ci";
 import SelectBox from "../common/Common function/SelectBox";
 
@@ -227,12 +227,12 @@ export default function ManageTask() {
                       : option.company_id
                         ? `${option.company_id},employer`
                         : `${option.id},applicant_type`,
-                    label: option.employee_id
-                      ? (option.name + " (Candidate)")
-                      : option.company_id
-                        ? option.company_name + " (Client)"
-                        : option.title + " (Applicant Type)" ||
-                        "unknown user",
+                    label:
+                      option.employee_id
+                        ? `${option.name} (${option.employee_id} - Candidate)`
+                        : option.company_id
+                          ? `${option.company_name} (${option.company_id} - Client)`
+                          : `${option.title} (Applicant Type)` || "Unknown User"
                   })) : []}
                   selectedValue={userId + "," + userType}
                   onChange={(e) => {
@@ -251,7 +251,7 @@ export default function ManageTask() {
                 <SelectBox
                   Width={"yes"} options={applicantTypeList ? applicantTypeList.map((option) => ({
                     value: `${option.id},applicant_type`,
-                    label: option.title,
+                    label: `${option.title}`,
                   })) : []}
                   selectedValue={userId + "," + userType}
                   onChange={(e) => {

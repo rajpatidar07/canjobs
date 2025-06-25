@@ -17,7 +17,7 @@ import EmployeeFooter from "../common/footer";
 import VisaTable from "../common/visaTable";
 import { useLocation } from "react-router-dom";
 import { getApplicanTypeApi, GetEmployeeVisaList } from "../../api/api";
-import CommonThreeDots from "../common/commonThreeDots";
+import CommonThreeDots from "../common/Common function/commonThreeDots";
 import SelectBox from "../common/Common function/SelectBox";
 export default function Visa() {
   let location = useLocation();

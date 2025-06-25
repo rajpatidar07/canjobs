@@ -423,9 +423,11 @@ export default function AdminTaskTable(props) {
                             data.subject_description === "0" ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
-                            <div className="m-0" style={{ maxWidth: 300 }}>
+                            <div className="m-0" >
                               <div
-                                className="font-size-3 text-italic text-black-2 mb-0 text-truncate"
+                                className="font-size-3 text-italic text-black-2 mb-0 text-warp " style={{
+                                  maxWidth: 400,
+                                }}
                                 title={data.subject_description}
                                 dangerouslySetInnerHTML={{
                                   __html: data.subject_description,
@@ -722,7 +724,7 @@ export default function AdminTaskTable(props) {
             />
           ) : null}
         </ModalSidebar>
-      </div>
+      </div >
 
       <SAlert
         show={deleteAlert}

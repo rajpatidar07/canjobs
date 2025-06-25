@@ -42,7 +42,7 @@ import determineBackgroundColor from "./Common function/DetermineBackgroundColou
 import CommentTaskBox from "./commonTaskBox";
 import ModalSidebar from "./modalSidebar";
 import { BsChat } from "react-icons/bs";
-import CommonThreeDots from "./commonThreeDots";
+import CommonThreeDots from "./Common function/commonThreeDots";
 import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
 import filterjson from "../json/filterjson";
 import ApplicantTypeTimeLine from "./ApplicantTypeTimeLine";

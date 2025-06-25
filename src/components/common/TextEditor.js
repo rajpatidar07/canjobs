@@ -539,7 +539,7 @@ export default function TextEditor({ state, setState, page, identifier, adminSig
 
 
   const editorStyle = {
-    height: '10rem',
+    height: 'auto',
     padding: '1rem',
     cursor: 'text',
   };
@@ -573,6 +573,17 @@ export default function TextEditor({ state, setState, page, identifier, adminSig
       </div>
     );
   };
+  const editorWrapperStyle = {
+    display: "block",
+    width: "100%",
+    color: "#6b6e6f",
+    backgroundColor: "#fff",
+    border: "1px solid #e5e5e5",
+    borderRadius: "0.3125rem",
+    resize: "vertical",
+    overflow: "auto",
+    minHeight: "10rem",  // Minimum height
+  };
 
   return (
     <div>
@@ -581,17 +592,10 @@ export default function TextEditor({ state, setState, page, identifier, adminSig
         onEditorStateChange={handleEditorChange}
         onBlur={handleBlur}
         blockRendererFn={blockRenderer}
-        wrapperStyle={{
-          display: "block",
-          width: "100%",
-          color: "#6b6e6f",
-          backgroundColor: "#fff",
-          border: "1px solid #e5e5e5",
-          borderRadius: "0.3125rem",
-        }}
+        wrapperStyle={editorWrapperStyle}
         editorStyle={editorStyle}
         toolbar={{
-          options: ['inline', 'list', 'image'],
+          options: ['inline', 'list'],
           inline: { options: ['bold', 'italic'] },
           list: { options: ['unordered', 'ordered'] },
         }}

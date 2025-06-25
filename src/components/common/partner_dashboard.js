@@ -10,7 +10,7 @@ import PartnerPage from "./partner_page";
 import PartnerTAble from "./PartnerTAble";
 import SAlert from "../common/sweetAlert";
 import { toast } from "react-toastify";
-import CommonThreeDots from "./commonThreeDots";
+import CommonThreeDots from "./Common function/commonThreeDots";
 // import FilterJson from "../json/filterjson";
 function PartnerDashboard() {
   /*Show modal states */

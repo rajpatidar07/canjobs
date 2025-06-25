@@ -9,7 +9,7 @@ import { getApplicanTypeApi } from "../../api/api";
 import ApplicantTypeDocuments from "./ApplicantTypeDocuments";
 import ModalSidebar from "./modalSidebar";
 import CommentTaskBox from "./commonTaskBox";
-import CommonThreeDots from "./commonThreeDots";
+import CommonThreeDots from "./Common function/commonThreeDots";
 import SelectBox from "./Common function/SelectBox";
 
 export default function CommonApplicatTypePage() {

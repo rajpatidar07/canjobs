@@ -1,4 +1,8 @@
 # Deploy on live
+1. Add all email types to be sent to the Admin, Applicant, Client, and Agent from the Admin module.
+2. Make the TextEditor stretchable for the email description and all other places where it is used.
+3. Add employee and employer IDs to the filter, and include the list of payment invoice records and the task dashboard.
+4. Manage the space for the description and group by section in the task dashboard.
 Date: 23/06/25
 1. Create the new Retainer Agreement for Work permit application for 2 stages.
 2. Add business fields to the renewal application and employer retainer agreement.

@@ -4,12 +4,14 @@ import { SendEmail } from "../../../api/api";
 import { toast } from "react-toastify";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import TextEditor from "../../common/TextEditor";
+import { Link } from "react-router-dom"
+import { LiaFileSignatureSolid } from "react-icons/lia";
 function SendMailForm({ email, setApiCall }) {
   const [loading, setLoading] = useState(false);
   const [fileBase, setFileBase] = useState("");
   const [fileNames, setFileNames] = useState([]);
-  let adminSignature = localStorage.getItem("admin_signature")
-
+  let adminSignature = localStorage.getItem("admin_signature");
+  const [signatureImage, setSignatureImage] = useState(adminSignature || null);
   let AdminEmail = localStorage.getItem("admin_email");
   let userrType = localStorage.getItem("userType");
   /*Render function to get the Response*/
@@ -23,7 +25,8 @@ function SendMailForm({ email, setApiCall }) {
     email: email,
     adminemail: "",
     bccemail: "",
-    signature: adminSignature || ""
+    signature: signatureImage || "",
+    additionalText: ""
   };
 
   /*Validation */
@@ -218,7 +221,11 @@ function SendMailForm({ email, setApiCall }) {
     if (validate()) {
       try {
         setLoading(true);
-        let Response = await SendEmail(state, fileBase);
+        let payload = { ...state };
+        if (signatureImage) {
+          payload.signatureImage = signatureImage;
+        }
+        let Response = await SendEmail(payload, fileBase);
         setLoading(false);
         if (Response.message === "email sent successfully") {
           toast.success("Email sent successfully", {
@@ -227,7 +234,7 @@ function SendMailForm({ email, setApiCall }) {
           });
           setLoading(false);
           setState(initialFormState);
-          // setFileBase("");
+          setSignatureImage(null);
           setFileNames([]);
           setErrors("");
           setApiCall(true);
@@ -239,8 +246,8 @@ function SendMailForm({ email, setApiCall }) {
           });
           setLoading(false);
           setState(initialFormState);
+          setSignatureImage(null);
           setErrors("");
-          // setFileBase("");
           setFileNames([]);
         }
         if (Response.message === "Fields must not be empty!") {
@@ -250,14 +257,14 @@ function SendMailForm({ email, setApiCall }) {
           });
           setLoading(false);
           setState(initialFormState);
+          setSignatureImage(null);
           setErrors("");
-          // setFileBase("");
           setFileNames([]);
         }
       } catch (err) {
         console.log(err);
         setLoading(false);
-        // setFileBase("");
+        setSignatureImage(null);
         setFileNames([]);
         setErrors("");
         setState(initialFormState);
@@ -269,14 +276,16 @@ function SendMailForm({ email, setApiCall }) {
     const value = e.target.value;
     const emailArray = value.split(",").map((email) => email.trim()); // Split emails and trim whitespace
 
-   if(userrType==="admin"){ setState((prevState) => ({
-      ...prevState,
-      adminemail: [AdminEmail, ...emailArray.filter((email) => email !== AdminEmail)], // Ensure AdminEmail is always first
-    }));}else{
+    if (userrType === "admin") {
       setState((prevState) => ({
-      ...prevState,
-      adminemail: emailArray, // Ensure AdminEmail is always first
-    }))
+        ...prevState,
+        adminemail: [AdminEmail, ...emailArray.filter((email) => email !== AdminEmail)], // Ensure AdminEmail is always first
+      }));
+    } else {
+      setState((prevState) => ({
+        ...prevState,
+        adminemail: emailArray, // Ensure AdminEmail is always first
+      }))
     }
   };
   // Update adminemail state to ensure multiple emails are comma-separated
@@ -288,6 +297,20 @@ function SendMailForm({ email, setApiCall }) {
       ...prevState,
       bccemail: [...emailArray], // Ensure AdminEmail is always first
     }));
+  };
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSignatureImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const triggerFileInput = () => {
+    document.getElementById("signatureImageInput").click();
   };
   return (
     <div>
@@ -409,6 +432,62 @@ function SendMailForm({ email, setApiCall }) {
                 </span>
               )}
             </div>
+          </div>
+          <div className="mb-2 col-12">
+            <label
+              htmlFor="additionalText"
+              className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+            >
+              Signature Text:
+            </label>
+            <textarea
+              name="additionalText"
+              value={state.additionalText || ""}
+              onChange={onInputChange}
+              rows={4}
+              className="form-control"
+              placeholder="Enter Signature text here"
+              id="additionalText"
+            />
+          </div>
+          <div className="mb-2 col-12">
+            <label className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0">
+              Signature Image:
+            </label>
+
+            {signatureImage ? (
+              <div className="mb-2">
+                <img
+                  src={signatureImage}
+                  alt="Signature"
+                  style={{ maxWidth: "200px", maxHeight: "100px" }}
+                />
+                <Link
+                  className="btn btn-link p-0 mt-1"
+                  onClick={triggerFileInput}
+                >
+                  Change Signature Image
+                </Link>
+              </div>
+            ) : (
+              <div>
+                <Link
+                  type="button"
+                  className="text-dark display-2"
+                  onClick={triggerFileInput}
+                >
+                  <LiaFileSignatureSolid />
+                </Link>
+              </div>
+            )}
+
+            <input
+              type="file"
+              accept="image/*"
+              id="signatureImageInput"
+              onChange={handleImageChange}
+              className="form-control d-none"
+            />
           </div>
           <div className="mail-file-attachments">
             {fileNames.map((fileName) => (

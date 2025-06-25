@@ -397,11 +397,12 @@ export default function AddTaskForm(props) {
                   ? `${item.company_id},employer`
                   : `${item.id},applicant_type`;
 
-              const label = item.employee_id
-                ? `${item.name} (Candidate)`
-                : item.company_id
-                  ? `${item.company_name} (Client)`
-                  : `${item.title} (Applicant Type)` || "Unknown User";
+              const label =
+                item.employee_id
+                  ? `${item.name} (${item.employee_id} - Candidate)`
+                  : item.company_id
+                    ? `${item.company_name} (${item.company_id} - Client)`
+                    : `${item.title} (Applicant Type)` || "Unknown User"
 
               return { value, label };
             })}

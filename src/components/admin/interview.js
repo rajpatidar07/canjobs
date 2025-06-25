@@ -4,7 +4,7 @@ import AdminSidebar from "./sidebar";
 import Interview from "../common/interviewTable";
 import { useEffect } from "react";
 import { getInterview } from "../../api/api";
-import CommonThreeDots from "../common/commonThreeDots";
+import CommonThreeDots from  "../common/Common function/commonThreeDots";
 export default function ManageInterview() {
   /*Search state */
   let [search, setSearch] = useState("");

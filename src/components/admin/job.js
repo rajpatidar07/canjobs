@@ -8,7 +8,7 @@ import AddJobModal from "../forms/employer/job";
 import { GetAllJobs, GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import JobTable from "../common/jobTable";
-import CommonThreeDots from "../common/commonThreeDots";
+import CommonThreeDots from  "../common/Common function/commonThreeDots";
 import SelectBox from "../common/Common function/SelectBox";
 
 function Job(props) {

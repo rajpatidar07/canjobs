@@ -219,11 +219,12 @@ const PaymentTable = (props) => {
                               : option.company_id
                                 ? `${option.company_id},employer`
                                 : `${option.id},applicant_type`,
-                            label: option.employee_id
-                              ? option.name + " (Candidate)"
-                              : option.company_id
-                                ? option.company_name + " (Client)"
-                                : option.title + " (Applicant Type)" || "unknown user",
+                            label:
+                              option.employee_id
+                                ? `${option.employee_id} - ${option.name} (Candidate)`
+                                : option.company_id
+                                  ? `${option.company_id} - ${option.company_name} (Client)`
+                                  : `${option.id} - ${option.title} (Applicant Type)` || "Unknown User"
                           })) || [])}
                           selectedValue={state.user_id + "," + state.user_type}
                           onChange={(e) => {
@@ -377,11 +378,12 @@ const PaymentTable = (props) => {
                                 : option.company_id
                                   ? `${option.company_id},employer`
                                   : `${option.id},applicant_type`,
-                              label: option.employee_id
-                                ? option.name + " (Candidate)"
-                                : option.company_id
-                                  ? option.company_name + " (Client)"
-                                  : option.title + " (Applicant Type)" || "unknown user",
+                              label:
+                                option.employee_id
+                                  ? `${option.name} (${option.employee_id} - Candidate)`
+                                  : option.company_id
+                                    ? `${option.company_name} (${option.company_id} - Client)`
+                                    : `${option.title} (Applicant Type)` || "Unknown User"
                             })) || []) : []}
                             selectedValue={record.user_id + "," + record.user_type}
                             onChange={(e) => {
