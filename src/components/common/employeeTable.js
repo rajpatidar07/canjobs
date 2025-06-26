@@ -81,9 +81,7 @@ export default function EmployeeTable(props) {
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
   // const [statusList, ] = useState([...filterjson.employee_status]);
-
   const statusList = [...filterjson.employee_status];
-
   /*Pagination states */
   const [status, setStatus] = useState(
     StatusTab
@@ -96,8 +94,6 @@ export default function EmployeeTable(props) {
             ? "0,1,2,3,5,6"
             : "4,7,8,9"
   );
-
-
   const [totalData, setTotalData] = useState("");
   const [recordsPerPage] = useState(10);
   /*Shorting states */
@@ -213,10 +209,12 @@ export default function EmployeeTable(props) {
       console.log(err);
     }
   };
+
   useEffect(() => {
     if (canID) setCandidateId(canID);
     if (taskID) setTaskId(taskID);
   }, [location.key, canID, taskID]);
+
   /*Render function to get the employer*/
   useEffect(() => {
     EmpData();
@@ -227,7 +225,6 @@ export default function EmployeeTable(props) {
     if (alredyApplied === true) {
       setAlredyApplied(false);
     }
-
     // eslint-disable-next-line
   }, [
     location.key,
@@ -316,6 +313,7 @@ export default function EmployeeTable(props) {
   // setemployeeId(e);
   // };
   // /*
+
   /*To call Api to delete employee */
   async function deleteEmployee(e) {
     try {
@@ -381,24 +379,28 @@ export default function EmployeeTable(props) {
     setemployeeId(e);
     setShowStatusChange(true);
   };
+
   /*function to Open  change applicants category Modal */
   const ChangeApplicantsCategory = (e) => {
     setemployeeId(e);
     setShowEmployeeMOdal(true);
     setPageNameForForm("Category");
   };
+
   /*function to Open  change applicants type Modal */
   const ChangeApplicantsType = (e) => {
     setemployeeId(e);
     setShowEmployeeMOdal(true);
     setPageNameForForm("ApplicantType");
   };
+
   /*function to Open  change applicants Agent "Reffer_by" Modal */
   const ChangeApplicantsAgent = (e) => {
     setemployeeId(e);
     setShowEmployeeMOdal(true);
     setPageNameForForm("agentAssigned");
   };
+
   /*Function to get the new user */
   // const currentDate = new Date(); // Get current date
   // const oneMonthAgo = new Date(); // Create a new date object for one month ago
@@ -407,6 +409,7 @@ export default function EmployeeTable(props) {
   // function isTimeWithin24Hours(createdTime) {
   //   return Date.now() - new Date(createdTime).getTime() <= 86400000;
   // }
+  /*Function to clear the page no of the pagination */
   const clearPageNo = () => {
     localStorage.removeItem("PageNo");
     props.setpageNo(1);
@@ -418,6 +421,7 @@ export default function EmployeeTable(props) {
   //   // You may need to call an API to update the status in the backend
   // };
 
+  /*Onchange function to change the status */
   const OnStatusChange = async (e, empdata, eventKey) => {
     e.preventDefault();
     setIsLoading(true);
@@ -462,6 +466,7 @@ export default function EmployeeTable(props) {
       setIsLoading(false);
     }
   };
+  /*Function to change the applicant type of the employee */
   const OnApplicantTypeChange = async (e, empdata, eventKey) => {
     e.preventDefault();
     setIsLoading(true);
@@ -493,6 +498,7 @@ export default function EmployeeTable(props) {
 
   // setStatusList(filterjson.employee_status);
 
+  /*Function to get the parent interested in of the employee that is applicant type */
   let ApplicantType = (id) => {
     const selectedItem = applicantTypeList.find((item) => item.id === id);
     if (!selectedItem) return null; // Handle case where no match is found
@@ -510,6 +516,7 @@ export default function EmployeeTable(props) {
     }
   };
 
+  /*Function to get the child interested in of the employee that is sub applicant type */
   let ApplicantSubType = (id) => {
     const selectedItem = applicantTypeList.find((item) => item.id === id);
     if (!selectedItem) return null; // Handle case where no match is found
@@ -648,11 +655,8 @@ export default function EmployeeTable(props) {
         {props.heading === "Dashboard" ? null : (
           <div className="d-flex justify-content-between align-items-center w-100">
             <div
-              className={`btn-group mb-3 ${props.skill || location.pathname === "/slots" ? "d-none" : ""
-                }`}
-              role="group"
-              aria-label="Basic example"
-            >
+              className={`btn-group mb-3 ${props.skill || location.pathname === "/slots" ? "d-none" : ""}`}
+              role="group" aria-label="Basic example">
               <button
                 type="button"
                 className={

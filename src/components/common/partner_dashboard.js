@@ -18,7 +18,6 @@ function PartnerDashboard() {
   let [showAddEAgentModal, setShowAgentMOdal] = useState(false);
   /*data and id states */
   let [agentId, setAgentId] = useState();
-
   /*delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
@@ -41,6 +40,7 @@ function PartnerDashboard() {
     setShowAgentMOdal(true);
     setAgentId(e);
   };
+
   /*Function to search the agent */
   const onSearch = (e) => {
     const inputValue = e.target.value;
@@ -66,7 +66,7 @@ function PartnerDashboard() {
     setDeleteAlert(true);
   };
 
-  //   /*To cancel the delete alert box */
+  /*To cancel the delete alert box */
   const CancelDelete = () => {
     setDeleteAlert(false);
   };
@@ -92,28 +92,15 @@ function PartnerDashboard() {
     <>
       <div className={"site-wrapper overflow-hidden bg-default-2"}>
         {/* <!-- Header Area --> */}
-        <AdminHeader
-          heading={
-            user_type === "agent" ? "Partner Dashboard" : "Manage Partner"
-          }
-        />
+        <AdminHeader heading={user_type === "agent" ? "Partner Dashboard" : "Manage Partner"}/>
         {/* <!-- navbar- --> */}
-        <AdminSidebar
-          heading={
-            user_type === "agent" ? "Partner Dashboard" : "Manage Partner"
-          }
-        />
-
-        {/* <!--Add Adgent Details Modal --> */}
-
+        <AdminSidebar heading={user_type === "agent" ? "Partner Dashboard" : "Manage Partner"}/>
+        {/* <!--Add Agent Details Modal --> */}
         <div className={"dashboard-main-container mt-14"} id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">
               <div
-                className={
-                  user_type === "agent" ? "d-none" : "mb-4 align-items-center"
-                }
-              >
+                className={user_type === "agent" ? "d-none" : "mb-4 align-items-center"}>
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Partner's</h3>
                 </div>
