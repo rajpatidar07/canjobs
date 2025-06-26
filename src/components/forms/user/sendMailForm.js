@@ -1,22 +1,21 @@
 import React, { /*useEffect,*/ useState } from "react";
 import useValidation from "../../common/useValidation";
-import { SendEmail } from "../../../api/api";
+import { AddAdmin, SendEmail } from "../../../api/api";
 import { toast } from "react-toastify";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import TextEditor from "../../common/TextEditor";
 import { Link } from "react-router-dom"
 import { LiaFileSignatureSolid } from "react-icons/lia";
+import { IoMdClose } from "react-icons/io";
 function SendMailForm({ email, setApiCall }) {
   const [loading, setLoading] = useState(false);
   const [fileBase, setFileBase] = useState("");
   const [fileNames, setFileNames] = useState([]);
   let adminSignature = localStorage.getItem("admin_signature");
+  let adminSignatureText = localStorage.getItem("admin_signature_text");
   const [signatureImage, setSignatureImage] = useState(adminSignature || null);
   let AdminEmail = localStorage.getItem("admin_email");
   let userrType = localStorage.getItem("userType");
-  /*Render function to get the Response*/
-  // useEffect(() => {
-  // }, []);
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
@@ -26,7 +25,7 @@ function SendMailForm({ email, setApiCall }) {
     adminemail: "",
     bccemail: "",
     signature: signatureImage || "",
-    additionalText: ""
+    signature_text: adminSignatureText || ""
   };
 
   /*Validation */
@@ -64,7 +63,7 @@ function SendMailForm({ email, setApiCall }) {
   const { state, setState, onInputChange, errors, setErrors, validate } =
     useValidation(initialFormState, validators);
 
-  /*On change fnction to upload bulk document in 1 array*/
+  /*On change function to upload bulk document in 1 array*/
   // const handleBulkFileChange = async (event) => {
   //   const files = event.target.files;
 
@@ -125,6 +124,7 @@ function SendMailForm({ email, setApiCall }) {
   //     reader.readAsDataURL(file);
   //   }
   // };
+
   /*Function to convert file to base64 */
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -138,7 +138,9 @@ function SendMailForm({ email, setApiCall }) {
       };
     });
   };
-  const handleBulkFileChange = async (event, id) => {
+
+  /* Function to add files in bulk*/
+  const AddAttachmentChange = async (event, id) => {
     const files = event.target.files;
     {
       // Check the number of files selected
@@ -206,7 +208,8 @@ function SendMailForm({ email, setApiCall }) {
       // Store the object of files
     }
   };
-  //Function to Remove any attechment
+
+  //Function to Remove any attachments
   const handleRemoveFile = (fileName) => {
     const newFileBase = { ...fileBase };
     const newFileNames = fileNames.filter((name) => name !== fileName);
@@ -219,6 +222,19 @@ function SendMailForm({ email, setApiCall }) {
   const onSendMailClick = async () => {
     // console.log(state.signature);
     if (validate()) {
+      if (state.signature_text || signatureImage) {
+        let data = {
+          admin_id: localStorage.getItem("admin_id"),
+          signature: state.signature_text,
+          signature_image: signatureImage
+        }
+        // Combine text and image into one base64 image
+        const responseData = await AddAdmin(data);
+        if (responseData.message === "admin updated successfully") {
+          localStorage.setItem("admin_signature", signatureImage)
+          localStorage.setItem("admin_signature_text", state.signature_text)
+        }
+      }
       try {
         setLoading(true);
         let payload = { ...state };
@@ -233,8 +249,7 @@ function SendMailForm({ email, setApiCall }) {
             autoClose: 1000,
           });
           setLoading(false);
-          setState(initialFormState);
-          setSignatureImage(null);
+          setState({ ...state, ...initialFormState, signature_text: state.signature_text });
           setFileNames([]);
           setErrors("");
           setApiCall(true);
@@ -271,6 +286,7 @@ function SendMailForm({ email, setApiCall }) {
       }
     }
   };
+
   // Update adminemail state to ensure multiple emails are comma-separated
   const handleAdminCCEmailChange = (e) => {
     const value = e.target.value;
@@ -304,6 +320,7 @@ function SendMailForm({ email, setApiCall }) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setSignatureImage(reader.result);
+        setState({ ...state, signature: reader.result })
       };
       reader.readAsDataURL(file);
     }
@@ -435,19 +452,19 @@ function SendMailForm({ email, setApiCall }) {
           </div>
           <div className="mb-2 col-12">
             <label
-              htmlFor="additionalText"
+              htmlFor="signature_text"
               className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
             >
               Signature Text:
             </label>
             <textarea
-              name="additionalText"
-              value={state.additionalText || ""}
+              name="signature_text"
+              value={state.signature_text || ""}
               onChange={onInputChange}
               rows={4}
               className="form-control"
               placeholder="Enter Signature text here"
-              id="additionalText"
+              id="signature_text"
             />
           </div>
           <div className="mb-2 col-12">
@@ -480,7 +497,6 @@ function SendMailForm({ email, setApiCall }) {
                 </Link>
               </div>
             )}
-
             <input
               type="file"
               accept="image/*"
@@ -498,7 +514,7 @@ function SendMailForm({ email, setApiCall }) {
                   className="mail-remove-file"
                   onClick={() => handleRemoveFile(fileName)}
                 >
-                  X
+                  <IoMdClose />
                 </button>
               </div>
             ))}
@@ -511,7 +527,7 @@ function SendMailForm({ email, setApiCall }) {
                 accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                 style={{ display: "none" }}
                 onChange={(e) => {
-                  handleBulkFileChange(e);
+                  AddAttachmentChange(e);
                 }}
                 placeholder="Attach file"
                 multiple
@@ -548,5 +564,4 @@ function SendMailForm({ email, setApiCall }) {
     </div>
   );
 }
-
 export default SendMailForm;

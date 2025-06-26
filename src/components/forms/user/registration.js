@@ -5,7 +5,7 @@ import useValidation from "../../common/useValidation";
 import PasswordInput from "../../common/Common function/PasswordInput";
 
 function Registration(props) {
-  // USER CARRER PROFILE VALIDATION
+  // USER CAREER PROFILE VALIDATION
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
@@ -18,6 +18,7 @@ function Registration(props) {
     userdol: "",
     worklevel: "",
   };
+
   // VALIDATION CONDITIONS
   const validators = {
     companyname: [
@@ -56,19 +57,20 @@ function Registration(props) {
         value === "" || value.trim() === "" ? "Work Level is required" : null,
     ],
   };
+
   // CUSTOM VALIDATIONS IMPORT
   const { state, onInputChange, errors, validate } = useValidation(
     initialFormState,
     validators
   );
-  // USER CARRER PROFILE SUBMIT BUTTON
+
+  // USER CAREER PROFILE SUBMIT BUTTON
   const onCarrerProfileClick = (event) => {
     event.preventDefault();
     if (validate()) {
     }
   };
-  // END USER CARRER PROFILE VALIDATION
-  return (
+    return (
     <>
       <Modal
         show={props.show}

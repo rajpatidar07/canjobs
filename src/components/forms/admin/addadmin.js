@@ -10,6 +10,9 @@ import "react-toastify/dist/ReactToastify.css";
 import filterjson from "../../json/filterjson";
 import PasswordInput from "../../common/Common function/PasswordInput";
 import SelectBox from "../../common/Common function/SelectBox";
+import { LiaFileSignatureSolid } from "react-icons/lia";
+import { FaEdit } from "react-icons/fa";
+import { Link } from "react-router-dom";
 // import Permissions from "../../json/emailPermisionJson";
 
 function Addadmin(props) {
@@ -18,6 +21,11 @@ function Addadmin(props) {
   let [already, setAlready] = useState("");
   let [loading, setLoading] = useState(false);
   let admin_type = localStorage.getItem("admin_type")
+  let admin_id = localStorage.getItem("admin_id")
+  let adminSignature = props.adminId === admin_id ? localStorage.getItem("admin_signature") : "";
+  let adminSignatureText = props.adminId === admin_id ? localStorage.getItem("admin_signature") : "";
+  const [signatureImage, setSignatureImage] = useState(adminSignature || null);
+
   /* Functionality to close the modal */
   const close = () => {
     setState(initialFormState);
@@ -36,6 +44,8 @@ function Addadmin(props) {
     admin_type: "",
     contact_no: "",
     profile_image: "",
+    signature: adminSignatureText || "",
+    signature_image: signatureImage || ""
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -164,6 +174,8 @@ function Addadmin(props) {
             autoClose: 1000,
           });
           props.setApiCall(true);
+          localStorage.setItem("admin_signature", signatureImage)
+          localStorage.setItem("admin_signature_text", state.signature_text)
           return close();
         }
         if (responseData.message === "admin updated successfully") {
@@ -172,6 +184,8 @@ function Addadmin(props) {
             autoClose: 1000,
           });
           props.setApiCall(true);
+          localStorage.setItem("admin_signature", signatureImage)
+          localStorage.setItem("admin_signature_text", state.signature_text)
           return close();
         }
         if (responseData.message === "Admin already exists") {
@@ -186,8 +200,22 @@ function Addadmin(props) {
       setLoading(false);
     }
   };
-  // END USER ADMIN PROFILE UPDATE VALIDATION
-  return (
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSignatureImage(reader.result);
+        setState({ ...state, signatur_image: reader.result })
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const triggerFileInput = () => {
+    document.getElementById("signatureImageInput").click();
+  }; return (
     <>
       <Modal
         show={props.show}
@@ -359,7 +387,7 @@ function Addadmin(props) {
                 </span>
               )}
             </div>
-            {console.log(state.admin_id && (admin_type !== "admin" && admin_type !== "super-admin") ? "d-none" : "form-group ",(admin_type !== "admin" && admin_type !== "super-admin"),admin_type)}
+            {console.log(state.admin_id && (admin_type !== "admin" && admin_type !== "super-admin") ? "d-none" : "form-group ", (admin_type !== "admin" && admin_type !== "super-admin"), admin_type)}
             <div className={state.admin_id && (admin_type !== "admin" && admin_type !== "super-admin") ? "d-none" : "form-group "}>
               <label
                 htmlFor="admin_type"
@@ -388,6 +416,62 @@ function Addadmin(props) {
                   {errors.admin_type}
                 </span>
               )}
+            </div>
+            <div className="mb-2 col-12">
+              <label
+                htmlFor="signature"
+                className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+              >
+                Signature Text:
+              </label>
+              <textarea
+                name="signature"
+                value={state.signature || ""}
+                onChange={onInputChange}
+                rows={4}
+                className="form-control"
+                placeholder="Enter Signature text here"
+                id="signature"
+              />
+            </div>
+            <div className="mb-2 col-12">
+              <label className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-2 d-block">
+                Signature Image:
+              </label>
+
+              {signatureImage ? (
+                <div className="mb-2 position-relative d-inline-block">
+                  <img
+                    src={signatureImage}
+                    alt="Signature"
+                    style={{ maxWidth: "200px", maxHeight: "100px" }}
+                  />
+                  <Link
+                    className="position-absolute top-0 end-0 p-1 text-primary"
+                    onClick={triggerFileInput}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <FaEdit size={20} />
+                  </Link>
+                </div>
+              ) : (
+                <div>
+                  <Link
+                    type="button"
+                    className="text-dark display-2"
+                    onClick={triggerFileInput}
+                  >
+                    <LiaFileSignatureSolid />
+                  </Link>
+                </div>
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                id="signatureImageInput"
+                onChange={handleImageChange}
+                className="form-control d-none"
+              />
             </div>
             <span className="text-danger font-size-3">{already}</span>
             <div className="form-group text-center">

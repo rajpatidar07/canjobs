@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { BsChat, BsFileEarmarkWord, BsThreeDots } from "react-icons/bs";
-// import { GrLineChart } from 'react-icons/gr'
-// import { HiOutlineBell } from 'react-icons/hi2'
 import ExportExcelButton from "../exportExcelButton";
 import { Link } from "react-router-dom";
 import { FiFilePlus, FiFolderPlus } from "react-icons/fi";
@@ -17,8 +15,9 @@ export default function CommonThreeDots(props) {
   let [addFileLoading, setAddFileLoading] = useState(false);
   let [openExcelSheet, setOpenExcelSheet] = useState(false);
   let [openWordFile, setOpenWordFile] = useState(false);
-
   let user_type = localStorage.getItem("userType");
+
+  /*Function to add file for the applicant type */
   const AddFileClick = async (event) => {
     // setAddFileClickOn(true);
     setAddFileLoading(true);
@@ -149,7 +148,6 @@ export default function CommonThreeDots(props) {
         <Link className="d-flex align-items-center justify-content-center text-dark">
           <BsThreeDots size={15} />
         </Link>
-
         {isOpen && (
           <div
             className="dropdown-menu show position-absolute bg-white shadow rounded border-0 "

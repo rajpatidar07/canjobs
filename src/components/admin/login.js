@@ -28,10 +28,10 @@ export default function AdminLoginFrom({
         showForgotPassword
           ? ""
           : value === null || value.trim() === ""
-          ? "Email is required"
-          : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? "Email is required"
+            : /\S+@\S+\.\S+/.test(value)
+              ? null
+              : "Email is invalid",
     ],
     password: [
       (value) =>
@@ -42,10 +42,10 @@ export default function AdminLoginFrom({
         state.email
           ? ""
           : value === null || value.trim() === ""
-          ? "Email is required"
-          : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? "Email is required"
+            : /\S+@\S+\.\S+/.test(value)
+              ? null
+              : "Email is invalid",
     ],
   };
   /*----LOGIN ONCHANGE FuNCTION----*/
@@ -76,6 +76,8 @@ export default function AdminLoginFrom({
           localStorage.setItem("admin_type", updatedTodo.user_type);
           localStorage.setItem("admin_email", updatedTodo.email);
           localStorage.setItem("portal", "job");
+          localStorage.setItem("admin_signature", updatedTodo.signature_image)
+          localStorage.setItem("admin_signature_text", updatedTodo.signature)
           toast.success("Logged In Successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,

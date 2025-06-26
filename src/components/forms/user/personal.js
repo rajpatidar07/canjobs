@@ -281,6 +281,8 @@ function PersonalDetails(props) {
   // const onSelectChange = (option) => {
   //   setState({ ...state, reffer_by: option.value });
   // };
+
+  /*Render function to get the agent list */
   useEffect(() => {
     AgentJson();
     if (user_type === "admin") {
@@ -351,7 +353,7 @@ function PersonalDetails(props) {
       setLoading(false);
     }
   }
-  // END USER PERSONAL DETAIL VALIDATION
+
   /*Function to convert file to base64 */
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -365,6 +367,7 @@ function PersonalDetails(props) {
       };
     });
   };
+
   /*Onchange function of Resume */
   const handleUploadFile = async (e) => {
     // const allowedFormats = ["image/jpeg", "image/png", "application/pdf"]; // List of allowed formats
@@ -385,6 +388,7 @@ function PersonalDetails(props) {
       });
     }
   };
+
   /*Onchange function of profile */
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -409,6 +413,7 @@ function PersonalDetails(props) {
     let base64Name = encoded.base64;
     setState({ ...state, profile_photo: base64Name });
   };
+
   /* Functionality to close the modal */
   const close = () => {
     setState(initialFormStateuser);
@@ -470,7 +475,7 @@ function PersonalDetails(props) {
               <i className="fas fa-times"></i>
             </button>
             <div className="bg-white rounded h-100 px-11 pt-7">
-              <form onSubmit={onUserPersonalDetailClick}>
+              <form onSubmit={(e) => onUserPersonalDetailClick(e)}>
                 {props.employeeId === "0" ? (
                   <h5 className="text-center pt-2 mb-7">
                     Add Candidate Details
@@ -588,10 +593,6 @@ function PersonalDetails(props) {
                     )}
                   </div>
                   <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
-
-
-
-
                     <label
                       htmlFor="contact_no"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -611,7 +612,6 @@ function PersonalDetails(props) {
                       >
                         {countryCode || 'Code'}
                       </span>
-
                       {showDropdown && (
                         <ul className="dropdown-menu show" style={{ position: 'absolute', top: '100%', left: 0 }}>
                           {(FilterJson.location || []).map((item, index) => (
@@ -723,7 +723,6 @@ function PersonalDetails(props) {
                       }
                       id="date_of_birth"
                     />
-
                     {/*----ERROR MESSAGE FOR DOB----*/}
                     {errors.date_of_birth && (
                       <span
@@ -734,7 +733,6 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-
                   <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="gender"
@@ -781,7 +779,6 @@ function PersonalDetails(props) {
                       setState={setState}
                       page={"description"}
                     />
-
                     {/* <textarea
                       name="description"
                       value={state.description || ""}
@@ -942,7 +939,6 @@ function PersonalDetails(props) {
                         placeholder="Select Country"
                       />
                     </div>
-
                     {/*----ERROR MESSAGE FOR COUNTRY----*/}
                     {errors.currently_located_country && (
                       <span
@@ -953,7 +949,6 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-
                   {/* FOURTH LINE */}
                   <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                     <label
@@ -961,7 +956,6 @@ function PersonalDetails(props) {
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
                       English level {/*(Max 3)*/}:
-
                     </label>
                     <select
                       name="language"
@@ -1026,7 +1020,6 @@ function PersonalDetails(props) {
                   </span>
                 )}
               </div> */}
-
                   {/* <div className={`form-group  ${props.user_of_page === "assignedUser" ||
                     props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" || props.pageNameForForm === "Category" || portal === "study"
                     ? "d-none"
@@ -1123,8 +1116,7 @@ function PersonalDetails(props) {
                       </select>
                     </div>
                   }
-                 
-                  {(applicantTypeList.filter((item) => item.parent_id == state.interested_in_id).length > 0 &&
+                   {(applicantTypeList.filter((item) => item.parent_id == state.interested_in_id).length > 0 &&
                     applicantTypeList?.find((item) => item.parent_id == state.interested_in_id).level == 1) && (
                       <div className={`form-group ${props.user_of_page === "assignedUser" ||
                         props.user_of_page === "agentAssigned" ||
@@ -1191,14 +1183,12 @@ function PersonalDetails(props) {
                         placeholder="Select Main Type"
                       />
                     </div>
-
                     {errors.interested_in_id && (
                       <span className="text-danger font-size-3">
                         {errors.interested_in_id}
                       </span>
                     )}
                   </div>
-
                   {/* SUB TYPE */}
                   {main && applicantTypeList.some(item => item.level === "1" && item.parent_id === main) && (
                     <div className="form-group col-md-4">
@@ -1228,10 +1218,8 @@ function PersonalDetails(props) {
                           placeholder="Select Sub Type"
                         />
                       </div>
-
                     </div>
                   )}
-
                   {/* SUB SUB TYPE */}
                   {sub && applicantTypeList.some(item => item.level === "2" && item.parent_id === sub) && (
                     <div className="form-group col-md-4">
@@ -1261,9 +1249,7 @@ function PersonalDetails(props) {
                           placeholder="Select Sub Sub Type"
                         />
                       </div>
-
                     </div>)}
-
                   <div className={`form-group col-md-4
                   ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
                       || props.pageNameForForm === "ApplicantType" || props.pageNameForForm === "Category" ? "d-none" : ""}`}>
@@ -1290,7 +1276,6 @@ function PersonalDetails(props) {
                         })
                       }
                     />
-
                     {/*----ERROR MESSAGE FOR experience----*/}
                     {errors.experience && (
                       <span
@@ -1307,7 +1292,6 @@ function PersonalDetails(props) {
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
                       If Candidate is Inside Canada
-
                     </label>
                     <select
                       name="work_permit_canada"
@@ -1364,7 +1348,6 @@ function PersonalDetails(props) {
                         })
                       }
                     />
-
                     {/*----ERROR MESSAGE FOR OTHER COUNTRY PERMIT----*/}
                     {errors.work_permit_other_country && (
                       <span
@@ -1402,7 +1385,6 @@ function PersonalDetails(props) {
                       className={errors.reffer_by ? "form-control border border-danger px-0 pt-4" : "form-control px-0 pt-4 border-0"}
                     /> */}
                       <div className={errors.reffer_by ? "border border-danger rounded" : ""}>
-
                         <SelectBox
                           Width={"yes"}
                           options={agentList.map((item) => ({
@@ -1435,7 +1417,6 @@ function PersonalDetails(props) {
                       >
                         +
                       </span>
-
                     </div>
                     {/* ERROR MSG FOR REFFER BY */}
                     {errors.reffer_by && (
@@ -1502,7 +1483,6 @@ function PersonalDetails(props) {
                           : "text-capitalize"
                       }
                     />
-
                     {/* <span
                       className="btn btn-sm btn-secondary"
                       onClick={() => setShowAdminMOdal(true)}
@@ -1515,7 +1495,6 @@ function PersonalDetails(props) {
                     >
                       +
                     </span>  */}
-
                     {/* ERROR MSG FOR REFFER BY  */}
                     {errors.assigned_by && (
                       <span
@@ -1526,7 +1505,6 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-
                   <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser"
                     || props.pageNameForForm === "ApplicantType" ||
                     props.pageNameForForm === "Category" ||
@@ -1570,7 +1548,6 @@ function PersonalDetails(props) {
                         htmlFor="fetured"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
-
                         <input
                           type="checkbox"
                           id="fetured"
@@ -1600,7 +1577,6 @@ function PersonalDetails(props) {
                         htmlFor="addlocal"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
-
                         <input
                           type="checkbox"
                           id="addlocal"
@@ -1654,5 +1630,4 @@ function PersonalDetails(props) {
     </>
   );
 }
-
 export default PersonalDetails;
