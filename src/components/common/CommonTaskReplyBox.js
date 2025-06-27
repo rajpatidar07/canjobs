@@ -24,7 +24,11 @@ export default function CommonTaskReplyBox(props) {
   // let [selectedPartner, setSelectedPartner] = useState("");
   const [commentsReplyList, setCommentsReplyList] = useState([]);
   const [apiCall, setApicall] = useState(false);
-  const [taskId] = useState(props.taskData?.id);
+  const [taskId, setTaskId] = useState(props.taskData?.id);
+
+  useEffect(() => {
+    setTaskId(props.taskData?.id);
+  }, [props.taskData?.id]);
   const commentReplyRefs = useRef({})
   const AdminType = localStorage.getItem("admin_type");
   let admin_id =
@@ -63,6 +67,13 @@ export default function CommonTaskReplyBox(props) {
 
           if (props.replyId && commentReplyRefs.current[props.replyId]) {
             commentReplyRefs.current[props.replyId].scrollIntoView({ behavior: "smooth", block: "center" });
+            // Clear the URL search params after scrolling
+            if (window.history && window.history.replaceState) {
+              const url = new URL(window.location);
+              url.searchParams.delete("replyId");
+              url.searchParams.delete("taskId");
+              window.history.replaceState({}, document.title, url.toString());
+            }
           }
         }
         if (

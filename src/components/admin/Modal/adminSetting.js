@@ -12,7 +12,7 @@ import {
 } from "../../../api/api";
 import { toast } from "react-toastify";
 import ParentSetting from "../../common/parentSetting";
-
+/*List of email types for the admin */
 const emailKeys = [
   "lmia",
   "visa",
@@ -24,7 +24,8 @@ const emailKeys = [
   "notes",
   "task_created_by_admin_task",
   "reply_on_admin_doc",
-  "forget_password"]
+  "forget_password",
+  "add_job_company"]
 const notificationKeys = ["lmia", "visa", "interview", "job"];
 
 function AdminSetting({ show, close, setShowChangePass }) {
@@ -35,6 +36,7 @@ function AdminSetting({ show, close, setShowChangePass }) {
   const [emailAuthLink, setEmailAuthLink] = useState({});
   const [sharePointData, setSharePointData] = useState({});
 
+  /*"Function to retrieve admin permission data related to the admin settings of the logged-in */
   const GetPermissionData = async () => {
     try {
       const res = await GetAdminrSetting();
@@ -45,6 +47,7 @@ function AdminSetting({ show, close, setShowChangePass }) {
     }
   };
 
+  /*Function to get the auth data of the logged admin */
   const GeEmailAuthData = async () => {
     try {
       const res1 = await GeEmailAuthenticationData();
@@ -57,12 +60,14 @@ function AdminSetting({ show, close, setShowChangePass }) {
     }
   };
 
+  /*Render function to get the permission and the auth data */
   useEffect(() => {
     GeEmailAuthData();
     GetPermissionData();
     if (apiCall) setApiCall(false);
   }, [apiCall]);
 
+  /*Function to grant permission for the type of email and notifications of the admin */
   const togglePermission = async (key) => {
     const isNotif = key.startsWith("notification_");
     const name = isNotif ? key.replace("notification_", "") : key;
@@ -89,6 +94,7 @@ function AdminSetting({ show, close, setShowChangePass }) {
     }
   };
 
+  /*Dynamic rending the types of the email and notification of the admin */
   const renderSwitches = (keys, data, prefix = "") =>
     keys.map((key, i) => (
       <li key={key} className="mb-3 col-6">
@@ -101,7 +107,7 @@ function AdminSetting({ show, close, setShowChangePass }) {
             onChange={() => togglePermission(`${prefix}${key}`)}
           />
           <label className="custom-control-label text-capitalize" htmlFor={`switch_${prefix}${i}`}>
-            {key === "new_user_registered" ? "Applicant's Registration mail":key ==="interview_schedule_admin"?"Interview Scheduled" :key ==="task_created_by_admin_doc"?"Task Created on Document":key ==="task_created_by_admin_task"?"Comments Mail":key==="reply_on_admin_doc"?"Reply mail":key==="forget_password"?"Forget Password": key.charAt(0).toUpperCase() + key.slice(1)}
+            {key === "new_user_registered" ? "Applicant's Registration mail" : key === "interview_schedule_admin" ? "Interview Scheduled" : key === "task_created_by_admin_doc" ? "Task Created on Document" : key === "task_created_by_admin_task" ? "Comments Mail" : key === "reply_on_admin_doc" ? "Reply mail" : key === "forget_password" ? "Forget Password" : key === "add_job_company" ? "Add Job by company" : key.charAt(0).toUpperCase() + key.slice(1)}
           </label>
         </div>
       </li>
@@ -115,17 +121,14 @@ function AdminSetting({ show, close, setShowChangePass }) {
       <div className="bg-white rounded h-100 px-11 pt-10">
         <h3 className="text-center">Settings</h3>
         <ParentSetting setopenAdminSettings={setOpenAdminSettings} setApiCall={setApiCall} />
-
         {openAdminSettings && (
           <>
             <h6 className="text-start mt-4 text-grey">Admin's Email Preferences</h6>
             <ul className="list-unstyled row">{renderSwitches(emailKeys, email)}</ul>
-
             <h6 className="text-start mt-4 text-grey">Admin's Notification Preferences</h6>
             <ul className="list-unstyled row">{renderSwitches(notificationKeys, notification, "notification_")}</ul>
           </>
         )}
-
         <div className="mb-3">
           {emailAuthLink.is_already_authorized === "yes" ? (
             <h4 style={{ color: "#5be15b" }}>Mail already authorized!</h4>

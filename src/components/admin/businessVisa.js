@@ -48,7 +48,7 @@ export default function BusinessVIsa() {
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Business visa</h3>
                 </div>
-                {/*<-- Search Busniness visa -->*/}
+                {/*<-- Search Business visa -->*/}
                 <div className="row m-0 align-items-center">
                   {/* Employees filter's */}
                   <ApplicantsFilter

@@ -11,6 +11,7 @@ function EmailTemplate() {
   let [Email, setEmail] = useState();
 
   let userData = "";
+  
   const GetAllEmail = async () => {
     try {
       userData = await GetAllEmailTemplate();
@@ -19,10 +20,12 @@ function EmailTemplate() {
       console.log(err);
     }
   };
+
   useEffect(() => {
     GetAllEmail();
     // eslint-disable-next-line
   }, []);
+
   /*Function to open Add or edit template */
   const editEmailTemplate = (e) => {
     setShowAddTamplateModal(true);

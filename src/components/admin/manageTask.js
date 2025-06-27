@@ -15,7 +15,7 @@ import AdminListTaskTable from "../common/AdminListTaskTabel";
 import CustomButton from "../common/button";
 import AddTaskForm from "../forms/admin/addTaskForm";
 import { Link, useLocation } from "react-router-dom";
-import CommonThreeDots from  "../common/Common function/commonThreeDots";
+import CommonThreeDots from "../common/Common function/commonThreeDots";
 import { CiSearch } from "react-icons/ci";
 import SelectBox from "../common/Common function/SelectBox";
 
@@ -42,8 +42,16 @@ export default function ManageTask() {
   const [updateTaskData, setUpdateTaskData] = useState();
   const [adminList, setAdminList] = useState([]);
   const [allTaskList, setAllTaskList] = useState([]);
-  const [taskId, setTaskId] = useState(NotifiTaskId)
-  const [replyId, setReplyId] = useState(NotifiReplyId)
+  const [taskId, setTaskId] = useState(NotifiTaskId || "")
+  const [replyId, setReplyId] = useState(NotifiReplyId || "")
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const newTaskId = params.get("taskId") || "";
+    const newReplyId = params.get("replyId") || "";
+    setTaskId(newTaskId);
+    setReplyId(newReplyId);
+  }, [location.search, location.key]);
   const [searchError, setSearchError] = useState("");
   const [search, setSearch] = useState("");
 
@@ -86,6 +94,7 @@ export default function ManageTask() {
       console.log(err);
     }
   };
+
   useEffect(() => {
     if (NotifiTaskId) {
       setTaskId(NotifiTaskId)
@@ -354,8 +363,8 @@ export default function ManageTask() {
                     pageNo={taskPage}
                     setpageNo={setTaskPage}
                     adminType={adminType}
-                    taskId={NotifiTaskId}
-                    replyId={NotifiReplyId}
+                    taskId={taskId}
+                    replyId={replyId}
                     setUpdateTaskData={setUpdateTaskData}
                     setShowTaskForm={setShowTaskForm}
                     setReplyId={setReplyId}

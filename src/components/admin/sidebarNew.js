@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link ,useLocation } from "react-router-dom";
 import {
   MdOutlineDashboardCustomize,
   MdOutlinePhotoFilter,
@@ -57,6 +57,7 @@ const AdminSidebar = (props) => {
   let portal = localStorage.getItem("portal")
   // const [openParent, setOpenParent] = useState(null);
   const [apiCall, setApiCall] = useState(false);
+    const location = useLocation();
   // const [items, setItems] = useState(
   //   applicanttypedata.filter((item) => item.parent_id === "0")
   // );
@@ -248,7 +249,7 @@ const AdminSidebar = (props) => {
       "/setting": "Setting",
     };
 
-    const currentPath = window.location.pathname;
+    const currentPath = location.pathname;
     const matchedHeading = pathToHeadingMap[currentPath];
     if (matchedHeading && props.heading !== matchedHeading) {
       // If your parent component controls `props.heading`, call a function to update it
@@ -257,8 +258,7 @@ const AdminSidebar = (props) => {
       props.setPageHeading(matchedHeading);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  }, [location.key]);
   return (
     <div className={`sidebar_parent show`} id="sidebar">
       {/* <SAlert

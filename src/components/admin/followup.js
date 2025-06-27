@@ -8,6 +8,7 @@ import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import JobResponse from "./response";
 import Loader from "../common/loader";
+import { HiArrowSmallLeft } from "react-icons/hi2";
 function Followup() {
   /*show Modal and props state */
   let [isLoading, setIsLoading] = useState(true);
@@ -142,7 +143,6 @@ function Followup() {
         <AdminHeader heading={"Manage Follow-ups"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Follow-ups"} />
-
         <div
           className={
             showJobDetails === false
@@ -426,18 +426,9 @@ function Followup() {
                         {/* Map function to show the data in the list*/}
                         {totalData === 0 || jobData.length === 0 ? (
                           <tr>
-                            <th className="bg-white"></th>
-                            <th className="bg-white"></th>
-                            <th className="bg-white"></th>
-                            <th className="bg-white"></th>
-                            <th className="bg-white text-center">
+                            <th colSpan={8} className="bg-white text-center">
                               No Data Found
                             </th>
-                            <th className="bg-white"></th>
-                            <th className="bg-white"></th>
-                            <th className="bg-white"></th>
-                            <th className="bg-white"></th>
-                            <th className="bg-white"></th>
                           </tr>
                         ) : (
                           (jobData || []).map((job, i) => (
@@ -587,7 +578,7 @@ function Followup() {
                       onClick={() => setShowJobDetails(false)}
                       className="d-flex align-items-center ml-4"
                     >
-                      <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+                      <span className="bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"><HiArrowSmallLeft /></span>
                       <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                         Back
                       </span>

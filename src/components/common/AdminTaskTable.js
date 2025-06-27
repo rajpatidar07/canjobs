@@ -192,7 +192,6 @@ export default function AdminTaskTable(props) {
       doc_parent_id: originalData.doc_parent_id,
       assigned_to: assigned_to,
       assigned_to_name: assigned_to_name,
-      id: originalData.id,
       type: originalData.type,
     };
 
@@ -696,14 +695,14 @@ export default function AdminTaskTable(props) {
         <ModalSidebar
           show={openReplyBox}
           onClose={() => {
+            props.setReplyId("");
+            props.setTaskId("");
             setOpenReplyBox(false)
-            props.setReplyId("")
-            props.setTaskId("")
           }}
           children={
             <CommonTaskReplyBox
               openReplyBox={openReplyBox}
-              setOpenReplyBox={setOpenReplyBox}
+              setOpenReplyBox={setOpenReplyBox} // no-op since openReplyBox is derived from props.replyId
               taskData={singleTaskData}
               replyId={props.replyId}
               taskType={"task"}
@@ -715,7 +714,7 @@ export default function AdminTaskTable(props) {
           {openReplyBox ? (
             <CommonTaskReplyBox
               openReplyBox={openReplyBox}
-              setOpenReplyBox={setOpenReplyBox}
+              setOpenReplyBox={setOpenReplyBox} // no-op
               taskData={singleTaskData}
               replyId={props.replyId}
               taskType={"task"}
