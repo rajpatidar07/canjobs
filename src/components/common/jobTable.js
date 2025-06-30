@@ -299,6 +299,7 @@ export default function JobTable(props) {
     setJobId(job);
     setOpenLimia(true);
   };
+  console.log(props)
   return (
     <>
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
@@ -309,7 +310,7 @@ export default function JobTable(props) {
             <table className="table table-striped main_data_table">
               <thead>
                 <tr>
-                    <th
+                  <th
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
                   >
@@ -369,6 +370,153 @@ export default function JobTable(props) {
                       </Link>
                     </th>
                   )}
+                  {props.response === "lmia" && props.response !== "response" ? (
+                    <>
+                      <th
+                        scope="col"
+                        className=" border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to=""
+                          onClick={() => handleSort("salary")}
+                          className="text-gray"
+                          title="Sort by Wages"
+                        >
+                          Wages
+                        </Link>
+                      </th>
+                      <th
+                        scope="col"
+                        className=" border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to=""
+                          onClick={() => handleSort("lmia_status")}
+                          className="text-gray"
+                          title="Sort by LMIA status"
+                        >
+                          LMIA status
+                        </Link>
+                      </th>
+                      <th
+                        scope="col"
+                        className=" border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to=""
+                          onClick={() => handleSort("lmia_number")}
+                          className="text-gray"
+                          title="Sort by LMIA number"
+                        >
+                          LMIA Number
+                        </Link>
+                      </th>
+                      <th
+                        scope="col"
+                        className=" border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to=""
+                          onClick={() => handleSort("lmia_creation_date")}
+                          className="text-gray"
+                          title="Sort by LMIA creation date"
+                        >
+                          LMIA Creation Date
+                        </Link>
+                      </th>
+                      <th
+                        scope="col"
+                        className=" border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to=""
+                          onClick={() => handleSort("lmia_submissiom_date")}
+                          className="text-gray"
+                          title="Sort by LMIA submission date"
+                        >
+                          LMIA Submission Date
+                        </Link>
+                      </th>
+                      <th
+                        scope="col"
+                        className=" border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to=""
+                          onClick={() => handleSort("lmia_date_expiry")}
+                          className="text-gray"
+                          title="Sort by LMIA submission date"
+                        >
+                          LMIA Expiry Date
+                        </Link>
+                      </th>
+                      <th
+                        scope="col"
+                        className=" border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to=""
+                          onClick={() => handleSort("lmia_payment_status")}
+                          className="text-gray"
+                          title="Sort by LMIA payment status"
+                        >
+                          LMIA Payment Status
+                        </Link>
+                      </th>
+                      <th
+                        scope="col"
+                        className=" border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to=""
+                          onClick={() => handleSort("lmia_payment_by")}
+                          className="text-gray"
+                          title="Sort by LMIA payment by"
+                        >
+                          LMIA Payment By
+                        </Link>
+                      </th>
+                      <th
+                        scope="col"
+                        className=" border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to=""
+                          onClick={() => handleSort("lmia_monday_status")}
+                          className="text-gray"
+                          title="Sort by LMIA status"
+                        >
+                          LMIA Status
+                        </Link>
+                      </th>
+                      <th
+                        scope="col"
+                        className=" border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to=""
+                          onClick={() => handleSort("lmia_notes")}
+                          className="text-gray"
+                          title="Sort by LMIA notes"
+                        >
+                          LMIA Notes
+                        </Link>
+                      </th>
+                      <th
+                        scope="col"
+                        className=" border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to=""
+                          onClick={() => handleSort("type_of_lmia")}
+                          className="text-gray"
+                          title="Sort by Type of LMIA"
+                        >
+                          Type of LMIA
+                        </Link>
+                      </th>
+                    </>
+                  ) : null}
                   {props.heading === "Dashboard" ? null : (
                     <th
                       scope="col"
@@ -399,36 +547,6 @@ export default function JobTable(props) {
                       </Link>
                     </th>
                   )}
-                  {props.heading === "Dashboard" ? null : (
-                    <th
-                      scope="col"
-                      className=" border-0 font-size-4 font-weight-normal"
-                    >
-                      <Link
-                        to=""
-                        onClick={() => handleSort("created_at")}
-                        className="text-gray"
-                        title={`Sort by ${user_type === "admin" &&
-                          props.response === "lmia" ? "submission" : "posting"} date`}
-                      >
-                        {user_type === "admin" &&
-                          props.response === "lmia" ? "Submission" : "Posting"} date
-                      </Link>
-                    </th>
-                  )}
-                  <th
-                    scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to=""
-                      onClick={() => handleSort("salary")}
-                      className="text-gray"
-                      title="Sort by Salary"
-                    >
-                      Salary
-                    </Link>
-                  </th>
                   <th
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
@@ -492,7 +610,7 @@ export default function JobTable(props) {
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || jobData.length === 0 ? (
                   <tr>
-                    <th colSpan={11} className="bg-white text-center">
+                    <th colSpan={props.response === "lmia" ? 21 : 11} className="bg-white text-center">
                       No Data Found
                     </th>
                   </tr>
@@ -517,10 +635,10 @@ export default function JobTable(props) {
                             }
                             style={{ border: "0" }}
                           >
-                            
+
                             <td
                               style={{ paddingBottom: "0!important" }}
-                              colSpan="11"
+                              colSpan={props.response === "lmia" ? 21 : 11}
                               className={
                                 job.lmia_status ? "bg-white text-center" : "d-none"
                               }
@@ -674,8 +792,8 @@ export default function JobTable(props) {
                             /*job.is_applied === "1" ? "d-none" : */ "col-12 text-capitalize job_row"
                           }
                         >
-                          <th scope="row" className="py-5 ">{job.job_id	}</th>
-                          <th  className="py-5 ">
+                          <th scope="row" className="py-5 ">{job.job_id}</th>
+                          <th className="py-5 ">
                             <div className="d-flex align-items-center">
                               {(job.is_monday_data === 1 || job.is_monday_data === "1") && (
                                 <MondayBadge />
@@ -736,6 +854,110 @@ export default function JobTable(props) {
                               </h3>
                             </th>
                           )}
+                          {props.response === "lmia" && props.response !== "response" ?
+                            <>
+                              <th className="py-5 ">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                  title={job.salary ? "$" + job.salary : "N/A"}>
+                                  {job.salary ? "$" + job.salary : "N/A"}
+                                </h3>
+                              </th>
+                              <th className="py-5 ">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                  title={job.lmia_status || "N/A"}>
+                                  {job.lmia_status || "N/A"}
+                                </h3>
+                              </th>
+                              <th className="py-5 ">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                  title={job.lmia_number || "N/A"}>
+                                  {job.lmia_number || "N/A"}
+                                </h3>
+                              </th>
+                              <th className="py-5 ">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                  title={job.lmia_creation_date || "N/A"}>
+                                  {job.lmia_creation_date || "N/A"}
+                                </h3>
+                              </th>
+                              <th className="py-5 ">
+                                <h3
+                                  className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
+                                  title={
+                                    ConvertTime({
+                                      _date: (user_type === "admin" &&
+                                        props.response === "lmia")
+                                        ? job.lmia_submissiom_date
+                                        : job.created_at
+                                      , format: "DD MMMM, YYYY"
+                                    })
+                                    //   moment(job.created_at).format(
+                                    //   "DD MMMM, YYYY"
+                                    // ) 
+                                  }
+                                >
+                                  {/* {job.created_at ? job.created_at : "N/A"} */}
+                                  {<ConvertTime _date={(user_type === "admin" &&
+                                    props.response === "lmia")
+                                    ? job.lmia_submissiom_date
+                                    : job.created_at} format={"DD MMMM, YYYY"} />}
+                                  {/* {moment(job.created_at).format("DD MMMM, YYYY")} */}
+                                </h3>
+                              </th>
+                              <th className="py-5 ">
+                                <h3
+                                  className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
+                                  title={
+                                    ConvertTime({
+                                      _date: (user_type === "admin" &&
+                                        props.response === "lmia")
+                                        ? job.lmia_date_expiry
+                                        : job.created_at
+                                      , format: "DD MMMM, YYYY"
+                                    })
+                                    //   moment(job.created_at).format(
+                                    //   "DD MMMM, YYYY"
+                                    // ) 
+                                  }
+                                >
+                                  {/* {job.created_at ? job.created_at : "N/A"} */}
+                                  {<ConvertTime _date={(user_type === "admin" &&
+                                    props.response === "lmia")
+                                    ? job.lmia_date_expiry
+                                    : job.created_at} format={"DD MMMM, YYYY"} />}
+                                  {/* {moment(job.created_at).format("DD MMMM, YYYY")} */}
+                                </h3>
+                              </th>
+                              <th className="py-5 ">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                  title={job.lmia_payment_status || "N/A"}>
+                                  {job.lmia_payment_status || "N/A"}
+                                </h3>
+                              </th>
+                              <th className="py-5 ">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                  title={job.lmia_payment_by || "N/A"}>
+                                  {job.lmia_payment_by || "N/A"}
+                                </h3>
+                              </th>
+                              <th className="py-5 ">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                  title={job.lmia_monday_status || "N/A"}>
+                                  {job.lmia_monday_status || "N/A"}
+                                </h3>
+                              </th>
+                              <th className="py-5 ">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                  title={job.lmia_notes || "N/A"}>
+                                  {job.lmia_notes || "N/A"}
+                                </h3>
+                              </th>
+                              <th className="py-5 ">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                  title={job.type_of_lmia || "N/A"}>
+                                  {job.type_of_lmia || "N/A"}
+                                </h3>
+                              </th></> : null}
                           {props.heading === "Dashboard" ? null : (
                             <th className="py-5 d-none">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
@@ -753,38 +975,6 @@ export default function JobTable(props) {
                               </h3>
                             </th>
                           )}
-                          {props.heading === "Dashboard" ? null : (
-                            <th className="py-5 ">
-                              <h3
-                                className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
-                                title={
-                                  ConvertTime({
-                                    _date: (user_type === "admin" &&
-                                      props.response === "lmia")
-                                      ? job.lmia_submissiom_date
-                                      : job.created_at
-                                    , format: "DD MMMM, YYYY"
-                                  })
-                                  //   moment(job.created_at).format(
-                                  //   "DD MMMM, YYYY"
-                                  // ) 
-                                }
-                              >
-                                {/* {job.created_at ? job.created_at : "N/A"} */}
-                                {<ConvertTime _date={(user_type === "admin" &&
-                                  props.response === "lmia")
-                                  ? job.lmia_submissiom_date
-                                  : job.created_at} format={"DD MMMM, YYYY"} />}
-                                {/* {moment(job.created_at).format("DD MMMM, YYYY")} */}
-                              </h3>
-                            </th>
-                          )}
-                          <th className="py-5 ">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
-                              title={job.salary ? "$" + job.salary : "N/A"}>
-                              {job.salary ? "$" + job.salary : "N/A"}
-                            </h3>
-                          </th>
                           <th className="py-5 ">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
                               title={job.experience_required + (
@@ -1082,7 +1272,7 @@ export default function JobTable(props) {
                                           </button>
                                           <button
                                             className={
-                                              (props.response === "lmia" &&
+                                              (
                                                 user_type === "admin") ||
                                                 props.response === "visa"
                                                 ? "d-none"
@@ -1129,7 +1319,7 @@ export default function JobTable(props) {
                                             }
                                             onClick={() => AdditionalLmiaInfo(job)}
                                             title="Edit LMIA Info"
-                                            disabled={!job.lmia_status}
+                                          // disabled={!job.lmia_status}
                                           >
                                             LMIA Info
                                           </button>

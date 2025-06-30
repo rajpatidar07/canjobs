@@ -7,7 +7,7 @@ const filterjson = {
     { value: "5", label: "business visa" },
   ],
   location: [
-    { "country": "afghanistan", "code": "+93" }, 
+    { "country": "afghanistan", "code": "+93" },
     { "country": "aland islands", "code": "+358" },
     { "country": "albania", "code": "+355" },
     { "country": "algeria", "code": "+213" },
@@ -1053,6 +1053,31 @@ const filterjson = {
     "December",
     "January - November",
     "12 months"
+  ],
+  monday_status: [
+    { value: "1", label: "application submited" },
+    { value: "2", label: "prepared" },
+    { value: "3", label: "LMIA refused" },
+    { value: "4", label: "application initiated" },
+    { value: "5", label: "application cancelled" },
+    { value: "6", label: "LMIA closed" },
+    { value: "7", label: "sent for review to harpreet" },
+    { value: "8", label: "application Approved" },
+    { value: "9", label: "LMIA incomplete" },
+    { value: "10", label: "prepared, will submit asap" },
+    { value: "11", label: "open application approved" },
+    { value: "12", label: "no placement to be done" },
+    { value: "13", label: "stuck" },
+    { value: "14", label: "not started yet" },
+    { value: "15", label: "application withdrawn" },
+    { value: "16", label: "on hold" },
+    { value: "17", label: "expired" },
+  ],
+  type_of_lmia:[
+     { value: "1", label: "low wage" },
+    { value: "2", label: "high wage" },
+    { value: "3", label: "PR support (LW)" },
+    { value: "4", label: "PR support (HW)" },
   ]
 
 };

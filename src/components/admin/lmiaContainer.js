@@ -10,6 +10,7 @@ import JobTable from "../common/jobTable";
 import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
 import SelectBox from "../common/Common function/SelectBox";
+import CustomButton from "../common/button";
 function LimaContainer(props) {
   /*show Modal and props state */
   let [apiCall, setApiCall] = useState(false);
@@ -67,11 +68,11 @@ function LimaContainer(props) {
   };
 
   /* Function to show the single data to update job */
-  // const editJob = (e) => {
-  //   // e.preventDefault();
-  //   setShowAddJobsModal(true);
-  //   setJobId(e);
-  // };
+  const editJob = (e) => {
+    // e.preventDefault();
+    setShowAddJobsModal(true);
+    setJobId(e);
+  };
   /*Function to search the Job */
   const onSearch = (e) => {
     const inputValue = e.target.value;
@@ -240,6 +241,22 @@ function LimaContainer(props) {
                           type={"location"}
                         />
                       </div>
+                    </div>
+                    <div className={props.employee_id ? "d-none" : "text-end col-xl-12"}>
+                      <div className="float-md-right d-flex">
+                        <CustomButton
+                          className="font-size-3 rounded-3 btn btn-primary border-0"
+                          onClick={() => editJob("0")}
+                          title="Add Jobs"
+                        >
+                          Add LMIA
+                        </CustomButton>
+                        {/* <div className="mt-4">
+                        <CommonThreeDots tableName={"job"} tableData={allJob} />
+                      </div> */}
+                        {/*<-- Add Job Modal -->*/}
+                      </div>
+                      <small className="text-danger">{searcherror}</small>
                     </div>
                   </div>
                 )}

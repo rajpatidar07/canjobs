@@ -4,6 +4,7 @@ import useValidation from '../../common/useValidation';
 import moment from 'moment';
 import { toast } from "react-toastify"
 import { AddLmiaAdditionalInformationJob, AddLmiaAdditionalInformationEmployee } from '../../../api/api';
+import filterjson from '../../json/filterjson';
 export default function LmiaInfo(props) {
     const [loading, setLoading] = useState(false)
     // USER CATEGORY VALIDATION
@@ -17,6 +18,10 @@ export default function LmiaInfo(props) {
             submissiom_date: props.resData.lmia_submissiom_date || "",
             payment_status: props.resData.lmia_payment_status || "",
             payment_by: props.resData.lmia_payment_by || "",
+            lmia_date_expiry: props.resData.lmia_date_expiry || "",
+            lmia_monday_status: props.resData.lmia_monday_status || "",
+            lmia_notes: props.resData.lmia_notes || "",
+            type_of_lmia: props.resData.type_of_lmia || "",
         } : {
             apply_id: props.resData.apply_id,
             lmia_number: props.resData.lmia_number || "",
@@ -24,6 +29,10 @@ export default function LmiaInfo(props) {
             submissiom_date: props.resData.submissiom_date || "",
             payment_status: props.resData.payment_status || "",
             payment_by: props.resData.payment_by || "",
+            lmia_date_expiry: props.resData.lmia_date_expiry || "",
+            lmia_monday_status: props.resData.lmia_monday_status || "",
+            lmia_notes: props.resData.lmia_notes || "",
+            type_of_lmia: props.resData.type_of_lmia || "",
         };
     //   VALIDATION CONDITIONS
     const validators = {
@@ -48,7 +57,7 @@ export default function LmiaInfo(props) {
     };
 
     // CUSTOM VALIDATIONS IMPORT
-    const { state, setState, onInputChange, errors, setErrors/*, validate*/ } =
+    const { state, setState, onInputChange, errors, setErrors, validate } =
         useValidation(initialFormState, validators);
     /*function to close modalll */
     let close = () => {
@@ -61,21 +70,23 @@ export default function LmiaInfo(props) {
     const onAddInfo = async (e) => {
         e.preventDefault()
         setLoading(true)
-        try {
-            let res = props.job === "yes"
-                ? await AddLmiaAdditionalInformationJob(state)
-                : await AddLmiaAdditionalInformationEmployee(state)
-            if (res.message === 'Data updated successfully') {
-                toast.success("Information Added successfully", {
-                    position: toast.POSITION.TOP_RIGHT,
-                    autoClose: 1000,
-                });
-                props.setApiCall(true);
-                return close();
+        if (validate()) {
+            try {
+                let res = props.job === "yes"
+                    ? await AddLmiaAdditionalInformationJob(state)
+                    : await AddLmiaAdditionalInformationEmployee(state)
+                if (res.message === 'Data updated successfully') {
+                    toast.success("Information Added successfully", {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 1000,
+                    });
+                    props.setApiCall(true);
+                    return close();
+                }
+            } catch (err) {
+                console.log(err)
+                setLoading(false)
             }
-        } catch (err) {
-            console.log(err)
-            setLoading(false)
         }
     }
     return (
@@ -97,7 +108,7 @@ export default function LmiaInfo(props) {
                 <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
                     <h5 className="text-center pt-2 mb-7">Add LMIA Additional Info</h5>
                     <form
-                    onSubmit={(e)=>onAddInfo(e)}
+                        onSubmit={(e) => onAddInfo(e)}
                     >
                         <div className="form-group">
                             <label
@@ -191,6 +202,35 @@ export default function LmiaInfo(props) {
                         </div>
                         <div className="form-group ">
                             <label
+                                htmlFor="lmia_date_expiry"
+                                className="font-size-4 text-black-2  line-height-reset"
+                            >
+                                Expiry Date {/*<span className="text-danger">*</span> :*/}
+                            </label>
+                            <input
+                                className={
+                                    errors.lmia_date_expiry
+                                        ? "form-control coustam_datepicker border border-danger text-lowercase"
+                                        : "form-control coustam_datepicker text-lowercase"
+                                }
+                                value={state.lmia_date_expiry}
+                                onChange={onInputChange}
+                                id="lmia_date_expiry"
+                                name="lmia_date_expiry"
+                                type="date"
+                                onKeyDownCapture={(e) => e.preventDefault()}
+                                min={moment().format("DD-MM-YYYY")}
+                                maxLength={60}
+                            />
+                            {/*----ERROR MESSAGE FOR Submission Date ----*/}
+                            {/* {errors.lmia_date_expiry && (
+                                <span key={errors.lmia_date_expiry} className="text-danger font-size-3">
+                                    {errors.lmia_date_expiry}
+                                </span>
+                            )} */}
+                        </div>
+                        <div className="form-group ">
+                            <label
                                 htmlFor="payment_status"
                                 className="font-size-4 text-black-2  line-height-reset"
                             >
@@ -258,6 +298,102 @@ export default function LmiaInfo(props) {
                                 </span>
                             )}
                         </div>
+                        <div className="form-group ">
+                            <label
+                                htmlFor="type_of_lmia"
+                                className="font-size-4 text-black-2  line-height-reset"
+                            >
+                                Type of LMIA {/*<span className="text-danger">*</span> :*/}
+                            </label>
+                            <select
+                                type={"text"}
+                                className={
+                                    errors.type_of_lmia
+                                        ? "form-control border border-danger text-capitalize"
+                                        : "form-control text-capitalize"
+                                }
+                                value={state.type_of_lmia}
+                                onChange={onInputChange}
+                                id="type_of_lmia"
+                                name="type_of_lmia"
+                                multiple={false}
+                            >
+                                <option value={""}>Select status</option>
+                                {filterjson.type_of_lmia.map((item) =>
+                                    <option value={item.value} key={item.value}>{item.label}</option>
+                                )}
+                            </select>
+                            {/*----ERROR MESSAGE FOR PAYMENT BY----*/}
+                            {errors.type_of_lmia && (
+                                <span
+                                    key={errors.type_of_lmia}
+                                    className="text-danger font-size-3"
+                                >
+                                    {errors.type_of_lmia}
+                                </span>
+                            )}
+                        </div>
+                        <div className="form-group ">
+                            <label
+                                htmlFor="lmia_monday_status"
+                                className="font-size-4 text-black-2  line-height-reset"
+                            >
+                                Status {/*<span className="text-danger">*</span> :*/}
+                            </label>
+                            <select
+                                type={"text"}
+                                className={
+                                    errors.lmia_monday_status
+                                        ? "form-control border border-danger text-capitalize"
+                                        : "form-control text-capitalize"
+                                }
+                                value={state.lmia_monday_status}
+                                onChange={onInputChange}
+                                id="lmia_monday_status"
+                                name="lmia_monday_status"
+                                multiple={false}
+                            >
+                                <option value={""}>Select status</option>
+                                {filterjson.monday_status.map((item) =>
+                                    <option value={item.value} key={item.value}>{item.label}</option>
+                                )}
+                            </select>
+                            {/*----ERROR MESSAGE FOR PAYMENT BY----*/}
+                            {errors.lmia_monday_status && (
+                                <span
+                                    key={errors.lmia_monday_status}
+                                    className="text-danger font-size-3"
+                                >
+                                    {errors.lmia_monday_status}
+                                </span>
+                            )}
+                        </div>
+                        <div className="form-group ">
+                            <label
+                                htmlFor="lmia_notes"
+                                className="font-size-4 text-black-2  line-height-reset"
+                            >
+                                Notes {/*<span className="text-danger">*</span> :*/}
+                            </label>
+                            <input
+                                className={
+                                    errors.lmia_notes
+                                        ? "form-control border border-danger text-lowercase"
+                                        : "form-control text-lowercase"
+                                }
+                                value={state.lmia_notes}
+                                onChange={onInputChange}
+                                id="lmia_notes"
+                                name="lmia_notes"
+                                type="text"
+                            />
+                            {/*----ERROR MESSAGE FOR Submission Date ----*/}
+                            {/* {errors.lmia_notes && (
+                                <span key={errors.lmia_notes} className="text-danger font-size-3">
+                                    {errors.lmia_notes}
+                                </span>
+                            )} */}
+                        </div>
                         <div className="form-group text-center">
                             {loading === true ? (
                                 <button
@@ -276,15 +412,15 @@ export default function LmiaInfo(props) {
                                 <button
                                     className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                                     type="submit"
-                                    // onClick={onAddInfo}
+                                // onClick={onAddInfo}
                                 >
                                     Submit
                                 </button>
                             )}
                         </div>
                     </form>
-                </div>
-            </Modal>
+                </div >
+            </Modal >
         </>
     )
 }
