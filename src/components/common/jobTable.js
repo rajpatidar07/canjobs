@@ -24,6 +24,8 @@ import { GrDocumentUpload } from "react-icons/gr";
 import ConvertTime from "./Common function/ConvertTime";
 import LmiaInfo from "../forms/admin/lmiaInfo";
 import MondayBadge from "./MondayBadge";
+import determineBackgroundColor from "./Common function/DetermineBackgroundColour";
+import filterjson from "../json/filterjson";
 export default function JobTable(props) {
   /*show Modal and props state */
   let [isLoading, setIsLoading] = useState(true);
@@ -456,11 +458,24 @@ export default function JobTable(props) {
                       >
                         <Link
                           to=""
+                          onClick={() => handleSort("lmia_date_approved")}
+                          className="text-gray"
+                          title="Sort by LMIA date approved"
+                        >
+                          LMIA Date Approved
+                        </Link>
+                      </th>
+                      <th
+                        scope="col"
+                        className=" border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to=""
                           onClick={() => handleSort("lmia_payment_status")}
                           className="text-gray"
-                          title="Sort by LMIA payment status"
+                          title="Sort by LMIA payment"
                         >
-                          LMIA Payment Status
+                          LMIA Payment 
                         </Link>
                       </th>
                       <th
@@ -478,7 +493,11 @@ export default function JobTable(props) {
                       </th>
                       <th
                         scope="col"
-                        className=" border-0 font-size-4 font-weight-normal"
+                        className={
+                          user_type === "user"
+                            ? "d-none"
+                            : " border-0 font-size-4 font-weight-normal"
+                        }
                       >
                         <Link
                           to=""
@@ -486,7 +505,7 @@ export default function JobTable(props) {
                           className="text-gray"
                           title="Sort by LMIA status"
                         >
-                          LMIA Status
+                          Monday status
                         </Link>
                       </th>
                       <th
@@ -574,23 +593,6 @@ export default function JobTable(props) {
                       title="Sort by Responses"
                     >
                       Vacancies / Responses
-                    </Link>
-                  </th>
-                  <th
-                    scope="col"
-                    className={
-                      user_type === "user"
-                        ? "d-none"
-                        : " border-0 font-size-4 font-weight-normal"
-                    }
-                  >
-                    <Link
-                      to=""
-                      onClick={() => handleSort("lmia_status")}
-                      className="text-gray"
-                      title="Sort by LMIA status"
-                    >
-                      LMIA status
                     </Link>
                   </th>
                   {props.heading === "Dashboard" ||
@@ -862,11 +864,115 @@ export default function JobTable(props) {
                                   {job.salary ? "$" + job.salary : "N/A"}
                                 </h3>
                               </th>
-                              <th className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                              <th
+                                className={
+                                  user_type === "user" ? "d-none" : " py-5"
+                                }
+                              >
+                                <div className="font-size-3 font-weight-normal text-black-2 mb-0"
                                   title={job.lmia_status || "N/A"}>
-                                  {job.lmia_status || "N/A"}
-                                </h3>
+                                  {
+                                    job.lmia_status === "onboarding" ? (
+                                      <span className="px-3 py-2 badge badge-pill badge-shamrock">
+                                        Onboarding
+                                      </span>
+                                    ) : job.lmia_status === "advertisements" ? (
+                                      <span className="px-3 py-2 badge badge-pill bg-info text-white">
+                                        Advertisements
+                                      </span>
+                                    ) : job.lmia_status === "documentation" ? (
+                                      <span className="px-3 py-2 badge badge-pill badge-gray">
+                                        Documentation
+                                      </span>
+                                    ) : job.lmia_status ===
+                                      "candidate placement" ? (
+                                      <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
+                                        Candidate Placement
+                                      </span>
+                                    ) : job.lmia_status === "submission" ? (
+                                      <span className="px-3 py-2 badge badge-pill badge-warning">
+                                        Submission
+                                      </span>
+                                    ) : job.lmia_status === "decision" ?
+                                      job.lmia_status === "decision" &&
+                                        lmiaStatusRejectComment ? (
+                                        lmiaStatusRejectComment[0] !==
+                                        undefined &&
+                                        (lmiaStatusRejectComment || []).map(
+                                          (item, i) => {
+                                            return (
+                                              item === undefined ||
+                                                item === "undefined" ||
+                                                item === null ||
+                                                item === ""
+                                                ? null
+                                                : item.job_id === job.job_id
+                                            ) ? (
+                                              <div
+                                                key={i + 6}
+                                                className={`px-3 py-2 badge badge-pill ${item.lmia_substage ===
+                                                  "approved"
+                                                  ? " badge-shamrock"
+                                                  : item.lmia_substage ===
+                                                    "refused"
+                                                    ? " badge-danger"
+                                                    : " badge-waring"
+                                                  }`}
+                                              >
+                                                <span>
+                                                  {item.lmia_substage ===
+                                                    "approved"
+                                                    ? "Approved"
+                                                    : item.lmia_substage ===
+                                                      "refused"
+                                                      ? "Refused"
+                                                      : "Awaiting Decision"}
+                                                </span>
+                                              </div>
+                                            ) : // <small className="mx-10" key={i}>
+                                              // {item.lmia_substage === "approved"
+                                              //   ? "Congratulation your Limia is Approved"
+                                              //   : item.lmia_substage === "awaiting decision"
+                                              //   ? "Your Limia status is in progress"
+                                              //   : item.lmia_substage === "reject"
+                                              //   ? "Sorry to inform you your Limia got rejected."
+                                              //   : ""}
+                                              // </small>
+                                              null;
+                                          }
+                                        )
+                                      ) : (
+                                        null
+                                      )
+                                        (
+                                        // <span className={`px-3 py-2 badge badge-pill ${job.lmia_substage ===
+                                        //   "approved"
+                                        //   ? " badge-shamrock"
+                                        //   : job.lmia_substage ===
+                                        //     "refused"
+                                        //     ? " badge-danger"
+                                        //     : " badge-waring"
+                                        //   }`}>
+                                        //   {
+                                        //     job.lmia_substage ===
+                                        //       "approved"
+                                        //       ? "Approved"
+                                        //       : job.lmia_substage ===
+                                        //         "refused"
+                                        //         ? "Refused"
+                                        //         : "Awaiting Decision"
+                                        //   }
+                                        // </span>
+                                      ) : (
+                                        <span>N/A</span>
+                                      )
+                                    // ) : (job.lmia_status === "application submitted" ? (
+                                    //   <span className="px-3 py-2 badge badge-pill badge-info">
+                                    //     Application submitted
+                                    //   </span>
+                                    // )
+                                  }
+                                </div>
                               </th>
                               <th className="py-5 ">
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
@@ -929,6 +1035,20 @@ export default function JobTable(props) {
                                 </h3>
                               </th>
                               <th className="py-5 ">
+                                <h3
+                                  className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
+                                  title={
+                                    ConvertTime({
+                                      _date:  job.lmia_date_approved
+                                      , format: "DD MMMM, YYYY"
+                                    })
+                                  }
+                                >
+                                  {<ConvertTime _date={job.lmia_date_approved
+                                    } format={"DD MMMM, YYYY"} />}
+                                </h3>
+                              </th>
+                              <th className="py-5 ">
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
                                   title={job.lmia_payment_status || "N/A"}>
                                   {job.lmia_payment_status || "N/A"}
@@ -941,9 +1061,12 @@ export default function JobTable(props) {
                                 </h3>
                               </th>
                               <th className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                <h3 className={`font-size-3 font-weight-normal mb-0 text-capitalize text-center ${job.lmia_monday_status ? `${determineBackgroundColor(job)} text-white` : " text-dark"} rounded-pill font-size-1 px-1  mr-2`}
                                   title={job.lmia_monday_status || "N/A"}>
-                                  {job.lmia_monday_status || "N/A"}
+                                  <span
+                                    className="font-size-3 font-weight-normal m-0"> {filterjson.monday_status.find((item) => item.value === job.lmia_monday_status)?.label
+                                      || "N/A"}
+                                  </span>
                                 </h3>
                               </th>
                               <th className="py-5 ">
@@ -953,9 +1076,12 @@ export default function JobTable(props) {
                                 </h3>
                               </th>
                               <th className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                <h3 className={`font-size-3 font-weight-normal mb-0 text-capitalize text-center ${job.type_of_lmia ? `${determineBackgroundColor(job)} text-white` : " text-dark"} rounded-pill font-size-1 px-1  mr-2`}
                                   title={job.type_of_lmia || "N/A"}>
-                                  {job.type_of_lmia || "N/A"}
+                                  <span
+                                    className="font-size-3 font-weight-normal m-0">  {filterjson.type_of_lmia.find((item) => item.value === job.type_of_lmia)?.label
+                                      || "N/A"}
+                                  </span>
                                 </h3>
                               </th></> : null}
                           {props.heading === "Dashboard" ? null : (
@@ -1034,116 +1160,7 @@ export default function JobTable(props) {
                               )}
                             </h3>
                           </th>
-                          <th
-                            className={
-                              user_type === "user" ? "d-none" : " py-5"
-                            }
-                          >
-                            <div className="font-size-3 font-weight-normal text-black-2 mb-0"
-                              title={job.lmia_status || "N/A"}>
-                              {
-                                job.lmia_status === "onboarding" ? (
-                                  <span className="px-3 py-2 badge badge-pill badge-shamrock">
-                                    Onboarding
-                                  </span>
-                                ) : job.lmia_status === "advertisements" ? (
-                                  <span className="px-3 py-2 badge badge-pill bg-info text-white">
-                                    Advertisements
-                                  </span>
-                                ) : job.lmia_status === "documentation" ? (
-                                  <span className="px-3 py-2 badge badge-pill badge-gray">
-                                    Documentation
-                                  </span>
-                                ) : job.lmia_status ===
-                                  "candidate placement" ? (
-                                  <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
-                                    Candidate Placement
-                                  </span>
-                                ) : job.lmia_status === "submission" ? (
-                                  <span className="px-3 py-2 badge badge-pill badge-warning">
-                                    Submission
-                                  </span>
-                                ) : job.lmia_status === "decision" ?
-                                  job.lmia_status === "decision" &&
-                                    lmiaStatusRejectComment ? (
-                                    lmiaStatusRejectComment[0] !==
-                                    undefined &&
-                                    (lmiaStatusRejectComment || []).map(
-                                      (item, i) => {
-                                        return (
-                                          item === undefined ||
-                                            item === "undefined" ||
-                                            item === null ||
-                                            item === ""
-                                            ? null
-                                            : item.job_id === job.job_id
-                                        ) ? (
-                                          <div
-                                            key={i + 6}
-                                            className={`px-3 py-2 badge badge-pill ${item.lmia_substage ===
-                                              "approved"
-                                              ? " badge-shamrock"
-                                              : item.lmia_substage ===
-                                                "refused"
-                                                ? " badge-danger"
-                                                : " badge-waring"
-                                              }`}
-                                          >
-                                            <span>
-                                              {item.lmia_substage ===
-                                                "approved"
-                                                ? "Approved"
-                                                : item.lmia_substage ===
-                                                  "refused"
-                                                  ? "Refused"
-                                                  : "Awaiting Decision"}
-                                            </span>
-                                          </div>
-                                        ) : // <small className="mx-10" key={i}>
-                                          // {item.lmia_substage === "approved"
-                                          //   ? "Congratulation your Limia is Approved"
-                                          //   : item.lmia_substage === "awaiting decision"
-                                          //   ? "Your Limia status is in progress"
-                                          //   : item.lmia_substage === "reject"
-                                          //   ? "Sorry to inform you your Limia got rejected."
-                                          //   : ""}
-                                          // </small>
-                                          null;
-                                      }
-                                    )
-                                  ) : (
-                                    null
-                                  )
-                                    (
-                                    // <span className={`px-3 py-2 badge badge-pill ${job.lmia_substage ===
-                                    //   "approved"
-                                    //   ? " badge-shamrock"
-                                    //   : job.lmia_substage ===
-                                    //     "refused"
-                                    //     ? " badge-danger"
-                                    //     : " badge-waring"
-                                    //   }`}>
-                                    //   {
-                                    //     job.lmia_substage ===
-                                    //       "approved"
-                                    //       ? "Approved"
-                                    //       : job.lmia_substage ===
-                                    //         "refused"
-                                    //         ? "Refused"
-                                    //         : "Awaiting Decision"
-                                    //   }
-                                    // </span>
-                                  ) : (
-                                    <span>N/A</span>
-                                  )
-                                // ) : (job.lmia_status === "application submitted" ? (
-                                //   <span className="px-3 py-2 badge badge-pill badge-info">
-                                //     Application submitted
-                                //   </span>
-                                // )
-                              }
-                            </div>
-                          </th>
+
                           {props.heading === "Dashboard" ||
                             user_type === "user" ||
                             user_type === "company" || user_type === "agent" ? null : (
@@ -1272,9 +1289,7 @@ export default function JobTable(props) {
                                           </button>
                                           <button
                                             className={
-                                              (
-                                                user_type === "admin") ||
-                                                props.response === "visa"
+                                              props.response === "visa"
                                                 ? "d-none"
                                                 : "btn btn-outline-info action_btn"
                                             }

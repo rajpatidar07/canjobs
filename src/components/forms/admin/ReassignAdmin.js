@@ -170,7 +170,7 @@ function ReassignAdmin(props) {
                             )}
                             <button
                                 type="button"
-                                className="btn btn-primary ml-auto mr-auto mx-2 rounded-5"
+                                className="btn btn-light ml-auto mr-auto mx-2 rounded-5"
                                 data-dismiss="modal"
                                 onClick={close}
                             >

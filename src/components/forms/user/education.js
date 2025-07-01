@@ -563,7 +563,7 @@ function Education(props) {
               )}
               <button
                 type="button"
-                className="btn btn-primary mx-5"
+                className="btn btn-light mx-5"
                 data-dismiss="modal"
                 onClick={close}
               >

@@ -5,7 +5,7 @@ import useValidation from '../useValidation';
 import SignaturePadComponent from './SignaturePadComponent';
 
 export default function ClientSignatureForm() {
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     let [clientSignature, setClientSignature] = useState("notdone")
     // USER CATEGORY TYPE VALIDATION
     // INITIAL STATE ASSIGNMENT
@@ -106,12 +106,12 @@ export default function ClientSignatureForm() {
     // USER Test Email SUBMIT BUTTON
     const onFormSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
+        // setLoading(true);
         // console.log(state)
         try {
             let res = await AddUpdateAgreement(state)
             if (res.data.status === 1 && res.data.message === "Agreement updated successfully.") {
-                setLoading(false)
+                // setLoading(false)
                 setState(initialFormState)
                 toast.success("Felids added successfully.", {
                     position: toast.POSITION.TOP_RIGHT,
@@ -123,7 +123,7 @@ export default function ClientSignatureForm() {
             }
         } catch (err) {
             console.log(err)
-            setLoading(false)
+            // setLoading(false)
         }
     };
     useEffect(() => {

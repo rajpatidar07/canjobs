@@ -357,8 +357,7 @@ export default function AdminTaskTable(props) {
                       </Link>
                     </th>
                   }
-                  {props.heading === "Dashboard" ||
-                    props.heading !== "Task Dashboard" ? (
+                  {props.heading === "Dashboard" ? (
                     ""
                   ) : (
                     <th
@@ -620,8 +619,7 @@ export default function AdminTaskTable(props) {
                         </td>
                         <td
                           className={
-                            props.heading === "dashboard" ||
-                              props.heading !== "Task Dashboard"
+                            props.heading === "dashboard"
                               ? "d-none"
                               : " py-5 min-width-px-100 exclude-mark-read"
                           }
@@ -644,7 +642,7 @@ export default function AdminTaskTable(props) {
                               </span>
                             </button>
                             <button
-                              className="btn btn-outline-info action_btn"
+                              className={props.heading !== "Task Dashboard" ? "d-none" : "btn btn-outline-info action_btn"}
                               onClick={() => {
                                 props.setUpdateTaskData(data);
                                 props.setShowTaskForm(true);
@@ -658,7 +656,7 @@ export default function AdminTaskTable(props) {
                             </button>
                             <button
                               className={
-                                props.user === "agent"
+                                props.user === "agent" || props.heading !== "Task Dashboard"
                                   ? "d-none"
                                   : "btn btn-outline-info action_btn"
                               }
@@ -695,8 +693,10 @@ export default function AdminTaskTable(props) {
         <ModalSidebar
           show={openReplyBox}
           onClose={() => {
-            props.setReplyId("");
-            props.setTaskId("");
+            if (props.heading === "Task Dashboard") {
+              props.setReplyId("")
+              props.setTaskId("")
+            }
             setOpenReplyBox(false)
           }}
           children={

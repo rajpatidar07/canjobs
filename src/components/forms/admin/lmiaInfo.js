@@ -22,6 +22,7 @@ export default function LmiaInfo(props) {
             lmia_monday_status: props.resData.lmia_monday_status || "",
             lmia_notes: props.resData.lmia_notes || "",
             type_of_lmia: props.resData.type_of_lmia || "",
+            lmia_date_approved: props.resData.lmia_date_approved || ""
         } : {
             apply_id: props.resData.apply_id,
             lmia_number: props.resData.lmia_number || "",
@@ -29,9 +30,10 @@ export default function LmiaInfo(props) {
             submissiom_date: props.resData.submissiom_date || "",
             payment_status: props.resData.payment_status || "",
             payment_by: props.resData.payment_by || "",
-            lmia_date_expiry: props.resData.lmia_date_expiry || "",
-            lmia_monday_status: props.resData.lmia_monday_status || "",
-            lmia_notes: props.resData.lmia_notes || "",
+            date_approved: props.resData.date_approved || "",
+            date_expiry: props.resData.date_expiry || "",
+            monday_status: props.resData.monday_status || "",
+            notes: props.resData.notes || "",
             type_of_lmia: props.resData.type_of_lmia || "",
         };
     //   VALIDATION CONDITIONS
@@ -202,21 +204,17 @@ export default function LmiaInfo(props) {
                         </div>
                         <div className="form-group ">
                             <label
-                                htmlFor="lmia_date_expiry"
+                                htmlFor={props.job === "yes" ? "lmia_date_expiry" : "date_expiry"}
                                 className="font-size-4 text-black-2  line-height-reset"
                             >
                                 Expiry Date {/*<span className="text-danger">*</span> :*/}
                             </label>
                             <input
-                                className={
-                                    errors.lmia_date_expiry
-                                        ? "form-control coustam_datepicker border border-danger text-lowercase"
-                                        : "form-control coustam_datepicker text-lowercase"
-                                }
-                                value={state.lmia_date_expiry}
+                                className={"form-control coustam_datepicker text-lowercase"}
+                                value={props.job === "yes" ? state.lmia_date_expiry : state.date_expiry}
                                 onChange={onInputChange}
-                                id="lmia_date_expiry"
-                                name="lmia_date_expiry"
+                                id={props.job === "yes" ? "lmia_date_expiry" : "date_expiry"}
+                                name={props.job === "yes" ? "lmia_date_expiry" : "date_expiry"}
                                 type="date"
                                 onKeyDownCapture={(e) => e.preventDefault()}
                                 min={moment().format("DD-MM-YYYY")}
@@ -228,6 +226,25 @@ export default function LmiaInfo(props) {
                                     {errors.lmia_date_expiry}
                                 </span>
                             )} */}
+                        </div>
+                        <div className="form-group ">
+                            <label
+                                htmlFor={props.job === "yes" ? "lmia_date_approved" : "date_approved"}
+                                className="font-size-4 text-black-2  line-height-reset"
+                            >
+                                Approved Date {/*<span className="text-danger">*</span> :*/}
+                            </label>
+                            <input
+                                className={"form-control coustam_datepicker text-lowercase"}
+                                value={props.job === "yes" ? state.lmia_date_approved : state.date_approved}
+                                onChange={onInputChange}
+                                id={props.job === "yes" ? "lmia_date_approved" : "date_approved"}
+                                name={props.job === "yes" ? "lmia_date_approved" : "date_approved"}
+                                type="date"
+                                onKeyDownCapture={(e) => e.preventDefault()}
+                                min={moment().format("DD-MM-YYYY")}
+                                maxLength={60}
+                            />
                         </div>
                         <div className="form-group ">
                             <label
@@ -307,10 +324,7 @@ export default function LmiaInfo(props) {
                             </label>
                             <select
                                 type={"text"}
-                                className={
-                                    errors.type_of_lmia
-                                        ? "form-control border border-danger text-capitalize"
-                                        : "form-control text-capitalize"
+                                className={"form-control text-capitalize"
                                 }
                                 value={state.type_of_lmia}
                                 onChange={onInputChange}
@@ -323,34 +337,22 @@ export default function LmiaInfo(props) {
                                     <option value={item.value} key={item.value}>{item.label}</option>
                                 )}
                             </select>
-                            {/*----ERROR MESSAGE FOR PAYMENT BY----*/}
-                            {errors.type_of_lmia && (
-                                <span
-                                    key={errors.type_of_lmia}
-                                    className="text-danger font-size-3"
-                                >
-                                    {errors.type_of_lmia}
-                                </span>
-                            )}
                         </div>
                         <div className="form-group ">
                             <label
-                                htmlFor="lmia_monday_status"
+                                htmlFor={props.job === "yes" ? "lmia_monday_status" : "monday_status"}
                                 className="font-size-4 text-black-2  line-height-reset"
                             >
                                 Status {/*<span className="text-danger">*</span> :*/}
                             </label>
                             <select
                                 type={"text"}
-                                className={
-                                    errors.lmia_monday_status
-                                        ? "form-control border border-danger text-capitalize"
-                                        : "form-control text-capitalize"
+                                className={"form-control text-capitalize"
                                 }
-                                value={state.lmia_monday_status}
+                                value={props.job === "yes" ? state.lmia_monday_status : state.monday_status}
                                 onChange={onInputChange}
-                                id="lmia_monday_status"
-                                name="lmia_monday_status"
+                                id={props.job === "yes" ? "lmia_monday_status" : "monday_status"}
+                                name={props.job === "yes" ? "lmia_monday_status" : "monday_status"}
                                 multiple={false}
                             >
                                 <option value={""}>Select status</option>
@@ -358,41 +360,23 @@ export default function LmiaInfo(props) {
                                     <option value={item.value} key={item.value}>{item.label}</option>
                                 )}
                             </select>
-                            {/*----ERROR MESSAGE FOR PAYMENT BY----*/}
-                            {errors.lmia_monday_status && (
-                                <span
-                                    key={errors.lmia_monday_status}
-                                    className="text-danger font-size-3"
-                                >
-                                    {errors.lmia_monday_status}
-                                </span>
-                            )}
                         </div>
                         <div className="form-group ">
                             <label
-                                htmlFor="lmia_notes"
+                                htmlFor={props.job === "yes" ? "lmia_notes" : "notes"}
                                 className="font-size-4 text-black-2  line-height-reset"
                             >
                                 Notes {/*<span className="text-danger">*</span> :*/}
                             </label>
                             <input
-                                className={
-                                    errors.lmia_notes
-                                        ? "form-control border border-danger text-lowercase"
-                                        : "form-control text-lowercase"
+                                className={"form-control text-lowercase"
                                 }
-                                value={state.lmia_notes}
+                                value={props.job === "yes" ? state.lmia_notes : state.notes}
                                 onChange={onInputChange}
-                                id="lmia_notes"
-                                name="lmia_notes"
+                                id={props.job === "yes" ? "lmia_notes" : "notes"}
+                                name={props.job === "yes" ? "lmia_notes" : "notes"}
                                 type="text"
                             />
-                            {/*----ERROR MESSAGE FOR Submission Date ----*/}
-                            {/* {errors.lmia_notes && (
-                                <span key={errors.lmia_notes} className="text-danger font-size-3">
-                                    {errors.lmia_notes}
-                                </span>
-                            )} */}
                         </div>
                         <div className="form-group text-center">
                             {loading === true ? (

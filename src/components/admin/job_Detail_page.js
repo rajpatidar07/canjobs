@@ -64,8 +64,8 @@ function JobDetailpageAdmim(props) {
   if (jobData !== "") {
     skill =
       jobData.keyskill === null ||
-      jobData.keyskill === undefined ||
-      jobData.keyskill === "undefined"
+        jobData.keyskill === undefined ||
+        jobData.keyskill === "undefined"
         ? []
         : jobData.keyskill.split(",");
   }
@@ -122,9 +122,8 @@ function JobDetailpageAdmim(props) {
         }
       >
         <div
-          className={`container${
-            user_type === "admin" || user_type === "agent" ? "-fluid" : ""
-          }`}
+          className={`container${user_type === "admin" || user_type === "agent" ? "-fluid" : ""
+            }`}
         >
           <div className="row text-left mt-5 pt-0">
             <div className="col-12 mb-1 d-none">
@@ -151,8 +150,8 @@ function JobDetailpageAdmim(props) {
                       <CustomButton
                         className={
                           user_type === "user" ||
-                          user_type === "agent" ||
-                          jobData.length === 0
+                            user_type === "agent" ||
+                            jobData.length === 0
                             ? "d-none"
                             : "font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
                         }
@@ -203,7 +202,7 @@ function JobDetailpageAdmim(props) {
                         <CustomButton
                           title={"Send Custom Email"}
                           className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                          /*Functionalities have to be done. */
+                        /*Functionalities have to be done. */
                         >
                           {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
                           <RiMailSendLine />
@@ -226,8 +225,8 @@ function JobDetailpageAdmim(props) {
                 <div className="col px-5 pt-5 pb-5  border-right position-relative">
                   <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
                     {!jobData.location &&
-                    !jobData.language &&
-                    !jobData.address ? (
+                      !jobData.language &&
+                      !jobData.address ? (
                       <div className="info_box text-left text-capitalize">
                         <span className="font-size-3 text-smoke  mr-7">
                           No Data FOund
@@ -353,6 +352,75 @@ function JobDetailpageAdmim(props) {
                       Job Responses
                     </Link>
                   </li>
+                  {/* <li
+                    className={
+                      user_type === "user"
+                        ? "d-none"
+                        : "tab-menu-items nav-item"
+                    }
+                  >
+                    <Link
+                      className={
+                        TabActive === "notes"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                      }
+                      id="notes"
+                      data-toggle="tab"
+                      role="tab"
+                      aria-controls="notes"
+                      aria-selected="true"
+                      onClick={() => setTabActive("notes")}
+                    >
+                      Notes
+                    </Link>
+                  </li>
+                  <li
+                    className={
+                      user_type === "user"
+                        ? "d-none"
+                        : "tab-menu-items nav-item"
+                    }
+                  >
+                    <Link
+                      className={
+                        TabActive === "documents"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                      }
+                      id="documents"
+                      data-toggle="tab"
+                      role="tab"
+                      aria-controls="documents"
+                      aria-selected="true"
+                      onClick={() => setTabActive("documents")}
+                    >
+                      Documents
+                    </Link>
+                  </li>
+                  <li
+                    className={
+                      user_type === "user"
+                        ? "d-none"
+                        : "tab-menu-items nav-item"
+                    }
+                  >
+                    <Link
+                      className={
+                        TabActive === "chat"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                      }
+                      id="chat"
+                      data-toggle="tab"
+                      role="tab"
+                      aria-controls="chat"
+                      aria-selected="true"
+                      onClick={() => setTabActive("chat")}
+                    >
+                      Chat
+                    </Link>
+                  </li> */}
                 </ul>
                 {/*---Profile Details----*/}
                 <div
@@ -384,8 +452,8 @@ function JobDetailpageAdmim(props) {
                           <CustomButton
                             className={
                               user_type === "user" ||
-                              user_type === "agent" ||
-                              jobData.length === 0
+                                user_type === "agent" ||
+                                jobData.length === 0
                                 ? "d-none"
                                 : "font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
                             }
@@ -432,20 +500,19 @@ function JobDetailpageAdmim(props) {
                               </h5>
 
                               <hr
-                                className={`my-3 ${
-                                  !jobData.location &&
+                                className={`my-3 ${!jobData.location &&
                                   !jobData.language &&
                                   !jobData.address &&
                                   !jobData.your_duties
-                                    ? "d-none"
-                                    : ""
-                                }`}
+                                  ? "d-none"
+                                  : ""
+                                  }`}
                               />
                               <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap w-100">
                                 {!jobData.location &&
-                                !jobData.language &&
-                                !jobData.address &&
-                                !jobData.your_duties ? (
+                                  !jobData.language &&
+                                  !jobData.address &&
+                                  !jobData.your_duties ? (
                                   ""
                                 ) : (
                                   <>
@@ -528,13 +595,13 @@ function JobDetailpageAdmim(props) {
                                   </h4>
                                 </div>
                                 {!jobData.industry &&
-                                !jobData.corporation &&
-                                !jobData.company_size &&
-                                !jobData.job_type &&
-                                !jobData.education &&
-                                !jobData.role_category &&
-                                !jobData.experience_required &&
-                                !jobData.department ? (
+                                  !jobData.corporation &&
+                                  !jobData.company_size &&
+                                  !jobData.job_type &&
+                                  !jobData.education &&
+                                  !jobData.role_category &&
+                                  !jobData.experience_required &&
+                                  !jobData.department ? (
                                   <div className="text-left row m-0">
                                     <div className="font-size-3 mb-4 mr-10">
                                       No Data Found
@@ -653,11 +720,11 @@ function JobDetailpageAdmim(props) {
                                       {jobData.email}
                                     </Link>
                                     {user_type === "admin" ||
-                                    props.self === "no" ? (
+                                      props.self === "no" ? (
                                       <CustomButton
                                         title={"Send Custom Email"}
                                         className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                                        /*Functionalities have to be done. */
+                                      /*Functionalities have to be done. */
                                       >
                                         {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
                                         <RiMailSendLine />
@@ -776,7 +843,9 @@ function JobDetailpageAdmim(props) {
                     TabActive === "notes" ? "justify-content-center " : "d-none"
                   }
                 >
-                  {/* {TabActive === "notes" ? (
+                  <div className="response_main_div w-100">
+
+                    {/* {TabActive === "notes" ? (
                     <AddCompanyfollowup
                       company_id={cid}
                       setApiCall={setApiCall}
@@ -803,6 +872,23 @@ function JobDetailpageAdmim(props) {
                   //         </div>
                   //       </div>
                   null*/}
+                  </div>
+                </div>
+                <div
+                  className={
+                    TabActive === "documents" ? "justify-content-center " : "d-none"
+                  }
+                >
+                  <div className="response_main_div w-100">
+                  </div>
+                </div>
+                <div
+                  className={
+                    TabActive === "chat" ? "justify-content-center " : "d-none"
+                  }
+                >
+                  <div className="response_main_div w-100">
+                  </div>
                 </div>
               </div>
             </div>

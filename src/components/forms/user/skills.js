@@ -273,7 +273,7 @@ function Skills(props) {
             <div className="form-group text-center mb-0">
               <button
                 type="button"
-                className="btn btn-primary ml-auto mr-auto"
+                className="btn btn-light ml-auto mr-auto"
                 data-dismiss="modal"
                 onClick={close}
               >

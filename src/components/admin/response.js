@@ -31,6 +31,8 @@ import { PiBriefcaseLight } from "react-icons/pi";
 import { ImCalendar } from "react-icons/im";
 import { GrDocumentUser } from "react-icons/gr";
 import LmiaInfo from "../forms/admin/lmiaInfo.js";
+import determineBackgroundColor from "../common/Common function/DetermineBackgroundColour.js";
+import filterjson from "../json/filterjson";
 function JobResponse(props) {
   /*show modal and data states */
   let [documentModal, setDocumentModal] = useState(false);
@@ -126,7 +128,6 @@ function JobResponse(props) {
         //   }
         // }
         setResponseData(userData.data.data);
-
         setTotalData(userData.data.total_rows);
         setIsLoading(false);
       }
@@ -135,6 +136,7 @@ function JobResponse(props) {
       setIsLoading(false);
     }
   };
+
   /*Render function to get the Response*/
   useEffect(() => {
     ResponseData();
@@ -340,15 +342,15 @@ function JobResponse(props) {
     <div
       className={
         props.heading === "Response" ||
-        (props.heading === undefined && user_type === "admin")
+          (props.heading === undefined && user_type === "admin")
           ? "site-wrapper overflow-hidden bg-default-2  "
           : props.heading === "Dashboard"
-          ? "site-wrapper overflow-hidden bg-default-2 bg-white"
-          : "response_main_div"
+            ? "site-wrapper overflow-hidden bg-default-2 bg-white"
+            : "response_main_div"
       }
     >
       {props.heading === "Response" ||
-      (props.heading === undefined && user_type === "admin") ? (
+        (props.heading === undefined && user_type === "admin") ? (
         <>
           {/* <!-- Header Area --> */}
           <AdminHeader heading={"Response"} />
@@ -360,21 +362,21 @@ function JobResponse(props) {
       <div
         className={
           props.heading === "Response" ||
-          (props.heading === undefined && user_type === "admin")
+            (props.heading === undefined && user_type === "admin")
             ? "dashboard-main-container mt-14"
             : props.heading === "Dashboard"
-            ? ""
-            : "response__container"
+              ? ""
+              : "response__container"
         }
       >
         <div
           className={
             props.heading === "Response" ||
-            (props.heading === undefined && user_type === "admin")
+              (props.heading === undefined && user_type === "admin")
               ? "container-fluid"
               : props.heading === "Dashboard"
-              ? ""
-              : "container"
+                ? ""
+                : "container"
           }
         >
           {props.heading === "Dashboard" ? (
@@ -393,7 +395,7 @@ function JobResponse(props) {
               <div
                 className={
                   props.heading === "Response" ||
-                  (props.heading === undefined && user_type === "admin")
+                    (props.heading === undefined && user_type === "admin")
                     ? "row m-0 align-items-center"
                     : "d-none"
                 }
@@ -491,11 +493,11 @@ function JobResponse(props) {
             <div
               className={
                 props.heading === "Response" ||
-                (props.heading === undefined && user_type === "admin")
+                  (props.heading === undefined && user_type === "admin")
                   ? ""
                   : props.heading === "Dashboard"
-                  ? "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
-                  : ""
+                    ? "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
+                    : ""
               }
             >
               <div className="table-responsive main_table_div">
@@ -543,6 +545,166 @@ function JobResponse(props) {
                             Name
                           </Link>
                         </th>
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("lmia_number");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by LMIA Number"
+                          >
+                            LMIA Number
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("lmia_creation_date");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by LMIA Creation Date"
+                          >
+                            LMIA Creation Date
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("lmia_submission_date");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by LMIA Submission Date"
+                          >
+                            LMIA Submission Date
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("lmia_expiry_date");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by LMIA Expiry Date"
+                          >
+                            LMIA Expiry Date
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("date_approved");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by Date Approved"
+                          >
+                            LMAI Approved Date
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("lmia_payment_status");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by LMIA Payment"
+                          >
+                            LMIA Payment
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("lmia_payment_by");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by LMIA Payment By"
+                          >
+                            LMIA Payment By
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("monday_status");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by Monday Status"
+                          >
+                            Monday Status
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("lmia_notes");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by LMIA Notes"
+                          >
+                            LMIA Notes
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("type_of_lmia");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by Type of LMIA"
+                          >
+                            Type of LMIA
+                          </Link>
+                        </th>
 
                         {/* <th
                           scope="col"
@@ -562,7 +724,7 @@ function JobResponse(props) {
                         </th> */}
 
                         {props.heading === "Dashboard" ||
-                        user_type === "company" ? (
+                          user_type === "company" ? (
                           ""
                         ) : (
                           <th
@@ -657,8 +819,8 @@ function JobResponse(props) {
                           Interview
                         </th>
                         {props.heading === "Dashboard" ||
-                        user_type === "company" ||
-                        props.self === "yes" ? (
+                          user_type === "company" ||
+                          props.self === "yes" ? (
                           ""
                         ) : (
                           <th
@@ -674,7 +836,7 @@ function JobResponse(props) {
                     <tbody>
                       {totalData === 0 || response.length === 0 ? (
                         <tr>
-                          <th colSpan={9} className="bg-white text-center">
+                          <th colSpan={16} className="bg-white text-center">
                             No Data Found
                           </th>
                         </tr>
@@ -707,7 +869,6 @@ function JobResponse(props) {
                                         )}
                                       </div>
                                     </div>
-
                                     <div className=" mb-0" title={res.name}>
                                       <p
                                         className="m-0 text-black-2 font-weight-bold text-capitalize"
@@ -726,21 +887,20 @@ function JobResponse(props) {
                                           (res.gender === "female"
                                             ? "F"
                                             : res.gender === "male"
-                                            ? "M"
-                                            : "O") +
+                                              ? "M"
+                                              : "O") +
                                           (res.marital_status ||
-                                          res.date_of_birth
-                                            ? `(${res.marital_status}${
-                                                moment().diff(
-                                                  res.date_of_birth,
-                                                  "years"
-                                                ) === 0
-                                                  ? ""
-                                                  : `,${moment().diff(
-                                                      res.date_of_birth,
-                                                      "years"
-                                                    )}Y`
-                                              })`
+                                            res.date_of_birth
+                                            ? `(${res.marital_status}${moment().diff(
+                                              res.date_of_birth,
+                                              "years"
+                                            ) === 0
+                                              ? ""
+                                              : `,${moment().diff(
+                                                res.date_of_birth,
+                                                "years"
+                                              )}Y`
+                                            })`
                                             : null)
                                         }
                                       >
@@ -752,8 +912,8 @@ function JobResponse(props) {
                                         {res.gender === "female"
                                           ? "F"
                                           : res.gender === "male"
-                                          ? "M"
-                                          : "O"}
+                                            ? "M"
+                                            : "O"}
                                         ({res.marital_status}
                                         {/*Calculation of age from date of birth*/}
                                         {moment().diff(
@@ -762,9 +922,9 @@ function JobResponse(props) {
                                         ) === 0
                                           ? ""
                                           : `,${moment().diff(
-                                              res.date_of_birth,
-                                              "years"
-                                            )}Y`}
+                                            res.date_of_birth,
+                                            "years"
+                                          )}Y`}
                                         )
                                       </p>
                                       {res.created_by_admin === ("0" || 0) ? (
@@ -794,6 +954,50 @@ function JobResponse(props) {
                                 )}
                               </h3>
                             </th>
+                            <th className="py-5 " title={res.lmia_number || "N/A"}>
+                              {res.lmia_number || "N/A"}
+                            </th>
+                            <th className="py-5 " title={res.creation_date || "N/A"}>
+                              {res.creation_date ? moment(res.creation_date).format("YYYY-MM-DD") : "N/A"}
+                            </th>
+                            <th className="py-5 " title={res.lmia_submission_date || "N/A"}>
+                              {res.lmia_submission_date ? moment(res.lmia_submission_date).format("YYYY-MM-DD") : "N/A"}
+                            </th>
+                            <th className="py-5 " title={res.lmia_expiry_date || "N/A"}>
+                              {res.lmia_expiry_date ? moment(res.lmia_expiry_date).format("YYYY-MM-DD") : "N/A"}
+                            </th>
+                            <th className="py-5 " title={res.date_approved || "N/A"}>
+                              {res.date_approved ? moment(res.date_approved).format("YYYY-MM-DD") : "N/A"}
+                            </th>
+                            <th className="py-5 " title={res.payment_status || "N/A"}>
+                              {res.payment_status || "N/A"}
+                            </th>
+                            <th className="py-5 " title={res.payment_by || "N/A"}>
+                              {res.payment_by || "N/A"}
+                            </th>
+                            <th className="py-5 " title={res.monday_status || "N/A"}>
+                              <span
+                                className={`font-size-3 font-weight-normal text-center text-capitalize rounded-pill font-size-1 px-1  ${res.monday_status ? `${determineBackgroundColor(res)} text-white` : " text-dark"}`}
+                              >
+                                <span
+                                  className="font-size-3 font-weight-normal m-0"> {FilterJson.monday_status.find(
+                                    (item) => item.value === res.monday_status
+                                  )?.label || "N/A"}
+                                </span>
+                              </span>
+                            </th>
+                            <th className="py-5 " title={res.notes || "N/A"}>
+                              {res.notes || "N/A"}
+                            </th>
+                            <th className="py-5 " title={res.type_of_lmia || "N/A"}>
+                              <span className={`font-size-3 font-weight-normal text-center text-capitalize rounded-pill font-size-1 p-1  ${res.type_of_lmia ? `${determineBackgroundColor(res)} text-white` : " text-dark"}`}
+                                title={res.type_of_lmia || "N/A"}>
+                                <span
+                                  className="font-size-3 font-weight-normal m-0"> {filterjson.type_of_lmia.find((item) => item.value === res.type_of_lmia)?.label
+                                    || "N/A"}
+                                </span>
+                              </span>
+                            </th>
 
                             {/* <th className="py-5 ">
                               <p className="m-0 text-black-2 font-weight-semibold text-capitalize">
@@ -804,113 +1008,119 @@ function JobResponse(props) {
                               </p>
                             </th> */}
 
-                            {props.heading === "Dashboard" ||
-                            user_type === "company" ? (
-                              ""
-                            ) : (
-                              <th className=" py-5">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {res.contact_no || res.email ? (
-                                    <>
-                                      <p
-                                        className="font-size-3 font-weight-normal m-0"
-                                        title={res.contact_no}
-                                      >
-                                        <Link
-                                          className="text-dark"
-                                          to={`tel:${res.contact_no}`}
+                            {
+                              props.heading === "Dashboard" ||
+                                user_type === "company" ? (
+                                ""
+                              ) : (
+                                <th className=" py-5">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    {res.contact_no || res.email ? (
+                                      <>
+                                        <p
+                                          className="font-size-3 font-weight-normal m-0"
+                                          title={res.contact_no}
                                         >
-                                          {res.contact_no &&
-                                            `+${res.contact_no}`}
-                                        </Link>
-                                      </p>
-                                      <p
-                                        className="font-size-3 font-weight-normal m-0"
-                                        title={res.email}
-                                      >
-                                        <Link
-                                          className="text-dark"
-                                          to={`mailto:${res.email}`}
+                                          <Link
+                                            className="text-dark"
+                                            to={`tel:${res.contact_no}`}
+                                          >
+                                            {res.contact_no &&
+                                              `+${res.contact_no}`}
+                                          </Link>
+                                        </p>
+                                        <p
+                                          className="font-size-3 font-weight-normal m-0"
+                                          title={res.email}
                                         >
-                                          {res.email}
-                                        </Link>
-                                      </p>
-                                    </>
-                                  ) : (
-                                    <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                      N/A
-                                    </span>
-                                  )}
-                                </h3>
-                              </th>
-                            )}
-                            {props.heading === "Dashboard" ? (
-                              ""
-                            ) : (
-                              <th className="py-5 ">
-                                <h3
-                                  className="font-size-3 font-weight-normal text-black-2 mb-0"
-                                  title={
-                                    res.current_location +
-                                    " " +
-                                    res.currently_located_country
-                                  }
-                                >
-                                  {res.current_location ||
-                                  res.currently_located_country ? (
-                                    <>
-                                      <span>{res.current_location}</span>
-                                      <span className="px-1">
-                                        {res.currently_located_country}
+                                          <Link
+                                            className="text-dark"
+                                            to={`mailto:${res.email}`}
+                                          >
+                                            {res.email}
+                                          </Link>
+                                        </p>
+                                      </>
+                                    ) : (
+                                      <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                        N/A
                                       </span>
-                                    </>
-                                  ) : (
-                                    <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                      N/A
-                                    </span>
-                                  )}
-                                </h3>
-                              </th>
-                            )}
-                            {props.heading === "Dashboard" ? (
-                              ""
-                            ) : (
-                              <th className=" py-5">
-                                <h3
-                                  className="font-size-3 font-weight-normal text-black-2 mb-0"
-                                  title={
-                                    res.experience +
-                                    (res.experience === "1-3 " ||
-                                    res.experience === "1-2 " ||
-                                    res.experience === "3-5 " ||
-                                    res.experience === "5-7 " ||
-                                    res.experience === "7+ "
-                                      ? "Years"
-                                      : res.experience === "0-1 "
-                                      ? "Year"
-                                      : "")
-                                  }
-                                >
-                                  {res.experience ? (
-                                    res.experience +
-                                    (res.experience === "1-3 " ||
-                                    res.experience === "1-2 " ||
-                                    res.experience === "3-5 " ||
-                                    res.experience === "5-7 " ||
-                                    res.experience === "7+ "
-                                      ? "Years"
-                                      : res.experience === "0-1 "
-                                      ? "Year"
-                                      : "")
-                                  ) : (
-                                    <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                      N/A
-                                    </span>
-                                  )}
-                                </h3>
-                              </th>
-                            )}
-                            <th className="text-center py-5 ">
+                                    )}
+                                  </h3>
+                                </th>
+                              )
+                            }
+                            {
+                              props.heading === "Dashboard" ? (
+                                ""
+                              ) : (
+                                <th className="py-5 ">
+                                  <h3
+                                    className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                    title={
+                                      res.current_location +
+                                      " " +
+                                      res.currently_located_country
+                                    }
+                                  >
+                                    {res.current_location ||
+                                      res.currently_located_country ? (
+                                      <>
+                                        <span>{res.current_location}</span>
+                                        <span className="px-1">
+                                          {res.currently_located_country}
+                                        </span>
+                                      </>
+                                    ) : (
+                                      <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                        N/A
+                                      </span>
+                                    )}
+                                  </h3>
+                                </th>
+                              )
+                            }
+                            {
+                              props.heading === "Dashboard" ? (
+                                ""
+                              ) : (
+                                <th className=" py-5">
+                                  <h3
+                                    className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                    title={
+                                      res.experience +
+                                      (res.experience === "1-3 " ||
+                                        res.experience === "1-2 " ||
+                                        res.experience === "3-5 " ||
+                                        res.experience === "5-7 " ||
+                                        res.experience === "7+ "
+                                        ? "Years"
+                                        : res.experience === "0-1 "
+                                          ? "Year"
+                                          : "")
+                                    }
+                                  >
+                                    {res.experience ? (
+                                      res.experience +
+                                      (res.experience === "1-3 " ||
+                                        res.experience === "1-2 " ||
+                                        res.experience === "3-5 " ||
+                                        res.experience === "5-7 " ||
+                                        res.experience === "7+ "
+                                        ? "Years"
+                                        : res.experience === "0-1 "
+                                          ? "Year"
+                                          : "")
+                                    ) : (
+                                      <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                        N/A
+                                      </span>
+                                    )}
+                                  </h3>
+                                </th>
+                              )
+                            }
+                            < th className="text-center py-5 " >
                               <div
                                 className="font-size-3 font-weight-normal text-black-2 mb-0 "
                                 title={res.lmia_status || "N/A"}
@@ -926,19 +1136,18 @@ function JobResponse(props) {
                                     </span>
                                   ) : res.lmia_status === "decision" ? (
                                     <span
-                                      className={`px-3 py-2 badge badge-pill text-capitalize ${
-                                        lmiaSubStages.find(
+                                      className={`px-3 py-2 badge badge-pill text-capitalize ${lmiaSubStages.find(
+                                        (stage) =>
+                                          stage.lmia_status === "decision"
+                                      )?.lmia_substage === "approved"
+                                        ? "badge-shamrock"
+                                        : lmiaSubStages.find(
                                           (stage) =>
                                             stage.lmia_status === "decision"
-                                        )?.lmia_substage === "approved"
-                                          ? "badge-shamrock"
-                                          : lmiaSubStages.find(
-                                              (stage) =>
-                                                stage.lmia_status === "decision"
-                                            )?.lmia_substage === "refused"
+                                        )?.lmia_substage === "refused"
                                           ? "badge-danger"
                                           : "badge-warning"
-                                      }`}
+                                        }`}
                                     >
                                       {lmiaSubStages.find(
                                         (stage) =>
@@ -1003,8 +1212,8 @@ function JobResponse(props) {
                                   res.status === "complete"
                                     ? "Complete"
                                     : res.status === "pending"
-                                    ? "Scheduled"
-                                    : "Pending"
+                                      ? "Scheduled"
+                                      : "Pending"
                                 }
                               >
                                 {res.status === "complete" ? (
@@ -1023,8 +1232,8 @@ function JobResponse(props) {
                               </p>
                             </th>
                             {props.heading === "Dashboard" ||
-                            user_type === "company" ||
-                            props.self === "yes" ? (
+                              user_type === "company" ||
+                              props.self === "yes" ? (
                               ""
                             ) : (
                               <th className="py-5  min-width-px-100">
@@ -1048,7 +1257,7 @@ function JobResponse(props) {
                                   <button
                                     className={
                                       props.response === "visa" ||
-                                      res.is_reserve === "0"
+                                        res.is_reserve === "0"
                                         ? "d-none"
                                         : "btn btn-outline-info action_btn text-gray"
                                     }
@@ -1060,7 +1269,7 @@ function JobResponse(props) {
                                   <button
                                     className={
                                       props.response === "visa" ||
-                                      res.is_reserve === "0"
+                                        res.is_reserve === "0"
                                         ? "d-none"
                                         : "btn btn-outline-info action_btn text-gray"
                                     }
@@ -1072,7 +1281,7 @@ function JobResponse(props) {
                                   <button
                                     className={
                                       props.response === "lmia" ||
-                                      res.is_reserve === "0"
+                                        res.is_reserve === "0"
                                         ? "d-none"
                                         : "btn btn-outline-info action_btn"
                                     }
@@ -1087,7 +1296,7 @@ function JobResponse(props) {
                                   <button
                                     className={
                                       res.is_reserve === "0" ||
-                                      props.response === "lmia"
+                                        props.response === "lmia"
                                         ? "d-none"
                                         : "btn btn-outline-info action_btn"
                                     }
@@ -1125,7 +1334,7 @@ function JobResponse(props) {
                                     className={
                                       (props.response === "visa" ||
                                         props.response === "lmia") &&
-                                      res.is_reserve === "1"
+                                        res.is_reserve === "1"
                                         ? "btn btn-outline-info action_btn d-none"
                                         : "d-none"
                                     }
@@ -1154,7 +1363,7 @@ function JobResponse(props) {
                                   <button
                                     className={
                                       props.response === "visa" ||
-                                      props.response === "lmia"
+                                        props.response === "lmia"
                                         ? "d-none"
                                         : "btn btn-outline-info action_btn"
                                     }
@@ -1171,19 +1380,19 @@ function JobResponse(props) {
                                   <button
                                     className={
                                       props.response === "visa" ||
-                                      props.response === "lmia"
+                                        props.response === "lmia"
                                         ? "d-none"
                                         : "btn btn-outline-info action_btn text-gray"
                                     }
                                     onClick={() => OpenChangeJob(res)}
                                     title="Change Job"
                                     disabled={res.interested_in === "pgwp"}
-                                    // disabled={
-                                    //   props.total_applicants >=
-                                    //   props.role_category
-                                    //     ? true
-                                    //     : false
-                                    // }
+                                  // disabled={
+                                  //   props.total_applicants >=
+                                  //   props.role_category
+                                  //     ? true
+                                  //     : false
+                                  // }
                                   >
                                     <PiBriefcaseLight />
                                   </button>
@@ -1229,16 +1438,18 @@ function JobResponse(props) {
             </div>
           </div>
         </div>
-      </div>
-      {documentModal ? (
-        <DocumentModal
-          show={documentModal}
-          close={() => setDocumentModal(false)}
-          employee_id={employeeId}
-          job={"no"}
-          lmia={lmiaStatus}
-        />
-      ) : null}
+      </div >
+      {
+        documentModal ? (
+          <DocumentModal
+            show={documentModal}
+            close={() => setDocumentModal(false)
+            }
+            employee_id={employeeId}
+            job={"no"}
+            lmia={lmiaStatus}
+          />
+        ) : null}
       {/* {followup ? (
         <Addfollowup
           show={followup}
@@ -1252,72 +1463,82 @@ function JobResponse(props) {
           }}
         />
       ) : null} */}
-      {showVisaModal ? (
-        <VisaStatus
-          show={showVisaModal}
-          employeeData={employeeId}
-          apiCall={apiCall}
-          setApiCall={setApiCall}
-          close={() => setVisaModal(false)}
-          type={"visa"}
-        />
-      ) : null}
+      {
+        showVisaModal ? (
+          <VisaStatus
+            show={showVisaModal}
+            employeeData={employeeId}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
+            close={() => setVisaModal(false)}
+            type={"visa"}
+          />
+        ) : null
+      }
 
-      {interview ? (
-        <AddInterview
-          show={interview}
-          job_id={jobId}
-          resData={resData}
-          apiCall={apiCall}
-          setApiCall={setApiCall}
-          close={() => {
-            setInterview(false);
-            setResData("");
-          }}
-        />
-      ) : null}
-      {lmia ? (
-        <LmiaStatus
-          show={lmia}
-          resData={resData}
-          apiCall={apiCall}
-          setApiCall={setApiCall}
-          job={"no"}
-          close={() => {
-            setLimia(false);
-            setResData("");
-          }}
-        />
-      ) : null}
-      {showLmiaAdditionalInfobModal ? (
-        <LmiaInfo
-          show={showLmiaAdditionalInfobModal}
-          resData={resData}
-          apiCall={apiCall}
-          setApiCall={setApiCall}
-          job={"no"}
-          close={() => {
-            setShowLmiaAdditionalInfobModal(false);
-            setResData("");
-          }}
-        />
-      ) : null}
-      {showChangeJobModal ? (
-        <ChangeJob
-          resData={resData}
-          close={() => {
-            setShowChangeJobModal(false);
-            setResData("");
-          }}
-          apiCall={apiCall}
-          setApiCall={setApiCall}
-          job_id={jobId}
-          show={showChangeJobModal}
-          status={0}
-          setChangeJob={setChangeJob}
-        />
-      ) : null}
-    </div>
+      {
+        interview ? (
+          <AddInterview
+            show={interview}
+            job_id={jobId}
+            resData={resData}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
+            close={() => {
+              setInterview(false);
+              setResData("");
+            }}
+          />
+        ) : null
+      }
+      {
+        lmia ? (
+          <LmiaStatus
+            show={lmia}
+            resData={resData}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
+            job={"no"}
+            close={() => {
+              setLimia(false);
+              setResData("");
+            }}
+          />
+        ) : null
+      }
+      {
+        showLmiaAdditionalInfobModal ? (
+          <LmiaInfo
+            show={showLmiaAdditionalInfobModal}
+            resData={resData}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
+            job={"no"}
+            close={() => {
+              setShowLmiaAdditionalInfobModal(false);
+              setResData("");
+            }}
+          />
+        ) : null
+      }
+      {
+        showChangeJobModal ? (
+          <ChangeJob
+            resData={resData}
+            close={() => {
+              setShowChangeJobModal(false);
+              setResData("");
+            }}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
+            job_id={jobId}
+            show={showChangeJobModal}
+            status={0}
+            setChangeJob={setChangeJob}
+          />
+        ) : null
+      }
+    </div >
   );
 }
 

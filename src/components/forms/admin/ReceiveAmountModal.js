@@ -151,7 +151,7 @@ export default function ReceiveAmountModal(props) {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <button className="btn btn-secondary" onClick={close}>
+          <button className="btn btn-light" onClick={close}>
             Close
           </button>
           <button className="btn btn-primary" disabled={loading} onClick={handleSave}>

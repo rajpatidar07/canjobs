@@ -122,7 +122,7 @@ export default function EditDocNameForm({ EditNameType, setApiCall, userId, name
                         <div className="form-group text-center mb-0 col">
                             <button
                                 type="button"
-                                className="btn btn-primary "
+                                className="btn btn-light "
                                 data-dismiss="modal"
                                 onClick={close}
                             >
