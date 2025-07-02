@@ -41,7 +41,19 @@ axios.interceptors.response.use(
     return response;
   },
   error => {
-    return Promise.reject(error);
+    if(error.message==="Network Error"||error.message==="Request failed with status code 401"){
+      if (user_type === "user") {
+        window.location.href = "/candidate_login";
+      } else if (user_type === "company") {
+        window.location.href = "/client_login";
+      } else if (user_type === "admin") {
+        window.location.href = "/adminlogin";
+      } else if (user_type === "agent") {
+        window.location.href = "/partnerlogin";
+      } else {
+        window.location.href = "/";
+      }
+    return Promise.reject(error);}
   }
 );
 
