@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import AddJobModal from "../forms/employer/job";
 import EmployeeHeader from "../common/header";
 import CustomButton from "../common/button";
-import { GetJobDetail } from "../../api/api";
+import { AddJob, GetJobDetail } from "../../api/api";
 import Loader from "../common/loader";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { PiPencilDuotone } from "react-icons/pi";
 // import AdminHeader from "../admin/header";
 // import AdminSidebar from "../admin/sidebar";
@@ -15,18 +15,32 @@ import { BiPhoneCall } from "react-icons/bi";
 import LimaArrowProfile from "../common/LimaArrowProfile";
 import EmployeeFooter from "../common/footer";
 import { getInitials } from "../common/GetInitials";
+import SharePointDocument from "../common/Document folder/SharePointDocument";
+import Addfollowup from "../forms/admin/addfollowup";
 function JobDetailpageAdmim(props) {
   const user_type = localStorage.getItem("userType");
   let jid = localStorage.getItem("job_id");
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const docId = searchParams.get("docId");
+  const notes = searchParams.get("note");
+  const note_id = searchParams.get("noteid");
+  const docParentId = searchParams.get("docParentId");
+  const docHighAnnoId = searchParams.get("annotationId");
+  const docTaskId = searchParams.get("taskId");
+  // const partnerChat = searchParams.get("partner");
   let skill = [];
   let navigate = useNavigate();
   /*Show modal and data state */
   const [lima, setLmia] = useState([]);
+  const [addNote, setAddNote] = useState(false);
   const [lmiaStatusRejectComment, setLmiaStatusRejectComment] = useState([]);
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
   const [showJobEditModal, setShowJobEditModal] = useState(false);
-  const [TabActive, setTabActive] = useState("detail");
+  const [TabActive, setTabActive] = useState(docId
+    ? "documents"
+    : "detail");
   const [jobData, setJobData] = useState("");
   const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   // const [employerKycData, setEmployrKycData] = useState("");
@@ -57,8 +71,11 @@ function JobDetailpageAdmim(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
+    if (docId) {
+      setTabActive("documents");
+    }
     // eslint-disable-next-line
-  }, [apiCall]);
+  }, [apiCall, location.key, docId]);
 
   /*Set skill variable to array frm string */
   if (jobData !== "") {
@@ -83,8 +100,13 @@ function JobDetailpageAdmim(props) {
               backgroundColor: "#992b32",
               minWidth: "50%",
             }}
-            onClick={() => navigate(-1)}
-          >
+            onClick={() => {
+              if (TabActive === "notes") {
+                navigate(-1);
+              } else {
+                setAddNote(true);
+              }
+            }}          >
             <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
             <span className="text-uppercase font-size-3 font-weight-bold">
               <h3 className="font-size-6 mb-0 text-capitalize text-white">
@@ -352,7 +374,7 @@ function JobDetailpageAdmim(props) {
                       Job Responses
                     </Link>
                   </li>
-                  {/* <li
+                  <li
                     className={
                       user_type === "user"
                         ? "d-none"
@@ -393,7 +415,23 @@ function JobDetailpageAdmim(props) {
                       role="tab"
                       aria-controls="documents"
                       aria-selected="true"
-                      onClick={() => setTabActive("documents")}
+                      onClick={async () => {
+                        if (
+                          !jobData.doc_folder_id &&
+                          jobData.job_title
+                        ) {
+                          // Call the API with the modified object
+                          await AddJob(jobData);
+                          setApiCall(true);
+                          // if (responseData.status === 1) {
+                          //   setTabActive("documents");
+                          // }else{
+                          setTabActive("documents");
+                          // }
+                        } else {
+                          setTabActive("documents");
+                        }
+                      }}
                     >
                       Documents
                     </Link>
@@ -420,7 +458,7 @@ function JobDetailpageAdmim(props) {
                     >
                       Chat
                     </Link>
-                  </li> */}
+                  </li>
                 </ul>
                 {/*---Profile Details----*/}
                 <div
@@ -840,47 +878,57 @@ function JobDetailpageAdmim(props) {
                 </div>
                 <div
                   className={
-                    TabActive === "notes" ? "justify-content-center " : "d-none"
+                    TabActive === "notes"
+                      ? "justify-content-center "
+                      : "d-none"
                   }
                 >
-                  <div className="response_main_div w-100">
-
-                    {/* {TabActive === "notes" ? (
-                    <AddCompanyfollowup
-                      company_id={cid}
-                      setApiCall={setApiCall}
-                    />
-                  ) 
-                   : //  <div className="p-10 notes_container">
-                  //         <div className="single_note mb-5">
-                  //           <small>Created on: 2023-08-03 17:10:53</small>
-                  //           <div className="card p-5">
-                  //             This is some text within a card body.
-                  //           </div>
-                  //         </div>
-                  //         <div className="single_note mb-5">
-                  //           <small>Created on: 2023-08-03 17:10:53</small>
-                  //           <div className="card p-5">
-                  //             This is some text within a card body.
-                  //           </div>
-                  //         </div>
-                  //         <div className="single_note mb-5">
-                  //           <small>Created on: 2023-08-03 17:10:53</small>
-                  //           <div className="card p-5">
-                  //             This is some text within a card body.
-                  //           </div>
-                  //         </div>
-                  //       </div>
-                  null*/}
-                  </div>
+                  <Addfollowup
+                    userId={jid}
+                    userType={"job"}
+                    setApiCall={setApiCall}
+                    assigned_by_id={jobData.assigned_by}
+                    noteNotification={notes}
+                    show={TabActive === "notes" || addNote}
+                    page={TabActive === "notes" ? "no" : "yes"}
+                    close={() => {
+                      setAddNote(false);
+                    }}
+                    note_id={notes ? note_id : ""}
+                    skip={() => navigate(-1)}
+                  />
                 </div>
                 <div
                   className={
-                    TabActive === "documents" ? "justify-content-center " : "d-none"
+                    TabActive === "documents"
+                      ? "justify-content-center"
+                      : "d-none"
                   }
+                  id="applieddocuments"
+                  role="tabpanel"
+                  aria-labelledby="applieddocuments"
                 >
-                  <div className="response_main_div w-100">
-                  </div>
+                  {console.log(docId
+                    ? docParentId + "fdgdg"
+                    : jobData.doc_folder_id + "pppp")}
+                  {TabActive === "documents" ? (
+                    <SharePointDocument
+                      user_id={jid}
+                      emp_user_type={"job"}
+                      folderId={
+                        docId
+                          ? docParentId
+                          : jobData.doc_folder_id
+                      }
+                      AnnoteId={docHighAnnoId}
+                      docTaskId={docTaskId}
+                      notification={docId ? "yes" : "no"}
+                      docId={docId ? docId : ""}
+                      docTypePage={"adobe"}
+                      user_name={jobData.job_title}
+                      partnerId={""}//jobData.reffer_by
+                    />
+                  ) : null}
                 </div>
                 <div
                   className={

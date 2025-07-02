@@ -19,6 +19,32 @@ if (view_as_token) {
   Token = view_as_token;
 }
 
+axios.interceptors.response.use(
+  response => {
+    if (
+      response.data &&
+      response.data.status === false &&
+      response.data.message === "Unauthorised Token"
+    ) {
+      if (user_type === "employee") {
+        window.location.href = "/candidate_login";
+      } else if (user_type === "employer") {
+        window.location.href = "/client_login";
+      } else if (user_type === "admin") {
+        window.location.href = "/adminlogin";
+      } else if (user_type === "agent") {
+        window.location.href = "/partnerlogin";
+      } else {
+        window.location.href = "/";
+      }
+    }
+    return response;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
+
 // Location Api
 /*Country*/
 export const GetCountry = async () => {

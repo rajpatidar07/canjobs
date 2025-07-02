@@ -13,6 +13,7 @@ export default function ManageInterview() {
   const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   const [allInterviews, setAllInterviews] = useState([]);
 
+  /*Function to get the interview data */
   const GetllINterviewData = async () => {
     try {
       let res = await getInterview();
@@ -21,6 +22,7 @@ export default function ManageInterview() {
       console.log(err);
     }
   };
+  
   useEffect(() => {
     GetllINterviewData();
     if ((search === "") === true) {

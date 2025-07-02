@@ -25,7 +25,10 @@ const emailKeys = [
   "task_created_by_admin_task",
   "reply_on_admin_doc",
   "forget_password",
-  "add_job_company"]
+  "add_job_company",
+  "apply_on_job",
+  "add_job_admin",
+]
 const notificationKeys = ["lmia", "visa", "interview", "job"];
 
 function AdminSetting({ show, close, setShowChangePass }) {
@@ -107,7 +110,25 @@ function AdminSetting({ show, close, setShowChangePass }) {
             onChange={() => togglePermission(`${prefix}${key}`)}
           />
           <label className="custom-control-label text-capitalize" htmlFor={`switch_${prefix}${i}`}>
-            {key === "new_user_registered" ? "Applicant's Registration mail" : key === "interview_schedule_admin" ? "Interview Scheduled" : key === "task_created_by_admin_doc" ? "Task Created on Document" : key === "task_created_by_admin_task" ? "Comments Mail" : key === "reply_on_admin_doc" ? "Reply mail" : key === "forget_password" ? "Forget Password" : key === "add_job_company" ? "Add Job by company" : key.charAt(0).toUpperCase() + key.slice(1)}
+            {
+              key === "new_user_registered"
+                ? "Applicant's Registration mail"
+                : key === "interview_schedule_admin"
+                  ? "Interview Scheduled"
+                  : key === "task_created_by_admin_doc"
+                    ? "Task Created on Document"
+                    : key === "task_created_by_admin_task"
+                      ? "Comments Mail"
+                      : key === "reply_on_admin_doc"
+                        ? "Reply mail"
+                        : key === "forget_password"
+                          ? "Forget Password"
+                          : key === "add_job_company"
+                            ? "Add Job by company"
+                            : key
+                              .replaceAll("_", " ") // replaces all underscores with spaces
+                              .replace(/(^\w|\s\w)/g, (m) => m.toUpperCase()) // capitalizes each word
+            }
           </label>
         </div>
       </li>

@@ -301,7 +301,6 @@ export default function JobTable(props) {
     setJobId(job);
     setOpenLimia(true);
   };
-  console.log(props)
   return (
     <>
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">

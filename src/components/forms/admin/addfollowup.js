@@ -896,7 +896,7 @@ function Addfollowup(props) {
           "note",
           senderId,
           senderEmail,
-          adminType||assigned_by_type,//sender type
+          adminType || assigned_by_type,//sender type
           props.userId, //props.userId
           "",//docData.parentReference.id,
           props.userType,
@@ -1001,7 +1001,7 @@ function Addfollowup(props) {
               className={`activity_container px-8 py-6 col-md-8 border-right ${props.page === "yes" ? "d-none" : ""
                 }`}
             >
-              <div>
+              <div className={props.userType === "job" ? "d-none" : ""}>
                 <h5>Tasks</h5>
                 <AdminTaskTable
                   heading={""}
@@ -1018,6 +1018,7 @@ function Addfollowup(props) {
                   adminType={""}
                 />
               </div>
+              {console.log(response)}
               <div
                 className={
                   response.length === 0 || !response ? "d-none" : "p-5 rounded "
