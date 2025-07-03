@@ -33,7 +33,7 @@ const MessageList = ({ data, loginuser, loginusertype, recordsPerPage, setRecord
       style={{ overflowY: "scroll", height: "590px" }}>
       {data.length === 0 ? (
         <div className="message">
-          <div>No Data Found</div>
+          <p>No Data Found</p>
         </div>
       ) : (
         data.map((message, index) => {
@@ -72,8 +72,6 @@ const MessageList = ({ data, loginuser, loginusertype, recordsPerPage, setRecord
                 : "sent"
                 }`}
             >
-              {console.log(message.task_creator_user_id === loginuser &&
-                message.task_creator_user_type === loginusertype, message.task_creator_user_id, loginuser, "type", message.task_creator_user_type, loginusertype)}
               <div className="message-content font-size-3">
                 {title === "" || iconSrc === "" ? (
                   message.subject_description === "" ||
@@ -83,7 +81,7 @@ const MessageList = ({ data, loginuser, loginusertype, recordsPerPage, setRecord
                     message.subject_description === "null" ? (
                     ""
                   ) : (
-                    <div className=" mr-3 mb-3  ">
+                    <div className=" mr-3 mb-3 ">
                       <div className="message-text">
                         {message.task_creator_user_name && (
                           <span className="message-sender font-size-3 text-capitalize">
@@ -106,7 +104,6 @@ const MessageList = ({ data, loginuser, loginusertype, recordsPerPage, setRecord
                     className="align-items-center mr-3 mb-3 rounded border bg-white position-relative htmlFileCls p-2 message-text"
                     title={title}
                   >
-                    {" "}
                     {message.task_creator_user_name && (
                       <span className="message-sender font-size-3 text-capitalize">
                         {message.task_creator_user_name}
@@ -126,7 +123,7 @@ const MessageList = ({ data, loginuser, loginusertype, recordsPerPage, setRecord
                         <div>
                           <small
                             className="d-inline-block text-truncate text-decoration-none text-dark"
-                            style={{ maxWidth: "100%" }}
+                            style={{ maxWidth: "80%" }}
                           >
                             {title}
                           </small>

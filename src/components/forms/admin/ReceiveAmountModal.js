@@ -83,7 +83,6 @@ export default function ReceiveAmountModal(props) {
         due_amount: remainingDue,
         received_amount: totalReceived,
       };
-      console.log(data);
       setLoading(true);
       let res = await AddUpdatePaymentInvoiceApi(data)
       if (res.data.status === 1 || res.data.status === "1") {

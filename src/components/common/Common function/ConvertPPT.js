@@ -14,7 +14,7 @@ const ConvertPPT = async (data) => {
                 Authorization: `Bearer ${accessToken}`
             }
         });
-        console.log(response)
+        // console.log(response)
         if (!response.ok) {
             throw new Error(`Conversion failed: ${response.statusText}`);
         }   
@@ -24,7 +24,7 @@ const ConvertPPT = async (data) => {
 
         // Create a URL from the blob to use in the frontend
         const pdfUrl = URL.createObjectURL(pdfBlob);
-        console.log(pdfUrl, "pdfUrl")
+        // console.log(pdfUrl, "pdfUrl")
         return pdfUrl;
 
     } catch (error) {

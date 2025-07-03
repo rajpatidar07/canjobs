@@ -132,7 +132,6 @@ const PaymentInvoiceForm = (props) => {
           Number(parseFloat(state.due_amount) + parseFloat(state.total)).toFixed(2),
         // received_amount: parseFloat(state.received_amount||0) + parseFloat(recAmt)
       }
-      console.log(data,)
       setLoading(true)
       let res = await AddUpdatePaymentInvoiceApi(data)
       if (res.data.status === 1 || res.data.status === "1") {

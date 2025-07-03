@@ -1018,7 +1018,6 @@ function Addfollowup(props) {
                   adminType={""}
                 />
               </div>
-              {console.log(response)}
               <div
                 className={
                   response.length === 0 || !response ? "d-none" : "p-5 rounded "

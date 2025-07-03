@@ -316,31 +316,33 @@ function Notifications({
                                                   }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
                                                   : data.document_user_type === "job"
                                                     ? `/job_detail?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""
-                                                      }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}` 
-                                                   : `/${data.employee_id}?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""
-                                                      }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
-                                                    : data.subject === "signed_agreement"
-                                                      ? data.document_user_type === "employer"
-                                                        ? `/client_detail?agreement=true`
-                                                        : `/${data.employee_id}?agreement=true`
-                                                      : data.subject === "mention_task"
-                                                        ? `/managetasks?taskId=${parseJsonSafely(data?.notif_json).task_id || ""
-                                                        }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""
-                                                        }`
-                                                        : data.subject ===
-                                                          "mention_applicant_type_candidate_chat"
-                                                          ? `/slots?sId=${data.interested_in}&notifiType=candidate&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
-                                                          }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}&canId=${data.employee_id}`
-                                                          : data.subject === "mention_applicant_type_group_chat"
-                                                            ? `/slots?sId=${data.interested_in}&notifiType=group&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
-                                                            }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
-                                                            : data.subject === "mention_call_log_chat"
-                                                              ? `/daily_pages?call_logId=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
-                                                              : data.subject === "mention_hour_log_chat"
-                                                                ? `/daily_pages?hour_logId=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
-                                                                : data.subject === "mention_consultation_chat"
-                                                                  ? `/daily_pages?consultation_id=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
-                                                                  : ''
+                                                    }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
+                                                    : `/${data.employee_id}?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""
+                                                    }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
+                                            : data.subject === "signed_agreement"
+                                              ? data.document_user_type === "employer"
+                                                ? `/client_detail?agreement=true`
+                                                : `/${data.employee_id}?agreement=true`
+                                              : data.subject === "mention_task"
+                                                ? `/managetasks?taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                                                }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""
+                                                }`
+                                                : data.subject ===
+                                                  "mention_applicant_type_candidate_chat"
+                                                  ? `/slots?sId=${data.interested_in}&notifiType=candidate&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                                                  }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}&canId=${data.employee_id}`
+                                                  : data.subject === "mention_applicant_type_group_chat"
+                                                    ? `/slots?sId=${data.interested_in}&notifiType=group&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                                                    }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
+                                                    : data.subject === "mention_call_log_chat"
+                                                      ? `/daily_pages?call_logId=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                                      : data.subject === "mention_hour_log_chat"
+                                                        ? `/daily_pages?hour_logId=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                                        : data.subject === "mention_consultation_chat"
+                                                          ? `/daily_pages?consultation_id=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                                          : data.subject === "mention_job_chat"
+                                                            ? `/job_detail?chat=${data.employee_id}`
+                                                            : ''
                       }
                       onClick={() => {
                         try {
@@ -390,6 +392,8 @@ function Notifications({
                               "applicantType",
                               data.interested_in
                             );
+                          } else if (data.subject === "mention_job_chat") {
+                            localStorage.setItem("job_id", data.employee_id)
                           }
                         } catch (err) {
                           console.error("Error handling click event:", err);

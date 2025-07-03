@@ -3,6 +3,13 @@
 2. Make the TextEditor stretchable for the email description and all other places where it is used.
 3. Add employee and employer IDs to the filter, and include the list of payment invoice records and the task dashboard.
 4. Manage the space for the description and group by section in the task dashboard.
+5. Add functionality for admin signatures and enable sending emails from the user profile, along with conditions to update and send the email to the user.
+6. Add a "Reply" option to the Task Table under the Notes tab in the User Profile.
+7. Add additional fields for Expiry Date, Approved Date, Type of LMIA, Monday Status, and Notes — for both Job and Candidate LMIA sections.
+8. Add an "Add LMIA" option on the LMIA page, and also include an option to update the job (LMIA) in the Job List table on the Manage LMIA page.
+9. Add Tab documents for the job in job details page.
+10. Add a note tab to the job details page.
+11. Add a chat tab option on the job details page to enable admins to communicate about the job.
 Date: 23/06/25
 1. Create the new Retainer Agreement for Work permit application for 2 stages.
 2. Add business fields to the renewal application and employer retainer agreement.

@@ -17,9 +17,9 @@ import EmployeeFooter from "../common/footer";
 import { getInitials } from "../common/GetInitials";
 import SharePointDocument from "../common/Document folder/SharePointDocument";
 import Addfollowup from "../forms/admin/addfollowup";
+import JobChatBox from "../common/JobChatBox";
 function JobDetailpageAdmim(props) {
   const user_type = localStorage.getItem("userType");
-  let jid = localStorage.getItem("job_id");
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const docId = searchParams.get("docId");
@@ -28,7 +28,8 @@ function JobDetailpageAdmim(props) {
   const docParentId = searchParams.get("docParentId");
   const docHighAnnoId = searchParams.get("annotationId");
   const docTaskId = searchParams.get("taskId");
-  // const partnerChat = searchParams.get("partner");
+  const chat = searchParams.get("chat");
+  let jid = chat ? chat : localStorage.getItem("job_id");
   let skill = [];
   let navigate = useNavigate();
   /*Show modal and data state */
@@ -38,9 +39,14 @@ function JobDetailpageAdmim(props) {
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
   const [showJobEditModal, setShowJobEditModal] = useState(false);
-  const [TabActive, setTabActive] = useState(docId
-    ? "documents"
-    : "detail");
+  const [TabActive, setTabActive] = useState(
+    docId
+      ? "documents"
+      : chat
+        ? "chat"
+        : notes
+          ? "note"
+          : "detail");
   const [jobData, setJobData] = useState("");
   const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   // const [employerKycData, setEmployrKycData] = useState("");
@@ -73,6 +79,12 @@ function JobDetailpageAdmim(props) {
     }
     if (docId) {
       setTabActive("documents");
+    }
+    if (chat) {
+      setTabActive("chat")
+    }
+    if (notes) {
+      setTabActive("notes")
     }
     // eslint-disable-next-line
   }, [apiCall, location.key, docId]);
@@ -908,9 +920,6 @@ function JobDetailpageAdmim(props) {
                   role="tabpanel"
                   aria-labelledby="applieddocuments"
                 >
-                  {console.log(docId
-                    ? docParentId + "fdgdg"
-                    : jobData.doc_folder_id + "pppp")}
                   {TabActive === "documents" ? (
                     <SharePointDocument
                       user_id={jid}
@@ -931,11 +940,14 @@ function JobDetailpageAdmim(props) {
                   ) : null}
                 </div>
                 <div
-                  className={
-                    TabActive === "chat" ? "justify-content-center " : "d-none"
-                  }
-                >
+                  className={TabActive === "chat" ? "justify-content-center " : "d-none"}>
                   <div className="response_main_div w-100">
+                    <JobChatBox
+                      userId={jid}
+                      partnerChatNav={chat}
+                      type={"job_chat"}
+                      emp_user_type={"job"}
+                    />
                   </div>
                 </div>
               </div>

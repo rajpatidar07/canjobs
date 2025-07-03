@@ -41,7 +41,8 @@ axios.interceptors.response.use(
     return response;
   },
   error => {
-    if(error.message==="Network Error"||error.message==="Request failed with status code 401"){
+    if (error.message === "Network Error" || error.message === "Request failed with status code 401") {
+      console.log(error)
       if (user_type === "user") {
         window.location.href = "/candidate_login";
       } else if (user_type === "company") {
@@ -53,7 +54,7 @@ axios.interceptors.response.use(
       } else {
         window.location.href = "/";
       }
-    return Promise.reject(error);}
+    }
   }
 );
 

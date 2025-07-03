@@ -15,7 +15,7 @@ export default function ResetPassword() {
   const path = location.pathname;
   let Token = path.split("/")[2].split(":")[1];
   let userType = path.split("/")[2].split(":")[0];
-  console.log(Token,userType)
+  // console.log(Token,userType)
   let navigate = useNavigate();
   let [loading, setLoading] = useState(false);
   /*----USER RESET PASSWORD VALIDATION----*/

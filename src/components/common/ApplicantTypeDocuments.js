@@ -238,7 +238,7 @@ export default function ApplicantTypeDocuments(props) {
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     ) {
       let res = await convertWordToPDF(data);
-      console.log(res)
+      // console.log(res)s
       if (res) {
         setState((prev) => ({
           ...prev,
@@ -286,7 +286,7 @@ export default function ApplicantTypeDocuments(props) {
             let res = await ConvertAnyFileToPdf(
               data
             );
-            console.log(res);
+            // console.log(res);
             setState((prev) => ({
               ...prev,
               convertedDoc: `data:application/pdf;base64,${res}`,
@@ -302,7 +302,7 @@ export default function ApplicantTypeDocuments(props) {
         }
       }
       else {
-        console.log(data, "other")
+        // console.log(data, "other")
         window.open(data.webUrl);
         setState((prev) => ({
           ...prev,
@@ -620,7 +620,7 @@ export default function ApplicantTypeDocuments(props) {
       console.log(err);
     }
   }
-  console.log(state.folderID, props)
+  // console.log(state.folderID, props)
   return (
     <div>
       <>
