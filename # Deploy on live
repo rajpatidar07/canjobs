@@ -1,4 +1,5 @@
 # Deploy on live
+Date:04/07/025
 1. Add all email types to be sent to the Admin, Applicant, Client, and Agent from the Admin module.
 2. Make the TextEditor stretchable for the email description and all other places where it is used.
 3. Add employee and employer IDs to the filter, and include the list of payment invoice records and the task dashboard.

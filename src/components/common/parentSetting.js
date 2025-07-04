@@ -119,7 +119,7 @@ export default function ParentSetting({ setopenAdminSettings, setApiCall }) {
           </h6>
 
           <ul className="list-unstyled row">
-            {emailPermissionMap[selectedOption].map((key) => (
+            {emailPermissionMap[selectedOption]?.map((key) => (
               <li className="mb-3 col-6" key={key}>
                 <div className="custom-control custom-switch">
                   <input

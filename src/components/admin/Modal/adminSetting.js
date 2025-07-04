@@ -28,14 +28,15 @@ const emailKeys = [
   "add_job_company",
   "apply_on_job",
   "add_job_admin",
+  "rcic_signed_agreement",
 ]
 const notificationKeys = ["lmia", "visa", "interview", "job"];
 
 function AdminSetting({ show, close, setShowChangePass }) {
   const [apiCall, setApiCall] = useState(false);
   const [openAdminSettings, setOpenAdminSettings] = useState(false);
-  const [email, setEmail] = useState(Object.fromEntries(emailKeys.map(k => [k, 0])));
-  const [notification, setNotification] = useState(Object.fromEntries(notificationKeys.map(k => [k, 0])));
+  const [email, setEmail] = useState(Object.fromEntries(emailKeys?.map(k => [k, 0])));
+  const [notification, setNotification] = useState(Object.fromEntries(notificationKeys?.map(k => [k, 0])));
   const [emailAuthLink, setEmailAuthLink] = useState({});
   const [sharePointData, setSharePointData] = useState({});
 
@@ -43,8 +44,10 @@ function AdminSetting({ show, close, setShowChangePass }) {
   const GetPermissionData = async () => {
     try {
       const res = await GetAdminrSetting();
-      setEmail(JSON.parse(res.data.email_permission));
-      setNotification(JSON.parse(res.data.notification_permission));
+      const emailPerm = JSON.parse(res.data.email_permission);
+      const notificationPerm = JSON.parse(res.data.notification_permission);
+      setEmail(emailPerm && typeof emailPerm === 'object' ? emailPerm : Object.fromEntries(emailKeys.map(k => [k, 0])));
+      setNotification(notificationPerm && typeof notificationPerm === 'object' ? notificationPerm : Object.fromEntries(notificationKeys.map(k => [k, 0])));
     } catch (err) {
       console.error(err);
     }
@@ -99,14 +102,14 @@ function AdminSetting({ show, close, setShowChangePass }) {
 
   /*Dynamic rending the types of the email and notification of the admin */
   const renderSwitches = (keys, data, prefix = "") =>
-    keys.map((key, i) => (
+    keys?.map((key, i) => (
       <li key={key} className="mb-3 col-6">
         <div className="custom-control custom-switch">
           <input
             type="checkbox"
             className="custom-control-input"
             id={`switch_${prefix}${i}`}
-            checked={!!data[key]}
+            checked={!!(data && data[key])}
             onChange={() => togglePermission(`${prefix}${key}`)}
           />
           <label className="custom-control-label text-capitalize" htmlFor={`switch_${prefix}${i}`}>
