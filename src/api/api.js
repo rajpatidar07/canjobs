@@ -1,10 +1,10 @@
 import axios from "axios";
-// const API_URL = window.location.origin === "https://canpathwaysjobs.com"
-//   ? "https://api.canpathwaysjobs.com/canjobs/" : "https://api-dev.canpathwaysjobs.com/"
+const API_URL = window.location.origin === "https://canpathwaysjobs.com"
+  ? "https://api.canpathwaysjobs.com/canjobs/" : "https://api-dev.canpathwaysjobs.com/"
 //Local
 // const API_URL ="http://192.168.29.51/canjobs/"
 // New AWS backend
-const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
+// const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
 let Token = localStorage.getItem("token");
 let driveId = "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F";
 const view_as_token = localStorage.getItem("view_as_token");
@@ -2879,7 +2879,8 @@ export const SendEmail = async (data, FileList, url) => {
       attachments: FileList || "",
       attachments_url: url,
       bcc_email: data.bccemail,
-      signature: data.signature
+      signature: data.signature,
+      sender_id:data.sender_id
     },
     {
       headers: {

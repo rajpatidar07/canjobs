@@ -193,6 +193,7 @@ export default function AdminTaskTable(props) {
       assigned_to: assigned_to,
       assigned_to_name: assigned_to_name,
       type: originalData.type,
+      id: originalData.id
     };
 
     // Call the API to update the document

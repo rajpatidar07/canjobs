@@ -15,12 +15,14 @@ function SendMailForm({ email, setApiCall }) {
   let adminSignatureText = localStorage.getItem("admin_signature_text");
   const [signatureImage, setSignatureImage] = useState(adminSignature || null);
   let AdminEmail = localStorage.getItem("admin_email");
+  let AdminId = localStorage.getItem("admin_id");
   let userrType = localStorage.getItem("userType");
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     subject: "",
     description: "",
+    sender_id: AdminId,
     email: email,
     adminemail: "",
     bccemail: "",
@@ -253,6 +255,8 @@ function SendMailForm({ email, setApiCall }) {
           setFileNames([]);
           setErrors("");
           setApiCall(true);
+          setFileBase("");
+          setFileNames([]);
         }
         if (Response.message === "Failed !") {
           toast.error("Something went wrong", {
@@ -263,6 +267,8 @@ function SendMailForm({ email, setApiCall }) {
           setState(initialFormState);
           setSignatureImage(null);
           setErrors("");
+          setFileNames([]);
+          setFileBase("");
           setFileNames([]);
         }
         if (Response.message === "Fields must not be empty!") {
@@ -275,6 +281,8 @@ function SendMailForm({ email, setApiCall }) {
           setSignatureImage(null);
           setErrors("");
           setFileNames([]);
+          setFileBase("");
+          setFileNames([]);
         }
       } catch (err) {
         console.log(err);
@@ -283,6 +291,8 @@ function SendMailForm({ email, setApiCall }) {
         setFileNames([]);
         setErrors("");
         setState(initialFormState);
+        setFileBase("");
+        setFileNames([]);
       }
     }
   };

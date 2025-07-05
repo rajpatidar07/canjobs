@@ -387,7 +387,6 @@ function Addadmin(props) {
                 </span>
               )}
             </div>
-            {console.log(state.admin_id && (admin_type !== "admin" && admin_type !== "super-admin") ? "d-none" : "form-group ", (admin_type !== "admin" && admin_type !== "super-admin"), admin_type)}
             <div className={state.admin_id && (admin_type !== "admin" && admin_type !== "super-admin") ? "d-none" : "form-group "}>
               <label
                 htmlFor="admin_type"
@@ -439,10 +438,10 @@ function Addadmin(props) {
                 Signature Image:
               </label>
 
-              {signatureImage ? (
+              {state?.signature_image ? (
                 <div className="mb-2 position-relative d-inline-block">
                   <img
-                    src={signatureImage}
+                    src={state?.signature_image}
                     alt="Signature"
                     style={{ maxWidth: "200px", maxHeight: "100px" }}
                   />
