@@ -1258,7 +1258,7 @@ export default function JobTable(props) {
                                                 : "d-none"
                                             }
                                             onClick={() => updateLima(job)}
-                                            title="Update LIMA"
+                                            title="Update LMIA"
                                           >
                                             <span className="text-gray px-2">
                                               LMIA

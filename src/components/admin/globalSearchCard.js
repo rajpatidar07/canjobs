@@ -16,10 +16,9 @@ function GlobalSearchCard(props) {
       className="py-1 border-bottom w-100"
       to={props.to}
       title={props.title}
-      onClick={handleSearchClick}
-    >
+      onClick={handleSearchClick}>
       <div className="d-flex profile_box gx-2 justify-content-between">
-        <div className=" mb-0">
+        <div className="mb-0">
           <span className="m-0 font-size-4 font-weight-bold text-capitalize">
             {props.name}
           </span>
@@ -30,16 +29,9 @@ function GlobalSearchCard(props) {
               {props.company}
             </p>
           )}
-          {/* <p className="text-gray font-size-3 m-0 text-capitalize">
-            M(married, 25Y)
-          </p> */}
           <p className="m-0 font-size-3">{props.mobile}</p>
-          <p className="m-0 font-size-3">{props.email}</p>
+          <p className="m-0 font-size-3 text-break">{props?.email?.replace(/,/g, " ")}</p>
         </div>
-        {/* <div className="contact_div text-right">
-          <p className="m-0 font-size-3">1234567890</p>
-          <p className="m-0 font-size-3">email@email.com</p>
-        </div> */}
       </div>
     </Link>
   );

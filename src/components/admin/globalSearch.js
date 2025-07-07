@@ -1,17 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // import { Button, Form, InputGroup } from "react-bootstrap";
 import GlobalSearchCard from "./globalSearchCard";
-import { GlobalSearchResult } from "../../api/api";
+import { getallAdminData, GlobalSearchResult, GlobalSearchResultOther, GlobalSearchResultRelated } from "../../api/api";
 // import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { Link } from "react-router-dom";
 function GlobalSearch() {
-  const [show, setshow] = useState(false);
-  let [search, setsearch] = useState("");
+  const [show, setShow] = useState(false);
+  let [search, setSearch] = useState("");
+  let [adminList, setAdminList] = useState([]);
   let [searchData, setSearchData] = useState([]);
   let admin_id = localStorage.getItem("admin_id")
   let admin_type = localStorage.getItem("admin_type")
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (show && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [show]);
+
   /*Global Search API Call*/
   const GlobalSearchAPICall = async (admin) => {
     // let search = "";
@@ -19,8 +28,34 @@ function GlobalSearch() {
     // setIsLoading(true);
     try {
       const userData = await GlobalSearchResult(search, admin ? admin_id : "", admin ? admin_type : "");
-      setSearchData(userData.data.data);
-      // console.log(searchData.admin.length);
+      const userDataOther = await GlobalSearchResultOther(search, admin ? admin_id : "", admin ? admin_type : "");
+      const userDataRelated = await GlobalSearchResultRelated(search, admin ? admin_id : "", admin ? admin_type : "");
+      const getAllAdmin = await getallAdminData()
+
+      setAdminList(getAllAdmin.data)
+      const data1 = userData.data.data || {};
+      const data2 = userDataOther.data.data || {};
+      const data3 = userDataRelated.data.data || {};
+
+      // Combine all keys and merge arrays for matching keys
+      const mergedData = {};
+
+      // Helper to merge objects
+      const mergeData = (source) => {
+        Object.entries(source).forEach(([key, value]) => {
+          if (Array.isArray(value)) {
+            mergedData[key] = (mergedData[key] || []).concat(value);
+          }
+        });
+      };
+
+      mergeData(data1);
+      mergeData(data2);
+      mergeData(data3);
+
+      setSearchData(mergedData);
+      console.log("Merged Data:", mergedData);
+      console.log(userDataOther.data.data, userDataRelated.data.data);
       // setIsLoading(false);
     } catch (err) {
       console.log(err);
@@ -33,33 +68,32 @@ function GlobalSearch() {
     }
   };
   const close = () => {
-    setshow(false)
+    setShow(false)
     setSearchData([])
-    setsearch("")
+    setSearch("")
   }
+  /*Parse the data of the notify_json */
+  // const parseJsonSafely = (jsonString) => {
+  //   try {
+  //     return jsonString ? JSON.parse(jsonString) : {};
+  //   } catch (error) {
+  //     console.error("Invalid JSON in notif_json:", jsonString, error);
+  //     return {};
+  //   }
+  // };
   return (
     <div className="global_search_box">
-      {/* <i
-        style={{ cursor: "pointer" }}
-        className="fas fa-search text-white mx-5"
-        onClick={() => setshow(true)}
-      ></i> */}
       <span
         style={{ cursor: "pointer" }}
         className=" text-white mx-5"
-        onClick={() => setshow(true)}
+        onClick={() => setShow(true)}
         title="Global Search"
       >
         <FaSearch />
       </span>
       <div
-        className={
-          show
-            ? " d-flex global_search_content position-fixed show"
-            : " d-flex global_search_content position-fixed"
-        }
-      >
-        <div className="left_side" onClick={() => setshow(false)}></div>
+        className={show ? " d-flex global_search_content position-fixed show" : " d-flex global_search_content position-fixed"}>
+        <div className="left_side" onClick={() => setShow(false)}></div>
         <div className="right_side bg-white">
           <div className="global_search d-flex align-items-center p-3 px-5 ">
             <div className="col">
@@ -69,10 +103,12 @@ function GlobalSearch() {
                   type="text"
                   className="form-control"
                   placeholder="Search Candidate"
-                  name="Employee_name"
+                  name="search"
                   value={search}
-                  onChange={(e) => setsearch(e.target.value)}
+                  onChange={(e) => setSearch(e.target.value)}
                   onKeyPress={handleKeyPress}
+                  ref={inputRef}
+
                 />
                 <div className="input-group-append">
                   <button
@@ -129,7 +165,7 @@ function GlobalSearch() {
                       <GlobalSearchCard
                         close={close}
                         to={`/${data.employee_id}`}
-                        key={data.employee_id} // Use a unique key
+                        key={data.employee_id}
                         name={data.name}
                         mobile={data.contact_no}
                         email={data.email}
@@ -145,7 +181,7 @@ function GlobalSearch() {
                     {searchData["employer"].map((data) => (
                       <GlobalSearchCard
                         close={close}
-                        key={data.company_id} // Use a unique key
+                        key={data.company_id}
                         name={data.contact_person_name}
                         mobile={data.contact_no}
                         email={data.email}
@@ -165,7 +201,7 @@ function GlobalSearch() {
                     {searchData["agent"].map((data) => (
                       <GlobalSearchCard
                         close={close}
-                        key={data.id} // Use a unique key
+                        key={data.id}
                         name={data.name}
                         mobile={data.contact_no}
                         email={data.email}
@@ -184,7 +220,7 @@ function GlobalSearch() {
                     {searchData["admin"].map((data) => (
                       <GlobalSearchCard
                         close={close}
-                        key={data.admin_id} // Use a unique key
+                        key={data.admin_id}
                         name={data.name}
                         mobile={data.contact_no}
                         email={data.email}
@@ -192,18 +228,47 @@ function GlobalSearch() {
                     ))}
                   </div>
                 )}
-                {searchData["task"] && searchData["task"].length > 0 && (
+                {searchData["task_data"] && searchData["task_data"].length > 0 && (
                   <div className="col-lg-3 col-sm-6">
                     <h5 className="font-size-2 font-weight-bold m-0 border-bottom text-uppercase">
                       Task
                     </h5>
-                    {searchData["task"].map((data) => (
+                    {searchData["task_data"].map((data) => (
                       <GlobalSearchCard
                         close={close}
-                        key={data.admin_id} // Use a unique key
-                        name={data.name}
-                        mobile={data.contact_no}
-                        email={data.email}
+                        key={data.employee_id}
+                        name={data.employee_name || data.subject_description}
+                        // to={data.employee_type === "employer"
+                        //   ? `/client_detail?docId=${data.doc_id
+                        //   }&docParentId=${parseJsonSafely(data?.notif_json)
+                        //     .doc_parent_id || ""
+                        //   }&annotationId=${parseJsonSafely(data?.notif_json)
+                        //     .annotation_id || ""
+                        //   }&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                        //   }`
+                        //   : data.employee_type === "applicant_type"
+                        //     ? `/slots?sId=${data.interested_in}&docId=${data.doc_id}&docParentId=${parseJsonSafely(data?.notif_json)
+                        //       .doc_parent_id || ""
+                        //     }&annotationId=${parseJsonSafely(data?.notif_json)
+                        //       .annotation_id || ""
+                        //     }&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                        //     }`
+                        //     : data.employee_type === "job"
+                        //       ? `/job_detail?docId=${data.doc_id
+                        //       }&docParentId=${parseJsonSafely(data?.notif_json)
+                        //         .doc_parent_id || ""
+                        //       }&annotationId=${parseJsonSafely(data?.notif_json)
+                        //         .annotation_id || ""
+                        //       }&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                        //       }`
+                        //       : `/${data.employee_id}?docId=${data.doc_id
+                        //       }&docParentId=${parseJsonSafely(data?.notif_json)
+                        //         .doc_parent_id || ""
+                        //       }&annotationId=${parseJsonSafely(data?.notif_json)
+                        //         .annotation_id || ""
+                        //       }&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                        //       }`}
+                        email={data.document_name || data.assigned_to}
                       />
                     ))}
                   </div>
@@ -216,7 +281,7 @@ function GlobalSearch() {
                     {searchData["notes"].map((data) => (
                       <GlobalSearchCard
                         close={close}
-                        key={data.admin_id} // Use a unique key
+                        key={data.id}
                         name={data.name}
                         mobile={data.contact_no}
                         email={data.email}
@@ -232,7 +297,7 @@ function GlobalSearch() {
                     {searchData["applicant_type_group_chat"].map((data) => (
                       <GlobalSearchCard
                         close={close}
-                        key={data.admin_id} // Use a unique key
+                        key={data.id}
                         name={data.name}
                         mobile={data.contact_no}
                         email={data.email}
@@ -248,7 +313,7 @@ function GlobalSearch() {
                     {searchData["applicant_type_candidate_chat"].map((data) => (
                       <GlobalSearchCard
                         close={close}
-                        key={data.admin_id} // Use a unique key
+                        key={data.id}
                         name={data.name}
                         mobile={data.contact_no}
                         email={data.email}
@@ -264,27 +329,45 @@ function GlobalSearch() {
                     {searchData["document"].map((data) => (
                       <GlobalSearchCard
                         close={close}
-                        key={data.admin_id} // Use a unique key
+                        key={data.id}
                         name={data.name}
-                        mobile={data.contact_no}
-                        email={data.email}
+                        mobile={data.hour_log_of_admin}
+                        email={data.admin_name}
                       />
                     ))}
                   </div>
                 )}
-                {searchData["call_log_chat"] && searchData["call_log_chat"].length > 0 && (
+                {searchData["call_log"] && searchData["call_log"].length > 0 && (
                   <div className="col-lg-3 col-sm-6">
                     <h5 className="font-size-2 font-weight-bold m-0 border-bottom text-uppercase">
                       Daily call logs
                     </h5>
-                    {searchData["call_log_chat"].map((data) => (
+                    {searchData["call_log"].map((data) => (
                       <GlobalSearchCard
                         close={close}
-                        key={data.admin_id} // Use a unique key
+                        key={data.id}
                         name={data.name}
-                        mobile={data.contact_no}
-                        email={data.email}
+                        mobile={data.phone}
+                        email={data.purpose}
                       />
+                    ))}
+                  </div>
+                )}
+                {searchData["daily_hour_log"] && searchData["daily_hour_log"].length > 0 && (
+                  <div className="col-lg-3 col-sm-6">
+                    <h5 className="font-size-2 font-weight-bold m-0 border-bottom text-uppercase">
+                      Daily Hour logs
+                    </h5>
+                    {searchData["daily_hour_log"].map((data) => (
+                      <>
+                        <GlobalSearchCard
+                          close={close}
+                          key={data.id}
+                          name={data.item}
+                          mobile={adminList.find((item) => item.admin_id === data.hour_log_of_admin)?.email}
+                          email={data.email}
+                        />
+                      </>
                     ))}
                   </div>
                 )}

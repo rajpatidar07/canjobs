@@ -130,7 +130,7 @@ export default function LmiaInfo(props) {
                                 onChange={onInputChange}
                                 id="lmia_number"
                                 name="lmia_number"
-                                placeholder="LIMA No."
+                                placeholder="LMIA No."
                                 maxLength={60}
                             />
                             {/*----ERROR MESSAGE FOR LMIA NUMBER----*/}

@@ -515,14 +515,14 @@ export default function RetauberAgreementList({
             close={() => setOpenSignfPspdfkit(false)}
           />
         ) : null}
-        <SAlert
+        {deleteAlert && <SAlert
           show={deleteAlert}
           title={deleteName}
           text="Are you Sure you want to delete !"
           onConfirm={() => deleteAdmin(deleteId)}
           showCancelButton={true}
           onCancel={CancelDelete}
-        />
+        />}
       </div>
     </div>
   );

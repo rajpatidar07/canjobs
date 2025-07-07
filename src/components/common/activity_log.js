@@ -1,16 +1,9 @@
-import React /*, { useState }*/ from "react";
-// import CustomButton from "../common/button";
+import React from "react";
 import "react-toastify/dist/ReactToastify.css";
-// import AddAgent from "../forms/admin/addAgent";
-// import { GetFilter } from "../../api/api";
-// import AgentTable from "../common/agentTable";
 import AdminSidebar from "../admin/sidebar";
 import AdminHeader from "../admin/header";
-// import PartnerPage from "./partner_page";
 import ActivityTable from "./activity_table";
-// import FilterJson from "../json/filterjson";
 function ActivityLog(props) {
-  // let user_type = localStorage.getItem("userType");
 
   return (
     <>
@@ -19,9 +12,7 @@ function ActivityLog(props) {
         <AdminHeader heading="Activity Log" />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading="Activity Log" />
-
         {/* <!--Add Adgent Details Modal --> */}
-
         <div className={"dashboard-main-container mt-14"} id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">

@@ -3359,6 +3359,36 @@ export const GlobalSearchResult = async (search, admin_id, admin_type) => {
   );
   return response;
 };
+/*Global Search other API */
+export const GlobalSearchResultOther = async (search, admin_id, admin_type) => {
+  // console.log(admin_id, admin_type)
+  const response = await axios.post(
+    `${API_URL}common/globalSearchOther`,
+    { search },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+/*Global Search retaled API */
+export const GlobalSearchResultRelated = async (search, admin_id, admin_type) => {
+  // console.log(admin_id, admin_type)
+  const response = await axios.post(
+    `${API_URL}common/globalSearchRelated`,
+    { search },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
 /*Global Search API */
 export const getActivityLog = async (
   page,

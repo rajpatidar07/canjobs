@@ -622,7 +622,7 @@ function JobResponse(props) {
                             className="text-gray"
                             title="Sort by Date Approved"
                           >
-                            LMAI Approved Date
+                            LMIA Approved Date
                           </Link>
                         </th>
                         <th
