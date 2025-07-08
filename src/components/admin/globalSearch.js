@@ -96,7 +96,7 @@ function GlobalSearch() {
         <div className="left_side" onClick={() => setShow(false)}></div>
         <div className="right_side bg-white">
           <div className="global_search d-flex align-items-center p-3 px-5 ">
-            <div className="col">
+            <div className="col-lg-3 col-sm-6">
               <div className="input-group mb-3 ">
                 <input
                   required
@@ -152,17 +152,17 @@ function GlobalSearch() {
               }}
             ></i>
           </div>
-          <div className="row global_search_result py-2 px-8">
+          <div className="global_search_result py-2 px-8">
             {/* Display search results or Not Found message */}
             {Object.keys(searchData).some(key => searchData[key] && searchData[key].length > 0) ? (
               <>
                 {searchData["employee"] && searchData["employee"].length > 0 && (
-                  <div className="col-lg-3 col-sm-6">
-                    <h5 className="font-size-2 font-weight-bold m-0 border-bottom text-uppercase">
+                  <div className="row">
+                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
                       Applicants
                     </h5>
                     {searchData["employee"].map((data) => (
-                      <GlobalSearchCard
+                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
                         close={close}
                         to={`/${data.employee_id}`}
                         key={data.employee_id}
@@ -170,16 +170,17 @@ function GlobalSearch() {
                         mobile={data.contact_no}
                         email={data.email}
                       />
+                      </div>
                     ))}
                   </div>
                 )}
                 {searchData["employer"] && searchData["employer"].length > 0 && (
-                  <div className="col-lg-3 col-sm-6">
-                    <h5 className="font-size-2 font-weight-bold m-0 border-bottom text-uppercase">
+                  <div className="row">
+                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
                       Clients
                     </h5>
                     {searchData["employer"].map((data) => (
-                      <GlobalSearchCard
+                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.company_id}
                         name={data.contact_person_name}
@@ -190,16 +191,17 @@ function GlobalSearch() {
                         to={`/client_detail`}
                         title="Client Details"
                       />
+                      </div>
                     ))}
                   </div>
                 )}
                 {searchData["agent"] && searchData["agent"].length > 0 && (
-                  <div className="col-lg-3 col-sm-6">
-                    <h5 className="font-size-2 font-weight-bold m-0 border-bottom text-uppercase">
+                  <div className="row">
+                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
                       Partners
                     </h5>
                     {searchData["agent"].map((data) => (
-                      <GlobalSearchCard
+                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.id}
                         name={data.name}
@@ -209,32 +211,34 @@ function GlobalSearch() {
                         title="Partner Profile"
                         id={data.id}
                       />
+                      </div>
                     ))}
                   </div>
                 )}
                 {searchData["admin"] && searchData["admin"].length > 0 && (
-                  <div className="col-lg-3 col-sm-6">
-                    <h5 className="font-size-2 font-weight-bold m-0 border-bottom text-uppercase">
+                  <div className="row">
+                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
                       Admins
                     </h5>
                     {searchData["admin"].map((data) => (
-                      <GlobalSearchCard
+                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.admin_id}
                         name={data.name}
                         mobile={data.contact_no}
                         email={data.email}
                       />
+                      </div>
                     ))}
                   </div>
                 )}
                 {searchData["task_data"] && searchData["task_data"].length > 0 && (
-                  <div className="col-lg-3 col-sm-6">
-                    <h5 className="font-size-2 font-weight-bold m-0 border-bottom text-uppercase">
+                  <div className="row">
+                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
                       Task
                     </h5>
                     {searchData["task_data"].map((data) => (
-                      <GlobalSearchCard
+                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.employee_id}
                         name={data.employee_name || data.subject_description}
@@ -270,105 +274,109 @@ function GlobalSearch() {
                         //       }`}
                         email={data.document_name || data.assigned_to}
                       />
+                      </div>
                     ))}
                   </div>
                 )}
                 {searchData["notes"] && searchData["notes"].length > 0 && (
-                  <div className="col-lg-3 col-sm-6">
-                    <h5 className="font-size-2 font-weight-bold m-0 border-bottom text-uppercase">
+                  <div className="row">
+                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
                       Notes
                     </h5>
                     {searchData["notes"].map((data) => (
-                      <GlobalSearchCard
+                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.id}
                         name={data.name}
                         mobile={data.contact_no}
                         email={data.email}
                       />
+                      </div>
                     ))}
                   </div>
                 )}
                 {searchData["applicant_type_group_chat"] && searchData["applicant_type_group_chat"].length > 0 && (
-                  <div className="col-lg-3 col-sm-6">
-                    <h5 className="font-size-2 font-weight-bold m-0 border-bottom text-uppercase">
+                  <div className="row">
+                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
                       Group discussion
                     </h5>
                     {searchData["applicant_type_group_chat"].map((data) => (
-                      <GlobalSearchCard
+                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.id}
                         name={data.name}
                         mobile={data.contact_no}
                         email={data.email}
                       />
+                      </div>
                     ))}
                   </div>
                 )}
                 {searchData["applicant_type_candidate_chat"] && searchData["applicant_type_candidate_chat"].length > 0 && (
-                  <div className="col-lg-3 col-sm-6">
-                    <h5 className="font-size-2 font-weight-bold m-0 border-bottom text-uppercase">
+                  <div className="row">
+                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
                       Candidate discussion
                     </h5>
                     {searchData["applicant_type_candidate_chat"].map((data) => (
-                      <GlobalSearchCard
+                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.id}
                         name={data.name}
                         mobile={data.contact_no}
                         email={data.email}
                       />
+                      </div>
                     ))}
                   </div>
                 )}
                 {searchData["document"] && searchData["document"].length > 0 && (
-                  <div className="col-lg-3 col-sm-6">
-                    <h5 className="font-size-2 font-weight-bold m-0 border-bottom text-uppercase">
+                  <div className="row">
+                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
                       Documents
                     </h5>
                     {searchData["document"].map((data) => (
-                      <GlobalSearchCard
+                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.id}
                         name={data.name}
                         mobile={data.hour_log_of_admin}
                         email={data.admin_name}
                       />
+                      </div>
                     ))}
                   </div>
                 )}
                 {searchData["call_log"] && searchData["call_log"].length > 0 && (
-                  <div className="col-lg-3 col-sm-6">
-                    <h5 className="font-size-2 font-weight-bold m-0 border-bottom text-uppercase">
+                  <div className="row">
+                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
                       Daily call logs
                     </h5>
                     {searchData["call_log"].map((data) => (
-                      <GlobalSearchCard
+                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.id}
                         name={data.name}
                         mobile={data.phone}
                         email={data.purpose}
                       />
+                      </div>
                     ))}
                   </div>
                 )}
                 {searchData["daily_hour_log"] && searchData["daily_hour_log"].length > 0 && (
-                  <div className="col-lg-3 col-sm-6">
-                    <h5 className="font-size-2 font-weight-bold m-0 border-bottom text-uppercase">
+                  <div className="row">
+                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
                       Daily Hour logs
                     </h5>
                     {searchData["daily_hour_log"].map((data) => (
-                      <>
-                        <GlobalSearchCard
-                          close={close}
-                          key={data.id}
-                          name={data.item}
-                          mobile={adminList.find((item) => item.admin_id === data.hour_log_of_admin)?.email}
-                          email={data.email}
-                        />
-                      </>
-                    ))}
+                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                        close={close}
+                        key={data.id}
+                        name={data.item}
+                        mobile={adminList.find((item) => item.admin_id === data.hour_log_of_admin)?.email}
+                        email={data.email}
+                      />
+                      </div>))}
                   </div>
                 )}
 
@@ -379,9 +387,9 @@ function GlobalSearch() {
                 <div className="col-12 mb-3">
                   <img src="image/logo-main-black.png" alt="Pathways Logo" className="img-fluid" />
                 </div>
-                <h5 className="font-size-2 font-weight-bold m-0">Not result Found</h5>
+                <h5 className="font-size-5 font-weight-bold m-0">Not result Found</h5>
                 <div className="mt-3">
-                  <p className="font-size-2 font-weight-bold">Do you want to create a profile? Please consider one of the links below:</p>
+                  <p className="font-size-5 font-weight-bold">Do you want to create a profile? Please consider one of the links below:</p>
                   <Link to="/selfemployee" className="btn btn-primary mr-2">Create Applicant</Link>
                   <Link to="/adminclient" className="btn btn-primary">Create Client</Link>
                 </div>

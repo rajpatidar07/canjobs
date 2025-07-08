@@ -9,6 +9,7 @@ const AddPaymentDetailsForm = ({
     setApicall,
     felidData,
 }) => {
+    /*States */
     const [loading, setLoading] = useState(false);
     const [payments, setPayments] = useState(
         felidData.payment_json || []
@@ -22,11 +23,12 @@ const AddPaymentDetailsForm = ({
     });
     const [editIndex, setEditIndex] = useState(null);
 
+    /*on change function for the felids of payment details */
     const handleInputChange = (e, type) => {
         const { name, value } = e.target;
         setNewPayment({ ...newPayment, [name]: value });
     };
-
+    /*Function to add item in the json before the submission */
     const addPaymentDetails = () => {
         if (editIndex !== null) {
             const updatedClients = payments.map((item, index) =>
@@ -57,7 +59,7 @@ const AddPaymentDetailsForm = ({
             government_fee: "",
         });
     };
-
+    /*Function to remove the item of the payment detail */
     const removeClient = (indexToDelete, type) => {
         if (window.confirm("Are you sure you want to delete this Payment details?")) {
             let newjson = payments.filter(
@@ -66,13 +68,14 @@ const AddPaymentDetailsForm = ({
             setPayments(newjson);
         }
     };
+    /*Function to edit the item of the payment detail */
     const editClient = (index, type) => {
         const PaymentToEdit = payments[index];
         setNewPayment(PaymentToEdit);
         setEditIndex(index);
     };
 
-
+    /*Submit function of payment details */
     const onFormSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -99,6 +102,7 @@ const AddPaymentDetailsForm = ({
             setLoading(false);
         }
     };
+    /*Variable to check whether the field is blank or not, to disable the submit button. */
     const IsFamilyFelidsEmpty = JSON.stringify(newPayment) === JSON.stringify({
         description: "",
         notes: "",
@@ -106,7 +110,6 @@ const AddPaymentDetailsForm = ({
         retainer_fee: "",
         government_fee: "",
     });
-    console.log(payments)
     return (
         <Modal
             show={show}
