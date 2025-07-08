@@ -238,7 +238,7 @@ function MainLayout() {
         <Route exact path="/linkedin" component={LinkedInCallback} />
         <Route exact path="/signagreement" element={<UserSigningPage />} />
         <Route path="/agreeone" element={<ExpressEntryPdf />} />
-        <Route path="/dynamin_ra" element={<DynamicRA />} />
+        <Route path="/dynamic_ra" element={<DynamicRA />} />
         <Route path="/work_permit_application_2_stage" element={<WorkPermitApplicantTwoStagePdf />} />
         <Route
           path="/initial_consultation"

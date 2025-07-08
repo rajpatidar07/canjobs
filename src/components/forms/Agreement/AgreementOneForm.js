@@ -4,7 +4,8 @@ import { AddUpdateAgreement, GetAgreement } from "../../../api/api";
 import useValidation from "../../common/useValidation";
 import { toast } from "react-toastify";
 import { Modal } from "react-bootstrap";
-import ClietFamilyFeilds from "../../common/Retaineragreement/clietFamilyFeilds";
+import ClietFamilyFeilds from "./clietFamilyFeilds";
+import PaymentDetails from "./PaymentDetails";
 const AgreementOneForm = ({
   folderId,
   user_id,
@@ -33,62 +34,70 @@ const AgreementOneForm = ({
     date_signature_client: "",
     client_date_of_birth: emp_user_type === "employee" ? userData?.date_of_birth : "",
   };
-  const initialFormState = {
-    type: "",
-    rcic_membership_no: "",
-    matter: "",
-    summary: "",
-    initial: "",
-    professional_fees: "",
-    courier_charges: "",
-    government_fees: "",
-    application_fees: "",
-    biometrics_fees: "",
-    administrative_fee: "",
-    applicable_taxes: "",
-    balance: "",
-    total_cost: "",
-    applicable_retainer_fee_stape_1: "",
-    applicable_government_processing_fee_stape_1: "",
-    applicable_retainer_fee_stape_2: "",
-    applicable_government_processing_fee_stape_2: "",
-    applicable_retainer_fee_stape_3: "",
-    applicable_government_processing_fee_stape_3: "",
-    total_amount_signing_of_contract: "",
-    balance_paid_at_time_of_filing: "",
-    rcic_first_name: "",
-    rcic_last_name: "",
-    rcic_signature: "",
-    date_signature_client: "",
-    date_signature_rcic: "",
-    sender: localStorage.getItem("admin_id"),
-    sender_type: localStorage.getItem("admin_type"),
-    receiver:
-      emp_user_type === "employee"
-        ? userData?.employee_id
-        : userData?.company_id,
-    receiver_type: emp_user_type === "employee" ? "employee" : "employer",
-    assigned_by_id: "",
-    assigned_by_type: "",
-    signature_status: "",
-    id: "",
-    note: "",
-    client_file_no: "",
-    agreement_date: "",
-    client_email: userData?.email || "",
-    client_contact: userData?.contact_no || "",
-    client_telephone: "",
-    client_cellphone: "",
-    client_fax: "",
-    client_address:
-      emp_user_type === "employee"
-        ? userData?.current_location ? userData?.current_location + " " + userData?.currently_located_country : ""
-        : userData?.address ? userData?.address : "",
-    family_json: [initialClientState],
-    client_first_name:
-      emp_user_type === "employee" ? userData?.name : userData?.company_name,
-    business_name: userData?.company_name || "",
-  };
+  // const initialPaymentState = {
+  //   description: "",
+  //   notes: "",
+  //   additional_info: "",
+  //   retainer_fee: "",
+  //   government_fee: "",
+  // }
+    const initialFormState = {
+      type: "",
+      rcic_membership_no: "",
+      matter: "",
+      summary: "",
+      initial: "",
+      professional_fees: "",
+      courier_charges: "",
+      government_fees: "",
+      application_fees: "",
+      biometrics_fees: "",
+      administrative_fee: "",
+      applicable_taxes: "",
+      balance: "",
+      total_cost: "",
+      applicable_retainer_fee_stape_1: "",
+      applicable_government_processing_fee_stape_1: "",
+      applicable_retainer_fee_stape_2: "",
+      applicable_government_processing_fee_stape_2: "",
+      applicable_retainer_fee_stape_3: "",
+      applicable_government_processing_fee_stape_3: "",
+      total_amount_signing_of_contract: "",
+      balance_paid_at_time_of_filing: "",
+      rcic_first_name: "",
+      rcic_last_name: "",
+      rcic_signature: "",
+      date_signature_client: "",
+      date_signature_rcic: "",
+      sender: localStorage.getItem("admin_id"),
+      sender_type: localStorage.getItem("admin_type"),
+      receiver:
+        emp_user_type === "employee"
+          ? userData?.employee_id
+          : userData?.company_id,
+      receiver_type: emp_user_type === "employee" ? "employee" : "employer",
+      assigned_by_id: "",
+      assigned_by_type: "",
+      signature_status: "",
+      id: "",
+      note: "",
+      client_file_no: "",
+      agreement_date: "",
+      client_email: userData?.email || "",
+      client_contact: userData?.contact_no || "",
+      client_telephone: "",
+      client_cellphone: "",
+      client_fax: "",
+      client_address:
+        emp_user_type === "employee"
+          ? userData?.current_location ? userData?.current_location + " " + userData?.currently_located_country : ""
+          : userData?.address ? userData?.address : "",
+      family_json: [initialClientState],
+      client_first_name:
+        emp_user_type === "employee" ? userData?.name : userData?.company_name,
+      business_name: userData?.company_name || "",
+      payment_json: []
+    };
   const validators = {
     family_json: {
       validateClientEmail: [(value) =>
@@ -162,7 +171,7 @@ const AgreementOneForm = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [felidData]);
-  /*Function and states for the family member */
+  /*Function and states for the family member and payment details */
   const [newClient, setNewClient] = useState({
     client_first_name: "",
     client_last_name: "",
@@ -171,12 +180,20 @@ const AgreementOneForm = ({
     client_date_of_birth: "",
     applicant_type: "",
   });
-
+  const [newPayment, setNewPayment] = useState({
+    description: "",
+    notes: "",
+    additional_info: "",
+    retainer_fee: "",
+    government_fee: "",
+  });
   const [editIndex, setEditIndex] = useState(null);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e, type) => {
     const { name, value } = e.target;
-    setNewClient({ ...newClient, [name]: value });
+    if (type === "payment") {
+      setNewPayment({ ...newPayment, [name]: value });
+    } else { setNewClient({ ...newClient, [name]: value }); }
   };
 
   const addClient = () => {
@@ -202,19 +219,55 @@ const AgreementOneForm = ({
       client_date_of_birth: "",
     });
   };
-
-  const removeClient = (indexToDelete) => {
-    if (window.confirm("Are you sure you want to delete this client?")) {
-      let newjson = state?.family_json.filter(
-        (_, index) => index !== indexToDelete
+  const addPaymentDetails = () => {
+    if (editIndex !== null) {
+      const updatedClients = state?.payment_json.map((item, index) =>
+        index === editIndex ? { ...newPayment, id: item.id } : item
       );
-      setState({ ...state, family_json: newjson });
+      setState({ ...state, payment_json: updatedClients });
+      setEditIndex(null);
+    } else {
+      // Assuming state.payment_json is an array
+      const updatedClients = [
+        ...(state?.payment_json || []),
+        { ...newPayment, id: Date.now() },
+      ];
+      setState({ ...state, payment_json: updatedClients });
+    }
+    setNewPayment({
+      description: "",
+      notes: "",
+      additional_info: "",
+      retainer_fee: "",
+      government_fee: "",
+    });
+  };
+
+  const removeClient = (indexToDelete, type) => {
+    if (window.confirm("Are you sure you want to delete this client?")) {
+      if (type === "payment") {
+        let newjson = state?.payment_json.filter(
+          (_, index) => index !== indexToDelete
+        );
+        setState({ ...state, payment_json: newjson });
+      } else {
+        let newjson = state?.family_json.filter(
+          (_, index) => index !== indexToDelete
+        );
+        setState({ ...state, family_json: newjson });
+      }
     }
   };
-  const editClient = (index) => {
-    const clientToEdit = state?.family_json[index];
-    setNewClient(clientToEdit);
-    setEditIndex(index);
+  const editClient = (index, type) => {
+    if (type === "payment") {
+      const PaymentToEdit = state?.payment_json[index];
+      setNewPayment(PaymentToEdit);
+      setEditIndex(index);
+    } else {
+      const clientToEdit = state?.family_json[index];
+      setNewClient(clientToEdit);
+      setEditIndex(index);
+    }
   };
 
   /*on change function for the main client */
@@ -341,7 +394,9 @@ const AgreementOneForm = ({
                           ? "/three_column"
                           : agreementType === "work permit application-2 stage" ?
                             "/work_permit_application_2_stage"
-                            : `/agreeone`;
+                            : agreementType === "dynamic RA"
+                              ? "/dynamic_ra"
+                              : `/agreeone`;
               localStorage.setItem(
                 "agreementStateData",
                 JSON.stringify(stateData)
@@ -688,7 +743,7 @@ const AgreementOneForm = ({
                   {
                     label:
                       "Applicable Retainer Fee for this stage (Non-Refundable) for Step 1",
-                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" || agreementType === "dynamic RA" ? "d-none" : "",
                     name: "applicable_retainer_fee_stape_1",
                     type: "text",
                     disabled: false
@@ -696,7 +751,7 @@ const AgreementOneForm = ({
                   {
                     label:
                       "Applicable Government Processing Fee for Step 1",
-                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" || agreementType === "dynamic RA" ? "d-none" : "",
                     name: "applicable_government_processing_fee_stape_1",
                     type: "text",
                     disabled: false
@@ -704,7 +759,7 @@ const AgreementOneForm = ({
                   {
                     label:
                       "Applicable Government Processing Fee for Step 2",
-                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" || agreementType === "work permit" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" || agreementType === "work permit" || agreementType === "dynamic RA" ? "d-none" : "",
                     name: "applicable_government_processing_fee_stape_2",
                     type: "text",
                     disabled: false
@@ -720,7 +775,7 @@ const AgreementOneForm = ({
                   {
                     label:
                       "Applicable Retainer Fee for this stage (Non-Refundable) for Step 2",
-                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" || agreementType === "work permit" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" || agreementType === "work permit" || agreementType === "dynamic RA" ? "d-none" : "",
                     name: "applicable_retainer_fee_stape_2",
                     type: "text",
                     disabled: false
@@ -736,7 +791,7 @@ const AgreementOneForm = ({
                   {
                     label:
                       "Total Amount: (Non-Refundable) (Paid at signing of contract and sharing of checklist)",
-                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" || agreementType === "dynamic RA" ? "d-none" : "",
                     name: "total_amount_signing_of_contract",
                     type: "text",
                     disabled: false
@@ -744,7 +799,7 @@ const AgreementOneForm = ({
                   {
                     label:
                       "Balance (Non-Refundable) (Paid at time of filing)",
-                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" || agreementType === "dynamic RA" ? "d-none" : "",
                     name: "balance_paid_at_time_of_filing",
                     type: "text",
                     disabled: false
@@ -847,7 +902,7 @@ const AgreementOneForm = ({
               ))}
             <div
               className={
-                openSignature === "yes" || agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" || agreementType === "three column" || agreementType === "Alberta PNP and federal PR" || agreementType === "express entry" || agreementType === "work permit" || agreementType === "work permit application-2 stage" || SigningUserType === "employee" || SigningUserType === "company" ? "d-none" : "form-group col-md-12 "
+                openSignature === "yes" || agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" || agreementType === "three column" || agreementType === "Alberta PNP and federal PR" || agreementType === "express entry" || agreementType === "work permit" || agreementType === "dynamic RA" || agreementType === "work permit application-2 stage" || SigningUserType === "employee" || SigningUserType === "company" ? "d-none" : "form-group col-md-12 "
               }
             >
               <h3 className="font-size-4 text-black-2 line-height-reset">
@@ -861,6 +916,25 @@ const AgreementOneForm = ({
                   editClient={editClient}
                   clients={state?.family_json}
                   addClient={addClient}
+                />
+              </div>
+            </div>
+            <div
+              className={
+                openSignature === "no" && agreementType === "dynamic RA" && SigningUserType !== "employee" && SigningUserType !== "company" ? "form-group col-md-12 " : "d-none"
+              }
+            >
+              <h3 className="font-size-4 text-black-2 line-height-reset">
+                Add Payment Details
+              </h3>
+              <div className="">
+                <PaymentDetails
+                  handleInputChange={handleInputChange}
+                  newPayment={newPayment}
+                  removePayment={removeClient}
+                  editPayment={editClient}
+                  Payments={state?.payment_json}
+                  addPayments={addPaymentDetails}
                 />
               </div>
             </div>

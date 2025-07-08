@@ -20,37 +20,7 @@ const DynamicRA = () => {
         email_for
     } = JSON.parse(data) || {};
     const familyJsonArray = felidData?.family_json || [];
-
-    const paymentRows = [
-        {
-            description: "Completes upon signing the retainer and sharing the checklists and intake sheet with client Data gathering, filling out the forms, information verification and completeness check, preparing the application package and payment is due before final submission of application. Provide proof of submission to the client.",
-            notes: "",
-            additionalInfo: "All payments made are non refundable and total service charges to be collected regardless, whether the client s withdraw from the file a this stage. The government fee and courier charges must be paid apart from professional fees payment scheduled",
-            retainerFee: felidData?.applicable_retainer_fee_stape_1,
-            governmentFee: felidData?.applicable_government_processing_fee_stape_1,
-        },
-        {
-            description: "Completes upon signing the retainer and sharing the checklists and intake sheet with client Data gathering, filling out the forms, information verification and completeness check, preparing the application package and payment is due before final submission of application. Provide proof of submission to the client.",
-            notes: "",
-            additionalInfo: "All payments made are non refundable and total service charges to be collected regardless, whether the client s withdraw from the file a this stage. The government fee and courier charges must be paid apart from professional fees payment scheduled",
-            retainerFee: felidData?.applicable_retainer_fee_stape_2,
-            governmentFee: felidData?.applicable_government_processing_fee_stape_2,
-        },
-        {
-            description: "Completes upon signing the retainer and sharing the checklists and intake sheet with client Data gathering, filling out the forms, information verification and completeness check, preparing the application package and payment is due before final submission of application. Provide proof of submission to the client.",
-            notes: "",
-            additionalInfo: "All payments made are non refundable and total service charges to be collected regardless, whether the client s withdraw from the file a this stage. The government fee and courier charges must be paid apart from professional fees payment scheduled",
-            retainerFee: felidData?.applicable_retainer_fee_stape_3,
-            governmentFee: felidData?.applicable_government_processing_fee_stape_3,
-        },
-        {
-            description: "Completes upon signing the retainer and sharing the checklists and intake sheet with client Data gathering, filling out the forms, information verification and completeness check, preparing the application package and payment is due before final submission of application. Provide proof of submission to the client.",
-            notes: "",
-            additionalInfo: "All payments made are non refundable and total service charges to be collected regardless, whether the client s withdraw from the file a this stage. The government fee and courier charges must be paid apart from professional fees payment scheduled",
-            retainerFee: felidData?.applicable_retainer_fee_stape_4,
-            governmentFee: felidData?.applicable_government_processing_fee_stape_4,
-        },
-    ];
+    const paymentRows =  felidData?.payment_json || [];
 
     /*COnvert blob to file  */
     useEffect(() => {
@@ -670,13 +640,13 @@ const DynamicRA = () => {
                                             <Text>{row.notes}</Text>
                                         </View>
                                         <View style={styles.cell}>
-                                            <Text >{row.additionalInfo}</Text>
+                                            <Text >{row.additional_info}</Text>
                                         </View>
                                         <View style={[styles.cell, { fontSize: "10px" }]}>
-                                            <Text>{row.retainerFee}</Text>
+                                            <Text>{row.retainer_fee}</Text>
                                         </View>
                                         <View style={[styles.cell, { fontSize: "10px" }]}>
-                                            <Text>{row.governmentFee}</Text>
+                                            <Text>{row.government_fee}</Text>
                                         </View>
                                     </View>
                                 ))}

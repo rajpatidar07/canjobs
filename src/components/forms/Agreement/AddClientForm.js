@@ -4,7 +4,7 @@ import { Modal } from "react-bootstrap";
 import { AddUpdateAgreement } from "../../../api/api";
 import { toast } from "react-toastify";
 // import moment from 'moment';
-import ClietFamilyFeilds from "../../common/Retaineragreement/clietFamilyFeilds";
+import ClietFamilyFeilds from "../Agreement/clietFamilyFeilds"
 const AddClientForm = ({
   folderId,
   user_id,

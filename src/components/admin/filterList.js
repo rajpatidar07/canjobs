@@ -55,9 +55,8 @@ function FilterList() {
   const CancelDelete = () => {
     setDeleteAlert(false);
   };
-  /*To call Api to delete category */
+  /*Function to delete the filter */
   async function deleteFilter(e, f) {
-    /*Function to delete the filter */
     try {
       const responseData = await DeleteFilter(e, f);
       if (responseData.message === "List item has been deleted") {

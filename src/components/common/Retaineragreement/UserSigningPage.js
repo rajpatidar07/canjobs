@@ -11,7 +11,7 @@ import HtmlAGreementFour from './Html/HtmlAGreementFour'
 import WorkPermitHtml from "./Html/WorkPermitHtml";
 import HtmlAgreementSix from './Html/HtmlAgreementSix'
 import HtmlAgreementSeven from './Html/HtmlAgreementSeven'
-// import HtmlAgreementEight from './Html/HtmlAgreementEight'
+import HtmlAgreementDynamic from './Html/HtmlAgreementDynamic'
 // import HTmlAgreementNine from './Html/HTmlAgreementNine'
 import HtmlAgreementTen from './Html/HtmlAgreementTen'
 import HtmlAgreementEleven from './Html/HtmlAgreementEleven'
@@ -150,7 +150,6 @@ export default function UserSigningPage() {
                                                         felidData={felidData}
                                                         emp_user_type={emp_user_type}
                                                         addSign={addSign} />
-                                                    //<HtmlAgreementEight />
                                                     : type === "Alberta PNP and federal PR"
                                                         ? <AlbertaPNPAndFederalPR
                                                             page={"user"}
@@ -219,7 +218,14 @@ export default function UserSigningPage() {
                                                                                                                 felidData={felidData}
                                                                                                                 emp_user_type={emp_user_type}
                                                                                                                 addSign={addSign} />
-                                                                                                            : null}
+                                                                                                            :
+                                                                                                            type === "dynamic RA"
+                                                                                                                ? <HtmlAgreementDynamic
+                                                                                                                    page={"admin"}
+                                                                                                                    felidData={felidData}
+                                                                                                                    emp_user_type={emp_user_type}
+                                                                                                                    addSign={addSign} />
+                                                                                                                : null}
 
                     <div className='d-flex justify-content-center mt-5'>
                         <button className="btn btn-primary text-decoration-none" onClick={(e) => addSign(e, "final")}>

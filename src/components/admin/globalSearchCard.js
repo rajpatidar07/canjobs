@@ -19,17 +19,17 @@ function GlobalSearchCard(props) {
       onClick={handleSearchClick}>
       <div className="d-flex profile_box gx-2 justify-content-between">
         <div className="mb-0">
-          <span className="m-0 font-size-4 font-weight-bold text-capitalize">
+          <span className="m-0 font-size-4 font-weight-bold text-capitalize text-break">
             {props.name}
           </span>
           {props.company === ("" || undefined) ? (
             ""
           ) : (
-            <p className="m-0 font-size-2 font-weight-bold text-uppercase">
+            <p className="m-0 font-size-2 font-weight-bold text-uppercase text-break">
               {props.company}
             </p>
           )}
-          <p className="m-0 font-size-3">{props.mobile}</p>
+          <p className="m-0 font-size-3 text-break">{props.mobile}</p>
           <p className="m-0 font-size-3 text-break">{props?.email?.replace(/,/g, " ")}</p>
         </div>
       </div>

@@ -152,7 +152,7 @@ function GlobalSearch() {
               }}
             ></i>
           </div>
-          <div className="row global_search_result py-2 px-5">
+          <div className="row global_search_result py-2 px-8">
             {/* Display search results or Not Found message */}
             {Object.keys(searchData).some(key => searchData[key] && searchData[key].length > 0) ? (
               <>

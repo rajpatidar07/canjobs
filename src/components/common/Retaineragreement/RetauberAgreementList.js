@@ -22,6 +22,7 @@ import { FaEdit } from "react-icons/fa";
 import AddClientForm from "../../forms/Agreement/AddClientForm";
 import moment from "moment";
 import Loader from "../loader";
+import AddPaymentDetailsForm from "../../forms/Agreement/AddPaymentdetailsForm";
 export default function RetauberAgreementList({
   user_id,
   emp_user_type,
@@ -34,6 +35,7 @@ export default function RetauberAgreementList({
   const [openAddAgreementForm, setOpenAddAgreementForm] = useState(false);
   const [openAddAgreementFelids, setOpenAddAgreementFelids] = useState(false);
   const [openAddClientFeilds, setOpenAddClientFeilds] = useState(false);
+  const [openAddPaymentDetails, setOpenAddPaymentDetails] = useState(false);
   const [openViewAgreement, setOpenViewAgreement] = useState(false);
   const [openSignfPspdfkit, setOpenSignfPspdfkit] = useState(false);
   const [openViewAgreementSign, setOpenViewAgreementSign] = useState("");
@@ -332,10 +334,14 @@ export default function RetauberAgreementList({
                           <button
                             className={`btn btn-outline-info action_btn ${data.type === "recruitment services agreement" || data.type === "initial consultation" || data.type === "employer renewal stream" || data.type === "employers" || data.type === "three column" || data.type === "express entry" || data.type === "Alberta PNP and federal PR" || data.type === "work permit" || data.type === "work permit application-2 stage" ? "d-none" : ""}`}
                             onClick={() => {
-                              setOpenAddClientFeilds(true);
+                              if (data.type === "dynamic RA") {
+                                setOpenAddPaymentDetails(true)
+                              } else {
+                                setOpenAddClientFeilds(true);
+                              }
                               setAgreementData(data);
                             }}
-                            title="Add Family"
+                            title={data.type === "dynamic RA" ? "Add Payment Details" : "Add Family"}
                           >
                             <span className="text-gray px-2">
                               <FaPlus />
@@ -481,6 +487,23 @@ export default function RetauberAgreementList({
             folderId={folderId}
           />
         ) : null}
+        {openAddPaymentDetails ?
+          (<AddPaymentDetailsForm
+            show={openAddPaymentDetails}
+            close={() => {
+              setOpenAddPaymentDetails(false);
+              setOpenViewAgreementSign("");
+            }}
+            userData={userData}
+            setApicall={setApicall}
+            felidData={agreementData}
+            emp_user_type={emp_user_type}
+            user_id={user_id}
+            openSignature={openViewAgreementSign === "sign" ? "yes" : "no"}
+            folderId={folderId}
+          />
+          )
+          : null}
         {openAddAgreementForm ? (
           <RetainerAgreement
             show={openAddAgreementForm}

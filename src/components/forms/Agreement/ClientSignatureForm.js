@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { AddUpdateAgreement, GetAgreement } from '../../../api/api';
 import { toast } from 'react-toastify';
-import useValidation from '../useValidation';
-import SignaturePadComponent from './SignaturePadComponent';
+import useValidation from '../../common/useValidation';
+import SignaturePadComponent from '../../common/Retaineragreement/SignaturePadComponent';
 
 export default function ClientSignatureForm() {
     // const [loading, setLoading] = useState(false);

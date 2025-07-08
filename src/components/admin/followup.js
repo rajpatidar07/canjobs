@@ -34,6 +34,7 @@ function Followup() {
   const [sortOrder, setSortOrder] = useState("DESC");
   const [responseId, setresponseId] = useState();
   const [responseDropDown, setresponseDropDown] = useState(false);
+  
   /*Function to get the jSon */
   const JsonData = async () => {
     try {

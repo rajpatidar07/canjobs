@@ -9,7 +9,7 @@ import HtmlAGreementFour from "./Html/HtmlAGreementFour";
 import WorkPermitHtml from "./Html/WorkPermitHtml";
 import HtmlAgreementSix from "./Html/HtmlAgreementSix";
 import HtmlAgreementSeven from "./Html/HtmlAgreementSeven";
-// import HtmlAgreementEight from "./Html/HtmlAgreementEight";
+import HtmlAgreementDynamic from "./Html/HtmlAgreementDynamic";
 // import HTmlAgreementNine from "./Html/HTmlAgreementNine";
 import HtmlAgreementTen from "./Html/HtmlAgreementTen";
 import HtmlAgreementEleven from "./Html/HtmlAgreementEleven";
@@ -137,6 +137,8 @@ export default function MainRetainerAggHtml({
                         ? '/alberta_pnp'
                         : agreementData.type === "work permit application-2 stage"
                           ? '/work_permit_application_2_stage'
+                          :agreementData.type === "dynamic RA"
+                          ?`/dynamic_ra`
                           : `/agreeone`;
       localStorage.setItem("agreementStateData", JSON.stringify(stateData));
       // Open the new page in a new tab
@@ -244,12 +246,7 @@ export default function MainRetainerAggHtml({
                 emp_user_type={emp_user_type}
                 addSign={""}
               />
-            ) : // <HtmlAgreementEight
-              // page={"admin"}
-              //   userData={userData}
-              //   felidData={felidData}
-              //   emp_user_type={emp_user_type}
-              //   addSign={""} />
+            ) :
               agreementData.type === "Alberta PNP and federal PR" ? (
                 <AlbertaPNPAndFederalPR
                   page={"admin"}
@@ -308,7 +305,14 @@ export default function MainRetainerAggHtml({
                       felidData={felidData}
                       emp_user_type={emp_user_type}
                       addSign={""} />
-                    : null}
+                    : agreementData.type === "dynamic RA"
+                      ? <HtmlAgreementDynamic
+                        page={"admin"}
+                        userData={userData}
+                        felidData={felidData}
+                        emp_user_type={emp_user_type}
+                        addSign={""} />
+                      : null}
         {/* <button
           className={
             felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  "btn btn-primary my-2" : "d-none"
