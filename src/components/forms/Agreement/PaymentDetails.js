@@ -39,8 +39,8 @@ function PaymentDetails({
                     </tr>
                 </thead>
                 <tbody>
-                    {Array.isArray(Payments) && Payments.length > 1 ? (
-                        Payments.slice(1).map((client, index) => (
+                    {Array.isArray(Payments) && Payments.length > 0 ? (
+                        Payments.map((client, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td className="text-capitalize" title={client.description || "N/A"}>{client.description || "N/A"}</td>

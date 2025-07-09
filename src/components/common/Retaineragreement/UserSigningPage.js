@@ -221,7 +221,7 @@ export default function UserSigningPage() {
                                                                                                             :
                                                                                                             type === "dynamic RA"
                                                                                                                 ? <HtmlAgreementDynamic
-                                                                                                                    page={"admin"}
+                                                                                                                    page={"user"}
                                                                                                                     felidData={felidData}
                                                                                                                     emp_user_type={emp_user_type}
                                                                                                                     addSign={addSign} />

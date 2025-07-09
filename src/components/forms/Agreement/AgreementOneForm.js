@@ -41,63 +41,63 @@ const AgreementOneForm = ({
   //   retainer_fee: "",
   //   government_fee: "",
   // }
-    const initialFormState = {
-      type: "",
-      rcic_membership_no: "",
-      matter: "",
-      summary: "",
-      initial: "",
-      professional_fees: "",
-      courier_charges: "",
-      government_fees: "",
-      application_fees: "",
-      biometrics_fees: "",
-      administrative_fee: "",
-      applicable_taxes: "",
-      balance: "",
-      total_cost: "",
-      applicable_retainer_fee_stape_1: "",
-      applicable_government_processing_fee_stape_1: "",
-      applicable_retainer_fee_stape_2: "",
-      applicable_government_processing_fee_stape_2: "",
-      applicable_retainer_fee_stape_3: "",
-      applicable_government_processing_fee_stape_3: "",
-      total_amount_signing_of_contract: "",
-      balance_paid_at_time_of_filing: "",
-      rcic_first_name: "",
-      rcic_last_name: "",
-      rcic_signature: "",
-      date_signature_client: "",
-      date_signature_rcic: "",
-      sender: localStorage.getItem("admin_id"),
-      sender_type: localStorage.getItem("admin_type"),
-      receiver:
-        emp_user_type === "employee"
-          ? userData?.employee_id
-          : userData?.company_id,
-      receiver_type: emp_user_type === "employee" ? "employee" : "employer",
-      assigned_by_id: "",
-      assigned_by_type: "",
-      signature_status: "",
-      id: "",
-      note: "",
-      client_file_no: "",
-      agreement_date: "",
-      client_email: userData?.email || "",
-      client_contact: userData?.contact_no || "",
-      client_telephone: "",
-      client_cellphone: "",
-      client_fax: "",
-      client_address:
-        emp_user_type === "employee"
-          ? userData?.current_location ? userData?.current_location + " " + userData?.currently_located_country : ""
-          : userData?.address ? userData?.address : "",
-      family_json: [initialClientState],
-      client_first_name:
-        emp_user_type === "employee" ? userData?.name : userData?.company_name,
-      business_name: userData?.company_name || "",
-      payment_json: []
-    };
+  const initialFormState = {
+    type: "",
+    rcic_membership_no: "",
+    matter: "",
+    summary: "",
+    initial: "",
+    professional_fees: "",
+    courier_charges: "",
+    government_fees: "",
+    application_fees: "",
+    biometrics_fees: "",
+    administrative_fee: "",
+    applicable_taxes: "",
+    balance: "",
+    total_cost: "",
+    applicable_retainer_fee_stape_1: "",
+    applicable_government_processing_fee_stape_1: "",
+    applicable_retainer_fee_stape_2: "",
+    applicable_government_processing_fee_stape_2: "",
+    applicable_retainer_fee_stape_3: "",
+    applicable_government_processing_fee_stape_3: "",
+    total_amount_signing_of_contract: "",
+    balance_paid_at_time_of_filing: "",
+    rcic_first_name: "",
+    rcic_last_name: "",
+    rcic_signature: "",
+    date_signature_client: "",
+    date_signature_rcic: "",
+    sender: localStorage.getItem("admin_id"),
+    sender_type: localStorage.getItem("admin_type"),
+    receiver:
+      emp_user_type === "employee"
+        ? userData?.employee_id
+        : userData?.company_id,
+    receiver_type: emp_user_type === "employee" ? "employee" : "employer",
+    assigned_by_id: "",
+    assigned_by_type: "",
+    signature_status: "",
+    id: "",
+    note: "",
+    client_file_no: "",
+    agreement_date: "",
+    client_email: userData?.email || "",
+    client_contact: userData?.contact_no || "",
+    client_telephone: "",
+    client_cellphone: "",
+    client_fax: "",
+    client_address:
+      emp_user_type === "employee"
+        ? userData?.current_location ? userData?.current_location + " " + userData?.currently_located_country : ""
+        : userData?.address ? userData?.address : "",
+    family_json: [initialClientState],
+    client_first_name:
+      emp_user_type === "employee" ? userData?.name : userData?.company_name,
+    business_name: userData?.company_name || "",
+    payment_json: []
+  };
   const validators = {
     family_json: {
       validateClientEmail: [(value) =>
@@ -325,10 +325,25 @@ const AgreementOneForm = ({
         state.initial &&
         !state.initial.startsWith("data:image/")
       ) {
-        filteredState.initial = textToImage(state.initial.split(" ")
-          .filter((word) => word)
-          .map((word) => word[0])
-          .join(" ") || "");
+        const words = state.initial.trim().split(" ").filter(word => word);
+        let initials = "";
+
+        if (words.length > 1) {
+          // Multiple words: take first letter of each
+          initials = words.map(word => word[0]).join(" ");
+        } else if (words.length === 1) {
+          const word = words[0];
+          if (word.length === 2) {
+            // Single word with 2 letters: return both with space
+            initials = word[0] + " " + word[1];
+          } else {
+            // Single word with more than 2 letters: return only first letter
+            initials = word[0];
+          }
+        }
+
+        filteredState.initial = textToImage(initials || "");
+
       }
 
 
@@ -921,7 +936,7 @@ const AgreementOneForm = ({
             </div>
             <div
               className={
-                openSignature === "no" && agreementType === "dynamic RA" && SigningUserType !== "employee" && SigningUserType !== "company" ? "form-group col-md-12 " : "d-none"
+                openSignature === "no" && agreementType === "dynamic RA" && (SigningUserType && SigningUserType !== "employee" && SigningUserType !== "company") ? "form-group col-md-12 " : "d-none"
               }
             >
               <h3 className="font-size-4 text-black-2 line-height-reset">
