@@ -4,7 +4,6 @@ import React, { useState } from "react";
 // import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import PersonalDetails from "../forms/user/personal";
-// import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserProfile from "../user/profile";
 // import { GetFilter, GetAgentJson,getallAdminData } from "../../api/api";

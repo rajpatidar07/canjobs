@@ -4,7 +4,6 @@ import AdminSidebar from "./sidebar";
 import { GetCredentialData } from "../../api/api";
 import CredentialTable from "../common/CredentialTable";
 import UpdateCredentialForm from "../forms/admin/UpdateCredentialForm";
-// import { ToastContainer } from "react-toastify";
 export default function Credentional() {
   const [credentialData, setCredentialData] = useState([]);
   const [singleCredentialData, setSingleCredentialData] = useState([]);

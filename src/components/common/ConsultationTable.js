@@ -62,6 +62,9 @@ function ConsultationTable(props) {
   const NotificationConsultationId = searchParams.get("consultation_id") || "";
   const NotifiTaskId = searchParams.get("taskId") || "";
 
+  // Added prop to control reset call without ConsultationId
+  const { resetWithoutConsultationId } = props;
+
   // const [setIsScrolled] = useState(false);
   const [showConsultationModal, setShowConsultationModal] = useState(NotifiTaskId);
   const [taskId, setTaskId] = useState(NotifiTaskId);
@@ -90,7 +93,8 @@ function ConsultationTable(props) {
     try {
       setIsLoading(true);
       const data = {
-        id: ConsultationId,
+        // Conditionally include id based on resetWithoutConsultationId prop
+        ...(resetWithoutConsultationId ? {} : { id: ConsultationId }),
         applicant_name: "",
         email: "",
         manager_id: props.selectedAdminId,
@@ -308,6 +312,18 @@ function ConsultationTable(props) {
       setConsultationId(NotificationConsultationId)
     }
   }, [location.key, NotificationConsultationId, NotifiTaskId])
+
+  // Call GetConsultationList when resetWithoutConsultationId changes to true
+  useEffect(() => {
+    if (resetWithoutConsultationId) {
+      GetConsultationList();
+      // Notify parent to reset the flag to avoid repeated calls
+      if (props.onResetHandled) {
+        props.onResetHandled();
+      }
+    }
+  }, [resetWithoutConsultationId]);
+
   // Placeholder: Load data list from API or props
   useEffect(() => {
     GetConsultationList()

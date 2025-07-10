@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 // import { Button, Form, InputGroup } from "react-bootstrap";
 import GlobalSearchCard from "./globalSearchCard";
 import { getallAdminData, GlobalSearchResult, GlobalSearchResultOther, GlobalSearchResultRelated } from "../../api/api";
-// import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { Link } from "react-router-dom";
@@ -96,7 +95,7 @@ function GlobalSearch() {
         <div className="left_side" onClick={() => setShow(false)}></div>
         <div className="right_side bg-white">
           <div className="global_search d-flex align-items-center p-3 px-5 ">
-            <div className="col-lg-3 col-sm-6">
+            <div className="col">
               <div className="input-group mb-3 ">
                 <input
                   required
@@ -152,7 +151,7 @@ function GlobalSearch() {
               }}
             ></i>
           </div>
-          <div className="global_search_result py-2 px-8">
+          <div className="global_search_result py-2 px-8 mb-12">
             {/* Display search results or Not Found message */}
             {Object.keys(searchData).some(key => searchData[key] && searchData[key].length > 0) ? (
               <>
@@ -278,18 +277,73 @@ function GlobalSearch() {
                     ))}
                   </div>
                 )}
-                {searchData["notes"] && searchData["notes"].length > 0 && (
+                {searchData["lmia_data"] && searchData["lmia_data"].length > 0 && (
                   <div className="row">
                     <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
-                      Notes
+                      LMIA
                     </h5>
-                    {searchData["notes"].map((data) => (
+                    {searchData["lmia_data"].map((data) => (
                       <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.id}
                         name={data.name}
-                        mobile={data.contact_no}
-                        email={data.email}
+                        mobile={data.status}
+                        email={data.type}
+                        to={"/lmia"}
+                      />
+                      </div>
+                    ))}
+                  </div>
+                )}
+                 {searchData["job_data"] && searchData["job_data"].length > 0 && (
+                  <div className="row">
+                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
+                      Jobs
+                    </h5>
+                    {searchData["job_data"].map((data) => (
+                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                        close={close}
+                        key={data.job_id}
+                        name={data.job_title}
+                        mobile={data.location	}
+                        email={data.salary}
+                        to={"/job"}
+                      />
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {searchData["visa_data"] && searchData["visa_data"].length > 0 && (
+                  <div className="row">
+                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
+                      Visa
+                    </h5>
+                    {searchData["visa_data"].map((data) => (
+                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                        close={close}
+                        key={data.id}
+                        name={data.name}
+                        mobile={data.status}
+                        email={data.type}
+                        to={"/visa"}
+                      />
+                      </div>
+                    ))}
+                  </div>
+                )}
+                  {searchData["interview_data"] && searchData["interview_data"].length > 0 && (
+                  <div className="row">
+                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
+                      Interview
+                    </h5>
+                    {searchData["interview_data"].map((data) => (
+                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                        close={close}
+                        key={data.id}
+                        name={data.name}
+                        mobile={data.status}
+                        email={data.type}
+                        to={"/interview"}
                       />
                       </div>
                     ))}
@@ -358,6 +412,7 @@ function GlobalSearch() {
                         name={data.name}
                         mobile={data.phone}
                         email={data.purpose}
+                        to={`/daily_pages?call_logId=${data.id}`}
                       />
                       </div>
                     ))}
@@ -375,11 +430,28 @@ function GlobalSearch() {
                         name={data.item}
                         mobile={adminList.find((item) => item.admin_id === data.hour_log_of_admin)?.email}
                         email={data.email}
+                        to={`/daily_pages?hour_logId=${data.id}`}
                       />
                       </div>))}
                   </div>
                 )}
-
+                {searchData["consultation_data"] && searchData["consultation_data"].length > 0 && (
+                  <div className="row">
+                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
+                      Consultation
+                    </h5>
+                    {searchData["consultation_data"].map((data) => (
+                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                        close={close}
+                        key={data.id}
+                        name={data.applicant_name}
+                        mobile={data.phone}
+                        email={data.email}
+                        to={`/daily_pages?consultation_id=${data.id}`}
+                      />
+                      </div>))}
+                  </div>
+                )}
               </>
             ) : (
               (search && searchData.length !== 0) ? <div className="col-12 text-center">
@@ -396,7 +468,6 @@ function GlobalSearch() {
               </div>
                 : null)}
           </div>
-
         </div>
       </div>
     </div>

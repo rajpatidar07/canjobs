@@ -18,6 +18,8 @@ import SelectBox from "./Common function/SelectBox";
 function Calllogtable(props) {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
+    // Added prop to control reset call without HourLogId
+    const { resetWithoutCallLogId } = props;
     let NotificallLogId = searchParams.get("call_logId") || ""
     let NotifiTaskId = searchParams.get("taskId") || ""
     const [isLoading, setIsLoading] = useState(false);
@@ -45,7 +47,7 @@ function Calllogtable(props) {
     const GetDailyCallLogList = async () => {
         try {
             setIsLoading(true)
-            let ResCallLog = await getDailyCallLogApi(props.searchCandidate, props.selectedAdminId, callLogId, '', currentPage, recordsPerPage, columnName, sortOrder);
+            let ResCallLog = await getDailyCallLogApi(props.searchCandidate, props.selectedAdminId, resetWithoutCallLogId ? "" : callLogId, '', currentPage, recordsPerPage, columnName, sortOrder);
             setCallLogData(ResCallLog.data.data.data)
             setTotalData(ResCallLog.data.data.total_rows)
             if (taskId) {
@@ -155,7 +157,7 @@ function Calllogtable(props) {
         //         tableContainerRef.current.removeEventListener("scroll", handleScroll);
         //     }
         // };
-    }, [taskId, callLogId, apiCall, props.searchCandidate, props.selectedAdminId, currentPage, sortOrder, columnName]);
+    }, [location.key, window.location.search, taskId, callLogId, apiCall, props.searchCandidate, props.selectedAdminId, currentPage, sortOrder, columnName]);
     /*Function to add New Daily call log item */
     const AddCallLog = async (newValue, data) => {
         if (newValue && newValue.preventDefault) {

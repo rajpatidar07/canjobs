@@ -19,6 +19,8 @@ const ManageDailyCallLog = () => {
   const [isFocused, setIsFocused] = useState(false);
   const [adminList, setAdminList] = useState([false]);
   const [searchCandidate, setSearchCandidate] = useState("");
+  const [resetWithoutCallLogId, setResetWithoutCallLogId] = useState(false);
+
   const dropdownRef = useRef(null);
 
   let getAdminData = async () => {
@@ -348,6 +350,11 @@ const ManageDailyCallLog = () => {
                   setSelectedAdminId("");
                   setSearchQuery("");
                   setSearchCandidate("")
+                  setResetWithoutCallLogId(true);
+                  const newUrl = window.location.pathname;
+                  window.history.replaceState({}, document.title, newUrl);
+                  // Reset the flag after a short delay to allow ConsultationTable to react
+                  setTimeout(() => setResetWithoutCallLogId(false), 100);
                 }}
               >
                 Reset
@@ -362,6 +369,7 @@ const ManageDailyCallLog = () => {
                 searchCandidate={searchCandidate}
                 setShowAddForm={setShowAddItemForm}
                 selectedAdminId={selectedAdminId}
+                resetWithoutCallLogId={resetWithoutCallLogId}
               />
             </div>
           </div>

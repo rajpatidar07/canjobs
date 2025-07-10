@@ -3,7 +3,6 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import EmployeeTable from "../common/employeeTable";
 import ApplicantsFilter from "../common/applicantsFilter";
-// import { ToastContainer } from "react-toastify";
 export default function PGWP() {
   /*Filter and search state */
   const [experienceFilterValue, setExperienceFilterValue] = useState("");
@@ -41,7 +40,6 @@ export default function PGWP() {
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
         <AdminHeader heading={"PGWP"} />
-        {/* <ToastContainer/> */}
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"PGWP"} />
         <div className="dashboard-main-container mt-14" id="dashboard-body">

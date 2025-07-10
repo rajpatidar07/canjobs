@@ -1,7 +1,8 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-import {  CiSearch } from "react-icons/ci";
+import { CiSearch } from "react-icons/ci";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { FaAngleDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -21,6 +22,7 @@ const ManageConsultation = () => {
   const [isFocused, setIsFocused] = useState(false);
   const [adminList, setAdminList] = useState([false]);
   const [searchCandidate, setSearchCandidate] = useState("");
+  const [resetWithoutConsultationId, setResetWithoutConsultationId] = useState(false);
   const dropdownRef = useRef(null);
 
   let getAdminData = async () => {
@@ -36,8 +38,8 @@ const ManageConsultation = () => {
   }, []);
   const filteredAdmins = adminList
     ? adminList?.filter((admin) =>
-        admin?.name?.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      admin?.name?.toLowerCase().includes(searchQuery.toLowerCase())
+    )
     : [];
 
   useEffect(() => {
@@ -183,6 +185,11 @@ const ManageConsultation = () => {
                   setSearchQuery("");
                   setDayFilterValue("");
                   setPageNo(1);
+                  setResetWithoutConsultationId(true);
+                  const newUrl = window.location.pathname;
+                  window.history.replaceState({}, document.title, newUrl);
+                  // Reset the flag after a short delay to allow ConsultationTable to react
+                  setTimeout(() => setResetWithoutConsultationId(false), 100);
                 }}
               >
                 Reset
@@ -202,6 +209,7 @@ const ManageConsultation = () => {
               // setFilterData={setFilterData}
               pageNo={pageNo}
               setPageNo={setPageNo}
+              resetWithoutConsultationId={resetWithoutConsultationId}
             />
           </div>
         </div>

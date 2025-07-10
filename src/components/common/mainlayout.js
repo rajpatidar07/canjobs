@@ -168,15 +168,15 @@ function MainLayout() {
         "/payment_invoice"
       ],
       user: [
-        `/${employeeId}`, "/student_profile", "/student_document", "/programs", "/education_loan", "/personal_loan", "/accommodation",
+        `/${employeeId}`, "/", "/student_profile", "/student_document", "/programs", "/education_loan", "/personal_loan", "/accommodation",
         "/jobs", "/jobdetail", "/profile", "/:eid", "/job_detail", "/client_detail", "/userpdf", "/view_pdf_Agreement", "/resume/:id"
       ],
       company: [
-        "/client_detail", "/clientprofile", "/managejobs", "/response", "/empsearch", "/profile", "/lmia", "/resume/:id",
+        `/${employeeId}`, "/:eid", "/client_detail", "/clientprofile", "/managejobs", "/response", "/empsearch", "/profile", "/lmia", "/resume/:id",
         "/job_detail", "/view_pdf_Agreement"
       ],
       agent: [ // same as admin list, assuming they share same paths
-        "/partner_dashboard", "/job", "/selfjob", "/category", "/lmia", "/visa", "/document", "/employee", "/selfemployee",
+        `/${employeeId}`, "/partner_dashboard", "/job", "/selfjob", "/category", "/lmia", "/visa", "/document", "/employee", "/selfemployee",
         "/adminclient", "/adminprofile", "/assignedjobs", "/:eid", "/userpdf", "/managetasks", "/sharepoint_document",
         "/client_detail", "/job_detail", "/partner_profile", "/followup", "/partner", "/partner_dashboard", "/daily_call_log",
         "/daily_hours_log", "/consultation", "/assigned_admin", "/activity_log", "/filter", "/interview", "/responses",
@@ -308,6 +308,7 @@ function MainLayout() {
             <Route path="/response" element={<Response />} />
             <Route path="/empsearch" element={<EmployeeSearch />} />
             <Route path="/profile" element={<UserProfile />} />
+            <Route path="/:eid" element={<ValidateRoute />} />
             {/* <Route path="/lmia_dashboard" element={<EmployerLMIA />} /> */}
             <Route path="/lmia" element={<LimaContainer />} />
             <Route path="/resume/:id" element={<ResumeGrerator />} />

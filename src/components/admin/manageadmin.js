@@ -8,8 +8,6 @@ import {
   GetManagerTeam,
 } from "../../api/api";
 import SelectBox from "../common/Common function/SelectBox";
-// import { toast } from "react-toastify";
-// import SAlert from "../common/sweetAlert";
 import FilterJson from "../json/filterjson";
 import Loader from "../common/loader";
 import ExecutiveBox from "../common/executiveBox";

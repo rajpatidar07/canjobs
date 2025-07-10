@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { useLocation } from "react-router-dom";
 import CustomButton from "../common/button";
 // import JobDetailsBox from "../common/jobdetail";
 // import AdminHeader from "./header";

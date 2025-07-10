@@ -4,7 +4,6 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { DeleteFilter, GetFilter } from "../../api/api";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../common/sweetAlert";
 import AddFilter from "../forms/admin/FilterForm";
 function FilterList() {

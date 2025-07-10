@@ -3,7 +3,6 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import EmployeeTable from "../common/employeeTable";
 import ApplicantsFilter from "../common/applicantsFilter";
-// import { ToastContainer } from "react-toastify";
 export default function Pnp() {
   /*Filter and search state */
   const [experienceFilterValue, setExperienceFilterValue] = useState("");
@@ -42,7 +41,6 @@ export default function Pnp() {
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
         <AdminHeader heading={"Alberta PNP"} />
-        {/* <ToastContainer/> */}
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"PNP"} />
         <div className="dashboard-main-container mt-14" id="dashboard-body">

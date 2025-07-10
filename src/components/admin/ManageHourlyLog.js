@@ -23,6 +23,7 @@ const ManageHourlyLog = () => {
   const [isFocused, setIsFocused] = useState(false);
   const [adminList, setAdminList] = useState([false]);
   const [searchCandidate, setSearchCandidate] = useState("");
+  const [resetWithoutHourLogId, setResetWithoutHourLogId] = useState(false);
   const dropdownRef = useRef(null);
 
   let getAdminData = async () => {
@@ -297,6 +298,11 @@ const ManageHourlyLog = () => {
                   setFilterByHour("")
                   setDayFilterValue("")
                   setPageNo(1)
+                  setResetWithoutHourLogId(true);
+                  const newUrl = window.location.pathname;
+                  window.history.replaceState({}, document.title, newUrl);
+                  // Reset the flag after a short delay to allow ConsultationTable to react
+                  setTimeout(() => setResetWithoutHourLogId(false), 100);
                 }}
               >
                 Reset
@@ -317,6 +323,7 @@ const ManageHourlyLog = () => {
               setFilterData={setFilterData}
               pageNo={pageNo}
               setPageNo={setPageNo}
+              resetWithoutHourLogId={resetWithoutHourLogId}
             />
           </div>
         </div>

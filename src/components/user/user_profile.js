@@ -507,7 +507,10 @@ const NewUserProfile = (props) => {
                         role="tab"
                         aria-controls="appliedJobs"
                         aria-selected="true"
-                        onClick={() => setTabActive("jobs")}
+                        onClick={() => {
+                          setTabActive("jobs")
+                          setpageNo(1)
+                        }}
                       >
                         Applied Jobs
                       </Link>

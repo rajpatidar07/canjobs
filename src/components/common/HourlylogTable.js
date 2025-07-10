@@ -22,6 +22,9 @@ function Hourlylogtable(props) {
     const NotifiHourLogId = searchParams.get("hour_logId") || "";
     const NotifiTaskId = searchParams.get("taskId") || "";
 
+    // Added prop to control reset call without HourLogId
+    const { resetWithoutHourLogId } = props;
+
     const [isLoading, setIsLoading] = useState(false);
     // const [setIsScrolled] = useState(false);
     const [taskId, setTaskId] = useState(NotifiTaskId);
@@ -62,7 +65,8 @@ function Hourlylogtable(props) {
             const data = {
                 limit: recordsPerPage,
                 page: 1,
-                id: HourLogId,
+                // Conditionally include id based on resetWithoutHourLogId prop
+                ...(resetWithoutHourLogId ? {} : { id: HourLogId }),
                 column_name: columnName,
                 sort_order: sortOrder,
                 day: props.day,
@@ -157,7 +161,7 @@ function Hourlylogtable(props) {
         //         tableContainerRef.current.removeEventListener("scroll", handleScroll);
         //     }
         // };
-    }, [taskId, HourLogId, apiCall, props.searchCandidate, props.selectedAdminId, props.pageNo, columnName, sortOrder, props.totalHour, props.day]);
+    }, [location.key, window.location.search, taskId, HourLogId, apiCall, props.searchCandidate, props.selectedAdminId, props.pageNo, columnName, sortOrder, props.totalHour, props.day]);
 
     const handleManagerClick = async (managerId, page, day, hour) => {
         // If already loaded for this manager, just toggle collapse

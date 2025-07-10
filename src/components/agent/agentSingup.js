@@ -11,7 +11,6 @@ import Permissions from "../json/emailPermisionJson";
 import { toast } from "react-toastify";
 import PasswordInput from "../common/Common function/PasswordInput";
 // import { useGoogleLogin } from '@react-oauth/google';
-// import axios from "axios";
 // import { useLinkedIn , LinkedIn} from "react-linkedin-login-oauth2";
 // import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
 // import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'

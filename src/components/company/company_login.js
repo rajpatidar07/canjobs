@@ -11,7 +11,6 @@ import { toast } from "react-toastify";
 import ForgotPasswordForm from "../forms/admin/ForgotPasswordForm";
 import PasswordInput from "../common/Common function/PasswordInput";
 // import { useGoogleLogin } from '@react-oauth/google';
-// import axios from "axios";
 // import { useLinkedIn , LinkedIn} from "react-linkedin-login-oauth2";
 // import linkedin from 'react--login-oauth2/assets/linkedin.png';
 // import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
