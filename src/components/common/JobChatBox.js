@@ -34,6 +34,7 @@ export default function JobChatBox({
     message: "",
     DocUrl: "",
   };
+
   // VALIDATION CONDITIONS
   const validators = {
     message: [
@@ -49,6 +50,7 @@ export default function JobChatBox({
                 : "",
     ],
   };
+
   // CUSTOM VALIDATIONS IMPORT
   const {
     state,
@@ -80,6 +82,7 @@ export default function JobChatBox({
     }
     // eslint-disable-next-line
   }, [apicall, partnerChatNav, userId]);
+
   //   Get the notes list
   const GetNotesData = async () => {
     try {
@@ -112,6 +115,7 @@ export default function JobChatBox({
       console.log(err);
     }
   };
+
   // Submit function to add notes conversation
   const handleMessageSubmit = async (e) => {
     e.preventDefault();
@@ -187,6 +191,7 @@ export default function JobChatBox({
     }
     // }
   };
+
   /*Function to convert file to base64 */
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -200,6 +205,7 @@ export default function JobChatBox({
       };
     });
   };
+
   /*On change fnction to upload bulk document in 1 array*/
   const handleBulkFileChange = async (event, id) => {
     const files = event.target.files;
@@ -286,6 +292,7 @@ export default function JobChatBox({
       setState({ ...state, DocUrl: "" });
     }
   };
+
   // Function to add annotation based on conditions
   const handleInputChange = (e, type) => {
     let value = e.target.value;
@@ -364,24 +371,17 @@ export default function JobChatBox({
           recordsPerPage={recordsPerPage}
           setRecordsPerPage={setRecordsPerPage}
         />
-        <AddNotesConversation
-          handleMessageSubmit={handleMessageSubmit}
-          onInputChange={handleInputChange}
-          state={state}
-          errors={errors}
-          handleBulkFileChange={handleBulkFileChange}
-          handleRemoveFile={handleRemoveFile}
-          fileNames={fileNames}
-          setState={setState}
-          isApiLoading={isApiLoading}
-        />
         {dropdownVisible && filteredEmails.length > 0 ? (
           <ul
-            className="email-suggestions"
+            // className="email-suggestions"
             style={{
-              maxHeight: 400,
+              height: filteredEmails.length >= 6 ? "250px" : "auto",
+              padding: "10px",
               overflowY: "auto",
-              zIndex: "999 !important",
+              background: "rgb(248, 248, 248)",
+              borderBottom: "1px solid rgb(221, 221, 221)",
+              listStyle: "none",
+              width: "100%"
             }}
           >
             {filteredEmails.map((email, index) => (
@@ -402,6 +402,18 @@ export default function JobChatBox({
             ))}
           </ul>
         ) : null}
+        <AddNotesConversation
+          handleMessageSubmit={handleMessageSubmit}
+          onInputChange={handleInputChange}
+          state={state}
+          errors={errors}
+          handleBulkFileChange={handleBulkFileChange}
+          handleRemoveFile={handleRemoveFile}
+          fileNames={fileNames}
+          setState={setState}
+          isApiLoading={isApiLoading}
+        />
+
         {userErrorforadminAssign ? (
           <span className="text-danger font-size-3">
             {userErrorforadminAssign}

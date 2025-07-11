@@ -33,6 +33,7 @@ export default function GenerateToken(props) {
     setUnauthorized("")
     props.close();
   };
+
   /*Render function to get admin list */
   useEffect(() => {
     AdminData();
@@ -43,6 +44,7 @@ export default function GenerateToken(props) {
     setAdminId(option.value.admin_id);
     setAdminType(option.value.admin_type)
   };
+  
   /*Render function to set data in search select box */
   useEffect(() => {
     const options = allAdmin.map((option) => ({

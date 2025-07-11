@@ -91,7 +91,7 @@ export default function EmployeeTable(props) {
         : props.ApplicantType
           ? "4,7,8,9"
           : props.self === "yes"
-            ? "0,1,2,3,5,6"
+            ? "-1,0,1,2,3,5,6"
             : "4,7,8,9"
   );
   const [totalData, setTotalData] = useState("");
@@ -664,13 +664,13 @@ export default function EmployeeTable(props) {
                     ? "d-none"
                     : status === "" ||
                       status === "00" ||
-                      status === "0,1,2,3,5,6" ||
+                      status === "-1,0,1,2,3,5,6" ||
                       status === "4,7,8,9"
                       ? "btn btn-primary"
                       : "btn btn-outline-primary"
                 }
                 onClick={() => {
-                  setStatus(props.self === "yes" ? "0,1,2,3,5,6" : "4,7,8,9");
+                  setStatus(props.self === "yes" ? "-1,0,1,2,3,5,6" : "4,7,8,9");
                   clearPageNo();
                 }}
                 title="All"

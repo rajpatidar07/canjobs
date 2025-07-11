@@ -274,7 +274,6 @@ function MainLayout() {
             <Route path="/jobs" element={<JobSearch />} />
             <Route path="/jobdetail" element={<JobDetail />} />
             <Route path="/profile" element={<UserProfile />} />
-            {/* <Route path="/:eid" element={<NewUserProfile />} /> */}
             <Route path="/:eid" element={<ValidateRoute />} />
             <Route path="*" element={<NotFound userType={userType} />} />
             <Route path="/job_detail" element={<JobDetailpageAdmim />} />

@@ -214,6 +214,11 @@ function AddJobModal(props) {
   // ADD JOBS SUBMIT BUTTON
   const onAddJobsClick = async (event) => {
     event.preventDefault();
+    setState({
+      ...state, employement: Company.find(
+        (item) => item?.company_id === state?.company_id
+      )?.franchise
+    })
     if (validate()) {
       setLoading(true);
       try {
@@ -230,7 +235,7 @@ function AddJobModal(props) {
           return close();
         }
         if (responseData.message === "Failed to insert job data") {
-          toast.error("No Mangr found", {
+          toast.error("No Manger found", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
@@ -400,13 +405,16 @@ function AddJobModal(props) {
                 <div className="position-relative">
                   <input
                     name="employement"
-                    value={state.employement || ""}
+                    value={Company.find(
+                      (item) => item?.company_id === state?.company_id
+                    )?.franchise || ""}
                     onChange={onInputChange}
                     className={
                       errors.employement
                         ? "text-capitalize form-control border border-danger position-relative overflow-hidden"
                         : "text-capitalize form-control position-relative overflow-hidden"
                     }
+                    disabled
                     placeholder="Operating Name"
                     id="employement"
                   />

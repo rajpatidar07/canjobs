@@ -14,7 +14,7 @@ export default function Humanitarian() {
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [interestFilterValue, setinterestFilterValue] = useState("");
   const [search, setSearch] = useState("");
-  const [searcherror, setSearchError] = useState("");
+  const [searchError, setSearchError] = useState("");
   let user_type = localStorage.getItem("userType");
   let [apiCall, setApiCall] = useState(false);
   /*Function to search the employee */
@@ -77,7 +77,7 @@ export default function Humanitarian() {
                     pageName={"humanitarian"}
                   />
                 </div>
-                <small className="text-danger">{searcherror}</small>
+                <small className="text-danger">{searchError}</small>
               </div>
               {/*<-- Business visa Table -->*/}
               <EmployeeTable
