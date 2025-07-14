@@ -18,7 +18,7 @@ function GlobalSearchCard(props) {
       onClick={handleSearchClick}>
       <div className="d-flex profile_box gx-2 justify-content-between">
         <div className="mb-0">
-          <span className="m-0 font-size-4 font-weight-bold text-capitalize text-break">
+          <span className="m-0 font-size-4 font-weight-bold text-capitalize text-break text-truncate" title={props.name}>
             {props.name}
           </span>
           {props.company === ("" || undefined) ? (

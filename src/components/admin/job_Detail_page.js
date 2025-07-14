@@ -18,6 +18,9 @@ import { getInitials } from "../common/GetInitials";
 import SharePointDocument from "../common/Document folder/SharePointDocument";
 import Addfollowup from "../forms/admin/addfollowup";
 import JobChatBox from "../common/JobChatBox";
+import determineBackgroundColor from "../common/Common function/DetermineBackgroundColour";
+import filterjson from "../json/filterjson";
+import ConvertTime from "../common/Common function/ConvertTime";
 function JobDetailpageAdmim(props) {
   const user_type = localStorage.getItem("userType");
   const location = useLocation();
@@ -800,58 +803,141 @@ function JobDetailpageAdmim(props) {
                             </div>
                           </div>
                         </div>
-                        <div className="text-capitalize company_detail_box w-100 m-0 mt-5 bg-light rounded p-8 position-relative">
+                        <div className=" row text-capitalize company_detail_box w-100 m-0 mt-5  rounded p-8 position-relative">
                           <div className="col-md-12 col-lg-12 p-0">
-                            <div>
-                              <h4 className="text-black-2 mb-0 font-size-5 d-flex text-break align-items-center justify-content-space-between">
-                                Job Description
-                                {/* <CustomButton
+                            <div className="row bg-light">
+                              <div className="col-lg-5 col-md-6 p-8 border-right">
+                                <h4 className="text-black-2 mb-0 font-size-5 d-flex text-break align-items-center justify-content-space-between">
+                                  <b className="block text-sm text-indigo-600">
+                                    Job Description
+                                  </b>
+                                  {/* <CustomButton
                                   className="font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
                                   onClick={() => setShowJobEditModal(true)}
                                 >
                                   <PiPencilDuotone />
                                 </CustomButton> */}
-                              </h4>
-                              <div className="pt-5 text-left">
-                                {jobData.job_description ? (
-                                  // <p className="font-size-4 mb-8 ">
-                                  //   {jobData.job_description}
-                                  // </p>
-                                  <div className="font-size-4 mb-8">
-                                    <div
-                                      dangerouslySetInnerHTML={{
-                                        __html: jobData.job_description,
-                                      }}
-                                    />
+                                </h4>
+                                <div className="lmia-details mt-3 p-4 border rounded bg-white from-blue-50 to-indigo-50 shadow-lg">
+                                  {jobData.job_description ? (
+                                    // <p className="font-size-4 mb-8 ">
+                                    //   {jobData.job_description}
+                                    // </p>
+                                    <div className="font-size-4 mb-8">
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html: jobData.job_description,
+                                        }}
+                                      />
+                                    </div>
+                                  ) : (
+                                    <p className="font-size-4 mb-8 text-center">
+                                      No data Found
+                                    </p>
+                                  )}
+                                </div>
+
+                              </div>
+                              <div className="col-lg-7 col-md-6 p-8">
+                                <h4 className="text-black-2 mb-0 font-size-5 d-flex text-break align-items-center justify-content-space-between">
+                                  <b className="block text-sm text-indigo-600">LMIA Details: </b>
+                                </h4>
+                                {jobData.lmia_number ? (
+                                  <div className="lmia-details mt-3 p-4 border rounded bg-white from-blue-50 to-indigo-50 shadow-lg">
+                                    <div className="row text-indigo-900 font-semibold">
+                                      <div className="col-6 mb-3">
+                                        <b className="block text-sm text-indigo-600">LMIA Number: </b>
+
+                                        <span className="block text-base"> {jobData.lmia_number || "N/A"}</span>
+                                      </div>
+                                      <div className="col-6 mb-3">
+                                        <b className="block text-sm text-indigo-600">Creation Date: </b>
+                                        <span className="block text-base">
+                                          <ConvertTime
+                                            _date={jobData.lmia_creation_date}
+                                            format={"DD-MM-YYYY"}
+                                          />
+                                        </span>
+                                      </div>
+                                      <div className="col-6 mb-3">
+                                        <b className="block text-sm text-indigo-600">Submission Date: </b>
+                                        <span className="block text-base">
+                                          <ConvertTime
+                                            _date={jobData.lmia_submissiom_date}
+                                            format={"DD-MM-YYYY"}
+                                          />
+                                        </span>
+                                      </div>
+                                      <div className="col-6 mb-3">
+                                        <b className="block text-sm text-indigo-600">Approved Date: </b>
+                                        <span className="block text-base">
+                                          <ConvertTime
+                                            _date={jobData.lmia_date_approved}
+                                            format={"DD-MM-YYYY"}
+                                          />
+                                        </span>
+                                      </div>
+                                      <div className="col-6 mb-3">
+                                        <b className="block text-sm text-indigo-600">Expiry Date: </b>
+                                        <span className="block text-base">
+                                          <ConvertTime
+                                            _date={jobData.lmia_date_expiry}
+                                            format={"DD-MM-YYYY"}
+                                          /></span>
+                                      </div>
+                                      <div className="col-6 mb-3">
+                                        <b className="block text-sm text-indigo-600">Payment Status: </b>
+                                        <span className="block text-base"> {jobData.lmia_payment_status || " N/A"}</span>
+                                      </div>
+                                      <div className="col-6 mb-3">
+                                        <b className="block text-sm text-indigo-600">Payment By: </b>
+                                        <span className="block text-base"> {jobData.lmia_payment_by || " N/A"}</span>
+                                      </div>
+                                      <div className="col-6 mb-3">
+                                        <b className="block text-sm text-indigo-600">Notes: </b>
+                                        <span className="block text-base"> {jobData.lmia_notes || " N/A"}</span>
+                                      </div>
+                                      <div className="col-6 mb-3">
+                                        <b className="block text-sm text-indigo-600">Type of LMIA: </b>
+                                        <span className={`block text-baser ${jobData.type_of_lmia ? `${determineBackgroundColor(jobData)} text-white` : " text-dark"} rounded-pill font-size-1 px-1  mr-2`}
+                                          title={jobData.type_of_lmia || "N/A"}>
+                                          <span
+                                            className="font-size-3 font-weight-normal m-0">  {filterjson.type_of_lmia.find((item) => item.value === jobData.type_of_lmia)?.label
+                                              || "N/A"}
+                                          </span>
+                                        </span>
+                                      </div>
+                                    </div>
                                   </div>
                                 ) : (
-                                  <p className="font-size-4 mb-8 text-center">
-                                    No data Found
-                                  </p>
+                                  <div className="text-muted font-italic">No LMIA details available</div>
                                 )}
-                              </div>
-                              <div className="pt-5 light-mode-texts border-top border-width-1 border-default-color">
-                                <div className="tags">
-                                  <h4 className="text-black-2 mb-0 font-size-5 d-flex text-break align-items-center justify-content-space-between">
+                                <h4 className="text-black-2 mb-0 font-size-5 pt-10 d-flex text-break align-items-center justify-content-space-between">
+                                  <b className="block text-sm text-indigo-600">
                                     Skills
-                                  </h4>
-                                  {skill.length > 0 ? (
-                                    <ul className="list-unstyled d-flex align-items-center flex-wrap row px-2">
-                                      {(skill || []).map((skill, i) =>
-                                        skill === "" ? null : (
-                                          <li key={i}>
-                                            <span className="text-capitalize bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2 m-1 text-break">
-                                              {skill}
-                                            </span>
-                                          </li>
-                                        )
-                                      )}
-                                    </ul>
-                                  ) : (
-                                    <div className="text-center">
-                                      <b>No Skill's found</b>
-                                    </div>
-                                  )}
+                                  </b>
+                                </h4>
+                                <div className="lmia-details mt-3 p-4 border rounded bg-white from-blue-50 to-indigo-50 shadow-lg">
+                                  <div className="tags">
+
+                                    {skill.length > 0 ? (
+                                      <ul className="list-unstyled d-flex align-items-center flex-wrap row px-2">
+                                        {(skill || []).map((skill, i) =>
+                                          skill === "" ? null : (
+                                            <li key={i}>
+                                              <span className="text-capitalize bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2 m-1 text-break">
+                                                {skill}
+                                              </span>
+                                            </li>
+                                          )
+                                        )}
+                                      </ul>
+                                    ) : (
+                                      <div className="text-center">
+                                        <b>No Skill's found</b>
+                                      </div>
+                                    )}
+                                  </div>
                                 </div>
                               </div>
                             </div>

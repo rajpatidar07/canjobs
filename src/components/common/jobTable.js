@@ -1159,7 +1159,6 @@ export default function JobTable(props) {
                               )}
                             </h3>
                           </th>
-
                           {props.heading === "Dashboard" ||
                             user_type === "user" ||
                             user_type === "company" || user_type === "agent" ? null : (
@@ -1223,9 +1222,7 @@ export default function JobTable(props) {
                                     Object.keys(props.skill).length === 0 ? (
                                     <>
                                       <div
-                                        className="btn-group button_group"
-                                      // role="group"
-                                      >
+                                        className="btn-group button_group">
                                         <button
                                           className="btn btn-outline-info action_btn"
                                           onClick={() => {

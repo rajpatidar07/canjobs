@@ -341,14 +341,14 @@ function JobResponse(props) {
   return (
     <div
       className={
-        props.heading === "Response" ||
-          (props.heading === undefined && user_type === "admin")
-          ? "site-wrapper overflow-hidden bg-default-2  "
-          : props.heading === "Dashboard"
-            ? "site-wrapper overflow-hidden bg-default-2 bg-white"
-            : "response_main_div"
-      }
-    >
+        props.response === "lmia" && (totalData === 0 || response.length === 0)
+          ? "d-none"
+          : props.heading === "Response" ||
+            (props.heading === undefined && user_type === "admin")
+            ? "site-wrapper overflow-hidden bg-default-2  "
+            : props.heading === "Dashboard"
+              ? "site-wrapper overflow-hidden bg-default-2 bg-white"
+              : "response_main_div"}>
       {props.heading === "Response" ||
         (props.heading === undefined && user_type === "admin") ? (
         <>
@@ -358,7 +358,6 @@ function JobResponse(props) {
           <AdminSidebar heading={"Response"} />
         </>
       ) : null}
-
       <div
         className={
           props.heading === "Response" ||

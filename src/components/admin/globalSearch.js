@@ -14,6 +14,9 @@ function GlobalSearch() {
   let admin_type = localStorage.getItem("admin_type")
   const inputRef = useRef(null);
 
+  // Function to get color based on category key
+  // Removed as per user request to revert to manual inline colors
+
   useEffect(() => {
     if (show && inputRef.current) {
       inputRef.current.focus();
@@ -157,11 +160,11 @@ function GlobalSearch() {
               <>
                 {searchData["employee"] && searchData["employee"].length > 0 && (
                   <div className="row">
-                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
+                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#007bff' }}>
                       Applicants
-                    </h5>
+                    </h4>
                     {searchData["employee"].map((data) => (
-                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         to={`/${data.employee_id}`}
                         key={data.employee_id}
@@ -175,11 +178,11 @@ function GlobalSearch() {
                 )}
                 {searchData["employer"] && searchData["employer"].length > 0 && (
                   <div className="row">
-                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
+                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#28a745' }}>
                       Clients
-                    </h5>
+                    </h4>
                     {searchData["employer"].map((data) => (
-                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.company_id}
                         name={data.contact_person_name}
@@ -196,11 +199,11 @@ function GlobalSearch() {
                 )}
                 {searchData["agent"] && searchData["agent"].length > 0 && (
                   <div className="row">
-                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
+                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#fd7e14' }}>
                       Partners
-                    </h5>
+                    </h4>
                     {searchData["agent"].map((data) => (
-                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.id}
                         name={data.name}
@@ -216,11 +219,11 @@ function GlobalSearch() {
                 )}
                 {searchData["admin"] && searchData["admin"].length > 0 && (
                   <div className="row">
-                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
+                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#6f42c1' }}>
                       Admins
-                    </h5>
+                    </h4>
                     {searchData["admin"].map((data) => (
-                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.admin_id}
                         name={data.name}
@@ -233,11 +236,11 @@ function GlobalSearch() {
                 )}
                 {searchData["task_data"] && searchData["task_data"].length > 0 && (
                   <div className="row">
-                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
+                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#dc3545' }}>
                       Task
-                    </h5>
+                    </h4>
                     {searchData["task_data"].map((data) => (
-                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.employee_id}
                         name={data.employee_name || data.subject_description}
@@ -279,11 +282,11 @@ function GlobalSearch() {
                 )}
                 {searchData["lmia_data"] && searchData["lmia_data"].length > 0 && (
                   <div className="row">
-                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
+                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#20c997' }}>
                       LMIA
-                    </h5>
+                    </h4>
                     {searchData["lmia_data"].map((data) => (
-                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.id}
                         name={data.name}
@@ -297,11 +300,11 @@ function GlobalSearch() {
                 )}
                  {searchData["job_data"] && searchData["job_data"].length > 0 && (
                   <div className="row">
-                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
+                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#e83e8c' }}>
                       Jobs
-                    </h5>
+                    </h4>
                     {searchData["job_data"].map((data) => (
-                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.job_id}
                         name={data.job_title}
@@ -315,11 +318,11 @@ function GlobalSearch() {
                 )}
                 {searchData["visa_data"] && searchData["visa_data"].length > 0 && (
                   <div className="row">
-                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
+                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#fd7e14' }}>
                       Visa
-                    </h5>
+                    </h4>
                     {searchData["visa_data"].map((data) => (
-                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.id}
                         name={data.name}
@@ -333,11 +336,11 @@ function GlobalSearch() {
                 )}
                   {searchData["interview_data"] && searchData["interview_data"].length > 0 && (
                   <div className="row">
-                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
+                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#20c997' }}>
                       Interview
-                    </h5>
+                    </h4>
                     {searchData["interview_data"].map((data) => (
-                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.id}
                         name={data.name}
@@ -351,11 +354,11 @@ function GlobalSearch() {
                 )}
                 {searchData["applicant_type_group_chat"] && searchData["applicant_type_group_chat"].length > 0 && (
                   <div className="row">
-                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
+                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#fd7e14' }}>
                       Group discussion
-                    </h5>
+                    </h4>
                     {searchData["applicant_type_group_chat"].map((data) => (
-                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.id}
                         name={data.name}
@@ -368,11 +371,11 @@ function GlobalSearch() {
                 )}
                 {searchData["applicant_type_candidate_chat"] && searchData["applicant_type_candidate_chat"].length > 0 && (
                   <div className="row">
-                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
+                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#007bff' }}>
                       Candidate discussion
-                    </h5>
+                    </h4>
                     {searchData["applicant_type_candidate_chat"].map((data) => (
-                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.id}
                         name={data.name}
@@ -385,11 +388,11 @@ function GlobalSearch() {
                 )}
                 {searchData["document"] && searchData["document"].length > 0 && (
                   <div className="row">
-                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
+                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#6f42c1' }}>
                       Documents
-                    </h5>
+                    </h4>
                     {searchData["document"].map((data) => (
-                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.id}
                         name={data.name}
@@ -402,11 +405,11 @@ function GlobalSearch() {
                 )}
                 {searchData["call_log"] && searchData["call_log"].length > 0 && (
                   <div className="row">
-                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
+                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#e83e8c' }}>
                       Daily call logs
-                    </h5>
+                    </h4>
                     {searchData["call_log"].map((data) => (
-                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.id}
                         name={data.name}
@@ -420,11 +423,11 @@ function GlobalSearch() {
                 )}
                 {searchData["daily_hour_log"] && searchData["daily_hour_log"].length > 0 && (
                   <div className="row">
-                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
+                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#20c997' }}>
                       Daily Hour logs
-                    </h5>
+                    </h4>
                     {searchData["daily_hour_log"].map((data) => (
-                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.id}
                         name={data.item}
@@ -437,11 +440,11 @@ function GlobalSearch() {
                 )}
                 {searchData["consultation_data"] && searchData["consultation_data"].length > 0 && (
                   <div className="row">
-                    <h5 className="font-size-5 font-weight-bold m-0  text-uppercase">
+                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#6f42c1' }}>
                       Consultation
-                    </h5>
+                    </h4>
                     {searchData["consultation_data"].map((data) => (
-                      <div className="col-lg-3 col-sm-6"> <GlobalSearchCard
+                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.id}
                         name={data.applicant_name}
@@ -459,9 +462,9 @@ function GlobalSearch() {
                 <div className="col-12 mb-3">
                   <img src="image/logo-main-black.png" alt="Pathways Logo" className="img-fluid" />
                 </div>
-                <h5 className="font-size-5 font-weight-bold m-0">Not result Found</h5>
+                <h4 className="w-100 border-bottom font-weight-bold m-0" style={{ color: '#dc3545' }}>Not result Found</h4>
                 <div className="mt-3">
-                  <p className="font-size-5 font-weight-bold">Do you want to create a profile? Please consider one of the links below:</p>
+                  <p className="w-100 border-bottom font-weight-bold">Do you want to create a profile? Please consider one of the links below:</p>
                   <Link to="/selfemployee" className="btn btn-primary mr-2">Create Applicant</Link>
                   <Link to="/adminclient" className="btn btn-primary">Create Client</Link>
                 </div>

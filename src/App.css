@@ -1332,12 +1332,12 @@ input::-webkit-inner-spin-button {
 }
 
 .global_search_content.position-fixed .left_side {
-  max-width: calc(100% - 900px);
+  max-width: calc(100% - 1500px);
   width: 100%;
 }
 
 .global_search_content.position-fixed .right_side {
-  max-width: 900px;
+  max-width: 1500px;
   height: 100vh;
   overflow: hidden;
   width: 100%;
