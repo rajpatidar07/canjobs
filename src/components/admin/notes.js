@@ -1,10 +1,9 @@
-import React, { useState /*, useEffect */ } from "react";
+import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 // import {
 //   GetFilter,
 // } from "../../api/api";
-import "react-toastify/dist/ReactToastify.css";
 import EmployeeNotesTable from "../common/employeeNotesTable";
 // import EmployerNotesTable from "../common/employerNotesTable";
 // import SAlert from "../common/sweetAlert";
@@ -194,6 +193,7 @@ function Notes() {
   //       console.log(err);
   //     }
   //   }
+
   /*Search Onchange function to Search Category data */
   const onSearch = (e) => {
     const inputValue = e.target.value;
@@ -210,6 +210,7 @@ function Notes() {
       setSearchError("");
     }
   };
+
   /*Search Onchange function to Search Category data */
   const onCompanySearch = (e) => {
     const inputValue = e.target.value;
@@ -354,7 +355,6 @@ function Notes() {
                   search={Companysearch}
                   userType={"employer"}
                 />
-
                 {/* <EmployerNotesTable search={Companysearch} /> */}
               </div>
             </div>

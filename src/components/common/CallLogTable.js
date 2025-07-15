@@ -276,7 +276,6 @@ function Calllogtable(props) {
                                             ))}
                                         </tr>
                                     </thead>
-
                                     <tbody>
                                         {props.showAddForm && (
                                             < >
@@ -313,24 +312,20 @@ function Calllogtable(props) {
                                                             </span>
                                                         )}
                                                     </td>
-
                                                     {/* Other Columns */}
                                                     <td style={{ minWidth: "150px" }}>
                                                         <StyledDropdown options={jsonList.status_type} status_name={"Status"} value={state.status} onChange={onInputChange} width={"600"} id="status" name="status"
                                                             setFilterListApiCall={setFilterListApiCall}
                                                             filterItemID={"36"} />
                                                     </td>
-
                                                     <td style={{ minWidth: "150px" }}>
                                                         <StyledDropdown options={jsonList.caller} value={state.caller} onChange={onInputChange} width={"400"} id="caller" name="caller" status_name={"Caller"}
                                                             setFilterListApiCall={setFilterListApiCall}
                                                             filterItemID={"39"} />
                                                     </td>
-
                                                     <td style={{ minWidth: "150px" }}>
                                                         <TableInput value={state.received_call_date} onChange={onInputChange} type="datetime-local" id="received_call_date" name="received_call_date" />
                                                     </td>
-
                                                     <td style={{ minWidth: "150px" }}>
                                                         <SelectBox
                                                             Width={"yes"} options={(props.adminList.map((option) => ({
@@ -344,7 +339,6 @@ function Calllogtable(props) {
                                                             type={"call_ans_by"}
                                                         />
                                                     </td>
-
                                                     <td style={{ minWidth: "150px" }}>
                                                         <TableInput value={state.phone} onChange={onInputChange} type="number" id="phone" name="phone" />
                                                         {errors.phone && (
@@ -353,23 +347,19 @@ function Calllogtable(props) {
                                                             </span>
                                                         )}
                                                     </td>
-
                                                     <td style={{ minWidth: "150px" }}>
                                                         <TableInput value={state.purpose} onChange={onInputChange} type="text" id="purpose" name="purpose" />
                                                     </td>
-
                                                     <td style={{ minWidth: "150px" }}>
                                                         <TableInput value={state.email} onChange={onInputChange} type="email" id="email" name="email" />
                                                     </td>
-
                                                     {/* Button Column */}
                                                     <td style={{ minWidth: "50px", textAlign: "center" }}>
                                                         {loading === true ? (
                                                             <button
                                                                 className="btn-sm btn-primary"
                                                                 type="button"
-                                                                disabled
-                                                            >
+                                                                disabled >
                                                                 <span
                                                                     className="spinner-border spinner-border-sm "
                                                                     role="status"
@@ -401,7 +391,6 @@ function Calllogtable(props) {
                                                     </td>
                                                 </tr>
                                             </>
-
                                         )}
                                         {callLogData.length === 0 ?
                                             <tr>
@@ -429,7 +418,6 @@ function Calllogtable(props) {
                                                                     type="text"
                                                                     name="name"
                                                                     id="name"
-
                                                                 />
                                                                 <Link onClick={() => {
                                                                     setSingelCallLogData(item)
@@ -441,7 +429,6 @@ function Calllogtable(props) {
                                                                 </Link>
                                                             </div>
                                                         </td>
-
                                                         {/* Other Columns */}
                                                         <td
                                                             style={{
@@ -463,14 +450,8 @@ function Calllogtable(props) {
 
                                                             />
                                                         </td>
-
                                                         <td
-
-                                                            style={{
-                                                                minWidth: "150px",
-
-                                                            }}
-                                                        >
+                                                            style={{minWidth: "150px",}}>
                                                             <StyledDropdown
                                                                 options={jsonList.caller}
                                                                 status_name={"Caller"}
@@ -483,10 +464,8 @@ function Calllogtable(props) {
                                                                 width={"400"}
                                                                 filterItemID={"39"}
                                                                 setFilterListApiCall={setFilterListApiCall}
-
                                                             />
                                                         </td>
-
                                                         {/* Date Input */}
                                                         <td style={{ minWidth: "150px" }}>
                                                             <TableInput
@@ -499,7 +478,6 @@ function Calllogtable(props) {
                                                                 id="received_call_date"
                                                             />
                                                         </td>
-
                                                         {/* Call Answered By */}
                                                         <td style={{ minWidth: "150px" }}>
                                                             <SelectBox
@@ -514,7 +492,6 @@ function Calllogtable(props) {
                                                                 type={"call_ans_by"}
                                                             />
                                                         </td>
-
                                                         {/* Phone Number */}
                                                         <td style={{ minWidth: "150px" }}>
                                                             <TableInput
@@ -527,7 +504,6 @@ function Calllogtable(props) {
                                                                 id="phone"
                                                             />
                                                         </td>
-
                                                         {/* Purpose of Call */}
                                                         <td style={{ minWidth: "150px" }}>
                                                             <TableInput
@@ -539,7 +515,6 @@ function Calllogtable(props) {
                                                                 id="purpose" name="purpose"
                                                             />
                                                         </td>
-
                                                         {/* Email */}
                                                         <td style={{ minWidth: "150px" }}>
                                                             <TableInput
@@ -566,7 +541,8 @@ function Calllogtable(props) {
                                                             }
                                                             title="Delete Call Log ">
                                                             <FaTrash />
-                                                        </button></td>
+                                                        </button>
+                                                        </td>
                                                     </tr>
                                                 ))}
                                     </tbody>
@@ -585,7 +561,6 @@ function Calllogtable(props) {
                             }
                         />
                     </div>
-
                     {/* Pagination Controls */}
                     <div className="pt-2">
                         <Pagination
@@ -632,5 +607,4 @@ function Calllogtable(props) {
         </>
     );
 }
-
 export default Calllogtable;

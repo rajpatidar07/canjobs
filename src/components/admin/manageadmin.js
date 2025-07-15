@@ -4,7 +4,7 @@ import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
 import Addadmin from "../forms/admin/addadmin";
 import {
-  getallAdminData /*, DeleteAdmin*/,
+  getallAdminData,
   GetManagerTeam,
 } from "../../api/api";
 import SelectBox from "../common/Common function/SelectBox";
@@ -46,6 +46,7 @@ function ManageAdmin() {
   /*Shorting states */
   const [columnName, setcolumnName] = useState("admin_id");
   const [sortOrder, setSortOrder] = useState("DESC");
+
   /* Function to get the Amin data*/
   const AdminData = async () => {
     setIsLoading(true);
@@ -114,6 +115,7 @@ function ManageAdmin() {
     setShowAdminModal(true);
     setAdminID(e);
   };
+
   /*To Show the delete alert box */
   // const ShowDeleteAlert = (e) => {
   //   setDeleteID(e.admin_id);
@@ -140,6 +142,7 @@ function ManageAdmin() {
   //     console.log(err);
   //   }
   // }
+
   /*Search Onchange function to filter the data */
   const onSearch = (e) => {
     const inputValue = e.target.value;
@@ -157,6 +160,7 @@ function ManageAdmin() {
       setSearchError("");
     }
   };
+
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
@@ -183,6 +187,7 @@ function ManageAdmin() {
       console.log(err);
     }
   };
+
   useEffect(() => {
     if (executiveapiCall === true) {
       OnManagerDetailClick(managerData);
@@ -190,6 +195,7 @@ function ManageAdmin() {
     }
     // eslint-disable-next-line
   }, [executiveapiCall, apiCall]);
+
   /*Function o add task to the executive */
   // const AddTask = async () => {
   //   setAddTeamListShow(false);

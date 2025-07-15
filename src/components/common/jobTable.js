@@ -310,301 +310,80 @@ export default function JobTable(props) {
           ) : (
             <table className="table table-striped main_data_table">
               <thead>
-                <tr>
-                  <th
-                    scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      onClick={() => {
-                        handleSort("job_id	");
+                <tr className="py-2">
+                  {[
+                    { key: "job_id", label: "Job ID", sticky: true },
+                    { key: "job_title", label: "Job Title", sticky: true },
+                    ...(props.heading === "Dashboard"
+                      ? []
+                      : [
+                        { key: "job_type", label: "Job Type" },
+                        { key: "location", label: "Address" },
+                      ]),
+                    ...(props.response === "lmia" && props.response !== "response"
+                      ? [
+                        { key: "salary", label: "Wages" },
+                        { key: "lmia_status", label: "LMIA Status" },
+                        { key: "lmia_number", label: "LMIA Number" },
+                        { key: "lmia_creation_date", label: "LMIA Creation Date" },
+                        { key: "lmia_submissiom_date", label: "LMIA Submission Date" },
+                        { key: "lmia_date_expiry", label: "LMIA Expiry Date" },
+                        { key: "lmia_date_approved", label: "LMIA Date Approved" },
+                        { key: "lmia_payment_status", label: "LMIA Payment" },
+                        { key: "lmia_payment_by", label: "LMIA Payment By" },
+                        ...(user_type === "user"
+                          ? []
+                          : [{ key: "lmia_monday_status", label: "Monday Status" }]),
+                        { key: "lmia_notes", label: "LMIA Notes" },
+                        { key: "type_of_lmia", label: "Type of LMIA" },
+                      ]
+                      : []),
+                    ...(props.heading === "Dashboard"
+                      ? []
+                      : [
+                        { key: "education", label: "Education", hidden: true },
+                        { key: "keyskill", label: "Skills", hidden: true },
+                      ]),
+                    { key: "experience_required", label: "Experience" },
+                    ...(user_type === "user"
+                      ? []
+                      : [
+                        {
+                          key: props.selfJob === "yes" ? "applied_by_self" : "applied_by_admin",
+                          label: "Vacancies / Responses",
+                        },
+                      ]),
+                    ...(props.heading === "Dashboard" ||
+                      user_type === "user" ||
+                      user_type === "company" ||
+                      user_type === "agent"
+                      ? []
+                      : [{ key: "action", label: "Action", isAction: true }]),
+                  ].map((col, index) => (
+                    <th
+                      key={index}
+                      className={`border-0 font-size-3 font-weight-normal ${col.sticky ? "table_sticky_col sticky_col1" : ""
+                        }  ${col.hidden ? "d-none" : ""}`}
+                      style={{
+                        ...(col.sticky && { background: "#fcb6b6", transition: "background 0.3s ease" }),
+                        ...(col.key === "job_title" && { left: "100px" })
                       }}
-                      title="Sort by Job Id"
-                      className="text-gray"
+
+                      title={col.isAction ? "Actions" : `Sort by ${col.label}`}
                     >
-                      Job Id
-                    </Link>
-                  </th>
-                  <th
-                    scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      onClick={() => {
-                        handleSort("job_title");
-                      }}
-                      title="Sort by Job Title"
-                      className="text-gray"
-                    >
-                      Job title
-                    </Link>
-                  </th>
-                  {props.heading === "Dashboard" ? null : (
-                    <th
-                      scope="col"
-                      className=" border-0 font-size-4 font-weight-normal"
-                    >
-                      <Link
-                        to=""
-                        onClick={() => handleSort("job_type")}
-                        title="Sort by Job type"
-                        className="text-gray"
-                      >
-                        Job Type
-                      </Link>
+                      {col.isAction ? (
+                        col.label
+                      ) : (
+                        <Link
+                          to=""
+                          className="text-dark"
+                          onClick={() => handleSort(col.key)}
+                        >
+                          {col.label}
+                        </Link>
+                      )}
                     </th>
-                  )}
-                  {props.heading === "Dashboard" ? null : (
-                    <th
-                      scope="col"
-                      className=" border-0 font-size-4 font-weight-normal"
-                    >
-                      <Link
-                        to=""
-                        onClick={() => {
-                          handleSort("location");
-                        }}
-                        className="text-gray"
-                        title="Sort by Address"
-                      >
-                        Address
-                      </Link>
-                    </th>
-                  )}
-                  {props.response === "lmia" && props.response !== "response" ? (
-                    <>
-                      <th
-                        scope="col"
-                        className=" border-0 font-size-4 font-weight-normal"
-                      >
-                        <Link
-                          to=""
-                          onClick={() => handleSort("salary")}
-                          className="text-gray"
-                          title="Sort by Wages"
-                        >
-                          Wages
-                        </Link>
-                      </th>
-                      <th
-                        scope="col"
-                        className=" border-0 font-size-4 font-weight-normal"
-                      >
-                        <Link
-                          to=""
-                          onClick={() => handleSort("lmia_status")}
-                          className="text-gray"
-                          title="Sort by LMIA status"
-                        >
-                          LMIA status
-                        </Link>
-                      </th>
-                      <th
-                        scope="col"
-                        className=" border-0 font-size-4 font-weight-normal"
-                      >
-                        <Link
-                          to=""
-                          onClick={() => handleSort("lmia_number")}
-                          className="text-gray"
-                          title="Sort by LMIA number"
-                        >
-                          LMIA Number
-                        </Link>
-                      </th>
-                      <th
-                        scope="col"
-                        className=" border-0 font-size-4 font-weight-normal"
-                      >
-                        <Link
-                          to=""
-                          onClick={() => handleSort("lmia_creation_date")}
-                          className="text-gray"
-                          title="Sort by LMIA creation date"
-                        >
-                          LMIA Creation Date
-                        </Link>
-                      </th>
-                      <th
-                        scope="col"
-                        className=" border-0 font-size-4 font-weight-normal"
-                      >
-                        <Link
-                          to=""
-                          onClick={() => handleSort("lmia_submissiom_date")}
-                          className="text-gray"
-                          title="Sort by LMIA submission date"
-                        >
-                          LMIA Submission Date
-                        </Link>
-                      </th>
-                      <th
-                        scope="col"
-                        className=" border-0 font-size-4 font-weight-normal"
-                      >
-                        <Link
-                          to=""
-                          onClick={() => handleSort("lmia_date_expiry")}
-                          className="text-gray"
-                          title="Sort by LMIA submission date"
-                        >
-                          LMIA Expiry Date
-                        </Link>
-                      </th>
-                      <th
-                        scope="col"
-                        className=" border-0 font-size-4 font-weight-normal"
-                      >
-                        <Link
-                          to=""
-                          onClick={() => handleSort("lmia_date_approved")}
-                          className="text-gray"
-                          title="Sort by LMIA date approved"
-                        >
-                          LMIA Date Approved
-                        </Link>
-                      </th>
-                      <th
-                        scope="col"
-                        className=" border-0 font-size-4 font-weight-normal"
-                      >
-                        <Link
-                          to=""
-                          onClick={() => handleSort("lmia_payment_status")}
-                          className="text-gray"
-                          title="Sort by LMIA payment"
-                        >
-                          LMIA Payment 
-                        </Link>
-                      </th>
-                      <th
-                        scope="col"
-                        className=" border-0 font-size-4 font-weight-normal"
-                      >
-                        <Link
-                          to=""
-                          onClick={() => handleSort("lmia_payment_by")}
-                          className="text-gray"
-                          title="Sort by LMIA payment by"
-                        >
-                          LMIA Payment By
-                        </Link>
-                      </th>
-                      <th
-                        scope="col"
-                        className={
-                          user_type === "user"
-                            ? "d-none"
-                            : " border-0 font-size-4 font-weight-normal"
-                        }
-                      >
-                        <Link
-                          to=""
-                          onClick={() => handleSort("lmia_monday_status")}
-                          className="text-gray"
-                          title="Sort by LMIA status"
-                        >
-                          Monday status
-                        </Link>
-                      </th>
-                      <th
-                        scope="col"
-                        className=" border-0 font-size-4 font-weight-normal"
-                      >
-                        <Link
-                          to=""
-                          onClick={() => handleSort("lmia_notes")}
-                          className="text-gray"
-                          title="Sort by LMIA notes"
-                        >
-                          LMIA Notes
-                        </Link>
-                      </th>
-                      <th
-                        scope="col"
-                        className=" border-0 font-size-4 font-weight-normal"
-                      >
-                        <Link
-                          to=""
-                          onClick={() => handleSort("type_of_lmia")}
-                          className="text-gray"
-                          title="Sort by Type of LMIA"
-                        >
-                          Type of LMIA
-                        </Link>
-                      </th>
-                    </>
-                  ) : null}
-                  {props.heading === "Dashboard" ? null : (
-                    <th
-                      scope="col"
-                      className=" border-0 font-size-4 font-weight-normal d-none"
-                    >
-                      <Link
-                        to=""
-                        onClick={() => handleSort("education")}
-                        className="text-gray"
-                        title="Sort by Education"
-                      >
-                        Education
-                      </Link>
-                    </th>
-                  )}
-                  {props.heading === "Dashboard" ? null : (
-                    <th
-                      scope="col"
-                      className=" border-0 font-size-4 font-weight-normal d-none"
-                    >
-                      <Link
-                        to=""
-                        onClick={() => handleSort("keyskill")}
-                        className="text-gray"
-                        title="Sort by Skill"
-                      >
-                        Skills
-                      </Link>
-                    </th>
-                  )}
-                  <th
-                    scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to=""
-                      onClick={() => handleSort("experience_required")}
-                      className="text-gray"
-                      title="Sort by Experience"
-                    >
-                      Experience
-                    </Link>
-                  </th>
-                  <th
-                    scope="col"
-                    className={
-                      user_type === "user"
-                        ? "d-none"
-                        : " border-0 font-size-4 font-weight-normal"
-                    }>
-                    <Link onClick={() => handleSort(props.selfJob === "yes"
-                      ? "applied_by_self"
-                      : "applied_by_admin")}
-                      className="text-gray"
-                      title="Sort by Responses"
-                    >
-                      Vacancies / Responses
-                    </Link>
-                  </th>
-                  {props.heading === "Dashboard" ||
-                    user_type === "user" ||
-                    user_type === "company" || user_type === "agent" ? null : (
-                    <th
-                      scope="col"
-                      className=" border-0 font-size-4 font-weight-normal"
-                      title="Actions"
-                    >
-                      Action
-                    </th>
-                  )}
+                  ))}
                 </tr>
               </thead>
               <tbody>
@@ -793,8 +572,8 @@ export default function JobTable(props) {
                             /*job.is_applied === "1" ? "d-none" : */ "col-12 text-capitalize job_row"
                           }
                         >
-                          <th scope="row" className="py-5 ">{job.job_id}</th>
-                          <th className="py-5 ">
+                          <th scope="row" className="table_sticky_col sticky_col1 py-5 bg-white" >{job.job_id}</th>
+                          <th className="table_sticky_col sticky_col1 py-5 bg-white" style={{ left: "100px" }}>
                             <div className="d-flex align-items-center">
                               {(job.is_monday_data === 1 || job.is_monday_data === "1") && (
                                 <MondayBadge />
@@ -1038,13 +817,13 @@ export default function JobTable(props) {
                                   className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
                                   title={
                                     ConvertTime({
-                                      _date:  job.lmia_date_approved
+                                      _date: job.lmia_date_approved
                                       , format: "DD MMMM, YYYY"
                                     })
                                   }
                                 >
                                   {<ConvertTime _date={job.lmia_date_approved
-                                    } format={"DD MMMM, YYYY"} />}
+                                  } format={"DD MMMM, YYYY"} />}
                                 </h3>
                               </th>
                               <th className="py-5 ">

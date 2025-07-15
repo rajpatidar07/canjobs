@@ -23,6 +23,7 @@ const ManagePayment = () => {
   const [isFocused, setIsFocused] = useState(false);
   const [search, setSearch] = useState("");
   const dropdownRef = useRef(null);
+
   /*function to get the user and admin data */
   const getUserData = async () => {
     try {
@@ -41,11 +42,13 @@ const ManagePayment = () => {
       console.log(err);
     }
   };
+  
   const filteredAdmins = adminList
     ? adminList?.filter((admin) =>
         admin?.name?.toLowerCase().includes(searchQuery.toLowerCase())
       )
     : [];
+
   useEffect(() => {
     getUserData();
   }, []);

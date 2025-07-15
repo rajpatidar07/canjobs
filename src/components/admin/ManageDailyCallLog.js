@@ -5,7 +5,6 @@ import Calllogtable from "../common/CallLogTable";
 import { CiFilter, CiSearch } from "react-icons/ci";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { FaAngleDown } from "react-icons/fa";
-// import { CgFileDocument } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import { getallAdminData } from "../../api/api";
 
@@ -31,6 +30,7 @@ const ManageDailyCallLog = () => {
       console.log(err);
     }
   };
+
   useEffect(() => {
     getAdminData();
   }, []);
@@ -51,12 +51,12 @@ const ManageDailyCallLog = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
   return (
     <div className="site-wrapper overflow-hidden bg-default-2">
       {/* Header & Sidebar */}
       <AdminHeader heading={"Manage Daily Call Log"} />
       <AdminSidebar heading={"Manage Daily Call Log"} />
-
       <div className="dashboard-main-container " id="dashboard-body">
         {/*removing class for now mt-14 */}
         <div className="container-fluid" >
@@ -66,7 +66,6 @@ const ManageDailyCallLog = () => {
                 <h3 className="font-size-6 mb-0">Manage Daily Call Log</h3>
               </div>
             </div>
-
             <div className="d-flex justify-content-start">
               {/* New Item Dropdown */}
               <div className="position-relative mr-2">
@@ -85,7 +84,6 @@ const ManageDailyCallLog = () => {
                     <FaAngleDown />
                   </span>
                 </button>
-
                 {/* <div
                                     className={` position-absolute end-0 bg-white z-index-4 text-left shadow-lg p-4 ${showItemdropdown === 0 ? "d-block" : "d-none"
                                         }`}
@@ -115,7 +113,6 @@ const ManageDailyCallLog = () => {
                                     </div>
                                 </div> */}
               </div>
-
               {/* Search */}
               <div
                 className="input-group mr-4"
@@ -150,7 +147,6 @@ const ManageDailyCallLog = () => {
                   onChange={(e) => setSearchCandidate(e.target.value)}
                 />
               </div>
-
               {/* Person Dropdown */}
               {/* <div className="position-relative">
                                 <button
@@ -271,7 +267,6 @@ const ManageDailyCallLog = () => {
                   </div>
                 )}
               </div>
-
               {/* Filter Dropdown */}
               <div className="position-relative d-none">
                 <button
@@ -285,7 +280,6 @@ const ManageDailyCallLog = () => {
                   <CiFilter />
                   <span className="ml-2">Filter</span>
                 </button>
-
                 <div
                   className={`position-absolute bg-white z-index-4 p-8 shadow-lg right-25 ${showfilterdropdown ? "d-block" : "d-none"
                     }`}
@@ -305,22 +299,18 @@ const ManageDailyCallLog = () => {
                       </button>
                     </div>
                   </div>
-
                   <div className="d-flex align-items-center mb-3">
                     <span className="me-2">Where</span>
-
                     <select className="form-select me-2 p-2 mx-4 w-100">
                       <option>Column</option>
                       <option>Priority</option>
                       <option>Status</option>
                     </select>
-
                     <select className="form-select p-2 w-100">
                       <option>Condition</option>
                       <option>Equals</option>
                       <option>Contains</option>
                     </select>
-
                     <select className="form-select ml-4 p-2 w-100">
                       <option>Value</option>
                       <option>High</option>
@@ -328,12 +318,10 @@ const ManageDailyCallLog = () => {
                       <option>Low</option>
                     </select>
                   </div>
-
                   <div className="d-flex mb-3">
                     <button className="btn mr-2">+ New Filter</button>
                     <button className="btn">+ New Group</button>
                   </div>
-
                   <div className="d-flex align-items-center">
                     <span className="me-2">Quick Filter</span>
                     <input

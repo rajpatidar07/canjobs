@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 // import { Button, Form, InputGroup } from "react-bootstrap";
 import GlobalSearchCard from "./globalSearchCard";
-import { getallAdminData, GlobalSearchResult, GlobalSearchResultOther, GlobalSearchResultRelated } from "../../api/api";
+import { getallAdminData, GlobalSearchResult, GlobalSearchResultOther, GlobalSearchResultRelated  } from "../../api/api";
 import { FaSearch } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { Link } from "react-router-dom";
@@ -13,10 +13,7 @@ function GlobalSearch() {
   let admin_id = localStorage.getItem("admin_id")
   let admin_type = localStorage.getItem("admin_type")
   const inputRef = useRef(null);
-
-  // Function to get color based on category key
-  // Removed as per user request to revert to manual inline colors
-
+  
   useEffect(() => {
     if (show && inputRef.current) {
       inputRef.current.focus();
@@ -57,7 +54,6 @@ function GlobalSearch() {
 
       setSearchData(mergedData);
       console.log("Merged Data:", mergedData);
-      console.log(userDataOther.data.data, userDataRelated.data.data);
       // setIsLoading(false);
     } catch (err) {
       console.log(err);

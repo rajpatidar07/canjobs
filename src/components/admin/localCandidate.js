@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-// import AdminHeader from "./header";
-// import AdminSidebar from "./sidebar";
 import EmployeeTable from "../common/employeeTable";
 import ApplicantsFilter from "../common/applicantsFilter";
 export default function LocalCandidate() {
@@ -16,6 +14,7 @@ export default function LocalCandidate() {
   const [searcherror, setSearchError] = useState("");
   let user_type = localStorage.getItem("userType");
   let [apiCall, setApiCall] = useState(false);
+  
   /*Function to search the employee */
   const onSearch = (e) => {
     const inputValue = e//.target.value;
