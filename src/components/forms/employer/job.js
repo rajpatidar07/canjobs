@@ -454,7 +454,7 @@ function AddJobModal(props) {
                           label: cat.value,
                         }))}
                       type="job_category_id"
-                      selectedValue={state.job_category_id || ""}
+                      selectedValue={parseInt(state.job_category_id) || ""}
                       onChange={(e) => {
                         onInputChange({
                           target: {
@@ -1122,7 +1122,7 @@ function AddJobModal(props) {
                     htmlFor="fetured"
                     className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                   >
-                    Featured:{" "}
+                    Featured:
                     <input
                       type="checkbox"
                       id="fetured"

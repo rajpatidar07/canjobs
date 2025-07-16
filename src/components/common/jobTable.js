@@ -8,6 +8,7 @@ import {
   ApplyJob,
   GetEmployeeFilterJob,
   GetJobLimaSubStages,
+  GetFilter,
 } from "../../api/api";
 import { toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
@@ -62,6 +63,21 @@ export default function JobTable(props) {
     : location.pathname === "/job_detail"
       ? localStorage.getItem("job_id")
       : "";
+  let [Json, setJson] = useState([]);
+  /*Function to get the jSon */
+  const JsonData = async () => {
+    try {
+      let Json = await GetFilter();
+      if (Json.data.message === "No data found") {
+        setJson([]);
+      } else {
+        setJson(Json.data.data);
+      }
+      setJson(Json.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   /* Function to get Job data*/
   const JobData = async () => {
     setIsLoading(true);
@@ -116,7 +132,7 @@ export default function JobTable(props) {
           location.pathname === "/employee" ||
           props.lima === "no" ||
           user_type === "user" ||
-          props.skill
+          props.skill || props.response === "lmia"
         ) {
           setresponseId();
         } else {
@@ -191,6 +207,7 @@ export default function JobTable(props) {
   /*Render function to get the job */
   useEffect(() => {
     JobData();
+    JsonData()
     if (apiCall === true || props.apiCall === true) {
       props.setApiCall(false);
       setApiCall(false);
@@ -322,20 +339,19 @@ export default function JobTable(props) {
                       ]),
                     ...(props.response === "lmia" && props.response !== "response"
                       ? [
-                        { key: "salary", label: "Wages" },
-                        { key: "lmia_status", label: "LMIA Status" },
                         { key: "lmia_number", label: "LMIA Number" },
+                        { key: "lmia_status", label: "LMIA Status" },
+                        { key: "monday_status", label: "Monday Status" },
                         { key: "lmia_creation_date", label: "LMIA Creation Date" },
-                        { key: "lmia_submissiom_date", label: "LMIA Submission Date" },
-                        { key: "lmia_date_expiry", label: "LMIA Expiry Date" },
                         { key: "lmia_date_approved", label: "LMIA Date Approved" },
+                        { key: "lmia_date_expiry", label: "LMIA Expiry Date" },
+                        { key: "job_category", label: "Position/Job Category" },
+                        { key: "salary", label: "LMIA Wages" },
+                        { key: "lmia_submissiom_date", label: "LMIA Submission Date" },
                         { key: "lmia_payment_status", label: "LMIA Payment" },
                         { key: "lmia_payment_by", label: "LMIA Payment By" },
-                        ...(user_type === "user"
-                          ? []
-                          : [{ key: "lmia_monday_status", label: "Monday Status" }]),
-                        { key: "lmia_notes", label: "LMIA Notes" },
                         { key: "type_of_lmia", label: "Type of LMIA" },
+                        { key: "lmia_notes", label: "LMIA Notes" },
                       ]
                       : []),
                     ...(props.heading === "Dashboard"
@@ -638,8 +654,8 @@ export default function JobTable(props) {
                             <>
                               <th className="py-5 ">
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
-                                  title={job.salary ? "$" + job.salary : "N/A"}>
-                                  {job.salary ? "$" + job.salary : "N/A"}
+                                  title={job.lmia_number || "N/A"}>
+                                  {job.lmia_number || "N/A"}
                                 </h3>
                               </th>
                               <th
@@ -752,16 +768,69 @@ export default function JobTable(props) {
                                   }
                                 </div>
                               </th>
-                              <th className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
-                                  title={job.lmia_number || "N/A"}>
-                                  {job.lmia_number || "N/A"}
-                                </h3>
+                              <th className="py-5 " title={filterjson.monday_status.find(
+                                (item) => item.value === job.lmia_monday_status
+                              )?.label || "N/A"}>
+                                <span
+                                  className={`font-size-3 font-weight-normal text-center text-capitalize rounded-pill font-size-1 px-3  ${job.lmia_monday_status ? `${determineBackgroundColor(job)} text-white` : " text-dark"}`}
+                                >
+                                  <span
+                                    className="font-size-3 font-weight-normal m-0"> {filterjson.monday_status.find(
+                                      (item) => item.value === job.lmia_monday_status
+                                    )?.label || "N/A"}
+                                  </span>
+                                </span>
                               </th>
                               <th className="py-5 ">
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
                                   title={job.lmia_creation_date || "N/A"}>
                                   {job.lmia_creation_date || "N/A"}
+                                </h3>
+                              </th>
+                              <th className="py-5 ">
+                                <h3
+                                  className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
+                                  title={
+                                    ConvertTime({
+                                      _date: job.lmia_date_approved
+                                      , format: "DD MMMM, YYYY"
+                                    })
+                                  }
+                                >
+                                  {<ConvertTime _date={job.lmia_date_approved
+                                  } format={"DD MMMM, YYYY"} />}
+                                </h3>
+                              </th>
+                              <th className="py-5 ">
+                                <h3
+                                  className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
+                                  title={
+                                    ConvertTime({
+                                      _date: (user_type === "admin" &&
+                                        props.response === "lmia")
+                                        ? job.lmia_date_expiry
+                                        : job.created_at
+                                      , format: "DD MMMM, YYYY"
+                                    })
+                                  }
+                                >
+                                  {<ConvertTime _date={job.lmia_date_expiry
+                                  } format={"DD MMMM, YYYY"} />}
+                                </h3>
+                              </th>
+                              <th className="py-5 ">
+                                <h3 className={`font-size-3 font-weight-normal mb-0 text-capitalize text-center  font-size-1 px-1  mr-2`}
+                                  title={Json?.Category?.filter((item) => item.id ===parseInt(job.job_category_id ))[0]?.value || "N/A"}>
+                                  <span
+                                    className="font-size-3 font-weight-normal m-0">  {Json?.Category?.filter((item) => item.id ===parseInt(job.job_category_id ))[0]?.value
+                                      || "N/A"}
+                                  </span>
+                                </h3>
+                              </th>
+                              <th className="py-5 ">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                  title={job.salary ? "$" + job.salary : "N/A"}>
+                                  {job.salary ? "$" + job.salary : "N/A"}
                                 </h3>
                               </th>
                               <th className="py-5 ">
@@ -789,44 +858,6 @@ export default function JobTable(props) {
                                 </h3>
                               </th>
                               <th className="py-5 ">
-                                <h3
-                                  className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
-                                  title={
-                                    ConvertTime({
-                                      _date: (user_type === "admin" &&
-                                        props.response === "lmia")
-                                        ? job.lmia_date_expiry
-                                        : job.created_at
-                                      , format: "DD MMMM, YYYY"
-                                    })
-                                    //   moment(job.created_at).format(
-                                    //   "DD MMMM, YYYY"
-                                    // ) 
-                                  }
-                                >
-                                  {/* {job.created_at ? job.created_at : "N/A"} */}
-                                  {<ConvertTime _date={(user_type === "admin" &&
-                                    props.response === "lmia")
-                                    ? job.lmia_date_expiry
-                                    : job.created_at} format={"DD MMMM, YYYY"} />}
-                                  {/* {moment(job.created_at).format("DD MMMM, YYYY")} */}
-                                </h3>
-                              </th>
-                              <th className="py-5 ">
-                                <h3
-                                  className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
-                                  title={
-                                    ConvertTime({
-                                      _date: job.lmia_date_approved
-                                      , format: "DD MMMM, YYYY"
-                                    })
-                                  }
-                                >
-                                  {<ConvertTime _date={job.lmia_date_approved
-                                  } format={"DD MMMM, YYYY"} />}
-                                </h3>
-                              </th>
-                              <th className="py-5 ">
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
                                   title={job.lmia_payment_status || "N/A"}>
                                   {job.lmia_payment_status || "N/A"}
@@ -839,10 +870,10 @@ export default function JobTable(props) {
                                 </h3>
                               </th>
                               <th className="py-5 ">
-                                <h3 className={`font-size-3 font-weight-normal mb-0 text-capitalize text-center ${job.lmia_monday_status ? `${determineBackgroundColor(job)} text-white` : " text-dark"} rounded-pill font-size-1 px-1  mr-2`}
-                                  title={job.lmia_monday_status || "N/A"}>
+                                <h3 className={`font-size-3 font-weight-normal mb-0 text-capitalize text-center ${job.type_of_lmia ? `${determineBackgroundColor(job)} text-white` : " text-dark"} rounded-pill font-size-1 px-1  mr-2`}
+                                  title={job.type_of_lmia || "N/A"}>
                                   <span
-                                    className="font-size-3 font-weight-normal m-0"> {filterjson.monday_status.find((item) => item.value === job.lmia_monday_status)?.label
+                                    className="font-size-3 font-weight-normal m-0">  {filterjson.type_of_lmia.find((item) => item.value === job.type_of_lmia)?.label
                                       || "N/A"}
                                   </span>
                                 </h3>
@@ -853,15 +884,8 @@ export default function JobTable(props) {
                                   {job.lmia_notes || "N/A"}
                                 </h3>
                               </th>
-                              <th className="py-5 ">
-                                <h3 className={`font-size-3 font-weight-normal mb-0 text-capitalize text-center ${job.type_of_lmia ? `${determineBackgroundColor(job)} text-white` : " text-dark"} rounded-pill font-size-1 px-1  mr-2`}
-                                  title={job.type_of_lmia || "N/A"}>
-                                  <span
-                                    className="font-size-3 font-weight-normal m-0">  {filterjson.type_of_lmia.find((item) => item.value === job.type_of_lmia)?.label
-                                      || "N/A"}
-                                  </span>
-                                </h3>
-                              </th></> : null}
+                            </>
+                            : null}
                           {props.heading === "Dashboard" ? null : (
                             <th className="py-5 d-none">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
@@ -1178,7 +1202,7 @@ export default function JobTable(props) {
                           job.job_id === responseId &&
                           job.total_applicants > 0 ? (
                           <tr>
-                            <td colSpan={11}>
+                            <td colSpan={props.response === "lmia" ? 21 : 11}>
                               <>
                                 {/* <!-- Job Responses --> */}
                                 <JobResponse

@@ -546,7 +546,7 @@ function JobResponse(props) {
                         </th>
                         <th
                           scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
                         >
                           <Link
                             to={""}
@@ -562,7 +562,7 @@ function JobResponse(props) {
                         </th>
                         <th
                           scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
                         >
                           <Link
                             to={""}
@@ -578,7 +578,7 @@ function JobResponse(props) {
                         </th>
                         <th
                           scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
                         >
                           <Link
                             to={""}
@@ -594,7 +594,7 @@ function JobResponse(props) {
                         </th>
                         <th
                           scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
                         >
                           <Link
                             to={""}
@@ -610,7 +610,7 @@ function JobResponse(props) {
                         </th>
                         <th
                           scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
                         >
                           <Link
                             to={""}
@@ -626,7 +626,7 @@ function JobResponse(props) {
                         </th>
                         <th
                           scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
                         >
                           <Link
                             to={""}
@@ -642,7 +642,7 @@ function JobResponse(props) {
                         </th>
                         <th
                           scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
                         >
                           <Link
                             to={""}
@@ -658,7 +658,7 @@ function JobResponse(props) {
                         </th>
                         <th
                           scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
                         >
                           <Link
                             to={""}
@@ -674,7 +674,7 @@ function JobResponse(props) {
                         </th>
                         <th
                           scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
                         >
                           <Link
                             to={""}
@@ -690,7 +690,7 @@ function JobResponse(props) {
                         </th>
                         <th
                           scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
                         >
                           <Link
                             to={""}
@@ -844,7 +844,7 @@ function JobResponse(props) {
                           // ((props.response === "response") || (props.response === "self") ||
                           //   ((props.response === "visa" || props.response === "lmia") && res.job_status === "1")) ?
                           <tr className="position-relative" key={i}>
-                            <th className="py-5 " title={res.employee_id}>
+                            <th className="py-5" title={res.employee_id}>
                               {res.employee_id}
                             </th>
                             <th className=" py-5">
@@ -953,28 +953,28 @@ function JobResponse(props) {
                                 )}
                               </h3>
                             </th>
-                            <th className="py-5 " title={res.lmia_number || "N/A"}>
+                            <th className={props.response === "lmia" ? "py-5" : "d-none"} title={res.lmia_number || "N/A"}>
                               {res.lmia_number || "N/A"}
                             </th>
-                            <th className="py-5 " title={res.creation_date || "N/A"}>
+                            <th className={props.response === "lmia" ? "py-5" : "d-none"} title={res.creation_date || "N/A"}>
                               {res.creation_date ? moment(res.creation_date).format("YYYY-MM-DD") : "N/A"}
                             </th>
-                            <th className="py-5 " title={res.lmia_submission_date || "N/A"}>
+                            <th className={props.response === "lmia" ? "py-5" : "d-none"} title={res.lmia_submission_date || "N/A"}>
                               {res.lmia_submission_date ? moment(res.lmia_submission_date).format("YYYY-MM-DD") : "N/A"}
                             </th>
-                            <th className="py-5 " title={res.lmia_expiry_date || "N/A"}>
+                            <th className={props.response === "lmia" ? "py-5" : "d-none"} title={res.lmia_expiry_date || "N/A"}>
                               {res.lmia_expiry_date ? moment(res.lmia_expiry_date).format("YYYY-MM-DD") : "N/A"}
                             </th>
-                            <th className="py-5 " title={res.date_approved || "N/A"}>
+                            <th className={props.response === "lmia" ? "py-5" : "d-none"} title={res.date_approved || "N/A"}>
                               {res.date_approved ? moment(res.date_approved).format("YYYY-MM-DD") : "N/A"}
                             </th>
-                            <th className="py-5 " title={res.payment_status || "N/A"}>
+                            <th className={props.response === "lmia" ? "py-5" : "d-none"} title={res.payment_status || "N/A"}>
                               {res.payment_status || "N/A"}
                             </th>
-                            <th className="py-5 " title={res.payment_by || "N/A"}>
+                            <th className={props.response === "lmia" ? "py-5" : "d-none"} title={res.payment_by || "N/A"}>
                               {res.payment_by || "N/A"}
                             </th>
-                            <th className="py-5 " title={res.monday_status || "N/A"}>
+                            <th className={props.response === "lmia" ? "py-5" : "d-none"} title={res.monday_status || "N/A"}>
                               <span
                                 className={`font-size-3 font-weight-normal text-center text-capitalize rounded-pill font-size-1 px-1  ${res.monday_status ? `${determineBackgroundColor(res)} text-white` : " text-dark"}`}
                               >
@@ -985,10 +985,10 @@ function JobResponse(props) {
                                 </span>
                               </span>
                             </th>
-                            <th className="py-5 " title={res.notes || "N/A"}>
+                            <th className={props.response === "lmia" ? "py-5" : "d-none"} title={res.notes || "N/A"}>
                               {res.notes || "N/A"}
                             </th>
-                            <th className="py-5 " title={res.type_of_lmia || "N/A"}>
+                            <th className={props.response === "lmia" ? "py-5" : "d-none"} title={res.type_of_lmia || "N/A"}>
                               <span className={`font-size-3 font-weight-normal text-center text-capitalize rounded-pill font-size-1 p-1  ${res.type_of_lmia ? `${determineBackgroundColor(res)} text-white` : " text-dark"}`}
                                 title={res.type_of_lmia || "N/A"}>
                                 <span
@@ -998,7 +998,7 @@ function JobResponse(props) {
                               </span>
                             </th>
 
-                            {/* <th className="py-5 ">
+                            {/* <th className="py-5">
                               <p className="m-0 text-black-2 font-weight-semibold text-capitalize">
                                 {res.job_title}
                               </p>
@@ -1053,7 +1053,7 @@ function JobResponse(props) {
                               props.heading === "Dashboard" ? (
                                 ""
                               ) : (
-                                <th className="py-5 ">
+                                <th className="py-5">
                                   <h3
                                     className="font-size-3 font-weight-normal text-black-2 mb-0"
                                     title={
