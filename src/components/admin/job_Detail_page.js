@@ -21,6 +21,7 @@ import JobChatBox from "../common/JobChatBox";
 import determineBackgroundColor from "../common/Common function/DetermineBackgroundColour";
 import filterjson from "../json/filterjson";
 import ConvertTime from "../common/Common function/ConvertTime";
+import LmiaInfo from "../forms/admin/lmiaInfo";
 function JobDetailpageAdmim(props) {
   const user_type = localStorage.getItem("userType");
   const location = useLocation();
@@ -42,6 +43,7 @@ function JobDetailpageAdmim(props) {
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
   const [showJobEditModal, setShowJobEditModal] = useState(false);
+  const [showLmiaAdditionalInfobModal, setShowLmiaAdditionalInfobModal] = useState(false);
   const [TabActive, setTabActive] = useState(
     docId
       ? "documents"
@@ -101,6 +103,7 @@ function JobDetailpageAdmim(props) {
         ? []
         : jobData.keyskill.split(",");
   }
+
   return (
     <div className="">
       {(user_type === "admin" || user_type === "agent") && (
@@ -642,6 +645,7 @@ function JobDetailpageAdmim(props) {
                                     <CustomButton
                                       className="font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
                                       onClick={() => setShowJobEditModal(true)}
+                                      title="Edit Job"
                                     >
                                       <PiPencilDuotone />
                                     </CustomButton>
@@ -842,6 +846,19 @@ function JobDetailpageAdmim(props) {
                                 <h4 className="text-black-2 mb-0 font-size-5 d-flex text-break align-items-center justify-content-space-between">
                                   <b className="block text-sm text-indigo-600">LMIA Details: </b>
                                 </h4>
+                                <CustomButton
+                                  className={
+                                    user_type === "user" ||
+                                      user_type === "agent" ||
+                                      jobData.length === 0
+                                      ? "d-none"
+                                      : "font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
+                                  }
+                                  title="Edit LMIA Info"
+                                  onClick={(e) => setShowLmiaAdditionalInfobModal(true)}
+                                >
+                                  <PiPencilDuotone />
+                                </CustomButton>
                                 {jobData.lmia_number ? (
                                   <div className="lmia-details mt-3 p-4 border rounded bg-white from-blue-50 to-indigo-50 shadow-lg">
                                     <div className="row text-indigo-900 font-semibold">
@@ -1052,6 +1069,20 @@ function JobDetailpageAdmim(props) {
           close={() => setShowJobEditModal(false)}
         />
       ) : null}
+      {
+        showLmiaAdditionalInfobModal ? (
+          <LmiaInfo
+            show={showLmiaAdditionalInfobModal}
+            resData={jobData}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
+            job={"yes"}
+            close={() => {
+              setShowLmiaAdditionalInfobModal(false);
+            }}
+          />
+        ) : null
+      }
       {/* {showCompanyInfoModal ? (
         <CompanyDetails
           employerId={user_type === "company" ? company_id : cid}
