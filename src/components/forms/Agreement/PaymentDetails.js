@@ -53,7 +53,7 @@ function PaymentDetails({
                                         <button
                                             type="button"
                                             className="btn btn-outline-info action_btn"
-                                            onClick={() => editPayment(index + 1, "payment")}
+                                            onClick={() => editPayment(index, "payment")}
                                             title="Edit"
                                         >
                                             <span className="text-gray px-5">
@@ -63,7 +63,7 @@ function PaymentDetails({
                                         <button
                                             type="button"
                                             className="btn btn-outline-danger action_btn"
-                                            onClick={() => removePayment(index + 1, "payment")}
+                                            onClick={() => removePayment(index, "payment")}
                                             title="Delete"
                                         >
                                             <span className="text-danger px-5">

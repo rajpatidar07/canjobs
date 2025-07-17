@@ -1,9 +1,10 @@
 # Deploy on live
+Date:17/07/25
 1. Add a dynamic RA with a maximum of 4 rows for payment details.
 2. Add fixed ID and job title to the job table.
 3. Add global search for task and some other tables.
 4. Add the LMIA details and also fix the design on the job details page.
-5.  Add a condition to hide "No data found" for candidate responses that are not reserved for the job.(Chahe tho hta bhi skte he ye point)
+5. When an admin is reassigned to a particular candidate, the candidate becomes visible to that admin based on their login. (Is working Fine)
 Date:04/07/025
 1. Add all email types to be sent to the Admin, Applicant, Client, and Agent from the Admin module.
 2. Make the TextEditor stretchable for the email description and all other places where it is used.
@@ -59,7 +60,7 @@ Date=>27/05/25.
 2.  Save client signature, RCIC signature, and initials as images in separate forms, and display them in both HTML and PDF views.
 3. Update the subject to camel case and add more context for the retainer agreement signing email and add required text too.
 4. Remove the "0" from "Applicable Tax" in all HTML and PDF versions of the RA.
-5. When an admin is assigned to a user and then deleted, the option to reassign the user to another admin (Working). 
+5. When an admin is assigned to a user and then deleted, the option to reassign the user to another admin . 
 7. Job ID added to all job view tables.
 8. Partner (Referred By) field made mandatory in the Add Candidate form.
 9. Removed reminder when sending invoice directly.

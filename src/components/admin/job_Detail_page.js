@@ -924,6 +924,16 @@ function JobDetailpageAdmim(props) {
                                           </span>
                                         </span>
                                       </div>
+                                         <div className="col-6 mb-3">
+                                        <b className="block text-sm text-indigo-600">Monday Status: </b>
+                                        <span className={`block text-baser ${jobData.lmia_monday_status ? `${determineBackgroundColor(jobData)} text-white` : " text-dark"} rounded-pill font-size-1 px-1  mr-2`}
+                                          title={jobData.lmia_monday_status || "N/A"}>
+                                          <span
+                                            className="font-size-3 font-weight-normal m-0">  {filterjson.monday_status.find((item) => item.value === jobData.lmia_monday_status)?.label
+                                              || "N/A"}
+                                          </span>
+                                        </span>
+                                      </div>
                                     </div>
                                   </div>
                                 ) : (

@@ -3592,7 +3592,8 @@ export const AddSharePointDOcument = async (
     "/alberta_pnp",
     "/three_column",
     "/agreeone",
-    "/work_permit_application_2_stage"
+    "/work_permit_application_2_stage",
+    "/dynamic_ra"
   ];
   // console.log(formData)
   if (Token || allowedPaths.includes(window.location.pathname)) {

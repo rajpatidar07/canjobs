@@ -52,6 +52,7 @@ const AdminHeader = (props) => {
   //   SessionCheck();
   // }, []);
   // // SessionCheck();
+  
   return (
     <header className="d-none site-header admin_header site-header--menu-right bg-default position-fixed border-left site-header--absolute w-100">
       <div className="container-fluid-fluid">

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 // import { Button, Form, InputGroup } from "react-bootstrap";
 import GlobalSearchCard from "./globalSearchCard";
-import { getallAdminData, GlobalSearchResult, GlobalSearchResultOther, GlobalSearchResultRelated  } from "../../api/api";
+import { getallAdminData, GlobalSearchResult,/* GlobalSearchResultOther,*/ GlobalSearchResultRelated  } from "../../api/api";
 import { FaSearch } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { Link } from "react-router-dom";
@@ -27,13 +27,13 @@ function GlobalSearch() {
     // setIsLoading(true);
     try {
       const userData = await GlobalSearchResult(search, admin ? admin_id : "", admin ? admin_type : "");
-      const userDataOther = await GlobalSearchResultOther(search, admin ? admin_id : "", admin ? admin_type : "");
+      // const userDataOther = await GlobalSearchResultOther(search, admin ? admin_id : "", admin ? admin_type : "");
       const userDataRelated = await GlobalSearchResultRelated(search, admin ? admin_id : "", admin ? admin_type : "");
       const getAllAdmin = await getallAdminData()
 
       setAdminList(getAllAdmin.data)
       const data1 = userData.data.data || {};
-      const data2 = userDataOther.data.data || {};
+      // const data2 = userDataOther.data.data || {};
       const data3 = userDataRelated.data.data || {};
 
       // Combine all keys and merge arrays for matching keys
@@ -49,7 +49,7 @@ function GlobalSearch() {
       };
 
       mergeData(data1);
-      mergeData(data2);
+      // mergeData(data2);
       mergeData(data3);
 
       setSearchData(mergedData);

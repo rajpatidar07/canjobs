@@ -117,6 +117,13 @@ function JobResponse(props) {
         setResData([]);
         setResponseData([]);
         setIsLoading(false);
+        if (props.response === "lmia") {
+          props.setResponsId("")
+          toast.error("No profile has been reserved yet!", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+        }
       } else {
         // if (props.self === "yes") {
         //   setResponseData(userData.data.data.filter((item) => item.employee_status === "0"));
@@ -342,7 +349,7 @@ function JobResponse(props) {
     <div
       className={
         props.response === "lmia" && (totalData === 0 || response.length === 0)
-          ? "d-none"
+          ? isLoading ? "" : "d-none"
           : props.heading === "Response" ||
             (props.heading === undefined && user_type === "admin")
             ? "site-wrapper overflow-hidden bg-default-2  "

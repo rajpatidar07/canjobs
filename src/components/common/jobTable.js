@@ -1221,6 +1221,7 @@ export default function JobTable(props) {
                                       ? "1"
                                       : "0"
                                   }
+                                  setResponsId={setresponseId}
                                   response={props.response}
                                   employee_id={
                                     location.state
