@@ -318,64 +318,83 @@ export default function JobTable(props) {
     setJobId(job);
     setOpenLimia(true);
   };
+
+  const columns = [
+    { key: "job_id", label: "Job ID", sticky: true },
+    { key: "job_title", label: "Job Title", sticky: true },
+
+    // Add Job Type & Address if not on Dashboard
+    ...(props.heading !== "Dashboard"
+      ? [
+        { key: "job_type", label: "Job Type" },
+        { key: "location", label: "Address" },
+      ]
+      : []),
+
+    // Add LMIA-specific columns if response is 'lmia'
+    ...(props.response === "lmia"
+      ? [
+        { key: "lmia_number", label: "LMIA Number" },
+        { key: "lmia_status", label: "LMIA Status" },
+        { key: "monday_status", label: "Monday Status" },
+        { key: "lmia_creation_date", label: "LMIA Creation Date" },
+        { key: "lmia_date_approved", label: "LMIA Date Approved" },
+        { key: "lmia_date_expiry", label: "LMIA Expiry Date" },
+        { key: "job_category", label: "Position/Job Category" },
+        { key: "salary", label: "LMIA Wages" },
+        { key: "lmia_submissiom_date", label: "LMIA Submission Date" },
+        { key: "lmia_payment_status", label: "LMIA Payment" },
+        { key: "lmia_payment_by", label: "LMIA Payment By" },
+        { key: "type_of_lmia", label: "Type of LMIA" },
+        { key: "lmia_notes", label: "LMIA Notes" },
+      ]
+      : []),
+
+    // Add Education & Skills if not on Dashboard
+    ...(props.heading !== "Dashboard"
+      ? [
+        { key: "education", label: "Education", hidden: true },
+        { key: "keyskill", label: "Skills", hidden: true },
+      ]
+      : []),
+
+    { key: "experience_required", label: "Experience" },
+
+    // Add Vacancies / Responses for admin or non-user
+    ...(user_type !== "user"
+      ? [
+        {
+          key: props.selfJob === "yes" ? "applied_by_self" : "applied_by_admin",
+          label: "Vacancies / Responses",
+        },
+      ]
+      : []),
+
+    { key: "profile_complete", label: "Profile", },
+
+    // Add Action only for admin
+    ...(
+      props.heading !== "Dashboard" &&
+        user_type !== "user" &&
+        user_type !== "company" &&
+        user_type !== "agent"
+        ? [{ key: "action", label: "Action", isAction: true }]
+        : []
+    ),
+  ];
+
   return (
     <>
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
-        <div className="table-responsive main_table_div">
+        <div className="table-responsive main_table_div"
+          style={{ maxHeight: "calc(-210px + 100vh)" }}>
           {isLoading ? (
             <Loader load={"yes"} />
           ) : (
             <table className="table table-striped main_data_table">
               <thead>
                 <tr className="py-2">
-                  {[
-                    { key: "job_id", label: "Job ID", sticky: true },
-                    { key: "job_title", label: "Job Title", sticky: true },
-                    ...(props.heading === "Dashboard"
-                      ? []
-                      : [
-                        { key: "job_type", label: "Job Type" },
-                        { key: "location", label: "Address" },
-                      ]),
-                    ...(props.response === "lmia" && props.response !== "response"
-                      ? [
-                        { key: "lmia_number", label: "LMIA Number" },
-                        { key: "lmia_status", label: "LMIA Status" },
-                        { key: "monday_status", label: "Monday Status" },
-                        { key: "lmia_creation_date", label: "LMIA Creation Date" },
-                        { key: "lmia_date_approved", label: "LMIA Date Approved" },
-                        { key: "lmia_date_expiry", label: "LMIA Expiry Date" },
-                        { key: "job_category", label: "Position/Job Category" },
-                        { key: "salary", label: "LMIA Wages" },
-                        { key: "lmia_submissiom_date", label: "LMIA Submission Date" },
-                        { key: "lmia_payment_status", label: "LMIA Payment" },
-                        { key: "lmia_payment_by", label: "LMIA Payment By" },
-                        { key: "type_of_lmia", label: "Type of LMIA" },
-                        { key: "lmia_notes", label: "LMIA Notes" },
-                      ]
-                      : []),
-                    ...(props.heading === "Dashboard"
-                      ? []
-                      : [
-                        { key: "education", label: "Education", hidden: true },
-                        { key: "keyskill", label: "Skills", hidden: true },
-                      ]),
-                    { key: "experience_required", label: "Experience" },
-                    ...(user_type === "user"
-                      ? []
-                      : [
-                        {
-                          key: props.selfJob === "yes" ? "applied_by_self" : "applied_by_admin",
-                          label: "Vacancies / Responses",
-                        },
-                      ]),
-                    ...(props.heading === "Dashboard" ||
-                      user_type === "user" ||
-                      user_type === "company" ||
-                      user_type === "agent"
-                      ? []
-                      : [{ key: "action", label: "Action", isAction: true }]),
-                  ].map((col, index) => (
+                  {columns.map((col, index) => (
                     <th
                       key={index}
                       className={`border-0 font-size-3 font-weight-normal ${col.sticky ? "table_sticky_col sticky_col1" : ""
@@ -588,8 +607,8 @@ export default function JobTable(props) {
                             /*job.is_applied === "1" ? "d-none" : */ "col-12 text-capitalize job_row"
                           }
                         >
-                          <th scope="row" className="table_sticky_col sticky_col1 py-5 bg-white" >{job.job_id}</th>
-                          <th className="table_sticky_col sticky_col1 py-5 bg-white" style={{ left: "100px" }}>
+                          <td className="table_sticky_col sticky_col1 py-5 bg-white" >{job.job_id}</td>
+                          <td className="table_sticky_col sticky_col1 py-5 bg-white" style={{ left: "100px" }}>
                             <div className="d-flex align-items-center">
                               {(job.is_monday_data === 1 || job.is_monday_data === "1") && (
                                 <MondayBadge />
@@ -627,9 +646,9 @@ export default function JobTable(props) {
                                 </Link>
                               </div>
                             </div>
-                          </th>
+                          </td>
                           {props.heading === "Dashboard" ? null : (
-                            <th className=" py-5"
+                            <td className=" py-5"
                               title={job.job_type}>
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {/* {job.employement} -  */}
@@ -637,10 +656,10 @@ export default function JobTable(props) {
                                 <br />
                                 {/* {job.industry_type} */}
                               </h3>
-                            </th>
+                            </td>
                           )}
                           {props.heading === "Dashboard" ? null : (
-                            <th className=" py-5" title={job.industry_type || job.location
+                            <td className=" py-5" title={job.industry_type || job.location
                               ? `${job.industry_type ? job.industry_type + "," : ""} ${job.location}`
                               : "N/A"}>
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
@@ -648,17 +667,17 @@ export default function JobTable(props) {
                                   ? `${job.industry_type ? job.industry_type + "," : ""} ${job.location}`
                                   : "N/A"}
                               </h3>
-                            </th>
+                            </td>
                           )}
                           {props.response === "lmia" && props.response !== "response" ?
                             <>
-                              <th className="py-5 ">
+                              <td className="py-5 ">
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
                                   title={job.lmia_number || "N/A"}>
                                   {job.lmia_number || "N/A"}
                                 </h3>
-                              </th>
-                              <th
+                              </td>
+                              <td
                                 className={
                                   user_type === "user" ? "d-none" : " py-5"
                                 }
@@ -767,8 +786,8 @@ export default function JobTable(props) {
                                     // )
                                   }
                                 </div>
-                              </th>
-                              <th className="py-5 " title={filterjson.monday_status.find(
+                              </td>
+                              <td className="py-5 " title={filterjson.monday_status.find(
                                 (item) => item.value === job.lmia_monday_status
                               )?.label || "N/A"}>
                                 <span
@@ -780,14 +799,14 @@ export default function JobTable(props) {
                                     )?.label || "N/A"}
                                   </span>
                                 </span>
-                              </th>
-                              <th className="py-5 ">
+                              </td>
+                              <td className="py-5 ">
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
                                   title={job.lmia_creation_date || "N/A"}>
                                   {job.lmia_creation_date || "N/A"}
                                 </h3>
-                              </th>
-                              <th className="py-5 ">
+                              </td>
+                              <td className="py-5 ">
                                 <h3
                                   className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
                                   title={
@@ -800,8 +819,8 @@ export default function JobTable(props) {
                                   {<ConvertTime _date={job.lmia_date_approved
                                   } format={"DD MMMM, YYYY"} />}
                                 </h3>
-                              </th>
-                              <th className="py-5 ">
+                              </td>
+                              <td className="py-5 ">
                                 <h3
                                   className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
                                   title={
@@ -817,23 +836,23 @@ export default function JobTable(props) {
                                   {<ConvertTime _date={job.lmia_date_expiry
                                   } format={"DD MMMM, YYYY"} />}
                                 </h3>
-                              </th>
-                              <th className="py-5 ">
+                              </td>
+                              <td className="py-5 ">
                                 <h3 className={`font-size-3 font-weight-normal mb-0 text-capitalize text-center  font-size-1 px-1  mr-2`}
-                                  title={Json?.Category?.filter((item) => item.id ===parseInt(job.job_category_id ))[0]?.value || "N/A"}>
+                                  title={Json?.Category?.filter((item) => item.id === parseInt(job.job_category_id))[0]?.value || "N/A"}>
                                   <span
-                                    className="font-size-3 font-weight-normal m-0">  {Json?.Category?.filter((item) => item.id ===parseInt(job.job_category_id ))[0]?.value
+                                    className="font-size-3 font-weight-normal m-0">  {Json?.Category?.filter((item) => item.id === parseInt(job.job_category_id))[0]?.value
                                       || "N/A"}
                                   </span>
                                 </h3>
-                              </th>
-                              <th className="py-5 ">
+                              </td>
+                              <td className="py-5 ">
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
                                   title={job.salary ? "$" + job.salary : "N/A"}>
                                   {job.salary ? "$" + job.salary : "N/A"}
                                 </h3>
-                              </th>
-                              <th className="py-5 ">
+                              </td>
+                              <td className="py-5 ">
                                 <h3
                                   className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
                                   title={
@@ -856,20 +875,20 @@ export default function JobTable(props) {
                                     : job.created_at} format={"DD MMMM, YYYY"} />}
                                   {/* {moment(job.created_at).format("DD MMMM, YYYY")} */}
                                 </h3>
-                              </th>
-                              <th className="py-5 ">
+                              </td>
+                              <td className="py-5 ">
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
                                   title={job.lmia_payment_status || "N/A"}>
                                   {job.lmia_payment_status || "N/A"}
                                 </h3>
-                              </th>
-                              <th className="py-5 ">
+                              </td>
+                              <td className="py-5 ">
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
                                   title={job.lmia_payment_by || "N/A"}>
                                   {job.lmia_payment_by || "N/A"}
                                 </h3>
-                              </th>
-                              <th className="py-5 ">
+                              </td>
+                              <td className="py-5 ">
                                 <h3 className={`font-size-3 font-weight-normal mb-0 text-capitalize text-center ${job.type_of_lmia ? `${determineBackgroundColor(job)} text-white` : " text-dark"} rounded-pill font-size-1 px-1  mr-2`}
                                   title={job.type_of_lmia || "N/A"}>
                                   <span
@@ -877,33 +896,33 @@ export default function JobTable(props) {
                                       || "N/A"}
                                   </span>
                                 </h3>
-                              </th>
-                              <th className="py-5 ">
+                              </td>
+                              <td className="py-5 ">
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
                                   title={job.lmia_notes || "N/A"}>
                                   {job.lmia_notes || "N/A"}
                                 </h3>
-                              </th>
+                              </td>
                             </>
                             : null}
                           {props.heading === "Dashboard" ? null : (
-                            <th className="py-5 d-none">
+                            <td className="py-5 d-none">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {job.education ? job.education : "N/A"}
                               </h3>
-                            </th>
+                            </td>
                           )}
                           {props.heading === "Dashboard" ? null : (
-                            <th className="py-5 d-none">
+                            <td className="py-5 d-none">
                               <h3
                                 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
                                 title={job.keyskill}
                               >
                                 {job.keyskill ? job.keyskill : "N/A"}
                               </h3>
-                            </th>
+                            </td>
                           )}
-                          <th className="py-5 ">
+                          <td className="py-5 ">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
                               title={job.experience_required + (
                                 job.experience_required === "1-3 " ||
@@ -927,8 +946,8 @@ export default function JobTable(props) {
                                   : ""
                               }
                             </h3>
-                          </th>
-                          <th
+                          </td>
+                          <td
                             className={
                               user_type === "user" ? "d-none" : "py-5 "
                             }
@@ -961,11 +980,28 @@ export default function JobTable(props) {
                                 </Link>
                               )}
                             </h3>
-                          </th>
+                          </td>
+                          <td
+                            className={"py-5 "
+                            }
+                          >
+                            <p className="font-size-2 font-weight-normal text-black-2 mb-0"
+                              title={job.profile_complete >= 99.0 ? "Complete" : "Incomplete"}>
+                              {job.profile_complete >= 99.0 ? (
+                                <span className="p-1 bg-primary-opacity-8 text-white text-center  border rounded-pill">
+                                  Complete
+                                </span>
+                              ) : (
+                                <span className="p-1 bg-warning text-white text-center  border rounded-pill">
+                                  Incomplete
+                                </span>
+                              )}
+                            </p>
+                          </td>
                           {props.heading === "Dashboard" ||
                             user_type === "user" ||
                             user_type === "company" || user_type === "agent" ? null : (
-                            <th className="py-5 min-width-px-100">
+                            <td className="py-5 min-width-px-100">
                               <div
                                 className="btn-group button_group"
                                 role="group"
@@ -1193,7 +1229,7 @@ export default function JobTable(props) {
                                   )
                                 }
                               </div>
-                            </th>
+                            </td>
                           )}
                         </tr>
 
@@ -1254,58 +1290,68 @@ export default function JobTable(props) {
             />
           </div>
         )}
-      </div>
+      </div >
 
-      {showAddCompanyDocModal ? (
-        <EmployerDocumentModal
-          employer_id={CompanyId}
-          show={showAddCompanyDocModal}
-          close={() => setShowAddCompanyDocModal(false)}
-        />
-      ) : null}
-      {showAddJobsModal ? (
-        <AddJobModal
-          show={showAddJobsModal}
-          jobdata={JobId}
-          admin={"admin"}
-          setApiCall={setApiCall}
-          apiCall={apiCall}
-          setDetailApiCall={props.setApiCall}
-          job_page="job_detail"
-          close={() => setShowAddJobsModal(false)}
-        />
-      ) : null}
-      {showCandidateModal ? (
-        <EmployeeModal
-          show={showCandidateModal}
-          close={() => setShowCandidateModal(false)}
-          data={candidateSkill}
-          setApiCall={setApiCall}
-          job_id={candidateSkill.job_id}
-        />
-      ) : null}
-      {showLmiaAdditionalInfobModal ? (
-        <LmiaInfo
-          show={showLmiaAdditionalInfobModal}
-          resData={JobId}
-          apiCall={apiCall}
-          setApiCall={setApiCall}
-          job={"yes"}
-          close={() => {
-            setShowLmiaAdditionalInfobModal(false);
-            setJobId("");
-          }}
-        />
-      ) : null}
-      {openLimia ? (
-        <LmiaStatus
-          resData={JobId}
-          show={openLimia}
-          close={() => setOpenLimia(false)}
-          job={"yes"}
-          setApiCall={setApiCall}
-        />
-      ) : null}
+      {
+        showAddCompanyDocModal ? (
+          <EmployerDocumentModal
+            employer_id={CompanyId}
+            show={showAddCompanyDocModal}
+            close={() => setShowAddCompanyDocModal(false)
+            }
+          />
+        ) : null}
+      {
+        showAddJobsModal ? (
+          <AddJobModal
+            show={showAddJobsModal}
+            jobdata={JobId}
+            admin={"admin"}
+            setApiCall={setApiCall}
+            apiCall={apiCall}
+            setDetailApiCall={props.setApiCall}
+            job_page="job_detail"
+            close={() => setShowAddJobsModal(false)}
+          />
+        ) : null
+      }
+      {
+        showCandidateModal ? (
+          <EmployeeModal
+            show={showCandidateModal}
+            close={() => setShowCandidateModal(false)}
+            data={candidateSkill}
+            setApiCall={setApiCall}
+            job_id={candidateSkill.job_id}
+          />
+        ) : null
+      }
+      {
+        showLmiaAdditionalInfobModal ? (
+          <LmiaInfo
+            show={showLmiaAdditionalInfobModal}
+            resData={JobId}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
+            job={"yes"}
+            close={() => {
+              setShowLmiaAdditionalInfobModal(false);
+              setJobId("");
+            }}
+          />
+        ) : null
+      }
+      {
+        openLimia ? (
+          <LmiaStatus
+            resData={JobId}
+            show={openLimia}
+            close={() => setOpenLimia(false)}
+            job={"yes"}
+            setApiCall={setApiCall}
+          />
+        ) : null
+      }
       <SAlert
         show={deleteAlert}
         title={deleteName}

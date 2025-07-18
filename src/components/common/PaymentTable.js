@@ -178,7 +178,8 @@ const PaymentTable = (props) => {
           className={"bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"}
         >
           <div >
-            <form className="table-responsive main_table_div">
+            <form className="table-responsive main_table_div"
+              style={{ maxHeight: "calc(-205px + 100vh)" }}>
               {isLoading ? (
                 <Loader />
               ) : <table className="table table-striped main_data_table text-center align-middle">

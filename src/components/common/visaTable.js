@@ -197,7 +197,8 @@ export default function VisaTable(props) {
         />
       ) : null}
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
-        <div className="table-responsive main_table_div">
+        <div className="table-responsive main_table_div"
+        style={{ maxHeight: "calc(-210px + 100vh)" }}>
           {isLoading ? (
             <Loader />
           ) : (

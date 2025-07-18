@@ -312,10 +312,10 @@ function Hourlylogtable(props) {
                 >
                     <div
                         className="datatable_div  pt-7 rounded pb-8 px-2"
-                        style={{ overflowX: "auto", overflowY: "scroll", height: "60vh" }}
                         ref={tableContainerRef}
                     >
-                        <form className="table-responsive main_table_div">
+                        <form className="table-responsive main_table_div"
+                         style={{ overflowX: "auto", overflowY: "scroll", maxHeight: "calc(-180px + 80vh)" }}>
                             {isLoading ? (
                                 <Loader />
                             ) : (

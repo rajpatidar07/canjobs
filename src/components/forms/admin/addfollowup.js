@@ -57,7 +57,7 @@ function Addfollowup(props) {
   const [recordsPerPage] = useState(10);
   const [taskPage, setTaskPage] = useState(1);
   /* Shorting states */
-  const [columnName, setcolumnName] = useState("created_on");
+  const [columnName, setcolumnName] = useState("updated_on");
   const [sortOrder, setSortOrder] = useState("DESC");
   let user_type = localStorage.getItem("userType");
   let adminType = localStorage.getItem("admin_type");
@@ -1557,7 +1557,7 @@ function Addfollowup(props) {
                   <Link
                     to={""}
                     onClick={() => {
-                      handleSort("name");
+                      handleSort("employee_name");
                     }}
                     className="text-gray"
                     title="Sort by Description"
@@ -1627,7 +1627,7 @@ function Addfollowup(props) {
                 </th>
                 <th
                   scope="col"
-                  className=" border-0 font-size-4 font-weight-normal"
+                  className=" border-0 font-size-4 font-weight-normal d-none"
                 >
                   <Link
                     to={""}
@@ -1647,119 +1647,120 @@ function Addfollowup(props) {
                 response.map((item) => item.status === "1") ? (
                 (response || []).map(
                   (res) =>
-                    res.status === "1" && (
-                      <tr key={res.id}>
-                        <td>
-                          <Link
-                            className="d-flex align-items-center"
-                            to={`/${res.user_id}`}
-                          >
-                            <div className="d-flex profile_box gx-2">
-                              <div className="media  align-items-center">
-                                <div className="circle-30 mx-auto overflow-hidden">
-                                  <img
-                                    src={
-                                      res.profile_photo === "" ||
-                                        res.profile_photo === null ||
-                                        res.profile_photo === undefined
-                                        ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                        : res.profile_photo
-                                    }
-                                    alt=""
-                                    className="w-100"
-                                  />
-                                </div>
-                              </div>
-                              <div className=" mb-0">
-                                {res.name === "" ||
-                                  res.name === "null" ||
-                                  res.name === null ||
-                                  res.name === undefined ? (
-                                  <p className="font-size-3 mb-0">N/A</p>
-                                ) : (
-                                  <p
-                                    className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
-                                    title={res.name}
-                                  >
-                                    {res.name}
-                                  </p>
-                                )}
+                  // res.status === "1" &&
+                  (
+                    <tr key={res.id}>
+                      <td>
+                        <Link
+                          className="d-flex align-items-center"
+                          to={`/${res.employee_id}?note=true&noteid=${res.id}`}
+                        >
+                          <div className="d-flex profile_box gx-2">
+                            <div className="media  align-items-center">
+                              <div className="circle-30 mx-auto overflow-hidden">
+                                <img
+                                  src={
+                                    res.profile_photo === "" ||
+                                      res.profile_photo === null ||
+                                      res.profile_photo === undefined
+                                      ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                      : res.profile_photo
+                                  }
+                                  alt=""
+                                  className="w-100"
+                                />
                               </div>
                             </div>
-                          </Link>
-                        </td>
-                        <td>
-                          {res.subject === "" ||
-                            res.subject === "null" ||
-                            res.subject === null ||
-                            res.subject === undefined ? (
-                            <p className="font-size-3 mb-0">N/A</p>
-                          ) : (
-                            <p
-                              className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
-                              title={res.subject}
-                            >
-                              {res.subject}
-                            </p>
-                          )}
-                        </td>
-                        <td>
-                          {res.subject_description === "" ||
-                            res.subject_description === "null" ||
-                            res.subject_description === null ||
-                            res.subject_description === undefined ? (
-                            <p className="font-size-3 mb-0">N/A</p>
-                          ) : (
-                            <p
-                              className="m-0 text-black-2 font-weight-bold text-capitalize  text-truncate"
-                              dangerouslySetInnerHTML={{
-                                __html: res.subject_description,
-                              }}
-                            />
-                          )}
-                        </td>
-                        <td>
-                          {res.created_on === "" ||
-                            res.created_on === "null" ||
-                            res.created_on === null ||
-                            res.created_on === undefined ? (
-                            <p className="font-size-3 mb-0">N/A</p>
-                          ) : (
-                            <small>
-                              <ConvertTime
-                                _date={res.created_on}
-                                format={".calendar()"}
-                              />
-                              {/* {moment(res.created_on).calendar()} */}
-                            </small>
-                          )}
-                        </td>
-                        <td>
-                          {res.next_followup_date === "" ||
-                            res.next_followup_date === "null" ||
-                            res.next_followup_date === null ||
-                            res.next_followup_date === undefined ? (
-                            <p className="font-size-3 mb-0">N/A</p>
-                          ) : (
-                            <small>
-                              {moment(res.next_followup_date).format(
-                                "MMM Do YY"
+                            <div className=" mb-0">
+                              {res.employee_name === "" ||
+                                res.employee_name === "null" ||
+                                res.employee_name === null ||
+                                res.employee_name === undefined ? (
+                                <p className="font-size-3 mb-0">N/A</p>
+                              ) : (
+                                <p
+                                  className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
+                                  title={res.employee_name}
+                                >
+                                  {res.employee_name}
+                                </p>
                               )}
-                            </small>
-                          )}
-                        </td>
-                        <td>
-                          {res.status === "" ||
-                            res.status === "null" ||
-                            res.status === null ||
-                            res.status === undefined ? (
-                            <p className="font-size-3 mb-0"></p>
-                          ) : (
-                            <small>{res.status === "1" ? "Private" : ""}</small>
-                          )}
-                        </td>
-                      </tr>
-                    )
+                            </div>
+                          </div>
+                        </Link>
+                      </td>
+                      <td>
+                        {res.subject === "" ||
+                          res.subject === "null" ||
+                          res.subject === null ||
+                          res.subject === undefined ? (
+                          <p className="font-size-3 mb-0">N/A</p>
+                        ) : (
+                          <p
+                            className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
+                            title={res.subject}
+                          >
+                            {res.subject}
+                          </p>
+                        )}
+                      </td>
+                      <td>
+                        {res.subject_description === "" ||
+                          res.subject_description === "null" ||
+                          res.subject_description === null ||
+                          res.subject_description === undefined ? (
+                          <p className="font-size-3 mb-0">N/A</p>
+                        ) : (
+                          <p
+                            className="m-0 text-black-2 font-weight-bold text-capitalize  text-truncate"
+                            dangerouslySetInnerHTML={{
+                              __html: res.subject_description,
+                            }}
+                          />
+                        )}
+                      </td>
+                      <td>
+                        {res.created_on === "" ||
+                          res.created_on === "null" ||
+                          res.created_on === null ||
+                          res.created_on === undefined ? (
+                          <p className="font-size-3 mb-0">N/A</p>
+                        ) : (
+                          <small>
+                            <ConvertTime
+                              _date={res.created_on}
+                              format={".calendar()"}
+                            />
+                            {/* {moment(res.created_on).calendar()} */}
+                          </small>
+                        )}
+                      </td>
+                      <td>
+                        {res.next_followup_date === "" ||
+                          res.next_followup_date === "null" ||
+                          res.next_followup_date === null ||
+                          res.next_followup_date === undefined ? (
+                          <p className="font-size-3 mb-0">N/A</p>
+                        ) : (
+                          <small>
+                            {moment(res.next_followup_date).format(
+                              "MMM Do YY"
+                            )}
+                          </small>
+                        )}
+                      </td>
+                      <td className="d-none">
+                        {res.status === "" ||
+                          res.status === "null" ||
+                          res.status === null ||
+                          res.status === undefined ? (
+                          <p className="font-size-3 mb-0"></p>
+                        ) : (
+                          <small>{res.status === "1" ? "Private" : ""}</small>
+                        )}
+                      </td>
+                    </tr>
+                  )
                 )
               ) : (
                 <tr className="text-center">

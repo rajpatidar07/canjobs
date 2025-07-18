@@ -1020,7 +1020,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
                 /> */}
                     <Addfollowup
                       userId={""}
-                      userType={"employee"}
+                      userType={""}
                       assigned_by_id={adminId}
                       setApiCall={setApiCall}
                       page={"dashboard"}

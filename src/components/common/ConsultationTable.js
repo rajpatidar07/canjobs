@@ -353,10 +353,10 @@ function ConsultationTable(props) {
         >
           <div
             className="datatable_div  pt-7 rounded pb-8 px-2"
-            style={{ overflowX: "auto", overflowY: "scroll", height: "60vh" }}
+
             ref={tableContainerRef}
           >
-            <form className="table-responsive main_table_div" onSubmit={handleAdd}>
+            <form className="table-responsive main_table_div" style={{ overflowX: "auto", overflowY: "scroll", height: "60vh" }} onSubmit={handleAdd}>
               {isLoading ? (
                 <Loader />
               ) : (

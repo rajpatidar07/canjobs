@@ -1,4 +1,6 @@
 # Deploy on live
+1. Add the complete job profile for the job.
+2. Fix the scroll bar design on the Job, LMIA, and Visa pages.
 Date:17/07/25
 1. Add a dynamic RA with a maximum of 4 rows for payment details.
 2. Add fixed ID and job title to the job table.
