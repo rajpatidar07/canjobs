@@ -135,6 +135,7 @@ export default function CommentReplyBox({
                       {/* {replyItem.msg} */}
                       <div
                         className="msg-color"
+                        style={{ whiteSpace: 'pre-wrap' }}
                         dangerouslySetInnerHTML={{
                           __html: replyItem.msg.replace(" @ ", " "),
                         }}

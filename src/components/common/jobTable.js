@@ -607,7 +607,16 @@ export default function JobTable(props) {
                             /*job.is_applied === "1" ? "d-none" : */ "col-12 text-capitalize job_row"
                           }
                         >
-                          <td className="table_sticky_col sticky_col1 py-5 bg-white" >{job.job_id}</td>
+                          <td className="table_sticky_col sticky_col1 py-5 bg-white" >
+                            <Link
+                              to={`/job_detail`}
+                              onClick={
+                                () =>
+                                  localStorage.setItem("job_id", job.job_id)
+                              }
+                              className="font-size-3 mb-0 font-weight-semibold text-black-2 "
+                              title={job.job_title}
+                            >{job.job_id}</Link></td>
                           <td className="table_sticky_col sticky_col1 py-5 bg-white" style={{ left: "100px" }}>
                             <div className="d-flex align-items-center">
                               {(job.is_monday_data === 1 || job.is_monday_data === "1") && (
@@ -1065,7 +1074,9 @@ export default function JobTable(props) {
                                         <button
                                           className="btn btn-outline-info action_btn"
                                           onClick={() => {
-                                            setresponseId(job.job_id);
+                                            if (props.response === "lmia" && responseId === job.job_id) {
+                                              setresponseId()
+                                            } else { setresponseId(job.job_id); }
                                           }}
                                           disabled={
                                             props.selfJob === "yes"

@@ -1,6 +1,11 @@
 # Deploy on live
 1. Add the complete job profile for the job.
 2. Fix the scroll bar design on the Job, LMIA, and Visa pages.
+3. Add a condition to allow multiple attachments at different times, and also include a drag-and-drop option for email attachments.
+4. Correct spacing and formatting have been added to the reply chat box, task dashboard.
+5. Fix the pagination for the applicant-type documents .
+6. Add navigation from the Job ID in the job table to the Job Details page.
+7. Add a condition to hide the candidate's response on the LMIA page when the 'Show' button is clicked, and vice versa
 Date:17/07/25
 1. Add a dynamic RA with a maximum of 4 rows for payment details.
 2. Add fixed ID and job title to the job table.

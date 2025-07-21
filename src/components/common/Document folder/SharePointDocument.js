@@ -96,7 +96,7 @@ export default function SharePointDocument({
   const [sortOrder, setSortOrder] = useState("DESC");
   let userType = localStorage.getItem("userType")
 
- /*Sorting Function */
+  /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
@@ -481,59 +481,44 @@ export default function SharePointDocument({
   // }, [openNoteForm])
 
 
-  /*On change fnction to upload bulk document in 1 array*/
+  /*On change function to upload bulk document in 1 array*/
   const handleBulkFileChange = async (event, id) => {
     const files = event.target.files;
 
-    // Check the number of files selected
-    if (files.length > 30) {
-      toast.error("You can only upload a maximum of 30 files at a time", {
+    // Limit to 15 files
+    if (files.length > 15) {
+      toast.error("You can only upload a maximum of 15 files at a time", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
       return;
     }
 
-    // const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
     const maxSize = 1024 * 8000; // 8 MB
+    const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
 
-    const filebseList = [];
+    // Start with existing files or initialize
+    const existingFiles = Array.isArray(docFileBase) ? [...docFileBase] : [];
+    const newFiles = [];
+
     for (let i = 0; i < files.length; i++) {
-      let file = files[i];
+      const file = files[i];
 
-      // Extract the filename and extension
       const lastDotIndex = file.name.lastIndexOf(".");
-      let fileName = file.name.substring(0, lastDotIndex); // Get the name part before the last dot
-      const fileExtension = file.name.substring(lastDotIndex + 1); // Get the extension part after the last dot
+      let fileName = file.name.substring(0, lastDotIndex).replace(/\.+/g, "");
+      const fileExtension = file.name.substring(lastDotIndex + 1);
+      const finalFileName = `${fileName}.${fileExtension}`;
 
-      // Remove all extra dots in the fileName part
-      fileName = fileName.replace(/\.+/g, ""); // Remove any extra dots
-
-      const finalFileName = `${fileName}.${fileExtension}`; // Form the new file name
-
-      // Create a new File object with the updated name, preserving the file's content and metadata
       const updatedFile = new File([file], finalFileName, {
         type: file.type,
         lastModified: file.lastModified,
       });
 
-      // Check file type
-      // const fileType = `.${fileExtension.toLowerCase()}`;
-      // if (!allowedTypes.includes(fileType)) {
-      //   toast.error(
-      //     `Invalid document type for file '${updatedFile.name}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
-      //     {
-      //       position: toast.POSITION.TOP_RIGHT,
-      //       autoClose: 1000,
-      //     }
-      //   );
-      //   return;
-      // }
-
-      // Check file size
-      if (updatedFile.size > maxSize) {
+      // Validate file type
+      const fileType = `.${fileExtension.toLowerCase()}`;
+      if (!allowedTypes.includes(fileType)) {
         toast.error(
-          `Document size can't be more than 8 MB for file '${updatedFile.name}'`,
+          `Invalid document type for file '${finalFileName}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
           {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
@@ -542,18 +527,32 @@ export default function SharePointDocument({
         return;
       }
 
-      // Read file as data URL
-      const reader = new FileReader();
-      reader.readAsDataURL(updatedFile);
+      // Validate file size
+      if (updatedFile.size > maxSize) {
+        toast.error(
+          `Document size can't be more than 8 MB for file '${finalFileName}'`,
+          {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          }
+        );
+        return;
+      }
 
-      // Add the updated file to the file list
-      filebseList.push(updatedFile);
+      // Prevent duplicates
+      const isDuplicate = existingFiles.some(f => f.name === finalFileName) || newFiles.some(f => f.name === finalFileName);
+      if (!isDuplicate) {
+        newFiles.push(updatedFile);
+      }
     }
 
-    // Store the object of files
-    setDocFileBase(filebseList);
+    const updatedFiles = [...existingFiles, ...newFiles];
+
+    // Save states
+    setDocFileBase(updatedFiles); // List of files
     setSaveBtn(true);
   };
+
   // const handleBulkFileChange = async (event, id) => {
   //   const files = event.target.files;
 

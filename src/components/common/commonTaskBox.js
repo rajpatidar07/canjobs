@@ -1120,6 +1120,7 @@ export default function CommentTaskBox(props) {
                                             {commentItem.subject_description && (
                                                 <span className="card-title text-break text-dark m-0 font-size-3">
                                                     <div
+                                                    style={{ whiteSpace: 'pre-wrap' }}
                                                         className="msg-color"
                                                         dangerouslySetInnerHTML={{
                                                             __html: commentItem.subject_description.replace(

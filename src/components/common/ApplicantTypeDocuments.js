@@ -69,45 +69,44 @@ export default function ApplicantTypeDocuments(props) {
     uploadProgress: 0
   });
 
-  /*On change fnction to upload bulk document in 1 array*/
+  /*On change function to upload bulk document in 1 array*/
   const handleBulkFileChange = async (event, id) => {
     const files = event.target.files;
 
-    // Check the number of files selected
-    if (files.length > 30) {
-      toast.error("You can only upload a maximum of 30 files at a time", {
+    // Limit to 15 files
+    if (files.length > 15) {
+      toast.error("You can only upload a maximum of 15 files at a time", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
       return;
     }
 
-    // const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
     const maxSize = 1024 * 8000; // 8 MB
+    const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
 
-    const filebseList = [];
+    // Start with existing files or initialize
+    const existingFiles = Array.isArray(docFileBase) ? [...docFileBase] : [];
+    const newFiles = [];
+
     for (let i = 0; i < files.length; i++) {
-      let file = files[i];
+      const file = files[i];
 
-      // Extract the filename and extension
       const lastDotIndex = file.name.lastIndexOf(".");
-      let fileName = file.name.substring(0, lastDotIndex); // Get the name part before the last dot
-      const fileExtension = file.name.substring(lastDotIndex + 1); // Get the extension part after the last dot
+      let fileName = file.name.substring(0, lastDotIndex).replace(/\.+/g, "");
+      const fileExtension = file.name.substring(lastDotIndex + 1);
+      const finalFileName = `${fileName}.${fileExtension}`;
 
-      // Remove all extra dots in the fileName part
-      fileName = fileName.replace(/\.+/g, ""); // Remove any extra dots
-
-      const finalFileName = `${fileName}.${fileExtension}`; // Form the new file name
-
-      // Create a new File object with the updated name, preserving the file's content and metadata
       const updatedFile = new File([file], finalFileName, {
         type: file.type,
         lastModified: file.lastModified,
       });
-      // Check file size
-      if (updatedFile.size > maxSize) {
+
+      // Validate file type
+      const fileType = `.${fileExtension.toLowerCase()}`;
+      if (!allowedTypes.includes(fileType)) {
         toast.error(
-          `Document size can't be more than 8 MB for file '${updatedFile.name}'`,
+          `Invalid document type for file '${finalFileName}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
           {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
@@ -116,16 +115,29 @@ export default function ApplicantTypeDocuments(props) {
         return;
       }
 
-      // Read file as data URL
-      const reader = new FileReader();
-      reader.readAsDataURL(updatedFile);
+      // Validate file size
+      if (updatedFile.size > maxSize) {
+        toast.error(
+          `Document size can't be more than 8 MB for file '${finalFileName}'`,
+          {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          }
+        );
+        return;
+      }
 
-      // Add the updated file to the file list
-      filebseList.push(updatedFile);
+      // Prevent duplicates
+      const isDuplicate = existingFiles.some(f => f.name === finalFileName) || newFiles.some(f => f.name === finalFileName);
+      if (!isDuplicate) {
+        newFiles.push(updatedFile);
+      }
     }
 
-    // Store the object of files
-    setDocFileBase(filebseList);
+    const updatedFiles = [...existingFiles, ...newFiles];
+
+    // Save states
+    setDocFileBase(updatedFiles); // List of files
     setState((prev) => ({
       ...prev,
       saveBtn: true,
@@ -468,6 +480,7 @@ export default function ApplicantTypeDocuments(props) {
       }));
     }
   };
+  const nPages = Math.ceil(state.totalData / state?.recordsPerPage);
   useEffect(() => {
     fetchAllShareType();
     // console.log(state.folderID, "oooooo")
@@ -481,7 +494,7 @@ export default function ApplicantTypeDocuments(props) {
       props.setFolderApiCall(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.columnName, state.sortOrder, props.folderApiCall, state.apiCall, state.folderID, props.notification === "yes" ? location.key : null]);
+  }, [state.columnName, state.sortOrder, props.folderApiCall, state.apiCall, state.folderID, state.pageNo, props.notification === "yes" ? location.key : null]);
   useEffect(() => {
     if (props.folderId !== state.folderID || props?.notification === "yes") {
       setState((prev) => ({
@@ -864,7 +877,7 @@ export default function ApplicantTypeDocuments(props) {
                       docsection={true}
                       getCommentsList={getCommentsList}
                       partnerId={props?.partnerId}
-                      nPages={props?.nPages}
+                      nPages={nPages}
                       ShowDeleteAlert={showDeleteAlert}
                       handleSort={handleSort}
                       handleBulkFileChange={handleBulkFileChange}

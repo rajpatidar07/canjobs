@@ -247,7 +247,7 @@ function LimaContainer(props) {
                         <CustomButton
                           className="font-size-3 rounded-3 btn btn-primary border-0"
                           onClick={() => editJob("0")}
-                          title="Add Jobs"
+                          title="Add LMIA"
                         >
                           Add LMIA
                         </CustomButton>

@@ -408,9 +408,9 @@ export default function CommonTaskReplyBox(props) {
               value={replyComment || ""}
               onChange={handleInputChange}
               placeholder="Comments or add others with @"
-              className={`comment-input ${commntData ? "" : "border-0"
+              className={`comment-input rounded overflow-hidden ${commntData ? "" : "border-0"
                 } bg-light`}
-              rows={2}
+               rows={4}
               style={{ outline: 0, border: commntData ? "2px solid blue" : "" }}
             ></textarea>
             {dropdownVisible && filteredEmails.length > 0 ? (
@@ -571,6 +571,7 @@ export default function CommonTaskReplyBox(props) {
                   <span className="card-title text-break text-dark m-0 font-size-3">
                     <div
                       className="msg-color"
+                      style={{ whiteSpace: 'pre-wrap' }}
                       dangerouslySetInnerHTML={{
                         __html: item.msg.replace(" @ ", " "),
                       }}

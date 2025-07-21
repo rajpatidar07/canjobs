@@ -11,12 +11,34 @@ function SendMailForm({ email, setApiCall }) {
   const [loading, setLoading] = useState(false);
   const [fileBase, setFileBase] = useState("");
   const [fileNames, setFileNames] = useState([]);
+  const [isDragging, setIsDragging] = useState(false);
   let adminSignature = localStorage.getItem("admin_signature");
   let adminSignatureText = localStorage.getItem("admin_signature_text");
   const [signatureImage, setSignatureImage] = useState(adminSignature || null);
   let AdminEmail = localStorage.getItem("admin_email");
   let AdminId = localStorage.getItem("admin_id");
   let userrType = localStorage.getItem("userType");
+
+  // Drag and drop handlers
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = async (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const syntheticEvent = { target: { files: e.dataTransfer.files } };
+      await AddAttachmentChange(syntheticEvent);
+      e.dataTransfer.clearData();
+    }
+  };
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
@@ -154,13 +176,13 @@ function SendMailForm({ email, setApiCall }) {
         return;
       }
 
-      // Continue with file validation and processing
-      const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
       const maxSize = 1024 * 8000; // 8 MB
+      const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
 
-      const fileList = { ...fileBase };
-      const fileNameList = [];
-      let DocRealName;
+      // Start with existing files array or empty
+      const existingFiles = Array.isArray(fileBase) ? [...fileBase] : [];
+      const newFiles = [];
+
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
 
@@ -189,25 +211,24 @@ function SendMailForm({ email, setApiCall }) {
           return;
         }
 
-        // Read file as data URL
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        const encoded = await convertToBase64(file);
-        const base64Name = encoded.base64;
-
-        // Construct file object with base64 data
-        const DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]
-          }`;
-
-        // Use DocRealName as the key for DocFile
-        DocRealName = file.name;
-        fileList[DocRealName] = DocFile;
-        fileNameList.push(DocRealName);
+        // Check if file already exists by name
+        if (!existingFiles.some(f => f.name === file.name) && !newFiles.some(f => f.name === file.name)) {
+          newFiles.push(file);
+        }
       }
-      // console.log(fileList, fileNameList);
-      setFileBase(fileList);
-      setFileNames(fileNameList);
-      // Store the object of files
+
+      // Append new files to existing files
+      const updatedFiles = [...existingFiles, ...newFiles];
+
+      // Read files as base64 and update fileBase state
+      const fileBaseData = {};
+      for (const file of updatedFiles) {
+        const encoded = await convertToBase64(file);
+        fileBaseData[file.name] = encoded.base64;
+      }
+
+      setFileBase(updatedFiles);
+      setFileNames(updatedFiles.map(f => f.name));
     }
   };
 
@@ -427,6 +448,18 @@ function SendMailForm({ email, setApiCall }) {
                     ? "border border-danger rounded overflow-hidden"
                     : "border rounded overflow-hidden"
                 }
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                style={{
+                  minHeight: "100px",
+                  padding: "10px",
+                  border: isDragging ? "2px dashed #007bff" : "2px dashed #ccc",
+                  borderRadius: "5px",
+                  backgroundColor: isDragging ? "#e9f5ff" : "transparent",
+                  transition: "all 0.3s ease",
+                  cursor: "pointer",
+                }}
               >
                 {/* <textarea
                   name="description"
@@ -448,6 +481,9 @@ function SendMailForm({ email, setApiCall }) {
                   adminSignature={adminSignature}
                   page={"mail"}// has same variable as description
                 />
+                <div style={{ marginTop: "10px", fontSize: "14px", color: "#666" }}>
+                  Drag and drop files here or click "Attach Files" button to upload attachments.
+                </div>
               </div>
               {/*----ERROR MESSAGE FOR DESRIPTION----*/}
               {errors.description && (
@@ -530,7 +566,29 @@ function SendMailForm({ email, setApiCall }) {
             ))}
           </div>
           <div className="mb-2 col-12">
-            <label className="btn btn-secondary ">
+            <label
+              className="btn btn-secondary"
+              onDragOver={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                e.currentTarget.style.border = "2px dashed #007bff";
+              }}
+              onDragLeave={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                e.currentTarget.style.border = "";
+              }}
+              onDrop={async (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                e.currentTarget.style.border = "";
+                if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                  const syntheticEvent = { target: { files: e.dataTransfer.files } };
+                  await AddAttachmentChange(syntheticEvent);
+                  e.dataTransfer.clearData();
+                }
+              }}
+            >
               <AiOutlineCloudUpload className="font-size-3 mr-2" />
               <input
                 type="file"
