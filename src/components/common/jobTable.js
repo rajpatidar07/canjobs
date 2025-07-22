@@ -9,6 +9,7 @@ import {
   GetEmployeeFilterJob,
   GetJobLimaSubStages,
   GetFilter,
+  GetAdminrSetting,
 } from "../../api/api";
 import { toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
@@ -30,6 +31,7 @@ import filterjson from "../json/filterjson";
 export default function JobTable(props) {
   /*show Modal and props state */
   let [isLoading, setIsLoading] = useState(true);
+  let [fieldsPermited, setFieldsPermited] = useState(true);
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [showAddCompanyDocModal, setShowAddCompanyDocModal] = useState(false);
   let [openLimia, setOpenLimia] = useState(false);
@@ -204,10 +206,25 @@ export default function JobTable(props) {
       setIsLoading(false);
     }
   };
+  /*Function to get the permission data */
+  const GetDashboardPermissionData = async () => {
+    try {
+      let Response = await GetAdminrSetting();
+      const lmia_column_permission = JSON.parse(
+        Response.data.lmia_column_permission
+      );
+      setFieldsPermited(lmia_column_permission);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   /*Render function to get the job */
   useEffect(() => {
     JobData();
     JsonData()
+    if (props.response === "lmia") {
+      GetDashboardPermissionData()
+    }
     if (apiCall === true || props.apiCall === true) {
       props.setApiCall(false);
       setApiCall(false);
@@ -318,7 +335,6 @@ export default function JobTable(props) {
     setJobId(job);
     setOpenLimia(true);
   };
-
   const columns = [
     { key: "job_id", label: "Job ID", sticky: true },
     { key: "job_title", label: "Job Title", sticky: true },
@@ -382,7 +398,11 @@ export default function JobTable(props) {
         : []
     ),
   ];
-
+  const FilterdColumns = columns.filter((col) => {
+    // Always show if it's not part of config OR config says 1
+    return fieldsPermited[col.key] === undefined || fieldsPermited[col.key] === 1 || col.isAction;
+  });
+  console.log(fieldsPermited, FilterdColumns)
   return (
     <>
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
@@ -394,7 +414,7 @@ export default function JobTable(props) {
             <table className="table table-striped main_data_table">
               <thead>
                 <tr className="py-2">
-                  {columns.map((col, index) => (
+                  {FilterdColumns.map((col, index) => (
                     <th
                       key={index}
                       className={`border-0 font-size-3 font-weight-normal ${col.sticky ? "table_sticky_col sticky_col1" : ""
@@ -607,322 +627,349 @@ export default function JobTable(props) {
                             /*job.is_applied === "1" ? "d-none" : */ "col-12 text-capitalize job_row"
                           }
                         >
-                          <td className="table_sticky_col sticky_col1 py-5 bg-white" >
-                            <Link
-                              to={`/job_detail`}
-                              onClick={
-                                () =>
-                                  localStorage.setItem("job_id", job.job_id)
-                              }
-                              className="font-size-3 mb-0 font-weight-semibold text-black-2 "
-                              title={job.job_title}
-                            >{job.job_id}</Link></td>
-                          <td className="table_sticky_col sticky_col1 py-5 bg-white" style={{ left: "100px" }}>
-                            <div className="d-flex align-items-center">
-                              {(job.is_monday_data === 1 || job.is_monday_data === "1") && (
-                                <MondayBadge />
-                              )}
-                              <div>
-                                <Link
-                                  to={`/job_detail`}
-                                  onClick={
-                                    () =>
-                                      localStorage.setItem("job_id", job.job_id)
-                                    // JobDetail(job.job_id)
-                                  }
-                                  className="font-size-3 mb-0 font-weight-semibold text-black-2 "
-                                  title={job.job_title + (job.employement ? ` (${job.employement})` : "")}
-                                >
-                                  <>
-                                    <p className="m-0 text-truncate text-black-2 font-weight-bold text-capitalize">
-                                      {job.job_title}{" "}
-                                      {job.employement
-                                        ? `(${job.employement})`
-                                        : ""}
-                                    </p>
-                                    <p className="text-gray font-size-2 m-0 text-capitalize"
-                                      title={job.company_name}>
-                                      {job.company_name}
-                                      {/* - {job.industry_type} */}
-                                      <br />
-                                      {job.is_featured === "1" ? (
-                                        <span className="bg-orange text-white featured_tag">
-                                          Featured
-                                        </span>
-                                      ) : null}
-                                    </p>
-                                  </>
-                                </Link>
+                            <td className="table_sticky_col sticky_col1 py-5 bg-white" >
+                              <Link
+                                to={`/job_detail`}
+                                onClick={
+                                  () =>
+                                    localStorage.setItem("job_id", job.job_id)
+                                }
+                                className="font-size-3 mb-0 font-weight-semibold text-black-2 "
+                                title={job.job_title}
+                              >{job.job_id}</Link>
+                            </td>                   
+                            <td className="table_sticky_col sticky_col1 py-5 bg-white" style={{ left: "100px" }}>
+                              <div className="d-flex align-items-center">
+                                {(job.is_monday_data === 1 || job.is_monday_data === "1") && (
+                                  <MondayBadge />
+                                )}
+                                <div>
+                                  <Link
+                                    to={`/job_detail`}
+                                    onClick={
+                                      () =>
+                                        localStorage.setItem("job_id", job.job_id)
+                                      // JobDetail(job.job_id)
+                                    }
+                                    className="font-size-3 mb-0 font-weight-semibold text-black-2 "
+                                    title={job.job_title + (job.employement ? ` (${job.employement})` : "")}
+                                  >
+                                    <>
+                                      <p className="m-0 text-truncate text-black-2 font-weight-bold text-capitalize">
+                                        {job.job_title}{" "}
+                                        {job.employement
+                                          ? `(${job.employement})`
+                                          : ""}
+                                      </p>
+                                      <p className="text-gray font-size-2 m-0 text-capitalize"
+                                        title={job.company_name}>
+                                        {job.company_name}
+                                        {/* - {job.industry_type} */}
+                                        <br />
+                                        {job.is_featured === "1" ? (
+                                          <span className="bg-orange text-white featured_tag">
+                                            Featured
+                                          </span>
+                                        ) : null}
+                                      </p>
+                                    </>
+                                  </Link>
+                                </div>
                               </div>
-                            </div>
-                          </td>
-                          {props.heading === "Dashboard" ? null : (
-                            <td className=" py-5"
-                              title={job.job_type}>
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {/* {job.employement} -  */}
-                                {job.job_type}
-                                <br />
-                                {/* {job.industry_type} */}
-                              </h3>
                             </td>
+                          {props.heading === "Dashboard" ? null : (
+                              <td className=" py-5"
+                                title={job.job_type}>
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  {/* {job.employement} -  */}
+                                  {job.job_type}
+                                  <br />
+                                  {/* {job.industry_type} */}
+                                </h3>
+                              </td>
                           )}
                           {props.heading === "Dashboard" ? null : (
-                            <td className=" py-5" title={job.industry_type || job.location
-                              ? `${job.industry_type ? job.industry_type + "," : ""} ${job.location}`
-                              : "N/A"}>
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {job.industry_type || job.location
-                                  ? `${job.industry_type ? job.industry_type + "," : ""} ${job.location}`
-                                  : "N/A"}
-                              </h3>
-                            </td>
+                            FilterdColumns.find(col => col.key === "location") && (
+                              <td className=" py-5" title={job.industry_type || job.location
+                                ? `${job.industry_type ? job.industry_type + "," : ""} ${job.location}`
+                                : "N/A"}>
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  {job.industry_type || job.location
+                                    ? `${job.industry_type ? job.industry_type + "," : ""} ${job.location}`
+                                    : "N/A"}
+                                </h3>
+                              </td>
+                            )
                           )}
                           {props.response === "lmia" && props.response !== "response" ?
                             <>
-                              <td className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
-                                  title={job.lmia_number || "N/A"}>
-                                  {job.lmia_number || "N/A"}
-                                </h3>
-                              </td>
-                              <td
-                                className={
-                                  user_type === "user" ? "d-none" : " py-5"
-                                }
-                              >
-                                <div className="font-size-3 font-weight-normal text-black-2 mb-0"
-                                  title={job.lmia_status || "N/A"}>
-                                  {
-                                    job.lmia_status === "onboarding" ? (
-                                      <span className="px-3 py-2 badge badge-pill badge-shamrock">
-                                        Onboarding
-                                      </span>
-                                    ) : job.lmia_status === "advertisements" ? (
-                                      <span className="px-3 py-2 badge badge-pill bg-info text-white">
-                                        Advertisements
-                                      </span>
-                                    ) : job.lmia_status === "documentation" ? (
-                                      <span className="px-3 py-2 badge badge-pill badge-gray">
-                                        Documentation
-                                      </span>
-                                    ) : job.lmia_status ===
-                                      "candidate placement" ? (
-                                      <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
-                                        Candidate Placement
-                                      </span>
-                                    ) : job.lmia_status === "submission" ? (
-                                      <span className="px-3 py-2 badge badge-pill badge-warning">
-                                        Submission
-                                      </span>
-                                    ) : job.lmia_status === "decision" ?
-                                      job.lmia_status === "decision" &&
-                                        lmiaStatusRejectComment ? (
-                                        lmiaStatusRejectComment[0] !==
-                                        undefined &&
-                                        (lmiaStatusRejectComment || []).map(
-                                          (item, i) => {
-                                            return (
-                                              item === undefined ||
-                                                item === "undefined" ||
-                                                item === null ||
-                                                item === ""
-                                                ? null
-                                                : item.job_id === job.job_id
-                                            ) ? (
-                                              <div
-                                                key={i + 6}
-                                                className={`px-3 py-2 badge badge-pill ${item.lmia_substage ===
-                                                  "approved"
-                                                  ? " badge-shamrock"
-                                                  : item.lmia_substage ===
-                                                    "refused"
-                                                    ? " badge-danger"
-                                                    : " badge-waring"
-                                                  }`}
-                                              >
-                                                <span>
-                                                  {item.lmia_substage ===
+                              {FilterdColumns.find(col => col.key === "lmia_number") && (
+                                <td className="py-5 ">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                    title={job.lmia_number || "N/A"}>
+                                    {job.lmia_number || "N/A"}
+                                  </h3>
+                                </td>
+                              )}
+                              {console.log(FilterdColumns.find(col => col.key === "lmia_status",FilterdColumns.find(col => col.key === "lmia_date_approved")))}
+                              {FilterdColumns.find(col => col.key === "lmia_status") && (
+                                <td
+                                  className={
+                                    user_type === "user" ? "d-none" : " py-5"
+                                  }
+                                >
+                                  <div className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                    title={job.lmia_status || "N/A"}>
+                                    {
+                                      job.lmia_status === "onboarding" ? (
+                                        <span className="px-3 py-2 badge badge-pill badge-shamrock">
+                                          Onboarding
+                                        </span>
+                                      ) : job.lmia_status === "advertisements" ? (
+                                        <span className="px-3 py-2 badge badge-pill bg-info text-white">
+                                          Advertisements
+                                        </span>
+                                      ) : job.lmia_status === "documentation" ? (
+                                        <span className="px-3 py-2 badge badge-pill badge-gray">
+                                          Documentation
+                                        </span>
+                                      ) : job.lmia_status ===
+                                        "candidate placement" ? (
+                                        <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
+                                          Candidate Placement
+                                        </span>
+                                      ) : job.lmia_status === "submission" ? (
+                                        <span className="px-3 py-2 badge badge-pill badge-warning">
+                                          Submission
+                                        </span>
+                                      ) : job.lmia_status === "decision" ?
+                                        job.lmia_status === "decision" &&
+                                          lmiaStatusRejectComment ? (
+                                          lmiaStatusRejectComment[0] !==
+                                          undefined &&
+                                          (lmiaStatusRejectComment || []).map(
+                                            (item, i) => {
+                                              return (
+                                                item === undefined ||
+                                                  item === "undefined" ||
+                                                  item === null ||
+                                                  item === ""
+                                                  ? null
+                                                  : item.job_id === job.job_id
+                                              ) ? (
+                                                <div
+                                                  key={i + 6}
+                                                  className={`px-3 py-2 badge badge-pill ${item.lmia_substage ===
                                                     "approved"
-                                                    ? "Approved"
+                                                    ? " badge-shamrock"
                                                     : item.lmia_substage ===
                                                       "refused"
-                                                      ? "Refused"
-                                                      : "Awaiting Decision"}
-                                                </span>
-                                              </div>
-                                            ) : // <small className="mx-10" key={i}>
-                                              // {item.lmia_substage === "approved"
-                                              //   ? "Congratulation your Limia is Approved"
-                                              //   : item.lmia_substage === "awaiting decision"
-                                              //   ? "Your Limia status is in progress"
-                                              //   : item.lmia_substage === "reject"
-                                              //   ? "Sorry to inform you your Limia got rejected."
-                                              //   : ""}
-                                              // </small>
-                                              null;
-                                          }
+                                                      ? " badge-danger"
+                                                      : " badge-waring"
+                                                    }`}
+                                                >
+                                                  <span>
+                                                    {item.lmia_substage ===
+                                                      "approved"
+                                                      ? "Approved"
+                                                      : item.lmia_substage ===
+                                                        "refused"
+                                                        ? "Refused"
+                                                        : "Awaiting Decision"}
+                                                  </span>
+                                                </div>
+                                              ) : // <small className="mx-10" key={i}>
+                                                // {item.lmia_substage === "approved"
+                                                //   ? "Congratulation your Limia is Approved"
+                                                //   : item.lmia_substage === "awaiting decision"
+                                                //   ? "Your Limia status is in progress"
+                                                //   : item.lmia_substage === "reject"
+                                                //   ? "Sorry to inform you your Limia got rejected."
+                                                //   : ""}
+                                                // </small>
+                                                null;
+                                            }
+                                          )
+                                        ) : (
+                                          null
                                         )
-                                      ) : (
-                                        null
-                                      )
-                                        (
-                                        // <span className={`px-3 py-2 badge badge-pill ${job.lmia_substage ===
-                                        //   "approved"
-                                        //   ? " badge-shamrock"
-                                        //   : job.lmia_substage ===
-                                        //     "refused"
-                                        //     ? " badge-danger"
-                                        //     : " badge-waring"
-                                        //   }`}>
-                                        //   {
-                                        //     job.lmia_substage ===
-                                        //       "approved"
-                                        //       ? "Approved"
-                                        //       : job.lmia_substage ===
-                                        //         "refused"
-                                        //         ? "Refused"
-                                        //         : "Awaiting Decision"
-                                        //   }
-                                        // </span>
-                                      ) : (
-                                        <span>N/A</span>
-                                      )
-                                    // ) : (job.lmia_status === "application submitted" ? (
-                                    //   <span className="px-3 py-2 badge badge-pill badge-info">
-                                    //     Application submitted
-                                    //   </span>
-                                    // )
-                                  }
-                                </div>
-                              </td>
-                              <td className="py-5 " title={filterjson.monday_status.find(
-                                (item) => item.value === job.lmia_monday_status
-                              )?.label || "N/A"}>
-                                <span
-                                  className={`font-size-3 font-weight-normal text-center text-capitalize rounded-pill font-size-1 px-3  ${job.lmia_monday_status ? `${determineBackgroundColor(job)} text-white` : " text-dark"}`}
-                                >
+                                          (
+                                          // <span className={`px-3 py-2 badge badge-pill ${job.lmia_substage ===
+                                          //   "approved"
+                                          //   ? " badge-shamrock"
+                                          //   : job.lmia_substage ===
+                                          //     "refused"
+                                          //     ? " badge-danger"
+                                          //     : " badge-waring"
+                                          //   }`}>
+                                          //   {
+                                          //     job.lmia_substage ===
+                                          //       "approved"
+                                          //       ? "Approved"
+                                          //       : job.lmia_substage ===
+                                          //         "refused"
+                                          //         ? "Refused"
+                                          //         : "Awaiting Decision"
+                                          //   }
+                                          // </span>
+                                        ) : (
+                                          <span>N/A</span>
+                                        )
+                                      // ) : (job.lmia_status === "application submitted" ? (
+                                      //   <span className="px-3 py-2 badge badge-pill badge-info">
+                                      //     Application submitted
+                                      //   </span>
+                                      // )
+                                    }
+                                  </div>
+                                </td>
+                              )}
+                              {FilterdColumns.find(col => col.key === "monday_status") && (
+                                <td className="py-5 " title={filterjson.monday_status.find(
+                                  (item) => item.value === job.lmia_monday_status
+                                )?.label || "N/A"}>
                                   <span
-                                    className="font-size-3 font-weight-normal m-0"> {filterjson.monday_status.find(
-                                      (item) => item.value === job.lmia_monday_status
-                                    )?.label || "N/A"}
+                                    className={`font-size-3 font-weight-normal text-center text-capitalize rounded-pill font-size-1 px-3  ${job.lmia_monday_status ? `${determineBackgroundColor(job)} text-white` : " text-dark"}`}
+                                  >
+                                    <span
+                                      className="font-size-3 font-weight-normal m-0"> {filterjson.monday_status.find(
+                                        (item) => item.value === job.lmia_monday_status
+                                      )?.label || "N/A"}
+                                    </span>
                                   </span>
-                                </span>
-                              </td>
-                              <td className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
-                                  title={job.lmia_creation_date || "N/A"}>
-                                  {job.lmia_creation_date || "N/A"}
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3
-                                  className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
-                                  title={
-                                    ConvertTime({
-                                      _date: job.lmia_date_approved
-                                      , format: "DD MMMM, YYYY"
-                                    })
-                                  }
-                                >
-                                  {<ConvertTime _date={job.lmia_date_approved
-                                  } format={"DD MMMM, YYYY"} />}
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3
-                                  className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
-                                  title={
-                                    ConvertTime({
-                                      _date: (user_type === "admin" &&
-                                        props.response === "lmia")
-                                        ? job.lmia_date_expiry
-                                        : job.created_at
-                                      , format: "DD MMMM, YYYY"
-                                    })
-                                  }
-                                >
-                                  {<ConvertTime _date={job.lmia_date_expiry
-                                  } format={"DD MMMM, YYYY"} />}
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3 className={`font-size-3 font-weight-normal mb-0 text-capitalize text-center  font-size-1 px-1  mr-2`}
-                                  title={Json?.Category?.filter((item) => item.id === parseInt(job.job_category_id))[0]?.value || "N/A"}>
-                                  <span
-                                    className="font-size-3 font-weight-normal m-0">  {Json?.Category?.filter((item) => item.id === parseInt(job.job_category_id))[0]?.value
-                                      || "N/A"}
-                                  </span>
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
-                                  title={job.salary ? "$" + job.salary : "N/A"}>
-                                  {job.salary ? "$" + job.salary : "N/A"}
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3
-                                  className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
-                                  title={
-                                    ConvertTime({
-                                      _date: (user_type === "admin" &&
-                                        props.response === "lmia")
-                                        ? job.lmia_submissiom_date
-                                        : job.created_at
-                                      , format: "DD MMMM, YYYY"
-                                    })
-                                    //   moment(job.created_at).format(
-                                    //   "DD MMMM, YYYY"
-                                    // ) 
-                                  }
-                                >
-                                  {/* {job.created_at ? job.created_at : "N/A"} */}
-                                  {<ConvertTime _date={(user_type === "admin" &&
-                                    props.response === "lmia")
-                                    ? job.lmia_submissiom_date
-                                    : job.created_at} format={"DD MMMM, YYYY"} />}
-                                  {/* {moment(job.created_at).format("DD MMMM, YYYY")} */}
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
-                                  title={job.lmia_payment_status || "N/A"}>
-                                  {job.lmia_payment_status || "N/A"}
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
-                                  title={job.lmia_payment_by || "N/A"}>
-                                  {job.lmia_payment_by || "N/A"}
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3 className={`font-size-3 font-weight-normal mb-0 text-capitalize text-center ${job.type_of_lmia ? `${determineBackgroundColor(job)} text-white` : " text-dark"} rounded-pill font-size-1 px-1  mr-2`}
-                                  title={job.type_of_lmia || "N/A"}>
-                                  <span
-                                    className="font-size-3 font-weight-normal m-0">  {filterjson.type_of_lmia.find((item) => item.value === job.type_of_lmia)?.label
-                                      || "N/A"}
-                                  </span>
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
-                                  title={job.lmia_notes || "N/A"}>
-                                  {job.lmia_notes || "N/A"}
-                                </h3>
-                              </td>
+                                </td>
+                              )}
+                              {FilterdColumns.find(col => col.key === "lmia_creation_date") && (
+                                <td className="py-5 ">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                    title={job.lmia_creation_date || "N/A"}>
+                                    {job.lmia_creation_date || "N/A"}
+                                  </h3>
+                                </td>
+                              )}
+                              {FilterdColumns.find(col => col.key === "lmia_date_approved") && (
+                                <td className="py-5 ">
+                                  <h3
+                                    className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
+                                    title={
+                                      ConvertTime({
+                                        _date: job.lmia_date_approved
+                                        , format: "DD MMMM, YYYY"
+                                      })
+                                    }
+                                  >
+                                    {<ConvertTime _date={job.lmia_date_approved
+                                    } format={"DD MMMM, YYYY"} />}
+                                  </h3>
+                                </td>
+                              )}
+                              {FilterdColumns.find(col => col.key === "lmia_date_expiry") && (
+                                <td className="py-5 ">
+                                  <h3
+                                    className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
+                                    title={
+                                      ConvertTime({
+                                        _date: (user_type === "admin" &&
+                                          props.response === "lmia")
+                                          ? job.lmia_date_expiry
+                                          : job.created_at
+                                        , format: "DD MMMM, YYYY"
+                                      })
+                                    }
+                                  >
+                                    {<ConvertTime _date={job.lmia_date_expiry
+                                    } format={"DD MMMM, YYYY"} />}
+                                  </h3>
+                                </td>
+                              )}
+                              {FilterdColumns.find(col => col.key === "job_category") && (
+                                <td className="py-5 ">
+                                  <h3 className={`font-size-3 font-weight-normal mb-0 text-capitalize text-center  font-size-1 px-1  mr-2`}
+                                    title={Json?.Category?.filter((item) => item.id === parseInt(job.job_category_id))[0]?.value || "N/A"}>
+                                    <span
+                                      className="font-size-3 font-weight-normal m-0">  {Json?.Category?.filter((item) => item.id === parseInt(job.job_category_id))[0]?.value
+                                        || "N/A"}
+                                    </span>
+                                  </h3>
+                                </td>
+                              )}
+                              {FilterdColumns.find(col => col.key === "salary") && (
+                                <td className="py-5 ">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                    title={job.salary ? "$" + job.salary : "N/A"}>
+                                    {job.salary ? "$" + job.salary : "N/A"}
+                                  </h3>
+                                </td>
+                              )}
+                              {FilterdColumns.find(col => col.key === "lmia_submissiom_date") && (
+                                <td className="py-5 ">
+                                  <h3
+                                    className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
+                                    title={
+                                      ConvertTime({
+                                        _date: (user_type === "admin" &&
+                                          props.response === "lmia")
+                                          ? job.lmia_submissiom_date
+                                          : job.created_at
+                                        , format: "DD MMMM, YYYY"
+                                      })
+                                    }
+                                  >
+                                    {/* {job.created_at ? job.created_at : "N/A"} */}
+                                    {<ConvertTime _date={(user_type === "admin" &&
+                                      props.response === "lmia")
+                                      ? job.lmia_submissiom_date
+                                      : job.created_at} format={"DD MMMM, YYYY"} />}
+                                    {/* {moment(job.created_at).format("DD MMMM, YYYY")} */}
+                                  </h3>
+                                </td>
+                              )}
+                              {FilterdColumns.find(col => col.key === "lmia_payment_status") && (
+                                <td className="py-5 ">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                    title={job.lmia_payment_status || "N/A"}>
+                                    {job.lmia_payment_status || "N/A"}
+                                  </h3>
+                                </td>
+                              )}
+                              {FilterdColumns.find(col => col.key === "lmia_payment_by") && (
+                                <td className="py-5 ">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                    title={job.lmia_payment_by || "N/A"}>
+                                    {job.lmia_payment_by || "N/A"}
+                                  </h3>
+                                </td>
+                              )}
+                              {FilterdColumns.find(col => col.key === "type_of_lmia") && (
+                                <td className="py-5 ">
+                                  <h3 className={`font-size-3 font-weight-normal mb-0 text-capitalize text-center ${job.type_of_lmia ? `${determineBackgroundColor(job)} text-white` : " text-dark"} rounded-pill font-size-1 px-1  mr-2`}
+                                    title={job.type_of_lmia || "N/A"}>
+                                    <span
+                                      className="font-size-3 font-weight-normal m-0">  {filterjson.type_of_lmia.find((item) => item.value === job.type_of_lmia)?.label
+                                        || "N/A"}
+                                    </span>
+                                  </h3>
+                                </td>
+                              )}
+                              {FilterdColumns.find(col => col.key === "lmia_notes") && (
+                                <td className="py-5 ">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                    title={job.lmia_notes || "N/A"}>
+                                    {job.lmia_notes || "N/A"}
+                                  </h3>
+                                </td>
+                              )}
                             </>
                             : null}
                           {props.heading === "Dashboard" ? null : (
-                            <td className="py-5 d-none">
+                            FilterdColumns.find(col => col.key === "education") && <td className="py-5 d-none">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {job.education ? job.education : "N/A"}
                               </h3>
                             </td>
                           )}
                           {props.heading === "Dashboard" ? null : (
-                            <td className="py-5 d-none">
+                            FilterdColumns.find(col => col.key === "keyskill") && <td className="py-5 d-none">
                               <h3
                                 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
                                 title={job.keyskill}
@@ -931,7 +978,7 @@ export default function JobTable(props) {
                               </h3>
                             </td>
                           )}
-                          <td className="py-5 ">
+                          {FilterdColumns.find(col => col.key === "experience_required") && <td className="py-5 ">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
                               title={job.experience_required + (
                                 job.experience_required === "1-3 " ||
@@ -955,10 +1002,11 @@ export default function JobTable(props) {
                                   : ""
                               }
                             </h3>
-                          </td>
+                          </td>}
                           <td
                             className={
-                              user_type === "user" ? "d-none" : "py-5 "
+
+                              user_type === "user" || !FilterdColumns.find(col => col.key === "applied_by_admin") ? "d-none" : "py-5 "
                             }
                           >
                             <h3 className="font-size-3 font-weight-bold text-black-2 mb-0"
@@ -990,7 +1038,7 @@ export default function JobTable(props) {
                               )}
                             </h3>
                           </td>
-                          <td
+                          {FilterdColumns.find(col => col.key === "profile_complete") && <td
                             className={"py-5 "
                             }
                           >
@@ -1006,7 +1054,7 @@ export default function JobTable(props) {
                                 </span>
                               )}
                             </p>
-                          </td>
+                          </td>}
                           {props.heading === "Dashboard" ||
                             user_type === "user" ||
                             user_type === "company" || user_type === "agent" ? null : (
@@ -1244,44 +1292,46 @@ export default function JobTable(props) {
                           )}
                         </tr>
 
-                        {(responseId !== undefined ||
-                          responseId !== "undefined") &&
-                          job.job_id === responseId &&
-                          job.total_applicants > 0 ? (
-                          <tr>
-                            <td colSpan={props.response === "lmia" ? 21 : 11}>
-                              <>
-                                {/* <!-- Job Responses --> */}
-                                <JobResponse
-                                  responseId={responseId}
-                                  apiCall={apiCall}
-                                  setApiCall={setApiCall}
-                                  heading={"Manage Jobs"}
-                                  self={props.selfJob}
-                                  total_applicants={job.total_applicants}
-                                  role_category={job.role_category}
-                                  status={
-                                    props.response === "response" ||
-                                      props.response === "visa" ||
-                                      props.response === "lmia" ||
-                                      props.response === "companyprofile"
-                                      ? "1"
-                                      : "0"
-                                  }
-                                  setResponsId={setresponseId}
-                                  response={props.response}
-                                  employee_id={
-                                    location.state
-                                      ? location.state.employee_id
+                        {
+                          (responseId !== undefined ||
+                            responseId !== "undefined") &&
+                            job.job_id === responseId &&
+                            job.total_applicants > 0 ? (
+                            <tr>
+                              <td colSpan={props.response === "lmia" ? 21 : 11}>
+                                <>
+                                  {/* <!-- Job Responses --> */}
+                                  <JobResponse
+                                    responseId={responseId}
+                                    apiCall={apiCall}
+                                    setApiCall={setApiCall}
+                                    heading={"Manage Jobs"}
+                                    self={props.selfJob}
+                                    total_applicants={job.total_applicants}
+                                    role_category={job.role_category}
+                                    status={
+                                      props.response === "response" ||
+                                        props.response === "visa" ||
+                                        props.response === "lmia" ||
+                                        props.response === "companyprofile"
+                                        ? "1"
+                                        : "0"
+                                    }
+                                    setResponsId={setresponseId}
+                                    response={props.response}
+                                    employee_id={
+                                      location.state
                                         ? location.state.employee_id
+                                          ? location.state.employee_id
+                                          : ""
                                         : ""
-                                      : ""
-                                  }
-                                />
-                              </>
-                            </td>
-                          </tr>
-                        ) : null}
+                                    }
+                                  />
+                                </>
+                              </td>
+                            </tr>
+                          ) : null
+                        }
                       </React.Fragment>
                     );
                   })

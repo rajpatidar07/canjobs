@@ -87,6 +87,7 @@ const NewUserProfile = (props) => {
             ? "retaineragreement"
             : "profile"
   );
+  const [selectedPaymentTab, setSelectedPaymentTab] = useState("payment_records");
   const [userDetail, setuserDetail] = useState([]);
   const [userFound, setuserFound] = useState();
   const [PersonalDetail, setPersonalDetail] = useState([]);
@@ -1755,7 +1756,50 @@ const NewUserProfile = (props) => {
                   >
                     {TabActive === "payment" ? (
                       <div className="p-1 activity_container">
-                        {user_type === "admin" ? (
+                        <div className="p-3">
+                          <h3 className="">Payment's</h3>
+                        </div>
+                        <div
+                          className={user_type === "user" ? "d-none" : "d-flex justify-content-between align-items-center mb-3"}
+                          style={{ gap: "5px" }}
+                        >
+                          <div
+                            className={`btn-group`}
+                            role="group"
+                            aria-label="Basic example"
+                          >
+                            <button
+                              type="button"
+                              className={
+                                `${selectedPaymentTab === "payment_records"
+                                  ? "btn btn-primary"
+                                  : "btn btn-outline-primary"}`
+                              }
+                              onClick={() => {
+                                setSelectedPaymentTab("payment_records");
+                              }}
+                              title="payment_records"
+                            >
+                              Payment records
+                            </button>
+                            <button
+                              type="button"
+                              className={
+                                `${selectedPaymentTab === "invoice"
+                                  ? "btn btn-primary"
+                                  : "btn btn-outline-primary"} `
+                              }
+                              onClick={() => {
+                                setSelectedPaymentTab("invoice");
+                                // setApplicanttypeFolderId(location?.state?.folderId || localApplicantTypeFolderId)
+                              }}
+                              title="invoice"
+                            >
+                              Invoice
+                            </button>
+                          </div>
+                        </div>
+                        {user_type === "admin" && selectedPaymentTab === "invoice" ? (
                           <PaymentPage
                             user_id={eid}
                             user_type={"employee"}

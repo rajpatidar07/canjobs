@@ -5,7 +5,9 @@
 4. Correct spacing and formatting have been added to the reply chat box, task dashboard.
 5. Fix the pagination for the applicant-type documents .
 6. Add navigation from the Job ID in the job table to the Job Details page.
-7. Add a condition to hide the candidate's response on the LMIA page when the 'Show' button is clicked, and vice versa
+7. Add a condition to hide the candidate's response on the LMIA page when the 'Show' button is clicked, and vice versa.
+8. Add conditions for the payment records and invoice and cash and card payment from the admin side.
+9. Add option for  the Permission in LMIA table fields and also manage the view for the permitted fields of the LMIA table.
 Date:17/07/25
 1. Add a dynamic RA with a maximum of 4 rows for payment details.
 2. Add fixed ID and job title to the job table.

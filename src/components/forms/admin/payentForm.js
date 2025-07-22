@@ -4,10 +4,12 @@ import PayForm from "./PayForm";
 // import Loader from "../../common/loader";
 import AddTransactionForm from "./addTransactionForm";
 import ConvertTime from "../../common/Common function/ConvertTime";
+
 export default function PayentForm({ data, user_id, user_type }) {
   const [apiCall, setApicall] = useState(true);
   // const [loading, setLoading] = useState(true);
   const [paymentList, setPaytemList] = useState([]);
+  const [paymentMode, setPaymentMode] = useState("card"); // default to card
 
   let user = localStorage.getItem("userType");
 
@@ -43,9 +45,12 @@ export default function PayentForm({ data, user_id, user_type }) {
     // eslint-disable-next-line
   }, [apiCall]);
 
+  const handlePaymentModeChange = (e) => {
+    setPaymentMode(e.target.value);
+  };
+
   return (
     <>
-
       <div className="bg-white rounded h-100 px-10 overflow-y-hidden">
         <div className="row">
           {
@@ -117,22 +122,56 @@ export default function PayentForm({ data, user_id, user_type }) {
               </div>
             </div>
           }
-          {(user_type === "employee" && user === "agent") ? null :
+          {user === "admin" ? (
+            <div className="col-md-4">
+              <div className="d-flex justify-content-around mb-3">
+                <label className="form-label">Select Payment Mode: </label>
+                <select
+                  className="form-select form-control col-4"
+                  value={paymentMode}
+                  onChange={handlePaymentModeChange}
+                >
+                  <option value="card">Card</option>
+                  <option value="cash">Cash</option>
+                </select>
+              </div>
+              {paymentMode === "cash" ? (
+                <AddTransactionForm
+                  data={data}
+                  setApicall={setApicall}
+                  user_id={user_id}
+                  user={user}
+                  user_type={user_type}
+                />
+              ) : (
+                <PayForm
+                  data={data}
+                  setApicall={setApicall}
+                  user_id={user_id}
+                  user={user_type}
+                />
+              )}
+            </div>
+          ) : (user_type === "employee" && user === "agent") ? null :
             user === "user" || user === "company" || user === "agent" ? (
-              <PayForm
-                data={data}
-                setApicall={setApicall}
-                user_id={user_id}
-                user={user_type}
-              />
+              <div className="col-md-4">
+                <PayForm
+                  data={data}
+                  setApicall={setApicall}
+                  user_id={user_id}
+                  user={user_type}
+                />
+              </div>
             ) : user === "agent" ? null : (
-              <AddTransactionForm
-                data={data}
-                setApicall={setApicall}
-                user_id={user_id}
-                user={user}
-                user_type={user_type}
-              />
+              <div className="col-md-4">
+                <AddTransactionForm
+                  data={data}
+                  setApicall={setApicall}
+                  user_id={user_id}
+                  user={user}
+                  user_type={user_type}
+                />
+              </div>
             )}
         </div>
       </div>

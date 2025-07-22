@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import JobDetailsBox from "../common/jobdetail";
-// import AdminHeader from "./header";
-// import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
 import { GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
@@ -11,6 +9,8 @@ import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
 import SelectBox from "../common/Common function/SelectBox";
 import CustomButton from "../common/button";
+import LmiafieldsPermission from "../forms/admin/LmiafieldsPermission";
+import { FaLock } from "react-icons/fa6";
 function LimaContainer(props) {
   /*show Modal and props state */
   let [apiCall, setApiCall] = useState(false);
@@ -20,6 +20,7 @@ function LimaContainer(props) {
   const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   /*Filter and search state */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
+  const [openPermission, setOpenPermission] = useState(false);
   const [SkillFilterValue, setSkillFilterValue] = useState(
     props ? props.skill : ""
   );
@@ -254,7 +255,12 @@ function LimaContainer(props) {
                         {/* <div className="mt-4">
                         <CommonThreeDots tableName={"job"} tableData={allJob} />
                       </div> */}
-                        {/*<-- Add Job Modal -->*/}
+                        {/*<-- AddLmia feilds permssion  Modal -->*/}
+                        <button className=" btn-sm btn-primary border-0 mx-2"
+                          onClick={() => setOpenPermission("0")}
+                          title="Add LMIA Permissions "
+                        >
+                          <FaLock /></button>
                       </div>
                       <small className="text-danger">{searcherror}</small>
                     </div>
@@ -325,6 +331,14 @@ function LimaContainer(props) {
           close={() => setShowAddJobsModal(false)}
         />
       ) : null}
+      {openPermission ?
+        <LmiafieldsPermission
+          show={openPermission}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => setOpenPermission(false)}
+        />
+        : null}
       {userType === "company" ? <EmployeeFooter /> : null}
     </>
   );

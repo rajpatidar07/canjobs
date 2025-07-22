@@ -154,11 +154,8 @@ const Payment_Page = (props) => {
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
         <div
           className={` d-flex
-              justify-content-between`}
+              justify-content-end`}
         >
-          <div className="p-3">
-            <h3 className="">Payment's</h3>
-          </div>
           <div className="p-3">
             <button
               className="btn btn-primary"

@@ -153,7 +153,7 @@ export default function PayForm({ setApicall, data, user, user_id }) {
     GetStripeDetails();
   }
   return (
-    <form className="col-md-4 p-10">
+    <form className=" p-10">
       <label className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0">
         Payment from: <span className="text-danger">*</span>
       </label>
