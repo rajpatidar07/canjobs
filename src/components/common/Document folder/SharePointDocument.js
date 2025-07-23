@@ -30,7 +30,7 @@ import DocumentsNotes from "./DocumentsNotes";
 import CreateExcelSheet from "./CreateExcelSheet";
 import CreateWordFile from "../../forms/user/CreateWordFile";
 import ConvertPPT from "../Common function/ConvertPPT";
-import ConvertAnyFileToPdf from "../Common function/ConvertAnyFileTopdf";
+// import ConvertAnyFileToPdf from "../Common function/ConvertAnyFileTopdf";
 import convertWordToPDF from "../Common function/ConvertWordToPdf";
 // import DocViewer from "react-doc-viewer";
 // import { PDFDocument } from 'pdf-lib';
@@ -214,7 +214,7 @@ export default function SharePointDocument({
     }
     else if (
       data.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" || data.file.mimeType === "application/vnd.ms-powerpoint" ||
-      data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+      // data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
       data.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     ) {
       let res = await ConvertPPT(data)
@@ -224,26 +224,27 @@ export default function SharePointDocument({
         setDocPreview(false);
         setConvertedDoc("");
       }
-    } else if (
-      data.file.mimeType ===
-      "application/vnd.ms-excel"
-    ) {
-      if (data["@microsoft.graph.downloadUrl"]) {
-        try {
-          let res = await ConvertAnyFileToPdf(data);
-          if (res) {
-            setConvertedDoc(`data:application/pdf;base64,${res}`);
-          } else {
-            setDocPreview(false);
-            setConvertedDoc("");
-          }
-        } catch (error) {
-          console.error("Error converting Excel to PDF:", error);
-          setDocPreview(false);
-          setConvertedDoc("");
-        }
-      }
     }
+    //  else if (
+    //   data.file.mimeType ===
+    //   "application/vnd.ms-excel"
+    // ) {
+    //   if (data["@microsoft.graph.downloadUrl"]) {
+    //     try {
+    //       let res = await ConvertAnyFileToPdf(data);
+    //       if (res) {
+    //         setConvertedDoc(`data:application/pdf;base64,${res}`);
+    //       } else {
+    //         setDocPreview(false);
+    //         setConvertedDoc("");
+    //       }
+    //     } catch (error) {
+    //       console.error("Error converting Excel to PDF:", error);
+    //       setDocPreview(false);
+    //       setConvertedDoc("");
+    //     }
+    //   }
+    // }
     else {
       setDocPreview(false);
       setConvertedDoc("");
@@ -376,7 +377,7 @@ export default function SharePointDocument({
             setDocSingleDate(res.data.data.find((item) => item.id === newdocId));
             SetPdfDocUrl(res.data.data.find((item) => item.id === newdocId));
             setFileID(res.data.data.find((item) => item.id === newdocId).id);
-            console.log(res.data.data.find((item) => item.id === newdocId), "pppppppp")
+            // console.log(res.data.data.find((item) => item.id === newdocId), "pppppppp")
             getCommentsList(res.data.data.find((item) => item.id === newdocId));
             const newUrl = window.location.pathname;
             window.history.replaceState({}, document.title, newUrl);

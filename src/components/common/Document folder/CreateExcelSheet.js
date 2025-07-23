@@ -4,6 +4,7 @@ import { FaArrowRight, FaArrowDownLong } from "react-icons/fa6";
 import { Modal } from "react-bootstrap"
 import { toast } from "react-toastify";
 import { AddSharePointDOcument } from "../../../api/api";
+import * as XLSX from "xlsx";
 const customCreateFormulaParser = (data) =>
   createFormulaParser(data, { SUM: undefined });
 
@@ -61,16 +62,28 @@ const CreateExcelSheet = (props) => {
     setData(data.map((row) => [...row, { value: "" }]));
     setLoading(false)
   };
-  const createCSVFile = (e) => {
+  const createCSVFile = async (e) => {
+    e.preventDefault();
     // Convert spreadsheet data to CSV format
-    const csvRows = data.map(row => row.map(cell => cell.value).join(","));
-    const csvString = csvRows.join("\n");
+    // const csvRows = data.map(row => row.map(cell => cell.value).join(","));
+    // const csvString = csvRows.join("\n");
 
-    // Create a File object (similar to file input selection)
-    const csvFile = new File([csvString], `Sheet${new Date().getTime()}`, { type: "text/csv" });
+    // Convert CSV string to XLSX file in memory
+    const worksheet = XLSX.utils.aoa_to_sheet(data.map(row => row.map(cell => cell.value)));
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
-    // Log the file object
-    exportToExcelFile(e, csvFile)
+    const wbout = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+    const xlsxBlob = new Blob([wbout], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    });
+
+    const xlsxFile = new File([xlsxBlob], `Sheet${new Date().getTime()}.xlsx`, {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    });
+    // console.log(xlsxFile)
+    // Upload the XLSX file using the existing exportToExcelFile function
+    await exportToExcelFile(e, xlsxFile);
   };
   /*Function to Add excel to the api */
   const exportToExcelFile = async (e, file) => {

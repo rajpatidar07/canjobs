@@ -23,7 +23,7 @@ import SAlert from "./sweetAlert";
 // import ExcelToPdfConverter from "./Common function/ExcelToPdfConverter";
 import AddFolderModal from "./Document folder/AddFolderModal";
 import ConvertPPT from "./Common function/ConvertPPT";
-import ConvertAnyFileToPdf from "./Common function/ConvertAnyFileTopdf";
+// import ConvertAnyFileToPdf from "./Common function/ConvertAnyFileTopdf";
 // import ConvertAnyFileToPdf from "./Common function/ConvertAnyFileTopdf";
 // import convertPPTtoPDF from "./Common function/PpttoPdf";
 export default function ApplicantTypeDocuments(props) {
@@ -150,6 +150,7 @@ export default function ApplicantTypeDocuments(props) {
       columnName: column,
     }));
   }
+  
   const fetchAdminData = async () => {
     try {
       const userData = await getallAdminData();
@@ -272,8 +273,8 @@ export default function ApplicantTypeDocuments(props) {
       }));
     } else
       if (
-        data.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" || data.file.mimeType === "application/vnd.ms-powerpoint" ||
-        data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        data.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" || data.file.mimeType === "application/vnd.ms-powerpoint" 
+        // || data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       ) {
         let res = await ConvertPPT(data)
         if (res) {
@@ -289,30 +290,30 @@ export default function ApplicantTypeDocuments(props) {
           }));
         }
       }
-      else if (
-        data.file.mimeType ===
-        "application/vnd.ms-excel"
-      ) {
-        if (data["@microsoft.graph.downloadUrl"]) {
-          try {
-            let res = await ConvertAnyFileToPdf(
-              data
-            );
-            // console.log(res);
-            setState((prev) => ({
-              ...prev,
-              convertedDoc: `data:application/pdf;base64,${res}`,
-            }));
-          } catch (error) {
-            console.error("Error converting Excel to PDF:", error);
-            setState((prev) => ({
-              ...prev,
-              convertedDoc: "",
-              docPreview: false,
-            }));
-          }
-        }
-      }
+      // else if (
+      //   data.file.mimeType ===
+      //   "application/vnd.ms-excel"
+      // ) {
+      //   if (data["@microsoft.graph.downloadUrl"]) {
+      //     try {
+      //       let res = await ConvertAnyFileToPdf(
+      //         data
+      //       );
+      //       // console.log(res);
+      //       setState((prev) => ({
+      //         ...prev,
+      //         convertedDoc: `data:application/pdf;base64,${res}`,
+      //       }));
+      //     } catch (error) {
+      //       console.error("Error converting Excel to PDF:", error);
+      //       setState((prev) => ({
+      //         ...prev,
+      //         convertedDoc: "",
+      //         docPreview: false,
+      //       }));
+      //     }
+      //   }
+      // }
       else {
         // console.log(data, "other")
         window.open(data.webUrl);
@@ -480,7 +481,9 @@ export default function ApplicantTypeDocuments(props) {
       }));
     }
   };
+
   const nPages = Math.ceil(state.totalData / state?.recordsPerPage);
+
   useEffect(() => {
     fetchAllShareType();
     // console.log(state.folderID, "oooooo")
@@ -495,6 +498,7 @@ export default function ApplicantTypeDocuments(props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.columnName, state.sortOrder, props.folderApiCall, state.apiCall, state.folderID, state.pageNo, props.notification === "yes" ? location.key : null]);
+  
   useEffect(() => {
     if (props.folderId !== state.folderID || props?.notification === "yes") {
       setState((prev) => ({

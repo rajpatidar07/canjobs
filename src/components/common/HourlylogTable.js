@@ -780,7 +780,6 @@ function Hourlylogtable(props) {
 
                             )}
                         </form>
-                        {console.log(deleteAlertHourLog === true ? "dfsdfsd" : "pppp", deleteAlertHourLog)}
                         {/* {deleteAlertHourLog && ( */}
                         <SAlert
                             show={deleteAlertHourLog}
