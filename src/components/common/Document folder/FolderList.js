@@ -793,7 +793,6 @@ export default function FolderList({
             recordsPerPage={recordsPerPage}
           />
         </div>
-
         {(userType === "admin" || userType === "agent") && (
           <>
             <CommentSection
