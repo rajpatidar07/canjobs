@@ -1053,7 +1053,7 @@ function CompanyProfileDetail(props) {
                         <PayentForm
                           data={employerData}
                           user_id={cid}
-                          user_type={"employee"}
+                          user_type={"employer"}
                         />
                       )}
                     </div>

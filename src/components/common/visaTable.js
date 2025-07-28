@@ -17,6 +17,7 @@ import { GrDocumentUser } from "react-icons/gr";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { toast } from "react-toastify";
 import VisaTimeLine from "./visaTimeLine";
+import ConvertTime from "./Common function/ConvertTime";
 export default function VisaTable(props) {
   let user_type = localStorage.getItem("userType");
   /*Show modal states */
@@ -53,7 +54,8 @@ export default function VisaTable(props) {
         columnName,
         sortOrder,
         props.employee_id,
-        "visa"
+        "visa",
+        props.subStage
       );
       if (userData.data.data.length === 0) {
         setemployeeData([]);
@@ -124,6 +126,7 @@ export default function VisaTable(props) {
     sortOrder,
     props.apiCall,
     apiCall,
+    props.subStage
   ]);
 
   /* Function to show the single data to update Employee*/
@@ -198,7 +201,7 @@ export default function VisaTable(props) {
       ) : null}
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
         <div className="table-responsive main_table_div"
-        style={{ maxHeight: "calc(-210px + 100vh)" }}>
+          style={{ maxHeight: "calc(-210px + 100vh)" }}>
           {isLoading ? (
             <Loader />
           ) : (
@@ -303,6 +306,26 @@ export default function VisaTable(props) {
                       <Link
                         to={""}
                         onClick={() => {
+                          handleSort("visa_stat_date");
+                          props.setpageNo(1);
+                        }}
+                        className="text-gray"
+                        title="Sort by visa Start Date"
+                      >
+                        Visa Start Date
+                      </Link>
+                    </th>
+                  )}
+                  {props.heading === "Dashboard" ? (
+                    ""
+                  ) : (
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
+                    >
+                      <Link
+                        to={""}
+                        onClick={() => {
                           handleSort("visa_country");
                           props.setpageNo(1);
                         }}
@@ -349,6 +372,15 @@ export default function VisaTable(props) {
                       Status
                     </th>
                   )}
+                  {props.visa === "yes" ? null : (
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
+                      title="visa_decision_date"
+                    >
+                      Visa Decision Date
+                    </th>
+                  )}
                   {props.heading === "Dashboard" || user_type === "company" ? (
                     ""
                   ) : (
@@ -366,7 +398,7 @@ export default function VisaTable(props) {
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || employeeData.length === 0 ? (
                   <tr>
-                    <th colSpan={10} className="bg-white text-center">
+                    <th colSpan={11} className="bg-white text-center">
                       No Data Found
                     </th>
                   </tr>
@@ -379,7 +411,7 @@ export default function VisaTable(props) {
                         <tr style={{ border: "0" }}>
                           <td
                             style={{ paddingBottom: "0!important" }}
-                            colSpan="10"
+                            colSpan="11"
                             className={
                               empdata.visa_status ? "bg-white text-center" : "d-none"
                             }
@@ -541,6 +573,24 @@ export default function VisaTable(props) {
                           ""
                         ) : (
                           <td className=" py-5">
+                            {empdata.visa_start_date === null || !empdata.visa_start_date ? (
+                              <p className="font-size-3  mb-0">N/A</p>
+                            ) : (
+
+                              <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate text-capitalize"
+                                title={empdata.visa_start_date}>
+                                <ConvertTime
+                                  _date={empdata.visa_start_date}
+                                  format={"DD MMM, YYYY"}
+                                />
+                              </p>
+                            )}
+                          </td>
+                        )}
+                        {props.heading === "Dashboard" ? (
+                          ""
+                        ) : (
+                          <td className=" py-5">
                             {empdata.visa_country === null ||
                               empdata.visa_country === "" || !empdata.visa_country ? (
                               <p className="font-size-3  mb-0" title="N/A ">N/A</p>
@@ -650,11 +700,17 @@ export default function VisaTable(props) {
                         </td>
 
                         {/* Calulation to get user is new or retained */}
-                        {/* <td className=" py-5">
-                        <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          {(new Date(empdata.created_at) >= oneMonthAgo && new Date(empdata.created_at) <= currentDate) === true ? "New" : "Retained"}                        
-                          </p>
-                      </td> */}
+                        <td className=" py-5">
+                          {empdata?.visa_decision_date ? <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            <ConvertTime
+                              _date={empdata?.visa_decision_date}
+                              format={"DD MMM, YYYY"}
+                            />
+                          </p> :
+                            <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              N/A
+                            </span>}
+                        </td>
 
                         <td
                           className={

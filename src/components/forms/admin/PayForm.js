@@ -45,7 +45,6 @@ export default function PayForm({ setApicall, data, user, user_id }) {
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, onInputChange, errors, setErrors, validate } =
     useValidation(initialFormState, validators);
-
   /*Function to made razor pay payment*/
   const onPayentClick = async (e) => {
     // console.log(errors, data);
@@ -71,7 +70,7 @@ export default function PayForm({ setApicall, data, user, user_id }) {
             description: "FIRST RAZOR PAY",
             order_id: orderId,
             handler: async function (response) {
-              await AddRazorpay(amount, response, user,user_id);
+              await AddRazorpay(amount, response, user, user_id);
               // Perform any additional actions on successful payment here
               toast.success("Payment Successful.", {
                 position: toast.POSITION.TOP_RIGHT,
@@ -160,7 +159,7 @@ export default function PayForm({ setApicall, data, user, user_id }) {
       <div className="row">
         <div
           className={`col-6 text-capitalize`}
-          //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}
+        //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}
         >
           <input
             type="radio"
@@ -175,7 +174,7 @@ export default function PayForm({ setApicall, data, user, user_id }) {
         </div>
         <div
           className={`col-6 text-capitalize`}
-          //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}
+        //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}
         >
           <input
             type="radio"
@@ -340,9 +339,9 @@ export default function PayForm({ setApicall, data, user, user_id }) {
                 state.amount
                   ? setStripePayment(true)
                   : setErrors({
-                      ...errors,
-                      amount: "Please set the amount before payment",
-                    })
+                    ...errors,
+                    amount: "Please set the amount before payment",
+                  })
               }
               className="btn btn-info btn-small w-100 mb-5 rounded-5 text-uppercase"
               title="Stripe pay"
@@ -356,9 +355,9 @@ export default function PayForm({ setApicall, data, user, user_id }) {
                 state.amount
                   ? setBraintreePayment(true)
                   : setErrors({
-                      ...errors,
-                      amount: "Please set the amount before payment",
-                    })
+                    ...errors,
+                    amount: "Please set the amount before payment",
+                  })
               }
               className="w-100 mb-5 rounded-5 text-uppercase"
               title="Braintree pay"

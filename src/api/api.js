@@ -1239,6 +1239,7 @@ export const AddUpdateVisa = async (employee_id, state, id, type) => {
       country: state.country,
       type: type,
       status: state.status,
+      visa_decision_date: state.visa_decision_date
     },
     {
       headers: {
@@ -1261,7 +1262,8 @@ export const GetEmployeeVisaList = async (
   column,
   sort,
   id,
-  type
+  type,
+  substage
 ) => {
   const response = await axios.post(
     `${API_URL}getVisa`,
@@ -1275,7 +1277,8 @@ export const GetEmployeeVisaList = async (
       limit: limit,
       column_name: column,
       sort_order: sort,
-      type: type
+      type: type,
+      substage: substage
     },
     {
       headers: {
@@ -2880,7 +2883,7 @@ export const SendEmail = async (data, FileList, url) => {
       attachments_url: url,
       bcc_email: data.bccemail,
       signature: data.signature,
-      sender_id:data.sender_id
+      sender_id: data.sender_id
     },
     {
       headers: {
@@ -3206,7 +3209,7 @@ export const AddRazorpay = async (amount, response, role, id) => {
       razorpay0rderId: response.razorpay_order_id,
       razorpaysighature: response.razorpay_signature,
       user_role: role,
-      id: role === "agent" ? id : "",
+      id: id ,
     },
     {
       headers: {

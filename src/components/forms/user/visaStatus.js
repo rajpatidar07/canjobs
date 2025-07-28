@@ -29,6 +29,7 @@ export default function VisaStatus(props) {
   const initialFormStateuser = {
     status: props.employeeData?.[props.type === "visa" ? "visa_status" : "applicant_process_status"],
     country: props.employeeData?.visa_country,
+    visa_decision_date: ""
   };
   /*Function to get Visa sub stage */
   const GetVIsaSubSTage = async () => {
@@ -293,6 +294,20 @@ export default function VisaStatus(props) {
                 onVisaUpdateClick={onVisaUpdateClick}
               />
             )}
+            <div className={props.type === "visa" && state.status === "file decision" ? "form-group col" : "d-none"}>
+              <label
+                htmlFor="visa_decision_date"
+                className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+              >
+                Visa Decision Date :
+              </label>
+              <input 
+              className="form-control"
+                type="date"
+                value={state.visa_decision_date}
+                onChange={onInputChange}
+                name="visa_decision_date" />
+            </div>
             <div className="form-group text-center">
               {loading === true ? (
                 <button

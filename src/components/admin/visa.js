@@ -32,6 +32,7 @@ export default function Visa() {
   let [applicantTypeList, setApplicantTypeList] = useState([]);
   const [VisaCountryFilter, setVisaCountryFilter] = useState("");
   const [VisStatusFilterValue, setVisStatusFilterValue] = useState("");
+  const [VisaSubStatusFilterValue, setVisaSubStatusFilterValue] = useState("");
   const [IntrestedFilterValue, setIntrestedFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
@@ -214,6 +215,24 @@ export default function Visa() {
                       />
                     </div>
                   </div>
+                  {VisStatusFilterValue && <div className={"col p-1 form_group mb-3"}>
+                    <p className="input_label">Filter by Visa Sub Status:</p>
+                    <div className="select_div">
+                      <SelectBox
+                        Width={"yes"} options={(FilterJson?.visa_sub_stages[VisStatusFilterValue].map((option) => ({
+                          value: option,
+                          label: option,
+                        })) || [])}
+                        selectedValue={VisaSubStatusFilterValue}
+                        onChange={(e) => {
+                          setVisaSubStatusFilterValue(e ? e.value : null);
+                          setpageNo(1);
+                          setEmpId("");
+                        }}
+                        type={"status"}
+                      />
+                    </div>
+                  </div>}
                   <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Application type:</p>
                     <div className="select_div">
@@ -231,6 +250,26 @@ export default function Visa() {
                         type={"intrested_in"}
                       />
                     </div>
+                  </div>
+                  <div className={"col form_group p-0"}>
+                    <button
+                      className="btn btn-primary w-100"
+                      onClick={() => {
+                        const clearFiltersByPageName = () => {
+                          setIntrestedFilterValue("")
+                          setVisaSubStatusFilterValue("")
+                          setVisStatusFilterValue("")
+                          setVisaCountryFilter("")
+                          setSearch("")
+                          setSearch("");
+                          setpageNo(1);
+                          setEmpId("");
+                        };
+                        clearFiltersByPageName();
+                      }}
+                    >
+                      Reset
+                    </button>
                   </div>
                   <div className="mt-4">
                     <CommonThreeDots tableName={"visa"} tableData={allVisa} />
@@ -387,6 +426,7 @@ export default function Visa() {
                 employee_id={EmpId}
                 setpageNo={setpageNo}
                 pageNo={pageNo}
+                subStage={VisaSubStatusFilterValue}
               />
             </div>
           </div>
