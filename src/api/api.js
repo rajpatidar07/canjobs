@@ -69,6 +69,7 @@ export const GetCountry = async () => {
   });
   return response.data;
 };
+
 //Api to get the statistics count of all data
 export const GetAllDataCount = async () => {
   const response = await axios.get(`${API_URL}common/getSummaryCounts`);
@@ -93,6 +94,7 @@ export const GetAllChartData = async (id, type, applicantType) => {
   );
   return response.data;
 };
+
 //Api to get the graph data count of all applicants type data
 export const GetAllApplicanttypeChartData = async (id, type) => {
   const response = await axios.post(
@@ -110,6 +112,7 @@ export const GetAllApplicanttypeChartData = async (id, type) => {
   );
   return response.data;
 };
+
 //Api to get the graph data count of all lima status
 export const GetAllLimaChartData = async (id, type) => {
   const response = await axios.post(
@@ -127,6 +130,7 @@ export const GetAllLimaChartData = async (id, type) => {
   );
   return response.data;
 };
+
 //Api to get the graph data count of all applicants type data  of visa status
 export const GetAllVisaChartData = async (id, type) => {
   const response = await axios.post(
@@ -144,6 +148,7 @@ export const GetAllVisaChartData = async (id, type) => {
   );
   return response.data;
 };
+
 /*Chanage password Api */
 export const ChangePasswordApi = async (props) => {
   const response = await axios.put(
@@ -259,6 +264,7 @@ export const EmployeeForgotPassword = async (props) => {
   });
   return response.data;
 };
+
 /*Employee detail api */
 export const EmployeeDetails = async (props) => {
   const formData = new FormData();
@@ -276,6 +282,7 @@ export const EmployeeDetails = async (props) => {
   return response.data;
   // }
 };
+
 /*get Applicant Type and sub types  api */
 export const getApplicanTypeApi = async (id) => {
   const response = await axios.post(
@@ -293,6 +300,7 @@ export const getApplicanTypeApi = async (id) => {
   return response.data;
   // }
 };
+
 /*Add Applicant Type and sub types  api */
 export const AddApplicanTypeApi = async (props) => {
   const response = await axios.post(
@@ -308,6 +316,7 @@ export const AddApplicanTypeApi = async (props) => {
   return response.data;
   // }
 };
+
 /*Delete Applicant Type and sub types  api */
 export const DeleteApplicanTypeApi = async (props) => {
   const response = await axios.post(
@@ -358,6 +367,7 @@ export const AddEmployeeDetails = async (props) => {
 
   return response.data;
 };
+
 /*Employee List Api */
 export const getallEmployeeData = async (
   search,
@@ -417,6 +427,7 @@ export const getallEmployeeData = async (
   );
   return response.data;
 };
+
 /*Detail Employee Education Api */
 export const EmployeeEducationDetails = async (props) => {
   const formData = new FormData();
@@ -456,6 +467,7 @@ export const AddEmployeeEducation = async (props, id) => {
   );
   return response.data;
 };
+
 /*Detail Employee Skill Api */
 export const EmployeeSkillDetails = async (props) => {
   const formData = new FormData();
@@ -632,6 +644,7 @@ export const GetJobDetail = async (props) => {
   );
   return response;
 };
+
 /*Api to get list of the Document */
 export const GetEmployeeDocumentList = async (id, empType, type) => {
   const response = await axios.post(
@@ -650,6 +663,7 @@ export const GetEmployeeDocumentList = async (id, empType, type) => {
   );
   return response;
 };
+
 /*Api to get list of the Document drive */
 export const GetDocumentDriveList = async (id, empType, type) => {
   const response = await axios.post(
@@ -669,6 +683,7 @@ export const GetDocumentDriveList = async (id, empType, type) => {
   );
   return response;
 };
+
 /*Api to upload document*/
 export const UploadDocument = async (id, type, doc, docId, docName) => {
   const response = await axios.put(
@@ -690,6 +705,7 @@ export const UploadDocument = async (id, type, doc, docId, docName) => {
   );
   return response;
 };
+
 /*Api to Upload bulk document */
 export const UploadBulkDocument = async (id, data, docId, empType) => {
   const response = await axios.put(
@@ -709,6 +725,7 @@ export const UploadBulkDocument = async (id, data, docId, empType) => {
   );
   return response;
 };
+
 /*Api to Upload Drive document */
 export const UploadDriveDocument = async (
   id,
@@ -740,6 +757,7 @@ export const UploadDriveDocument = async (
   );
   return response;
 };
+
 /*Api to document name */
 export const ChangeNameDocument = async (
   id,
@@ -800,6 +818,7 @@ export const DeleteDocument = async (id, type) => {
   );
   return response;
 };
+
 /*Api function to add annotation for the document */
 export const ADocAnnotation = async (
   id,
@@ -911,7 +930,6 @@ export const ADocAnnotation = async (
   return response;
 };
 
-
 /*Api to get common json to get the json to add task  */
 export const GetGetCommanJson = async (type) => {
   const response = await axios.post(`${API_URL}api/common_controller/getCommonJson`, {
@@ -923,7 +941,9 @@ export const GetGetCommanJson = async (type) => {
     },
   });
   return response.data;
-};/*Api to get document comment list  */
+};
+
+/*Api to get document comment list  */
 export const GetCommentsAndAssign = async (
   id,
   userid,
@@ -982,6 +1002,7 @@ export const GetCommentsAndAssign = async (
   );
   return response;
 };
+
 /*Api to get document task admin list  */
 export const GetAdminsTasks = async (
   id,
@@ -1033,6 +1054,7 @@ export const GetAdminsTasks = async (
   );
   return response;
 };
+
 /*Api to update Documentcomment assign */
 export const UpdateDocuentcommentAssign = async (json, docUserType) => {
   const response = await axios.put(`${API_URL}admin/updateDocTask?document_user_type=${docUserType}`, json, {
@@ -1043,6 +1065,7 @@ export const UpdateDocuentcommentAssign = async (json, docUserType) => {
   });
   return response.data;
 };
+
 /*Api to delete document comments */
 export const DeleteCommentsAndAssign = async (DocId, id, userId,
   userType,
@@ -1067,6 +1090,7 @@ export const DeleteCommentsAndAssign = async (DocId, id, userId,
   );
   return response;
 };
+
 /*Api to Send Reply for document comments */
 export const SendReplyCommit = async (
   data,
@@ -1141,6 +1165,7 @@ export const SendReplyCommit = async (
   );
   return response;
 };
+
 /*Api to Send Reply for document comments */
 export const SendReplyCommitSharepoint = async (
   data,
@@ -1204,6 +1229,7 @@ export const GetReplyCommit = async (doc_id, task_id) => {
   );
   return response;
 };
+
 /*Api to delete document comments replyes */
 export const DeleteReplyCommentsAndAssign = async (id, userId,
   userType,
@@ -1228,6 +1254,7 @@ export const DeleteReplyCommentsAndAssign = async (id, userId,
   );
   return response;
 };
+
 /*Api to Add update visa */
 export const AddUpdateVisa = async (employee_id, state, id, type) => {
   // /job_detail(employee_id, state, id)
@@ -1289,6 +1316,7 @@ export const GetEmployeeVisaList = async (
   );
   return response;
 };
+
 /*Api to get Visa Sub stage List */
 export const GetVisaSubStages = async (misc_id, type, id) => {
   const response = await axios.post(
@@ -1352,6 +1380,7 @@ export const EmployerSignUp = async (props, permission) => {
   const response = await axios.post(`${API_URL}employer_signup`, formData);
   return response.data;
 };
+
 /*Employer Login */
 export const EmployerLogin = async (props) => {
   const formData = new FormData();
@@ -1465,6 +1494,7 @@ export const GetAllResponse = async (
   );
   return response;
 };
+
 /*Delete Response api */
 export const DeletRespone = async (apply_id, employee_id) => {
   const response = await axios.post(
@@ -1807,6 +1837,7 @@ export const AddLimia = async (props, employee_id, job_id) => {
   );
   return response.data;
 };
+
 /*Function to add update lmia additional information for employee lmia*/
 export const AddLmiaAdditionalInformationEmployee = async (data) => {
   // (props);
@@ -1822,6 +1853,7 @@ export const AddLmiaAdditionalInformationEmployee = async (data) => {
   );
   return response.data;
 };
+
 /*Function to add update lmia additional information for job lmia*/
 export const AddLmiaAdditionalInformationJob = async (data) => {
   // (props);
@@ -1887,6 +1919,7 @@ export const AddUpdateEmployeeLmiaSubStage = async (props) => {
   );
   return response.data;
 };
+
 /*Function to Delete lmia sub stage of employee */
 export const deleteLmiaSubstageEmployee = async (id) => {
   const response = await axios.post(
@@ -1903,6 +1936,7 @@ export const deleteLmiaSubstageEmployee = async (id) => {
   );
   return response.data;
 };
+
 /*Function to add update lmia sub stage  of job*/
 export const AddUpdateJobLmiaSubStage = async (props) => {
   const response = await axios.put(
@@ -1917,6 +1951,7 @@ export const AddUpdateJobLmiaSubStage = async (props) => {
   );
   return response.data;
 };
+
 /*Fuction to delete lmiasub stage */
 export const deleteLmiaSubstageJob = async (id) => {
   const response = await axios.post(
@@ -1954,6 +1989,8 @@ export const getFollowupLastData = async (page, column, limit, sort, time) => {
   );
   return response.data;
 };
+
+/*FUnction to get LMIA status */
 export const getLMIAstatus = async (props) => {
   const response = await axios.post(
     `${API_URL}company/getLmia`,
@@ -1967,6 +2004,7 @@ export const getLMIAstatus = async (props) => {
   );
   return response.data;
 };
+
 /*Api to get list of the Document */
 export const GetEmployerDocumentList = async (id, type) => {
   const response = await axios.post(
@@ -2045,6 +2083,7 @@ export const AdminLogin = async (props) => {
   const response = await axios.post(`${API_URL}admin_login`, formData);
   return response.data;
 };
+
 /*Admin Forgot password Api */
 export const AdminForgotPasswordApi = async (props) => {
   const response = await axios.post(
@@ -2059,6 +2098,7 @@ export const AdminForgotPasswordApi = async (props) => {
   );
   return response.data;
 };
+
 /*Admin Reset password Api */
 export const AdminResetPasswordApi = async (props) => {
   const response = await axios.put(`${API_URL}admin/resetPassword`, props, {
@@ -2366,6 +2406,7 @@ export const DeleteAdmin = async (props) => {
   );
   return response.data;
 };
+
 /*Reassign Admin Api before deletion */
 export const ReassignAdminApi = async (props) => {
   const response = await axios.post(
@@ -2436,6 +2477,7 @@ export const getSingleFollowup = async (
 
   return response.data;
 };
+
 /*get Followup single data Api */
 export const getSingleCompanyFollowup = async (
   company_id,
@@ -2467,6 +2509,7 @@ export const getSingleCompanyFollowup = async (
 
   return response.data;
 };
+
 /*Get All Users Followup Data */
 export const getAllUsersFollowUpData = async (
   userId,
@@ -2561,6 +2604,7 @@ export const GetAllEmailTemplate = async (props) => {
   });
   return response.data;
 };
+
 /*Api to get email Pagination */
 export const GetAllEmailPagination = async (email, search) => {
   const response = await axios.post(
@@ -2578,6 +2622,7 @@ export const GetAllEmailPagination = async (email, search) => {
   );
   return response.data;
 };
+
 /*Api to update email template */
 export const AddUpdateEmailTemplate = async (props) => {
   const response = await axios.put(
@@ -2597,6 +2642,7 @@ export const AddUpdateEmailTemplate = async (props) => {
   );
   return response.data;
 };
+
 /*Api to Test email template */
 export const TestEmail = async (props) => {
   // (props);
@@ -2615,6 +2661,7 @@ export const TestEmail = async (props) => {
   );
   return response.data;
 };
+
 /* Function to get get email authentication*/
 export const GeEmailAuthenticationData = async () => {
   const response = await axios.get(
@@ -2634,6 +2681,7 @@ export const GeEmailAuthenticationData = async () => {
   );
   return response.data;
 };
+
 /* Function to get share point*/
 export const GetSharePointData = async () => {
   const response = await axios.get(
@@ -2651,6 +2699,7 @@ export const GetSharePointData = async () => {
   );
   return response.data;
 };
+
 /* Function to Refresh share point*/
 export const RefreshPointData = async () => {
   const response = await axios.get(
@@ -2665,6 +2714,7 @@ export const RefreshPointData = async () => {
   );
   return response.data;
 };
+
 /*Api to get single  email preveiw */
 export const GetPreviewEmail = async (emailType, id) => {
   const response = await axios.post(
@@ -2684,6 +2734,7 @@ export const GetPreviewEmail = async (emailType, id) => {
   );
   return response.data;
 };
+
 /*Api to get single  email preveiw Attchment */
 export const GetPreviewAttchmentEmail = async (emailType, id) => {
   const response = await axios.post(
@@ -2725,6 +2776,7 @@ export const ReadEmail = async (page, limit, search, email) => {
   );
   return response.data;
 };
+
 /*Api to read Sent email */
 export const ReadSentEmail = async (page, limit, search, email) => {
   // console.log(email, "lll")
@@ -2750,6 +2802,7 @@ export const ReadSentEmail = async (page, limit, search, email) => {
   );
   return response.data;
 };
+
 /*Api to All Sent email */
 export const ReadAllEmail = async (page, limit, search, email) => {
   const response = await axios.post(
@@ -2770,6 +2823,7 @@ export const ReadAllEmail = async (page, limit, search, email) => {
   );
   return response.data;
 };
+
 /*Api to reply email */
 export const ReplyToMail = async (msgId, type, msg) => {
   const response = await axios.post(
@@ -2846,6 +2900,7 @@ export const ReservedEmployeeForJob = async (id, employee_id, status) => {
   );
   return response.data;
 };
+
 /*Api to Remove Reserved employee for a job */
 export const RemoveReservedEmployeeForJob = async (apply_id, employee_id) => {
   const response = await axios.post(
@@ -2863,6 +2918,7 @@ export const RemoveReservedEmployeeForJob = async (apply_id, employee_id) => {
   );
   return response.data;
 };
+
 /*Api to Send email to the user and company*/
 export const SendEmail = async (data, FileList, url) => {
   // console.log(data);
@@ -2894,6 +2950,7 @@ export const SendEmail = async (data, FileList, url) => {
   );
   return response.data;
 };
+
 /*Api to forward  email to the user and company*/
 export const forwardMail = async (data, FileList, url) => {
   // console.log(FileList);
@@ -2945,6 +3002,7 @@ export const AddExecutiveTeam = async (manager_id, executive_id) => {
   );
   return response.data;
 };
+
 /*Api to Remove executive to the manager*/
 export const RemoveExecutiveTeam = async (executive_id) => {
   const response = await axios.put(
@@ -2961,6 +3019,7 @@ export const RemoveExecutiveTeam = async (executive_id) => {
   );
   return response.data;
 };
+
 /*Api to Reasign job to manager*/
 export const ReassignJobTOManager = async (manager_id, job_id) => {
   const response = await axios.put(
@@ -2978,6 +3037,7 @@ export const ReassignJobTOManager = async (manager_id, job_id) => {
   );
   return response.data;
 };
+
 /*Api to get employee setting */
 export const GetEmployeeSetting = async () => {
   const response = await axios.post(
@@ -2992,6 +3052,7 @@ export const GetEmployeeSetting = async () => {
   );
   return response.data;
 };
+
 /*Api to get employer setting */
 export const GetEmployerSetting = async () => {
   const response = await axios.post(
@@ -3006,6 +3067,7 @@ export const GetEmployerSetting = async () => {
   );
   return response.data;
 };
+
 /*Api to get Admin setting */
 export const GetAdminrSetting = async () => {
   const response = await axios.post(`${API_URL}admin/getAdminSetting`, "", {
@@ -3016,6 +3078,7 @@ export const GetAdminrSetting = async () => {
   });
   return response.data;
 };
+
 /*Api to get Parent setting */
 export const GetParentSetting = async (data) => {
   const response = await axios.post(
@@ -3071,6 +3134,7 @@ export const AddAdminPermission = async (data) => {
   });
   return response.data;
 };
+
 /*Api to Add permission by admin to employee and employer*/
 export const AddChildPermission = async (data) => {
   const response = await axios.put(
@@ -3085,6 +3149,7 @@ export const AddChildPermission = async (data) => {
   );
   return response.data;
 };
+
 //Agent
 /*Api to login agent*/
 export const LoginAgent = async (state) => {
@@ -3094,6 +3159,7 @@ export const LoginAgent = async (state) => {
   const response = await axios.post(`${API_URL}agent/login`, formData);
   return response.data;
 };
+
 /*Api to Signup agent*/
 export const SignupAgent = async (state) => {
   const formData = new FormData();
@@ -3104,6 +3170,7 @@ export const SignupAgent = async (state) => {
   const response = await axios.post(`${API_URL}agent/signup`, formData);
   return response.data;
 };
+
 /*Api to Forgot password agent*/
 export const ForgotAgentPasswordApi = async (props) => {
   const response = await axios.post(`${API_URL}agent/forgetPassword`, {
@@ -3111,6 +3178,7 @@ export const ForgotAgentPasswordApi = async (props) => {
   });
   return response.data;
 };
+
 /*Api to Reset password agent*/
 export const ResetAgentPasswordApi = async (props) => {
   const response = await axios.put(`${API_URL}agent/resetPassword`, props, {
@@ -3154,6 +3222,7 @@ export const GetAgent = async (id, search, page, limit, column, Order) => {
   );
   return response.data;
 };
+
 /*Api to delete agent */
 export const DeleteAgent = async (id) => {
   const response = await axios.post(
@@ -3199,6 +3268,7 @@ export const CreateRazorpay = async (price, currency) => {
   );
   return response;
 };
+
 /*Razor pay payment api */
 export const AddRazorpay = async (amount, response, role, id) => {
   await axios.post(
@@ -3220,6 +3290,7 @@ export const AddRazorpay = async (amount, response, role, id) => {
   );
   return response;
 };
+
 /*Stripe payment api */
 export const AddStripePalpay = async (amount) => {
   const response = await axios.post(
@@ -3238,6 +3309,7 @@ export const AddStripePalpay = async (amount) => {
 
   return response;
 };
+
 /*Braintree payment api */
 export const AddBrainTressPayment = async (amount, nonce, name) => {
   const response = await axios.post(
@@ -3258,6 +3330,7 @@ export const AddBrainTressPayment = async (amount, nonce, name) => {
 
   return response;
 };
+
 /*Stripe payment api */
 export const GetStripePaymentDetails = async (
   id,
@@ -3285,6 +3358,7 @@ export const GetStripePaymentDetails = async (
 
   return response;
 };
+
 /*Add payment to database api */
 export const AddPaymentToDataBase = async (
   data,
@@ -3313,6 +3387,7 @@ export const AddPaymentToDataBase = async (
   );
   return response;
 };
+
 /*Api to get payment list */
 export const GetPaymentList = async (id, user, payType) => {
   const response = await axios.post(
@@ -3331,8 +3406,8 @@ export const GetPaymentList = async (id, user, payType) => {
   );
   return response.data;
 };
-/*Api to add cash paymet by admin  */
 
+/*Api to add cash paymet by admin  */
 export const AddCashpayment = async (data) => {
   const response = await axios.put(
     `${API_URL}payment/addPaymentReciept`,
@@ -3362,6 +3437,7 @@ export const GlobalSearchResult = async (search, admin_id, admin_type) => {
   );
   return response;
 };
+
 /*Global Search other API */
 export const GlobalSearchResultOther = async (search, admin_id, admin_type) => {
   // console.log(admin_id, admin_type)
@@ -3377,6 +3453,7 @@ export const GlobalSearchResultOther = async (search, admin_id, admin_type) => {
   );
   return response;
 };
+
 /*Global Search retaled API */
 export const GlobalSearchResultRelated = async (search, admin_id, admin_type) => {
   // console.log(admin_id, admin_type)
@@ -3392,6 +3469,7 @@ export const GlobalSearchResultRelated = async (search, admin_id, admin_type) =>
   );
   return response;
 };
+
 /*Global Search API */
 export const getActivityLog = async (
   page,
@@ -3435,6 +3513,7 @@ export const getActivityLog = async (
   );
   return response;
 };
+
 // Api fucntion to get Credential Data
 export const GetCredentialData = async (id, type) => {
   // console.log("Props" + props.user_id + props.user_type);
@@ -3453,6 +3532,7 @@ export const GetCredentialData = async (id, type) => {
   );
   return response;
 };
+
 // Api fucntion to Update Credential Data
 export const UpdateCredentialApi = async (props) => {
   const response = await axios.post(
@@ -3468,6 +3548,7 @@ export const UpdateCredentialApi = async (props) => {
   );
   return response;
 };
+
 /*Share point apis */
 // Api function to get folders or type of document of perticular employee
 export const getSharePointFoldersList = async (Id, User, columnName, sort, limit, page) => {
@@ -3491,6 +3572,7 @@ export const getSharePointFoldersList = async (Id, User, columnName, sort, limit
   );
   return response;
 };
+
 //Api function to GET emolyee  peticular document folder data
 export const getSharePointParticularFolders = async (Id, User, folderId, columnName, sort, limit, page, fileId,) => {
   let create_by_type = user_type === "user" ? "employee" : user_type === "company" ? "employer" : admin_type;
@@ -3521,6 +3603,7 @@ export const getSharePointParticularFolders = async (Id, User, folderId, columnN
   );
   return response;
 };
+
 //Api function to Add document folder or type
 export const AddSharePointFolders = async (folder, parentId, isPrivate, userId, userType) => {
   let create_by_type = user_type === "user" ? "employee" : user_type === "company" ? "employer" : admin_type;
@@ -3547,6 +3630,7 @@ export const AddSharePointFolders = async (folder, parentId, isPrivate, userId, 
   );
   return response;
 };
+
 //Api function to Add sharepoint document
 export const AddSharePointDOcument = async (
   id,
@@ -3615,6 +3699,7 @@ export const AddSharePointDOcument = async (
     return { error: 'Token is not available' }
   }
 };
+
 /*Update private document apis for documents and folder */
 export const UpdateDocFolderIsPrivate = async (document_id, is_private) => {
   const response = await axios.post(
@@ -3632,6 +3717,7 @@ export const UpdateDocFolderIsPrivate = async (document_id, is_private) => {
   );
   return response;
 };
+
 //Api function to get folder or type breadcrumb
 export const getFolderBreadcrumb = async (folderid) => {
   const response = await axios.post(
@@ -3649,6 +3735,7 @@ export const getFolderBreadcrumb = async (folderid) => {
   );
   return response;
 };
+
 // Api to convert doc to pdf
 export const GetDocConvertToken = async (doc_id) => {
   const response = await axios.get(
@@ -3656,6 +3743,7 @@ export const GetDocConvertToken = async (doc_id) => {
   );
   return response;
 };
+
 /*Api to convert any file to pdf base64 */
 export const GetPdfBaseOfAnyFile = async (data) => {
   const response = await axios.post(`https://api.canpathwaysjobs.com/canjobs/common/changeToPdf
@@ -3695,6 +3783,7 @@ export const ChangeDocNameSharpoint = async (
   );
   return response;
 };
+
 // /Api function to edit Folder name for sharepoint
 export const ChangeFolderNameSharpoint = async (
   userId,
@@ -3720,6 +3809,7 @@ export const ChangeFolderNameSharpoint = async (
   );
   return response;
 };
+
 // /Api function to Delete Folder or document for sharepoint
 export const DeleteFolderOrDocument = async (FolderId, type, userType, userId) => {
   const response = await axios.post(
@@ -3740,7 +3830,8 @@ export const DeleteFolderOrDocument = async (FolderId, type, userType, userId) =
   );
   return response;
 };
-// /Api function to Get document url for sharepoint
+
+// Api function to Get document url for sharepoint
 export const GetSharePointDocUrl = async (Id) => {
   const response = await axios.post(
     `${API_URL}admin/getDocPreviewUrl_new`,
@@ -3757,6 +3848,7 @@ export const GetSharePointDocUrl = async (Id) => {
   );
   return response;
 };
+
 /*Adobe api */
 /*APi to adobe generate token */
 export const GetAdobeToken = async (Id) => {
@@ -3775,8 +3867,9 @@ export const GetAdobeToken = async (Id) => {
   );
   return response;
 };
+
 /*Agreement Apis */
-// /Api function to Get document url for sharepoint
+// Api function to Get document url for sharepoint
 export const GetAgreement = async (Id, receiver, receiver_type, type) => {
   const response = await axios.post(
     `${API_URL}api/Agreement_api/get_agreement`,
@@ -3795,7 +3888,8 @@ export const GetAgreement = async (Id, receiver, receiver_type, type) => {
   );
   return response;
 };
-// /Api function to Get document url for sharepoint
+
+// Api function to Get document url for sharepoint
 export const AddUpdateAgreement = async (data) => {
   const response = await axios.put(
     `${API_URL}api/Agreement_api/addUpdateAgreement`,
@@ -3809,6 +3903,7 @@ export const AddUpdateAgreement = async (data) => {
   );
   return response;
 };
+
 /*Delete Agreement Api */
 export const DeleteAgreement = async (id) => {
   const response = await axios.post(
@@ -3823,6 +3918,7 @@ export const DeleteAgreement = async (id) => {
   );
   return response.data;
 };
+
 /* Export excel Api */
 export const ExportExcelApi = async (table_name, applicantType, status, local, type) => {
   const response = await axios.post(
@@ -3843,6 +3939,7 @@ export const ExportExcelApi = async (table_name, applicantType, status, local, t
   );
   return response.data;
 }
+
 /* Api to apply for program */
 export const ApplyProgram = async (data) => {
   const response = await axios.post(
@@ -3858,6 +3955,7 @@ export const ApplyProgram = async (data) => {
   );
   return response.data;
 }
+
 /* Api to get apply program */
 export const GetApplyProgram = async (search, employerId, employee_type, limit, sort, column, page, applied_user_id, applied_user_type, time, program_id) => {
   const response = await axios.post(
@@ -3885,6 +3983,7 @@ export const GetApplyProgram = async (search, employerId, employee_type, limit, 
   );
   return response.data;
 }
+
 /* Api to Add Update Daily Call Log */
 export const AddUpdateDailCallLogApi = async (data) => {
   const response = await axios.post(
@@ -3900,6 +3999,7 @@ export const AddUpdateDailCallLogApi = async (data) => {
   );
   return response;
 }
+
 /* Api to get Daily Call Log */
 export const getDailyCallLogApi = async (serchName, filterbyAdmin, id, searchPhone, page, limit, column, sort) => {
   // console.log(" name:", serchName,
@@ -3930,6 +4030,7 @@ export const getDailyCallLogApi = async (serchName, filterbyAdmin, id, searchPho
   );
   return response;
 }
+
 /* Api to get Daily Call Log Char*/
 export const getDailyCallLogChatApi = async (call_log_id, page, limit) => {
   const response = await axios.post(
@@ -3945,6 +4046,7 @@ export const getDailyCallLogChatApi = async (call_log_id, page, limit) => {
   );
   return response;
 }
+
 /* Api to get Daily Call Log Char*/
 export const DeleteCallLogApi = async (data) => {
   const response = await axios.post(
@@ -3972,6 +4074,7 @@ export const ReadTaskOrReplyApi = async (data) => {
   );
   return response;
 }
+
 /*Function to get read task ad reply by admin  */
 export const getViewersDataApi = async (id, type) => {
   const response = await axios.post(`${API_URL}common/getTaskThreadRead`,
@@ -3984,6 +4087,7 @@ export const getViewersDataApi = async (id, type) => {
   );
   return response;
 }
+
 /*Api to ad update invoice record*/
 export const AddUpdatePaymentInvoiceRecordApi = async (data) => {
   const response = await axios.post(`${API_URL}admin/addUpdateInvoice`,
@@ -4009,6 +4113,7 @@ export const getAllInvioceRecord = async (data) => {
   );
   return response;
 }
+
 /*Api to delete invoice record*/
 export const DeletePaymentIvoiceRecord = async (data) => {
   const response = await axios.post(`${API_URL}admin/deleteInvoice`,
@@ -4034,6 +4139,7 @@ export const getAllInvioce = async (data) => {
   );
   return response;
 }
+
 /*Api to ad update invoice */
 export const AddUpdatePaymentInvoiceApi = async (data) => {
   const response = await axios.post(`${API_URL}common/addUpdatePaymentInvoice`,
@@ -4049,6 +4155,7 @@ export const AddUpdatePaymentInvoiceApi = async (data) => {
   );
   return response;
 }
+
 /*Api to delete payment invoice */
 export const DeletePaymentInvoiceApi = async (id) => {
   const response = await axios.post(`${API_URL}common/deletePaymentInvoice`,
@@ -4061,6 +4168,7 @@ export const DeletePaymentInvoiceApi = async (id) => {
   );
   return response;
 }
+
 /*Api to get last payment invoice */
 export const GetLastPaymentInvoiceApi = async (id) => {
   const response = await axios.get(`${API_URL}common/getLastPaymentInvoice`,
@@ -4073,6 +4181,7 @@ export const GetLastPaymentInvoiceApi = async (id) => {
   );
   return response;
 }
+
 /*Api to send invoice reminder */
 export const SendPaymentInvoiceReminderApi = async (data) => {
   const response = await axios.post(`${API_URL}common/sendPaymentReminder`, { ...data, driveId: driveId },
@@ -4086,6 +4195,7 @@ export const SendPaymentInvoiceReminderApi = async (data) => {
   return response;
 
 }
+
 /*Api to Get hour log */
 export const GetHourLogApi = async (data) => {
   const response = await axios.post(`${API_URL}admin/getDailyHourLog
@@ -4099,6 +4209,7 @@ export const GetHourLogApi = async (data) => {
   );
   return response;
 }
+
 /*Api to Add  Hour log */
 export const AddUpdateHourLogApi = async (data) => {
   const response = await axios.post(`${API_URL}admin/addUpdateDailyHourLog
@@ -4112,6 +4223,7 @@ export const AddUpdateHourLogApi = async (data) => {
   );
   return response;
 }
+
 /*Api to Delete  Hour log */
 export const DeleteUpdateHourLogApi = async (data) => {
   const response = await axios.post(`${API_URL}admin/deleteDailyHourLog
@@ -4140,6 +4252,7 @@ export const SendHtmlForPdf = async (html) => {
   );
   return response;
 }
+
 /*Add Update Consultation */
 export const AddUpdateConsultation = async (data) => {
   const formData = new FormData();
@@ -4186,6 +4299,7 @@ export const AddUpdateConsultation = async (data) => {
   return response;
 }
 
+/*Api Function to get consultation data */
 export const GetConsultation = async (data) => {
   const response = await axios.post(`${API_URL}common/getConsultation`, data,
     {
@@ -4197,6 +4311,8 @@ export const GetConsultation = async (data) => {
   );
   return response;
 }
+
+/*Api Function to Delete consultation data */
 export const DeleteConsultation = async (data) => {
   const response = await axios.post(`${API_URL}common/deleteConsultation`, data,
     {
