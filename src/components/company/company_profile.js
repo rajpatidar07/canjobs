@@ -38,6 +38,8 @@ function CompanyProfileDetail(props) {
   const docParentId = searchParams.get("docParentId");
   const docHighAnnoId = searchParams.get("annotationId");
   const docTaskId = searchParams.get("taskId");
+  const user_payment = searchParams.get("user_payment");
+  const Payment_id = searchParams.get("Pid");
   const notes = searchParams.get("note");
   const note_id = searchParams.get("noteid");
   const agreement = searchParams.get("agreement");
@@ -61,10 +63,13 @@ function CompanyProfileDetail(props) {
         ? "notes"
         : agreement === "true"
           ? "retaineragreement"
-          : "profile"
+          : user_payment === "true"
+            ? "payment"
+            : "profile"
   );
   const [addNote, setAddNote] = useState(false);
   const [employerData, setEmployerData] = useState("");
+  const [selectedPaymentTab, setSelectedPaymentTab] = useState("payment_records");
   const [employerKycData, setEmployerKycData] = useState("");
   const [jobPageNo, setJobPageNO] = useState(1);
   const [interviewPageNo, setInterviewPageNO] = useState(1);
@@ -112,7 +117,7 @@ function CompanyProfileDetail(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
-    if (transactionId) {
+    if (transactionId || user_payment === "true") {
       setTabActive("payment");
     }
     if (agreement) {
@@ -486,7 +491,7 @@ function CompanyProfileDetail(props) {
                   </li>
                   <li
                     className={
-                      user_type === "user"
+                      user_type === "user" || user_type === "agent"
                         ? "d-none"
                         : "tab-menu-items nav-item"
                     }
@@ -1041,7 +1046,50 @@ function CompanyProfileDetail(props) {
                 >
                   {TabActive === "payment" ? (
                     <div className="p-10 activity_container">
-                      {user_type === "admin" ? (
+                      <div className="p-3">
+                        <h3 className="">Payment's</h3>
+                      </div>
+                      <div
+                        className={user_type === "user" ? "d-none" : "d-flex justify-content-between align-items-center mb-3"}
+                        style={{ gap: "5px" }}
+                      >
+                        <div
+                          className={`btn-group`}
+                          role="group"
+                          aria-label="Basic example"
+                        >
+                          <button
+                            type="button"
+                            className={
+                              `${selectedPaymentTab === "payment_records"
+                                ? "btn btn-primary"
+                                : "btn btn-outline-primary"}`
+                            }
+                            onClick={() => {
+                              setSelectedPaymentTab("payment_records");
+                            }}
+                            title="payment_records"
+                          >
+                            Payment records
+                          </button>
+                          <button
+                            type="button"
+                            className={
+                              `${selectedPaymentTab === "invoice"
+                                ? "btn btn-primary"
+                                : "btn btn-outline-primary"} `
+                            }
+                            onClick={() => {
+                              setSelectedPaymentTab("invoice");
+                              // setApplicanttypeFolderId(location?.state?.folderId || localApplicantTypeFolderId)
+                            }}
+                            title="invoice"
+                          >
+                            Invoice
+                          </button>
+                        </div>
+                      </div>
+                      {user_type === "admin" && selectedPaymentTab === "invoice" ? (
                         <PaymentPage
                           user_id={cid}
                           user_type={"employer"}
@@ -1051,6 +1099,7 @@ function CompanyProfileDetail(props) {
                         />
                       ) : (
                         <PayentForm
+                          Payment_id={Payment_id || ""}
                           data={employerData}
                           user_id={cid}
                           user_type={"employer"}

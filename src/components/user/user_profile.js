@@ -57,6 +57,8 @@ const NewUserProfile = (props) => {
   const searchParams = new URLSearchParams(location.search);
   const docId = searchParams.get("docId");
   const agreement = searchParams.get("agreement");
+  const user_payment = searchParams.get("user_payment");
+  const Payment_id = searchParams.get("Pid");
   const notes = searchParams.get("note");
   const docParentId = searchParams.get("docParentId");
   const docHighAnnoId = searchParams.get("annotationId");
@@ -85,7 +87,9 @@ const NewUserProfile = (props) => {
           ? "notes"
           : agreement === "true"
             ? "retaineragreement"
-            : "profile"
+            : user_payment === "true"
+              ? "payment"
+              : "profile"
   );
   const [selectedPaymentTab, setSelectedPaymentTab] = useState("payment_records");
   const [userDetail, setuserDetail] = useState([]);
@@ -228,7 +232,7 @@ const NewUserProfile = (props) => {
       //   localStorage.setItem("name", PersonalDetail.name)
       // }
     }
-    if (transactionId) {
+    if (transactionId ||user_payment === "true") {
       //   setPayment();
       setTabActive("payment");
     }
@@ -656,7 +660,7 @@ const NewUserProfile = (props) => {
                       </Link>
                     </li>
                     <li
-                      className={`tab-menu-items nav-item ${user_type === "company" ? "d-none" : ""
+                      className={`tab-menu-items nav-item ${user_type === "company" ||user_type==="agent" ? "d-none" : ""
                         }`}
                     >
                       <Link
@@ -1809,6 +1813,7 @@ const NewUserProfile = (props) => {
                           />
                         ) : (
                           <PayentForm
+                            Payment_id={Payment_id || ""}
                             data={PersonalDetail}
                             user_id={eid}
                             user_type={"employee"}

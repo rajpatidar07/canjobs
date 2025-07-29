@@ -33,10 +33,10 @@ export default function Visa() {
   const [VisaCountryFilter, setVisaCountryFilter] = useState("");
   const [VisStatusFilterValue, setVisStatusFilterValue] = useState("");
   const [VisaSubStatusFilterValue, setVisaSubStatusFilterValue] = useState("");
-  const [IntrestedFilterValue, setIntrestedFilterValue] = useState("");
+  const [InterestedFilterValue, setInterestedFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
-  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
+  const [pageNo, setPageNo] = useState(localStorage.getItem("PageNo") || 1);
   //  const [categoryFilterValue, setCategoryFilterValue] = useState("");
   //  const [locationFilterValue, setLocationFilterValue] = useState("");
   //  const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
@@ -52,7 +52,7 @@ export default function Visa() {
   // }, [
   // VisStatusFilterValue,
   // VisaCountryFilter,
-  // IntrestedFilterValue,
+  // InterestedFilterValue,
   //   //  categoryFilterValue,
   //   //  locationFilterValue,
   //   //  jobSwapFilterValue,
@@ -112,7 +112,7 @@ export default function Visa() {
     setEmpId("");
     const inputValue = e.target.value;
     setSearch(inputValue);
-    setpageNo(1);
+    setPageNo(1);
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Candidate Name cannot start with a number.");
@@ -190,7 +190,7 @@ export default function Visa() {
                         selectedValue={VisaCountryFilter}
                         onChange={(e) => {
                           setVisaCountryFilter(e ? e.value : null);
-                          setpageNo(1);
+                          setPageNo(1);
                           setEmpId("");
                         }}
                         type={"location"}
@@ -208,7 +208,7 @@ export default function Visa() {
                         selectedValue={VisStatusFilterValue}
                         onChange={(e) => {
                           setVisStatusFilterValue(e ? e.value : null);
-                          setpageNo(1);
+                          setPageNo(1);
                           setEmpId("");
                         }}
                         type={"status"}
@@ -226,7 +226,7 @@ export default function Visa() {
                         selectedValue={VisaSubStatusFilterValue}
                         onChange={(e) => {
                           setVisaSubStatusFilterValue(e ? e.value : null);
-                          setpageNo(1);
+                          setPageNo(1);
                           setEmpId("");
                         }}
                         type={"status"}
@@ -241,13 +241,13 @@ export default function Visa() {
                           value: option.id,
                           label: option.title,
                         })) || [])}
-                        selectedValue={IntrestedFilterValue}
+                        selectedValue={InterestedFilterValue}
                         onChange={(e) => {
-                          setIntrestedFilterValue(e ? e.value : null);
-                          setpageNo(1);
+                          setInterestedFilterValue(e ? e.value : null);
+                          setPageNo(1);
                           setEmpId("");
                         }}
-                        type={"intrested_in"}
+                        type={"interested_in"}
                       />
                     </div>
                   </div>
@@ -256,13 +256,12 @@ export default function Visa() {
                       className="btn btn-primary w-100"
                       onClick={() => {
                         const clearFiltersByPageName = () => {
-                          setIntrestedFilterValue("")
+                          setInterestedFilterValue("")
                           setVisaSubStatusFilterValue("")
                           setVisStatusFilterValue("")
                           setVisaCountryFilter("")
                           setSearch("")
-                          setSearch("");
-                          setpageNo(1);
+                          setPageNo(1);
                           setEmpId("");
                         };
                         clearFiltersByPageName();
@@ -419,12 +418,12 @@ export default function Visa() {
               <VisaTable
                 search={search}
                 VisaCountryFilterValue={VisaCountryFilter}
-                IntrestedFilterValue={IntrestedFilterValue}
+                IntrestedFilterValue={InterestedFilterValue}
                 VisStatusFilterValue={VisStatusFilterValue}
                 apiCall={apiCall}
                 setApiCall={setApiCall}
                 employee_id={EmpId}
-                setpageNo={setpageNo}
+                setpageNo={setPageNo}
                 pageNo={pageNo}
                 subStage={VisaSubStatusFilterValue}
               />

@@ -588,6 +588,7 @@ export default function CommentSection({
       }
     }
   };
+  
   /*Function to update comment */
   const OnHandleUpdateCommentStatus = async (originalData, status) => {
     const {
@@ -703,6 +704,7 @@ export default function CommentSection({
       setIsApiCalls(false)
     }
   };
+
   /*FUnction to update replies for he comment */
   const OnHandleUpdateCommentReply = async (originalData) => {
     const { receiver_email, msg, receiver_name, receiver_type, receiver_id } =
@@ -812,6 +814,7 @@ export default function CommentSection({
 
     }
   };
+
   /*Function to get comment list */
   const Getcomments = async (annotStatus, adminfilter) => {
     let CommentRes = await GetCommentsAndAssign(
@@ -831,6 +834,7 @@ export default function CommentSection({
       }
     }
   };
+
   /*Function to delete comment */
   const OnDeleteComment = async (docId, id) => {
     try {
@@ -848,6 +852,7 @@ export default function CommentSection({
       console.log(err);
     }
   };
+  
   /*Function to delete comment Replies*/
   const OnDeleteCommentReplies = async (id) => {
     try {

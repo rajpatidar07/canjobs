@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { GetPaymentList } from "../../../api/api";
 import PayForm from "./PayForm";
 // import Loader from "../../common/loader";
 import AddTransactionForm from "./addTransactionForm";
 import ConvertTime from "../../common/Common function/ConvertTime";
 
-export default function PayentForm({ data, user_id, user_type }) {
+export default function PayentForm({ data, user_id, user_type, Payment_id }) {
   const [apiCall, setApicall] = useState(true);
   // const [loading, setLoading] = useState(true);
   const [paymentList, setPaytemList] = useState([]);
   const [paymentMode, setPaymentMode] = useState("card"); // default to card
 
   let user = localStorage.getItem("userType");
-
+  const PaymentRef = useRef({})
   /*Function to get Payment list data */
   const PaymentData = async () => {
     try {
@@ -28,6 +28,9 @@ export default function PayentForm({ data, user_id, user_type }) {
       } else {
         // setLoading(false);
         setPaytemList(Response.data.data);
+        const newUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, newUrl);
+        localStorage.setItem("navigation_url", "");
       }
     } catch (err) {
       console.log(err);
@@ -44,6 +47,15 @@ export default function PayentForm({ data, user_id, user_type }) {
     }
     // eslint-disable-next-line
   }, [apiCall]);
+
+  useEffect(() => {
+    if (Payment_id && PaymentRef.current && PaymentRef.current[Payment_id]) {
+      PaymentRef.current[Payment_id].scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [paymentList, Payment_id]);
 
   const handlePaymentModeChange = (e) => {
     setPaymentMode(e.target.value);
@@ -64,14 +76,17 @@ export default function PayentForm({ data, user_id, user_type }) {
                   </div>
                 ) : (
                   (paymentList || []).map((res, index) => (
-                    <div className="" key={index}>
+                    <div
+                      ref={(el) => (PaymentRef.current[res.id] = el)}
+                      className={""} key={index}>
                       <div className="d-flex justify-content-between">
                         <p className="text-italic font-size-3 m-0">
                           Payment on:{" "}
                           <ConvertTime _date={res.created_at} format={"Do MM YYYY, h:mm:ss a"} />
                         </p>
                       </div>
-                      <div className="card rounded-3 py-2 px-5">
+                      <div className={`card rounded-3 py-2 px-5 comment_box_card
+                         ${Payment_id === res.id ? "highlighted-comment" : ""}`}>
                         <p className="fw-bold m-0 row">
                           <span className="col-md-10 col-sm-12 ">
                             {res.payment_mode ? (

@@ -342,7 +342,11 @@ function Notifications({
                                                           ? `/daily_pages?consultation_id=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
                                                           : data.subject === "mention_job_chat"
                                                             ? `/job_detail?chat=${data.employee_id}`
-                                                            : ''
+                                                            : data.subject === "payment_success"
+                                                              ? data.document_user_type === "employer"
+                                                                ? `/client_detail?user_payment=true&Pid=${data.mention_id}`
+                                                                : `/${data.employee_id}?user_payment=true&Pid=${data.mention_id}`
+                                                              : ''
                       }
                       onClick={() => {
                         try {
@@ -366,7 +370,8 @@ function Notifications({
                           } else if (
                             data.subject === "mention_document" ||
                             data.subject === "mention_notes" ||
-                            data.subject === "signed_agreement"
+                            data.subject === "signed_agreement" ||
+                            data.subject === "payment_success"
                           ) {
                             if (data.document_user_type === "applicant_type") {
                               localStorage.setItem(

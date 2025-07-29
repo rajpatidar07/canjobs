@@ -5,8 +5,7 @@ import { FaComments } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import Loader from "../loader.js"
-// import $ from 'jquery';
-const AdobePDFViewer = ({ url, data, userId, commentsList, selectedMentionAdmin, DocUserType, adminList, setCommentsList, partnerList, userType, docsection, docTypeList, fileId, setDocSingleDate, setFileID, setConvertedDoc, getCommentsList, SetPdfDocUrl, openCommentBox, AnnoteId, docTaskId, AdminData, page }) => {
+const AdobePDFViewer = ({ url, data, userId, commentsList, selectedMentionAdmin, DocUserType, adminList, setCommentsList, partnerList, userType, docSection, docTypeList, fileId, setDocSingleDate, setFileID, setConvertedDoc, getCommentsList, SetPdfDocUrl, openCommentBox, AnnoteId, docTaskId, AdminData, page }) => {
   let [openAnnotationBox, setOpenAnnotationBox] = useState(openCommentBox ? true : false);
   let [annotationDrawBox, setAnnotationDrawBox] = useState("");
   let [annotationId, setAnnotationId] = useState(AnnoteId || "");
@@ -18,6 +17,7 @@ const AdobePDFViewer = ({ url, data, userId, commentsList, selectedMentionAdmin,
   const [currentIndex, setCurrentIndex] = useState(
     docTypeList?.findIndex((item) => item.id === fileId)
   );
+
   // Handler for Previous button
   const handlePreviousClick = () => {
     if (currentIndex > 0) {
@@ -51,6 +51,7 @@ const AdobePDFViewer = ({ url, data, userId, commentsList, selectedMentionAdmin,
       }
     }
   };
+
   useEffect(() => {
     // Compute AnoData when commentsList changes
     const AnoData = commentsList.length !== 0
@@ -68,6 +69,7 @@ const AdobePDFViewer = ({ url, data, userId, commentsList, selectedMentionAdmin,
   //   setFileID(docTypeList[currentIndex]?.id);
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [currentIndex]);
+
   /*REnder document method */
   useEffect(() => {
     if (url && data && userType) {
@@ -198,6 +200,7 @@ const AdobePDFViewer = ({ url, data, userId, commentsList, selectedMentionAdmin,
     // return () => clearTimeout(timer);
     // eslint-disable-next-line
   }, [url, commentsList, annotationData]);
+
   /*Render method to Highlight the annotation from clicking it */
   useEffect(() => {
     // if (!data?.name?.includes(1295)) {
@@ -235,9 +238,10 @@ const AdobePDFViewer = ({ url, data, userId, commentsList, selectedMentionAdmin,
     // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [annotationId, annotationManager, adobeViewer]);
+
   return (
     <div
-      style={{ height: docsection ? "100vh" : "calc(100vh - 130px)" }}
+      style={{ height: docSection ? "100vh" : "calc(100vh - 130px)" }}
       className="row m-0 position-relative"
     >
       {/*  data?.name.includes(1295) ?
@@ -255,7 +259,7 @@ const AdobePDFViewer = ({ url, data, userId, commentsList, selectedMentionAdmin,
           : "col-md-12 col-lg-12 col-sm-12"
           } full-window-div position-relative`}
         style={{
-          maxHeight: docsection ? "100vh" : "calc(100vh - 130px)",
+          maxHeight: docSection ? "100vh" : "calc(100vh - 130px)",
           // transition: "all .3s",
         }}
       >
@@ -323,11 +327,10 @@ const AdobePDFViewer = ({ url, data, userId, commentsList, selectedMentionAdmin,
             id="pdf-div"
             className={`w-100 full-window-div`}
             style={{
-              height: docsection ? "100vh" : "calc(100vh - 130px)",
-              // transition: "all .3s",
+              height: docSection ? "100vh" : "calc(100vh - 130px)",
             }}
-          ></div> :
-          <Loader />}
+          ></div>
+          : <Loader />}
       </div>
       <Link
         to={""}
@@ -367,7 +370,7 @@ const AdobePDFViewer = ({ url, data, userId, commentsList, selectedMentionAdmin,
           setAnnotationData={setAnnotationData}
           setCommentsList={setCommentsList}
           openAnnotationBox={openAnnotationBox}
-          docsection={docsection}
+          docsection={docSection}
           docTaskId={docTaskId}
         />
       )}
