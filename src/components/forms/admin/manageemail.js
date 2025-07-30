@@ -4,7 +4,6 @@ import useValidation from "../../common/useValidation";
 import { AddUpdateEmailTemplate } from "../../../api//api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import TextEditor from "../../common/TextEditor";
 
 function ManageEmail(props) {
   let [loading, setLoading] = useState(false);
@@ -16,6 +15,7 @@ function ManageEmail(props) {
     props.close();
     setLoading(false);
   };
+
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     id: "",
@@ -23,6 +23,7 @@ function ManageEmail(props) {
     subject: "",
     message: "",
   };
+
   // VALIDATION CONDITIONS
   const validators = {
     email_type: [
@@ -38,6 +39,7 @@ function ManageEmail(props) {
         value === "" || value.trim() === "" ? "Message is required" : "",
     ],
   };
+
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, setErrors, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
@@ -50,6 +52,8 @@ function ManageEmail(props) {
     }
    // eslint-disable-next-line
   }, [props.data]);
+  
+  /*Function to add email template */
   const onAddUpdateTemplate = async (event) => {
     event.preventDefault();
     if (validate()) {

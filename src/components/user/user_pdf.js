@@ -6,8 +6,8 @@ const PDFViewer = () => {
   const urlSearchParams = new URLSearchParams(location.search);
   const pdfUrl = urlSearchParams.get("pdfUrl");
   const fileExtension = pdfUrl ? pdfUrl.split(".").pop().toLowerCase() : null;
-  // console.log(pdfUrl)
-  /*Functio to Download pdf */
+
+  /*Function to Download pdf */
   const downloadPDF = () => {
     const link = document.createElement("a");
     link.href = pdfUrl;
@@ -19,6 +19,7 @@ const PDFViewer = () => {
     // Handle the case where pdfUrl is null or empty
     return <div>No PDF URL provided.</div>;
   }
+  
   return (
     <div className="mt-15 ">
       {fileExtension === "docx" || fileExtension === "doc"

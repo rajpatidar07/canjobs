@@ -13,6 +13,7 @@ export default function PayentForm({ data, user_id, user_type, Payment_id }) {
 
   let user = localStorage.getItem("userType");
   const PaymentRef = useRef({})
+
   /*Function to get Payment list data */
   const PaymentData = async () => {
     try {
@@ -57,6 +58,7 @@ export default function PayentForm({ data, user_id, user_type, Payment_id }) {
     }
   }, [paymentList, Payment_id]);
 
+  /*Function to to change payment mode */
   const handlePaymentModeChange = (e) => {
     setPaymentMode(e.target.value);
   };

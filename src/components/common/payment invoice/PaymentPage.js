@@ -39,6 +39,8 @@ const Payment_Page = (props) => {
   /*delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteData, setDeleteData] = useState("");
+
+  /*Functio to get user data */
   const GetAllUserData = async () => {
     try {
       let res = await GetFilter()
@@ -79,6 +81,7 @@ const Payment_Page = (props) => {
       setIsLoading(false)
     }
   };
+
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
   useEffect(() => {
@@ -89,10 +92,12 @@ const Payment_Page = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiCall, currentPage, columnName, sortOrder])
 
+  /*Function to cancel the delete pop up */
   const CancelDelete = () => {
     setDeleteAlert(false);
     setDeleteData("");
   }
+
   /*Function to delete the invoice */
   const DeleteInvoice = async (id) => {
     try {
@@ -110,6 +115,8 @@ const Payment_Page = (props) => {
       console.log(err)
     }
   }
+
+  /*Function to get invoice pdf */
   const GetInvoicePdf = async (data) => {
     setDocLoder(true);
     try {
@@ -144,6 +151,7 @@ const Payment_Page = (props) => {
       setDocLoder(false);
     }
   };
+
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
@@ -153,8 +161,7 @@ const Payment_Page = (props) => {
     <div className="response_main_div w-100">
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
         <div
-          className={` d-flex
-              justify-content-end`}
+          className={` d-flex justify-content-end`}
         >
           <div className="p-3">
             <button

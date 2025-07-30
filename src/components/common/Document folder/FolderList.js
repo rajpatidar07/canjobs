@@ -295,7 +295,6 @@ export default function FolderList({
                           </li>
                           <li className="list-group-item text-danger">
                             <Link onClick={() => ShowDeleteAlert(item)}>
-                              {" "}
                               Delete {item.folder ? "Folder" : "File"}
                             </Link>
                           </li>
@@ -395,7 +394,6 @@ export default function FolderList({
                               to={`/view_pdf_Agreement?new_emp_user_type=${DocUserType}&new_user_id=${userId}&folderId=${item.parentReference.id}&document_id=${item.id}&partner_id=${partnerId}`}
                               target="_blank"
                             >
-                              {" "}
                               Open in new tab {item.folder ? "Folder" : "File"}
                             </Link>
                           </li>
