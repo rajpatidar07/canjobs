@@ -49,10 +49,13 @@ const labelMap = {
 export default function LmiafieldsPermission(props) {
   const [permissions, setPermissions] = useState(defaultPermissions)
 
+  /*Close function */
   const close = () => {
     props.close()
+    setPermissions(defaultPermissions)
   }
 
+  /*Function to get the permission data */
   const fetchPermissions = async () => {
     try {
       const response = await GetAdminrSetting()
@@ -63,6 +66,7 @@ export default function LmiafieldsPermission(props) {
     }
   }
 
+  /*Function to change the permission from the checkbox*/
   const handleCheckboxChange = async (field) => {
     const updatedPermissions = {
       lmia_column_permission: {
@@ -97,7 +101,7 @@ export default function LmiafieldsPermission(props) {
         type="button"
         className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
         data-dismiss="modal"
-        onClick={close}
+        onClick={() => close()}
       >
         <i className="fas fa-times"></i>
       </button>

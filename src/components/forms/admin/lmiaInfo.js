@@ -91,6 +91,7 @@ export default function LmiaInfo(props) {
             }
         }
     }
+    console.log(state)
     return (
         <>
             <Modal
@@ -218,7 +219,6 @@ export default function LmiaInfo(props) {
                                 type="date"
                                 onKeyDownCapture={(e) => e.preventDefault()}
                                 min={moment().format("DD-MM-YYYY")}
-                                maxLength={60}
                             />
                             {/*----ERROR MESSAGE FOR Submission Date ----*/}
                             {/* {errors.lmia_date_expiry && (
@@ -243,8 +243,7 @@ export default function LmiaInfo(props) {
                                 type="date"
                                 onKeyDownCapture={(e) => e.preventDefault()}
                                 min={moment().format("DD-MM-YYYY")}
-                                maxLength={60}
-                            />
+                                    />
                         </div>
                         <div className="form-group ">
                             <label

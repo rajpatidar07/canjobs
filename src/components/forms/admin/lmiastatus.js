@@ -122,10 +122,10 @@ function LmiaStatus(props) {
       }
       /*Added sub stage response */
       if (
-        Response.message === "insert successfully" ||
-        Response.message === "updated successfully"
+        Response.message === "insert successfully"
+        || Response.message === "updated successfully"
       ) {
-        toast.success("Lmia Sub Stage Added successfully", {
+        toast.success("LMIA Sub Stage Added successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
@@ -139,6 +139,7 @@ function LmiaStatus(props) {
       console.log(err);
     }
   };
+
   /* Functionality to close the modal */
   const close = () => {
     setState({ ...state, lmia_status: "" });
@@ -146,6 +147,7 @@ function LmiaStatus(props) {
     setLoading(false);
     props.close();
   };
+
   // USER LIMIA UPDATE VALIDATION
   useEffect(() => {
     GetSubSTage();
@@ -183,7 +185,7 @@ function LmiaStatus(props) {
   const { state, setState, setErrors, /*onInputChange,*/ errors, validate } =
     useValidation(initialFormState, validators);
 
-  // USER LIMIA UPDATE FILTER SUBMIT BUTTON
+  // USER LIMA UPDATE FILTER SUBMIT BUTTON
   const onLmiaUpdateClick = async (event) => {
     event.preventDefault();
     if (validate() && props.job === "yes") {
@@ -251,7 +253,7 @@ function LmiaStatus(props) {
       setLoading(false);
     }
   };
-  // END LIMIA VALIDATION
+  // END LIMA VALIDATION
 
   return (
     <>
