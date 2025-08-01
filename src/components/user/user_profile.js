@@ -86,7 +86,7 @@ const NewUserProfile = (props) => {
         : notes === "true"
           ? "notes"
           : agreement === "true"
-            ? "retaineragreement"
+            ? "retainer agreement"
             : user_payment === "true"
               ? "payment"
               : "profile"
@@ -246,7 +246,7 @@ const NewUserProfile = (props) => {
       setTabActive("notes");
     }
     if (agreement) {
-      setTabActive("retaineragreement");
+      setTabActive("retainer agreement");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiCall, eid, docId, docParentId, notes, agreement, location.key]);
@@ -645,7 +645,7 @@ const NewUserProfile = (props) => {
                     >
                       <Link
                         className={
-                          TabActive === "retaineragreement"
+                          TabActive === "retainer agreement"
                             ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
                             : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
                         }
@@ -654,7 +654,7 @@ const NewUserProfile = (props) => {
                         role="tab"
                         aria-controls="retaineragreementTab"
                         aria-selected="true"
-                        onClick={() => setTabActive("retaineragreement")}
+                        onClick={() => setTabActive("retainer agreement")}
                       >
                         Retainer Agreement
                       </Link>
@@ -1732,12 +1732,12 @@ const NewUserProfile = (props) => {
                   </div>
                   <div
                     className={
-                      TabActive === "retaineragreement"
+                      TabActive === "retainer agreement"
                         ? "justify-content-center "
                         : "d-none"
                     }
                   >
-                    {TabActive === "retaineragreement" ? (
+                    {TabActive === "retainer agreement" ? (
                       <RetainerAgrementMainPage
                         user_id={eid}
                         emp_user_type={"employee"}

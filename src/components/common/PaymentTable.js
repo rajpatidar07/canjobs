@@ -8,13 +8,25 @@ import Pagination from "../common/pagination"
 import SAlert from "../common/sweetAlert";
 import { toast } from "react-toastify";
 import Loader from "../common/loader";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import SelectBox from "./Common function/SelectBox";
+import { BsChat } from "react-icons/bs";
+import ModalSidebar from "./modalSidebar";
+import CommentTaskBox from "./commonTaskBox";
 const PaymentTable = (props) => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const NotificationPaymentnId = searchParams.get("Payment_rec_id") || "";
+  const NotifiTaskId = searchParams.get("taskId") || "";
+
   let [filterListapiCall, setFilterListApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(false);
   const [jsonList, setJsonList] = useState([]);
   const [paymentRecordsList, setPaymentRecordsList] = useState([]);
+  const [singleData, setSingleData] = useState();
+  const [taskId, setTaskId] = useState(NotifiTaskId);
+  const [showPaymentChatModal, setShowPaymentChatModal] = useState(NotifiTaskId);
+  const [PaymentRecId, setPaymentRecId] = useState(NotificationPaymentnId);
   const [totalData, setTotalData] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [columnName, setcolumnName] = useState("updated_at");
@@ -49,6 +61,7 @@ const PaymentTable = (props) => {
   }
   const { state, setState, setErrors, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
+
   /*function to get the list */
   let getFilterList = async () => {
     try {
@@ -89,6 +102,14 @@ const PaymentTable = (props) => {
     props.selectedAdminId,
     props.selectedAdminType, sortOrder, columnName]);
 
+  useEffect(() => {
+    if (NotifiTaskId) {
+      setTaskId(NotifiTaskId)
+    }
+    if (NotificationPaymentnId) {
+      setPaymentRecId(NotificationPaymentnId)
+    }
+  }, [location.key, NotificationPaymentnId, NotifiTaskId])
   /*FUnction to update the payment invoice record */
   const handleUpdateChange = async (e, id, field) => {
     if (e && e.preventDefault) {
@@ -115,6 +136,7 @@ const PaymentTable = (props) => {
       console.log(err);
     }
   };
+
   /*function to add payment record  */
   const AddPaymentRecord = async () => {
     if (validate()) {
@@ -139,6 +161,7 @@ const PaymentTable = (props) => {
       }
     }
   }
+
   /*function to delete the invoice record */
   const deletePaymentInoiceRecord = async (id) => {
     try {
@@ -160,6 +183,7 @@ const PaymentTable = (props) => {
 
     }
   }
+
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
@@ -200,8 +224,16 @@ const PaymentTable = (props) => {
                     ].map((heading, index) => (
                       <th
                         key={index}
-                        className="border-0 font-size-3 font-weight-normal"
-                      >
+                        className={`border-0 font-size-3 font-weight-normal ${index === 0 ? "table_sticky_col sticky_col1" : ""
+                          }`}
+                        style={
+                          index === 0
+                            ? {
+                              background: "white",
+                              transition: "background 0.3s ease",
+                            }
+                            : {}
+                        }                      >
                         <Link to="" className="text-dark"
                           onClick={() => { if (heading !== "Action") { handleSort(heading === "Name" ? "user_name	" : heading === "Referred By" ? "referred_name" : heading === "Manager" ? "manager_name" : heading === "Method" ? "payment_method" : (heading.toLowerCase().replaceAll(" ", "_"))) } }}
                         >
@@ -243,6 +275,7 @@ const PaymentTable = (props) => {
                             {errors.user_id}
                           </span>
                         )}
+
                       </td>
                       <td>
                         {" "}
@@ -371,27 +404,47 @@ const PaymentTable = (props) => {
                     </tr> :
                     (paymentRecordsList || []).map((record, index) => (
                       <tr key={index}>
-                        <td>
-                          <SelectBox
-                            Width={"yes"} options={props.employeeEmployerlist ? (props.employeeEmployerlist?.map((option) => ({
-                              value: option.employee_id
-                                ? `${option.employee_id},employee`
-                                : option.company_id
-                                  ? `${option.company_id},employer`
-                                  : `${option.id},applicant_type`,
-                              label:
-                                option.employee_id
-                                  ? `${option.name} (${option.employee_id} - Candidate)`
+                        <td
+                          className="table_sticky_col sticky_col1 "
+                          style={{
+                            minWidth: "200px",
+                            maxWidth: "280px",
+                            background: "white",
+                            transition: "background 0.3s ease",
+                          }}>
+                          <div className="d-flex">
+                            <div
+                            style={{minWidth: "180px",maxWidth:"250px"}}>
+                            <SelectBox
+                              Width={"yes"} options={props.employeeEmployerlist ? (props.employeeEmployerlist?.map((option) => ({
+                                value: option.employee_id
+                                  ? `${option.employee_id},employee`
                                   : option.company_id
-                                    ? `${option.company_name} (${option.company_id} - Client)`
-                                    : `${option.title} (Applicant Type)` || "Unknown User"
-                            })) || []) : []}
-                            selectedValue={record.user_id + "," + record.user_type}
-                            onChange={(e) => {
-                              handleUpdateChange(e, record.id, "user_id")
-                            }}
-                            type={"user_id"}
-                          />
+                                    ? `${option.company_id},employer`
+                                    : `${option.id},applicant_type`,
+                                label:
+                                  option.employee_id
+                                    ? `${option.name} (${option.employee_id} - Candidate)`
+                                    : option.company_id
+                                      ? `${option.company_name} (${option.company_id} - Client)`
+                                      : `${option.title} (Applicant Type)` || "Unknown User"
+                              })) || []) : []}
+                              selectedValue={record.user_id + "," + record.user_type}
+                              onChange={(e) => {
+                                handleUpdateChange(e, record.id, "user_id")
+                              }}
+                              type={"user_id"}
+                            />
+                            </div>
+                            <Link onClick={() => {
+                              setSingleData(record)
+                              setShowPaymentChatModal(true)
+                            }}>
+                              <span className="text-gray p-5">
+                                <BsChat />
+                              </span>
+                            </Link>
+                          </div>
                         </td>
                         <td>
                           <SelectBox
@@ -518,37 +571,37 @@ const PaymentTable = (props) => {
           </div>
         </div>
       </div>
-      {/* <ModalSidebar
-                show={showCallLogModal}
-                onClose={() => {
-                    setShowCallLogModal(false)
-                    setTaskId("")
-                    setCallLogId("")
-                }}
-                children={
-                    <CommentTaskBox
-                        userId={singelCallLogData?.id}
-                        taskType={"call_log_chat"}
-                        taskUserType={"call_log"}
-                        setOpenReplyBox={setShowCallLogModal}
-                        openReplyBox={showCallLogModal}
-                        taskName={"Discussion for Call log"}
-                        TaskId={taskId}
-                    />
-                }
-            >
-                {showCallLogModal ? (
-                    <CommentTaskBox
-                        userId={singelCallLogData?.id}
-                        taskType={"call_log_chat"}
-                        taskUserType={"call_log"}
-                        setOpenReplyBox={setShowCallLogModal}
-                        openReplyBox={showCallLogModal}
-                        taskName={"Discussion for Call log"}
-                        TaskId={taskId}
-                    />
-                ) : null}
-            </ModalSidebar> */}
+      <ModalSidebar
+        show={showPaymentChatModal}
+        onClose={() => {
+          setShowPaymentChatModal(false)
+          setTaskId("")
+          setPaymentRecId("")
+        }}
+        children={
+          <CommentTaskBox
+            userId={singleData?.id || PaymentRecId}
+            taskType={"payment_rec_chat"}
+            taskUserType={"payment_rec"}
+            setOpenReplyBox={setShowPaymentChatModal}
+            openReplyBox={showPaymentChatModal}
+            taskName={"Discussion for Payment Record"}
+            TaskId={taskId}
+          />
+        }
+      >
+        {showPaymentChatModal ? (
+          <CommentTaskBox
+            userId={singleData?.id || PaymentRecId}
+            taskType={"payment_rec_chat"}
+            taskUserType={"payment_rec"}
+            setOpenReplyBox={setShowPaymentChatModal}
+            openReplyBox={showPaymentChatModal}
+            taskName={"Discussion for Payment Record"}
+            TaskId={taskId}
+          />
+        ) : null}
+      </ModalSidebar>
     </>
   );
 };
