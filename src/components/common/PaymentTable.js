@@ -18,6 +18,7 @@ const PaymentTable = (props) => {
   const searchParams = new URLSearchParams(location.search);
   const NotificationPaymentnId = searchParams.get("Payment_rec_id") || "";
   const NotifiTaskId = searchParams.get("taskId") || "";
+  const { resetWithPaymentRecId } = props;
 
   let [filterListapiCall, setFilterListApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(false);
@@ -74,6 +75,7 @@ const PaymentTable = (props) => {
         admin_type: props.selectedAdminType,
         column_name: columnName,
         sort_order: sortOrder,
+        id: resetWithPaymentRecId ? "" : PaymentRecId
       }
       let json = await GetFilter();
       let resRecords = await getAllInvioceRecord(getPaymentRecData);
@@ -81,6 +83,13 @@ const PaymentTable = (props) => {
         setIsLoading(false)
         setTotalData(resRecords.data.data.total_rows)
         setPaymentRecordsList(resRecords.data.data.data)
+        if (taskId) {
+          setSingleData(resRecords.data.data.data[0])
+          setShowPaymentChatModal(true)
+          const newUrl = window.location.pathname;
+          window.history.replaceState({}, document.title, newUrl);
+          localStorage.setItem("navigation_url", "")
+        }
       } else {
         setIsLoading(false)
       }
@@ -97,10 +106,10 @@ const PaymentTable = (props) => {
       setFilterListApiCall(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterListapiCall,
-    props.search,
-    props.selectedAdminId,
-    props.selectedAdminType, sortOrder, columnName]);
+  }, [location.key, window.location.search, taskId, filterListapiCall,
+  props.search,
+  props.selectedAdminId,
+  props.selectedAdminType, sortOrder, columnName]);
 
   useEffect(() => {
     if (NotifiTaskId) {
@@ -414,27 +423,27 @@ const PaymentTable = (props) => {
                           }}>
                           <div className="d-flex">
                             <div
-                            style={{minWidth: "180px",maxWidth:"250px"}}>
-                            <SelectBox
-                              Width={"yes"} options={props.employeeEmployerlist ? (props.employeeEmployerlist?.map((option) => ({
-                                value: option.employee_id
-                                  ? `${option.employee_id},employee`
-                                  : option.company_id
-                                    ? `${option.company_id},employer`
-                                    : `${option.id},applicant_type`,
-                                label:
-                                  option.employee_id
-                                    ? `${option.name} (${option.employee_id} - Candidate)`
+                              style={{ minWidth: "180px", maxWidth: "250px" }}>
+                              <SelectBox
+                                Width={"yes"} options={props.employeeEmployerlist ? (props.employeeEmployerlist?.map((option) => ({
+                                  value: option.employee_id
+                                    ? `${option.employee_id},employee`
                                     : option.company_id
-                                      ? `${option.company_name} (${option.company_id} - Client)`
-                                      : `${option.title} (Applicant Type)` || "Unknown User"
-                              })) || []) : []}
-                              selectedValue={record.user_id + "," + record.user_type}
-                              onChange={(e) => {
-                                handleUpdateChange(e, record.id, "user_id")
-                              }}
-                              type={"user_id"}
-                            />
+                                      ? `${option.company_id},employer`
+                                      : `${option.id},applicant_type`,
+                                  label:
+                                    option.employee_id
+                                      ? `${option.name} (${option.employee_id} - Candidate)`
+                                      : option.company_id
+                                        ? `${option.company_name} (${option.company_id} - Client)`
+                                        : `${option.title} (Applicant Type)` || "Unknown User"
+                                })) || []) : []}
+                                selectedValue={record.user_id + "," + record.user_type}
+                                onChange={(e) => {
+                                  handleUpdateChange(e, record.id, "user_id")
+                                }}
+                                type={"user_id"}
+                              />
                             </div>
                             <Link onClick={() => {
                               setSingleData(record)

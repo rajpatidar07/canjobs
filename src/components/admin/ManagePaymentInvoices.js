@@ -22,6 +22,8 @@ const ManagePayment = () => {
   const [showfilterdropdown, setShowfilterdropdown] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [search, setSearch] = useState("");
+  const [resetWithPaymentRecId, setResetWithPaymentRecId] = useState(false);
+
   const dropdownRef = useRef(null);
 
   /*function to get the user and admin data */
@@ -42,11 +44,11 @@ const ManagePayment = () => {
       console.log(err);
     }
   };
-  
+
   const filteredAdmins = adminList
     ? adminList?.filter((admin) =>
-        admin?.name?.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      admin?.name?.toLowerCase().includes(searchQuery.toLowerCase())
+    )
     : [];
 
   useEffect(() => {
@@ -211,9 +213,8 @@ const ManagePayment = () => {
                 </button>
 
                 <div
-                  className={`position-absolute bg-white z-index-4 p-8 shadow-lg right-25 ${
-                    showfilterdropdown ? "d-block" : "d-none"
-                  }`}
+                  className={`position-absolute bg-white z-index-4 p-8 shadow-lg right-25 ${showfilterdropdown ? "d-block" : "d-none"
+                    }`}
                   style={{ width: "800px" }}
                 >
                   <div className="d-flex justify-content-between align-items-center">
@@ -276,6 +277,11 @@ const ManagePayment = () => {
                   setSelectedAdminId("");
                   setSelectedAdminType("");
                   setSearchQuery("");
+                  setResetWithPaymentRecId(true);
+                  const newUrl = window.location.pathname;
+                  window.history.replaceState({}, document.title, newUrl);
+                  // Reset the flag after a short delay to allow ConsultationTable to react
+                  setTimeout(() => setResetWithPaymentRecId(false), 100);
                 }}
               >
                 Reset
@@ -292,6 +298,8 @@ const ManagePayment = () => {
               search={search}
               selectedAdminId={selectedAdminId}
               selectedAdminType={selectedAdminType}
+              resetWithPaymentRecId={resetWithPaymentRecId}
+
             />
           </div>
         </div>

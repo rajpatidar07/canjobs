@@ -346,7 +346,9 @@ function Notifications({
                                                               ? data.document_user_type === "employer"
                                                                 ? `/client_detail?user_payment=true&Pid=${data.mention_id}`
                                                                 : `/${data.employee_id}?user_payment=true&Pid=${data.mention_id}`
-                                                              : ''
+                                                              :data.subject === "mention_payment_rec_chat"
+                                                        ? `/payment_records?Payment_rec_id=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}` 
+                                                              :''
                       }
                       onClick={() => {
                         try {

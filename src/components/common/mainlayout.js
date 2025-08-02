@@ -165,7 +165,7 @@ function MainLayout() {
         "/visitorsvisa", "/studypermit", "/temporaryresident", "/economicimmigration", "/familysponsorship", "/pnp", "/passport",
         "/citizenship", "/humanitarian_and_Compassionate", "/permanent_resident_cards", "/pgwp", "/wes", "/atip", "/localcandidates",
         "/federal_pr", "/view_pdf_Agreement", "/study_dashboard", "/programs", "/students", "/student_profile", "/applied_programs",
-        "/payment_invoice"
+        "/payment_records"
       ],
       user: [
         `/${employeeId}`, "/", "/student_profile", "/student_document", "/programs", "/education_loan", "/personal_loan", "/accommodation",
@@ -185,7 +185,7 @@ function MainLayout() {
         "/visitorsvisa", "/studypermit", "/temporaryresident", "/economicimmigration", "/familysponsorship", "/pnp", "/passport",
         "/citizenship", "/humanitarian_and_Compassionate", "/permanent_resident_cards", "/pgwp", "/wes", "/atip", "/localcandidates",
         "/federal_pr", "/view_pdf_Agreement", "/study_dashboard", "/programs", "/students", "/student_profile", "/applied_programs",
-        "/payment_invoice"
+        "/payment_records"
       ]
     };
 
@@ -483,7 +483,7 @@ function MainLayout() {
               <Route path="/student_profile" element={<StudentProfile />} />
               <Route path="/applied_programs" element={<AppliedPrograms />} />
               <Route path="*" element={<Loader load={"yes"} />} />
-              <Route path="/payment_invoice" element={<ManagePayment />} />
+              <Route path="/payment_records" element={<ManagePayment />} />
               {/* <Route path="/:eid" element={<NewUserProfile />} /> */}
             </Route>
 

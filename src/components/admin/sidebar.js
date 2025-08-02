@@ -1048,7 +1048,7 @@ const AdminSidebar = (props) => {
             }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             title={"Manage Payment"}
-            to="/payment_invoice"
+            to="/payment_records"
           >
             <MdOutlinePayments className="sidebar_icon" />
             <span className="text-truncate">Manage Payment</span>
