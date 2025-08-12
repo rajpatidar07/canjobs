@@ -10,6 +10,7 @@ import {
   GetJobLimaSubStages,
   GetFilter,
   GetAdminrSetting,
+  AddAdminPermission,
 } from "../../api/api";
 import { toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
@@ -31,7 +32,7 @@ import filterjson from "../json/filterjson";
 export default function JobTable(props) {
   /*show Modal and props state */
   let [isLoading, setIsLoading] = useState(true);
-  let [fieldsPermited, setFieldsPermited] = useState(true);
+  let [fieldsPermited, setFieldsPermited] = useState({});
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [showAddCompanyDocModal, setShowAddCompanyDocModal] = useState(false);
   let [openLimia, setOpenLimia] = useState(false);
@@ -213,6 +214,19 @@ export default function JobTable(props) {
       const lmia_column_permission = JSON.parse(
         Response.data.lmia_column_permission
       );
+      if (lmia_column_permission === null) {
+        const updatedPermissions = {
+          lmia_column_permission: {},
+        }
+        try {
+          const response = await AddAdminPermission(updatedPermissions)
+          if (response.message === 'successfully') {
+            GetDashboardPermissionData()
+          }
+        } catch (err) {
+          console.error(err)
+        }
+      }
       setFieldsPermited(lmia_column_permission);
     } catch (err) {
       console.log(err);
@@ -398,11 +412,10 @@ export default function JobTable(props) {
         : []
     ),
   ];
-  const FilterdColumns = columns.filter((col) => {
+  const FilterdColumns = columns?.filter((col) => {
     // Always show if it's not part of config OR config says 1
     return fieldsPermited[col.key] === undefined || fieldsPermited[col.key] === 1 || col.isAction;
   });
-  console.log(fieldsPermited, FilterdColumns)
   return (
     <>
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
@@ -627,66 +640,66 @@ export default function JobTable(props) {
                             /*job.is_applied === "1" ? "d-none" : */ "col-12 text-capitalize job_row"
                           }
                         >
-                            <td className="table_sticky_col sticky_col1 py-5 bg-white" >
-                              <Link
-                                to={`/job_detail`}
-                                onClick={
-                                  () =>
-                                    localStorage.setItem("job_id", job.job_id)
-                                }
-                                className="font-size-3 mb-0 font-weight-semibold text-black-2 "
-                                title={job.job_title}
-                              >{job.job_id}</Link>
-                            </td>                   
-                            <td className="table_sticky_col sticky_col1 py-5 bg-white" style={{ left: "100px" }}>
-                              <div className="d-flex align-items-center">
-                                {(job.is_monday_data === 1 || job.is_monday_data === "1") && (
-                                  <MondayBadge />
-                                )}
-                                <div>
-                                  <Link
-                                    to={`/job_detail`}
-                                    onClick={
-                                      () =>
-                                        localStorage.setItem("job_id", job.job_id)
-                                      // JobDetail(job.job_id)
-                                    }
-                                    className="font-size-3 mb-0 font-weight-semibold text-black-2 "
-                                    title={job.job_title + (job.employement ? ` (${job.employement})` : "")}
-                                  >
-                                    <>
-                                      <p className="m-0 text-truncate text-black-2 font-weight-bold text-capitalize">
-                                        {job.job_title}{" "}
-                                        {job.employement
-                                          ? `(${job.employement})`
-                                          : ""}
-                                      </p>
-                                      <p className="text-gray font-size-2 m-0 text-capitalize"
-                                        title={job.company_name}>
-                                        {job.company_name}
-                                        {/* - {job.industry_type} */}
-                                        <br />
-                                        {job.is_featured === "1" ? (
-                                          <span className="bg-orange text-white featured_tag">
-                                            Featured
-                                          </span>
-                                        ) : null}
-                                      </p>
-                                    </>
-                                  </Link>
-                                </div>
+                          <td className="table_sticky_col sticky_col1 py-5 bg-white" >
+                            <Link
+                              to={`/job_detail`}
+                              onClick={
+                                () =>
+                                  localStorage.setItem("job_id", job.job_id)
+                              }
+                              className="font-size-3 mb-0 font-weight-semibold text-black-2 "
+                              title={job.job_title}
+                            >{job.job_id}</Link>
+                          </td>
+                          <td className="table_sticky_col sticky_col1 py-5 bg-white" style={{ left: "100px" }}>
+                            <div className="d-flex align-items-center">
+                              {(job.is_monday_data === 1 || job.is_monday_data === "1") && (
+                                <MondayBadge />
+                              )}
+                              <div>
+                                <Link
+                                  to={`/job_detail`}
+                                  onClick={
+                                    () =>
+                                      localStorage.setItem("job_id", job.job_id)
+                                    // JobDetail(job.job_id)
+                                  }
+                                  className="font-size-3 mb-0 font-weight-semibold text-black-2 "
+                                  title={job.job_title + (job.employement ? ` (${job.employement})` : "")}
+                                >
+                                  <>
+                                    <p className="m-0 text-truncate text-black-2 font-weight-bold text-capitalize">
+                                      {job.job_title}{" "}
+                                      {job.employement
+                                        ? `(${job.employement})`
+                                        : ""}
+                                    </p>
+                                    <p className="text-gray font-size-2 m-0 text-capitalize"
+                                      title={job.company_name}>
+                                      {job.company_name}
+                                      {/* - {job.industry_type} */}
+                                      <br />
+                                      {job.is_featured === "1" ? (
+                                        <span className="bg-orange text-white featured_tag">
+                                          Featured
+                                        </span>
+                                      ) : null}
+                                    </p>
+                                  </>
+                                </Link>
                               </div>
-                            </td>
+                            </div>
+                          </td>
                           {props.heading === "Dashboard" ? null : (
-                              <td className=" py-5"
-                                title={job.job_type}>
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {/* {job.employement} -  */}
-                                  {job.job_type}
-                                  <br />
-                                  {/* {job.industry_type} */}
-                                </h3>
-                              </td>
+                            <td className=" py-5"
+                              title={job.job_type}>
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {/* {job.employement} -  */}
+                                {job.job_type}
+                                <br />
+                                {/* {job.industry_type} */}
+                              </h3>
+                            </td>
                           )}
                           {props.heading === "Dashboard" ? null : (
                             FilterdColumns.find(col => col.key === "location") && (
@@ -711,7 +724,6 @@ export default function JobTable(props) {
                                   </h3>
                                 </td>
                               )}
-                              {console.log(FilterdColumns.find(col => col.key === "lmia_status",FilterdColumns.find(col => col.key === "lmia_date_approved")))}
                               {FilterdColumns.find(col => col.key === "lmia_status") && (
                                 <td
                                   className={

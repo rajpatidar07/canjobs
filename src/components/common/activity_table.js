@@ -15,6 +15,8 @@ export default function ActivityTable(props) {
   const [action_id /*, setaction_id*/] = useState(props.action_id);
   const [action_type /*, setaction_type*/] = useState(props.action_type);
   const [activityData, setactivityData] = useState([]);
+  const [columnName, setColumnName] = useState("created_at");
+  const [sortOrder, setSortOrder] = useState("DESC");
   /*Pagination states */
   // const [status, setStatus] = useState(props.self === "yes" ? -1 : 4);
   const [callapi, setCallApi] = useState(false);
@@ -105,8 +107,8 @@ export default function ActivityTable(props) {
         "",
         "",
         "",
-        "",
-        "",
+        sortOrder,//sort
+        columnName,//column name
         props.filter_by_time,
         props.applicantType
       );
@@ -129,7 +131,14 @@ export default function ActivityTable(props) {
       setCallApi(false)
     }
     // eslint-disable-next-line
-  }, [page, callapi, props.filter_by_time]);
+  }, [page, callapi, props.filter_by_time, sortOrder,
+    columnName,]);
+
+  /*Sorting Function */
+  const handleSort = (columnName) => {
+    setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
+    setColumnName(columnName);
+  };
   return (
     <>
       <div className="table-responsive main_table_div">
@@ -140,11 +149,11 @@ export default function ActivityTable(props) {
             {/* <button onClick={() => setCallApi(true)}>call</button> */}
             <thead>
               <tr className="">
-                {hide ? null : <th>User ID</th>}
-                {hide ? null : <th>User Type</th>}
-                {hide ? null : <th>User Name</th>}
+                {hide ? null : <th><Link onClick={() => handleSort("user_id")} class="text-dark">User ID</Link></th>}
+                {hide ? null : <th><Link onClick={() => handleSort("user_type")} class="text-dark">User Type</Link></th>}
+                {hide ? null : <th><Link onClick={() => handleSort( "created_by")} class="text-dark">User Name</Link></th>}
                 <th>Log</th>
-                <th>Date Time</th>
+                <th><Link onClick={() => handleSort("created_at")} class="text-dark">Date Time</Link></th>
               </tr>
             </thead>
             <tbody>

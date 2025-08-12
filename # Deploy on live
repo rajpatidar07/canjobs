@@ -11,6 +11,8 @@
 10. Add a condition to open the Excel document in SharePoint for a better view and to allow editing.
 11. Added two fields for the start date and decision date of the visa.
 12. Added a substage filter for the visa, along with a reset option for the visa filters.
+13. Add notification for mail sent by user to portal.
+14. Remove the validation for special characters in the subject while sending emails from the portal.
 Date:17/07/25
 1. Add a dynamic RA with a maximum of 4 rows for payment details.
 2. Add fixed ID and job title to the job table.
@@ -35,7 +37,7 @@ Date: 23/06/25
 3. Resolve the issue of mentioning the admin in notes for employees and employers.
 Date:19/06/25
 1. Fix the issue with the invoice date in the payment invoice email template for users, and also add the invoice number.
-Date:17-06-25(staging)18/06/25(on live)
+ate:17-06-25(staging)18/06/25(on live)
 1. Add text for the invoice and state in the payment invoice; fix the time zone.
 2. Add conditions to include the subject in the Retainer Agreement.
 3. Update the copyright year in all emails.

@@ -618,59 +618,60 @@ export default function AdminTaskTable(props) {
                             </>
                           )}
                         </td>
-                        <td
-                          className={
-                            props.heading === "dashboard"
+                        {(props.heading === "dashboard" || props.heading === "Dashboard") ?
+                          null
+                          : <td
+                            className={(props.heading === "dashboard" || props.heading === "Dashboard")
                               ? "d-none"
                               : " py-5 min-width-px-100 exclude-mark-read"
-                          }
-                        >
-                          <div
-                            className="btn-group button_group"
-                            role="group"
-                            aria-label="Basic example"
+                            }
                           >
-                            <button
-                              className="btn btn-outline-info action_btn"
-                              onClick={() => {
-                                setOpenReplyBox(true);
-                                setSingleTaskData(data);
-                              }}
-                              title="Add Reply"
+                            <div
+                              className="btn-group button_group"
+                              role="group"
+                              aria-label="Basic example"
                             >
-                              <span className="text-gray px-2">
-                                <AiOutlineMessage />
-                              </span>
-                            </button>
-                            <button
-                              className={props.heading !== "Task Dashboard" ? "d-none" : "btn btn-outline-info action_btn"}
-                              onClick={() => {
-                                props.setUpdateTaskData(data);
-                                props.setShowTaskForm(true);
-                              }}
-                              title="Edit Task"
-                              disabled={adminId !== data.task_creator_user_id}
-                            >
-                              <span className="text-gray px-2">
-                                <CiEdit />
-                              </span>
-                            </button>
-                            <button
-                              className={
-                                props.user === "agent" || props.heading !== "Task Dashboard"
-                                  ? "d-none"
-                                  : "btn btn-outline-info action_btn"
-                              }
-                              onClick={() => ShowDeleteAlert(data)}
-                              title="Delete Partner"
-                              disabled={adminId !== data.task_creator_user_id}
-                            >
-                              <span className="px-2 text-danger">
-                                <RiDeleteBin5Line />
-                              </span>
-                            </button>
-                          </div>
-                        </td>
+                              <button
+                                className={props.heading === "Dashboard" ? "d-none" : "btn btn-outline-info action_btn"}
+                                onClick={() => {
+                                  setOpenReplyBox(true);
+                                  setSingleTaskData(data);
+                                }}
+                                title="Add Reply"
+                              >
+                                <span className="text-gray px-2">
+                                  <AiOutlineMessage />
+                                </span>
+                              </button>
+                              <button
+                                className={props.heading !== "Task Dashboard" ? "d-none" : "btn btn-outline-info action_btn"}
+                                onClick={() => {
+                                  props.setUpdateTaskData(data);
+                                  props.setShowTaskForm(true);
+                                }}
+                                title="Edit Task"
+                                disabled={adminId !== data.task_creator_user_id}
+                              >
+                                <span className="text-gray px-2">
+                                  <CiEdit />
+                                </span>
+                              </button>
+                              <button
+                                className={
+                                  props.user === "agent" || props.heading !== "Task Dashboard"
+                                    ? "d-none"
+                                    : "btn btn-outline-info action_btn"
+                                }
+                                onClick={() => ShowDeleteAlert(data)}
+                                title="Delete Partner"
+                                disabled={adminId !== data.task_creator_user_id}
+                              >
+                                <span className="px-2 text-danger">
+                                  <RiDeleteBin5Line />
+                                </span>
+                              </button>
+                            </div>
+                          </td>}
                       </tr>
                     </React.Fragment>
                   ))

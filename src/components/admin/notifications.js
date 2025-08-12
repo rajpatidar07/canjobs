@@ -346,9 +346,13 @@ function Notifications({
                                                               ? data.document_user_type === "employer"
                                                                 ? `/client_detail?user_payment=true&Pid=${data.mention_id}`
                                                                 : `/${data.employee_id}?user_payment=true&Pid=${data.mention_id}`
-                                                              :data.subject === "mention_payment_rec_chat"
-                                                        ? `/payment_records?Payment_rec_id=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}` 
-                                                              :''
+                                                              : data.subject === "mention_payment_rec_chat"
+                                                                ? `/payment_records?Payment_rec_id=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                                                : data.subject === 'new_mail'
+                                                                  ? data.action_user_type === "employee"
+                                                                    ? `/${data.action_id}?user_email=true&emailId=${data.mention_id}`
+                                                                    : `/client_detail?user_email=true&Pid=${data.mention_id}`
+                                                                  : ""
                       }
                       onClick={() => {
                         try {
@@ -387,7 +391,7 @@ function Notifications({
                             } else if (data.document_user_type === "employer") {
                               localStorage.setItem(
                                 "company_id",
-                                data.employee_id
+                                data.subject === 'new_mail' ? data.action_id : data.employee_id
                               );
                             }
                           } else if (

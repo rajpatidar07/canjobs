@@ -57,6 +57,8 @@ const NewUserProfile = (props) => {
   const searchParams = new URLSearchParams(location.search);
   const docId = searchParams.get("docId");
   const agreement = searchParams.get("agreement");
+  const user_email = searchParams.get("user_email");
+  const emailId = searchParams.get("emailId");
   const user_payment = searchParams.get("user_payment");
   const Payment_id = searchParams.get("Pid");
   const notes = searchParams.get("note");
@@ -89,7 +91,9 @@ const NewUserProfile = (props) => {
             ? "retainer agreement"
             : user_payment === "true"
               ? "payment"
-              : "profile"
+              : user_email === "yes"
+                ? "email"
+                : "profile"
   );
   const [selectedPaymentTab, setSelectedPaymentTab] = useState("payment_records");
   const [userDetail, setuserDetail] = useState([]);
@@ -232,7 +236,7 @@ const NewUserProfile = (props) => {
       //   localStorage.setItem("name", PersonalDetail.name)
       // }
     }
-    if (transactionId ||user_payment === "true") {
+    if (transactionId || user_payment === "true") {
       //   setPayment();
       setTabActive("payment");
     }
@@ -247,6 +251,9 @@ const NewUserProfile = (props) => {
     }
     if (agreement) {
       setTabActive("retainer agreement");
+    }
+    if(user_email){
+      setTabActive("email")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiCall, eid, docId, docParentId, notes, agreement, location.key]);
@@ -660,7 +667,7 @@ const NewUserProfile = (props) => {
                       </Link>
                     </li>
                     <li
-                      className={`tab-menu-items nav-item ${user_type === "company" ||user_type==="agent" ? "d-none" : ""
+                      className={`tab-menu-items nav-item ${user_type === "company" || user_type === "agent" ? "d-none" : ""
                         }`}
                     >
                       <Link
@@ -1841,7 +1848,7 @@ const NewUserProfile = (props) => {
                     }
                   >
                     {TabActive === "email" ? (
-                      <MainEmailPage email={PersonalDetail.email} />
+                      <MainEmailPage email={PersonalDetail.email} emailId={emailId}/>
                     ) : null}
                   </div>
                   <div

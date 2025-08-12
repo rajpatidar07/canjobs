@@ -3495,7 +3495,7 @@ export const getActivityLog = async (
       user_type: user_type,
       action_id: action_id,
       action_type: action_type,
-      column_name: "created_at",
+      column_name: columnName || "created_at",
       sort_order: sort ? sort : "sort",
       limit: limit,
       filter_by_time: time,

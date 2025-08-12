@@ -3,18 +3,18 @@ import EmailList from "./emailList";
 // import AdminHeader from "../admin/header";
 // import AdminSidebar from "../admin/sidebar";
 import {
-  ReadEmail,ReadAllEmail,
+  ReadEmail, ReadAllEmail,
   ReadSentEmail /*, GetAllEmailPagination*/,
 } from "../../api/api";
-const MainEmailPage = ({ email }) => {
+const MainEmailPage = ({ email, emailId }) => {
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
-  const [emailType, setEmailType] = useState("SENT");
+  const [emailType, setEmailType] = useState(emailId ? "SENT" : "INBOX");
   /* data and id states */
   const [emailData, setemailData] = useState([]);
-  //  let [employeeId, setemployeeId] = useState();
+  // let [emailSing, setemailSing] = useState();
   // let [lmiaStatus, setLmiaStatus] = useState();
   /* Pagination states */
   // const [totalData, setTotalData] = useState(0);
@@ -30,14 +30,15 @@ const MainEmailPage = ({ email }) => {
     setIsLoading(true);
     try {
       let userData;
-     if(emailType === "ALL"){
-      userData = await ReadAllEmail(
-        currentPage,
-        recordsPerPage,
-        search,
-        email?.trim("")
-      );
-     }else if (emailType === "SENT") {
+      console.log(emailType, "ooooooooooooo")
+      if (emailType === "ALL") {
+        userData = await ReadAllEmail(
+          currentPage,
+          recordsPerPage,
+          search,
+          email?.trim("")
+        );
+      } else if (emailType === "SENT") {
         userData = await ReadSentEmail(
           currentPage,
           recordsPerPage,
@@ -61,6 +62,9 @@ const MainEmailPage = ({ email }) => {
       } else {
         let reversedData = userData.data.value.slice(); // Create a copy of the array
         setemailData(reversedData);
+        const newUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, newUrl);
+        localStorage.setItem("navigation_url", "")
         setIsLoading(false);
         // if (emailType === "SENT") {
         //   reversedData.reverse(); // Reverse the array if emailType is "SENT"
@@ -141,7 +145,7 @@ const MainEmailPage = ({ email }) => {
         {/* <!-- navbar- --> */}
         {/* <AdminSidebar heading={"Email"} /> */}
 
-        
+
         <div
           className={"container-fluid document_container bg-white px-0"}
           id="dashboard-body"
@@ -365,7 +369,8 @@ const MainEmailPage = ({ email }) => {
               search={search}
               email={email}
               handelScroll={handelScroll}
-              // setPageToken={setPageToken}
+              EmailId={emailId}
+            // setPageToken={setPageToken}
             />
           </div>
         </div>

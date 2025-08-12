@@ -62,8 +62,8 @@ function SendMailForm({ email, setApiCall }) {
           //   ? "Subject can not have a number."
           : value.length < 2
             ? "Subject should have 2 or more letters"
-            : /[^A-Za-z 0-9]/g.test(value)
-              ? "Cannot use special character "
+            // : /[^A-Za-z 0-9]/g.test(value)
+            //   ? "Cannot use special character "
               : "",
     ],
     description: [

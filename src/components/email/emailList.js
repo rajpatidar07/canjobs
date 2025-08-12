@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import Pagination from "../common/pagination";
 import Loader from "../common/loader";
 import { Link } from "react-router-dom";
@@ -23,10 +23,14 @@ const EmailList = ({
   // pageToken,
   // setPageToken,
   handelScroll,
+  EmailId
 }) => {
-  const [emailId, setEmailId] = useState();
-  const [singleEmailData, setSingleEmailData] = useState();
+  const [emailId, setEmailId] = useState(EmailId);
+  const [singleEmailData, setSingleEmailData] = useState(EmailId ? data?.find((item) => item.id === EmailId) : {});
   const [sentEmail, setSentEmail] = useState("no");
+
+  // Set emailType to INBOX when EmailId is available
+
   let user_type = localStorage.getItem("userType");
   /*Function to decode the email subject */
   function decodeEmailSubject(encodedSubject) {
@@ -39,6 +43,13 @@ const EmailList = ({
         )
     );
   }
+
+  useEffect(() => {
+    if (data) {
+      setSingleEmailData(data?.find((item) => item.id === EmailId))
+    }
+  }, [EmailId, data])
+
   return (
     <div className="emails">
       <div className="email-list">
@@ -416,7 +427,7 @@ const EmailList = ({
                 </div>
               </div>
             ) : (
-              emailId && (
+              (data && emailId && singleEmailData) && (
                 <PreviewEmail
                   id={emailId}
                   emailType={emailType}
