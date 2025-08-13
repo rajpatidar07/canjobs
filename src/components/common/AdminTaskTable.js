@@ -164,6 +164,7 @@ export default function AdminTaskTable(props) {
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
+    props.setpageNo(1);
   };
   /*function to change task status */
   const OnStatusChange = async (originalData, status) => {
@@ -240,7 +241,6 @@ export default function AdminTaskTable(props) {
                       to={""}
                       onClick={() => {
                         handleSort("task_creator_user_name");
-                        props.setpageNo(1);
                       }}
                       className="text-gray"
                       title="Sort by Assigned From"
@@ -256,7 +256,6 @@ export default function AdminTaskTable(props) {
                       to={""}
                       onClick={() => {
                         handleSort("assigned_to_name");
-                        props.setpageNo(1);
                       }}
                       className="text-gray"
                       title="Sort by Assigned To"
@@ -272,7 +271,6 @@ export default function AdminTaskTable(props) {
                       to={""}
                       onClick={() => {
                         handleSort("subject_description");
-                        props.setpageNo(1);
                       }}
                       className="text-gray"
                       title="Sort by Description"
@@ -291,7 +289,6 @@ export default function AdminTaskTable(props) {
                         to={""}
                         onClick={() => {
                           handleSort("type");
-                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Type"
@@ -311,7 +308,6 @@ export default function AdminTaskTable(props) {
                         to={""}
                         onClick={() => {
                           handleSort("Priority");
-                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Priority"
@@ -331,7 +327,6 @@ export default function AdminTaskTable(props) {
                         to={""}
                         onClick={() => {
                           handleSort("group_by");
-                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Status"
@@ -349,7 +344,6 @@ export default function AdminTaskTable(props) {
                         to={""}
                         onClick={() => {
                           handleSort("status");
-                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Status"

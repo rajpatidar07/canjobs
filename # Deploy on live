@@ -13,6 +13,7 @@
 12. Added a substage filter for the visa, along with a reset option for the visa filters.
 13. Add notification for mail sent by user to portal.
 14. Remove the validation for special characters in the subject while sending emails from the portal.
+15. Add sorting in all tables.
 Date:17/07/25
 1. Add a dynamic RA with a maximum of 4 rows for payment details.
 2. Add fixed ID and job title to the job table.

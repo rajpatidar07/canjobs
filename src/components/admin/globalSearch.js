@@ -604,15 +604,15 @@ function GlobalSearch() {
                         close={close}
                         key={data.id}
                         name={data.subject_description}
-                        email={applicantTypeList?.find((item) => item.id === data.employee_id)?.title}
+                        email={applicantTypeList?.find((item) => item.id === data.interested_in_id	)?.title}
                         mobile={data.employee_name}
                         onClick={() => {
                           localStorage.setItem(
                             "applicantType",
-                            data.employee_id)
+                            data.interested_in_id	)
                         }}
-                        to={`/slots?sId=${data.employee_id}&notifiType=candidate&taskId=${data.id || ""
-                          }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`}
+                        to={`/slots?sId=${data.interested_in_id	}&notifiType=candidate&taskId=${data.id || ""
+                          }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}&canId=${data.employee_id}`}
                       />
                       </div>
                     ))}

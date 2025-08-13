@@ -126,9 +126,16 @@ function ApplicantTypeTable(props) {
                                     <tr>
                                         <th
                                             scope="col"
-                                            className="border-0 font-size-4 font-weight-normal text-start"
+                                            className="border-0 text-start font-size-4 font-weight-normal"
                                         >
-                                            Title
+                                            <Link
+                                                className=" text-dark"
+                                                onClick={() => {
+                                                    props.handleSort("title")
+                                                    setCurrentPage(1)
+                                                }}>
+                                                Title
+                                            </Link>
                                         </th>
 
                                         {props.heading === "Dashboard" ||

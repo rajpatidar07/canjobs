@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AssignedJobTable from "./assignedJobTable";
 import { Accordion } from "react-bootstrap";
+import { Link } from "react-router-dom";
 export default function ManegerBox({
   // data,
   isLoading,
@@ -90,15 +91,30 @@ export default function ManegerBox({
         <tr>
           <th scope="col" className="border-0 font-size-4 font-weight-normal"
             title="Name">
-            Name
+            <Link onClick={() => {
+              handleSort("name")
+            }}
+              className="text-dark">
+              Name
+            </Link>
           </th>
           <th scope="col" className="border-0 font-size-4 font-weight-normal"
             title="Contact">
-            Contact
+            <Link onClick={() => {
+              handleSort("email")
+            }}
+              className="text-dark">
+              Contact
+            </Link>
           </th>
           <th scope="col" className="border-0 font-size-4 font-weight-normal"
             title="Total Jobs">
+            {/* <Link onClick={() => {
+              handleSort("name")
+            }}
+              className="text-dark"> */}
             Total Jobs
+            {/* </Link> */}
           </th>
         </tr>
       </thead>

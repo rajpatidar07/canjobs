@@ -284,11 +284,13 @@ export const EmployeeDetails = async (props) => {
 };
 
 /*get Applicant Type and sub types  api */
-export const getApplicanTypeApi = async (id) => {
+export const getApplicanTypeApi = async (id, column, sort) => {
   const response = await axios.post(
     `${API_URL}admin/getApplicantType`,
     {
-      admin_access_id: id
+      admin_access_id: id,
+      column_name: column,
+      sort_order: sort,
     },
     {
       headers: {
@@ -3870,14 +3872,16 @@ export const GetAdobeToken = async (Id) => {
 
 /*Agreement Apis */
 // Api function to Get document url for sharepoint
-export const GetAgreement = async (Id, receiver, receiver_type, type) => {
+export const GetAgreement = async (Id, receiver, receiver_type, sort, column, type,) => {
   const response = await axios.post(
     `${API_URL}api/Agreement_api/get_agreement`,
     {
       id: Id,
       receiver: receiver,
       receiver_type: receiver_type,
-      type: type
+      type: type,
+      column_name: column,
+      sort_order: sort,
     },
     {
       headers: {

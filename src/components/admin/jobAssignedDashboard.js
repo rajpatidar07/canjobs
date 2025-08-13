@@ -51,7 +51,7 @@ export default function JobAssignedDashboard() {
       setApiCall(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, apiCall]);
+  }, [search, apiCall, sortOrder, columnName]);
 
   /*Function to Search employer */
   const onSearch = (e) => {

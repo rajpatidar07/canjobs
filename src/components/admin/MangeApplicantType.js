@@ -16,10 +16,19 @@ export default function ManageApplicantType(props) {
   const [updateApplicantTypeData, setUpdateApplicantTypeData] = useState();
   const liRefs = useRef([]);
   let [showApplicantTypeForm, setShowApplicantTypeForm] = useState(false);
+  const [columnName, setColumnName] = useState("created_at");
+  const [sortOrder, setSortOrder] = useState("DESC");
+
+  /*Sorting Function */
+  const handleSort = (columnName) => {
+    setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
+    setColumnName(columnName);
+    setpageNo(1)
+  };
 
   const getAllSlotsData = async () => {
     try {
-      let response = await getApplicanTypeApi("");
+      let response = await getApplicanTypeApi("", columnName, sortOrder);
       let Adminresponse = await getallAdminData();
       setAllApplicantType(response.data.data.reverse());
       setAllAdmin(Adminresponse.data);
@@ -27,6 +36,7 @@ export default function ManageApplicantType(props) {
       console.log(err);
     }
   };
+  
   useEffect(() => {
     getAllSlotsData();
     if (props.heading) {
@@ -38,9 +48,10 @@ export default function ManageApplicantType(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
-  }, [props.heading, apiCall]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.heading, apiCall, sortOrder, columnName]);
 
-  /*Search Onchange function to Search applicanttypedata data */
+  /*Search Onchange function to Search applicant type data data */
   // const onSearch = (e) => {
   //   const inputValue = e.target.value;
   //   setSearch(inputValue);
@@ -104,6 +115,7 @@ export default function ManageApplicantType(props) {
               setApiCall={setApiCall}
               setShowApplicantTypeForm={setShowApplicantTypeForm}
               setUpdateApplicantTypeData={setUpdateApplicantTypeData}
+              handleSort={handleSort}
             />
           </div>
         </div>

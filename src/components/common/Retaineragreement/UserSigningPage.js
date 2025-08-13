@@ -56,7 +56,7 @@ export default function UserSigningPage() {
             //     emp_user_type,
             //     folderId
             // );
-            let Agreeres = await GetAgreement(id, user_id, emp_user_type, type === "PNP   express entry/federal PR" ? "Alberta PNP and federal PR" : type)
+            let Agreeres = await GetAgreement(id, user_id, emp_user_type, "", "", type === "PNP   express entry/federal PR" ? "Alberta PNP and federal PR" : type)
             if (Agreeres.data.data) {
                 setFelidData(Agreeres.data.data[0])
                 setLoader(false);

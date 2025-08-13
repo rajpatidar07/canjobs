@@ -8,6 +8,7 @@ import {
   DeleteAgreement,
   GetSharePointData,
 } from "../../../api/api";
+import { Link } from "react-router-dom";
 import { FaFilePdf, FaFileSignature, FaPlus } from "react-icons/fa";
 import MainRetainerAggHtml from "./MainRetainerAggHtml";
 import ViewPdf from "./viewPdf";
@@ -53,8 +54,8 @@ export default function RetauberAgreementList({
   // const [totalData, setTotalData] = useState("");
   // const [recordsPerPage] = useState(10);
   // /*Shorting states */
-  // const [columnName,/* setcolumnName*/] = useState("id");
-  // const [sortOrder,/* setSortOrder*/] = useState("DESC");
+  const [columnName, setColumnName] = useState("id");
+  const [sortOrder, setSortOrder] = useState("DESC");
   // const [currentPage, setCurrentPage] = useState(1);
 
   /*Pagination Calculation */
@@ -63,7 +64,7 @@ export default function RetauberAgreementList({
   const getAgreeFelidData = async () => {
     try {
       setIsLoading(true)
-      let res = await GetAgreement("", user_id, emp_user_type);
+      let res = await GetAgreement("", user_id, emp_user_type, sortOrder, columnName);
       if (res.data.data) {
         setAgreementList(res.data.data);
         setIsLoading(false)
@@ -161,6 +162,11 @@ export default function RetauberAgreementList({
     setOpenAddAgreementFelids(true);
   };
 
+  /*Sorting Function */
+  const handleSort = (columnName) => {
+    setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
+    setColumnName(columnName);
+  };
   return (
     <div className="response_main_div w-100">
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
@@ -207,31 +213,51 @@ export default function RetauberAgreementList({
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
                   >
-                    Agreement
+                    <Link onClick={() => {
+                      handleSort("agreement_subject")
+                    }} className="text-dark">
+                      Agreement
+                    </Link>
                   </th>
                   <th
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
                   >
-                    Sent Date
+                    <Link onClick={() => {
+                      handleSort("send_date")
+                    }} className="text-dark">
+                      Sent Date
+                    </Link>
                   </th>
                   <th
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
                   >
-                    Receive Date
+                    <Link onClick={() => {
+                      handleSort("received_date")
+                    }} className="text-dark">
+                      Receive Date
+                    </Link>
                   </th>
                   <th
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
                   >
-                    Pdf generated status
+                    <Link onClick={() => {
+                      handleSort("pdf_genrated_status")
+                    }} className="text-dark">
+                      Pdf generated status
+                    </Link>
                   </th>
                   <th
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
                   >
-                    Signature status
+                    <Link onClick={() => {
+                      handleSort("signature_status")
+                    }} className="text-dark">
+                      Signature status
+                    </Link>
                   </th>
                   <th
                     scope="col"
