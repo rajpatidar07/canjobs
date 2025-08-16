@@ -156,8 +156,8 @@ function MainLayout() {
 
     const allowedPaths = {
       admin: [
-        "/dashboard", "/job", "/selfjob", "/category", "/lmia", "/visa", "/document", "/employee", "/selfemployee",
-        "/adminclient", "/adminprofile", "/assignedjobs", "/:eid", "/userpdf", "/managetasks", "/sharepoint_document",
+        "/adminprofile", "/dashboard", "/job", "/selfjob", "/category", "/lmia", "/visa", "/document", "/employee", "/selfemployee",
+        "/adminclient", "/assignedjobs", "/:eid", "/userpdf", "/managetasks", "/sharepoint_document",
         "/client_detail", "/job_detail", "/partner_profile", "/followup", "/partner", "/partner_dashboard", "/daily_call_log",
         "/daily_hours_log", "/consultation", "/assigned_admin", "/activity_log", "/filter", "/interview", "/responses",
         "/lmia_dashboard", "/emailtemplate", "/notes", "/credentials", "/testpdfurl", "/resume/:id", "/daily_pages", "/email",
@@ -176,16 +176,7 @@ function MainLayout() {
         "/job_detail", "/view_pdf_Agreement"
       ],
       agent: [ // same as admin list, assuming they share same paths
-        `/${employeeId}`, "/partner_dashboard", "/job", "/selfjob", "/category", "/lmia", "/visa", "/document", "/employee", "/selfemployee",
-        "/adminclient", "/adminprofile", "/assignedjobs", "/:eid", "/userpdf", "/managetasks", "/sharepoint_document",
-        "/client_detail", "/job_detail", "/partner_profile", "/followup", "/partner", "/partner_dashboard", "/daily_call_log",
-        "/daily_hours_log", "/consultation", "/assigned_admin", "/activity_log", "/filter", "/interview", "/responses",
-        "/lmia_dashboard", "/emailtemplate", "/notes", "/credentials", "/testpdfurl", "/resume/:id", "/daily_pages", "/email",
-        "/googledrive", "/anotation", "/slots", "/setting", "/manage_applicant_type", "/businessvisa", "/expressentry",
-        "/visitorsvisa", "/studypermit", "/temporaryresident", "/economicimmigration", "/familysponsorship", "/pnp", "/passport",
-        "/citizenship", "/humanitarian_and_Compassionate", "/permanent_resident_cards", "/pgwp", "/wes", "/atip", "/localcandidates",
-        "/federal_pr", "/view_pdf_Agreement", "/study_dashboard", "/programs", "/students", "/student_profile", "/applied_programs",
-        "/payment_records"
+        `/${employeeId}`, "/partner_dashboard", "/employee", "/selfemployee", "/assignedjobs", "/:eid", "/userpdf", "/client_detail", "/job_detail", "/partner_profile", "/followup", "/partner", "/partner_dashboard", "/testpdfurl", "/resume/:id",
       ]
     };
 
@@ -196,10 +187,84 @@ function MainLayout() {
       agent: "/partner_dashboard"
     };
 
+    const loginRoutes = {
+      admin: "/adminlogin",
+      user: "/candidate_login",
+      company: "/client_login",
+      agent: "/partnerlogin"
+    };
+
+    // Public routes that don't require authentication
+    const publicRoutes = [
+      "/",
+      "/main_home",
+      "/study",
+      "/signup",
+      "/candidate_login",
+      "/candidate_signup",
+      "/client_login",
+      "/client_singup",
+      "/jobs",
+      "/jobdetail",
+      "/aboutus",
+      "/demojob",
+      "/adminlogin",
+      "/partnerlogin",
+      "/study_partner_login",
+      "/study_admin_login",
+      "/resetpassword/:id",
+      "/outside_booking"
+    ];
+
     useEffect(() => {
-      if (!token || token === "null" || token === "undefined") return;
+      // Check if the current path is a public route
+      const isPublicRoute = publicRoutes.some(route => {
+        if (route.includes("/:id")) {
+          const baseRoute = route.split("/:")[0];
+          return path.startsWith(baseRoute);
+        }
+        return route === path;
+      });
+      // If no token and trying to access protected route, redirect to login
+      if (!token || token === "null" || token === "undefined") {
+        if (!isPublicRoute) {
+          // Try to determine user type from path
+          let targetUserType = null;
+
+          // Check if path matches any user type patterns based on allowedPaths
+          const pathLower = path.toLowerCase();
+          console.log("first", allowedPaths.user.some(route => pathLower.includes(route)), "pp", (allowedPaths.company.some(route => pathLower.includes(route))))
+          if (allowedPaths.company.some(route => pathLower.includes(route)) === true) {
+            targetUserType = "company";
+            console.log("company", allowedPaths.company, allowedPaths.company.some(route => pathLower.includes(route)), pathLower)
+          } else if (allowedPaths.agent.some(route => pathLower.includes(route)) === true) {
+            // Check agent routes
+            targetUserType = "agent";
+            console.log("agent", allowedPaths.agent, allowedPaths.agent.some(route => pathLower.includes(route)), pathLower)
+          } else if (allowedPaths.admin.some(route => pathLower.includes(route)) === true) {
+            // Check admin routes (default fallback)
+            targetUserType = "admin";
+            console.log("admin", allowedPaths.agent, allowedPaths.agent.some(route => pathLower.includes(route)), pathLower)
+          } else if (allowedPaths.user.some(route => pathLower.includes(route)) === true) {
+            // Check user routes (default fallback)
+            targetUserType = "user";
+            console.log("user", allowedPaths.user, allowedPaths.user.some(route => route, pathLower), pathLower)
+          }
+          console.log(targetUserType, "pppppppppppppppp", loginRoutes[targetUserType])
+          if (targetUserType && loginRoutes[targetUserType]) {
+            navigate(loginRoutes[targetUserType]);
+          } else {
+            // Default to candidate login
+            navigate("/");
+          }
+        }
+        return;
+      }
+
+      // If token exists, check if path is allowed for this user type
       const allowed = allowedPaths[userType] || [];
       const isAllowed = allowed.some((allowedPath) => matchPath(allowedPath, path));
+
       if (!isAllowed) {
         navigate(redirectPath[userType]);
       }
