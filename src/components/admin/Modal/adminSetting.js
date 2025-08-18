@@ -196,7 +196,7 @@ function AdminSetting({ show, close, setShowChangePass }) {
         </div>
 
         <Link
-          to=""
+          to="#"
           onClick={() => {
             setShowChangePass(true);
             close();

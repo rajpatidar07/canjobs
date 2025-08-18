@@ -3,7 +3,8 @@ import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import {
   AdminDetails,
-  AddAdmin /* AddChildPermission*/,
+  AddAdmin, /* AddChildPermission*/
+  encryptPassword,
 } from "../../../api//api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -141,6 +142,7 @@ function Addadmin(props) {
   /*Function to get admin detail */
   const AdminData = async () => {
     try {
+
       const userData = await AdminDetails(props.adminId);
       if (userData === undefined || userData.data.length === 0) {
         setState(initialFormState);
@@ -166,7 +168,8 @@ function Addadmin(props) {
     if (validate()) {
       setLoading(true);
       try {
-        const responseData = await AddAdmin(state);
+        let data = { ...state, password: encryptPassword(state.password) }
+        const responseData = await AddAdmin(data);
         if (responseData.message === "admin added successfully") {
           // await AddChildPermission(Permissions);
           toast.success("Admin added successfully", {

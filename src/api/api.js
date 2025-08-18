@@ -1,4 +1,5 @@
 import axios from "axios";
+import CryptoJS from "crypto-js";
 const API_URL = window.location.origin === "https://canpathwaysjobs.com"
   ? "https://api.canpathwaysjobs.com/canjobs/" : "https://api-dev.canpathwaysjobs.com/"
 //Local
@@ -18,7 +19,21 @@ const admin_type = localStorage.getItem("admin_type");
 if (view_as_token) {
   Token = view_as_token;
 }
+const SECRET_KEY = "MySuperSecretKey123"; // ⚠️ ye same key backend me bhi honi chahiye
+const SECRET_IV = "MySuperSecretIV123";
 
+export const encryptPassword = (password) => {
+  const key = CryptoJS.enc.Utf8.parse(SECRET_KEY.substring(0, 16));
+  const iv = CryptoJS.enc.Utf8.parse(SECRET_IV.substring(0, 16));
+
+  const encrypted = CryptoJS.AES.encrypt(password, key, {
+    iv: iv,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7
+  });
+
+  return encrypted.toString(); // base64 string
+}
 axios.interceptors.response.use(
   response => {
     if (
@@ -151,9 +166,16 @@ export const GetAllVisaChartData = async (id, type) => {
 
 /*Chanage password Api */
 export const ChangePasswordApi = async (props) => {
+  let encryptPass = encryptPassword(props.password)
+  let encryptNewPass = encryptPassword(props.new_password)
+  let encryptConfPass = encryptPassword(props.conf_password)
   const response = await axios.put(
     `${API_URL}${user_type}/changePassword`,
-    props,
+    {
+      password: encryptPass,
+      new_password: encryptNewPass,
+      conf_password: encryptConfPass,
+    },
     {
       headers: {
         "Content-Type": "application/json",
@@ -193,9 +215,10 @@ export const getJson = async () => {
 // EMPLOYEE'S API
 /*Employee sign */
 export const EmployeeSignUp = async (props, permission) => {
+  let newPass = encryptPassword(props.password)
   const formData = new FormData();
   formData.append("email", props.email);
-  formData.append("password", props.password);
+  formData.append("password", newPass);
   formData.append("otp", props.otp);
   formData.append("resume", props.resume);
   formData.append("reffer_by", props.reffer_by);
@@ -209,9 +232,10 @@ export const EmployeeSignUp = async (props, permission) => {
 
 /*Employee Login */
 export const EmployeeLogin = async (props) => {
+  let newPass = encryptPassword(props.password)
   const formData = new FormData();
   formData.append("email", props.email);
-  formData.append("password", props.password);
+  formData.append("password", newPass);
   const response = await axios.post(`${API_URL}employee_login`, formData);
   return response.data;
 };
@@ -1372,9 +1396,10 @@ export const DeleteVisa = async (id) => {
 // EMPLOYER'S API
 /*Employer sign up */
 export const EmployerSignUp = async (props, permission) => {
+  let newPass = encryptPassword(props.password)
   const formData = new FormData();
   formData.append("email", props.email);
-  formData.append("password", props.password);
+  formData.append("password", newPass);
   formData.append("contact_no", props.contact_no);
   formData.append("term_and_condition", props.term_and_condition);
   formData.append("otp", props.otp);
@@ -1385,9 +1410,10 @@ export const EmployerSignUp = async (props, permission) => {
 
 /*Employer Login */
 export const EmployerLogin = async (props) => {
+  let newPass = encryptPassword(props.password)
   const formData = new FormData();
   formData.append("email", props.email);
-  formData.append("password", props.password);
+  formData.append("password", newPass);
   formData.append("remember", props.remember);
   const response = await axios.post(`${API_URL}employer_login`, formData);
   return response.data;
@@ -2079,9 +2105,11 @@ export const getSummaryCount = async () => {
 
 /*Admin login Api */
 export const AdminLogin = async (props) => {
+  let newPass = encryptPassword(props.password)
+  console.log("newPass :-", newPass)
   const formData = new FormData();
   formData.append("email", props.email);
-  formData.append("password", props.password);
+  formData.append("password", newPass);
   const response = await axios.post(`${API_URL}admin_login`, formData);
   return response.data;
 };
@@ -3155,18 +3183,20 @@ export const AddChildPermission = async (data) => {
 //Agent
 /*Api to login agent*/
 export const LoginAgent = async (state) => {
+  let newPass = encryptPassword(state.password)
   const formData = new FormData();
   formData.append("email", state.email);
-  formData.append("password", state.password);
+  formData.append("password", newPass);
   const response = await axios.post(`${API_URL}agent/login`, formData);
   return response.data;
 };
 
 /*Api to Signup agent*/
 export const SignupAgent = async (state) => {
+  let newPass = encryptPassword(state.password)
   const formData = new FormData();
   formData.append("email", state.email);
-  formData.append("password", state.password);
+  formData.append("password", newPass);
   formData.append("name", state.name);
   formData.append("otp", state.otp);
   const response = await axios.post(`${API_URL}agent/signup`, formData);

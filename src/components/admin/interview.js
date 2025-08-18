@@ -14,7 +14,7 @@ export default function ManageInterview() {
   const [allInterviews, setAllInterviews] = useState([]);
 
   /*Function to get the interview data */
-  const GetllINterviewData = async () => {
+  const GetInterviewData = async () => {
     try {
       let res = await getInterview();
       setAllInterviews(res.data);
@@ -24,7 +24,7 @@ export default function ManageInterview() {
   };
   
   useEffect(() => {
-    GetllINterviewData();
+    GetInterviewData();
     if ((search === "") === true) {
       setSearchError("");
     }

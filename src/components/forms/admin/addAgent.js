@@ -4,7 +4,7 @@ import useValidation from "../../common/useValidation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import filterjson from "../../json/filterjson";
-import { AddUpdateAgent, GetAgent, getallAdminData } from "../../../api/api";
+import { AddUpdateAgent, encryptPassword, GetAgent, getallAdminData } from "../../../api/api";
 import PasswordInput from "../../common/Common function/PasswordInput";
 import SelectBox from "../../common/Common function/SelectBox";
 
@@ -225,7 +225,7 @@ function AddAgent(props) {
     let data = {
       name: state.name,
       email: state.email,
-      password: state.id ? "" : state.password,
+      password: state.id ? "" : encryptPassword(state.password),
       type: state.type,
       contact_no: state.contact_no,
       profile_image: state.profile_image,

@@ -14,6 +14,7 @@
 13. Add notification for mail sent by user to portal.
 14. Remove the validation for special characters in the subject while sending emails from the portal.
 15. Add sorting in all tables.
+16. Add encrypted password for all login and signup users.
 Date:17/07/25
 1. Add a dynamic RA with a maximum of 4 rows for payment details.
 2. Add fixed ID and job title to the job table.

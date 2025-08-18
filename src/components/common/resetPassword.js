@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   EmployeeResetPasswordApi, AdminResetPasswordApi, EmployerResetPasswordApi, ResetAgentPasswordApi,
+  encryptPassword,
 } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -111,7 +112,11 @@ export default function ResetPassword() {
       }
       if (userType === "agent") {
         try {
-          let updatedTodo = await ResetAgentPasswordApi(state);
+          let data = {
+            ...state, password: encryptPassword(state.password),
+            conf_password: encryptPassword(state.conf_password),
+          }
+          let updatedTodo = await ResetAgentPasswordApi(data);
           if (
             updatedTodo.status === true ||
             updatedTodo.message === "Password updated successfully"
