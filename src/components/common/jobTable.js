@@ -464,8 +464,8 @@ export default function JobTable(props) {
                   </tr>
                 ) : (
                   (jobData || []).map((job, i) => {
-                    let LmiaStatusData = lmiaStatus.filter(
-                      (item) => item.job_id === job.job_id
+                    let LmiaStatusData = (lmiaStatus || []).filter(
+                      (item) => item && item?.job_id === job?.job_id
                     );
                     return (
                       <React.Fragment key={job.job_id}>

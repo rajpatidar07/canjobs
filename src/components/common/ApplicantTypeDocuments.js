@@ -150,7 +150,7 @@ export default function ApplicantTypeDocuments(props) {
       columnName: column,
     }));
   }
-  
+
   const fetchAdminData = async () => {
     try {
       const userData = await getallAdminData();
@@ -273,7 +273,7 @@ export default function ApplicantTypeDocuments(props) {
       }));
     } else
       if (
-        data.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" || data.file.mimeType === "application/vnd.ms-powerpoint" 
+        data.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" || data.file.mimeType === "application/vnd.ms-powerpoint"
         // || data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       ) {
         let res = await ConvertPPT(data)
@@ -497,8 +497,8 @@ export default function ApplicantTypeDocuments(props) {
       props.setFolderApiCall(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.columnName, state.sortOrder, props.folderApiCall, state.apiCall, state.folderID, state.pageNo, props.notification === "yes" ? location.key : null]);
-  
+  }, [state.columnName, state.sortOrder, props.folderApiCall, state.apiCall, state.folderID, state.pageNo, state.recordsPerPage, props.notification === "yes" ? location.key : null]);
+
   useEffect(() => {
     if (props.folderId !== state.folderID || props?.notification === "yes") {
       setState((prev) => ({

@@ -1,4 +1,5 @@
 # Deploy on live
+Date:19/08/25
 1. Add the complete job profile for the job.
 2. Fix the scroll bar design on the Job, LMIA, and Visa pages.
 3. Add a condition to allow multiple attachments at different times, and also include a drag-and-drop option for email attachments.
@@ -15,6 +16,7 @@
 14. Remove the validation for special characters in the subject while sending emails from the portal.
 15. Add sorting in all tables.
 16. Add encrypted password for all login and signup users.
+17. Add the chat box for the payment records. 
 Date:17/07/25
 1. Add a dynamic RA with a maximum of 4 rows for payment details.
 2. Add fixed ID and job title to the job table.

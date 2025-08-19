@@ -226,7 +226,7 @@ function SendMailForm({ email, setApiCall }) {
         const encoded = await convertToBase64(file);
         fileBaseData[file.name] = encoded.base64;
       }
-
+console.log(updatedFiles)
       setFileBase(updatedFiles);
       setFileNames(updatedFiles.map(f => f.name));
     }

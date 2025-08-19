@@ -19,6 +19,7 @@ function Pagination(props) {
     setVisiblePageNumbers(newVisiblePageNumbers);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.currentPage, props.nPages]);
+
   // Function to update records per page
   const handleRecordsPerPageChange = (e) => {
     const newRecordsPerPage = parseInt(e.target.value);

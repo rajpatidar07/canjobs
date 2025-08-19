@@ -184,7 +184,7 @@ function GlobalSearch() {
                       <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.company_id}
-                        name={data.contact_person_name}
+                        name={data.franchise}
                         mobile={data.contact_no}
                         email={data.email}
                         company={data.company_name}
@@ -611,7 +611,7 @@ function GlobalSearch() {
                             "applicantType",
                             data.interested_in_id	)
                         }}
-                        to={`/slots?sId=${data.interested_in_id	}&notifiType=candidate&taskId=${data.id || ""
+                        to={`/slots?sId=${data.interested_in_id}&notifiType=candidate&taskId=${data.id || ""
                           }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}&canId=${data.employee_id}`}
                       />
                       </div>
@@ -635,8 +635,8 @@ function GlobalSearch() {
                             "applicantType",
                             data.employee_id)
                         }}
-                        to={`/slots?sId=${data.employee_id}&notifiType=candidate&taskId=${data.task_id || ""
-                          }&replyId=${data?.id || ""}`}
+                        to={`/slots?sId=${data.interested_in_id}&notifiType=candidate&taskId=${data.id || ""
+                          }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}&canId=${data.employee_id}`}
                       />
                       </div>
                     ))}

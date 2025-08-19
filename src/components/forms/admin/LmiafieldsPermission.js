@@ -60,12 +60,16 @@ export default function LmiafieldsPermission(props) {
     try {
       const response = await GetAdminrSetting()
       const lmiaPermissions = JSON.parse(response.data.lmia_column_permission)
-      setPermissions(lmiaPermissions || defaultPermissions)
+      if (Object.keys(lmiaPermissions).length === 0
+      ) {
+        setPermissions(defaultPermissions)
+      } else {
+        setPermissions(lmiaPermissions)
+      }
     } catch (err) {
       console.error(err)
     }
   }
-
   /*Function to change the permission from the checkbox*/
   const handleCheckboxChange = async (field) => {
     const updatedPermissions = {
