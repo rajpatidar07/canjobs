@@ -214,7 +214,7 @@ export default function AddApplicantType(props) {
                                     : []}
                                 type={"selectedParent"}
                                 selectedValue={state.selectedParent}
-                                onChange={(e) => { setState({ ...state, selectedParent: e ? e.value : "" }) }}
+                                onChange={(e) => { setState({ ...state, selectedParent: e ? e.value : "", level: 1 }) }}
                             />
                         </div>
                         <div classNme="form-group col-12">

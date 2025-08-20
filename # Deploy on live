@@ -1,4 +1,8 @@
 # Deploy on live
+1. Update the LMIA creation date in the LMIA table .
+2. Set a new tab on the New Applicant page.
+3. Remove the applicant type history from Manage Applicant and Detail page.
+4. Resolve the issue of incorrect applicant type and subtype display in the candidate form update.
 Date:19/08/25
 1. Add the complete job profile for the job.
 2. Fix the scroll bar design on the Job, LMIA, and Visa pages.

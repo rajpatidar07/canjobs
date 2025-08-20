@@ -368,7 +368,7 @@ export default function JobTable(props) {
         { key: "lmia_status", label: "LMIA Status" },
         { key: "monday_status", label: "Monday Status" },
         { key: "lmia_creation_date", label: "LMIA Creation Date" },
-        { key: "lmia_date_approved", label: "LMIA Date Approved" },
+        { key: "lmia_date_approved", label: "LMIA Approved Date" },
         { key: "lmia_date_expiry", label: "LMIA Expiry Date" },
         { key: "job_category", label: "Position/Job Category" },
         { key: "salary", label: "LMIA Wages" },
@@ -640,7 +640,7 @@ export default function JobTable(props) {
                             /*job.is_applied === "1" ? "d-none" : */ "col-12 text-capitalize job_row"
                           }
                         >
-                          <td className="table_sticky_col sticky_col1 py-5 bg-white" >
+                          <td className="table_sticky_col sticky_col1 py-5 " style={{ backgroundColor: "#f4f4f4 " }} >
                             <Link
                               to={`/job_detail`}
                               onClick={
@@ -651,7 +651,7 @@ export default function JobTable(props) {
                               title={job.job_title}
                             >{job.job_id}</Link>
                           </td>
-                          <td className="table_sticky_col sticky_col1 py-5 bg-white" style={{ left: "100px" }}>
+                          <td className="table_sticky_col sticky_col1 py-5" style={{ left: "100px", backgroundColor: "#f4f4f4 " }}>
                             <div className="d-flex align-items-center">
                               {(job.is_monday_data === 1 || job.is_monday_data === "1") && (
                                 <MondayBadge />
@@ -853,9 +853,17 @@ export default function JobTable(props) {
                               )}
                               {FilterdColumns.find(col => col.key === "lmia_creation_date") && (
                                 <td className="py-5 ">
-                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
-                                    title={job.lmia_creation_date || "N/A"}>
-                                    {job.lmia_creation_date || "N/A"}
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
+                                    title={
+                                      ConvertTime({
+                                        _date: job.lmia_creation_date
+                                        , format: "DD MMMM, YYYY"
+                                      })
+                                    }>
+                                    {ConvertTime({
+                                      _date: job.lmia_creation_date
+                                      , format: "DD MMMM, YYYY"
+                                    }) || "N/A"}
                                   </h3>
                                 </td>
                               )}

@@ -272,11 +272,13 @@ function PersonalDetails(props) {
     }
     try {
       let response = await getApplicanTypeApi("");
-      setApplicantTypeList(response.data.data);
+      setApplicantTypeList(Array.isArray(response.data.data) ? response.data.data : []);
     } catch (err) {
       console.log(err);
+      setApplicantTypeList([]);
     }
   };
+  
   /*Function to set data to the search agent  */
   // const onSelectChange = (option) => {
   //   setState({ ...state, reffer_by: option.value });
@@ -1155,8 +1157,8 @@ function PersonalDetails(props) {
                     <div className={errors.interested_in_id ? "border border-danger rounded" : ""}>
                       <SelectBox
                         Width={"yes"}
-                        options={applicantTypeList
-                          .filter(item => item.level === "0" && ![
+                        options={(applicantTypeList
+                          .filter(item => (item.level === "0" && ![
                             "test typw",
                             "All Checklists",
                             "Checklists",
@@ -1164,8 +1166,8 @@ function PersonalDetails(props) {
                             "Daily hours log",
                             "Training Modules",
                             "Admission/student/college"
-                          ].some(it => item.title.includes(it)))
-                          .map(item => ({
+                          ].some(it => item.title.includes(it))))
+                          ).map(item => ({
                             value: item.id,
                             label: item.title,
                           }))

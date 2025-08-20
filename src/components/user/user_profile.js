@@ -16,7 +16,7 @@ import {
   GetEmployeeByLima,
   GetLimaSubStages,
   AddUpdateVisa,
-  getApplicanTypeApi,
+  // getApplicanTypeApi,
   // AddPaymentToDataBase,
 } from "../../api/api";
 import moment from "moment";
@@ -47,7 +47,7 @@ import RetainerAgrementMainPage from "../common/Retaineragreement/RetainerAgreme
 import VisaTimeLine from "../common/visaTimeLine";
 import PaymentPage from "../common/payment invoice/PaymentPage";
 import PayentForm from "../forms/admin/payentForm";
-import ApplicantTypeTimeLine from "../common/ApplicantTypeTimeLine";
+// import ApplicantTypeTimeLine from "../common/ApplicantTypeTimeLine";
 // import useSessionCheck from "../common/user_session";
 // import AdobePDFViewer from "../common/Adobe/adobeFile";
 const NewUserProfile = (props) => {
@@ -103,7 +103,7 @@ const NewUserProfile = (props) => {
   const [visaStatus, setVisaStatus] = useState([]);
   const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   let [isLoading, setIsLoading] = useState(true);
-  let [applicantTypeList, setApplicantTypeList] = useState([]);
+  // let [applicantTypeList, setApplicantTypeList] = useState([]);
   const user_type = localStorage.getItem("userType");
   // let id = localStorage.getItem("employee_id");
   const name = localStorage.getItem("name");
@@ -146,12 +146,12 @@ const NewUserProfile = (props) => {
       console.log(err);
       setIsLoading(false);
     }
-    try {
-      let response = await getApplicanTypeApi("");
-      setApplicantTypeList(response.data.data);
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    //   let response = await getApplicanTypeApi("");
+    //   setApplicantTypeList(response.data.data);
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
   /*Function to get Lmia */
   const getLimaOfuser = async () => {
@@ -456,7 +456,7 @@ const NewUserProfile = (props) => {
                   </div>
                 ) : null}
               </div>
-              {PersonalDetail.all_interested_in_id && user_type === "admin" && <div
+              {/* {PersonalDetail.all_interested_in_id && user_type === "admin" && <div
                 className={
                   "visa_lmia_status_div pl-6 pr-2"
                 }>
@@ -465,7 +465,7 @@ const NewUserProfile = (props) => {
                   All_types={PersonalDetail.all_interested_in_id}
                   ApplicantTypeList={applicantTypeList}
                 />
-              </div>}
+              </div>} */}
               <div className=" col-12 order-2 order-xl-1">
                 <div className="bg-white">
                   {/* LMIA */}
