@@ -174,7 +174,7 @@ export default function EmployerTable(props) {
                       className="text-gray"
                       title="Sort by Id"
                     >
-                      Client ID
+                      Employer ID
                     </Link>
                   </th>
                   <th
@@ -188,9 +188,9 @@ export default function EmployerTable(props) {
                         props.setpageNo(1);
                       }}
                       className="text-gray"
-                      title="Sort by Client Name"
+                      title="Sort by Employer Name"
                     >
-                      Client name
+                      Employer name
                     </Link>
                   </th>
                   {props.heading === "Dashboard" ? (

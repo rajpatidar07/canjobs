@@ -130,7 +130,7 @@ function Employer() {
                       required
                       type="text"
                       className="form-control"
-                      placeholder={"Client name"}
+                      placeholder={"Employer name"}
                       value={search}
                       name={"Employer_name"}
                       onChange={(e) => onSearch(e)}
@@ -188,7 +188,7 @@ function Employer() {
                         className="font-size-3 btn-block rounded-3 btn btn-primary border-0"
                         onClick={() => editEmployer("0")}
                       >
-                        Add Client
+                        Add Employer
                       </CustomButton>
                     </div>
                     <div className=" mt-6 text-right">

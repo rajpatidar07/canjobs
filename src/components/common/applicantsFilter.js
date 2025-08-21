@@ -39,6 +39,8 @@ export default function ApplicantsFilter({
   applicantTypeId,
   applicantTypeChildId,
   setSearch,
+  webFilterValue,
+  setWebFilterValue
 }) {
   // let [SkillList, setSkillList] = useState([]);
   // let [EducationList, setEducationList] = useState([]);
@@ -423,6 +425,22 @@ export default function ApplicantsFilter({
             : "d-none"
         }
       >
+        <label
+          htmlFor="web"
+          className="font-size-3 text-black-2 font-weight-semibold line-height-reset d-flex pb-1 m-0"
+        >
+          <input
+            type="checkbox"
+            id="web"
+            name="web"
+          checked={webFilterValue === 0}
+          value={webFilterValue}
+          onChange={(e) =>
+            setWebFilterValue(webFilterValue === "" ? 0 : "")
+          }
+          />
+          <span>Web</span>
+        </label>
         <label
           htmlFor="local"
           className="font-size-3 text-black-2 font-weight-semibold line-height-reset d-flex pb-1 m-0"

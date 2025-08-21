@@ -434,7 +434,7 @@ export default function JobTable(props) {
                         }  ${col.hidden ? "d-none" : ""}`}
                       style={{
                         ...(col.sticky && { background: "#fcb6b6", transition: "background 0.3s ease" }),
-                        ...(col.key === "job_title" && { left: "100px" })
+                        ...(col.key === "job_title" && { left: "100px" }) ,minWidth:"150px"
                       }}
 
                       title={col.isAction ? "Actions" : `Sort by ${col.label}`}

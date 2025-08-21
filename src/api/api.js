@@ -415,6 +415,7 @@ export const getallEmployeeData = async (
   assignedadminId,
   subType,
   localFilterValue,
+  webFilterValue
   // subSubtype
   // agent_u_id
 ) => {
@@ -442,7 +443,8 @@ export const getallEmployeeData = async (
       category_id: subType,
       employee_id: employee_id,
       is_local: localFilterValue,
-      sub_category: ""
+      sub_category: "",
+      created_by_admin :webFilterValue
     },
     {
       headers: {
@@ -1283,7 +1285,12 @@ export const DeleteReplyCommentsAndAssign = async (id, userId,
 
 /*Api to Add update visa */
 export const AddUpdateVisa = async (employee_id, state, id, type) => {
-  // /job_detail(employee_id, state, id)
+  // console.log("employee_id:", employee_id,
+  //   "id:", id,
+  //   "country:", state.country,
+  //   "type:", type,
+  //   "status: ", state.status,
+  //   "visa_decision_date:", state.visa_decision_date)
   const response = await axios.put(
     `${API_URL}addUpdateVisa `,
     {
@@ -2106,7 +2113,7 @@ export const getSummaryCount = async () => {
 /*Admin login Api */
 export const AdminLogin = async (props) => {
   let newPass = encryptPassword(props.password)
-  console.log("newPass :-", newPass)
+  // console.log("newPass :-", newPass)
   const formData = new FormData();
   formData.append("email", props.email);
   formData.append("password", newPass);
@@ -2951,7 +2958,7 @@ export const RemoveReservedEmployeeForJob = async (apply_id, employee_id) => {
 
 /*Api to Send email to the user and company*/
 export const SendEmail = async (data, FileList, url) => {
-  console.log(FileList);
+  // console.log(FileList);
   const formData = new FormData();
   formData.append("to", data.email);
   formData.append("subject", data.subject);

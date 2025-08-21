@@ -94,7 +94,7 @@ export default function EmployeeTable(props) {
             ? "-1"
             : "4,7,8,9"
   );
-  
+
   const [totalData, setTotalData] = useState("");
   const [recordsPerPage] = useState(10);
   /*Shorting states */
@@ -152,7 +152,8 @@ export default function EmployeeTable(props) {
           user_type === "agent" ? agentId : props.agentFilterValue,
           props.adminFilterValue,
           "", // props.categoryFilterValue,
-          props.localFilterValue
+          props.localFilterValue,
+          props.webFilterValue,
           // props.subCategoryFilterValue
         );
         if (userData.data.length === 0) {
@@ -253,6 +254,7 @@ export default function EmployeeTable(props) {
     props.localFilterValue,
     props.filterByEmployeeId,
     props.statustFilterValue,
+    props.webFilterValue
   ]);
 
   /* Function to show the single data to update Employee*/

@@ -44,6 +44,8 @@ function CompanyProfileDetail(props) {
   const note_id = searchParams.get("noteid");
   const agreement = searchParams.get("agreement");
   const company_id = localStorage.getItem("company_id");
+  const user_email = searchParams.get("user_email");
+  const emailId = searchParams.get("emailId");
   let cid = CompanyId ? CompanyId : company_id;
 
   let navigate = useNavigate();
@@ -65,7 +67,9 @@ function CompanyProfileDetail(props) {
           ? "retaineragreement"
           : user_payment === "true"
             ? "payment"
-            : "profile"
+            : user_email === "yes"
+              ? "email"
+              : "profile"
   );
   const [addNote, setAddNote] = useState(false);
   const [employerData, setEmployerData] = useState("");
@@ -136,6 +140,9 @@ function CompanyProfileDetail(props) {
       setTabActive("documents");
     } else if (notes) {
       setTabActive("notes");
+    }
+    if (user_email) {
+      setTabActive("email")
     }
     // eslint-disable-next-line
   }, [apiCall, company_id, notes, location.key]);
@@ -1125,7 +1132,7 @@ function CompanyProfileDetail(props) {
                   }
                 >
                   {TabActive === "email" ? (
-                    <MainEmailPage email={employerData?.email} />
+                    <MainEmailPage email={employerData?.email} emailId={emailId} />
                   ) : null}
                 </div>
                 <div

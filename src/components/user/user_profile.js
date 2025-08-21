@@ -16,7 +16,7 @@ import {
   GetEmployeeByLima,
   GetLimaSubStages,
   AddUpdateVisa,
-  // getApplicanTypeApi,
+  getApplicanTypeApi,
   // AddPaymentToDataBase,
 } from "../../api/api";
 import moment from "moment";
@@ -103,7 +103,7 @@ const NewUserProfile = (props) => {
   const [visaStatus, setVisaStatus] = useState([]);
   const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   let [isLoading, setIsLoading] = useState(true);
-  // let [applicantTypeList, setApplicantTypeList] = useState([]);
+  let [applicantTypeList, setApplicantTypeList] = useState([]);
   const user_type = localStorage.getItem("userType");
   // let id = localStorage.getItem("employee_id");
   const name = localStorage.getItem("name");
@@ -146,12 +146,12 @@ const NewUserProfile = (props) => {
       console.log(err);
       setIsLoading(false);
     }
-    // try {
-    //   let response = await getApplicanTypeApi("");
-    //   setApplicantTypeList(response.data.data);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      let response = await getApplicanTypeApi("");
+      setApplicantTypeList(response.data.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
   /*Function to get Lmia */
   const getLimaOfuser = async () => {
@@ -252,7 +252,7 @@ const NewUserProfile = (props) => {
     if (agreement) {
       setTabActive("retainer agreement");
     }
-    if(user_email){
+    if (user_email) {
       setTabActive("email")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -451,7 +451,7 @@ const NewUserProfile = (props) => {
                     <VisaTimeLine
                       visa={PersonalDetail.applicant_process_status}
                       substage={PersonalDetail.applicant_process_substages}
-                      type={PersonalDetail.applicant_process_type}
+                      type={applicantTypeList?applicantTypeList.find((item) => item.id === PersonalDetail.applicant_process_type)?.title:PersonalDetail.applicant_process_type}
                     />
                   </div>
                 ) : null}
@@ -1848,7 +1848,7 @@ const NewUserProfile = (props) => {
                     }
                   >
                     {TabActive === "email" ? (
-                      <MainEmailPage email={PersonalDetail.email} emailId={emailId}/>
+                      <MainEmailPage email={PersonalDetail.email} emailId={emailId} />
                     ) : null}
                   </div>
                   <div

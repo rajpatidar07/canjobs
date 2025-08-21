@@ -23,6 +23,7 @@ function SelfApplicat(props) {
     props ? props.skill : ""
   );
   const [localFilterValue, setLocalFilterValue] = useState("");
+  const [webFilterValue, setWebFilterValue] = useState("");
   const [agentFilterValue, setAgentFilterValue] = useState("");
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [educationFilterValue, setEducationFilterValue] = useState("");
@@ -138,6 +139,8 @@ function SelfApplicat(props) {
                     pageName={"employee"}
                     setLocalFilterValue={setLocalFilterValue}
                     localFilterValue={localFilterValue}
+                    webFilterValue={webFilterValue}
+                    setWebFilterValue={setWebFilterValue}
                     filterByEmployeeId={filterByEmployeeId}
                     setFilterByEmployeeId={setFilterByEmployeeId}
                   />
@@ -167,6 +170,7 @@ function SelfApplicat(props) {
                 interestFilterValue={interestFilterValue}
                 // categoryFilterValue={categoryFilterValue}
                 localFilterValue={localFilterValue}
+                webFilterValue={webFilterValue}
                 filterByEmployeeId={filterByEmployeeId}
               />
             </div>

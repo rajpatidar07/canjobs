@@ -48,6 +48,7 @@ const labelMap = {
 
 export default function LmiafieldsPermission(props) {
   const [permissions, setPermissions] = useState(defaultPermissions)
+  const [loading, setLoading] = useState(false)
 
   /*Close function */
   const close = () => {
@@ -70,25 +71,34 @@ export default function LmiafieldsPermission(props) {
       console.error(err)
     }
   }
+
   /*Function to change the permission from the checkbox*/
   const handleCheckboxChange = async (field) => {
     const updatedPermissions = {
-      lmia_column_permission: {
-        ...permissions,
-        [field]: permissions[field] === 0 ? 1 : 0,
-      },
+      ...permissions,
+      [field]: permissions[field] === 0 ? 1 : 0,
     }
+    setPermissions(updatedPermissions)
+
+  }
+
+  /*Onsubmit function of adding permissions for  the column */
+  const onSubmitForm = async () => {
+    let data = { lmia_column_permission: { ...permissions } }
     try {
-      const response = await AddAdminPermission(updatedPermissions)
+      setLoading(true)
+      const response = await AddAdminPermission(data)
       if (response.message === 'successfully') {
+        setLoading(false)
         fetchPermissions()
+        close()
         props.setApiCall(true)
       }
     } catch (err) {
       console.error(err)
+      setLoading(false)
     }
   }
-
   useEffect(() => {
     fetchPermissions()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -110,8 +120,8 @@ export default function LmiafieldsPermission(props) {
         <i className="fas fa-times"></i>
       </button>
       <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-        <form>
-          <h5 className="text-center mb-7 pt-2">Add Permission</h5>
+        <form className="p-5" >
+          <h5 className="text-center mb-7 pt-2">Hide Columns</h5>
           <div className="row">
             {permissions &&
               Object.keys(permissions).map((field, index) => (
@@ -122,7 +132,7 @@ export default function LmiafieldsPermission(props) {
                   <label>
                     <input
                       type="checkbox"
-                      checked={permissions[field] !== 0}
+                      checked={permissions[field] === 0}
                       onChange={() => handleCheckboxChange(field)}
                     />
                     <span className="px-2 text-capitalize">
@@ -131,6 +141,26 @@ export default function LmiafieldsPermission(props) {
                   </label>
                 </div>
               ))}
+          </div>
+          <div className='d-flex justify-content-space-between p-4'>
+            <button type="button" className="btn btn-light" onClick={() => close()}>Cancel</button>
+             {loading === true ? (
+                <button
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="button"
+                  disabled
+                >
+                  <span
+                    className="spinner-border spinner-border-sm "
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span className="sr-only">Loading...</span>
+                </button>
+              ) : (
+                 <button type="button" className="btn btn-primary btn-small w-25 rounded-5 text-uppercase" onClick={() => onSubmitForm()}>Save</button>
+              )}
+         
           </div>
         </form>
       </div>

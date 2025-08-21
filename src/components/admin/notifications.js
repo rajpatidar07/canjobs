@@ -351,7 +351,7 @@ function Notifications({
                                                                 : data.subject === 'new_mail'
                                                                   ? data.action_user_type === "employee"
                                                                     ? `/${data.action_id}?user_email=true&emailId=${data.mention_id}`
-                                                                    : `/client_detail?user_email=true&Pid=${data.mention_id}`
+                                                                    : `/client_detail?cId=${data.action_id}&user_email=true&emailId=${data.mention_id}`
                                                                   : ""
                       }
                       onClick={() => {
@@ -360,13 +360,16 @@ function Notifications({
                           ReadNotification(data.id);
                           setApicall(true);
                           // window.history.replaceState({}, document.title, "/"); //pta nhi q lgaya tha mene
+                          console.log("ppppppppppppp")
                           if (data.subject === "mention_partnerChat") {
                             localStorage.setItem("agent_id", data.employee_id);
+                            console.log("firest")
                           } else if (
                             data.subject === "assigned_admin_to_partner" ||
                             (data.document_user_type === "agent" &&
                               data.subject === "mention_notes")
                           ) {
+                            console.log("2")
                             localStorage.setItem(
                               "agent_id",
                               data.document_user_type === "agent"
@@ -379,7 +382,9 @@ function Notifications({
                             data.subject === "signed_agreement" ||
                             data.subject === "payment_success"
                           ) {
+                            console.log("3")
                             if (data.document_user_type === "applicant_type") {
+                              console.log("4")
                               localStorage.setItem(
                                 "applicantType",
                                 data.interested_in
@@ -388,7 +393,8 @@ function Notifications({
                                 "applicantTypeFolderId",
                                 parseJsonSafely(data?.notif_json).doc_parent_id
                               );
-                            } else if (data.document_user_type === "employer") {
+                            } else if (data.document_user_type === "employer"||data.action_user_type==="employer") {
+                              console.log("ppppp",data.subject,data.action_id)
                               localStorage.setItem(
                                 "company_id",
                                 data.subject === 'new_mail' ? data.action_id : data.employee_id
@@ -399,11 +405,13 @@ function Notifications({
                             "mention_applicant_type_candidate_chat" ||
                             data.subject === "mention_applicant_type_group_chat"
                           ) {
+                            console.log("6")
                             localStorage.setItem(
                               "applicantType",
                               data.interested_in
                             );
                           } else if (data.subject === "mention_job_chat") {
+                            console.log("7")
                             localStorage.setItem("job_id", data.employee_id)
                           }
                         } catch (err) {

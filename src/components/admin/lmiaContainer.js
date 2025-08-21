@@ -258,7 +258,7 @@ function LimaContainer(props) {
                         {/*<-- AddLmia feilds permssion  Modal -->*/}
                         <button className=" btn-sm btn-primary border-0 mx-2"
                           onClick={() => setOpenPermission("0")}
-                          title="Add LMIA Permissions "
+                          title="Hide Columns "
                         >
                           <FaLock /></button>
                       </div>
