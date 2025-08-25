@@ -4,11 +4,12 @@ import AdminHeader from "./header";
 import AdminSidebar from "../admin/sidebar";
 import { getallAdminData, getApplicanTypeApi } from "../../api/api";
 import AddApplicantType from "../forms/admin/AddApplicantType";
+import Loader from "../common/loader";
 
 export default function ManageApplicantType(props) {
   // let [search, setSearch] = useState("");
-  //   let [statusFilterValue, setStatusFilterValue] = useState("");
-  // const [searcherror, setSearchError] = useState("");
+    let [loading, setLoading] = useState(false);
+  const [parentApplicant, setParentApplicant] = useState("");
   const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   const [allApplicantType, setAllApplicantType] = useState([]);
   const [allAdmin, setAllAdmin] = useState([]);
@@ -28,15 +29,18 @@ export default function ManageApplicantType(props) {
 
   const getAllSlotsData = async () => {
     try {
+      setLoading(true)
       let response = await getApplicanTypeApi("", columnName, sortOrder);
       let Adminresponse = await getallAdminData();
       setAllApplicantType(response.data.data.reverse());
       setAllAdmin(Adminresponse.data);
+      setLoading(false)
     } catch (err) {
       console.log(err);
+      setLoading(false)
     }
   };
-  
+
   useEffect(() => {
     getAllSlotsData();
     if (props.heading) {
@@ -93,6 +97,7 @@ export default function ManageApplicantType(props) {
                 apicall={apiCall}
                 admins={allAdmin}
                 updateApplicantTypeData={updateApplicantTypeData}
+                parentApplicant={parentApplicant}
               />
             )}
             <div className="d-flex justify-content-end">
@@ -101,13 +106,26 @@ export default function ManageApplicantType(props) {
                 onClick={() => {
                   setShowApplicantTypeForm(true);
                   setUpdateApplicantTypeData();
+                  setParentApplicant("0")
                 }}
               >
                 Add Applicant Type
               </button>
+              <button
+                className="font-size-3 rounded-3 btn btn-primary border-0 mr-4"
+                onClick={() => {
+                  setShowApplicantTypeForm(true);
+                  setUpdateApplicantTypeData();
+                  setParentApplicant("1")
+                }}
+              >
+                Add Sub Applicant Type
+              </button>
             </div>
             {/*<-- Applicant type  Table -->*/}
-            <ApplicantTypeTable
+           {loading?
+           <Loader load={"yes"} />
+           : <ApplicantTypeTable
               heading={"Applicant Type"}
               setpageNo={setpageNo}
               pageNo={pageNo}
@@ -116,7 +134,8 @@ export default function ManageApplicantType(props) {
               setShowApplicantTypeForm={setShowApplicantTypeForm}
               setUpdateApplicantTypeData={setUpdateApplicantTypeData}
               handleSort={handleSort}
-            />
+              setParentApplicant={setParentApplicant}
+            />}
           </div>
         </div>
       </div>

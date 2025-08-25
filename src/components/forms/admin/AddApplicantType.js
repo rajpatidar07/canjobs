@@ -31,6 +31,14 @@ export default function AddApplicantType(props) {
                             ? "Title cannot contain numbers"
                             : "",
         ],
+        selectedParent: [
+            (value) =>
+                props.parentApplicant === "1" ?
+                    value.trim() === ""
+                        ? "Parent Applicant Type is required"
+                        : ""
+                    : null,
+        ]
     };
 
     // CUSTOM VALIDATION HOOK
@@ -178,18 +186,18 @@ export default function AddApplicantType(props) {
             {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
             <div className="bg-white rounded h-100 p-7">
                 <form onSubmit={(e) => addApplicantTypeClick(e)}>
-                    <h5 className="text-center mb-7">Add Applicant Type </h5>
+                    <h5 className={props.parentApplicant === "3" ? "d-none" : "text-center mb-7"}>{props.updateApplicantTypeData ? "Update" : "Add"} {props.parentApplicant === "1" ? "Sub " : ""}Applicant Type </h5>
                     <div className="row">
-                        <div className="form-group col-6">
+                        <div className={props.parentApplicant === "3" ? "d-none" : `form-group ${props.parentApplicant === "0" ? " col-12" : " col-6"}`}>
                             <label
                                 htmlFor="title"
                                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                             >
-                                Title<span className="text-danger">*</span> :
+                                Name <span className="text-danger">*</span> :
                             </label>
                             <input
                                 type="text"
-                                placeholder="Enter title"
+                                placeholder="Enter Name"
                                 name="title"
                                 className={`form-control ${errors.title ? "border border-danger" : ""}`}
                                 value={state.title}
@@ -197,45 +205,48 @@ export default function AddApplicantType(props) {
                             />
                             {errors.title && <p style={{ color: "red" }}>{errors.title}</p>}
                         </div>
-                        <div className={props.updateApplicantTypeData ? "d-none" : "form-group col-6"}>
+                        <div className={props.parentApplicant === "0" || props.parentApplicant === "3" ? "d-none" : "form-group col-6"}>
                             <label
                                 htmlFor="selectedParent"
                                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                             >
-                                Select Applicant Type :
+                                Select Parent Applicant Type  <span className="text-danger">*</span> :
                             </label>
-                            <SelectBox
-                                Width={"yes"}
-                                options={applicantTypeList ?
-                                    applicantTypeList?.filter((item) => item.level === (0 || "0")).map((option) => ({
-                                        value: option.id,
-                                        label: option.title,
-                                    }))
-                                    : []}
-                                type={"selectedParent"}
-                                selectedValue={state.selectedParent}
-                                onChange={(e) => { setState({ ...state, selectedParent: e ? e.value : "", level: 1 }) }}
-                            />
+                            <div className={errors.selectedParent ? "border border-danger rounded" : ""}>
+                                <SelectBox
+                                    Width={"yes"}
+                                    options={applicantTypeList ?
+                                        applicantTypeList?.filter((item) => item.level === (0 || "0")).map((option) => ({
+                                            value: option.id,
+                                            label: option.title,
+                                        }))
+                                        : []}
+                                    type={"selectedParent"}
+                                    selectedValue={state.selectedParent}
+                                    onChange={(e) => { setState({ ...state, selectedParent: e ? e.value : "", level: 1 }) }}
+                                />
+                            </div>
+                            {errors.selectedParent && <p style={{ color: "red" }}>{errors.selectedParent}</p>}
                         </div>
-                        <div classNme="form-group col-12">
+                        <div className={props.parentApplicant === "3" ? " col-12" : "d-none"}>
                             <label
-                                htmlFor="access_admin_id"
-                                className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                                // htmlFor="access_admin_id"
+                                className="font-size-4 text-black-2 font-weight-semibold line-height-reset text-center d-flex justify-content-center"
                             >
-                                Grant access to the admin :
+                                <h5 className=" text-center"> Grant access to the admin </h5>
                             </label>
                             <ul className="list-unstyled row px-8 d-flex flex-wrap">
                                 {(props.admins || []).map(({ id, admin_id, name }) => {
                                     return (
-                                        <li key={id} className="col-md-4 col-sm-6 d-flex align-items-center gap-2">
+                                        <li key={admin_id} className="col-md-4 col-sm-6 d-flex align-items-center gap-2">
                                             <input
                                                 type="checkbox"
                                                 className="form-check-input"
                                                 checked={adminAccessIds.has(String(admin_id))}
                                                 onChange={() => handleCheckboxChange(admin_id)}
-                                                id={`admin-checkbox-${id}`}
+                                                id={`admin-checkbox-${admin_id}`}
                                             />
-                                            <label htmlFor={`admin-checkbox-${id}`} className="form-check-label">
+                                            <label htmlFor={`admin-checkbox-${admin_id}`} className="form-check-label">
                                                 {name}
                                             </label>
                                         </li>

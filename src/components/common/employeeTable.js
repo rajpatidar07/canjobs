@@ -521,12 +521,12 @@ export default function EmployeeTable(props) {
 
   /*Function to get the child interested in of the employee that is sub applicant type */
   let ApplicantSubType = (id) => {
-    const selectedItem = applicantTypeList.find((item) => item.id === id);
+    const selectedItem = applicantTypeList.find((item) => item.id === id && item.level === "1");
     if (!selectedItem) return null; // Handle case where no match is found
     return selectedItem.title;
   };
 
-  // let sub_type = applicantTypeList.filter(
+  // let sub_type = applicantTypeList.filter(s
   //   (item) => item.parent_id === empdata?.interested_in_id
   // );
 
@@ -1695,11 +1695,13 @@ export default function EmployeeTable(props) {
                         <td
                           className={
                             props?.ApplicantType && props?.ApplicantType
-                              ? "text-center"
+                              ? "d-flex justify-content-center text-center"
                               : "d-none"
                           }
                         >
-                          {props?.ApplicantType && empdata.category_id ? (
+                          {props?.ApplicantType && ApplicantSubType(
+                            empdata.interested_in_id
+                          ) ? (
                             <>
                               {/* <p
                                 className={`font-size-2 font-weight-normal text-white mb-0 text-capitalize  `}
@@ -1761,6 +1763,7 @@ export default function EmployeeTable(props) {
                                               eventKey={item.id}
                                               className="text-capitalize"
                                             >
+
                                               {item.title}
                                             </Dropdown.Item>
                                           ))}

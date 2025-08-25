@@ -23,6 +23,7 @@ function Employee(props) {
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [interestFilterValue, setinterestFilterValue] = useState("");
   // const [categoryFilterValue, setCategoryFilterValue] = useState("");
+  const [webFilterValue, setWebFilterValue] = useState("");
   const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
   const [localFilterValue, setLocalFilterValue] = useState("");
   const [search, setSearch] = useState("");
@@ -69,8 +70,8 @@ function Employee(props) {
         }
       >
         {props.skill === null ||
-        props.skill === undefined ||
-        Object.keys(props.skill).length === 0 ? (
+          props.skill === undefined ||
+          Object.keys(props.skill).length === 0 ? (
           <>
             {/* <!-- Header Area --> */}
             <AdminHeader heading={"Manage Applicants"} />
@@ -138,6 +139,8 @@ function Employee(props) {
                     setLocalFilterValue={setLocalFilterValue}
                     filterByEmployeeId={filterByEmployeeId}
                     setFilterByEmployeeId={setFilterByEmployeeId}
+                    webFilterValue={webFilterValue}
+                    setWebFilterValue={setWebFilterValue}
                   />
                 </div>
                 <small className="text-danger">{searcherror}</small>
@@ -167,6 +170,7 @@ function Employee(props) {
                 // categoryFilterValue={categoryFilterValue}
                 localFilterValue={localFilterValue}
                 filterByEmployeeId={filterByEmployeeId}
+                webFilterValue={webFilterValue}
               />
             </div>
           </div>
@@ -176,8 +180,8 @@ function Employee(props) {
           <div
             className={
               props.skill === null ||
-              props.skill === undefined ||
-              Object.keys(props.skill).length === 0
+                props.skill === undefined ||
+                Object.keys(props.skill).length === 0
                 ? "dashboard-main-container mt-14"
                 : ""
             }

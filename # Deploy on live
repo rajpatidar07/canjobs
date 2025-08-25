@@ -1,15 +1,15 @@
 # Deploy on live
+Date:25/08/25
 1. Update the LMIA creation date in the LMIA table .
 2. Set a new tab on the New Applicant page.
 3. Remove the applicant type history from Manage Applicant and Detail page.
 4. Resolve the issue of incorrect applicant type and subtype display in the candidate form update.
 5. Change the color of the fixed column in the job table and alignment of the columns.
-6. Retain the LMIA permission condition for the LMIA page and update the heading name.
-7. Add a filter by web on the new applicant page.
+6. Retain the LMIA permission condition for the LMIA page and update the heading name. 
+7. Add a filter by web on the new applicant page. 
 8. Manage Employer – Replace the word "Client" with "Employer" to avoid confusion with Candidate/Client.
 9. Send a notification to the assigned admin when an email is sent to jobportal@canpathway.com.
-10. Resolve the issue of incorrect applicant type and subtype display in the candidate form update.
-11.  Fix the issue where applicant type, stage, and sub-stage are not updating in the user profile on the applicant type page.
+10. Fix the issue where applicant type, stage, and sub-stage are not updating in the user profile on the applicant type page.
 
 Date:19/08/25
 1. Add the complete job profile for the job.

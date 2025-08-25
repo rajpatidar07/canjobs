@@ -10,31 +10,35 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 function ApplicantTypeTable(props) {
     // let search = props.search;
+    const applicantType = props.allApplicantType;
     let [isLoading, setIsLoading] = useState(true);
-    // let [showApplicantTypeForm, setShowApplicantTypeForm] = useState(false);
-    // const [updateApplicantTypeData, setUpdateApplicantTypeData] = useState();
+    let [applicantLevel, setApplicantLevel] = useState("parent");
+    const [filteredData, setFilteredData] = useState(
+        applicantType.filter((data) => data.parent_id === "0")
+    );
     let [apiCall, setApiCall] = useState(props.apiCall);
     const [deleteAlertApplicantTypeData, setDeleteAlertApplicantTypeData] =
         useState(false);
     const [deleteAlertApplicant, setDeleteAlertApplicant] =
         useState(false);
 
-    const applicantType = props.allApplicantType;
-
     /*Pagination states */
-    const filteredData = (applicantType || []).filter(
-        (data) => data.parent_id === "0"
-    );
+    // const filteredData = (applicantType || []).filter(
+    //     (data) => data.parent_id === "0"
+    // );
 
     const [totalData, setTotalData] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [recordsPerPage] = useState(10);
 
-    //   /* Function to get the intervew data*/
+    //   /* Function to get the applicant type data*/
     const applicantTypeData = async () => {
         try {
             if (filteredData && filteredData.length > 0) {
                 setTotalData(filteredData.length);
+            } else {
+                setFilteredData(applicantType.filter((data) => data.parent_id === "0"))
+                setTotalData(applicantType.length)
             }
             setIsLoading(false);
         } catch (err) {
@@ -47,7 +51,7 @@ function ApplicantTypeTable(props) {
     useEffect(() => {
         applicantTypeData();
         // eslint-disable-next-line
-    }, [filteredData, apiCall]);
+    }, [applicantType, filteredData, apiCall]);
 
     /*Pagination Calculation */
     const nPages = Math.ceil(totalData / recordsPerPage);
@@ -110,6 +114,50 @@ function ApplicantTypeTable(props) {
                         <h3 className="font-size-6 mb-0">Applicant Type </h3>
                     </div>
                 </div>
+                <ul
+                    className={`nav border-top border-bottom border-mercury user_profile_tab`}
+                    id="myTab"
+                    role="tablist"
+                >
+                    <li className="tab-menu-items nav-item">
+                        <Link
+                            className={
+                                applicantLevel === "parent"
+                                    ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                                    : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                            }
+                            id="parent"
+                            onClick={() => {
+                                setApplicantLevel("parent")
+                                setFilteredData((applicantType || []).filter(
+                                    (data) => data.parent_id === "0"))
+                                    setCurrentPage(1)
+                            }}
+                        >
+                            Applicant Type
+                        </Link>
+                    </li>
+                    <li
+                        className={"tab-menu-items nav-item"}
+                    >
+                        <Link
+                            className={
+                                applicantLevel === "child"
+                                    ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                                    : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                            }
+                            id="child"
+                            onClick={() => {
+                                setApplicantLevel("child")
+                                setFilteredData((applicantType || []).filter(
+                                    (data) => data.level === "1"))
+                                    setCurrentPage(1)
+                            }}
+                        >
+                            Sub Applicant Type
+                        </Link>
+                    </li>
+                </ul>
                 <div
                     className={
                         props.heading === "Dashboard"
@@ -134,10 +182,16 @@ function ApplicantTypeTable(props) {
                                                     props.handleSort("title")
                                                     setCurrentPage(1)
                                                 }}>
-                                                Title
+                                                Name
                                             </Link>
                                         </th>
-
+                                        {applicantLevel === "child" ? <th
+                                            scope="col"
+                                            className=" border-0 font-size-4 font-weight-normal text-end"
+                                            title="Actions"
+                                        >
+                                            Parent
+                                        </th> : null}
                                         {props.heading === "Dashboard" ||
                                             props.user_type === "company" ? null : (
                                             <th
@@ -186,6 +240,10 @@ function ApplicantTypeTable(props) {
                                                             </div>
                                                         )}
                                                     </td>
+                                                    {applicantLevel === "child" ?
+                                                        <td className="font-size-3 mb-0 font-weight-semibold  text-truncate">
+                                                            {(applicantType || [])?.find((item) => item.id === data.parent_id)?.title}
+                                                        </td> : null}
                                                     <td
                                                         className={
                                                             props.heading === "Dashboard" ||
@@ -204,10 +262,23 @@ function ApplicantTypeTable(props) {
                                                                 onClick={() => {
                                                                     props.setUpdateApplicantTypeData(data);
                                                                     props.setShowApplicantTypeForm(true);
+                                                                    props.setParentApplicant(data.level)
                                                                 }}
-                                                                title=" Reschedule Interview"
+                                                                title="Update"
                                                             >
                                                                 Update
+                                                            </button>
+                                                            <button
+                                                                className="btn btn-outline-info action_btn "
+                                                                style={{ fontSize: "10px" }}
+                                                                onClick={() => {
+                                                                    props.setUpdateApplicantTypeData(data);
+                                                                    props.setShowApplicantTypeForm(true);
+                                                                    props.setParentApplicant("3")
+                                                                }}
+                                                                title="Grant Access"
+                                                            >
+                                                                Grant Access
                                                             </button>
                                                             <button
                                                                 className="btn btn-outline-info action_btn "
