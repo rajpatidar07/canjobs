@@ -591,7 +591,8 @@ const filterjson = {
     "dead",
     "working on",
     "submitted",
-    "completed"
+    "completed",
+    "consultation"
   ],
   interested: [
     "work permit application",

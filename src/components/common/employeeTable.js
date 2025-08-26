@@ -469,6 +469,7 @@ export default function EmployeeTable(props) {
       setIsLoading(false);
     }
   };
+  
   /*Function to change the applicant type of the employee */
   const OnApplicantTypeChange = async (e, empdata, eventKey) => {
     e.preventDefault();
@@ -667,13 +668,13 @@ export default function EmployeeTable(props) {
                     ? "d-none"
                     : status === "" ||
                       status === "00" ||
-                      status === "-1,0,1,2,3,5,6" ||
+                      status === "-1,0,1,2,3,5,6,10" ||
                       status === "4,7,8,9"
                       ? "btn btn-primary"
                       : "btn btn-outline-primary"
                 }
                 onClick={() => {
-                  setStatus(props.self === "yes" ? "-1,0,1,2,3,5,6" : "4,7,8,9");
+                  setStatus(props.self === "yes" ? "-1,0,1,2,3,5,6,10" : "4,7,8,9");
                   clearPageNo();
                 }}
                 title="All"
@@ -726,6 +727,21 @@ export default function EmployeeTable(props) {
                     title="Lead"
                   >
                     Lead
+                  </button>
+                    <button
+                    type="button"
+                    className={
+                      status === 10 || status === "10"
+                        ? "btn btn-primary"
+                        : "btn btn-outline-primary"
+                    }
+                    onClick={() => {
+                      setStatus(10);
+                      clearPageNo();
+                    }}
+                    title="Consultation"
+                  >
+                    Consultation
                   </button>
                   <button
                     type="button"

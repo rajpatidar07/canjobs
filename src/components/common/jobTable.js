@@ -431,10 +431,14 @@ export default function JobTable(props) {
                     <th
                       key={index}
                       className={`border-0 font-size-3 font-weight-normal ${col.sticky ? "table_sticky_col sticky_col1" : ""
-                        }  ${col.hidden ? "d-none" : ""}`}
+                        }  ${col.hidden ? "d-none" : ""} ${col.key === "job_title" ? "table_sticky_col" : ""}`}
                       style={{
                         ...(col.sticky && { background: "#fcb6b6", transition: "background 0.3s ease" }),
-                        ...(col.key === "job_title" && { left: "100px" }) ,minWidth:"150px"
+                        ...(col.key === "job_title" && { left: "50px" }),
+                        ...(col.key === "job_id" ? {
+                          minWidth: "50px ", maxWidth: "auto", position: "sticky",
+                          transition: " background 0.3s ease"
+                        } : { minWidth: "150px" }),
                       }}
 
                       title={col.isAction ? "Actions" : `Sort by ${col.label}`}
@@ -640,7 +644,10 @@ export default function JobTable(props) {
                             /*job.is_applied === "1" ? "d-none" : */ "col-12 text-capitalize job_row"
                           }
                         >
-                          <td className="table_sticky_col sticky_col1 py-5 " style={{ backgroundColor: "#f4f4f4 " }} >
+                          <td className=" sticky_col1 py-5 " style={{
+                            position: "sticky", maxWidth: "auto",
+                            transition: " background 0.3s ease", backgroundColor: "#f4f4f4 ", minWidth: "50px "
+                          }} >
                             <Link
                               to={`/job_detail`}
                               onClick={
@@ -651,7 +658,7 @@ export default function JobTable(props) {
                               title={job.job_title}
                             >{job.job_id}</Link>
                           </td>
-                          <td className="table_sticky_col sticky_col1 py-5" style={{ left: "100px", backgroundColor: "#f4f4f4 " }}>
+                          <td className="table_sticky_col sticky_col1 py-5" style={{ left: "50px", backgroundColor: "#f4f4f4 " }}>
                             <div className="d-flex align-items-center">
                               {(job.is_monday_data === 1 || job.is_monday_data === "1") && (
                                 <MondayBadge />

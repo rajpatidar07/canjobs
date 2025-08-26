@@ -228,7 +228,7 @@ export default function ManageTask() {
                 />
               </div>
               <div className="col px-1 form_group mb-3">
-                <p className="input_label">Filter by Applicant/Client:</p>
+                <p className="input_label">Filter by Applicant/Employer:</p>
                 <SelectBox
                   Width={"yes"} options={employeeList ? employeeList.map((option) => ({
                     value: option.employee_id
@@ -240,7 +240,7 @@ export default function ManageTask() {
                       option.employee_id
                         ? `${option.name} (${option.employee_id} - Candidate)`
                         : option.company_id
-                          ? `${option.company_name} (${option.company_id} - Client)`
+                          ? `${option.company_name} (${option.company_id} - Employer)`
                           : `${option.title} (Applicant Type)` || "Unknown User"
                   })) : []}
                   selectedValue={userId + "," + userType}
@@ -343,7 +343,7 @@ export default function ManageTask() {
                     <AddTaskForm
                       // userId={userId}
                       // TaskUserType={userType}
-                      employee_employer_applicantType_list={[...employeeList, ...applicantTypeList]}
+                      employee_employer_applicantType_list={[...employeeList,]}// ...applicantTypeList
                       setApiCall={setApiCall}
                       setShowTaskForm={setShowTaskForm}
                       updateTaskData={updateTaskData}

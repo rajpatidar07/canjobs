@@ -10,23 +10,22 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 function ApplicantTypeTable(props) {
     // let search = props.search;
-    const applicantType = props.allApplicantType;
+    const applicantType = [...props.allApplicantType].reverse()
     let [isLoading, setIsLoading] = useState(true);
     let [applicantLevel, setApplicantLevel] = useState("parent");
     const [filteredData, setFilteredData] = useState(
         applicantType.filter((data) => data.parent_id === "0")
     );
     let [apiCall, setApiCall] = useState(props.apiCall);
-    const [deleteAlertApplicantTypeData, setDeleteAlertApplicantTypeData] =
-        useState(false);
-    const [deleteAlertApplicant, setDeleteAlertApplicant] =
-        useState(false);
+    const [deleteId, setDeleteId] = useState();
+    const [deleteName, setDeleteName] = useState("");
+    const [deleteAlert, setDeleteAlert] = useState(false);
+
 
     /*Pagination states */
     // const filteredData = (applicantType || []).filter(
     //     (data) => data.parent_id === "0"
     // );
-
     const [totalData, setTotalData] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [recordsPerPage] = useState(10);
@@ -68,31 +67,46 @@ function ApplicantTypeTable(props) {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 1000,
                 });
-                setDeleteAlertApplicant(false)
-                setDeleteAlertApplicantTypeData();
+                setDeleteAlert(false)
+                setDeleteId("")
+                setDeleteName("")
                 setApiCall(true);
-                props.setApiCall(true)
+                if (applicantLevel === "parent") {
+                    setFilteredData(applicantType.filter((item) => (item.id !== data.id && item.parent_id === "0")))
+                } else {
+                    setFilteredData(applicantType.filter((item) => (item.id !== data.id && item.level === "1")))
+                }
+                // props.setApiCall(true)
             }
-            if (response.message === "This applicant type cannot be deleted because it is used for applicant") {
+            if (response.message === "This applicant type cannot be deleted because it is used for applicant" || response.message === "This applicant type cannot be deleted because it is used for applicant.") {
                 toast.error(response.message, {
                     position: toast.POSITION.TOP_RIGHT,
-                    autoClose: 1000,
+                    autoClose: 2000,
                 });
-                setDeleteAlertApplicant(false)
-                setDeleteAlertApplicantTypeData();
+                setDeleteAlert(false)
+                setDeleteId("")
+                setDeleteName("")
             }
+
             if (response.message === "This applicant type cannot be deleted because it has a sub-applicant type.") {
                 toast.error(response.message, {
                     position: toast.POSITION.TOP_RIGHT,
-                    autoClose: 1000,
+                    autoClose: 2000,
                 });
-                setDeleteAlertApplicant(false)
-                setDeleteAlertApplicantTypeData();
+                setDeleteAlert(false)
+                setDeleteId("")
+                setDeleteName("")
             }
         } catch (err) {
             console.log(err);
         }
     }
+
+    /*Function to close the delete alert box */
+    const CancelDelete = () => {
+        setDeleteAlert(false);
+    };
+
 
     return (
         <>
@@ -131,15 +145,13 @@ function ApplicantTypeTable(props) {
                                 setApplicantLevel("parent")
                                 setFilteredData((applicantType || []).filter(
                                     (data) => data.parent_id === "0"))
-                                    setCurrentPage(1)
+                                setCurrentPage(1)
                             }}
                         >
                             Applicant Type
                         </Link>
                     </li>
-                    <li
-                        className={"tab-menu-items nav-item"}
-                    >
+                    <li className={"tab-menu-items nav-item"}>
                         <Link
                             className={
                                 applicantLevel === "child"
@@ -151,7 +163,7 @@ function ApplicantTypeTable(props) {
                                 setApplicantLevel("child")
                                 setFilteredData((applicantType || []).filter(
                                     (data) => data.level === "1"))
-                                    setCurrentPage(1)
+                                setCurrentPage(1)
                             }}
                         >
                             Sub Applicant Type
@@ -284,23 +296,14 @@ function ApplicantTypeTable(props) {
                                                                 className="btn btn-outline-info action_btn "
                                                                 style={{ fontSize: "10px", color: "red" }}
                                                                 onClick={() => {
-                                                                    setDeleteAlertApplicantTypeData(data)
-                                                                    setDeleteAlertApplicant(true)
+                                                                    setDeleteName(data.title)
+                                                                    setDeleteId(data.id)
+                                                                    setDeleteAlert(true)
                                                                 }
                                                                 }
                                                                 title="Delete Applicant Type">
                                                                 <FaTrash />
                                                             </button>
-                                                            <SAlert
-                                                                show={deleteAlertApplicant}
-                                                                title={deleteAlertApplicantTypeData?.title}
-                                                                text="Are you Sure you want to delete !"
-                                                                onConfirm={() => deleteApplicantType(deleteAlertApplicantTypeData.id)}
-                                                                showCancelButton={true}
-                                                                onCancel={() =>
-                                                                    setDeleteAlertApplicant(false)
-                                                                }
-                                                            />
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -326,6 +329,16 @@ function ApplicantTypeTable(props) {
                     </div>
                 </div>
             </div>
+
+            {/* Single SAlert instance outside the table */}
+            <SAlert
+                show={deleteAlert}
+                title={deleteName}
+                text="Are you Sure you want to delete !"
+                onConfirm={() => deleteApplicantType(deleteId)}
+                showCancelButton={true}
+                onCancel={(CancelDelete)}
+            />
         </>
     );
 }

@@ -387,7 +387,7 @@ export default function AddTaskForm(props) {
         </div>
         <div className="mb-3 form-group col">
           <label
-            htmlFor="userId" className="font-size-3 text-black-2  line-height-reset ">Applicant/Applicant Type/Client:</label>
+            htmlFor="userId" className="font-size-3 text-black-2  line-height-reset ">Applicant/Employer:</label>
           <SelectBox
             Width={"yes"}
             options={(props.employee_employer_applicantType_list || []).map((item) => {
@@ -401,7 +401,7 @@ export default function AddTaskForm(props) {
                 item.employee_id
                   ? `${item.name} (${item.employee_id} - Candidate)`
                   : item.company_id
-                    ? `${item.company_name} (${item.company_id} - Client)`
+                    ? `${item.company_name} (${item.company_id} - Employer)`
                     : `${item.title} (Applicant Type)` || "Unknown User"
 
               return { value, label };
