@@ -2,19 +2,20 @@ import moment from "moment/moment";
 import React, { useState, useEffect } from "react";
 import useValidation from "../common/useValidation";
 // import { CKEditor } from "ckeditor4-react";
-import { AddEmployeeDetails, GetAgentJson } from "../../api/api";
+import { AddEmployeeDetails, GetAgentJson, getApplicanTypeApi } from "../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import FilterJson from "../json/filterjson";
 // import AddAgent from "../admin/addAgent";
 import { Link, useLocation } from "react-router-dom";
 import Permissions from "../json/emailPermisionJson";
+import SelectBox from "./Common function/SelectBox";
 function UserRegisterPage() {
   let encoded;
   // const [imgError, setImgError] = useState("");
   const [loading, setLoading] = useState(false);
   const [SingUpSuccess, setSingUpSuccess] = useState("");
   const [agentList, setAgentList] = useState([]);
+  const [applicantTypeList, setApplicantTypeList] = useState([]);
 
   // let user_type = localStorage.getItem("userType");
   const location = useLocation();
@@ -39,6 +40,13 @@ function UserRegisterPage() {
     } catch (err) {
       console.log(err);
     }
+     try {
+          let response = await getApplicanTypeApi("");
+          setApplicantTypeList(Array.isArray(response.data.data) ? response.data.data : []);
+        } catch (err) {
+          console.log(err);
+          setApplicantTypeList([]);
+        }
   };
   useEffect(() => {
     AgentJson();
@@ -59,7 +67,7 @@ function UserRegisterPage() {
     currently_located_country: "",
     language: "",
     religion: "",
-    interested_in: "",
+    interested_in_id: "",
     experience: "",
     work_permit_canada: "",
     work_permit_other_country: "",
@@ -182,7 +190,7 @@ function UserRegisterPage() {
     //       ? "Religion can not have a number."
     //       : "",
     // ],
-    interested_in: [
+    interested_in_id: [
       (value) => (value === "" ? "Interested in is required" : null),
     ],
     // experience: [
@@ -330,7 +338,23 @@ function UserRegisterPage() {
   //   let base64Name = encoded.base64;
   //   setState({ ...state, profile_photo: base64Name });
   // };
+const getHierarchy = (id) => {
+    const selected = applicantTypeList.find(item => item.id === id);
+    if (!selected) return { main: "", sub: "", subsub: "" };
 
+    if (selected.level === "0") {
+      return { main: selected.id, sub: "", subsub: "" };
+    } else if (selected.level === "1") {
+      return { main: selected.parent_id, sub: selected.id, subsub: "" };
+    } else if (selected.level === "2") {
+      const sub = applicantTypeList.find(item => item.id === selected.parent_id);
+      return { main: sub?.parent_id || "", sub: sub?.id || "", subsub: selected.id };
+    }
+
+    return { main: "", sub: "", subsub: "" };
+  };
+
+  const { main, sub, subsub } = getHierarchy(state.interested_in_id);
   return (
     <div className="login-modal-main bg-white rounded-8 overflow-hidden">
       <div className="row no-gutters  justify-content-center m-5">
@@ -787,52 +811,109 @@ function UserRegisterPage() {
                     </span>
                   )}
                 </div> */}
-                <div className="form-group col-md-4">
-                  <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
-                    Interested In: <span className="text-danger">*</span>
-                  </label>
-                  <select
-                    className={`${errors.interested_in
-                      ? "form-control  border border-danger "
-                      : "form-control "
-                      }
-                      ${state.interested_in === "pnp" || state.interest === "pgwp"
-                        ? `text-uppercase`
-                        : "text-capitalize"
-                      }`}
-                    id="interested_in"
-                    name="interested_in"
-                    value={state.interested_in || ""}
-                    onChange={onInputChange}
-                  >
-                    <option value={""}>Select</option>
-                    {(FilterJson.interested || []).map((interest) => (
-                      <option
-                        key={interest}
-                        value={interest}
-                        className={
-                          interest === "pnp" || interest === "pgwp"
-                            ? `text-uppercase`
-                            : "text-capitalize"
-                        }
-                      >
-                        {interest === "pnp" ? "Alberta PNP" : interest}
-                      </option>
-                    ))}
-                    {/* <option value={"swap"}>SWEP</option>
-                  <option value={"parttime"}>Part-time</option>
-                  <option value={"all"}>All</option> */}
-                  </select>
-                  {/*----ERROR MESSAGE FOR interested_in----*/}
-                  {errors.interested_in && (
-                    <span
-                      key={errors.interested_in}
-                      className="text-danger font-size-3"
-                    >
-                      {errors.interested_in}
-                    </span>
-                  )}
-                </div>
+                {/* MAIN TYPE */}
+                                  <div className={"form-group col-md-4"}>
+                                    <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
+                                      Applicant's Type: <span className="text-danger">*</span>
+                                    </label>
+                                    <div className={errors.interested_in_id ? "border border-danger rounded" : ""}>
+                                      <SelectBox
+                                        Width={"yes"}
+                                        options={(applicantTypeList
+                                          .filter(item => (item.level === "0" && ![
+                                            "test typw",
+                                            "All Checklists",
+                                            "Checklists",
+                                            "Invitation letters/Declarations",
+                                            "Daily hours log",
+                                            "Training Modules",
+                                            "Admission/student/college"
+                                          ].some(it => item.title.includes(it))))
+                                          ).map(item => ({
+                                            value: item.id,
+                                            label: item.title,
+                                          }))
+                                        }
+                                        type="interested_in_id"
+                                        selectedValue={main}
+                                        onChange={(e) =>
+                                          onInputChange({
+                                            target: {
+                                              name: "interested_in_id",
+                                              value: e ? e.value : "",
+                                            },
+                                          })
+                                        }
+                                        placeholder="Select Main Type"
+                                      />
+                                    </div>
+                                    {errors.interested_in_id && (
+                                      <span className="text-danger font-size-3">
+                                        {errors.interested_in_id}
+                                      </span>
+                                    )}
+                                  </div>
+                                  {/* SUB TYPE */}
+                                  {main && applicantTypeList.some(item => item.level === "1" && item.parent_id === main) && (
+                                    <div className="form-group col-md-4">
+                                      <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
+                                        Sub Type:
+                                      </label>
+                                      <div className={errors.interested_in_id ? "border border-danger rounded" : ""}>
+                                        <SelectBox
+                                          Width={"yes"}
+                                          options={(applicantTypeList || [])
+                                            .filter(item => item.level === "1" && item.parent_id === main)
+                                            .map(item => ({
+                                              value: item.id,
+                                              label: item.title,
+                                            }))
+                                          }
+                                          type="interested_in_id"
+                                          selectedValue={sub}
+                                          onChange={(e) => {
+                                            onInputChange({
+                                              target: {
+                                                name: "interested_in_id",
+                                                value: e ? e.value : "",
+                                              },
+                                            });
+                                          }}
+                                          placeholder="Select Sub Type"
+                                        />
+                                      </div>
+                                    </div>
+                                  )}
+                                  {/* SUB SUB TYPE */}
+                                  {sub && applicantTypeList.some(item => item.level === "2" && item.parent_id === sub) && (
+                                    <div className="form-group col-md-4">
+                                      <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
+                                        Sub Sub Type:
+                                      </label>
+                                      <div className={errors.interested_in_id ? "border border-danger rounded" : ""}>
+                                        <SelectBox
+                                          Width={"yes"}
+                                          options={(applicantTypeList || [])
+                                            .filter(item => item.level === "2" && item.parent_id === sub)
+                                            .map(item => ({
+                                              value: item.id,
+                                              label: item.title,
+                                            }))
+                                          }
+                                          type="interested_in_id"
+                                          selectedValue={subsub}
+                                          onChange={(e) =>
+                                            onInputChange({
+                                              target: {
+                                                name: "interested_in_id",
+                                                value: e ? e.value : "",
+                                              },
+                                            })
+                                          }
+                                          placeholder="Select Sub Sub Type"
+                                        />
+                                      </div>
+                                    </div>)}
                 <div className="form-group col-md-4 d-none">
                   <label
                     htmlFor="reffer_by"

@@ -45,6 +45,8 @@ import { BsChat } from "react-icons/bs";
 import CommonThreeDots from "./Common function/commonThreeDots";
 import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
 import filterjson from "../json/filterjson";
+import AddConsultationInCandidate from "../forms/admin/AddConsultationInCandidate";
+import { FaHandshake } from "react-icons/fa";
 // import ApplicantTypeTimeLine from "./ApplicantTypeTimeLine";
 export default function EmployeeTable(props) {
   let agentId = localStorage.getItem("agent_id");
@@ -62,6 +64,7 @@ export default function EmployeeTable(props) {
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
+  const [showAddConsultationForm, setShowAddConsultationForm] = useState(false);
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
   let [showVisaModal, setVisaModal] = useState(false);
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
@@ -382,6 +385,12 @@ export default function EmployeeTable(props) {
     setemployeeId(e);
     setShowStatusChange(true);
   };
+  /*function to Open  Add Consultation form Modal */
+  const AddConsultaionClick = (e) => {
+    setemployeeId(e);
+    setShowAddConsultationForm(true);
+  };
+
 
   /*function to Open  change applicants category Modal */
   const ChangeApplicantsCategory = (e) => {
@@ -469,7 +478,7 @@ export default function EmployeeTable(props) {
       setIsLoading(false);
     }
   };
-  
+
   /*Function to change the applicant type of the employee */
   const OnApplicantTypeChange = async (e, empdata, eventKey) => {
     e.preventDefault();
@@ -590,6 +599,15 @@ export default function EmployeeTable(props) {
           close={() => setShowEmplyomentDetails(false)}
         />
       ) : null}
+      {showAddConsultationForm ?
+        <AddConsultationInCandidate
+          show={showAddConsultationForm}
+          employeeId={employeeId}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => setShowAddConsultationForm(false)}
+        />
+        : null}
       {showChangeJobModal ? (
         <JobModal
           show={showChangeJobModal}
@@ -728,7 +746,7 @@ export default function EmployeeTable(props) {
                   >
                     Lead
                   </button>
-                    <button
+                  <button
                     type="button"
                     className={
                       status === 10 || status === "10"
@@ -1132,24 +1150,23 @@ export default function EmployeeTable(props) {
                 ) : (
                   (employeeData || []).map((empdata, index) => (
                     <React.Fragment key={index}>
-                      {location.pathname === "/slots" ? (
-                        <tr style={{ border: "0" }}>
-                          <td
-                            style={{ paddingBottom: "0!important" }}
-                            colSpan="14"
-                            className={
-                              empdata.applicant_process_status
-                                ? "bg-white text-center m-0"
-                                : "d-none"
-                            }
-                          >
-                            <VisaTimeLine
-                              visa={empdata.applicant_process_status}
-                              substage={empdata.applicant_process_substages}
-                            />
-                          </td>
-                        </tr>
-                      ) : null}
+                      <tr style={{ border: "0" }}>
+                        <td
+                          style={{ paddingBottom: "0!important" }}
+                          colSpan="14"
+                          className={
+                            empdata.applicant_process_status
+                              ? "bg-white text-center m-0"
+                              : "d-none"
+                          }
+                        >
+                          <VisaTimeLine
+                            visa={empdata.applicant_process_status}
+                            substage={empdata.applicant_process_substages}
+                            type={location.pathname === "/slots" ? "" : ApplicantType(empdata.interested_in_id)}
+                          />
+                        </td>
+                      </tr>
                       {/* <tr style={{ border: "0" }}>
                         <td
                           style={{ paddingBottom: "0!important" }}
@@ -2044,6 +2061,17 @@ export default function EmployeeTable(props) {
                                         <GoTasklist />
                                       </span>
                                       {/* <i className="fas fa-stream text-gray"></i> */}
+                                    </button>
+                                    <button
+                                      className={empdata.status === "10" || empdata.status === 10 ? "btn btn-outline-info action_btn" : "d-none"}
+                                      onClick={() =>
+                                        AddConsultaionClick(empdata)
+                                      }
+                                      title="Add Consultation"
+                                    >
+                                      <span className="text-gray px-2">
+                                        <FaHandshake />
+                                      </span>
                                     </button>
                                     <button
                                       className={
