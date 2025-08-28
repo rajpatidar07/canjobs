@@ -24,7 +24,7 @@ function Registration(props) {
     companyname: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Client's name is required"
+          ? "Employer's name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : null,

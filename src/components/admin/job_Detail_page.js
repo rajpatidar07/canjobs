@@ -688,7 +688,7 @@ function JobDetailpageAdmim(props) {
                                     {jobData.company_size ? (
                                       <div
                                         className="font-size-3 mb-4 mr-10"
-                                        title="Client's team size"
+                                        title="Employer's team size"
                                       >
                                         <i className="fas fa-user-friends mr-2"></i>
                                         {jobData.company_size}

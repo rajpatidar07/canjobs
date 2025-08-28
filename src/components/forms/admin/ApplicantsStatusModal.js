@@ -95,9 +95,15 @@ export default function ApplicantsStatusModal(props) {
             </label>
             <SelectBox
               Width={"yes"}
-              options={(FilterJson.employee_status || []).map((item, index) => ({
-                value: String(index + 1),
-                label: item,
+              options={(FilterJson.employee_status || []).sort(
+                (a, b) =>
+                  ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"]
+                    .indexOf(a.label.toLowerCase()) -
+                  ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"]
+                    .indexOf(b.label.toLowerCase())
+              ).map((item, index) => ({
+                value: item.value,
+                label: item.label,
               }))}
               type="status"
               selectedValue={status || props.data.status}

@@ -641,10 +641,10 @@ export default function JobTable(props) {
                         )}
                         <tr
                           className={
-                            /*job.is_applied === "1" ? "d-none" : */ "col-12 text-capitalize job_row"
+                            /*job.is_applied === "1" ? "d-none" : */ "col-12job_row"
                           }
                         >
-                          <td className=" sticky_col1 py-5 " style={{
+                          <td className=" sticky_col1 py-5  text-capitalize " style={{
                             position: "sticky", maxWidth: "auto",
                             transition: " background 0.3s ease", backgroundColor: "#f4f4f4 ", minWidth: "50px "
                           }} >
@@ -658,7 +658,7 @@ export default function JobTable(props) {
                               title={job.job_title}
                             >{job.job_id}</Link>
                           </td>
-                          <td className="table_sticky_col sticky_col1 py-5" style={{ left: "50px", backgroundColor: "#f4f4f4 " }}>
+                          <td className="table_sticky_col sticky_col1 py-5  text-capitalize " style={{ left: "50px", backgroundColor: "#f4f4f4 " }}>
                             <div className="d-flex align-items-center">
                               {(job.is_monday_data === 1 || job.is_monday_data === "1") && (
                                 <MondayBadge />
@@ -698,7 +698,7 @@ export default function JobTable(props) {
                             </div>
                           </td>
                           {props.heading === "Dashboard" ? null : (
-                            <td className=" py-5"
+                            <td className=" text-capitalize  py-5"
                               title={job.job_type}>
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {/* {job.employement} -  */}
@@ -710,7 +710,7 @@ export default function JobTable(props) {
                           )}
                           {props.heading === "Dashboard" ? null : (
                             FilterdColumns.find(col => col.key === "location") && (
-                              <td className=" py-5" title={job.industry_type || job.location
+                              <td className=" text-capitalize  py-5" title={job.industry_type || job.location
                                 ? `${job.industry_type ? job.industry_type + "," : ""} ${job.location}`
                                 : "N/A"}>
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
@@ -844,7 +844,7 @@ export default function JobTable(props) {
                                 </td>
                               )}
                               {FilterdColumns.find(col => col.key === "monday_status") && (
-                                <td className="py-5 " title={filterjson.monday_status.find(
+                                <td className="py-5  text-capitalize " title={filterjson.monday_status.find(
                                   (item) => item.value === job.lmia_monday_status
                                 )?.label || "N/A"}>
                                   <span
@@ -910,7 +910,7 @@ export default function JobTable(props) {
                                 </td>
                               )}
                               {FilterdColumns.find(col => col.key === "job_category") && (
-                                <td className="py-5 ">
+                                <td className="py-5  text-capitalize ">
                                   <h3 className={`font-size-3 font-weight-normal mb-0 text-capitalize text-center  font-size-1 px-1  mr-2`}
                                     title={Json?.Category?.filter((item) => item.id === parseInt(job.job_category_id))[0]?.value || "N/A"}>
                                     <span
@@ -990,7 +990,7 @@ export default function JobTable(props) {
                             : null}
                           {props.heading === "Dashboard" ? null : (
                             FilterdColumns.find(col => col.key === "education") && <td className="py-5 d-none">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0  text-capitalize ">
                                 {job.education ? job.education : "N/A"}
                               </h3>
                             </td>
@@ -998,7 +998,7 @@ export default function JobTable(props) {
                           {props.heading === "Dashboard" ? null : (
                             FilterdColumns.find(col => col.key === "keyskill") && <td className="py-5 d-none">
                               <h3
-                                className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
+                                className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate  text-capitalize "
                                 title={job.keyskill}
                               >
                                 {job.keyskill ? job.keyskill : "N/A"}
@@ -1006,7 +1006,7 @@ export default function JobTable(props) {
                             </td>
                           )}
                           {FilterdColumns.find(col => col.key === "experience_required") && <td className="py-5 ">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0  text-capitalize "
                               title={job.experience_required + (
                                 job.experience_required === "1-3 " ||
                                   job.experience_required === "1-2 " ||
@@ -1264,7 +1264,7 @@ export default function JobTable(props) {
                                               ? "d-none"
                                               : "btn btn-outline-info action_btn"
                                               }`}
-                                            title="Client's document"
+                                            title="Employer's document"
                                             onClick={() =>
                                               OpenAddDocModal(job.company_id)
                                             }

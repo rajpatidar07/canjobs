@@ -28,7 +28,9 @@ function SelfApplicat(props) {
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [educationFilterValue, setEducationFilterValue] = useState("");
   const [interestFilterValue, setinterestFilterValue] = useState("");
-  // const [categoryFilterValue, setCategoryFilterValue] = useState("");
+  const [consultationOptedFilterValue, setConsultationOptedFilterValue] = useState("");
+  const [consultationStartDateFilterValue, setConsultationStartDateFilterValue] = useState("");
+  const [consultationEndDateFilterValue, setConsultationEndDateFilterValue] = useState("");
   const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
@@ -72,8 +74,8 @@ function SelfApplicat(props) {
         }
       >
         {props.skill === null ||
-        props.skill === undefined ||
-        Object.keys(props.skill).length === 0 ? (
+          props.skill === undefined ||
+          Object.keys(props.skill).length === 0 ? (
           <>
             {/* <!-- Header Area --> */}
             {/* <AdminHeader heading={"New Applicants"} /> */}
@@ -143,6 +145,12 @@ function SelfApplicat(props) {
                     setWebFilterValue={setWebFilterValue}
                     filterByEmployeeId={filterByEmployeeId}
                     setFilterByEmployeeId={setFilterByEmployeeId}
+                    consultationOptedFilterValue={consultationOptedFilterValue}
+                    consultationStartDateFilterValue={consultationStartDateFilterValue}
+                    consultationEndDateFilterValue={consultationEndDateFilterValue}
+                    setConsultationOptedFilterValue={setConsultationOptedFilterValue}
+                    setConsultationStartDateFilterValue={setConsultationStartDateFilterValue}
+                    setConsultationEndDateFilterValue={setConsultationEndDateFilterValue}
                   />
                 </div>
                 <small className="text-danger">{searcherror}</small>
@@ -172,6 +180,9 @@ function SelfApplicat(props) {
                 localFilterValue={localFilterValue}
                 webFilterValue={webFilterValue}
                 filterByEmployeeId={filterByEmployeeId}
+                consultationOptedFilterValue={consultationOptedFilterValue}
+                consultationStartDateFilterValue={consultationStartDateFilterValue}
+                consultationEndDateFilterValue={consultationEndDateFilterValue}
               />
             </div>
           </div>
@@ -181,8 +192,8 @@ function SelfApplicat(props) {
           <div
             className={
               props.skill === null ||
-              props.skill === undefined ||
-              Object.keys(props.skill).length === 0
+                props.skill === undefined ||
+                Object.keys(props.skill).length === 0
                 ? "dashboard-main-container mt-14"
                 : ""
             }

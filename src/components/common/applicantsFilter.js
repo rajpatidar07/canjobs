@@ -7,7 +7,8 @@ import {
 import { CiSearch } from "react-icons/ci";
 import filterjson from "../json/filterjson";
 import SelectBox from "./Common function/SelectBox";
-
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
 export default function ApplicantsFilter({
   search,
   onSearch,
@@ -40,7 +41,14 @@ export default function ApplicantsFilter({
   applicantTypeChildId,
   setSearch,
   webFilterValue,
-  setWebFilterValue
+  setWebFilterValue,
+  setConsultationOptedFilterValue,
+  setConsultationStartDateFilterValue,
+  setConsultationEndDateFilterValue,
+  consultationOptedFilterValue,
+  consultationStartDateFilterValue,
+  consultationEndDateFilterValue,
+
 }) {
   // let [SkillList, setSkillList] = useState([]);
   // let [EducationList, setEducationList] = useState([]);
@@ -49,6 +57,9 @@ export default function ApplicantsFilter({
   let [AdminList, setAdmintList] = useState([]);
   const [applicantTypeList, setApplicantTypeList] = useState([]);
   let portal = localStorage.getItem("portal");
+  let header = localStorage.getItem("admin_heading");
+  // let StatusTab = localStorage.getItem("StatusTab");
+
   /*Function to search */
   const SearchCandidate = () => {
     if (candidateSearch === "") {
@@ -115,6 +126,14 @@ export default function ApplicantsFilter({
     }
     // eslint-disable-next-line
   }, [skillFilterValue, educationFilterValue, applicantTypeId]);
+
+  /*on change function of date piker of consultation */
+  const handleChange = (range) => {
+    const [startDate, endDate] = range;
+    console.log(startDate, "end", endDate)
+    setConsultationStartDateFilterValue(startDate);
+    setConsultationEndDateFilterValue(endDate);
+  };
   return (
     <div
       className="row align-items-end mb-3 justify-content-start"
@@ -298,8 +317,8 @@ export default function ApplicantsFilter({
         <div className="select_div">
           <SelectBox
             Width={"yes"} options={(filterjson.employee_status.map((option, index) => ({
-              value: index + 1,
-              label: option,
+              value: option.value,
+              label: option.label,
             })) || [])}
             selectedValue={statustFilterValue}
             onChange={(e) => {
@@ -417,7 +436,37 @@ export default function ApplicantsFilter({
           />
         </div>
       </div>
-
+      {(header === "New Applicants") &&
+        <>
+          <div className="col form_group p-0">
+            <p className="input_label">
+              Filter by Consultation Opted  :
+            </p>
+            <select
+              className={"form-control"}
+              value={consultationOptedFilterValue}
+              onChange={(e) => setConsultationOptedFilterValue(e.target.value)}
+              id="consultation_opted"
+              name="consultation_opted"
+            >
+              <option value={""}>Select</option>
+              <option value={"1"}>Yes</option>
+              <option value={"0"}>No</option>
+            </select>
+          </div>
+          <div className="col form_group p-0">
+            <p className="input_label">
+              Filter by Consultation Date  :
+            </p>
+            <DatePicker
+              selected={consultationStartDateFilterValue}
+              onChange={handleChange}
+              startDate={consultationStartDateFilterValue}
+              endDate={consultationEndDateFilterValue}
+              selectsRange
+            />
+          </div>
+        </>}
       <div
         className={
           (skill === null || skill === undefined) && pageName === "employee"
@@ -433,11 +482,11 @@ export default function ApplicantsFilter({
             type="checkbox"
             id="web"
             name="web"
-          checked={webFilterValue === 0}
-          value={webFilterValue}
-          onChange={(e) =>
-            setWebFilterValue(webFilterValue === "" ? 0 : "")
-          }
+            checked={webFilterValue === 0}
+            value={webFilterValue}
+            onChange={(e) =>
+              setWebFilterValue(webFilterValue === "" ? 0 : "")
+            }
           />
           <span>Web</span>
         </label>
@@ -458,6 +507,7 @@ export default function ApplicantsFilter({
           <span>Local</span>
         </label>
       </div>
+
       <div className={"col form_group p-0"}>
         <button
           className="btn btn-primary w-100"
@@ -477,6 +527,11 @@ export default function ApplicantsFilter({
                   setSearch("");
                   setcandidateSearch("");
                 }
+                if (header === "New Applicants") {
+                setConsultationStartDateFilterValue("")
+                setConsultationEndDateFilterValue("")
+                setConsultationOptedFilterValue("")
+              }
               } else if (["4", "21", "22", "12"].includes(pageName)) {
                 setFilterByEmployeeId("");
                 setSearch("");

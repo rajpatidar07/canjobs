@@ -84,7 +84,7 @@ export default function EmployeeTable(props) {
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
   // const [statusList, ] = useState([...filterjson.employee_status]);
-  const statusList = [...filterjson.employee_status];
+  // const statusList = [...filterjson.employee_status];
   /*Pagination states */
   const [status, setStatus] = useState(
     StatusTab
@@ -157,6 +157,9 @@ export default function EmployeeTable(props) {
           "", // props.categoryFilterValue,
           props.localFilterValue,
           props.webFilterValue,
+          props.consultationOptedFilterValue,
+          props.consultationStartDateFilterValue,
+          props.consultationEndDateFilterValue,
           // props.subCategoryFilterValue
         );
         if (userData.data.length === 0) {
@@ -257,7 +260,10 @@ export default function EmployeeTable(props) {
     props.localFilterValue,
     props.filterByEmployeeId,
     props.statustFilterValue,
-    props.webFilterValue
+    props.webFilterValue,
+    props.consultationOptedFilterValue,
+    props.consultationStartDateFilterValue,
+    props.consultationEndDateFilterValue,
   ]);
 
   /* Function to show the single data to update Employee*/
@@ -694,6 +700,10 @@ export default function EmployeeTable(props) {
                 onClick={() => {
                   setStatus(props.self === "yes" ? "-1,0,1,2,3,5,6,10" : "4,7,8,9");
                   clearPageNo();
+                  localStorage.setItem(
+                    "StatusTab",
+                    props.self === "yes" ? "-1,0,1,2,3,5,6,10" : "4,7,8,9"
+                  );
                 }}
                 title="All"
               >
@@ -711,6 +721,7 @@ export default function EmployeeTable(props) {
                     onClick={() => {
                       setStatus(-1);
                       clearPageNo();
+                      localStorage.setItem("StatusTab", -1);
                     }}
                     title="New"
                   >
@@ -726,6 +737,7 @@ export default function EmployeeTable(props) {
                     onClick={() => {
                       setStatus(2);
                       clearPageNo();
+                      localStorage.setItem("StatusTab", 2);
                     }}
                     title="Prospect"
                   >
@@ -741,6 +753,7 @@ export default function EmployeeTable(props) {
                     onClick={() => {
                       setStatus(3);
                       clearPageNo();
+                      localStorage.setItem("StatusTab", 3);
                     }}
                     title="Lead"
                   >
@@ -756,6 +769,7 @@ export default function EmployeeTable(props) {
                     onClick={() => {
                       setStatus(10);
                       clearPageNo();
+                      localStorage.setItem("StatusTab", 10);
                     }}
                     title="Consultation"
                   >
@@ -771,6 +785,7 @@ export default function EmployeeTable(props) {
                     onClick={() => {
                       setStatus(5);
                       clearPageNo();
+                      localStorage.setItem("StatusTab", 5);
                     }}
                     title="Lost"
                   >
@@ -786,6 +801,7 @@ export default function EmployeeTable(props) {
                     onClick={() => {
                       setStatus(6);
                       clearPageNo();
+                      localStorage.setItem("StatusTab", 6);
                     }}
                     title="Dead"
                   >
@@ -804,6 +820,7 @@ export default function EmployeeTable(props) {
                     onClick={() => {
                       setStatus(4);
                       clearPageNo();
+                      localStorage.setItem("StatusTab", 4);
                     }}
                     title="Retained"
                   >
@@ -819,6 +836,7 @@ export default function EmployeeTable(props) {
                     onClick={() => {
                       setStatus(7);
                       clearPageNo();
+                      localStorage.setItem("StatusTab", 7);
                     }}
                     title="Working on"
                   >
@@ -834,6 +852,7 @@ export default function EmployeeTable(props) {
                     onClick={() => {
                       setStatus(8);
                       clearPageNo();
+                      localStorage.setItem("StatusTab", 8);
                     }}
                     title="Submitted"
                   >
@@ -849,6 +868,7 @@ export default function EmployeeTable(props) {
                     onClick={() => {
                       setStatus(9);
                       clearPageNo();
+                      localStorage.setItem("StatusTab", 9);
                     }}
                     title="Submitted"
                   >
@@ -856,7 +876,6 @@ export default function EmployeeTable(props) {
                   </button>
                 </>
               )}
-
             </div>
             {props.pageName === "employee" ? (
               <>
@@ -1896,8 +1915,29 @@ export default function EmployeeTable(props) {
                                     <DropdownButton
                                       as={ButtonGroup}
                                       title={
-                                        statusList[empdata.status - 1] ||
-                                        "Unknown"
+                                        status === "1"
+                                          ? "New"
+                                          : status === "2"
+                                            ? "Prospect"
+                                            : status === "3"
+                                              ? "Lead"
+                                              : status === "4"
+                                                ? "Retained"
+                                                : status === "5"
+                                                  ? "Lost"
+                                                  : status === "6"
+                                                    ? "Dead"
+                                                    : status === "7"
+                                                      ? "Working on"
+                                                      : status === "8"
+                                                        ? "Submitted"
+                                                        : status === "0"
+                                                          ? "New"
+                                                          : status === "9"
+                                                            ? "Complete"
+                                                            : status === "10"
+                                                              ? "Consultation"
+                                                              : "status"
                                       }
                                       variant={
                                         empdata.status === ("0" || 0)
@@ -1921,18 +1961,29 @@ export default function EmployeeTable(props) {
                                         OnStatusChange(e, empdata, eventKey)
                                       }
                                     >
-                                      {(filterjson.employee_status || []).map(
-                                        (item, index) => (
+                                      {(filterjson.employee_status || [])
+                                        .filter(item =>
+                                          props.self === "yes"
+                                            ? !["working on", "submitted", "completed", "retained"].includes(item.label.toLowerCase())
+                                            : !["new", "prospect", "lead", "consultation", "lost", "dead"].includes(item.label.toLowerCase())
+                                        )
+                                        .sort(
+                                          (a, b) =>
+                                            ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"]
+                                              .indexOf(a.label.toLowerCase()) -
+                                            ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"]
+                                              .indexOf(b.label.toLowerCase())
+                                        )
+                                        .map((item, index) => (
                                           <Dropdown.Item
                                             key={index}
-                                            value={item}
-                                            eventKey={index + 1}
+                                            value={item.value}
+                                            eventKey={item.value}   // keep eventKey same as value if you want real mapping
                                             className="text-capitalize"
                                           >
-                                            {item}
+                                            {item.label}
                                           </Dropdown.Item>
-                                        )
-                                      )}
+                                        ))}
                                     </DropdownButton>
 
                                     {empdata.status === ("1" || 1) &&

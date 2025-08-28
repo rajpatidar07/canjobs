@@ -90,9 +90,11 @@ const PayPalButton = (props) => {
       <PayPalScriptProvider
         options={{
           "client-id":
-            "AbYsUSCVrRqDtp4zlox3JSNxRHmmc-SRYVqaFc7GFQzfveGacibhiJCignxz418kGQgbjwwg_AAVvX6V",
+            "AeqhV1voIA40XD52fZYL3rPr3LeMfhZ_75rpdgAj47XHNJKQCY6H3YI_j3zS7W-yHS6Su1R3Ozoqza6U",
         }}
       >
+        {/* AbYsUSCVrRqDtp4zlox3JSNxRHmmc-SRYVqaFc7GFQzfveGacibhiJCignxz418kGQgbjwwg_AAVvX6V(testing client id)
+        AeqhV1voIA40XD52fZYL3rPr3LeMfhZ_75rpdgAj47XHNJKQCY6H3YI_j3zS7W-yHS6Su1R3Ozoqza6U(LIVE CLIENT ID BY NIDHI) */}
         <PayPalButtons createOrder={createOrder} onApprove={onApprove} />
       </PayPalScriptProvider>
     </>

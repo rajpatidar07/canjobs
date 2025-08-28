@@ -1,25 +1,25 @@
 import React, { useState } from "react";
 import useValidation from "../../common/useValidation";
-import { toast } from "react-toastify";
-import { useLocation, useNavigate, Link } from "react-router-dom";
+// import { toast } from "react-toastify";
+// import { useLocation, useNavigate, Link } from "react-router-dom";
 import {
-  CreateRazorpay,
-  AddRazorpay,
+  // CreateRazorpay,
+  // AddRazorpay,
   GetStripePaymentDetails,
 } from "../../../api/api";
 import PayPalButton from "../../common/PayPal";
-import { SiRazorpay } from "react-icons/si";
+// import { SiRazorpay } from "react-icons/si";
 import StripePay from "../../common/Stripe";
 import { FaStripe } from "react-icons/fa";
-import BraintreeDropIn from "../../common/braintreepayment";
+// import BraintreeDropIn from "../../common/braintreepayment";
 export default function PayForm({ setApicall, data, user, user_id }) {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [stripePayment, setStripePayment] = useState(false);
-  const [braintreePayment, setBraintreePayment] = useState(false);
+  // const [braintreePayment, setBraintreePayment] = useState(false);
   const [stopStripePayment, setStopStripePayment] = useState(true);
 
-  const navigate = useNavigate();
-  let location = useLocation();
+  // const navigate = useNavigate();
+  // let location = useLocation();
   // let name = localStorage.getItem("name")
   /*Initial state */
   const initialFormState = {
@@ -43,69 +43,69 @@ export default function PayForm({ setApicall, data, user, user_id }) {
     // ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, setErrors, validate } =
+  const { state, setState, onInputChange, errors, setErrors, /*validate*/ } =
     useValidation(initialFormState, validators);
   /*Function to made razor pay payment*/
-  const onPayentClick = async (e) => {
-    // console.log(errors, data);
-    if (validate() && (data.name || data.company_name)) {
-      const script = document.createElement("script");
-      script.src = "https://checkout.razorpay.com/v1/checkout.js";
-      script.onerror = () => {
-        alert("RazorPay SDK failed to load");
-      };
-      script.onload = async () => {
-        try {
-          setLoading(true);
-          // const total = userData.cart.reduce((a, b) => a + +b.price, 0).toFixed(0);
-          const result = await CreateRazorpay(state.amount, "USD");
-          const { amount, id: orderId, currency } = result.data.data;
-          // const getkey = await axios.get("http://localhost:8080/payment/get-razorpay-key");
-          const key = "rzp_test_m5J59Uvpq9YHDx";
-          const options = {
-            key: key,
-            amount: amount.toString(),
-            currency: currency,
-            name: user === "employee" ? data.name : data.company_name,
-            description: "FIRST RAZOR PAY",
-            order_id: orderId,
-            handler: async function (response) {
-              await AddRazorpay(amount, response, user, user_id);
-              // Perform any additional actions on successful payment here
-              toast.success("Payment Successful.", {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 5000,
-              });
-              setState(initialFormState);
-              setApicall(true);
-              navigate(location.pathname);
-            },
-            prefill: {
-              name: user === "employee" ? data.name : data.company_name,
-              email: data.email,
-              contact:
-                user === "employee" ? data.contact_contact_no : data.contact_no,
-            },
-          };
-          setLoading(false);
-          const paymentObject = new window.Razorpay(options);
-          paymentObject.open();
-        } catch (err) {
-          console.log(err);
-          setLoading(false);
-        }
-      };
-      document.body.appendChild(script);
-    }
-    if (!data) {
-      toast.error("Please complete your profile first", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 6000,
-      });
-    } else {
-      setLoading(false);
-    }
-  };
+  // const onPayentClick = async (e) => {
+  //   // console.log(errors, data);
+  //   if (validate() && (data.name || data.company_name)) {
+  //     const script = document.createElement("script");
+  //     script.src = "https://checkout.razorpay.com/v1/checkout.js";
+  //     script.onerror = () => {
+  //       alert("RazorPay SDK failed to load");
+  //     };
+  //     script.onload = async () => {
+  //       try {
+  //         setLoading(true);
+  //         // const total = userData.cart.reduce((a, b) => a + +b.price, 0).toFixed(0);
+  //         const result = await CreateRazorpay(state.amount, "USD");
+  //         const { amount, id: orderId, currency } = result.data.data;
+  //         // const getkey = await axios.get("http://localhost:8080/payment/get-razorpay-key");
+  //         const key = "rzp_test_m5J59Uvpq9YHDx";
+  //         const options = {
+  //           key: key,
+  //           amount: amount.toString(),
+  //           currency: currency,
+  //           name: user === "employee" ? data.name : data.company_name,
+  //           description: "FIRST RAZOR PAY",
+  //           order_id: orderId,
+  //           handler: async function (response) {
+  //             await AddRazorpay(amount, response, user, user_id);
+  //             // Perform any additional actions on successful payment here
+  //             toast.success("Payment Successful.", {
+  //               position: toast.POSITION.TOP_RIGHT,
+  //               autoClose: 5000,
+  //             });
+  //             setState(initialFormState);
+  //             setApicall(true);
+  //             navigate(location.pathname);
+  //           },
+  //           prefill: {
+  //             name: user === "employee" ? data.name : data.company_name,
+  //             email: data.email,
+  //             contact:
+  //               user === "employee" ? data.contact_contact_no : data.contact_no,
+  //           },
+  //         };
+  //         setLoading(false);
+  //         const paymentObject = new window.Razorpay(options);
+  //         paymentObject.open();
+  //       } catch (err) {
+  //         console.log(err);
+  //         setLoading(false);
+  //       }
+  //     };
+  //     document.body.appendChild(script);
+  //   }
+  //   if (!data) {
+  //     toast.error("Please complete your profile first", {
+  //       position: toast.POSITION.TOP_RIGHT,
+  //       autoClose: 6000,
+  //     });
+  //   } else {
+  //     setLoading(false);
+  //   }
+  // };
 
   /*Function to send the amount to paypal component */
   function getAmt() {
@@ -294,23 +294,26 @@ export default function PayForm({ setApicall, data, user, user_id }) {
             state={state}
             setStripePayment={setStripePayment}
           />
-        ) : braintreePayment && state.amount ? (
-          <BraintreeDropIn
-            amount={state.amount}
-            getAmt={getAmt}
-            setErrors={setErrors}
-            errors={errors}
-            setApicall={setApicall}
-            setState={setState}
-            state={state}
-            setBraintreePayment={setBraintreePayment}
-            show={braintreePayment}
-            user_id={user_id}
-            user={user}
-          />
-        ) : (
-          <>
-            {loading === true ? (
+        )
+          // :  braintreePayment && state.amount ? (
+          //   <BraintreeDropIn
+          //     amount={state.amount}
+          //     getAmt={getAmt}
+          //     setErrors={setErrors}
+          //     errors={errors}
+          //     setApicall={setApicall}
+          //     setState={setState}
+          //     state={state}
+          //     setBraintreePayment={setBraintreePayment}
+          //     show={braintreePayment}
+          //     user_id={user_id}
+          //     user={user}
+          //   />
+          // )
+          :
+          (
+            <>
+              {/* {loading === true ? (
               <button
                 className="btn btn-secondary btn-small w-100 mb-5 rounded-5 text-uppercase"
                 type="button"
@@ -333,21 +336,7 @@ export default function PayForm({ setApicall, data, user, user_id }) {
                 <SiRazorpay />
               </button>
             )}
-            <button
-              type="button"
-              onClick={() =>
-                state.amount
-                  ? setStripePayment(true)
-                  : setErrors({
-                    ...errors,
-                    amount: "Please set the amount before payment",
-                  })
-              }
-              className="btn btn-info btn-small w-100 mb-5 rounded-5 text-uppercase"
-              title="Stripe pay"
-            >
-              <FaStripe style={{ fontSize: "-webkit-xxx-large" }} />
-            </button>
+            
 
             <Link
               type="button"
@@ -368,21 +357,35 @@ export default function PayForm({ setApicall, data, user, user_id }) {
                 height="50px"
                 alt="Braintree"
               />
-            </Link>
-
-            <PayPalButton
-              amount={Number(state.amount)}
-              getAmt={getAmt}
-              setErrors={setErrors}
-              error={errors}
-              setApicall={setApicall}
-              setState={setState}
-              state={state}
-              user_id={user_id}
-              user={user}
-            />
-          </>
-        )}
+            </Link> */}
+              <button
+                type="button"
+                onClick={() =>
+                  state.amount
+                    ? setStripePayment(true)
+                    : setErrors({
+                      ...errors,
+                      amount: "Please set the amount before payment",
+                    })
+                }
+                className="btn btn-info btn-small w-100 mb-5 rounded-5 text-uppercase d-none"//abhi real ids lgani h iski nirantar sir e leke
+                title="Stripe pay"
+              >
+                <FaStripe style={{ fontSize: "-webkit-xxx-large" }} />
+              </button>
+              <PayPalButton
+                amount={Number(state.amount)}
+                getAmt={getAmt}
+                setErrors={setErrors}
+                error={errors}
+                setApicall={setApicall}
+                setState={setState}
+                state={state}
+                user_id={user_id}
+                user={user}
+              />
+            </>
+          )}
       </div>
     </form>
   );

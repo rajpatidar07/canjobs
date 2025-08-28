@@ -19,7 +19,7 @@ function AddEmployer(props) {
     companyname: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Client's name is required"
+          ? "Employer's name is required"
           : // : /[^A-Za-z 0-9]/g.test(value)
             // ? "Cannot use special character "
             null,
@@ -93,14 +93,14 @@ function AddEmployer(props) {
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onUserEmployerClick}>
-            <h5 className="text-center pt-2 mb-7">Add Client</h5>
+            <h5 className="text-center pt-2 mb-7">Add Employer</h5>
             <div className="row ">
               <div className="form-group col-md-6">
                 <label
                   htmlFor="companyname"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Client's Name<span className="text-danger">*</span>:
+                  Employer's Name<span className="text-danger">*</span>:
                 </label>
                 <input
                   type="text"
@@ -113,7 +113,7 @@ function AddEmployer(props) {
                   onChange={onInputChange}
                   name="companyname"
                   id="companyname"
-                  placeholder="Client's Name"
+                  placeholder="Employer's Name"
                   maxLength={60}
                 />
                 {/*----ERROR MESSAGE FOR COMPANY NAME----*/}

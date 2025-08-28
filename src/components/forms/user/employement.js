@@ -65,13 +65,13 @@ function EmployementDetails(props) {
     company: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Client's name is required"
+          ? "Employer's name is required"
           : // : /[^A-Za-z 0-9]/g.test(value)
           // ? "Cannot use special character "
           // : /[-]?\d+(\.\d+)?/.test(value)
-          // ? "Client's name can not have a number."
+          // ? "Employer's name can not have a number."
           value.length < 2
-            ? "Client's name should have 2 or more letters"
+            ? "Employer's name should have 2 or more letters"
             : "",
     ],
     designation: [
@@ -336,7 +336,7 @@ function EmployementDetails(props) {
                 <input
                   maxLength={60}
                   type="text"
-                  placeholder="Tell us your Client's name"
+                  placeholder="Tell us your Employer's name"
                   name="company"
                   value={state.company || ""}
                   onChange={onInputChange}
@@ -400,7 +400,7 @@ function EmployementDetails(props) {
                 <input
                   type="text"
                   maxLength={60}
-                  placeholder="Tell us your Client's location"
+                  placeholder="Tell us your Employer's location"
                   name="company_location"
                   value={state.company_location || ""}
                   onChange={onInputChange}

@@ -350,7 +350,7 @@ function Notes() {
                   />
                   <small className="text-danger">{companySearcherror}</small>
                 </div>
-                <h3 className="font-size-5 mb-0">Client's Notes</h3>
+                <h3 className="font-size-5 mb-0">Employer's Notes</h3>
                 <EmployeeNotesTable
                   search={Companysearch}
                   userType={"employer"}

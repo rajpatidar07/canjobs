@@ -3,10 +3,14 @@
 2. Reduce the space of the job_id column in the job table. Delete.
 3. Resolved the delete feature for applicant and sub-applicant types.
 4. Remove applicant type from the Add Task form in the Task Dashboard.
-5. Added option to include consultation date, opted status, and consultation status on the applicant page.(filter baki he)
-6. Made changes to applicant type dynamic handling on the signup page and applied required updates.(get applicant type wali api m backend se changes krne h or partner create kek satvir ko dena he)
+5. Added option to include consultation date, opted status, and consultation status on the applicant page.
+6. Made changes to applicant type dynamic handling on the signup page and applied required updates.( partner create krk satvir ko dena he live pe)
 7. Add applicant type stages on the Manage Applicant and New Applicant pages for the candidate.
-
+8. Added live PayPal client ID for real payments and hide all others with dummy details.
+9. Set default location on the job page should be Canada.
+10. Add a sequence and apply conditions according to the Candidate list page for candidate status, and update it everywhere it is used.
+11. Correct the case in LMIA notes on the Manage LMIA page.
+12. Change the lock icon to an eye-close icon for the Hide Column option on the LMIA page.
 Date:25/08/25
 1. Update the LMIA creation date in the LMIA table .
 2. Set a new tab on the New Applicant page.

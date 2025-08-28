@@ -73,9 +73,9 @@ function CompanyDetails(props) {
           value === null ||
           value === undefined ||
           value.trim() === ""
-          ? "Client's name is required"
+          ? "Employer's name is required"
           : value.length < 2
-            ? "Client's Name should have 2 or more letters"
+            ? "Employer's Name should have 2 or more letters"
             : // : /[^A-Za-z 0-9]/g.test(value)
             // ? "Cannot use special character "
             "",
@@ -92,11 +92,11 @@ function CompanyDetails(props) {
           value === null ||
           value === undefined ||
           value.trim() === ""
-          ? "Client's team Size is required"
+          ? "Employer'steam Size is required"
           : /[^A-Za-z 0-9]/g.test(value)
             ? "Cannot use special character "
             : value === "0" || value === 0
-              ? "Client's team Size can not be zero"
+              ? "Employer'steam Size can not be zero"
               : "",
     ],
     vacancy_for_post: [
@@ -200,7 +200,7 @@ function CompanyDetails(props) {
         if (responseData.message === "Employer data inserted successfully") {
           try {
             // await AddEmployerPermission(Permissions);
-            toast.success("Client Added successfully", {
+            toast.success("Employer Added successfully", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
@@ -211,7 +211,7 @@ function CompanyDetails(props) {
           }
         }
         if (responseData.message === "Employer data updated successfully") {
-          toast.success("Client Updated successfully", {
+          toast.success("Employer Updated successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
@@ -261,7 +261,7 @@ function CompanyDetails(props) {
           <form onSubmit={onCompanyDetailClick}>
             <h5 className="text-center pt-2 mb-7">
               {/* {user_type === "company" ? "Company Details" : "Employer Details"} */}
-              Client's Details
+              Employer's Details
             </h5>
             <input type="hidden" value={state.company_id || ""} />
             <div className="row">
@@ -284,7 +284,7 @@ function CompanyDetails(props) {
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  placeholder="Client Legal Name"
+                  placeholder="Employer Legal Name"
                   id="company_name"
                 />
                 {/*----ERROR MESSAGE FOR COMPANY NAME----*/}
@@ -457,7 +457,7 @@ function CompanyDetails(props) {
                   htmlFor="company_start_date"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Client's company Start Date:
+                  Employer's company Start Date:
                 </label>
 
                 <input
@@ -624,7 +624,7 @@ function CompanyDetails(props) {
                   htmlFor="about"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
-                  Client's company Logo:
+                  Employer's company Logo:
                 </label>
                 <div className="position-relative">
                   <input
@@ -674,7 +674,7 @@ function CompanyDetails(props) {
                           : "form-control"
                       }
                       id="about"
-                      placeholder="Client's Description"
+                      placeholder="Employer's Description"
                     ></textarea> */}
                     <TextEditor
                       setState={setState}

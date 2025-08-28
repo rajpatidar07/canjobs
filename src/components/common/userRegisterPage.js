@@ -191,7 +191,7 @@ function UserRegisterPage() {
     //       : "",
     // ],
     interested_in_id: [
-      (value) => (value === "" ? "Interested in is required" : null),
+      (value) => (value === "" ? "Applicant Type is required" : null),
     ],
     // experience: [
     //   (value) =>

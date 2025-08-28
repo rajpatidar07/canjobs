@@ -451,7 +451,7 @@ const NewUserProfile = (props) => {
                     <VisaTimeLine
                       visa={PersonalDetail.applicant_process_status}
                       substage={PersonalDetail.applicant_process_substages}
-                      type={applicantTypeList?applicantTypeList.find((item) => item.id === PersonalDetail.applicant_process_type)?.title:PersonalDetail.applicant_process_type}
+                      type={applicantTypeList ? applicantTypeList.find((item) => item.id === PersonalDetail.applicant_process_type)?.title : PersonalDetail.applicant_process_type}
                     />
                   </div>
                 ) : null}
@@ -929,21 +929,29 @@ const NewUserProfile = (props) => {
                                                           ? "New"
                                                           : status === "9"
                                                             ? "Complete"
-                                                            : "status"
+                                                            : status === "10"
+                                                              ? "Consultation"
+                                                              : "status"
                                       }
                                       size="sm"
                                       className="user_status_btn btn-primary rounded-pill font-size-3 px-3 py-1 text-white mr-2"
                                       onSelect={OnStatusChange}
                                     >
-                                      {(FilterJson.employee_status || []).map(
+                                      {(FilterJson.employee_status || []).sort(
+                                        (a, b) =>
+                                          ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"]
+                                            .indexOf(a.label.toLowerCase()) -
+                                          ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"]
+                                            .indexOf(b.label.toLowerCase())
+                                      ).map(
                                         (item, index) => (
                                           <Dropdown.Item
                                             key={index}
-                                            value={index + 1}
+                                            value={item.value}
                                             eventKey={index + 1}
                                             className="text-capitalize"
                                           >
-                                            {item}
+                                            {item.label}
                                           </Dropdown.Item>
                                         )
                                       )}

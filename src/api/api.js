@@ -415,7 +415,10 @@ export const getallEmployeeData = async (
   assignedadminId,
   subType,
   localFilterValue,
-  webFilterValue
+  webFilterValue,
+  conusultaionOpted,
+  consultStartDate,
+  consultationEndDate
   // subSubtype
   // agent_u_id
 ) => {
@@ -444,7 +447,10 @@ export const getallEmployeeData = async (
       employee_id: employee_id,
       is_local: localFilterValue,
       sub_category: "",
-      created_by_admin :webFilterValue
+      created_by_admin: webFilterValue,
+      consultation_from_date: consultStartDate,
+      consultation_to_date: consultationEndDate,
+      consultation_opted: conusultaionOpted,
     },
     {
       headers: {

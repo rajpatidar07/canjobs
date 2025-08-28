@@ -583,17 +583,18 @@ const filterjson = {
   admintype: ["super-admin", "admin", "manager", "executive"],
   duration: ["last week", "last month", "last 3 months", "last year"],
   employee_status: [
-    "new",
-    "prospect",
-    "lead",
-    "retained",
-    "lost",
-    "dead",
-    "working on",
-    "submitted",
-    "completed",
-    "consultation"
-  ],
+    { value: "1", label: "New" },
+    { value: "2", label: "Prospect" },
+    { value: "3", label: "Lead" },
+    { value: "4", label: "Retained" },
+    { value: "5", label: "Lost" },
+    { value: "6", label: "Dead" },
+    { value: "7", label: "Working on" },
+    { value: "8", label: "Submitted" },
+    { value: "9", label: "Completed" },
+    { value: "10", label: "Consultation" }
+  ]
+  ,
   interested: [
     "work permit application",
     "visitor visa",
@@ -1075,8 +1076,8 @@ const filterjson = {
     { value: "16", label: "on hold" },
     { value: "17", label: "expired" },
   ],
-  type_of_lmia:[
-     { value: "1", label: "low wage" },
+  type_of_lmia: [
+    { value: "1", label: "low wage" },
     { value: "2", label: "high wage" },
     { value: "3", label: "PR support (LW)" },
     { value: "4", label: "PR support (HW)" },

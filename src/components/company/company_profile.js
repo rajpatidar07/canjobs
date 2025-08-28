@@ -702,7 +702,7 @@ function CompanyProfileDetail(props) {
                                       {employerData?.company_size ? (
                                         <div
                                           className="font-size-3 mb-1 mr-10"
-                                          title="Client's team size (Full time)"
+                                          title="Employer's team size (Full time)"
                                         >
                                           <i className="fas fa-user-friends mr-2"></i>
                                           {employerData?.company_size}
@@ -711,7 +711,7 @@ function CompanyProfileDetail(props) {
                                       {employerData?.company_size_partTime ? (
                                         <div
                                           className="font-size-3 mb-1 mr-10"
-                                          title="Client's team size (Part time)"
+                                          title="Employer's team size (Part time)"
                                         >
                                           <i className="fas fa-user-friends mr-2"></i>
                                           {employerData?.company_size_partTime}

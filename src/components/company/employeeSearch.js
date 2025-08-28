@@ -375,7 +375,7 @@ function EmployeeSearch() {
                         <div className="col-md-6">
                           <div className="">
                             <span className="font-size-4 d-block mb-4 text-gray">
-                              Client's team size
+                              Employer's team size
                             </span>
                             <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
                               11-50 employees
@@ -642,7 +642,7 @@ function EmployeeSearch() {
                         <div className="col-md-6">
                           <div className="">
                             <span className="font-size-4 d-block mb-4 text-gray">
-                              Client's team size
+                              Employer's team size
                             </span>
                             <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
                               11-35 employees
@@ -909,7 +909,7 @@ function EmployeeSearch() {
                         <div className="col-md-6">
                           <div className="">
                             <span className="font-size-4 d-block mb-4 text-gray">
-                              Client's team size
+                              Employer's team size
                             </span>
                             <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
                               20-50 employees
@@ -1176,7 +1176,7 @@ function EmployeeSearch() {
                         <div className="col-md-6">
                           <div className="">
                             <span className="font-size-4 d-block mb-4 text-gray">
-                              Client's team size
+                              Employer's team size
                             </span>
                             <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
                               50-80 employees
@@ -1443,7 +1443,7 @@ function EmployeeSearch() {
                         <div className="col-md-6">
                           <div className="">
                             <span className="font-size-4 d-block mb-4 text-gray">
-                              Client's team size
+                              Employer's team size
                             </span>
                             <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
                               11-50 employees
@@ -1710,7 +1710,7 @@ function EmployeeSearch() {
                         <div className="col-md-6">
                           <div className="">
                             <span className="font-size-4 d-block mb-4 text-gray">
-                              Client's team size
+                              Employer's team size
                             </span>
                             <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
                               11-50 employees

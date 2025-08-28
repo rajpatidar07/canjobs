@@ -10,7 +10,7 @@ import EmployeeFooter from "../common/footer";
 import SelectBox from "../common/Common function/SelectBox";
 import CustomButton from "../common/button";
 import LmiafieldsPermission from "../forms/admin/LmiafieldsPermission";
-import { FaLock } from "react-icons/fa6";
+import { FaEyeSlash } from "react-icons/fa";
 function LimaContainer(props) {
   /*show Modal and props state */
   let [apiCall, setApiCall] = useState(false);
@@ -260,7 +260,7 @@ function LimaContainer(props) {
                           onClick={() => setOpenPermission("0")}
                           title="Hide Columns "
                         >
-                          <FaLock /></button>
+                          <FaEyeSlash /></button>
                       </div>
                       <small className="text-danger">{searcherror}</small>
                     </div>
