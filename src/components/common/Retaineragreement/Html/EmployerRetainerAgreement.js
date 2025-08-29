@@ -43,7 +43,7 @@ export default function EmployerRetainerAgreement({ page,
           />
         </div>
         <div class="content" style="padding: 10px 20px;text-align: justify;">
-            <h2 class="font-weight-bold text-blue mb-4 mt-4 text-capitalize text-primary font-size-6">Can Pathways Immigration Consultancy Limited</h2>
+            <h2 class="font-weight-bold text-blue mb-4 mt-4 text-capitalize text-primary font-size-6">Can Pathways Immigration Consultancy </h2>
             <p class="m-0">2618 Hopewell Pl NE #310, Calgary, AB T1Y 7J7</p>
             <p class="m-0">Tel: +1. (403)888 5308 </p>
             <p class="m-0">Email: <a href="mailto:info@canpathwaysjobs.com">info@canpathwaysjobs.com</a></p>
@@ -92,7 +92,7 @@ export default function EmployerRetainerAgreement({ page,
                 </div> 
     
                 <h3 class="font-size-6 ">2. RCIC Responsibilities and Commitments</h3>
-                <p>The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of the Client's applications for Labour Market Impact Assessment Applications from Employment and Social Development Canada (here in after "ESDC") + Recruitment (if applicable)</p>
+                <p>The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of the Client's applications for <b>Labour Market Impact Assessment Applications</b> from Employment and Social Development Canada (here in after <b>"ESDC"</b>) + <b>Recruitment</b> (if applicable)</p>
     
     <p> In consideration of the fees paid and the matter stated above, the RCIC agrees to do the following, with the assistance of the RClC's employees, as required:</p>
     <ul>
@@ -101,9 +101,9 @@ export default function EmployerRetainerAgreement({ page,
     <li> 	Guide the Client through the application process and review all documents to ensure consistency and accuracy;</li>
     <li> 	Submit the Client's application package to the appropriate offices;</li>
     <li> 	Apprise the Client on the progress of his/her application;</li>
-    <li> 	Handle all correspondence with Rural Community of business location on the Client's behalf respect to the application;</li>
+    <li>  Handle all correspondence with <b>ESDC</b> on the Client’s behalf in respect to the application;</li>
     <li> 	Liaise between the Canadian government and the Client;</li>
-    <li> 	Prepare the Client in advance if an Interviewwithan officer of Rural Community of business location is requested.</li>
+    <li> 	Prepare the Client in advance if an Interview with an ESDC officer is requested.</li>
     <li> 	Perform all duties on behalf of the Client competently and professionally.</li>
     </ul>
     
@@ -146,7 +146,6 @@ export default function EmployerRetainerAgreement({ page,
     <p>Additional fees that is involved in this process are as follows.</p>
     <p><span class="font-weight-bold pr-2 ">✓</span>LMIA Government Application fee foreach position <b>CAD 1000.00</b></p>
     <p><span class="font-weight-bold pr-2 ">✓</span>Job Advertisement fee for each occupation (2 paid Job Ads)	     <b>CAD 300.00</b></p>
-    <p><span class="font-weight-bold pr-2 ">✓</span>Chartered Professional Accountant's (CPA) Attestation Letter	     <b>CAD 1000.00</b></p>
     <p><span class="font-weight-bold pr-2 ">✓</span>Recruitment charges per applicant (if applicable)	<b>CAD 1000.00</b></p>
     <br>NOTE:<u> ${felidData.note || "All complaint forms must be signed."}</u><br><br>
     </div>
@@ -201,7 +200,7 @@ export default function EmployerRetainerAgreement({ page,
     <div>
     <h3 class="font-weight-bold font-size-6 ">10. Confidentiality </h3>
     <p>
-        All information and documentation reviewed by the RCIC, required by Service Canada and CIC and all other governing bodies, and used for the preparation of the application will not be divulged to any third party, other than agents and employees, without prior consent, except as demanded by law. The Client agrees to let the RCIC publish facts about the case as a case study without mentioning names. The RCIC, and all agents and employees of the RCIC, are also bound by the confidentiality requirements of Article 8.1 and 8.5 of the Code of Professional Ethics.</p>
+        All information and documentation reviewed by the RCIC, required by Service Canada and CIC and all other governing bodies, and used for the preparation of the application will not be divulged to any third party, other than agents and employees, without prior consent, except as demanded by law. <br>The Client agrees to let the RCIC publish facts about the case as a case study without mentioning names. The RCIC, and all agents and employees of the RCIC, are also bound by the confidentiality requirements of Article 8.1 and 8.5 of the Code of Professional Ethics.</p>
     <p>
         The Client agrees to the use of electronic communication and storage of confidential information. The RCIC will use his/her best efforts to maintain a high degree of security for electronic communication and information storage.
     </p>
@@ -215,18 +214,17 @@ export default function EmployerRetainerAgreement({ page,
         <div>
             <h3 class="font-weight-bold font-size-6 ">12. Change Policy</h3>
             <p>
-                The Client acknowledges that if the RCIC is asked to act on the Client's behalf on matters other than those outlined above in this Agreement, or because of a material change in the Client's circumstances, or because of material facts.</p>
-            <p>
                 The Client acknowledges that if the RCIC is asked to act on the Client's behalf on matters other than those outlined above in this Agreement, or because of a material change in the Client's circumstances, or because of material facts not disclosed at the outset of the application, or because of a change in government legislation regarding the processing of immigration-related applications, the Agreement can be modified accordingly upon mutual agreement.
             </p>
             </div>
             <div>
     <h3 class="font-weight-bold font-size-6 ">13. Termination </h3>
+    <p>
+        This Agreement is considered terminated upon completion of tasks identified under section 2 of this agreement.</p>
+    </p>
     <ul>
-    <li>
-        This Agreement is considered terminated upon completion of tasks identified under section 2 of this agreement.</li>
-    <li>
-        This Agreement is considered terminated if material changes occur to the Client's application or eligibility. which make it impossible to proceed with services detailed in section 2 of this Agreement.
+    <li>  
+    This Agreement is considered terminated if material changes occur to the Client's application or eligibility. which make it impossible to proceed with services detailed in section 2 of this Agreement.
     </li>
     <li>
         According to Article 14 of the Code of Professional Ethics, this Agreement may be terminated, upon writing, by the RCIC, provided withdrawal does not cause prejudice to the Client.
@@ -241,7 +239,12 @@ export default function EmployerRetainerAgreement({ page,
     <ul>
         <li>The Client expressly authorizes the RCIC to act on his/her behalf to the extent of the specific functions which the RCIC was retained to perform, as per Section 2 hereof.</li>
         <li><b>The RCIC and the firm are authorized to collect information and communicate with ESDC related to my LMIA applications. In case of Online applications, I authorize RCIC Harpreet Kaur to electronically sign any required document related to the LMIA file and recruitment (if applicable) and submit the application on my behalf</b></li>
-        <li>This Agreement constitutes the entire agreement between the parties concerning the subject matter here of and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, except as specifically set forth herein.</li>
+        <li>This Agreement constitutes the entire agreement between the parties concerning the subject matter hereof and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, except as specifically set forth herein.</li>
+        <li>The client authorizes the RCIC to use the company’s logo and publicly available company information 
+        solely for immigration-related purposes, including LMIA applications and submissions to ESDC or IRCC. 
+        This use is limited to required documentation and will not be used for unrelated purposes without prior 
+        written consent.
+        </li>
         <li>This Agreement shall be binding upon the parties hereto and their respective heirs, administrators, successors, and permitted assigns.</li>
         <li>This Agreement may only be altered or amended when such changes are made in writing and executed by the parties hereto.</li>
         <li>The provisions of this Agreement shall be deemed severable. If any provision of this Agreement shall be held unenforceable by any court of competent jurisdiction, such provision shall be severed from this Agreement, and the remaining provisions shall remain in full force and effect.</li>

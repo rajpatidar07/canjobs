@@ -11,6 +11,10 @@
 10. Add a sequence and apply conditions according to the Candidate list page for candidate status, and update it everywhere it is used.
 11. Correct the case in LMIA notes on the Manage LMIA page.
 12. Change the lock icon to an eye-close icon for the Hide Column option on the LMIA page.
+13. Resolve the issue of navigating to RA for user signature.
+14. Add contact details of the contact person on the company details page.
+15. Add the LMIA list on the company details page, make the required changes, and add conditions.
+16. Remove 'Limited' from the RA's as asked by Satvir.
 Date:25/08/25
 1. Update the LMIA creation date in the LMIA table .
 2. Set a new tab on the New Applicant page.

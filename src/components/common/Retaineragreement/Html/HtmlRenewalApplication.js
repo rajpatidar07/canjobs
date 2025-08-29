@@ -44,7 +44,7 @@ const HtmlRenewalApplication = ({
       />
     </div>
     <div class="content" style="padding: 10px 20px;text-align: justify;">
-        <h2 class="font-weight-bold text-blue mb-4 mt-4 text-capitalize text-primary font-size-6">Can Pathways Immigration Consultancy Limited</h2>
+        <h2 class="font-weight-bold text-blue mb-4 mt-4 text-capitalize text-primary font-size-6">Can Pathways Immigration Consultancy </h2>
         <p class="m-0">2618 Hopewell Pl NE #310, Calgary, AB T1Y 7J7</p>
         <p class="m-0">Tel: +1. (403)888 5308 </p>
         <p class="m-0">Email: <a href="mailto:info@canpathwaysjobs.com">info@canpathwaysjobs.com</a></p>

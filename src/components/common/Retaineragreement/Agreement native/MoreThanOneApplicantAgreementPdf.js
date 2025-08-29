@@ -143,7 +143,7 @@ const MoreThanOneApplicantAgreementPdf = () => {
               styles.textBold
             ]}
           >
-            Can Pathways Immigration Consultancy Limited
+            Can Pathways Immigration Consultancy 
           </Text>
           <Text style={styles.mb5}>2618 Hopewell Pl NE #310, Calgary, AB T1Y 7J7</Text>
           <Text style={styles.mb5}>Tel: +1 (403) 888-5308</Text>

@@ -28,6 +28,7 @@ import RetainerAgrementMainPage from "../common/Retaineragreement/RetainerAgreme
 import { getInitials } from "../common/GetInitials";
 import PaymentPage from "../common/payment invoice/PaymentPage";
 import PayentForm from "../forms/admin/payentForm";
+import LimaContainer from "../admin/lmiaContainer";
 // import LimaArrowProfile from "../common/LimaArrowProfile";
 function CompanyProfileDetail(props) {
   const user_type = localStorage.getItem("userType");
@@ -368,6 +369,23 @@ function CompanyProfileDetail(props) {
                       onClick={() => setTabActive("jobs")}
                     >
                       Jobs
+                    </Link>
+                  </li>
+                   <li className="tab-menu-items nav-item">
+                    <Link
+                      className={
+                        TabActive === "lmia"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                      }
+                      id="lmia"
+                      data-toggle="tab"
+                      role="tab"
+                      aria-controls="lmia"
+                      aria-selected="true"
+                      onClick={() => setTabActive("lmia")}
+                    >
+                      LMIA
                     </Link>
                   </li>
                   <li
@@ -849,6 +867,13 @@ function CompanyProfileDetail(props) {
                                       <BiPhoneCall className="text-secondary font-size-5 mr-2" />
                                       {employerData?.contact_no}
                                     </Link>
+                                     <Link
+                                      className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
+                                      to={`tel:${employerData?.contact_no_other}`}
+                                    >
+                                      <BiPhoneCall className="text-secondary font-size-5 mr-2" />
+                                      {employerData?.contact_no_other}
+                                    </Link>
                                   </div>
                                 )}
                               </div>
@@ -912,6 +937,31 @@ function CompanyProfileDetail(props) {
                 >
                   <div className="response_main_div w-100">
                     <JobTable
+                      company_id={cid}
+                      heading={"companyprofile"}
+                      response={"companyprofile"}
+                      detail={"company_detail"}
+                      // setLmia={setLmia}
+                      setApiCall={setApiCall}
+                      pageNo={jobPageNo}
+                      setpageNo={setJobPageNO}
+                    // setLmiaStatusRejectComment={setLmiaStatusRejectComment}
+                    />
+                  </div>
+                  {/* <!-- Top Start --> */}
+                </div>
+                <div
+                  className={
+                    TabActive === "lmia"
+                      ? "row m-0  justify-content-center"
+                      : "d-none"
+                  }
+                  id="appliedJobs"
+                  role="tabpanel"
+                  aria-labelledby="appliedJobs"
+                >
+                  <div className="response_main_div w-100">
+                    <LimaContainer
                       company_id={cid}
                       heading={"companyprofile"}
                       response={"companyprofile"}

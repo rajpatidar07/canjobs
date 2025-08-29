@@ -31,6 +31,7 @@ function LimaContainer(props) {
   const [company, setCompany] = useState("");
   let [Json, setJson] = useState([]);
   let userType = localStorage.getItem("userType");
+
   /*Function to get the jSon */
   const JsonData = async () => {
     try {
@@ -284,6 +285,7 @@ function LimaContainer(props) {
                 response="lmia"
                 pageNo={pageNo}
                 setpageNo={setpageNo}
+                company_id={props?.company_id}
               />
             </div>
           </div>
@@ -324,11 +326,12 @@ function LimaContainer(props) {
       {showAddJobsModal ? (
         <AddJobModal
           show={showAddJobsModal}
-          jobdata={JobId}
+          jobdata={props.company_id ? "" : JobId}
           admin={"admin"}
           apiCall={apiCall}
           setApiCall={setApiCall}
           close={() => setShowAddJobsModal(false)}
+          company_id={props.company_id || ""}
         />
       ) : null}
       {openPermission ?

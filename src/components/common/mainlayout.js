@@ -213,7 +213,8 @@ function MainLayout() {
       "/study_partner_login",
       "/study_admin_login",
       "/resetpassword/:id",
-      "/outside_booking"
+      "/outside_booking",
+      "/signagreement"
     ];
 
     useEffect(() => {

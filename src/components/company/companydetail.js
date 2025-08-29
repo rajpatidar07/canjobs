@@ -36,6 +36,21 @@ function CompanyDetailPage(props) {
   }, [props.employerId, apiCall]);
   return (
     <>
+    <div className="d-flex justify-content-space-between">
+      <h6>Contact Person Details</h6>
+      {props.page === "company_profile" ? (
+          <CustomButton
+            className={
+              user_type === "user"
+                ? "d-none"
+                : " font-size-3 rounded-3 btn-primary border-0"
+            }
+            onClick={() => setContactDetails(true)}
+          >
+            <PiPencilDuotone />
+          </CustomButton>
+        ) : null}
+      </div>
       <div
         className={
           props.page === "company_profile"
@@ -43,9 +58,12 @@ function CompanyDetailPage(props) {
             : "company_info"
         }
       >
-        {employerData.contact_person_name === null ||
-        employerData.contact_person_name === undefined ||
-        employerData.contact_person_name === "undefined" ? (
+        {(!employerData.contact_person_name &&
+          !employerData.designation &&
+          !employerData.email &&
+          !employerData.contact_no &&
+          !employerData.contact_no_other &&
+          !employerData.address) ? (
           <div className="text-left row m-0">
             <div className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7">
               No Data Found
@@ -59,7 +77,7 @@ function CompanyDetailPage(props) {
                 title="Contact Person Name"
               >
                 <i className="fas fa-user mr-2"></i>
-                {employerData.contact_person_name}
+                <b> Name:</b> {employerData.contact_person_name}
               </div>
             ) : null}
             {employerData.designation ? (
@@ -67,13 +85,13 @@ function CompanyDetailPage(props) {
                 className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7"
                 title="Designation"
               >
-                <i className="fas fa-portrait mr-2"></i>
-                {employerData.designation}
+                <i className="fas fa-briefcase mr-2"></i>
+                <b>Designation:</b> {employerData.designation}
               </div>
             ) : null}
-            {employerData.email && props.page !== "company_profile" ? (
+            {employerData.email && (
               <div
-                className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7"
+                className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7 d-none"
                 title="Email"
               >
                 <i className="fas fa-envelope mr-2"></i>
@@ -81,10 +99,10 @@ function CompanyDetailPage(props) {
                   {employerData.email}
                 </Link>
               </div>
-            ) : null}
-            {employerData.contact_no && props.page !== "company_profile" ? (
+            )}
+            {employerData.contact_no && (
               <div
-                className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7"
+                className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7 d-none"
                 title="Contact No"
               >
                 <i className="fas fa-phone-alt mr-2"></i>
@@ -95,12 +113,11 @@ function CompanyDetailPage(props) {
                   {employerData.contact_no}
                 </Link>
               </div>
-            ) : null}
-            {employerData.contact_no_other &&
-            props.page !== "company_profile" ? (
+            )}
+            {employerData.contact_no_other && (
               <div
-                className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7"
-                title="Contact No"
+                className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7 d-none"
+                title="Contact No Other"
               >
                 <i className="fas fa-phone-alt mr-2"></i>
                 <Link
@@ -110,34 +127,21 @@ function CompanyDetailPage(props) {
                   {employerData.contact_no_other}
                 </Link>
               </div>
-            ) : null}
+            )}
             {employerData.address ? (
               <div
                 className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7"
                 title="Address"
               >
                 <i className="fas fa-map-marker-alt mr-2"></i>
-                {employerData.address}
-                {", "} {employerData.city}
-                {"  "}
-                {employerData.pin_code}
-                {", "}
-                {employerData.state}
-                {", "}
-                {employerData.country}
+                <b> Address:</b> {employerData.address}
+                {employerData.city && `, ${employerData.city}`}
+                {employerData.pin_code && ` - ${employerData.pin_code}`}
+                {employerData.state && `, ${employerData.state}`}
+                {employerData.country && `, ${employerData.country}`}
               </div>
             ) : null}{" "}
-            {props.page === "company_profile" ? null : (
-              <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
-                <span>Contact Info</span>
-                <CustomButton
-                  className={" font-size-3 rounded-3 btn-primary border-0"}
-                  onClick={() => setContactDetails(true)}
-                >
-                  <PiPencilDuotone />
-                </CustomButton>
-              </h4>
-            )}
+
           </div>
         )}
         {props.page === "company_profile" ? (
@@ -145,7 +149,7 @@ function CompanyDetailPage(props) {
             className={
               user_type === "user"
                 ? "d-none"
-                : " font-size-3 rounded-3 btn-primary border-0"
+                : " font-size-3 rounded-3 btn-primary border-0 d-none"
             }
             onClick={() => setContactDetails(true)}
           >
