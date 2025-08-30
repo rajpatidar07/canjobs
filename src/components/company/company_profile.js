@@ -1173,7 +1173,7 @@ function CompanyProfileDetail(props) {
                   }
                 >
                   {TabActive === "contact" ? (
-                    <ContactPage email={employerData?.email} />
+                    <ContactPage email={employerData?.email} admin_id={employerData?.created_by_admin}/>
                   ) : null}
                 </div>
                 <div

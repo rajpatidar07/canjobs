@@ -307,15 +307,12 @@ export default function EmployerRetainerAgreement({ page,
     <div class="d-flex justify-content-end gap-4" style="gap: 4rem;">
     <h3 class="font-size-6 text-end">Initials :</h3>
     <div>
-        <div
-                           style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-                           
-                        ${felidData?.initial ? InitialFunction({ isPdf: false, felidData: felidData }) : ""}
-                            </div>
-    <h4 class="font-size-6 text-end d-none">RCIC</h4></div>
-    <div class="d-none">
-                <img src=${felidData?.initial || ""} alt="Initial" style="max-width: 100%; max-height: 100%;">
-    <h4 class="font-size-6 text-end">Clients</h4></div>
+        ${RCICSignatureFunction({ isPdf: false, felidData })}
+    <h4 class="font-size-6 text-end ">RCIC</h4></div>
+    <div class="">
+      <div style="width: 100%; height: 50px; display: flex; align-items: center; justify-content: center;">
+             ${felidData?.initial ? InitialFunction({ isPdf: false, felidData: felidData }) : ""}
+       </div>    <h4 class="font-size-6 text-end">Clients</h4></div>
     </div> 
     
   <div class="d-flex justify-content-center w-100 mt-5">

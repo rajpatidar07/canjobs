@@ -156,7 +156,7 @@ const EmployerRetainerAgreementPdf = () => {
               styles.textBold
             ]}
           >
-            Can Pathways Immigration Consultancy 
+            Can Pathways Immigration Consultancy
           </Text>
           <Text style={styles.mb5}>2618 Hopewell Pl NE #310, Calgary, AB T1Y 7J7</Text>
           <Text style={styles.mb5}>Tel: +1 (403) 888-5308</Text>
@@ -203,7 +203,7 @@ const EmployerRetainerAgreementPdf = () => {
               )}{" "}
               (here in after called the "Client")
             </Text>
-            <Text>  • Name of Business {felidData?.business_name ?<Text style={[{ borderBottomWidth: 1, borderBottomColor: "black" }, styles.underline]}>{felidData?.business_name}</Text> : "____________________________"}(here in after called the "Client")</Text>
+            <Text>  • Name of Business {felidData?.business_name ? <Text style={[{ borderBottomWidth: 1, borderBottomColor: "black" }, styles.underline]}>{felidData?.business_name}</Text> : "____________________________"}(here in after called the "Client")</Text>
             <Text>
               • Business Address:{" "}
               {felidData?.client_address ? <Text style={[{ borderBottomWidth: 1, borderBottomColor: "black" }, styles.underline]}>{felidData?.client_address}</Text> : "____________________________"}
@@ -316,9 +316,9 @@ const EmployerRetainerAgreementPdf = () => {
           <View style={styles.section}>
             <Text style={[styles.subtitle]}>5. Payment Schedule</Text>
             <ul>
-              <Text style={[styles.mb5]}><Text style={[styles.textBold]}>Total service charges PER LMIA position</Text> $3000+ 5%GST</Text>
-              <Text style={[styles.mb5]}><Text style={[styles.textBold]}>The first payment will be paid by the Client to the RCIC on the day this Agreement is executed by the Client: CAD $1000 + 5% GST</Text></Text>
-              <Text style={[styles.mb5]}><Text style={[styles.textBold]}>Second and final payment, will be paid by client before submitting final LMIA application to ESDC: CAD $2000+5% GST</Text></Text>
+              <Text style={[styles.mb5]}><Text style={[styles.textBold]}> Total service charges PER LMIA position</Text> $3000+ 5%GST</Text>
+              <Text style={[styles.mb5]}><Text style={[styles.textBold]}> The first payment will be paid by the Client to the RCIC on the day this Agreement is executed by the Client: CAD $1000 + 5% GST</Text></Text>
+              <Text style={[styles.mb5]}><Text style={[styles.textBold]}> Second and final payment, will be paid by client before submitting final LMIA application to ESDC: CAD $2000+5% GST</Text></Text>
             </ul>
             <Text style={[styles.mb5]}>
               *Taxes are payable wherever applicable. The above fee does not include any fees payable to the government of Canada. While the above fees are non-refundable — if for any reason agreement is terminated any un-used part of fees with be refunded after deduction of any costs. The client may specify the method of refund.
@@ -328,7 +328,6 @@ const EmployerRetainerAgreementPdf = () => {
             </Text>
             <Text style={[styles.mb5]}>✓ LMIA Government Application fee foreach position <Text style={[styles.textBold]}>CAD 1000.00</Text></Text>
             <Text style={[styles.mb5]}>✓ Job Advertisement fee for each occupation (2 paid Job Ads)	     <Text style={[styles.textBold]}>CAD 300.00</Text></Text>
-            <Text style={[styles.mb5]}>✓ Chartered Professional Accountant's (CPA) Attestation Letter	     <Text style={[styles.textBold]}>CAD 1000.00</Text></Text>
             <Text style={[styles.mb5]}>✓ Recruitment charges per applicant (if applicable)	<Text style={[styles.textBold]}>CAD 1000.00</Text></Text>
             {"/n"}
             <Text>NOTE:<Text style={styles.underline}>
@@ -337,7 +336,7 @@ const EmployerRetainerAgreementPdf = () => {
             </Text>
           </View>
           {/* 6th section */}
-          <View style={styles.section}>
+          <View style={[styles.section,]}>
             <Text style={[styles.subtitle]}>6. Methods of Payment: We DO NOT accept cheques. </Text>
             <Text>For Clients Located <Text style={[styles.textBold, styles.mb5]}>INSIDE</Text> Canada, we receive the following methods:</Text>
             <View style={styles.mb5}>
@@ -410,7 +409,8 @@ const EmployerRetainerAgreementPdf = () => {
           {/* 10th section */}
           <View style={styles.section}>
             <Text style={[styles.subtitle]}>10. Confidentiality</Text>
-            <Text style={[styles.mb5]}>All information and documentation reviewed by the RCIC, required by Service Canada and CIC and all other governing bodies, and used for the preparation of the application will not be divulged to any third party, other than agents and employees, without prior consent, except as demanded by law. The Client agrees to let the RCIC publish facts about the case as a case study without mentioning names. The RCIC, and all agents and employees of the RCIC, are also bound by the confidentiality requirements of Article 8.1 and 8.5 of the Code of Professional Ethics.
+            <Text style={[styles.mb5]}>All information and documentation reviewed by the RCIC, required by Service Canada and CIC and all other governing bodies, and used for the preparation of the application will not be divulged to any third party, other than agents and employees, without prior consent, except as demanded by law.
+              {'\n'} The Client agrees to let the RCIC publish facts about the case as a case study without mentioning names. The RCIC, and all agents and employees of the RCIC, are also bound by the confidentiality requirements of Article 8.1 and 8.5 of the Code of Professional Ethics.
               {'\n'}{'\n'}
               The Client agrees to these of electronic communication and storage of confidential information. The RCIC will use his/her best efforts to maintain a high degree of security for electronic communication and information storage.
             </Text>
@@ -425,17 +425,16 @@ const EmployerRetainerAgreementPdf = () => {
           {/* 12th section */}
           <View style={styles.section}>
             <Text style={[styles.subtitle]}>12. Change Policy</Text>
-            <Text style={[styles.mb5]}>The Client acknowledges that if the RCIC is asked to act on the Client's behalf on matters other than those outlined above in this Agreement, or because of a material change in the Client's circumstances, or because of material facts.
-              {'\n'}{'\n'}
+            <Text style={[styles.mb5]}>
               The Client acknowledges that if the RCIC is asked to act on the Client's behalf on matters other than those outlined above in this Agreement, or because of a material change in the Client's circumstances, or because of material facts not disclosed at the outset of the application, or because of a change in government legislation regarding the processing of immigration-related applications, the Agreement can be modified accordingly upon mutual agreement.
             </Text>
           </View>
           {/* 13th section */}
           <View style={styles.section}>
             <Text style={[styles.subtitle]}>13. Termination </Text>
+            <Text> This Agreement is considered terminated upon completion of tasks identified under section 2 of this agreement</Text>
             <View>
               {[
-                "This Agreement is considered terminated upon completion of tasks identified under section 2 of this agreement.",
                 "This Agreement is considered terminated if material changes occur to the Client's application or eligibility. which make it impossible to proceed with services detailed in section 2 of this Agreement.",
                 "According to Article 14 of the Code of Professional Ethics, this Agreement may be terminated, upon writing, by the RCIC, provided withdrawal does not cause prejudice to the Client.",
                 "In the event of early termination, before substantive work is done by the RCIC, the Client is entitled to pay an administration fee of 15% of the overall Professional Fee indicated on this agreement. This fee covers file opening, initial client assessment, costs of materials, and time spent on the case. Anything beyond this scope is considered substantive work and the fees collected up to that point will not be refunded.",
@@ -458,6 +457,7 @@ const EmployerRetainerAgreementPdf = () => {
                 "The Client expressly authorizes the RCIC to act on his/her behalf to the extent of the specific functions which the RCIC was retained to perform, as per Section 2 hereof.",
                 "The RCIC and the firm are authorized to collect information and communicate with ESDC related to my LMIA applications. In case of Online applications, I authorize RCIC Harpreet Kaur to electronically sign any required document related to the LMIA file and recruitment (if applicable) and submit the application on my behalf",
                 "This Agreement constitutes the entire agreement between the parties concerning the subject matter here of and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, except as specifically set forth herein.",
+                "The client authorizes the RCIC to use the company’s logo and publicly available company information solely for immigration-related purposes, including LMIA applications and submissions to ESDC or IRCC. This use is limited to required documentation and will not be used for unrelated purposes without prior written consent.",
                 "This Agreement shall be binding upon the parties hereto and their respective heirs, administrators, successors, and permitted assigns.",
                 "This Agreement may only be altered or amended when such changes are made in writing and executed by the parties hereto.",
                 "The provisions of this Agreement shall be deemed severable. If any provision of this Agreement shall be held unenforceable by any court of competent jurisdiction, such provision shall be severed from this Agreement, and the remaining provisions shall remain in full force and effect.",
@@ -541,29 +541,63 @@ const EmployerRetainerAgreementPdf = () => {
                 style={{
                   display: "flex",
                   flexDirection: "row",
-                  justifyContent: "flex-end",
-                  gap: 20,
+                  justifyContent: "flex-end", // aligns items inside
+                  gap: 20, // same as gap: 4rem in HTML
+                  maxWidth: "230px",
+                  alignItems: "flex-end",
+                  marginLeft: "auto", // pushes the whole block to the right
                 }}
               >
-                <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
+                {/* Initials label */}
+                <Text style={{ textAlign: "right", fontSize: 12, paddingTop: 8 }}>
+                  Initials :
+                </Text>
+
+                {/* RCIC Signature Block */}
                 <View>
-                  <View
+                  <RCICSignatureFunction isPdf={true} felidData={felidData} />
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      textAlign: "center",
+                    }}
                   >
-                    {felidData?.initial ? (
-                      <InitialFunction felidData={felidData} isPdf={true} />
-                    ) : (
-                      <View
-                        style={{
-                          display: "inline-block",
-                          width: 100,
-                          height: 50,
-                          border: "1px solid #ccc",
-                        }}
-                      />
-                    )}
-                  </View>
+                    RCIC
+                  </Text>
+                </View>
+
+                {/* Client Initial Block */}
+                <View>
+                  {felidData?.initial ? (
+                    <View
+                      style={{
+                        width: 100,
+                        height: 50,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <InitialFunction isPdf={true} felidData={felidData} />
+                    </View>
+                  ) : (
+                    <View
+                      style={{
+                        width: 100,
+                        height: 50,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderWidth: 1,
+                        borderColor: "#ccc",
+                        borderStyle: "solid",
+                      }}
+                    ></View>
+                  )}
+                  <Text style={{ fontSize: 12, textAlign: "center" }}>Clients</Text>
                 </View>
               </View>
+
             </View>
           </Page>
         </Document>
@@ -589,27 +623,63 @@ const EmployerRetainerAgreementPdf = () => {
                     style={{
                       display: "flex",
                       flexDirection: "row",
-                      justifyContent: "flex-end",
-                      gap: 20,
+                      justifyContent: "flex-end", // aligns items inside
+                      gap: 20, // same as gap: 4rem in HTML
+                      maxWidth: "230px",
+                      alignItems: "flex-end",
+                      marginLeft: "auto", // pushes the whole block to the right
                     }}
                   >
-                    <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
+                    {/* Initials label */}
+                    <Text style={{ textAlign: "right", fontSize: 12, paddingTop: 8 }}>
+                      Initials :
+                    </Text>
+
+                    {/* RCIC Signature Block */}
+                    <View>
+                      <RCICSignatureFunction isPdf={true} felidData={felidData} />
+                      <Text
+                        style={{
+                          fontSize: 12,
+                          textAlign: "center",
+                        }}
+                      >
+                        RCIC
+                      </Text>
+                    </View>
+
+                    {/* Client Initial Block */}
                     <View>
                       {felidData?.initial ? (
-                        <InitialFunction felidData={felidData} isPdf={true} />
-
+                        <View
+                          style={{
+                            width: 100,
+                            height: 50,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <InitialFunction isPdf={true} felidData={felidData} />
+                        </View>
                       ) : (
                         <View
                           style={{
-                            display: "inline-block",
                             width: 100,
                             height: 50,
-                            border: "1px solid #ccc",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            borderWidth: 1,
+                            borderColor: "#ccc",
+                            borderStyle: "solid",
                           }}
-                        />
+                        ></View>
                       )}
+                      <Text style={{ fontSize: 12, textAlign: "center" }}>Clients</Text>
                     </View>
                   </View>
+
                 </View>
               </Page>
             </Document>

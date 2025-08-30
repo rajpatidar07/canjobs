@@ -1121,7 +1121,7 @@ const NewUserProfile = (props) => {
                                 )}
                                 {!PersonalDetail.contact_no ||
                                   PersonalDetail.contact_no === 0 ||
-                                  "0" ||
+                                  PersonalDetail.contact_no ===  "0" ||
                                   user_type === "company" ? null : (
                                   <div>
                                     <Link
@@ -1697,7 +1697,6 @@ const NewUserProfile = (props) => {
                       />
                     ) : null}
                   </div>
-
                   <div
                     className={
                       TabActive === "visa"
@@ -1841,11 +1840,10 @@ const NewUserProfile = (props) => {
                     className={
                       TabActive === "contact"
                         ? "justify-content-center "
-                        : "d-none"
-                    }
+                        : "d-none"}
                   >
                     {TabActive === "contact" ? (
-                      <ContactPage email={PersonalDetail.email} />
+                      <ContactPage email={PersonalDetail.email} admin_id={PersonalDetail.assigned_by} agent_id={PersonalDetail.reffer_by} />
                     ) : null}
                   </div>
                   <div
