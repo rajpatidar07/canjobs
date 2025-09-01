@@ -1,104 +1,90 @@
-import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
+import React, { useState, useEffect, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { DeleteApplicanTypeApi } from "../../api/api";
 import Pagination from "./pagination";
-// import AddApplicantType from "../forms/admin/AddApplicantType";
 import Loader from "../common/loader";
 import SAlert from "./sweetAlert";
 import { FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+
 function ApplicantTypeTable(props) {
-    // let search = props.search;
-    const applicantType = [...props.allApplicantType].reverse()
-    let [isLoading, setIsLoading] = useState(true);
-    let [applicantLevel, setApplicantLevel] = useState("parent");
-    const [filteredData, setFilteredData] = useState(
-        applicantType.filter((data) => data.parent_id === "0")
-    );
-    let [apiCall, setApiCall] = useState(props.apiCall);
-    const [deleteId, setDeleteId] = useState();
+    const applicantType = useMemo(() => [...props.allApplicantType].reverse(), [props.allApplicantType]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [applicantLevel, setApplicantLevel] = useState("parent");
+    // const [apiCall, setApiCall] = useState(props.apiCall);
+    const [deleteId, setDeleteId] = useState("");
     const [deleteName, setDeleteName] = useState("");
     const [deleteAlert, setDeleteAlert] = useState(false);
 
-
-    /*Pagination states */
-    // const filteredData = (applicantType || []).filter(
-    //     (data) => data.parent_id === "0"
-    // );
-    const [totalData, setTotalData] = useState("");
+    /* Pagination states */
     const [currentPage, setCurrentPage] = useState(1);
     const [recordsPerPage] = useState(10);
 
-    //   /* Function to get the applicant type data*/
-    const applicantTypeData = async () => {
-        try {
-            if (filteredData && filteredData.length > 0) {
-                setTotalData(filteredData.length);
-            } else {
-                setFilteredData(applicantType.filter((data) => data.parent_id === "0"))
-                setTotalData(applicantType.length)
-            }
-            setIsLoading(false);
-        } catch (err) {
-            console.log(err);
-            setIsLoading(true);
+    /* Filtered data based on applicantLevel */
+    const filteredData = useMemo(() => {
+        if (applicantLevel === "child") {
+            return applicantType.filter((data) => data.parent_id !== "0");
+        } else {
+            return applicantType.filter((data) => data.parent_id === "0");
         }
+    }, [applicantType, applicantLevel]);
+
+    const totalData = filteredData.length;
+    /* Function to get the applicant type data */
+    const applicantTypeData = () => {
+        setIsLoading(false);
     };
 
-    /*Render function to get the interview*/
+    /* Effect to handle data loading and apiCall changes */
     useEffect(() => {
         applicantTypeData();
-        // eslint-disable-next-line
-    }, [applicantType, filteredData, apiCall]);
+    }, [applicantType]);
 
+    useEffect(() => {
+        setCurrentPage(1);
+        if (props.setpageNo) props.setpageNo(1);
+    }, [applicantLevel, props]);
     /*Pagination Calculation */
     const nPages = Math.ceil(totalData / recordsPerPage);
 
-    /*To call Api to delete employee */
+    /* To call API to delete applicant type */
     async function deleteApplicantType(id) {
-        let data = {
-            id: id,
-        };
+        const data = { id };
         try {
             const response = await DeleteApplicanTypeApi(data);
             if (response.status === 1 || response.status === "1") {
-                toast.error("Applicant Type deleted Successfully", {
+                toast.success("Applicant Type deleted successfully", {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 1000,
                 });
-                setDeleteAlert(false)
-                setDeleteId("")
-                setDeleteName("")
-                setApiCall(true);
-                if (applicantLevel === "parent") {
-                    setFilteredData(applicantType.filter((item) => (item.id !== data.id && item.parent_id === "0")))
-                } else {
-                    setFilteredData(applicantType.filter((item) => (item.id !== data.id && item.level === "1")))
-                }
-                // props.setApiCall(true)
-            }
-            if (response.message === "This applicant type cannot be deleted because it is used for applicant" || response.message === "This applicant type cannot be deleted because it is used for applicant.") {
+                setDeleteAlert(false);
+                setDeleteId("");
+                setDeleteName("");
+                props.setApiCall(true); // Trigger refetch from parent
+            } else if (response.message === "This applicant type cannot be deleted because it is used for applicant" ||
+                       response.message === "This applicant type cannot be deleted because it is used for applicant.") {
                 toast.error(response.message, {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 2000,
                 });
-                setDeleteAlert(false)
-                setDeleteId("")
-                setDeleteName("")
-            }
-
-            if (response.message === "This applicant type cannot be deleted because it has a sub-applicant type.") {
+                setDeleteAlert(false);
+                setDeleteId("");
+                setDeleteName("");
+            } else if (response.message === "This applicant type cannot be deleted because it has a sub-applicant type.") {
                 toast.error(response.message, {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 2000,
                 });
-                setDeleteAlert(false)
-                setDeleteId("")
-                setDeleteName("")
+                setDeleteAlert(false);
+                setDeleteId("");
+                setDeleteName("");
             }
         } catch (err) {
-            console.log(err);
+            console.error("Error deleting applicant type:", err);
+            toast.error("An error occurred while deleting the applicant type.", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000,
+            });
         }
     }
 
@@ -143,9 +129,10 @@ function ApplicantTypeTable(props) {
                             id="parent"
                             onClick={() => {
                                 setApplicantLevel("parent")
-                                setFilteredData((applicantType || []).filter(
-                                    (data) => data.parent_id === "0"))
+                                // setFilteredData((applicantType || []).filter(
+                                //     (data) => data.parent_id === "0"))
                                 setCurrentPage(1)
+                                props.setpageNo(1)
                             }}
                         >
                             Applicant Type
@@ -161,9 +148,10 @@ function ApplicantTypeTable(props) {
                             id="child"
                             onClick={() => {
                                 setApplicantLevel("child")
-                                setFilteredData((applicantType || []).filter(
-                                    (data) => data.level === "1"))
+                                // setFilteredData((applicantType || []).filter(
+                                //     (data) => data.level === "1"))
                                 setCurrentPage(1)
+                                props.setpageNo(1)
                             }}
                         >
                             Sub Applicant Type

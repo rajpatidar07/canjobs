@@ -234,7 +234,6 @@ const AdminHeader = (props) => {
           show={showSettings}
         />
       ) : null}
-      {console.log(showChangePass)}
       {/*<-- Change password Modal -->*/}
       {showChangePass ? (
         <ChangePassword

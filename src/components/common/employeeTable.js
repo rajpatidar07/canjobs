@@ -1145,6 +1145,42 @@ export default function EmployeeTable(props) {
                   >
                     Profile
                   </th>
+                  {status === "10" || status === 10 || status === "-1,0,1,2,3,5,6,10" ?
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal text-truncate"
+                    >
+                      <Link
+                        to={""}
+                        onClick={() => {
+                          handleSort("consultation_opted");
+                          props.setpageNo(1);
+                        }}
+                        className="text-gray"
+                        title="Sort by Consultation Opted"
+                      >
+                        Consultation Opted
+                      </Link>
+                    </th>
+                    : null}
+                  {status === "10" || status === 10 || status === "-1,0,1,2,3,5,6,10" ?
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal text-truncate"
+                    >
+                      <Link
+                        to={""}
+                        onClick={() => {
+                          handleSort("consultation_date");
+                          props.setpageNo(1);
+                        }}
+                        className="text-gray"
+                        title="Sort by Consultation Date"
+                      >
+                        Consultation Date
+                      </Link>
+                    </th>
+                    : null}
                   {props.heading === "Dashboard" ? (
                     ""
                   ) : (
@@ -1902,7 +1938,6 @@ export default function EmployeeTable(props) {
                                                   ? "Completed" : ""}
                               </span>
                             </p> */}
-
                             <td className="exclude-mark-read py-5">
                               {empdata.status === null ||
                                 empdata.status === undefined ||
@@ -1915,27 +1950,27 @@ export default function EmployeeTable(props) {
                                     <DropdownButton
                                       as={ButtonGroup}
                                       title={
-                                        status === "1"
+                                        empdata.status === "1"
                                           ? "New"
-                                          : status === "2"
+                                          : empdata.status === "2"
                                             ? "Prospect"
-                                            : status === "3"
+                                            : empdata.status === "3"
                                               ? "Lead"
-                                              : status === "4"
+                                              : empdata.status === "4"
                                                 ? "Retained"
-                                                : status === "5"
+                                                : empdata.status === "5"
                                                   ? "Lost"
-                                                  : status === "6"
+                                                  : empdata.status === "6"
                                                     ? "Dead"
-                                                    : status === "7"
+                                                    : empdata.status === "7"
                                                       ? "Working on"
-                                                      : status === "8"
+                                                      : empdata.status === "8"
                                                         ? "Submitted"
-                                                        : status === "0"
+                                                        : empdata.status === "0"
                                                           ? "New"
-                                                          : status === "9"
+                                                          : empdata.status === "9"
                                                             ? "Complete"
-                                                            : status === "10"
+                                                            : empdata.status === "10"
                                                               ? "Consultation"
                                                               : "status"
                                       }
@@ -2027,6 +2062,37 @@ export default function EmployeeTable(props) {
             {(new Date(empdata.created_at) >= oneMonthAgo && new Date(empdata.created_at) <= currentDate) === true ? "New" : "Retained"}          
             </p>
         </td> */}
+                        {status === "10" || status === 10 || status === "-1,0,1,2,3,5,6,10" ?
+                          <td className="text-center py-5">
+                            <p
+                              className="font-size-2 font-weight-normal text-black-2 mb-0"
+                              title={
+                                empdata.status === "10"
+                                  ? empdata.consultation_opted === "1"
+                                    ? "Yes"
+                                    : "No"
+                                  : "N/A"
+                              }
+                            >
+                              {empdata.status === "10"
+                                ? empdata.consultation_opted === "1"
+                                  ? "Yes"
+                                  : "No"
+                                : "N/A"}
+                            </p>
+                          </td>
+                          : null}
+                        {status === "10" || status === 10 || status === "-1,0,1,2,3,5,6,10" ?
+                          <td className="text-center py-5">
+                            <p
+                              className="font-size-2 font-weight-normal text-black-2 mb-0"
+                              title={
+                                ConvertTime({ _date: empdata.consultation_date, format: "DD MMMM, YYYY" })
+                              }
+                            >
+                              <ConvertTime _date={empdata.consultation_date} format={"DD MMMM, YYYY"} />                            </p>
+                          </td>
+                          : null}
                         {props.heading === "Dashboard" ? (
                           ""
                         ) : (

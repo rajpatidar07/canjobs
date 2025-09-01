@@ -117,7 +117,6 @@ export default function AddApplicantType(props) {
                     setErrors({ ...errors, title: 'Applicant type already exist' })
                     setLoading(false)
                 }
-                // console.log(response.status === (1 || "1"), response)
                 if (response.status === 1 || response.status === "1") {
                     if (state.level === 0 || state.level === "0") {
                         toast.success("Applicant Type Added successfully", {
@@ -216,7 +215,7 @@ export default function AddApplicantType(props) {
                                 <SelectBox
                                     Width={"yes"}
                                     options={applicantTypeList ?
-                                        applicantTypeList?.filter((item) => item.level === (0 || "0")).map((option) => ({
+                                        applicantTypeList?.filter((item) => item.parent_id === 0 || item.parent_id === "0").map((option) => ({
                                             value: option.id,
                                             label: option.title,
                                         }))

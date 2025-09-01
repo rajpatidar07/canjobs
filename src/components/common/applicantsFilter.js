@@ -130,7 +130,6 @@ export default function ApplicantsFilter({
   /*on change function of date piker of consultation */
   const handleChange = (range) => {
     const [startDate, endDate] = range;
-    console.log(startDate, "end", endDate)
     setConsultationStartDateFilterValue(startDate);
     setConsultationEndDateFilterValue(endDate);
   };

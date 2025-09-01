@@ -22,9 +22,7 @@ function LmiaStatus(props) {
   let [loading, setLoading] = useState(false);
   let [apiCall, setApiCall] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState([]);
-  const [expandedStatus, setExpandedStatus] = useState(
-    props.resData.lmia_status
-  );
+  const [expandedStatus, setExpandedStatus] = useState(props.resData.lmia_status);
   let employeeId =
     props.resData === undefined ? null : props.resData.employee_id;
   let lmia_status = props.resData.lmia_status;

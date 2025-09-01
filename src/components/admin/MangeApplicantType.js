@@ -53,7 +53,7 @@ export default function ManageApplicantType(props) {
       setApiCall(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.heading, apiCall, sortOrder, columnName]);
+  }, [pageNo,props.heading, apiCall, sortOrder, columnName]);
 
   /*Search Onchange function to Search applicant type data data */
   // const onSearch = (e) => {

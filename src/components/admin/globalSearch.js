@@ -103,7 +103,7 @@ function GlobalSearch() {
                   required
                   type="text"
                   className="form-control"
-                  placeholder="Search Candidate"
+                  placeholder="Search"
                   name="search"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
@@ -178,7 +178,7 @@ function GlobalSearch() {
                 {searchData["employer"] && searchData["employer"].length > 0 && (
                   <div className="row">
                     <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#28a745' }}>
-                      Clients
+                      Employers
                     </h4>
                     {searchData["employer"].map((data) => (
                       <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
@@ -190,7 +190,7 @@ function GlobalSearch() {
                         company={data.company_name}
                         id={data.company_id}
                         to={`/client_detail`}
-                        title="Client Details"
+                        title="Employer Details"
                       />
                       </div>
                     ))}
@@ -289,7 +289,7 @@ function GlobalSearch() {
                 {searchData["document_reply_data"] && searchData["document_reply_data"].length > 0 && (
                   <div className="row">
                     <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#dc3545' }}>
-                      Documents
+                      Documents Reply
                     </h4>
                     {searchData["document_reply_data"].map((data) => (
                       <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
@@ -388,7 +388,7 @@ function GlobalSearch() {
                         key={data.id}
                         name={data.subject_description}
                         mobile={data.subject}
-                        email={data.employee_name ? `${data.employee_name} (candidate)` : ""}
+                        email={data.employee_name ? `${data.employee_name} (Applicant)` : ""}
                         to={data.employee_type === "employer"
                           ? `/client_detail?note=true&noteid=${data.id}`
                           : data.employee_type === "agent" &&
@@ -417,7 +417,7 @@ function GlobalSearch() {
                         key={data.id}
                         name={data.msg}
                         mobile={data.subject}
-                        email={data.employee_name ? `${data.employee_name} (candidate)` : ""}
+                        email={data.employee_name ? `${data.employee_name} (Applicant)` : ""}
                         to={data.employee_type === "employer"
                           ? `/client_detail?note=true&noteid=${data.task_id}&replyId=${data.id || ""}`
                           : data.employee_type === "agent" &&
@@ -438,7 +438,7 @@ function GlobalSearch() {
                 {searchData["partner_data"] && searchData["partner_data"].length > 0 && (
                   <div className="row">
                     <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#20c997' }}>
-                      Partner Chat of candidate
+                      Partner Chat of Applicant
                     </h4>
                     {searchData["partner_data"].map((data) => (
                       <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
@@ -464,7 +464,7 @@ function GlobalSearch() {
                         close={close}
                         key={data.id}
                         name={data.subject_description}
-                        mobile={`${data.employee_name} (candidate)`}
+                        mobile={`${data.employee_name} (Applicant)`}
                         email={`Assigned to : ${data.assigned_to_name}`}
                         to={`/partner_profile?partner=${data.employee_id}`}
                       />
@@ -597,19 +597,19 @@ function GlobalSearch() {
                 {searchData["applicant_type_candidate_chat_data"] && searchData["applicant_type_candidate_chat_data"].length > 0 && (
                   <div className="row">
                     <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#007bff' }}>
-                      Candidate discussion
+                      Applicant discussion
                     </h4>
                     {searchData["applicant_type_candidate_chat_data"].map((data) => (
                       <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.id}
                         name={data.subject_description}
-                        email={applicantTypeList?.find((item) => item.id === data.interested_in_id	)?.title}
+                        email={applicantTypeList?.find((item) => item.id === data.interested_in_id)?.title}
                         mobile={data.employee_name}
                         onClick={() => {
                           localStorage.setItem(
                             "applicantType",
-                            data.interested_in_id	)
+                            data.interested_in_id)
                         }}
                         to={`/slots?sId=${data.interested_in_id}&notifiType=candidate&taskId=${data.id || ""
                           }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}&canId=${data.employee_id}`}
@@ -621,7 +621,7 @@ function GlobalSearch() {
                 {searchData["applicant_type_candidate_chat_reply_data"] && searchData["applicant_type_candidate_chat_reply_data"].length > 0 && (
                   <div className="row">
                     <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#007bff' }}>
-                      Candidate discussion reply
+                      Applicant discussion reply
                     </h4>
                     {searchData["applicant_type_candidate_chat_reply_data"].map((data) => (
                       <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
@@ -642,18 +642,42 @@ function GlobalSearch() {
                     ))}
                   </div>
                 )}
-                {searchData["document"] && searchData["document"].length > 0 && (
+                {searchData["documents_data"] && searchData["documents_data"].length > 0 && (
                   <div className="row">
                     <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#6f42c1' }}>
                       Documents
                     </h4>
-                    {searchData["document"].map((data) => (
+                    {searchData["documents_data"].map((data) => (
                       <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
-                        key={data.id}
-                        name={data.name}
-                        mobile={data.hour_log_of_admin}
-                        email={data.admin_name}
+                        key={data.employee_id}
+                        name={data.document_name}
+                        to={data.employee_type === "employer"
+                          ? `/client_detail?docId=${data.document_id	
+                          }&docParentId=${data.type_id
+                          }`
+                          : data.employee_type === "applicant_type"
+                            ? `/slots?sId=${data.employee_id}&docId=${data.document_id	}&docParentId=${data.type_id
+                            }`
+                            : data.employee_type === "job"
+                              ? `/job_detail?docId=${data.document_id	
+                              }&docParentId=${data.type_id}}`
+                              : `/${data.employee_id}?docId=${data.document_id	
+                              }&docParentId=${data.type_id}`}
+                        email={data.type || data.assigned_to}
+                        onClick={() => {
+                          if (data.employee_type === "applicant_type") {
+                            localStorage.setItem("applicantType", data.employee_id);
+                            localStorage.setItem(
+                              "applicantTypeFolderId",
+                              data.type_id
+                            );
+                          } else if (data.employee_type === "employer") {
+                            localStorage.setItem("company_id", data.employee_id);
+                          } else if (data.employee_type === "job") {
+                            localStorage.setItem("job_id", data.employee_id);
+                          }
+                        }}
                       />
                       </div>
                     ))}
@@ -740,7 +764,7 @@ function GlobalSearch() {
                 <div className="mt-3">
                   <p className="w-100 border-bottom font-weight-bold">Do you want to create a profile? Please consider one of the links below:</p>
                   <Link to="/selfemployee" className="btn btn-primary mr-2">Create Applicant</Link>
-                  <Link to="/adminclient" className="btn btn-primary">Create Client</Link>
+                  <Link to="/adminclient" className="btn btn-primary">Create Employer</Link>
                 </div>
               </div>
                 : null)}
