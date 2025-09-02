@@ -189,8 +189,9 @@ function GlobalSearch() {
                         email={data.email}
                         company={data.company_name}
                         id={data.company_id}
-                        to={`/client_detail`}
+                        to={`/client_detail?cId=${data.company_id}`}
                         title="Employer Details"
+                        onClick={() => { localStorage.setItem("company_id", data.company_id) }}
                       />
                       </div>
                     ))}
@@ -233,59 +234,6 @@ function GlobalSearch() {
                     ))}
                   </div>
                 )}
-                {searchData["document_data"] && searchData["document_data"].length > 0 && (
-                  <div className="row">
-                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#dc3545' }}>
-                      Documents
-                    </h4>
-                    {searchData["document_data"].map((data) => (
-                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
-                        close={close}
-                        key={data.employee_id}
-                        name={data.employee_name || data.subject_description}
-                        to={data.employee_type === "employer"
-                          ? `/client_detail?docId=${data.doc_id
-                          }&docParentId=${data.doc_parent_id
-                          }&annotationId=${parseJsonSafely(data?.doctaskjson)
-                            .id || ""
-                          }&taskId=${data?.id || ""
-                          }`
-                          : data.employee_type === "applicant_type"
-                            ? `/slots?sId=${data.employee_id}&docId=${data.doc_id}&docParentId=${data.doc_parent_id
-                            }&annotationId=${parseJsonSafely(data?.doctaskjson)
-                              .id || ""}&taskId=${data?.id || ""
-                            }`
-                            : data.employee_type === "job"
-                              ? `/job_detail?docId=${data.doc_id
-                              }&docParentId=${data.doc_parent_id}&annotationId=${parseJsonSafely(data?.doctaskjson)
-                                .id || ""
-                              }&taskId=${data?.id || ""
-                              }`
-                              : `/${data.employee_id}?docId=${data.doc_id
-                              }&docParentId=${data.doc_parent_id}&annotationId=${parseJsonSafely(data?.doctaskjson)
-                                .id || ""
-                              }&taskId=${data?.id || ""
-                              }`}
-                        email={data.document_name || data.assigned_to}
-                        onClick={() => {
-                          if (data.employee_type === "applicant_type") {
-                            localStorage.setItem("applicantType", data.employee_id);
-                            localStorage.setItem(
-                              "applicantTypeFolderId",
-                              data.doc_parent_id
-                            );
-                          } else if (data.employee_type === "employer") {
-                            localStorage.setItem("company_id", data.employee_id);
-                          } else if (data.employee_type === "job") {
-                            localStorage.setItem("job_id", data.employee_id);
-                          }
-                        }}
-
-                      />
-                      </div>
-                    ))}
-                  </div>
-                )}
                 {searchData["document_reply_data"] && searchData["document_reply_data"].length > 0 && (
                   <div className="row">
                     <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#dc3545' }}>
@@ -297,24 +245,24 @@ function GlobalSearch() {
                         key={data.employee_id}
                         name={data.msg}
                         to={data.employee_type === "employer"
-                          ? `/client_detail?docId=${data.doc_id
+                          ? `/client_detail?cId=${data.employee_id}&docId=${data.doc_id
                           }&docParentId=${data.doc_parent_id
                           }&annotationId=${parseJsonSafely(data?.doctaskjson)
                             .id || ""
                           }&taskId=${data?.id || ""
                           }`
                           : data.employee_type === "applicant_type"
-                            ? `/slots?sId=${data.employee_id}&docId=${data.doc_id}&docParentId=${data.doc_parent_id
+                            ? `/slots?sId=${data.employee_id}&docId=${data.type === "folder" ? "" : data.doc_id}&docParentId=${data.doc_parent_id
                             }&annotationId=${parseJsonSafely(data?.doctaskjson)
                               .id || ""}&taskId=${data?.id || ""
                             }`
                             : data.employee_type === "job"
-                              ? `/job_detail?docId=${data.doc_id
+                              ? `/job_detail?job_id=${data.employee_id}&docId=${data.type === "folder" ? "" : data.doc_id
                               }&docParentId=${data.doc_parent_id}&annotationId=${parseJsonSafely(data?.doctaskjson)
                                 .id || ""
                               }&taskId=${data?.id || ""
                               }`
-                              : `/${data.employee_id}?docId=${data.doc_id
+                              : `/${data.employee_id}?docId=${data.type === "folder" ? "" : data.doc_id
                               }&docParentId=${data.doc_parent_id}&annotationId=${parseJsonSafely(data?.doctaskjson)
                                 .id || ""
                               }&taskId=${data?.id || ""
@@ -390,14 +338,14 @@ function GlobalSearch() {
                         mobile={data.subject}
                         email={data.employee_name ? `${data.employee_name} (Applicant)` : ""}
                         to={data.employee_type === "employer"
-                          ? `/client_detail?note=true&noteid=${data.id}`
+                          ? `/client_detail?cId=${data.employee_id}&note=true&noteid=${data.id}`
                           : data.employee_type === "agent" &&
                             window.location.pathname === "/partner_profile"
                             ? `?note=true&noteid=${data?.id}`
                             : data.employee_type === "agent"
                               ? `/partner_profile?note=true&noteid=${data?.id}`
                               : data.employee_type === "job"
-                                ? `/job_detail?note=true&noteid=${data.id
+                                ? `/job_detail?job_id=${data.employee_id}&note=true&noteid=${data.id
                                 }`
                                 : `/${data.employee_id}?note=true&noteid=${data.id
                                 }`}
@@ -419,14 +367,14 @@ function GlobalSearch() {
                         mobile={data.subject}
                         email={data.employee_name ? `${data.employee_name} (Applicant)` : ""}
                         to={data.employee_type === "employer"
-                          ? `/client_detail?note=true&noteid=${data.task_id}&replyId=${data.id || ""}`
+                          ? `/client_detail?cId=${data.employee_id}&note=true&noteid=${data.task_id}&replyId=${data.id || ""}`
                           : data.employee_type === "agent" &&
                             window.location.pathname === "/partner_profile"
                             ? `?note=true&noteid=${data?.id}&replyId=${data.id || ""}`
                             : data.employee_type === "agent"
                               ? `/partner_profile?note=true&noteid=${data?.id}&replyId=${data.id || ""}`
                               : data.employee_type === "job"
-                                ? `/job_detail?note=true&noteid=${data.task_id
+                                ? `/job_detail?job_id=${data.employee_id}&note=true&noteid=${data.task_id
                                 }&replyId=${data.id || ""}`
                                 : `/${data.employee_id}?note=true&noteid=${data.task_id
                                 }&replyId=${data.id || ""}`}
@@ -648,37 +596,39 @@ function GlobalSearch() {
                       Documents
                     </h4>
                     {searchData["documents_data"].map((data) => (
-                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
-                        close={close}
-                        key={data.employee_id}
-                        name={data.document_name}
-                        to={data.employee_type === "employer"
-                          ? `/client_detail?docId=${data.document_id	
-                          }&docParentId=${data.type_id
-                          }`
-                          : data.employee_type === "applicant_type"
-                            ? `/slots?sId=${data.employee_id}&docId=${data.document_id	}&docParentId=${data.type_id
+                      <div className="col-lg-2 col-sm-6">
+                        {console.log(data, data.type === "folder" ? "pppp" : "'''''''''",)}
+                        <GlobalSearchCard
+                          close={close}
+                          key={data.employee_id}
+                          name={data.document_name}
+                          to={data.employee_type === "employer"
+                            ? `/client_detail?cId=${data.employee_id}&docId=${data.type === "folder" ? "" : data.doc_id
+                            }&docParentId=${data.type_id
                             }`
-                            : data.employee_type === "job"
-                              ? `/job_detail?docId=${data.document_id	
-                              }&docParentId=${data.type_id}}`
-                              : `/${data.employee_id}?docId=${data.document_id	
-                              }&docParentId=${data.type_id}`}
-                        email={data.type || data.assigned_to}
-                        onClick={() => {
-                          if (data.employee_type === "applicant_type") {
-                            localStorage.setItem("applicantType", data.employee_id);
-                            localStorage.setItem(
-                              "applicantTypeFolderId",
-                              data.type_id
-                            );
-                          } else if (data.employee_type === "employer") {
-                            localStorage.setItem("company_id", data.employee_id);
-                          } else if (data.employee_type === "job") {
-                            localStorage.setItem("job_id", data.employee_id);
-                          }
-                        }}
-                      />
+                            : data.employee_type === "applicant_type"
+                              ? `/slots?sId=${data.employee_id}&docId=${data.type === "folder" ? "" : data.document_id}&docParentId=${data.type_id
+                              }`
+                              : data.employee_type === "job"
+                                ? `/job_detail?job_id=${data.employee_id}&docId=${data.type === "folder" ? "" : data.document_id
+                                }&docParentId=${data.type_id}}`
+                                : `/${data.employee_id}?docId=${data.type === "folder" ? "" : data.document_id
+                                }&docParentId=${data.type_id}`}
+                          email={data.type || data.assigned_to}
+                          onClick={() => {
+                            if (data.employee_type === "applicant_type") {
+                              localStorage.setItem("applicantType", data.employee_id);
+                              localStorage.setItem(
+                                "applicantTypeFolderId",
+                                data.type_id
+                              );
+                            } else if (data.employee_type === "employer") {
+                              localStorage.setItem("company_id", data.employee_id);
+                            } else if (data.employee_type === "job") {
+                              localStorage.setItem("job_id", data.employee_id);
+                            }
+                          }}
+                        />
                       </div>
                     ))}
                   </div>

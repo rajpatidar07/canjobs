@@ -35,7 +35,7 @@ export default function CommonApplicatTypePage() {
 
   const [taskId, setTaskId] = useState(taskIdParam);
   const [selectedTab, setSelectedTab] = useState(
-    docId ? "documents" : "candidate"
+    docParentId ? "documents" : "candidate"
   );
 
   const [search, setSearch] = useState("");
@@ -91,7 +91,7 @@ export default function CommonApplicatTypePage() {
         setSelectedTab("candidate");
       }
     }
-    if (docId) setSelectedTab("documents");
+    if (docParentId) setSelectedTab("documents");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.key]);
 
@@ -299,7 +299,7 @@ export default function CommonApplicatTypePage() {
                 emp_user_type={"applicant_type"}
                 user_id={applicantTypeIdForApi}
                 setFolderApiCall={setFolderApiCall}
-                folderId={docId ? docParentId : applicantTypeFolderId}
+                folderId={docParentId ? docParentId : applicantTypeFolderId}
               />
             </div>
             {selectedTab === "candidate" ? (
@@ -367,7 +367,7 @@ export default function CommonApplicatTypePage() {
                 <ApplicantTypeDocuments
                   emp_user_type={"applicant_type"}
                   user_id={applicantTypeIdForApi}
-                  folderId={docId ? docParentId : applicantTypeFolderId}
+                  folderId={docParentId ? docParentId : applicantTypeFolderId}
                   notification={docId ? "yes" : "no"}
                   docId={docId || ""}
                   docTypePage={""}

@@ -45,7 +45,7 @@ function JobDetailpageAdmim(props) {
   const [showJobEditModal, setShowJobEditModal] = useState(false);
   const [showLmiaAdditionalInfobModal, setShowLmiaAdditionalInfobModal] = useState(false);
   const [TabActive, setTabActive] = useState(
-    docId
+    docParentId
       ? "documents"
       : chat
         ? "chat"
@@ -82,7 +82,7 @@ function JobDetailpageAdmim(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
-    if (docId) {
+    if (docParentId) {
       setTabActive("documents");
     }
     if (chat) {
@@ -92,7 +92,7 @@ function JobDetailpageAdmim(props) {
       setTabActive("notes")
     }
     // eslint-disable-next-line
-  }, [apiCall, location.key, docId]);
+  }, [apiCall, location.key, docParentId]);
 
   /*Set skill variable to array frm string */
   if (jobData !== "") {
@@ -1040,7 +1040,7 @@ function JobDetailpageAdmim(props) {
                       user_id={jid}
                       emp_user_type={"job"}
                       folderId={
-                        docId
+                        docParentId
                           ? docParentId
                           : jobData.doc_folder_id
                       }

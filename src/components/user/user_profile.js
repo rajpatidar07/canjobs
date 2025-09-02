@@ -81,7 +81,7 @@ const NewUserProfile = (props) => {
   const [showItSkills, setShowItSkills] = useState(false);
   const [addNote, setAddNote] = useState(false);
   const [TabActive, setTabActive] = useState(
-    docId
+    docParentId
       ? "documents" /*"sharepoint" */
       : partnerChat
         ? "agent conversation"
@@ -240,7 +240,7 @@ const NewUserProfile = (props) => {
       //   setPayment();
       setTabActive("payment");
     }
-    if (docId) {
+    if (docParentId) {
       setTabActive("documents");
     }
     if (partnerChat) {
@@ -256,7 +256,7 @@ const NewUserProfile = (props) => {
       setTabActive("email")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiCall, eid, docId, docParentId, notes, agreement, location.key]);
+  }, [apiCall, eid, docParentId, docId, notes, agreement, location.key]);
   /*Function to See uploaded resume */
   const handleViewResume = (pdfUrl) => {
     window.open(`/userpdf?pdfUrl=${encodeURIComponent(pdfUrl)}`, "_blank");
@@ -326,7 +326,7 @@ const NewUserProfile = (props) => {
     <div className="site-wrapper overflow-hidden bg-default-2">
       {/* <!-- Header Area --> */}
       {user_type === "admin" || user_type === "agent" ? (
-        (docId || notes ? (docId || notes) && userFound : userFound) && (
+        (docParentId || notes ? (docParentId || notes) && userFound : userFound) && (
           <>
             <Link
               className="d-flex align-items-center"
@@ -1659,7 +1659,7 @@ const NewUserProfile = (props) => {
                         user_id={eid}
                         emp_user_type={"employee"}
                         folderId={
-                          docId
+                          docParentId
                             ? docParentId
                             : PersonalDetail.documents_folder_id
                         }
@@ -1688,7 +1688,7 @@ const NewUserProfile = (props) => {
                         user_id={eid}
                         emp_user_type={"employee"}
                         folderId={
-                          docId
+                          docParentId
                             ? docParentId
                             : PersonalDetail.documents_folder_id
                         }
@@ -1775,7 +1775,7 @@ const NewUserProfile = (props) => {
                     {TabActive === "payment" ? (
                       <div className="p-1 activity_container">
                         <div className="p-3">
-                          <h3 className="">Payment's</h3>
+                          <h3 className="">Payments</h3>
                         </div>
                         <div
                           className={user_type === "user" ? "d-none" : "d-flex justify-content-between align-items-center mb-3"}

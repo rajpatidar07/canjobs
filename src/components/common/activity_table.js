@@ -149,11 +149,11 @@ export default function ActivityTable(props) {
             {/* <button onClick={() => setCallApi(true)}>call</button> */}
             <thead>
               <tr className="">
-                {hide ? null : <th><Link onClick={() => handleSort("user_id")} class="text-dark">User ID</Link></th>}
-                {hide ? null : <th><Link onClick={() => handleSort("user_type")} class="text-dark">User Type</Link></th>}
-                {hide ? null : <th><Link onClick={() => handleSort( "created_by")} class="text-dark">User Name</Link></th>}
+                {hide ? null : <th><Link onClick={() => handleSort("user_id")} className="text-dark">User ID</Link></th>}
+                {hide ? null : <th><Link onClick={() => handleSort("user_type")} className="text-dark">User Type</Link></th>}
+                {hide ? null : <th><Link onClick={() => handleSort( "created_by")} className="text-dark">User Name</Link></th>}
                 <th>Log</th>
-                <th><Link onClick={() => handleSort("created_at")} class="text-dark">Date Time</Link></th>
+                <th><Link onClick={() => handleSort("created_at")} className="text-dark">Date Time</Link></th>
               </tr>
             </thead>
             <tbody>

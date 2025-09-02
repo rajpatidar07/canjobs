@@ -60,7 +60,7 @@ function CompanyProfileDetail(props) {
   const [showKycComplainDetailsModal, setShowKycComplainDetailsModal] =
     useState(false);
   const [TabActive, setTabActive] = useState(
-    docId
+    docParentId
       ? "documents"
       : notes === "true"
         ? "notes"
@@ -130,14 +130,14 @@ function CompanyProfileDetail(props) {
     }
     if (CompanyId) {
       localStorage.setItem("company_id", CompanyId);
-      if (docId && company_id) {
+      if (docParentId && company_id) {
         setTabActive("documents");
       } else if (notes) {
         if (notes && company_id) {
           setTabActive("notes");
         }
       }
-    } else if (docId) {
+    } else if (docParentId) {
       setTabActive("documents");
     } else if (notes) {
       setTabActive("notes");
@@ -1007,11 +1007,11 @@ function CompanyProfileDetail(props) {
                       user_id={cid}
                       emp_user_type={"employer"}
                       folderId={
-                        docId ? docParentId : employerData?.documents_folder_id
+                        docParentId ? docParentId : employerData?.documents_folder_id
                       }
                       AnnoteId={docHighAnnoId}
                       docTaskId={docTaskId}
-                      notification={docId ? "yes" : "no"}
+                      notification={docParentId ? "yes" : "no"}
                       docId={docId ? docId : ""}
                       user_name={employerData?.company_name}
                     />
@@ -1104,7 +1104,7 @@ function CompanyProfileDetail(props) {
                   {TabActive === "payment" ? (
                     <div className="p-10 activity_container">
                       <div className="p-3">
-                        <h3 className="">Payment's</h3>
+                        <h3 className="">Payments</h3>
                       </div>
                       <div
                         className={user_type === "user" ? "d-none" : "d-flex justify-content-between align-items-center mb-3"}

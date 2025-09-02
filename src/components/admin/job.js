@@ -21,7 +21,7 @@ function Job(props) {
   const [SkillFilterValue, setSkillFilterValue] = useState(
     /*props ? props.skill : */ ""
   );
-  const [locationFilterValue, setLocationFilterValue] = useState("canada");
+  const [locationFilterValue, setLocationFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");

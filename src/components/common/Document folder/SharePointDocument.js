@@ -193,9 +193,9 @@ export default function SharePointDocument({
   /*Function to set the image and docx to pdf */
   const SetPdfDocUrl = async (data) => {
     if (
-      data.file.mimeType === "image/jpeg" ||
-      data.file.mimeType === "image/png" ||
-      data.file.mimeType === "image/jpg"
+      data?.file?.mimeType === "image/jpeg" ||
+      data?.file?.mimeType === "image/png" ||
+      data?.file?.mimeType === "image/jpg"
     ) {
       convertUrlToPDF(data["@microsoft.graph.downloadUrl"]);
     }
@@ -338,7 +338,7 @@ export default function SharePointDocument({
       let res = await getSharePointParticularFolders(
         user_id,
         emp_user_type,
-        docId ? folderId : folderID,
+         folderID,
         columnName,
         sortOrder,
         recordsPerPage,
@@ -785,7 +785,7 @@ export default function SharePointDocument({
     <>
       {folderId ? (
         <div className="document_section">
-          {docPreview && docSingleDate.file.mimeType !== "text/plain" ? (
+          {docPreview && docSingleDate?.file?.mimeType !== "text/plain" ? (
             <div
               className="App-viewer document_preview_full_screen"
               style={{

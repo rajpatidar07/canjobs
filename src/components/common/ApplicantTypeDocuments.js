@@ -787,7 +787,6 @@ export default function ApplicantTypeDocuments(props) {
                     />
                   )}
                   <div className="new_folder_create d-flex">
-
                     {openFolderModal && (
                       <AddFolderModal
                         emp_user_type={props.emp_user_type}
