@@ -232,6 +232,7 @@ export default function JobTable(props) {
       console.log(err);
     }
   };
+
   /*Render function to get the job */
   useEffect(() => {
     JobData();
@@ -262,11 +263,13 @@ export default function JobTable(props) {
   // const JobDetail = (e) => {
   //   props.JobDetail(e);
   // };
+
   /*Function to open additionlima info modal */
   const AdditionalLmiaInfo = (e) => {
     setShowLmiaAdditionalInfobModal(true)
     setJobId(e);
   }
+
   /* Function to show the Table of the employee of perticular skill */
   const matchingCandidates = (e) => {
     setShowCandidateModal(true);
@@ -290,9 +293,11 @@ export default function JobTable(props) {
     setDeleteName(e.job_title);
     setDeleteAlert(true);
   };
+
   // const GetLimaSubStageReject = (id) => {
   //   return
   // };
+
   /*To call Api to delete Job */
   async function deleteJob(e) {
     try {
@@ -412,6 +417,7 @@ export default function JobTable(props) {
         : []
     ),
   ];
+  
   const FilterdColumns = columns?.filter((col) => {
     // Always show if it's not part of config OR config says 1
     return fieldsPermited[col.key] === undefined || fieldsPermited[col.key] === 1 || col.isAction;

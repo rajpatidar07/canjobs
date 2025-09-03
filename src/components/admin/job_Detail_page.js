@@ -33,7 +33,7 @@ function JobDetailpageAdmim(props) {
   const docHighAnnoId = searchParams.get("annotationId");
   const docTaskId = searchParams.get("taskId");
   const chat = searchParams.get("chat");
-  let jid = chat ? chat : localStorage.getItem("job_id");
+  let jid = chat ? chat : (localStorage.getItem("job_id") || searchParams.get("job_id"))
   let skill = [];
   let navigate = useNavigate();
   /*Show modal and data state */

@@ -214,7 +214,18 @@ function MainLayout() {
       "/study_admin_login",
       "/resetpassword/:id",
       "/outside_booking",
-      "/signagreement"
+      "/signagreement",
+      `/initial_consultation `,
+      `/recruitment_service`,
+      `/renewal_application`,
+      "/more_than_one_applicant",
+      "/employers_agreement",
+      "/three_column",
+      "/work_permit",
+      '/alberta_pnp',
+      '/work_permit_application_2_stage',
+      `/dynamic_ra`,
+      `/agreeone`
     ];
 
     useEffect(() => {

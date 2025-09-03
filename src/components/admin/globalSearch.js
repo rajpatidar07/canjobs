@@ -234,6 +234,59 @@ function GlobalSearch() {
                     ))}
                   </div>
                 )}
+                {searchData["document_data"] && searchData["document_data"].length > 0 && (
+                  <div className="row">
+                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#dc3545' }}>
+                      Documents
+                    </h4>
+                    {searchData["document_data"].map((data) => (
+                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
+                        close={close}
+                        key={data.employee_id}
+                        name={data.employee_name || data.subject_description}
+                        to={data.employee_type === "employer"
+                          ? `/client_detail?cId=${data.employee_id}&docId=${data.type === "folder" ? "" : data.doc_id
+                          }&docParentId=${data.doc_parent_id
+                          }&annotationId=${parseJsonSafely(data?.doctaskjson)
+                            .id || ""
+                          }&taskId=${data?.id || ""
+                          }`
+                          : data.employee_type === "applicant_type"
+                            ? `/slots?sId=${data.employee_id}&docId=${data.type === "folder" ? "" : data.doc_id}&docParentId=${data.doc_parent_id
+                            }&annotationId=${parseJsonSafely(data?.doctaskjson)
+                              .id || ""}&taskId=${data?.id || ""
+                            }`
+                            : data.employee_type === "job"
+                              ? `/job_detail?job_id=${data.employee_id}docId=${data.type === "folder" ? "" : data.doc_id
+                              }&docParentId=${data.doc_parent_id}&annotationId=${parseJsonSafely(data?.doctaskjson)
+                                .id || ""
+                              }&taskId=${data?.id || ""
+                              }`
+                              : `/${data.employee_id}?docId=${data.doc_id
+                              }&docParentId=${data.doc_parent_id}&annotationId=${parseJsonSafely(data?.doctaskjson)
+                                .id || ""
+                              }&taskId=${data?.id || ""
+                              }`}
+                        email={data.document_name || data.assigned_to}
+                        onClick={() => {
+                          if (data.employee_type === "applicant_type") {
+                            localStorage.setItem("applicantType", data.employee_id);
+                            localStorage.setItem(
+                              "applicantTypeFolderId",
+                              data.doc_parent_id
+                            );
+                          } else if (data.employee_type === "employer") {
+                            localStorage.setItem("company_id", data.employee_id);
+                          } else if (data.employee_type === "job") {
+                            localStorage.setItem("job_id", data.employee_id);
+                          }
+                        }}
+
+                      />
+                      </div>
+                    ))}
+                  </div>
+                )}
                 {searchData["document_reply_data"] && searchData["document_reply_data"].length > 0 && (
                   <div className="row">
                     <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#dc3545' }}>
@@ -593,7 +646,7 @@ function GlobalSearch() {
                 {searchData["documents_data"] && searchData["documents_data"].length > 0 && (
                   <div className="row">
                     <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#6f42c1' }}>
-                      Documents
+                      Documents Folder
                     </h4>
                     {searchData["documents_data"].map((data) => (
                       <div className="col-lg-2 col-sm-6">
@@ -611,7 +664,7 @@ function GlobalSearch() {
                               }`
                               : data.employee_type === "job"
                                 ? `/job_detail?job_id=${data.employee_id}&docId=${data.type === "folder" ? "" : data.document_id
-                                }&docParentId=${data.type_id}}`
+                                }&docParentId=${data.type_id}`
                                 : `/${data.employee_id}?docId=${data.type === "folder" ? "" : data.document_id
                                 }&docParentId=${data.type_id}`}
                           email={data.type || data.assigned_to}
