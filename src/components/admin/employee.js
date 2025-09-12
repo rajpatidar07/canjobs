@@ -22,7 +22,9 @@ function Employee(props) {
   const [agentFilterValue, setAgentFilterValue] = useState("");
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [interestFilterValue, setinterestFilterValue] = useState("");
-  // const [categoryFilterValue, setCategoryFilterValue] = useState("");
+  const [consultationOptedFilterValue, setConsultationOptedFilterValue] = useState("");
+  const [consultationStartDateFilterValue, setConsultationStartDateFilterValue] = useState("");
+  const [consultationEndDateFilterValue, setConsultationEndDateFilterValue] = useState("");
   const [webFilterValue, setWebFilterValue] = useState("");
   const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
   const [localFilterValue, setLocalFilterValue] = useState("");
@@ -141,6 +143,12 @@ function Employee(props) {
                     setFilterByEmployeeId={setFilterByEmployeeId}
                     webFilterValue={webFilterValue}
                     setWebFilterValue={setWebFilterValue}
+                    consultationOptedFilterValue={consultationOptedFilterValue}
+                    consultationStartDateFilterValue={consultationStartDateFilterValue}
+                    consultationEndDateFilterValue={consultationEndDateFilterValue}
+                    setConsultationOptedFilterValue={setConsultationOptedFilterValue}
+                    setConsultationStartDateFilterValue={setConsultationStartDateFilterValue}
+                    setConsultationEndDateFilterValue={setConsultationEndDateFilterValue}
                   />
                 </div>
                 <small className="text-danger">{searcherror}</small>
@@ -171,6 +179,9 @@ function Employee(props) {
                 localFilterValue={localFilterValue}
                 filterByEmployeeId={filterByEmployeeId}
                 webFilterValue={webFilterValue}
+                consultationOptedFilterValue={consultationOptedFilterValue}
+                consultationStartDateFilterValue={consultationStartDateFilterValue}
+                consultationEndDateFilterValue={consultationEndDateFilterValue}
               />
             </div>
           </div>

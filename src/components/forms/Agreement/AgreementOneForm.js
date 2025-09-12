@@ -378,7 +378,7 @@ const AgreementOneForm = ({
               felidData.id,
               user_id,
               emp_user_type,
-              "","",
+              "", "",
               felidData.type
             );
             /*Function to generate pdf after adding signature */
@@ -706,7 +706,7 @@ const AgreementOneForm = ({
                     disabled: false
                   },
                   {
-                    label: "Administrative Fee",
+                    label: "Discount",
                     display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "administrative_fee",
                     type: "text",

@@ -435,7 +435,7 @@ export default function ApplicantsFilter({
           />
         </div>
       </div>
-      {(header === "New Applicants") &&
+      {(header === "New Applicants" || header === "Manage Applicants") &&
         <>
           <div className="col form_group p-0">
             <p className="input_label">
@@ -526,11 +526,11 @@ export default function ApplicantsFilter({
                   setSearch("");
                   setcandidateSearch("");
                 }
-                if (header === "New Applicants") {
-                setConsultationStartDateFilterValue("")
-                setConsultationEndDateFilterValue("")
-                setConsultationOptedFilterValue("")
-              }
+                if (header === "New Applicants" || header === "Manage Applicants") {
+                  setConsultationStartDateFilterValue("")
+                  setConsultationEndDateFilterValue("")
+                  setConsultationOptedFilterValue("")
+                }
               } else if (["4", "21", "22", "12"].includes(pageName)) {
                 setFilterByEmployeeId("");
                 setSearch("");

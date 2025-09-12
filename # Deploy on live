@@ -1,5 +1,9 @@
 # Deploy on live
 
+1. Added a consultation filter and consultation details on the Manage Applicant page.
+2. Remove the administration fee and add discount and made the necessary changes to the retainer agreements for both HTML and native code, as well as to the add/update form.
+3. Change the Aasigned by admin in applicant table to assigned admin.  
+
 Date=>02(pura kiya tha) & 03/09/25(changes krk kiya tha)
 
 1.  Separate the forms for applicant type and subtype, as combining them is causing confusion. Add an option to update the sub-applicant type as well.
@@ -8,10 +12,10 @@ Date=>02(pura kiya tha) & 03/09/25(changes krk kiya tha)
 4.  Remove applicant type from the Add Task form in the Task Dashboard.
 5.  Added option to include consultation date, opted status, and consultation status on the applicant page.
 6.  Made changes to applicant type dynamic handling on the signup page and applied required updates.(Candidate register url for this partner :https://canpathwaysjobs.com/signup?ref=56
-and partner credential shred in person to satvir)
+    and partner credential shred in person to satvir)
 7.  Add applicant type stages on the Manage Applicant and New Applicant pages for the candidate.
 8.  Added live PayPal client ID for real payments and hide all others with dummy details.(PLease check it with live data i do not save any card detils so i didnt test this)
-9.  Set default location on the job page should be Canada. 
+9.  Set default location on the job page should be Canada.
 10. Add a sequence and apply conditions according to the Candidate list page for candidate status, and update it everywhere it is used.
 11. Correct the case in LMIA notes on the Manage LMIA page.
 12. Change the lock icon to an eye-close icon for the Hide Column option on the LMIA page.
@@ -20,7 +24,7 @@ and partner credential shred in person to satvir)
 15. Add the LMIA list on the company details page, make the required changes, and add conditions.
 16. Remove 'Limited' from the RA's as asked by Satvir.
 17. Update the employer's retainer agreement as per the new PDF Satvir emailed.
-18. Resolve the search canpathways immigration employer while adding jobs 
+18. Resolve the search canpathways immigration employer while adding jobs
 19. Add global search for the employer’s operating name, document, and document folder name.
 20. Change the partner of work permit to the work permit applicant and make the required changes.
 21. Resolve the issue with the timeline on the user details page.
@@ -336,8 +340,7 @@ Date=>25/09/24:
 1. Add "Study Permit" in the "Application Type" dropdown and create a separate dashboard.
 2. Some design changes .
 
-Date=>24/09/24: 
-3. Complete the design and dynamic details and functionalities for the job list and detail box similar to the one shown in the link: https://ca.indeed.com/viewjob?jk=faf095d0fec97520&tk=1i70o4lv8ge6k820&from=serp&vjs=3. 4. Add export buttons to export Excel data for both employees and employers. 5. Add the candidate's name along with the signup and registration time on the signup page. 6. Add the admin's name and the last modified date and time to the manage applicant page. 7. Fix the issue with deleting candidates in the global search. 8. Add the candidate ID to the candidate's profile page, right after their name. 9. Add the comment section at the beginning, whether there is any highlight or mark in the document or not. 10. Keep the pagination on the same page when using the back button to return to the applicant from their profile for candidate management. 11. Removed the applicant status tabs from the dashboards for the different applicant types. 12. Made changes to the timeline for the LMIA, visa, and applicant process arrows. 13. Removed the text limit from the subject field of notes for both employees and employers. 14. after the clients signature it will not update agreement data and enable button top sign by rcic. 15. Enable signature pad for signing. 16. show all applicant types dashboard aft6er candidates status is retained.
+Date=>24/09/24: 3. Complete the design and dynamic details and functionalities for the job list and detail box similar to the one shown in the link: https://ca.indeed.com/viewjob?jk=faf095d0fec97520&tk=1i70o4lv8ge6k820&from=serp&vjs=3. 4. Add export buttons to export Excel data for both employees and employers. 5. Add the candidate's name along with the signup and registration time on the signup page. 6. Add the admin's name and the last modified date and time to the manage applicant page. 7. Fix the issue with deleting candidates in the global search. 8. Add the candidate ID to the candidate's profile page, right after their name. 9. Add the comment section at the beginning, whether there is any highlight or mark in the document or not. 10. Keep the pagination on the same page when using the back button to return to the applicant from their profile for candidate management. 11. Removed the applicant status tabs from the dashboards for the different applicant types. 12. Made changes to the timeline for the LMIA, visa, and applicant process arrows. 13. Removed the text limit from the subject field of notes for both employees and employers. 14. after the clients signature it will not update agreement data and enable button top sign by rcic. 15. Enable signature pad for signing. 16. show all applicant types dashboard aft6er candidates status is retained.
 
 Date=>05/09/24
 

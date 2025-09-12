@@ -996,9 +996,9 @@ export default function EmployeeTable(props) {
                           props.setpageNo(1);
                         }}
                         className="text-gray"
-                        title="Sort by Assigned by	Admin "
+                        title="Sort by Assigned	Admin "
                       >
-                        Assigned by Admin
+                        Assigned Admin
                       </Link>
                     </th>
                   )}
@@ -1145,7 +1145,7 @@ export default function EmployeeTable(props) {
                   >
                     Profile
                   </th>
-                  {status === "10" || status === 10 || status === "-1,0,1,2,3,5,6,10" ?
+                  {status === "10" || status === 10 || status === "-1,0,1,2,3,5,6,10" || status === "4,7,8,9" ?
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal text-truncate"
@@ -1163,7 +1163,7 @@ export default function EmployeeTable(props) {
                       </Link>
                     </th>
                     : null}
-                  {status === "10" || status === 10 || status === "-1,0,1,2,3,5,6,10" ?
+                  {status === "10" || status === 10 || status === "-1,0,1,2,3,5,6,10" || status === "4,7,8,9" ?
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal text-truncate"
@@ -1556,10 +1556,12 @@ export default function EmployeeTable(props) {
                             ) : (
                               <Link
                                 to={`/partner_profile`}
-                                onClick={()=>{localStorage.setItem(
-                                  "agent_id",
-                                  empdata.reffer_by
-                                )}}
+                                onClick={() => {
+                                  localStorage.setItem(
+                                    "agent_id",
+                                    empdata.reffer_by
+                                  )
+                                }}
                               >
                                 <p
                                   className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
@@ -2062,27 +2064,22 @@ export default function EmployeeTable(props) {
             {(new Date(empdata.created_at) >= oneMonthAgo && new Date(empdata.created_at) <= currentDate) === true ? "New" : "Retained"}          
             </p>
         </td> */}
-                        {status === "10" || status === 10 || status === "-1,0,1,2,3,5,6,10" ?
+                        {status === "10" || status === 10 || status === "-1,0,1,2,3,5,6,10" || status === "4,7,8,9" ?
                           <td className="text-center py-5">
                             <p
                               className="font-size-2 font-weight-normal text-black-2 mb-0"
-                              title={
-                                empdata.status === "10"
-                                  ? empdata.consultation_opted === "1"
-                                    ? "Yes"
-                                    : "No"
-                                  : "N/A"
+                              title={empdata.consultation_opted === "1"
+                                ? "Yes"
+                                : "No"
                               }
                             >
-                              {empdata.status === "10"
-                                ? empdata.consultation_opted === "1"
-                                  ? "Yes"
-                                  : "No"
-                                : "N/A"}
+                              {empdata.consultation_opted === "1"
+                                ? "Yes"
+                                : "No"}
                             </p>
                           </td>
                           : null}
-                        {status === "10" || status === 10 || status === "-1,0,1,2,3,5,6,10" ?
+                        {status === "10" || status === 10 || status === "-1,0,1,2,3,5,6,10" || status === "4,7,8,9" ?
                           <td className="text-center py-5">
                             <p
                               className="font-size-2 font-weight-normal text-black-2 mb-0"

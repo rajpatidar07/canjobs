@@ -1,11 +1,11 @@
 import axios from "axios";
 import CryptoJS from "crypto-js";
-// const API_URL = window.location.origin === "https://canpathwaysjobs.com"
-//   ? "https://api.canpathwaysjobs.com/canjobs/" : "https://api-dev.canpathwaysjobs.com/"
+const API_URL = window.location.origin === "https://canpathwaysjobs.com"
+  ? "https://api.canpathwaysjobs.com/canjobs/" : "https://api-dev.canpathwaysjobs.com/"
 //Local
 // const API_URL ="http://192.168.29.51/canjobs/"
 // New AWS backend
-const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
+// const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
 let Token = localStorage.getItem("token");
 let driveId = "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F";
 const view_as_token = localStorage.getItem("view_as_token");
@@ -3655,7 +3655,7 @@ export const getSharePointParticularFolders = async (Id, User, folderId, columnN
 export const AddSharePointFolders = async (folder, parentId, isPrivate, userId, userType) => {
   let create_by_type = user_type === "user" ? "employee" : user_type === "company" ? "employer" : admin_type;
   let create_by_id = user_type === "user" ? user_id : user_type === "company" ? employer_id : admin_id;
-console.log(userId,"llll")
+  console.log(userId, "llll")
   const response = await axios.post(
     `${API_URL}admin/createSharepointFolder_new`,
     {
