@@ -11,7 +11,9 @@ import EmployerHome from "../company/home";
 import CompanyProfile from "../company/profile";
 import ManageJobs from "../company/manageJob";
 import Response from "../company/response";
-import EmployeeHomePage from "../user/home";
+// import EmployeeHomePage from "../user/home";
+import EmployeeHomePage from "../user/Home2";
+
 import JobDetail from "../user/jobdetail";
 import JobSearch from "../user/jobs";
 import UserProfile from "../user/profile";

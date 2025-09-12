@@ -76,12 +76,12 @@ function EmployeeFooter() {
         <div className="row text-left">
           <div className="col-lg-4 col-sm-6 mb-lg-0 mb-9">
             {/* <!-- footer logo start --> */}
-            <img
-              src="image/logo-main-black.png"
-              alt=""
-              className="footer-logo mb-6"
-              style={{ maxHeight: "unset", maxWidth: "250px" }}
-            />
+              <img
+                src="image/logo-main-black.png"
+                alt=""
+                className="footer-logo mb-6"
+                style={{ maxHeight: "unset", maxWidth: "250px" }}
+              />
 
             <div className="social-icons">
               <ul className="pl-0 list-unstyled d-flex align-items-end ">
