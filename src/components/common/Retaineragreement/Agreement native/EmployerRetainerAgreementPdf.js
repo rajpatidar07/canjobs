@@ -278,6 +278,9 @@ const EmployerRetainerAgreementPdf = () => {
               {[
                 "Provide all necessary documents in English or with an English translation.",
                 "Follow instructions and advice from the RCIC within the prescribed timeframe.",
+                "The undersigned, _______________ (Director) in their personal capacity, unconditionally and irrevocably guarantees the full and prompt payment and performance of all debts, obligations, and liabilities of _________________(Company Name) under this Agreement.",
+                "In the event of default, the Creditor may proceed directly against the Guarantor’s personal assets without first exhausting remedies against the Company. The Guarantor waives any right to notice,demand, set-off, or defense.",
+                "This Guarantee is continuing, absolute, and binding, and shall remain in full force regardless of any amendment, renewal, extension, or modification of this Agreement. It shall also be binding upon the Guarantor and their heirs, executors, administrators, successors, and assigns.",
                 "In the event Service Canada office should contact the Client directly, the Client is instructed to notify the RCIC immediately.",
                 "The Client understands that they must be accurate and honest in the information they provide and that any inaccuracies may void this Agreement, or seriously affect the outcome of the application or the retention of any status they may obtain.",
                 "The Client should use e-mails as the method of contacting the RCIC. The response time is between 2-3 business days.",
@@ -389,7 +392,7 @@ const EmployerRetainerAgreementPdf = () => {
           <View style={styles.section}>
             <Text style={[styles.subtitle]}>9. Dispute Resolution</Text>
             <Text styles={[{ marginBottom: 10 }, styles.mb5]}>
-              Please be advised that Harpreet Kaur is a member in good standing of the Immigration Consultants of Canada Regulatory Council (ICCRC), and as such, is bound by its By-laws, Code of Professional Ethics, and associated Regulations. In the event of a dispute related to the Code of Professional Ethics, the Client and RCIC are to make every effort to resolve the matter between the two parties. In the event a resolution cannot be reached, the Client is to present the complaint in writing to the RCIC and allow the RCIC 30 days to respond to the Client. In the event the dispute is still unresolved, the Client may follow the complaint and discipline procedure outlined by the Council on their website under the heading "File a Complaint".
+              Please be advised that Harpreet Kaur is a member in good standing of the Immigration Consultants of Canada Regulatory Council (ICCRC), and as such, is bound by its By-laws, Code of Professional Ethics, and associated Regulations. In the event of a dispute related to the Code of Professional Ethics, the Client and RCIC are to make every effort to resolve the matter between the two parties. In the event a resolution cannot be reached, the Client is to present the complaint in writing to the RCIC and allow the RCIC 30 days to respond to the Client. In the event the dispute is still unresolved, the Client may follow the complaint and discipline procedure outlined by the Council on their website under the heading "File a Complaint". NOTE: All complaint forms must be signed.
             </Text>
             <View style={[{ marginBottom: 5, marginTop: 5 }]}>
               <Text styles={[styles.mb5]}>
