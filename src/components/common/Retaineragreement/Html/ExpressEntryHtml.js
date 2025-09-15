@@ -334,14 +334,14 @@ const ExpressEntryHtml = ({
                 <td style="border: 1px solid black; text-align: center" >${felidData?.professional_fees || ""
     }</td>
               </tr>
-           <tr>          <td style="text-align: center; border: 1px solid black">Disbursment</td>  
-           <td style="border: 1px solid black ; text-align: center">${felidData?.disbursment || ""
+           <tr>          <td style="text-align: center; border: 1px solid black">Disbursement</td>  
+           <td style="border: 1px solid black ; text-align: center">${felidData?.courier_charges || ""
     }</td>
                </tr>
              
               <tr>
                 <td style="border: 1px solid black; text-align: center">Discount</td>
-                <td style="border: 1px solid black; text-align: center">${felidData?.administrative_fee||""}</td>
+                <td style="border: 1px solid black; text-align: center">${felidData?.administrative_fee || ""}</td>
               </tr>
               <tr>
                 <td style="border: 1px solid black; text-align: center">Government fees</td>
@@ -353,7 +353,7 @@ const ExpressEntryHtml = ({
                   Administrative fee [as required]
                 </td>
                 <td style="border: 1px solid black; text-align: center">${""}
-    }</td>
+    </td>
               </tr>
               <tr>
                 <td style="text-align: center; border: 1px solid black">

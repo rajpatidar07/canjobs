@@ -320,14 +320,14 @@ export default function HtmlAgreementDynamic({
                   <td style="border: 1px solid black; text-align: center" >${felidData?.professional_fees || ""
     }</td>
                 </tr>
-             <tr>          <td style="text-align: center; border: 1px solid black">Disbursment</td>  
-             <td style="border: 1px solid black ; text-align: center">${felidData?.disbursment || ""
+             <tr>          <td style="text-align: center; border: 1px solid black">Disbursement</td> 
+             <td style="border: 1px solid black ; text-align: center">${felidData?.courier_charges || ""
     }</td>
                  </tr>
                
                 <tr>
                   <td style="border: 1px solid black; text-align: center">Discount</td>
-                  <td style="border: 1px solid black; text-align: center">${felidData?.administrative_fee||""}</td>
+                  <td style="border: 1px solid black; text-align: center">${felidData?.administrative_fee || ""}</td>
                 </tr>
                 <tr>
                   <td style="border: 1px solid black; text-align: center">Government fees</td>
@@ -370,9 +370,7 @@ export default function HtmlAgreementDynamic({
             </p>
             <p>
               Note: The courier charges and Government fees based on current rates
-              and may change anytime on or before submission.
-            </p>
-  
+              and may change anytime on or before submission.</p>
             <table style="border-collapse: collapse" cellspacing="0">
               <tr>
                 <td class="text-center" style="color:#0c5fa6">

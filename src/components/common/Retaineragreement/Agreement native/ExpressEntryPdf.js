@@ -606,13 +606,13 @@ const ExpressEntryPdf = () => {
               <View style={styles.row}>
                 <View style={styles.cell}><Text>Disbursement</Text>
                 </View>
-                <View style={styles.cell}><Text></Text>
+                <View style={styles.cell}><Text>{felidData?.courier_charges}</Text>
                 </View>
               </View>
               <View style={styles.row}>
-                <View style={styles.cell}><Text>Courier charges</Text>
+                <View style={styles.cell}><Text>Discount</Text>
                 </View>
-                <View style={styles.cell}><Text>{felidData?.courier_charges}</Text>
+                <View style={styles.cell}><Text>{felidData?.administrative_fee}</Text>
                 </View>
               </View>
               <View style={styles.row}>
@@ -626,7 +626,7 @@ const ExpressEntryPdf = () => {
                   <Text>Administrative fee [as required]</Text>
                 </View>
                 <View style={styles.cell}>
-                  <Text>{felidData?.administrative_fee}</Text>
+                  <Text></Text>
                 </View>
               </View>
               <View style={styles.row}>
@@ -670,7 +670,7 @@ const ExpressEntryPdf = () => {
             <View style={[styles.table, {
               marginTop:
                 felidData.initial ?
-                     50
+                  50
                   : 67
             }]}>
               <View style={styles.row}>

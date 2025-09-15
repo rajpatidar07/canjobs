@@ -19,19 +19,19 @@ function PaymentDetails({
                     <tr>
                         <th className="border-0 font-size-4 ">S.no</th>
                         <th scope="col" className="border-0 font-size-4 font-weight-normal">
-                            Description
+                            RCIC Service Milestone
                         </th>
                         <th scope="col" className="border-0 font-size-4 font-weight-normal">
-                            Notes
+                            Estimated date of Completion
                         </th>
                         <th scope="col" className="border-0 font-size-4 font-weight-normal">
-                            Additional Info
+                            Professional Fees (Non-Refundable)
                         </th>
                         <th scope="col" className="border-0 font-size-4 font-weight-normal">
-                            Retainer Fee
+                            Applicable Retainer Fee for this stage (Non- Refundable)
                         </th>
                         <th scope="col" className="border-0 font-size-4 font-weight-normal">
-                            Government Fee
+                            Applicable Government Processing Fee
                         </th>
                         <th scope="col" className="border-0 font-size-4 font-weight-normal">
                             Actions
@@ -93,7 +93,7 @@ function PaymentDetails({
                         name="description"
                         value={newPayment.description}
                         onChange={(e) => handleInputChange(e, "payment")}
-                        placeholder="Description"
+                        placeholder="RCIC Service Milestone"
                     />
                 </div>
                 <div className="col-md-2 mb-2">
@@ -103,7 +103,7 @@ function PaymentDetails({
                         name="notes"
                         value={newPayment.notes}
                         onChange={(e) => handleInputChange(e, "payment")}
-                        placeholder="Notes"
+                        placeholder="Estimated date of Completion"
                     />
                 </div>
                 <div className="col-md-2 mb-2">
@@ -113,7 +113,7 @@ function PaymentDetails({
                         name="additional_info"
                         value={newPayment.additional_info}
                         onChange={(e) => handleInputChange(e, "payment")}
-                        placeholder="Additional Info"
+                        placeholder="Professional Fees (Non-Refundable)"
                     />
                 </div>
                 <div className="col-md-2 mb-2">
@@ -123,7 +123,7 @@ function PaymentDetails({
                         name="retainer_fee"
                         value={newPayment.retainer_fee}
                         onChange={(e) => handleInputChange(e, "payment")}
-                        placeholder="Retainer Fee"
+                        placeholder="Applicable Retainer Fee for this stage (Non- Refundable)"
                     />
                 </div>
                 <div className="col-md-2 mb-2">
@@ -133,7 +133,7 @@ function PaymentDetails({
                         name="government_fee"
                         value={newPayment.government_fee}
                         onChange={(e) => handleInputChange(e, "payment")}
-                        placeholder="Government Fee"
+                        placeholder="Applicable Government Processing Fee"
                     />
                 </div>
                 <div className="col-md-1 mb-2">

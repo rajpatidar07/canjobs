@@ -464,10 +464,10 @@ const ThreeColumnRerainerAgreement = () => {
                             ))}
                             {[
                                 ["Professional Fees", felidData ? felidData?.professional_fees : ""],
-                                ["Disbursement", ""],
-                                ["Courier charges", felidData ? felidData?.courier_charges : ""],
+                                ["Disbursement", felidData ? felidData?.courier_charges : ""],
+                                ["Discount", felidData ? felidData?.administrative_fee : ""],
                                 ["Government fees", felidData ? felidData?.government_fees : ""],
-                                ["Administrative fee [as required]", felidData ? felidData?.administrative_fee : ""],
+                                ["Administrative fee [as required]", ""],
                                 [`Applicable Taxes: `, felidData ? felidData?.application_fees : "0"],
                                 ["Balance (Paid at time of filing):", felidData ? felidData?.balance : ""],
                                 ["Total Cost", felidData ? felidData?.total_cost : "", "red"]

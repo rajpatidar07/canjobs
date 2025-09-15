@@ -413,13 +413,13 @@ const AlbertaPnpPdf = () => {
                             <View style={styles.row}>
                                 <View style={styles.cell}><Text>Disbursement</Text>
                                 </View>
-                                <View style={styles.cell}><Text></Text>
+                                <View style={styles.cell}><Text>{felidData?.courier_charges}</Text>
                                 </View>
                             </View>
                             <View style={styles.row}>
-                                <View style={styles.cell}><Text>Courier charges</Text>
+                                <View style={styles.cell}><Text>Discount</Text>
                                 </View>
-                                <View style={styles.cell}><Text>{felidData?.courier_charges}</Text>
+                                <View style={styles.cell}><Text>{felidData?.administrative_fee}</Text>
                                 </View>
                             </View>
                             <View style={styles.row}>
@@ -433,7 +433,7 @@ const AlbertaPnpPdf = () => {
                                     <Text>Administrative fee [as required]</Text>
                                 </View>
                                 <View style={styles.cell}>
-                                    <Text>{felidData?.administrative_fee}</Text>
+                                    <Text></Text>
                                 </View>
                             </View>
                             <View style={styles.row}>
@@ -1243,7 +1243,7 @@ const AlbertaPnpPdf = () => {
                     </View>
                     <View style={{}}>
                         {/* Contact Information Header */}
-                        <View style={{marginTop:50}}>
+                        <View style={{ marginTop: 50 }}>
                             {/* Contact Information Header */}
                             <Text style={[{ fontWeight: "600" }, styles.definition]}>
                                 21. Contact Information

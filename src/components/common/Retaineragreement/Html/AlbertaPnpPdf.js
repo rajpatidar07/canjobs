@@ -410,13 +410,13 @@ const AlbertaPnpPdf = () => {
                             <View style={styles.row}>
                                 <View style={styles.cell}><Text>Disbursement</Text>
                                 </View>
-                                <View style={styles.cell}><Text></Text>
+                                <View style={styles.cell}><Text>{felidData?.courier_charges}</Text>
                                 </View>
                             </View>
                             <View style={styles.row}>
                                 <View style={styles.cell}><Text>Courier charges</Text>
                                 </View>
-                                <View style={styles.cell}><Text>{felidData?.courier_charges}</Text>
+                                <View style={styles.cell}><Text>{}</Text>
                                 </View>
                             </View>
                             <View style={styles.row}>

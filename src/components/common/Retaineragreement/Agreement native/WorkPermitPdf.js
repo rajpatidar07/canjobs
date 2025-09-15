@@ -415,13 +415,13 @@ const WorkPermitPdf = () => {
               <View style={styles.row}>
                 <View style={styles.cell}><Text>Disbursement</Text>
                 </View>
-                <View style={styles.cell}><Text></Text>
+                <View style={styles.cell}><Text>{felidData?.courier_charges}</Text>
                 </View>
               </View>
               <View style={styles.row}>
-                <View style={styles.cell}><Text>Courier charges</Text>
+                <View style={styles.cell}><Text>Discount</Text>
                 </View>
-                <View style={styles.cell}><Text>{felidData?.courier_charges}</Text>
+                <View style={styles.cell}><Text>{felidData?.administrative_fee}</Text>
                 </View>
               </View>
               <View style={styles.row}>
@@ -437,7 +437,7 @@ const WorkPermitPdf = () => {
                 </View>
                 <View style={styles.cell}>
 
-                  <Text>{felidData?.administrative_fee}</Text>
+                  <Text>{}</Text>
                 </View>
               </View>
               <View style={styles.row}>

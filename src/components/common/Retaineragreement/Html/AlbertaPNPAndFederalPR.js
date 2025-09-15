@@ -321,8 +321,8 @@ export default function AlbertaPNPAndFederalPR({
                   <td style="border: 1px solid black; text-align: center" >${felidData?.professional_fees || ""
     }</td>
                 </tr>
-             <tr>          <td style="text-align: center; border: 1px solid black">Disbursment</td>  
-             <td style="border: 1px solid black ; text-align: center">${felidData?.disbursment || ""
+             <tr>          <td style="text-align: center; border: 1px solid black">Disbursement</td>  
+             <td style="border: 1px solid black ; text-align: center">${felidData?.courier_charges || ""
     }</td>
                  </tr>
                

@@ -299,9 +299,9 @@ export default function EmployerRetainerAgreement({ page,
     }</td>
                             </tr>
                             <tr> <td
-                                style="text-align: center; border: 1px solid black">Disbursment</td>
+                                style="text-align: center; border: 1px solid black">Disbursement</td>
                               <td
-                                style="border: 1px solid black ; text-align: center">${felidData?.disbursment
+                                style="border: 1px solid black ; text-align: center">${felidData?.courier_charges
     || ""
     }</td>
                             </tr>
@@ -310,7 +310,7 @@ export default function EmployerRetainerAgreement({ page,
                               <td
                                 style="border: 1px solid black; text-align: center">Discount</td>
                               <td
-                                style="border: 1px solid black; text-align: center">${felidData?.administrative_fee||""}</td>
+                                style="border: 1px solid black; text-align: center">${felidData?.administrative_fee || ""}</td>
                             </tr>
                             <tr>
                               <td

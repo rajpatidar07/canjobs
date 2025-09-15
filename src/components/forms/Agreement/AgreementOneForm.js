@@ -699,7 +699,7 @@ const AgreementOneForm = ({
                     disabled: false
                   },
                   {
-                    label: "Courier charges",
+                    label: "Disbursement",
                     display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "courier_charges",
                     type: "text",
