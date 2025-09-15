@@ -2,7 +2,10 @@
 
 1. Added a consultation filter and consultation details on the Manage Applicant page.
 2. Remove the administration fee and add discount and made the necessary changes to the retainer agreements for both HTML and native code, as well as to the add/update form.
-3. Change the Aasigned by admin in applicant table to assigned admin.  
+3. Change the Aasigned by admin in applicant table to assigned admin.
+4. Updated the employer RA HTML and PDF.
+5. Resolved the issue with columns on Dynamic RA.
+6. Added disbursement to all RAs where required.
 
 Date=>02(pura kiya tha) & 03/09/25(changes krk kiya tha)
 
