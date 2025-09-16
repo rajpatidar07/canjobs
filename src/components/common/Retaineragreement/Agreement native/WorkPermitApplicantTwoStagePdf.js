@@ -419,9 +419,9 @@ const WorkPermitApplicantTwoStagePdf = () => {
                                 </View>
                             </View>
                             <View style={styles.row}>
-                                <View style={styles.cell}><Text>Courier charges</Text>
+                                <View style={styles.cell}><Text>Discount</Text>
                                 </View>
-                                <View style={styles.cell}><Text>{}</Text>
+                                <View style={styles.cell}><Text>{felidData?.administrative_fee}</Text>
                                 </View>
                             </View>
                             <View style={styles.row}>
@@ -435,7 +435,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                                     <Text>Administrative fee [as required]</Text>
                                 </View>
                                 <View style={styles.cell}>
-                                    <Text>{felidData?.administrative_fee}</Text>
+                                    <Text></Text>
                                 </View>
                             </View>
                             <View style={styles.row}>
@@ -1241,7 +1241,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                             RETAINER AGREEMENT
                         </Text>
                     </View>
-                    <View style={{ marginTop:  200 }}>
+                    <View style={{ marginTop: 200 }}>
                         {/* Contact Information Header */}
                         <View>
                             {/* Contact Information Header */}
@@ -1521,7 +1521,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                         AUTHORIZATION
                     </Text>
                     <Text style={{ marginTop: 15 }}>
-                        I 
+                        I
                         <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
                             {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
                         </Text> ( here in after referred to as the “client”), here by authorize and

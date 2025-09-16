@@ -21,7 +21,10 @@ export async function AddDocIdToAGreementApiFun
         signature_status: felidData?.signature_status,
         sender: admin_id,
         sender_type: admin_type,
-        email_for: email_for
+        email_for: email_for,
+        added_type: felidData?.added_type,
+        send_date: felidData?.send_date,
+        received_date: felidData?.received_date,
     };
     let addDocId = await AddUpdateAgreement(data);
     return addDocId

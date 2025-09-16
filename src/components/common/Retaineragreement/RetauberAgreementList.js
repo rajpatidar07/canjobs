@@ -24,6 +24,7 @@ import AddClientForm from "../../forms/Agreement/AddClientForm";
 import moment from "moment";
 import Loader from "../loader";
 import AddPaymentDetailsForm from "../../forms/Agreement/AddPaymentdetailsForm";
+import UploadAgreement from "../../forms/Agreement/UploadAgreement";
 export default function RetauberAgreementList({
   user_id,
   emp_user_type,
@@ -34,6 +35,7 @@ export default function RetauberAgreementList({
   const [openSendMail, setOpenSendMail] = useState(false);
   const [openAgreement, setOpenAgreement] = useState(false);
   const [openAddAgreementForm, setOpenAddAgreementForm] = useState(false);
+  const [openUploadAgreementForm, setOpenUploadAgreementForm] = useState(false);
   const [openAddAgreementFelids, setOpenAddAgreementFelids] = useState(false);
   const [openAddClientFeilds, setOpenAddClientFeilds] = useState(false);
   const [openAddPaymentDetails, setOpenAddPaymentDetails] = useState(false);
@@ -177,12 +179,15 @@ export default function RetauberAgreementList({
           <div className="p-3">
             <h3 className="">Agreement's</h3>
           </div>
-          <div className="p-3">
+          <div className="p-5 d-flex justify-content-space-between">
             <button
-              className="btn btn-primary"
+              className="btn btn-primary mx-2"
               onClick={() => setOpenAddAgreementForm(true)}
             >
               Add Agreement
+            </button>
+            <button className="btn btn-primary" onClick={() => setOpenUploadAgreementForm(true)}>
+              Upload Agreement
             </button>
           </div>
         </div>
@@ -282,9 +287,9 @@ export default function RetauberAgreementList({
                       {/* <td>{interview.id}</td> */}
                       <td>
                         {
-                          <div className="timeline_date d-flex flex-column">
+                          <p className="timeline_date d-flex flex-column">
                             {index + 1}
-                          </div>
+                          </p>
                         }
                       </td>
                       <td className="text-capitalize ">{data?.agreement_subject ? data.agreement_subject : data.type || "N/A"}</td>
@@ -323,7 +328,7 @@ export default function RetauberAgreementList({
                       <td>
                         <div className="btn-group button_group" role="group">
                           <button
-                            className="btn btn-outline-info action_btn "
+                            className={data.added_type === "uploaded_agreement" ? "d-none" : "btn btn-outline-info action_btn "}
                             onClick={() => {
                               setOpenAgreement(true);
                               setAgreementData(data);
@@ -345,7 +350,7 @@ export default function RetauberAgreementList({
                             </span>
                           </button>
                           <button
-                            className="btn btn-outline-info action_btn "
+                            className={data.added_type === "uploaded_agreement" ? "d-none" : "btn btn-outline-info action_btn "}
                             onClick={() => {
                               setOpenAddAgreementFelids(true);
                               setAgreementData(data);
@@ -358,7 +363,7 @@ export default function RetauberAgreementList({
                             </span>
                           </button>
                           <button
-                            className={`btn btn-outline-info action_btn ${data.type === "recruitment services agreement" || data.type === "initial consultation" || data.type === "employer renewal stream" || data.type === "employers" || data.type === "three column" || data.type === "express entry" || data.type === "Alberta PNP and federal PR" || data.type === "work permit" || data.type === "work permit application-2 stage" ? "d-none" : ""}`}
+                            className={data.added_type === "uploaded_agreement" ? "d-none" : `btn btn-outline-info action_btn ${data.type === "recruitment services agreement" || data.type === "initial consultation" || data.type === "employer renewal stream" || data.type === "employers" || data.type === "three column" || data.type === "express entry" || data.type === "Alberta PNP and federal PR" || data.type === "work permit" || data.type === "work permit application-2 stage" ? "d-none" : ""}`}
                             onClick={() => {
                               if (data.type === "dynamic RA") {
                                 setOpenAddPaymentDetails(true)
@@ -374,7 +379,7 @@ export default function RetauberAgreementList({
                             </span>
                           </button>
                           <button
-                            className="btn btn-outline-info action_btn "
+                            className={"btn btn-outline-info action_btn "}
                             disabled={!data.document_id}
                             onClick={() => {
                               setOpenViewAgreement(true);
@@ -388,7 +393,7 @@ export default function RetauberAgreementList({
                             </span>
                           </button>
                           <button
-                            className="btn btn-outline-info action_btn "
+                            className={data.added_type === "uploaded_agreement" ? "d-none" : "btn btn-outline-info action_btn "}
                             onClick={() => {
                               setOpenSendMail(true);
                               setAgreementData(data);
@@ -409,7 +414,7 @@ export default function RetauberAgreementList({
                             </span>
                           </button>
                           <button
-                            className="btn btn-outline-info action_btn d-none"
+                            className={data.added_type === "uploaded_agreement" ? "d-none" : "btn btn-outline-info action_btn d-none"}
                             onClick={() => {
                               setOpenSignfPspdfkit(true);
                               setAgreementData(data);
@@ -421,7 +426,7 @@ export default function RetauberAgreementList({
                             Sign document with pspdfkit
                           </button>
                           <button
-                            className="btn btn-outline-info action_btn "
+                            className={data.added_type === "uploaded_agreement" ? "d-none" : "btn btn-outline-info action_btn "}
                             onClick={() => {
                               addSignatureCLick();
                               setAgreementData(data);
@@ -537,6 +542,18 @@ export default function RetauberAgreementList({
             emp_user_type={emp_user_type}
             userData={userData}
             setApicall={setApicall}
+          />
+        ) : null}
+        {console.log(folderId, "ppppp")}
+        {openUploadAgreementForm ? (
+          <UploadAgreement
+            show={openUploadAgreementForm}
+            close={() => setOpenUploadAgreementForm(false)}
+            emp_user_type={emp_user_type}
+            userData={userData}
+            setApicall={setApicall}
+            folderId={folderId}
+
           />
         ) : null}
         {openViewAgreement ? (
