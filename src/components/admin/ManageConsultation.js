@@ -1,60 +1,88 @@
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { /*useEffect, useRef,*/ useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { CiSearch } from "react-icons/ci";
-import { IoPersonCircleOutline } from "react-icons/io5";
-import { FaAngleDown } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { getallAdminData } from "../../api/api";
-import ConsultationTable from "../common/ConsultationTable";
+// import { IoPersonCircleOutline } from "react-icons/io5";
+// import { FaAngleDown } from "react-icons/fa";
+// import { Link } from "react-router-dom";
+// import { getallAdminData } from "../../api/api";
+// import ConsultationTable from "../common/ConsultationTable";
+import EmployeeTable from "../common/employeeTable";
+import DatePicker from "react-datepicker";
+import PersonalDetails from "../forms/user/personal";
 
 const ManageConsultation = () => {
-  const [showdropdown, setShowdropdown] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedAdminId, setSelectedAdminId] = useState(null);
-  const [selectedAdminType, setSelectedAdminType] = useState(null);
+  // const [showdropdown, setShowdropdown] = useState(false);
+  // const [searchQuery, setSearchQuery] = useState("");
+  const [consultationOptedFilterValue, setConsultationOptedFilterValue] = useState("");
+  const [consultationStartDateFilterValue, setConsultationStartDateFilterValue] = useState("");
+  const [consultationEndDateFilterValue, setConsultationEndDateFilterValue] = useState("");
+  // const [selectedAdminId, setSelectedAdminId] = useState(null);
+  // const [selectedAdminType, setSelectedAdminType] = useState(null);
   const [showAddItemForm, setShowAddItemForm] = useState(false);
-  const [dayFilterValue, setDayFilterValue] = useState("");
+  const [employeeId, setEmployeeId] = useState();
+  const [apiCall, setApiCall] = useState(false);
+  // const [dayFilterValue, setDayFilterValue] = useState("");
   // const [filterData, setFilterData] = useState([]);
   const [pageNo, setPageNo] = useState(1);
   // const [showfilterdropdown, setShowfilterdropdown] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const [adminList, setAdminList] = useState([false]);
+  // const [adminList, setAdminList] = useState([false]);
   const [searchCandidate, setSearchCandidate] = useState("");
-  const [resetWithoutConsultationId, setResetWithoutConsultationId] = useState(false);
-  const dropdownRef = useRef(null);
+  // const [resetWithoutConsultationId, setResetWithoutConsultationId] = useState(false);
+  // const dropdownRef = useRef(null);
 
-  let getAdminData = async () => {
-    try {
-      let response = await getallAdminData();
-      setAdminList(response.data);
-    } catch (err) {
-      console.log(err);
-    }
+  // let getAdminData = async () => {
+  //   try {
+  //     let response = await getallAdminData();
+  //     setAdminList(response.data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  // useEffect(() => {
+  //   getAdminData();
+  // }, []);
+  // const filteredAdmins = adminList
+  //   ? adminList?.filter((admin) =>
+  //     admin?.name?.toLowerCase().includes(searchQuery.toLowerCase())
+  //   )
+  //   : [];
+
+  // useEffect(() => {
+  //   function handleClickOutside(event) {
+  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+  //       setShowdropdown(false);
+  //     }
+  //   }
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
+  /*on change function of date piker of consultation */
+  const handleChange = (range) => {
+    const [startDate, endDate] = range;
+    setConsultationStartDateFilterValue(startDate);
+    setConsultationEndDateFilterValue(endDate);
   };
-  useEffect(() => {
-    getAdminData();
-  }, []);
-  const filteredAdmins = adminList
-    ? adminList?.filter((admin) =>
-      admin?.name?.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    : [];
-
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowdropdown(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  /* Function to show the single data to update Employee*/
+  const editEmployee = (e) => {
+    setShowAddItemForm(true);
+    setEmployeeId(e);
+  };
   return (
     <div className="site-wrapper overflow-hidden bg-default-2">
+      {showAddItemForm ? (
+        <PersonalDetails
+          show={showAddItemForm}
+          employeeId={employeeId}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => setShowAddItemForm(false)}
+        />
+      ) : null}
       {/* Header & Sidebar */}
       <AdminHeader heading={"Manage Consultation Log"} />
       <AdminSidebar heading={"Manage Consultation Log"} />
@@ -70,13 +98,14 @@ const ManageConsultation = () => {
 
             <div className="d-flex justify-content-start">
               {/* New Item Dropdown */}
-              <div className="position-relative mr-2">
+              {/* <div className="position-relative mr-2">
                 <button
                   className="font-size-4 rounded-3 border-0 btn btn-primary p-2 mr-4"
                   onClick={() => {
-                    setShowdropdown(false);
-                    // setShowfilterdropdown(false);
-                    setShowAddItemForm(true);
+                    editEmployee("0")
+                    // setShowdropdown(false);
+                    // // setShowfilterdropdown(false);
+                    // setShowAddItemForm(true);
                   }}
                 >
                   <span className="ml-4">New Item</span>
@@ -84,11 +113,11 @@ const ManageConsultation = () => {
                     <FaAngleDown />
                   </span>
                 </button>
-              </div>
+              </div> */}
 
               {/* Search */}
               <div
-                className="input-group mr-4 d-none"
+                className="input-group mr-4 "
                 style={{
                   width: isFocused ? "300px" : "100px",
                   transition: "width 0.3s ease-in-out",
@@ -120,7 +149,35 @@ const ManageConsultation = () => {
                   onChange={(e) => setSearchCandidate(e.target.value)}
                 />
               </div>
-              <div className="position-relative" ref={dropdownRef}>
+              <div className="col form_group mr-4 ">
+                <p className="input_label">
+                  Filter by Consultation Opted  :
+                </p>
+                <select
+                  className={"form-control"}
+                  value={consultationOptedFilterValue}
+                  onChange={(e) => setConsultationOptedFilterValue(e.target.value)}
+                  id="consultation_opted"
+                  name="consultation_opted"
+                >
+                  <option value={""}>Select</option>
+                  <option value={"1"}>Yes</option>
+                  <option value={"0"}>No</option>
+                </select>
+              </div>
+              <div className="col form_group mr-4 ">
+                <p className="input_label">
+                  Filter by Consultation Date  :
+                </p>
+                <DatePicker
+                  selected={consultationStartDateFilterValue}
+                  onChange={handleChange}
+                  startDate={consultationStartDateFilterValue}
+                  endDate={consultationEndDateFilterValue}
+                  selectsRange
+                />
+              </div>
+              {/* <div className="position-relative" ref={dropdownRef}>
                 <button
                   className="font-size-4 rounded-3 border-0 btn bg-white p-2 mr-4"
                   onClick={() => setShowdropdown((prev) => !prev)}
@@ -146,7 +203,7 @@ const ManageConsultation = () => {
                         onChange={(e) => setSearchQuery(e.target.value)}
                       />
                     </div>
-                    {/* Admin List */}
+                     Admin List 
                     <ul className="list-unstyled d-flex align-items-center flex-wrap">
                       {filteredAdmins.length > 0 ? (
                         filteredAdmins.map((admin, index) => (
@@ -176,28 +233,59 @@ const ManageConsultation = () => {
                     </ul>
                   </div>
                 )}
-              </div>
+              </div> */}
               <button
                 className="btn btn-primary"
                 onClick={() => {
-                  setSelectedAdminId("");
-                  setSelectedAdminType("");
-                  setSearchQuery("");
-                  setDayFilterValue("");
+                  // setSelectedAdminId("");
+                  // setSelectedAdminType("");
+                  // setSearchQuery("");
+                  // setDayFilterValue("");
                   setPageNo(1);
-                  setResetWithoutConsultationId(true);
+                  setConsultationEndDateFilterValue("")
+                  setConsultationOptedFilterValue("")
+                  setConsultationStartDateFilterValue("")
+                  setSearchCandidate("")
+                  // setResetWithoutConsultationId(true);
                   const newUrl = window.location.pathname;
                   window.history.replaceState({}, document.title, newUrl);
                   // Reset the flag after a short delay to allow ConsultationTable to react
-                  setTimeout(() => setResetWithoutConsultationId(false), 100);
+                  // setTimeout(() => setResetWithoutConsultationId(false), 100);
                 }}
               >
                 Reset
               </button>
             </div>
-
+            <EmployeeTable
+              // showEmployeeProfile={showEmployeeProfile}
+              // employeeDetails={employeeDetails}
+              search={searchCandidate}
+              // experienceFilterValue={experienceFilterValue}
+              // educationFilterValue={educationFilterValue}
+              // skillFilterValue={skillFilterValue}
+              apiCall={apiCall}
+              setApiCall={setApiCall}
+              // skill={props.skill}
+              editEmployee={editEmployee}
+              // job_id={props.job_id}
+              // self={"yes"}
+              // status={"0"}
+              pageName={"consultation"}
+              pageNo={pageNo}
+              setpageNo={setPageNo}
+              // agentFilterValue={agentFilterValue}
+              // adminFilterValue={adminFilterValue}
+              // interestFilterValue={interestFilterValue}
+              // categoryFilterValue={categoryFilterValue}
+              // localFilterValue={localFilterValue}
+              // webFilterValue={webFilterValue}
+              // filterByEmployeeId={filterByEmployeeId}
+              consultationOptedFilterValue={consultationOptedFilterValue}
+              consultationStartDateFilterValue={consultationStartDateFilterValue}
+              consultationEndDateFilterValue={consultationEndDateFilterValue}
+            />
             {/* Consultation Table */}
-            <ConsultationTable
+            {/* <ConsultationTable
               heading={"Consultation"}
               showAddForm={showAddItemForm}
               adminList={adminList}
@@ -210,7 +298,7 @@ const ManageConsultation = () => {
               pageNo={pageNo}
               setPageNo={setPageNo}
               resetWithoutConsultationId={resetWithoutConsultationId}
-            />
+            /> */}
           </div>
         </div>
       </div>

@@ -330,7 +330,7 @@ const EmailList = ({
                                 {email.hasAttachments === true ? (
                                   <TiAttachment />
                                 ) : (
-                                  `No Attchment's`
+                                  `No Attachments`
                                 )}
                               </td>
                               {/* <td

@@ -15,8 +15,10 @@ import { Link } from "react-router-dom";
 import { HiOutlineInboxIn } from "react-icons/hi";
 import ReceiveAmountModal from "../../forms/admin/ReceiveAmountModal";
 import CommonRetainerAgreementDate from "../Retaineragreement/CommonRetainerAgreementDate";
+import UploadPaymentInvoice from '../../forms/payment invoice/UploadPaymentInvoice';
 const Payment_Page = (props) => {
   const [openAddPaymentForm, setOpenAddPaymentForm] = useState(false);
+  const [openUploadPaymentForm, setOpenUploadPaymentForm] = useState(false);
   const [openRecPaymentForm, setOpenRecPaymentForm] = useState(false);
   const [openPaymentReminder, setOpenPaymentReminder] = useState(false);
   const [apiCall, setApiCall] = useState(false);
@@ -163,9 +165,10 @@ const Payment_Page = (props) => {
         <div
           className={` d-flex justify-content-end`}
         >
-          <div className="p-3">
+          <div className=" d-flex justify-content-space-between p-3">
+
             <button
-              className="btn btn-primary"
+              className="btn btn-primary mx-2 "
               onClick={() => {
                 setOpenAddPaymentForm(true)
                 GetAllUserData()
@@ -174,6 +177,16 @@ const Payment_Page = (props) => {
               disabled={lastInvoiceNo ? false : true}
             >
               Add Invoice
+            </button><button
+              className="btn btn-primary"
+              onClick={() => {
+                setOpenUploadPaymentForm(true)
+                GetAllUserData()
+                setSingleInvoiceData()
+              }}
+              disabled={lastInvoiceNo ? false : true}
+            >
+              Upload Invoice
             </button>
           </div>
         </div>
@@ -192,6 +205,20 @@ const Payment_Page = (props) => {
             lastInvoiceNo={lastInvoiceNo}
           />
         )}
+        {openUploadPaymentForm &&
+          <UploadPaymentInvoice
+            close={() => {
+              setOpenUploadPaymentForm(false)
+              GetAllUserData()
+            }}
+            show={openUploadPaymentForm}
+            userId={props.user_id}
+            userType={props.user_type}
+            userEmail={props.user_email}
+            lastInvoiceNo={lastInvoiceNo}
+            setApiCall={setApiCall}
+          />
+        }
         {openRecPaymentForm ? (
           <ReceiveAmountModal
             close={() => setOpenRecPaymentForm(false)}
@@ -326,7 +353,7 @@ const Payment_Page = (props) => {
                       <div className="btn-group button_group" role="group">
 
                         <button
-                          className={item.is_send_mail === 1 || item.is_send_mail === "1" ? "d-none" : "btn btn-outline-info action_btn"}
+                          className={item.is_send_mail === 1 || item.is_send_mail === "1" || item.added_type === "uploaded_invoice" ? "d-none" : "btn btn-outline-info action_btn"}
                           onClick={() => {
                             setOpenAddPaymentForm(true)
                             setSingleInvoiceData(item)
@@ -350,7 +377,7 @@ const Payment_Page = (props) => {
                         </button> */}
 
                         <button
-                          className="btn btn-outline-info action_btn"
+                          className={item.added_type === "uploaded_invoice" ? "d-none" : "btn btn-outline-info action_btn"}
                           onClick={() => {
                             setOpenPaymentReminder(true);
                             setSingleInvoiceData(item)
@@ -362,7 +389,7 @@ const Payment_Page = (props) => {
                           </span>
                         </button>
                         <button
-                          className="btn btn-outline-info action_btn "
+                          className={item.added_type === "uploaded_invoice" ? "d-none" : "btn btn-outline-info action_btn "}
                           title="Receive amount"
                           onClick={() => {
                             setOpenRecPaymentForm(true);

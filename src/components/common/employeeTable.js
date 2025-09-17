@@ -91,11 +91,13 @@ export default function EmployeeTable(props) {
       ? StatusTab
       : props.pageName === "local_candidate"
         ? ""
-        : props.ApplicantType
-          ? "4,7,8,9"
-          : props.self === "yes"
-            ? "-1"
-            : "4,7,8,9"
+        : props.pageName === "consultation"
+          ? "10"
+          : props.ApplicantType
+            ? "4,7,8,9"
+            : props.self === "yes"
+              ? "-1"
+              : "4,7,8,9"
   );
 
   const [totalData, setTotalData] = useState("");
@@ -683,7 +685,7 @@ export default function EmployeeTable(props) {
         {props.heading === "Dashboard" ? null : (
           <div className="d-flex justify-content-between align-items-center w-100">
             <div
-              className={`btn-group mb-3 ${props.skill || location.pathname === "/slots" ? "d-none" : ""}`}
+              className={`btn-group mb-3 ${props.skill || location.pathname === "/slots" || props.pageName === "consultation" ? "d-none" : ""}`}
               role="group" aria-label="Basic example">
               <button
                 type="button"
@@ -897,7 +899,7 @@ export default function EmployeeTable(props) {
                 </div>
               </>
             ) : null}
-            <div className={location.pathname === "/slots" || props.job_id ? "d-none" : ""}>
+            <div className={location.pathname === "/slots" || props.pageName === "consultation" || props.job_id ? "d-none" : ""}>
               <div className="mt-2">
                 <CommonThreeDots
                   tableName={"employee"}
@@ -2001,7 +2003,7 @@ export default function EmployeeTable(props) {
                                       {(filterjson.employee_status || [])
                                         .filter(item =>
                                           props.self === "yes"
-                                            ? !["working on", "submitted", "completed", "retained"].includes(item.label.toLowerCase())
+                                            ? !["working on", "submitted", "completed",].includes(item.label.toLowerCase())
                                             : !["new", "prospect", "lead", "consultation", "lost", "dead"].includes(item.label.toLowerCase())
                                         )
                                         .sort(

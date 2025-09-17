@@ -7,31 +7,35 @@
 5. Resolved the issue with columns on Dynamic RA.
 6. Added disbursement to all RAs where required.
 7. Added option to upload RA and give view option to view it .
+8. Correct the spelling of Attachments in email list.
+9. Add Consultation list in consultation page.
+10. Add a "retained" status to the new applicant page to change the applicant's status.
+11. Added the option to upload payment invoices for candidates and made several updates.
 
 Date=>02(pura kiya tha) & 03/09/25(changes krk kiya tha)
 
-1.  Separate the forms for applicant type and subtype, as combining them is causing confusion. Add an option to update the sub-applicant type as well.
-2.  Reduce the space of the job_id column in the job table. Delete.
-3.  Resolved the delete feature for applicant and sub-applicant types.
-4.  Remove applicant type from the Add Task form in the Task Dashboard.
-5.  Added option to include consultation date, opted status, and consultation status on the applicant page.
-6.  Made changes to applicant type dynamic handling on the signup page and applied required updates.(Candidate register url for this partner :https://canpathwaysjobs.com/signup?ref=56
+10. Separate the forms for applicant type and subtype, as combining them is causing confusion. Add an option to update the sub-applicant type as well.
+11. Reduce the space of the job_id column in the job table. Delete.
+12. Resolved the delete feature for applicant and sub-applicant types.
+13. Remove applicant type from the Add Task form in the Task Dashboard.
+14. Added option to include consultation date, opted status, and consultation status on the applicant page.
+15. Made changes to applicant type dynamic handling on the signup page and applied required updates.(Candidate register url for this partner :https://canpathwaysjobs.com/signup?ref=56
     and partner credential shred in person to satvir)
-7.  Add applicant type stages on the Manage Applicant and New Applicant pages for the candidate.
-8.  Added live PayPal client ID for real payments and hide all others with dummy details.(PLease check it with live data i do not save any card detils so i didnt test this)
-9.  Set default location on the job page should be Canada.
-10. Add a sequence and apply conditions according to the Candidate list page for candidate status, and update it everywhere it is used.
-11. Correct the case in LMIA notes on the Manage LMIA page.
-12. Change the lock icon to an eye-close icon for the Hide Column option on the LMIA page.
-13. Resolve the issue of navigating to RA for user signature.
-14. Add contact details of the contact person on the company details page.
-15. Add the LMIA list on the company details page, make the required changes, and add conditions.
-16. Remove 'Limited' from the RA's as asked by Satvir.
-17. Update the employer's retainer agreement as per the new PDF Satvir emailed.
-18. Resolve the search canpathways immigration employer while adding jobs
-19. Add global search for the employer’s operating name, document, and document folder name.
-20. Change the partner of work permit to the work permit applicant and make the required changes.
-21. Resolve the issue with the timeline on the user details page.
+16. Add applicant type stages on the Manage Applicant and New Applicant pages for the candidate.
+17. Added live PayPal client ID for real payments and hide all others with dummy details.(PLease check it with live data i do not save any card detils so i didnt test this)
+18. Set default location on the job page should be Canada.
+19. Add a sequence and apply conditions according to the Candidate list page for candidate status, and update it everywhere it is used.
+20. Correct the case in LMIA notes on the Manage LMIA page.
+21. Change the lock icon to an eye-close icon for the Hide Column option on the LMIA page.
+22. Resolve the issue of navigating to RA for user signature.
+23. Add contact details of the contact person on the company details page.
+24. Add the LMIA list on the company details page, make the required changes, and add conditions.
+25. Remove 'Limited' from the RA's as asked by Satvir.
+26. Update the employer's retainer agreement as per the new PDF Satvir emailed.
+27. Resolve the search canpathways immigration employer while adding jobs
+28. Add global search for the employer’s operating name, document, and document folder name.
+29. Change the partner of work permit to the work permit applicant and make the required changes.
+30. Resolve the issue with the timeline on the user details page.
 
 Date=>25/08/25
 
