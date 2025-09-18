@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 export default function UploadAgreement(props) {
     const fileInputRef = useRef(null);
     const [isDragging, setIsDragging] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [docFileBase, setDocFileBase] = useState("");
     const [docFileBaseErr, setDocFileBaseErr] = useState("");
     let initialFormState = {
@@ -135,11 +136,7 @@ export default function UploadAgreement(props) {
     /*Function to submit the form */
     const onFormSubmit = async () => {
         if (validate() && docFileBase) {
-            console.log(props.emp_user_type === "employee" ? props.userData.employee_id : props.userData.company_id,
-                props.emp_user_type === "employee" ? "employee" : "employer",
-                props.folderId,
-                "",
-                [docFileBase]);
+            setLoading(true)
             try {
                 let res = await AddSharePointDOcument(
                     props.emp_user_type === "employee" ? props.userData.employee_id : props.userData.company_id,
@@ -165,12 +162,15 @@ export default function UploadAgreement(props) {
                         console.log(resApi);
                         props.setApicall(true)
                         close()
+                        setLoading(false)
                     } catch (err) {
                         console.log(err)
+                        setLoading(false)
                     }
                 }
             } catch (error) {
                 console.log("Error saving doc to sharepoint", error);
+                setLoading(false)
             }
         } else {
             setDocFileBaseErr("Please Select the Agreement file")
@@ -321,7 +321,7 @@ export default function UploadAgreement(props) {
                         </div>
                         <div className=' d-flex justify-content-center'>
                             <button type="button" onClick={(e) => { onFormSubmit(e) }} className="btn btn-primary">
-                                Submit
+                                {loading ? "submitting..." : "submit"}
                             </button>
                         </div>
                     </div>

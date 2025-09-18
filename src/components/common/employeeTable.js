@@ -92,7 +92,7 @@ export default function EmployeeTable(props) {
       : props.pageName === "local_candidate"
         ? ""
         : props.pageName === "consultation"
-          ? "10"
+          ? "-1,0,1,2,3,5,6,10,4,7,8,9"
           : props.ApplicantType
             ? "4,7,8,9"
             : props.self === "yes"
@@ -1147,7 +1147,7 @@ export default function EmployeeTable(props) {
                   >
                     Profile
                   </th>
-                  {status === "10" || status === 10 || status === "-1,0,1,2,3,5,6,10" || status === "4,7,8,9" ?
+                  {status === "10" || props.pageName === "consultation" || status === 10 || status === "-1,0,1,2,3,5,6,10" || status === "4,7,8,9" ?
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal text-truncate"
@@ -1165,7 +1165,7 @@ export default function EmployeeTable(props) {
                       </Link>
                     </th>
                     : null}
-                  {status === "10" || status === 10 || status === "-1,0,1,2,3,5,6,10" || status === "4,7,8,9" ?
+                  {status === "10" || props.pageName === "consultation" || status === 10 || status === "-1,0,1,2,3,5,6,10" || status === "4,7,8,9" ?
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal text-truncate"
@@ -2066,7 +2066,7 @@ export default function EmployeeTable(props) {
             {(new Date(empdata.created_at) >= oneMonthAgo && new Date(empdata.created_at) <= currentDate) === true ? "New" : "Retained"}          
             </p>
         </td> */}
-                        {status === "10" || status === 10 || status === "-1,0,1,2,3,5,6,10" || status === "4,7,8,9" ?
+                        {status === "10" || props.pageName === "consultation" || status === 10 || status === "-1,0,1,2,3,5,6,10" || status === "4,7,8,9" ?
                           <td className="text-center py-5">
                             <p
                               className="font-size-2 font-weight-normal text-black-2 mb-0"
@@ -2081,7 +2081,7 @@ export default function EmployeeTable(props) {
                             </p>
                           </td>
                           : null}
-                        {status === "10" || status === 10 || status === "-1,0,1,2,3,5,6,10" || status === "4,7,8,9" ?
+                        {status === "10" || props.pageName === "consultation" || status === 10 || status === "-1,0,1,2,3,5,6,10" || status === "4,7,8,9" ?
                           <td className="text-center py-5">
                             <p
                               className="font-size-2 font-weight-normal text-black-2 mb-0"
@@ -2179,7 +2179,7 @@ export default function EmployeeTable(props) {
                                       {/* <i className="fas fa-stream text-gray"></i> */}
                                     </button>
                                     <button
-                                      className={empdata.status === "10" || empdata.status === 10 ? "btn btn-outline-info action_btn" : "d-none"}
+                                      className={empdata.status === "10" || props.pageName === "consultation" || empdata.status === 10 ? "btn btn-outline-info action_btn" : "d-none"}
                                       onClick={() =>
                                         AddConsultaionClick(empdata)
                                       }

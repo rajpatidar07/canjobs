@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 export default function UploadPaymentInvoice(props) {
     const fileInputRef = useRef(null);
     const [isDragging, setIsDragging] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [fileName, setFileName] = useState("");
 
     // Modified initial state to hold a single file as a string (Base64)
@@ -155,6 +156,7 @@ export default function UploadPaymentInvoice(props) {
         }
 
         if (isValid) {
+            setLoading(true)
             try {
                 let res = await AddUpdatePaymentInvoiceApi(state);
                 if (res.data.status === 1 || res.data.status === "1") {
@@ -164,15 +166,18 @@ export default function UploadPaymentInvoice(props) {
                     });
                     close();
                     props.setApiCall(true);
+                    setLoading(false)
                 } else {
                     // Handle API errors if status is not 1 or "1"
                     toast.error(res.data.message || "Failed to create payment invoice.", {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 1000,
                     });
+                    setLoading(false)
                 }
             } catch (err) {
                 console.error("API Error:", err);
+                setLoading(false)
                 toast.error("An error occurred while submitting the form.", {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 1000,
@@ -323,8 +328,8 @@ export default function UploadPaymentInvoice(props) {
                         </div>
 
                         <div className=' d-flex justify-content-center'>
-                            <button type="button" onClick={onFormSubmit} className="btn btn-primary">
-                                Submit
+                            <button type="button" disable={loading} onClick={onFormSubmit} className="btn btn-primary">
+                                {loading ? "submitting..." : "submit"}
                             </button>
                         </div>
                     </div>
