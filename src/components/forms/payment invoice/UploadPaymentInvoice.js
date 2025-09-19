@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import useValidation from '../../common/useValidation';
 import { toast } from 'react-toastify';
@@ -28,7 +28,7 @@ export default function UploadPaymentInvoice(props) {
 
     // Updated validators for the single file field
     let validators = {
-        file: [
+        file: props.singleInvoiceData.id ? null : [
             (value) => (value === "" || value === null ? "File is required" : null),
         ],
         // Add other validators as needed for other fields
@@ -46,6 +46,27 @@ export default function UploadPaymentInvoice(props) {
         e.preventDefault();
         setIsDragging(true);
     };
+    console.log(props.singleInvoiceData)
+    useEffect(() => {
+        if (props.singleInvoiceData) {
+            setState({
+                ...state,
+                "invoice_no": props.singleInvoiceData?.invoice_no,
+                "user_email": props.singleInvoiceData?.user_email,
+                "terms": props.singleInvoiceData?.terms,
+                "invoice_date": props.singleInvoiceData?.invoice_date,
+                "user_id": props.singleInvoiceData?.user_id,
+                "user_type": props.singleInvoiceData?.user_type,
+                "due_date": props.singleInvoiceData?.due_date,
+                "due_amount": props.singleInvoiceData?.due_amount,
+                "received_amount": props.singleInvoiceData?.received_amount,
+                "added_type": props.singleInvoiceData?.added_type,
+                "file": props.singleInvoiceData?.file,
+                "id": props.singleInvoiceData?.id,
+            })
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.singleInvoiceData])
 
     const handleDragLeave = () => {
         setIsDragging(false);
@@ -150,7 +171,7 @@ export default function UploadPaymentInvoice(props) {
     const onFormSubmit = async () => {
         // Ensure file validation is considered
         const isValid = validate();
-        if (!state.file) { // Explicitly check if a file is selected
+        if (!state.file && !props.singleInvoiceData?.id) { // Explicitly check if a file is selected
             setErrors(prevErrors => ({ ...prevErrors, file: "File is required" }));
             return;
         }
@@ -223,6 +244,7 @@ export default function UploadPaymentInvoice(props) {
                                 className='form-control'
                             />
                         </div>
+                        {console.log(state.invoice_date)}
                         <div className="form-group col mt-5">
                             <label htmlFor='invoice_date'>Invoice Date</label>
                             <input
@@ -287,7 +309,7 @@ export default function UploadPaymentInvoice(props) {
                             </div>
                         )}
 
-                        <div className="d-flex align-items-center justify-content-start col-12"
+                        <div className={props?.singleInvoiceData?.id ? "d-none" : "d-flex align-items-center justify-content-start col-12"}
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
                             onDrop={handleDrop}
@@ -328,7 +350,7 @@ export default function UploadPaymentInvoice(props) {
                         </div>
 
                         <div className=' d-flex justify-content-center'>
-                            <button type="button" disable={loading} onClick={onFormSubmit} className="btn btn-primary">
+                            <button type="button" disabled={loading} onClick={onFormSubmit} className="btn btn-primary">
                                 {loading ? "submitting..." : "submit"}
                             </button>
                         </div>

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import useValidation from '../../common/useValidation';
 import filterjson from '../../json/filterjson';
@@ -32,6 +32,20 @@ export default function UploadAgreement(props) {
     const { state, setState, onInputChange, errors, validate, setErrors } =
         useValidation(initialFormState, validators);
 
+    useEffect(() => {
+        if (props.felidData) {
+            setState({
+                ...state, type: props.felidData.type, "signature_status": props.felidData.signature_status,
+                "send_date": props.felidData.send_date,
+                "received_date": props.felidData.received_date,
+                "receiver": props.felidData.receiver,
+                "receiver_type": props.felidData.receiver_type,
+                "added_type": props.felidData.added_type,
+                id: props.felidData.id
+            })
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.felidData])
     const handleDragOver = (e) => {
         e.preventDefault();
         setIsDragging(true);
@@ -135,48 +149,71 @@ export default function UploadAgreement(props) {
     }
     /*Function to submit the form */
     const onFormSubmit = async () => {
-        if (validate() && docFileBase) {
-            setLoading(true)
+        console.log(validate(), (docFileBase || state.id));
+        if (validate() && (docFileBase || state.id)) {
+            setLoading(true);
             try {
-                let res = await AddSharePointDOcument(
-                    props.emp_user_type === "employee" ? props.userData.employee_id : props.userData.company_id,
-                    props.emp_user_type === "employee" ? "employee" : "employer",
-                    props.folderId,
-                    "",
-                    docFileBase,
-                    1
-                );
-
-                console.log(res)
-                if (res.data.message === "Document Upload") {
-                    setDocFileBaseErr("")
-                    try {
-                        let resApi = await AddDocIdToAGreementApiFun({
-                            felidData: state,
-                            user_id: state.receiver,
-                            emp_user_type: state.receiver_type,
-                            folderID: props.folderID,
-                            document_id: res.data.data[0][0].document_id,
-                            // email_for
-                        })
-                        console.log(resApi);
-                        props.setApicall(true)
-                        close()
-                        setLoading(false)
-                    } catch (err) {
-                        console.log(err)
-                        setLoading(false)
+                let res;
+                if (docFileBase) {
+                    res = await AddSharePointDOcument(
+                        props.emp_user_type === "employee" ? props.userData.employee_id : props.userData.company_id,
+                        props.emp_user_type === "employee" ? "employee" : "employer",
+                        props.folderId,
+                        "",
+                        docFileBase,
+                        1
+                    );
+                    // Move the dependent code here, inside the check where 'res' is guaranteed to be defined
+                    if (res?.data?.message === "Document Upload" || props?.felidData?.id) {
+                        setDocFileBaseErr("");
+                        try {
+                            let resApi = await AddDocIdToAGreementApiFun({
+                                felidData: state,
+                                user_id: state.receiver,
+                                emp_user_type: state.receiver_type,
+                                folderID: props.folderID,
+                                document_id: res.data.data[0][0].document_id,
+                                // email_for
+                            });
+                            console.log(resApi);
+                            props.setApicall(true);
+                            close();
+                            setLoading(false);
+                        } catch (err) {
+                            console.log(err);
+                            setLoading(false);
+                        }
+                    }
+                } else { // This block handles the case where there is no new document to upload but an existing one to update
+                    if (props?.felidData?.id) {
+                        setDocFileBaseErr("");
+                        try {
+                            let resApi = await AddDocIdToAGreementApiFun({
+                                felidData: state,
+                                user_id: state.receiver,
+                                emp_user_type: state.receiver_type,
+                                // The document_id is not available here, so you need to handle that
+                                // For example, by getting it from the existing fieldData
+                                document_id: props.felidData.document_id,
+                            });
+                            console.log(resApi);
+                            props.setApicall(true);
+                            close();
+                            setLoading(false);
+                        } catch (err) {
+                            console.log(err);
+                            setLoading(false);
+                        }
                     }
                 }
             } catch (error) {
                 console.log("Error saving doc to sharepoint", error);
-                setLoading(false)
+                setLoading(false);
             }
         } else {
-            setDocFileBaseErr("Please Select the Agreement file")
+            setDocFileBaseErr("Please Select the Agreement file");
         }
-    }
-
+    };
     return (
         <Modal
             show={props.show}
@@ -259,8 +296,8 @@ export default function UploadAgreement(props) {
                                 name="signature_status"
                                 className='form-control'>
                                 <option value="">select</option>
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
+                                <option value="2">Completed</option>
+                                <option value="1">Incomplete</option>
                             </select>
                         </div>
                         {docFileBase.length > 0 && (
@@ -283,7 +320,7 @@ export default function UploadAgreement(props) {
                                 </ul>
                             </div>
                         )}
-                        <div className="d-flex align-items-center justify-content-start col-12"
+                        <div className={props?.felidData?.id ? "d-none" : "d-flex align-items-center justify-content-start col-12"}
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
                             onDrop={handleDrop}
@@ -320,7 +357,7 @@ export default function UploadAgreement(props) {
                             </span> : null}
                         </div>
                         <div className=' d-flex justify-content-center'>
-                            <button type="button" onClick={(e) => { onFormSubmit(e) }} className="btn btn-primary">
+                            <button type="button" disabled={loading} onClick={(e) => { onFormSubmit(e) }} className="btn btn-primary">
                                 {loading ? "submitting..." : "submit"}
                             </button>
                         </div>

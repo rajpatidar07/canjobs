@@ -217,6 +217,8 @@ const Payment_Page = (props) => {
             userEmail={props.user_email}
             lastInvoiceNo={lastInvoiceNo}
             setApiCall={setApiCall}
+            singleInvoiceData={singleInvoiceData}
+
           />
         }
         {openRecPaymentForm ? (
@@ -353,9 +355,13 @@ const Payment_Page = (props) => {
                       <div className="btn-group button_group" role="group">
 
                         <button
-                          className={item.is_send_mail === 1 || item.is_send_mail === "1" || item.added_type === "uploaded_invoice" ? "d-none" : "btn btn-outline-info action_btn"}
+                          className={item.is_send_mail === 1 || item.is_send_mail === "1" ? "d-none" : "btn btn-outline-info action_btn"}
                           onClick={() => {
-                            setOpenAddPaymentForm(true)
+                            if (item.added_type === "uploaded_invoice") {
+                              setOpenUploadPaymentForm(true)
+                            } else {
+                              setOpenAddPaymentForm(true)
+                            }
                             setSingleInvoiceData(item)
                           }}
                           title="Edit pdf"

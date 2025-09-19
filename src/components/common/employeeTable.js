@@ -1183,6 +1183,78 @@ export default function EmployeeTable(props) {
                       </Link>
                     </th>
                     : null}
+                  {props.pageName === "consultation" ?
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal text-truncate"
+                    >
+                      <Link
+                        to={""}
+                        onClick={() => {
+                          handleSort("signature_status");
+                          props.setpageNo(1);
+                        }}
+                        className="text-gray"
+                        title="Sort by RA Signature status"
+                      >
+                        RA Signature status
+                      </Link>
+                    </th>
+                    : null}
+                  {props.pageName === "consultation" ?
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal text-truncate"
+                    >
+                      <Link
+                        to={""}
+                        onClick={() => {
+                          handleSort("received_date");
+                          props.setpageNo(1);
+                        }}
+                        className="text-gray"
+                        title="Sort by RA Received date"
+                      >
+                        RA Received date
+                      </Link>
+                    </th>
+                    : null}
+                  {props.pageName === "consultation" ?
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal text-truncate"
+                    >
+                      <Link
+                        to={""}
+                        onClick={() => {
+                          handleSort("payment_mode");
+                          props.setpageNo(1);
+                        }}
+                        className="text-gray"
+                        title="Sort by Payment Mode"
+                      >
+                        Payment Mode
+                      </Link>
+                    </th>
+                    : null}
+                  {props.pageName === "consultation" ?
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal text-truncate"
+                    >
+                      <Link
+                        to={""}
+                        onClick={() => {
+                          handleSort("payment_date");
+                          props.setpageNo(1);
+                        }}
+                        className="text-gray"
+                        title="Sort by Payment Date"
+                      >
+                        Payment Date
+                      </Link>
+                    </th>
+                    : null}
                   {props.heading === "Dashboard" ? (
                     ""
                   ) : (
@@ -1200,7 +1272,7 @@ export default function EmployeeTable(props) {
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || employeeData.length === 0 ? (
                   <tr>
-                    <th colSpan={14} className="bg-white text-center">
+                    <th colSpan={props.pageName === "consultation" ? 18 : 14} className="bg-white text-center">
                       No Data Found
                     </th>
                   </tr>
@@ -2092,6 +2164,38 @@ export default function EmployeeTable(props) {
                               <ConvertTime _date={empdata.consultation_date} format={"DD MMMM, YYYY"} />                            </p>
                           </td>
                           : null}
+                        {props.pageName === "consultation" ?
+                          <td className="text-center py-5">
+                            <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                              {empdata.signature_status === "2" ? (
+                                <span className="p-1 bg-primary-opacity-8 text-white text-center  border rounded-pill">
+                                  Complete
+                                </span>
+                              ) : (
+                                <span className="p-1 bg-warning text-white text-center  border rounded-pill">
+                                  Incomplete
+                                </span>
+                              )}
+                            </p>
+                          </td>
+                          : null
+                        }
+                        {props.pageName === "consultation" ? <td className="text-capitalize ">
+                          <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+
+                            {empdata.received_date ? <ConvertTime _date={empdata.received_date} format={"DD MMMM, YYYY"} /> : "N/A"}
+                          </p>
+                        </td> : null}
+                        {props.pageName === "consultation" ? <td className=" py-5">
+                          <p className="font-size-2 font-weight-normal text-black-2 mb-0 text-capitalize">
+                            {empdata.payment_mode ? empdata.payment_mode : "N/A"}
+                          </p>
+                        </td> : null}
+                        {props.pageName === "consultation" ? <td className=" py-5">
+                          <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                            {empdata.payment_date ? <ConvertTime _date={empdata.payment_date} format={"DD MMMM, YYYY"} /> : "N/A"}
+                          </p>
+                        </td> : null}
                         {props.heading === "Dashboard" ? (
                           ""
                         ) : (

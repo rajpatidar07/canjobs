@@ -350,10 +350,15 @@ export default function RetauberAgreementList({
                             </span>
                           </button>
                           <button
-                            className={data.added_type === "uploaded_agreement" ? "d-none" : "btn btn-outline-info action_btn "}
+                            className={"btn btn-outline-info action_btn "}
                             onClick={() => {
-                              setOpenAddAgreementFelids(true);
+                              if (data.added_type === "uploaded_agreement") {
+                                setOpenUploadAgreementForm(true)
+                              } else {
+                                setOpenAddAgreementFelids(true);
+                              }
                               setAgreementData(data);
+
                             }}
                             title="Add fields"
                           // disabled={data.initial}
@@ -544,7 +549,6 @@ export default function RetauberAgreementList({
             setApicall={setApicall}
           />
         ) : null}
-        {console.log(folderId, "ppppp")}
         {openUploadAgreementForm ? (
           <UploadAgreement
             show={openUploadAgreementForm}
@@ -553,6 +557,7 @@ export default function RetauberAgreementList({
             userData={userData}
             setApicall={setApicall}
             folderId={folderId}
+            felidData={agreementData}
 
           />
         ) : null}
