@@ -1,71 +1,73 @@
-import React, { useEffect, useRef, useState } from "react";
-import { CiFilter, CiSearch } from "react-icons/ci";
+import React, {/* useEffect, useRef, useState*/ } from "react";
+// import { CiFilter, CiSearch } from "react-icons/ci";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-import { FaAngleDown } from "react-icons/fa";
-import { IoPersonCircleOutline } from "react-icons/io5";
-import PaymentTable from "../common/PaymentTable";
-import {
-  getallAdminData,
-  getallEmployeeData,
-  getAllEmployer,
-} from "../../api/api";
-import { Link } from "react-router-dom";
+import PaymentPage from "../common/payment invoice/PaymentPage";
+// import { FaAngleDown } from "react-icons/fa";
+// import { IoPersonCircleOutline } from "react-icons/io5";
+// import PaymentTable from "../common/PaymentTable";
+// import {
+//   getallAdminData,
+//   getallEmployeeData,
+//   getAllEmployer,
+// } from "../../api/api";
+// import { Link } from "react-router-dom";
+// import PaymentInvoiceTable from "../common/payment invoice/PaymentInvoiceTable";
 const ManagePayment = () => {
-  const [showdropdown, setShowdropdown] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedAdminType, setSelectedAdminType] = useState("");
-  const [selectedAdminId, setSelectedAdminId] = useState("");
-  const [employeeEmployerlist, setEmployeeEmployerlist] = useState(false);
-  const [adminList, setAdminList] = useState([]);
-  const [showAddItemForm, setShowAddItemForm] = useState(false);
-  const [showfilterdropdown, setShowfilterdropdown] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
-  const [search, setSearch] = useState("");
-  const [resetWithPaymentRecId, setResetWithPaymentRecId] = useState(false);
+  // const [showdropdown, setShowdropdown] = useState(false);
+  // const [searchQuery, setSearchQuery] = useState("");
+  // const [selectedAdminType, setSelectedAdminType] = useState("");
+  // const [selectedAdminId, setSelectedAdminId] = useState("");
+  // const [employeeEmployerlist, setEmployeeEmployerlist] = useState(false);
+  // const [adminList, setAdminList] = useState([]);
+  // const [showAddItemForm, setShowAddItemForm] = useState(false);
+  // const [showfilterdropdown, setShowfilterdropdown] = useState(false);
+  // const [isFocused, setIsFocused] = useState(false);
+  // const [search, setSearch] = useState("");
+  // const [resetWithPaymentRecId, setResetWithPaymentRecId] = useState(false);
 
-  const dropdownRef = useRef(null);
+  // const dropdownRef = useRef(null);
 
-  /*function to get the user and admin data */
-  const getUserData = async () => {
-    try {
-      const userData = await getallEmployeeData();
-      const CompanyData = await getAllEmployer();
-      const resAdmin = await getallAdminData();
-      setAdminList(resAdmin.data);
-      let allUserData = [];
-      if (userData?.data?.length === 0 && CompanyData?.data?.length === 0) {
-        setEmployeeEmployerlist([]);
-      } else {
-        allUserData = [...userData.data, ...CompanyData.data];
-        setEmployeeEmployerlist(allUserData);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // /*function to get the user and admin data */
+  // const getUserData = async () => {
+  //   try {
+  //     const userData = await getallEmployeeData();
+  //     const CompanyData = await getAllEmployer();
+  //     const resAdmin = await getallAdminData();
+  //     setAdminList(resAdmin.data);
+  //     let allUserData = [];
+  //     if (userData?.data?.length === 0 && CompanyData?.data?.length === 0) {
+  //       setEmployeeEmployerlist([]);
+  //     } else {
+  //       allUserData = [...userData.data, ...CompanyData.data];
+  //       setEmployeeEmployerlist(allUserData);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-  const filteredAdmins = adminList
-    ? adminList?.filter((admin) =>
-      admin?.name?.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    : [];
+  // const filteredAdmins = adminList
+  //   ? adminList?.filter((admin) =>
+  //     admin?.name?.toLowerCase().includes(searchQuery.toLowerCase())
+  //   )
+  //   : [];
 
-  useEffect(() => {
-    getUserData();
-  }, []);
+  // useEffect(() => {
+  //   getUserData();
+  // }, []);
 
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowdropdown(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  // useEffect(() => {
+  //   function handleClickOutside(event) {
+  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+  //       setShowdropdown(false);
+  //     }
+  //   }
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
   return (
     <div className="site-wrapper overflow-hidden bg-default-2">
       {/* Header & Sidebar */}
@@ -80,9 +82,8 @@ const ManagePayment = () => {
                 <h3 className="font-size-6 mb-0">Manage Payments</h3>
               </div>
             </div>
-
-            <div className="d-flex justify-content-start">
-              {/* New Item Dropdown */}
+            <PaymentPage pageName={"manage_payment"} />
+            {/* <div className=" justify-content-start d-none">//d-flex tha Abhi payemnt wala compoent import krne ke liye d- none kiya he 
               <div className="position-relative mr-2">
                 <button
                   className="font-size-4 rounded-3 border-0 btn btn-primary p-2 mr-4"
@@ -101,7 +102,6 @@ const ManagePayment = () => {
                 </button>
               </div>
 
-              {/* Search */}
               <div
                 className="input-group mr-4"
                 style={{
@@ -136,7 +136,6 @@ const ManagePayment = () => {
                 />
               </div>
 
-              {/* person dropdown */}
               <div className="position-relative" ref={dropdownRef}>
                 <button
                   className="font-size-4 rounded-3 border-0 btn bg-white p-2 mr-4"
@@ -165,7 +164,6 @@ const ManagePayment = () => {
                         onChange={(e) => setSearchQuery(e.target.value)}
                       />
                     </div>
-                    {/* Admin List */}
                     <ul className="list-unstyled d-flex align-items-center flex-wrap">
                       {filteredAdmins.length > 0 ? (
                         filteredAdmins.map((admin) => (
@@ -198,7 +196,6 @@ const ManagePayment = () => {
                 )}
               </div>
 
-              {/* Filter Dropdown */}
               <div className="position-relative d-none">
                 <button
                   className="font-size-4 rounded-3 border-0 bg-white btn p-2 mr-4"
@@ -286,10 +283,10 @@ const ManagePayment = () => {
               >
                 Reset
               </button>
-            </div>
+            </div> */}
 
             {/* Payment Table */}
-            <PaymentTable
+            {/* <PaymentTable
               heading={"Payment Table"}
               showAddForm={showAddItemForm}
               setShowAddForm={setShowAddItemForm}
@@ -300,7 +297,23 @@ const ManagePayment = () => {
               selectedAdminType={selectedAdminType}
               resetWithPaymentRecId={resetWithPaymentRecId}
 
-            />
+            /> */}
+            {/* <PaymentInvoiceTable
+              handleSort={handleSort}
+              setDeleteAlert={setDeleteAlert}
+              setDeleteData={setDeleteData}
+              setOpenViewInvoice={setOpenViewInvoice}
+              setInvoiceData={setInvoiceData}
+              GetInvoicePdf={GetInvoicePdf}
+              setOpenRecPaymentForm={setOpenRecPaymentForm}
+              setOpenPaymentReminder={setOpenPaymentReminder}
+              setOpenUploadPaymentForm={setOpenUploadPaymentForm}
+              setOpenAddPaymentForm={setOpenAddPaymentForm}
+              setSingleInvoiceData={setSingleInvoiceData}
+              json={json}
+              invoiceList={invoiceList}
+              totalData={totalData}
+            /> */}
           </div>
         </div>
       </div>

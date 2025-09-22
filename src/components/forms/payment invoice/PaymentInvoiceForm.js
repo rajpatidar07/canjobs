@@ -48,7 +48,15 @@ const PaymentInvoiceForm = (props) => {
     // received_amount: ""
   }
     ;
-  const { state, setState, onInputChange, /*errors, validate*/ } = useValidation(
+  const validators = {
+    user_id: [
+      (value) =>
+        value === "" || value === null || value.trim() === ""
+          ? "User is required"
+          : "",
+    ],
+  }
+  const { state, setState, onInputChange, errors, validate } = useValidation(
     initialFormState,);
   /*Function to get the  payment invoice terms list */
   let GetAllJsonList = async () => {
@@ -235,45 +243,54 @@ const PaymentInvoiceForm = (props) => {
                   <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
                     Customer
                   </label>
-                  <SelectBox
-                    Width={"yes"}
-                    options={(props.employee_employer_list || []).map((item) => {
-                      const value = item.employee_id
-                        ? `${item.employee_id},employee`
-                        : item.company_id
-                          ? `${item.company_id},employer`
-                          : `${item.id},applicant_type`;
+                  <div className={errors.reffer_by ? "border border-danger rounded" : ""}>
+                    <SelectBox
+                      Width={"yes"}
+                      options={(props.employee_employer_list || []).map((item) => {
+                        const value = item.employee_id
+                          ? `${item.employee_id},employee`
+                          : item.company_id
+                            ? `${item.company_id},employer`
+                            : `${item.id},applicant_type`;
 
-                      const label = item.employee_id
-                        ? `${item.name} (Candidate)`
-                        : item.company_id
-                          ? `${item.company_name} (Client)`
-                          : item.title
-                            ? `${item.title} (Applicant Type)`
-                            : "Unknown User";
+                        const label = item.employee_id
+                          ? `${item.name} (Candidate)`
+                          : item.company_id
+                            ? `${item.company_name} (Client)`
+                            : item.title
+                              ? `${item.title} (Applicant Type)`
+                              : "Unknown User";
 
-                      return {
-                        value,
-                        label,
-                      };
-                    })}
-                    type="userId"
-                    selectedValue={
-                      state.user_id && state.user_type
-                        ? `${state.user_id},${state.user_type}`
-                        : ""
-                    }
-                    onChange={(e) => {
-                      const val = e ? e.value.split(",") : ["", ""];
-                      setState((prev) => ({
-                        ...prev,
-                        user_id: val[0],
-                        user_type: val[1],
-                      }));
-                    }}
-                    isDisabled={!!(state.user_id && state.user_type)}
-                  />
-
+                        return {
+                          value,
+                          label,
+                        };
+                      })}
+                      type="userId"
+                      selectedValue={
+                        state.user_id && state.user_type
+                          ? `${state.user_id},${state.user_type}`
+                          : ""
+                      }
+                      onChange={(e) => {
+                        const val = e ? e.value.split(",") : ["", ""];
+                        setState((prev) => ({
+                          ...prev,
+                          user_id: val[0],
+                          user_type: val[1],
+                        }));
+                      }}
+                      isDisabled={!!(state.user_id && state.user_type)}
+                    />
+                    {errors.user_id && (
+                      <span
+                        key={errors.user_id}
+                        className="text-danger font-size-3"
+                      >
+                        {errors.user_id}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="form-group col-md-3">
                   <div className="d-flex justify-content-end align-items-start">

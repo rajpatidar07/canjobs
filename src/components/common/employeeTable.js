@@ -2283,7 +2283,7 @@ export default function EmployeeTable(props) {
                                       {/* <i className="fas fa-stream text-gray"></i> */}
                                     </button>
                                     <button
-                                      className={empdata.status === "10" || props.pageName === "consultation" || empdata.status === 10 ? "btn btn-outline-info action_btn" : "d-none"}
+                                      className={"btn btn-outline-info action_btn"}
                                       onClick={() =>
                                         AddConsultaionClick(empdata)
                                       }

@@ -119,7 +119,7 @@ export default function AddConsultationInCandidate(props) {
                 <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
                     <form onSubmit={(e) => onAddConsultationClick(e)}>
                         <h5 className="text-center pt-2 mb-7">
-                            Add Consultation</h5>
+                            {state.id ? "Update" : "Add"} Consultation</h5>
                         <div className="row pt-5">
                             <div className="form-group col-12 ">
                                 <label
@@ -187,8 +187,7 @@ export default function AddConsultationInCandidate(props) {
                                     </span>
                                 )}
                             </div>
-                            <div className="form-group  d-flex justify-content-center text-center">
-
+                            <div className="form-group text-center w-100">
                                 {loading === true ? (
                                     <button
                                         className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"

@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from "react"; import { FaAmazonPay, FaEye } from "react-icons/fa";
-import { CiEdit, CiTrash } from "react-icons/ci";
-import { AiOutlineFilePdf } from "react-icons/ai";
+import React, { useEffect, useState } from "react";
 import PaymentReminder from "../../forms/payment invoice/PaymentReminder";
 import { getallEmployeeData, getAllEmployer, getAllInvioce, DeletePaymentInvoiceApi, GetLastPaymentInvoiceApi, GetSharePointData, getSharePointParticularFolders, GetFilter } from "../../../api/api";
-import ConvertTime from "../Common function/ConvertTime";
 import SAlert from "../sweetAlert";
 import Pagination from "../pagination"
 import { toast } from "react-toastify";
 import Loader from "../loader";
 import PaymentInvoiceForm from "../../forms/payment invoice/PaymentInvoiceForm";
-import { FiAlertCircle } from "react-icons/fi";
 import ViewPdf from "../Retaineragreement/viewPdf";
-import { Link } from "react-router-dom";
-import { HiOutlineInboxIn } from "react-icons/hi";
 import ReceiveAmountModal from "../../forms/admin/ReceiveAmountModal";
-import CommonRetainerAgreementDate from "../Retaineragreement/CommonRetainerAgreementDate";
 import UploadPaymentInvoice from '../../forms/payment invoice/UploadPaymentInvoice';
-const Payment_Page = (props) => {
+import PaymentInvoiceTable from "./PaymentInvoiceTable";
+import DatePicker from "react-datepicker";
+const PaymentPage = (props) => {
   const [openAddPaymentForm, setOpenAddPaymentForm] = useState(false);
   const [openUploadPaymentForm, setOpenUploadPaymentForm] = useState(false);
   const [openRecPaymentForm, setOpenRecPaymentForm] = useState(false);
@@ -31,6 +26,8 @@ const Payment_Page = (props) => {
   const [invoicePdf, setInvoicePdf] = useState("");
   const [openViewInvoice, setOpenViewInvoice] = useState("");
   const [invoiceData, setInvoiceData] = useState("");
+  const [startDateFilterValue, setStartDateFilterValue] = useState("");
+  const [endDateFilterValue, setEndDateFilterValue] = useState("");
   let [json, setJson] = useState()
   /*Pagination */
   const [currentPage, setCurrentPage] = useState(1);
@@ -42,7 +39,7 @@ const Payment_Page = (props) => {
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteData, setDeleteData] = useState("");
 
-  /*Functio to get user data */
+  /*Function to get user data */
   const GetAllUserData = async () => {
     try {
       let res = await GetFilter()
@@ -59,7 +56,9 @@ const Payment_Page = (props) => {
         "page": currentPage,
         "limit": recordsPerPage,
         "sort_order": sortOrder,
-        "column_name": columnName
+        "column_name": columnName,
+        "start_date": startDateFilterValue,
+        "end_date": endDateFilterValue
       }
       const userData = await getallEmployeeData();
       const CompanyData = await getAllEmployer();
@@ -92,7 +91,7 @@ const Payment_Page = (props) => {
       setApiCall(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiCall, currentPage, columnName, sortOrder])
+  }, [apiCall, currentPage, columnName, sortOrder, startDateFilterValue, endDateFilterValue])
 
   /*Function to cancel the delete pop up */
   const CancelDelete = () => {
@@ -159,16 +158,44 @@ const Payment_Page = (props) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setColumnName(columnName);
   };
+  /*on change function of date piker of consultation */
+  const handleChange = (range) => {
+    const [startDate, endDate] = range;
+    setStartDateFilterValue(startDate);
+    setEndDateFilterValue(endDate);
+  };
   return (
     <div className="response_main_div w-100">
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
-        <div
-          className={` d-flex justify-content-end`}
-        >
-          <div className=" d-flex justify-content-space-between p-3">
-
+        <div className={` d-flex justify-content-between`}>
+          <div className=" d-flex justify-content-space-between flex-start p-3">
+            <div className="col form_group mr-4 ">
+              <p className="input_label">
+                Filter by Created Date  :
+              </p>
+              <DatePicker
+                selected={startDateFilterValue}
+                onChange={handleChange}
+                startDate={startDateFilterValue}
+                endDate={endDateFilterValue}
+                selectsRange
+              />
+            </div>
+            <div className="col form_group mr-4 mt-5">
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  setStartDateFilterValue("");
+                  setEndDateFilterValue("");
+                }}
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+          <div className={" d-flex justify-content-space-between flex-end p-3"}>
             <button
-              className="btn btn-primary mx-2 "
+              className="btn btn-primary mx-2 mt-5"
               onClick={() => {
                 setOpenAddPaymentForm(true)
                 GetAllUserData()
@@ -177,8 +204,9 @@ const Payment_Page = (props) => {
               disabled={lastInvoiceNo ? false : true}
             >
               Add Invoice
-            </button><button
-              className="btn btn-primary"
+            </button>
+            <button
+              className="btn btn-primary mt-5"
               onClick={() => {
                 setOpenUploadPaymentForm(true)
                 GetAllUserData()
@@ -232,233 +260,24 @@ const Payment_Page = (props) => {
         <div className="table-responsive main_table_div">
           {isLoading ? (
             <Loader />
-          ) : <table className="table table-striped main_data_table">
-            <thead>
-              <tr>
-                <th
-                  scope="col"
-                  className="border-0 font-size-4 font-weight-normal"
-                >
-                  <Link to="" className="text-dark" onClick={() => { handleSort("invoice_no") }}>
-                    Invoice No.
-                  </Link>
-                </th>
-                <th
-                  scope="col"
-                  className="border-0 font-size-4 font-weight-normal"
-                >
-                  <Link to="" className="text-dark" onClick={() => { handleSort("terms") }}>
-                    Terms
-                  </Link>
-                </th>
-                <th
-                  scope="col"
-                  className="border-0 font-size-4 font-weight-normal"
-                >
-                  <Link to="" className="text-dark" onClick={() => { handleSort("created_at") }}>
-                    Created On
-                  </Link>
-                </th>
-                <th
-                  scope="col"
-                  className="border-0 font-size-4 font-weight-normal"
-                >
-                  <Link to="" className="text-dark" onClick={() => { handleSort("status") }}>
-                    status</Link>
-                </th>
-                <th
-                  scope="col"
-                  className="border-0 font-size-4 font-weight-normal"
-                >
-                  <Link to="" className="text-dark" onClick={() => { handleSort("due_date") }}>
-                    Due date
-                  </Link>
-                </th>
-                <th
-                  scope="col"
-                  className="border-0 font-size-4 font-weight-normal"
-                >
-                  <Link to="" className="text-dark" onClick={() => { handleSort("due_amount") }}>
-                    Due amount</Link>
-                </th>
-                <th
-                  scope="col"
-                  className="border-0 font-size-4 font-weight-normal"
-                >
-                  Receive amount
-                </th>
-                <th
-                  scope="col"
-                  className="border-0 font-size-4 font-weight-normal"
-                >
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {totalData === 0 || invoiceList.length === 0 ? (
-                <tr>
-                  <th colSpan={6} className="bg-white text-center">
-                    No Data Found
-                  </th>
-                </tr>
-              ) :
-                (invoiceList || []).map((item, index) =>
-                  <tr key={index}>
-                    <td>{item.invoice_no}</td>
-                    <td className=" py-5">
-                      <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                        <span className="p-1">
-                          {json?.payment_invoice_terms.find((res) => res.id === parseInt(item.terms))?.value || "N/A"}
-                        </span>
-                      </p>
-                    </td>
-                    <td className=" py-5">
-                      <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                        <span className="p-1">
-                          <ConvertTime _date={item.created_at} format={"DD MMMM, YYYY"} />
-                        </span>
-                      </p>
-                    </td>
-                    <td>
-                      <p className="font-size-2 font-weight-normal mb-0">
-                        {item.status
-                          ? parseInt(item.status) === 1
-                            ? <span className="p-1 bg-primary-opacity-8 text-white  border rounded-pill">Payment received</span>
-                            : parseInt(item.status) === 2
-                              ? <span className="p-1 bg-warning text-white  border rounded-pill">Pending</span>
-                              : <span className="p-1 bg-danger text-white  border rounded-pill"> <FiAlertCircle /> Overdue on <ConvertTime _date={item.due_date} format={"DD/MM/YYYY"} /></span>
-                          : "N/A"}
-                      </p>
-                    </td>
-                    <td>
-                      <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                        <span className="p-1"><CommonRetainerAgreementDate _date={item.due_date} format={"DD MMMM, YYYY"} /></span>
-                      </p>
-                    </td>
-                    <td className=" py-5">
-                      <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                        <span className="p-1 ">
-                          {item.due_amount || 0}
-                        </span>
-                      </p>
-
-                    </td>
-                    <td className=" py-5">
-                      <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                        <span className="p-1 ">
-                          {item.received_amount || 0}
-                        </span>
-                      </p>
-                    </td>
-                    <td className=" py-5">
-                      <div className="btn-group button_group" role="group">
-
-                        <button
-                          className={item.is_send_mail === 1 || item.is_send_mail === "1" ? "d-none" : "btn btn-outline-info action_btn"}
-                          onClick={() => {
-                            if (item.added_type === "uploaded_invoice") {
-                              setOpenUploadPaymentForm(true)
-                            } else {
-                              setOpenAddPaymentForm(true)
-                            }
-                            setSingleInvoiceData(item)
-                          }}
-                          title="Edit pdf"
-                        >
-                          <span className="text-gray px-2">
-                            <CiEdit />
-                          </span>
-                        </button>
-                        {/* <button
-                          className="btn btn-outline-info action_btn"
-                          onClick={() => {
-                            setOpenPaymentReminder(true);
-                          }}
-                          title="Record Payment"
-                        >
-                          <span className="text-gray px-2">
-                            <BsRecordCircle />{" "}
-                          </span>
-                        </button> */}
-
-                        <button
-                          className={item.added_type === "uploaded_invoice" ? "d-none" : "btn btn-outline-info action_btn"}
-                          onClick={() => {
-                            setOpenPaymentReminder(true);
-                            setSingleInvoiceData(item)
-                          }}
-                          title="Payment Reminder"
-                        >
-                          <span className="text-gray px-2">
-                            <FaAmazonPay />
-                          </span>
-                        </button>
-                        <button
-                          className={item.added_type === "uploaded_invoice" ? "d-none" : "btn btn-outline-info action_btn "}
-                          title="Receive amount"
-                          onClick={() => {
-                            setOpenRecPaymentForm(true);
-                            setSingleInvoiceData(item);
-                          }}
-                          disabled={item.due_amount === 0 || item.due_amount === "0"}
-                        >
-                          <span className=" px-2"><HiOutlineInboxIn /></span>
-                        </button>
-                        <button
-                          className="btn btn-outline-info action_btn d-none"
-                          title="View Invoice"
-                        >
-                          <span className="text-gray px-2"><AiOutlineFilePdf /></span>
-                        </button>
-                        <button
-                          className="btn btn-outline-info action_btn "
-                          disabled={!item.document_id}
-                          onClick={() => {
-                            setOpenViewInvoice(true);
-                            setInvoiceData(item);
-                            GetInvoicePdf(item);
-                          }}
-                          title="View Invoice"
-                        >
-                          <span className="text-gray px-2">
-                            <FaEye />
-                          </span>
-                        </button>
-                        {/* <button
-                          className="btn btn-outline-info action_btn"
-                          onClick={() => {
-                            setOpenAddPaymentForm(true);
-                          }}
-                          title="Payment Method"
-                        >
-                          <span className="text-gray px-2">
-                            {" "}
-                            <RiSecurePaymentLine />
-                          </span>
-                        </button> */}
-                        <button
-                          className="btn btn-outline-info action_btn"
-                          onClick={() => {
-                            setDeleteAlert(true);
-                            setDeleteData(item)
-                          }}
-                          title="Delete"
-                        >
-                          <span>
-                            <span className="text-red px-2">
-                              <CiTrash />
-                            </span>
-                          </span>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-
-                )
-              }
-            </tbody>
-          </table>}
+          ) :
+            <PaymentInvoiceTable
+              handleSort={handleSort}
+              setDeleteAlert={setDeleteAlert}
+              setDeleteData={setDeleteData}
+              setOpenViewInvoice={setOpenViewInvoice}
+              setInvoiceData={setInvoiceData}
+              GetInvoicePdf={GetInvoicePdf}
+              setOpenRecPaymentForm={setOpenRecPaymentForm}
+              setOpenPaymentReminder={setOpenPaymentReminder}
+              setOpenUploadPaymentForm={setOpenUploadPaymentForm}
+              setOpenAddPaymentForm={setOpenAddPaymentForm}
+              setSingleInvoiceData={setSingleInvoiceData}
+              json={json}
+              invoiceList={invoiceList}
+              totalData={totalData}
+            />
+          }
           <div className="pt-2">
             <Pagination
               nPages={nPages}
@@ -574,4 +393,4 @@ const Payment_Page = (props) => {
   );
 };
 
-export default Payment_Page;
+export default PaymentPage;
