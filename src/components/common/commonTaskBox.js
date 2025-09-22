@@ -809,6 +809,37 @@ export default function CommentTaskBox(props) {
                 className="pt-0 pb-5"
             >
                 <form className="comment-form p-5 rounded bg-white " >
+                     <div className={props.taskType === "note" ? "mb-0 comment-input-container w-100" : "d-none"}>
+                        <label
+                            htmlFor="subject"
+                            className="input_label m-0"
+                        >
+                            Subject
+                        </label>
+                        <input
+                            id="subject"
+                            type="text"
+                            className="comment-input "
+                            value={subject}
+                            placeholder="Enter subject"
+                            onChange={(e) => setSubject(e.target.value)}
+                        />
+                    </div>
+                    <div className={props.taskType === "note" ? "mb-0 comment-input-container w-100" : "d-none"}>
+                        <label
+                            htmlFor="end_date"
+                            className="input_label m-0"
+                        >
+                            {props.taskType === "note" ? "Next Follow Up date" : "End date"}
+                        </label>
+                        <input
+                            id="end_date"
+                            type="date"
+                            className="comment-input"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                        />
+                    </div>
                     <div className="comment-input-container  m-0">
                         <label className="input_label m-0">Add new {props.taskName}:</label>
 
@@ -847,37 +878,7 @@ export default function CommentTaskBox(props) {
                             </ul>
                         ) : null}
                     </div>
-                    <div className={props.taskType === "note" ? "mb-0 comment-input-container " : "d-none"}>
-                        <label
-                            htmlFor="subject"
-                            className="input_label m-0"
-                        >
-                            Subject
-                        </label>
-                        <input
-                            id="subject"
-                            type="text"
-                            className="comment-input "
-                            value={subject}
-                            placeholder="Enter subject"
-                            onChange={(e) => setSubject(e.target.value)}
-                        />
-                    </div>
-                    <div className={props.taskType === "note" ? "mb-0 comment-input-container " : "d-none"}>
-                        <label
-                            htmlFor="end_date"
-                            className="input_label m-0"
-                        >
-                            {props.taskType === "note" ? "Next Follow Up date" : "End date"}
-                        </label>
-                        <input
-                            id="end_date"
-                            type="date"
-                            className="comment-input"
-                            value={endDate}
-                            onChange={(e) => setEndDate(e.target.value)}
-                        />
-                    </div>
+                   
                     <div
                         className="button-container mx-0 w-100 mt-2"
                         style={{

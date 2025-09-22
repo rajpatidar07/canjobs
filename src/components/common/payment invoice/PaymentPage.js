@@ -167,9 +167,9 @@ const PaymentPage = (props) => {
   return (
     <div className="response_main_div w-100">
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
-        <div className={` d-flex justify-content-between`}>
-          <div className=" d-flex justify-content-space-between flex-start p-3">
-            <div className="col form_group mr-4 ">
+        <div className={` d-flex justify-content-between mb-3`}>
+          <div className=" d-flex justify-content-space-between">
+            <div className="col form_group  ">
               <p className="input_label">
                 Filter by Created Date  :
               </p>
@@ -181,9 +181,9 @@ const PaymentPage = (props) => {
                 selectsRange
               />
             </div>
-            <div className="col form_group mr-4 mt-5">
+            <div className="col form_group ">
               <button
-                className="btn btn-primary"
+                className="btn btn-primary mx-2 mt-5"
                 onClick={() => {
                   setStartDateFilterValue("");
                   setEndDateFilterValue("");
@@ -193,7 +193,7 @@ const PaymentPage = (props) => {
               </button>
             </div>
           </div>
-          <div className={" d-flex justify-content-space-between flex-end p-3"}>
+          <div className={" d-flex justify-content-space-between "}>
             <button
               className="btn btn-primary mx-2 mt-5"
               onClick={() => {
@@ -246,6 +246,7 @@ const PaymentPage = (props) => {
             lastInvoiceNo={lastInvoiceNo}
             setApiCall={setApiCall}
             singleInvoiceData={singleInvoiceData}
+            employee_employer_list={employeeEmployerlist}
 
           />
         }

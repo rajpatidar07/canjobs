@@ -12,8 +12,11 @@
 10. Add a "retained" status to the new applicant page to change the applicant's status.
 11. Added the option to upload payment invoices for candidates and made several updates.
 12. Add all users payment invoice in manage payment page and add date range filter.
-13. Allow ad consuktation data add and update from manage appliacnat and user's profile page too.
-14. 
+13. Allow adding and updating consultation data from both the applicant management and user profile pages.
+14. Add an employee ID filter to the consultation table.
+15. Link notes in the applicant table and apply several changes.
+
+
 Date=>02(pura kiya tha) & 03/09/25(changes krk kiya tha)
 
 10. Separate the forms for applicant type and subtype, as combining them is causing confusion. Add an option to update the sub-applicant type as well.

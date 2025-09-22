@@ -187,7 +187,7 @@ export default function AddConsultationInCandidate(props) {
                                     </span>
                                 )}
                             </div>
-                            <div className="form-group text-center w-100">
+                            <div className="form-group text-center mx-auto w-100">
                                 {loading === true ? (
                                     <button
                                         className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"

@@ -47,6 +47,8 @@ import RetainerAgrementMainPage from "../common/Retaineragreement/RetainerAgreme
 import VisaTimeLine from "../common/visaTimeLine";
 import PaymentPage from "../common/payment invoice/PaymentPage";
 import PayentForm from "../forms/admin/payentForm";
+import ConvertTime from "../common/Common function/ConvertTime";
+import AddConsultationInCandidate from "../forms/admin/AddConsultationInCandidate";
 // import ApplicantTypeTimeLine from "../common/ApplicantTypeTimeLine";
 // import useSessionCheck from "../common/user_session";
 // import AdobePDFViewer from "../common/Adobe/adobeFile";
@@ -77,6 +79,7 @@ const NewUserProfile = (props) => {
   const [lmiaStatusRejectComment, setLmiaStatusRejectComment] = useState([]);
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
   const [showPersonalDetails, setShowPersonalDetails] = useState(false);
+  const [showConsultationForm, setShowConsultationForm] = useState(false);
   const [showEducation, setShowEducation] = useState(false);
   const [showItSkills, setShowItSkills] = useState(false);
   const [addNote, setAddNote] = useState(false);
@@ -837,6 +840,7 @@ const NewUserProfile = (props) => {
                                   ? null
                                   : () => setShowPersonalDetails(true)
                               }
+                              title="Update profile"
                             >
                               {user_type === "admin" ? (
                                 <>
@@ -1090,13 +1094,50 @@ const NewUserProfile = (props) => {
                                         </span>
                                       </div>
                                     ) : null}
+
                                   </div>
+
                                 )}
+
                                 {user_type === "company" ||
                                   props.self === "yes" ? null : (
                                   <CustomButton
                                     className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                                    title="Update profile"
                                     onClick={() => setShowPersonalDetails(true)}
+                                  >
+                                    <PiPencilDuotone />
+                                  </CustomButton>
+                                )}
+                              </div>
+                              <hr className="my-3" />
+                              <div className="personal_info_box d-flex align-items-center  flex-wrap w-100">
+                                {PersonalDetail.consultation_opted ? (
+                                  <div className="info_box text-left">
+                                    <span className="font-size-3 text-smoke  mr-7 text-capitalize">
+                                      Consultation Opted:
+                                      <b>
+                                        {` ${PersonalDetail.consultation_opted === 0 || PersonalDetail.consultation_opted === "0" ? "No" : "Yes"}`}
+                                      </b>
+                                    </span>
+                                  </div>
+                                ) : null}
+                                {PersonalDetail.consultation_date ? (
+                                  <div className="info_box text-left">
+                                    <span className="font-size-3 text-smoke  mr-7 text-capitalize">
+                                      Consultation Date:
+                                      <b>
+                                        <ConvertTime _date={PersonalDetail.consultation_date} format={"DD MMMM, YYYY"} />
+                                      </b>
+                                    </span>
+                                  </div>
+                                ) : null}
+                                {user_type === "company" ||
+                                  props.self === "yes" ? null : (
+                                  <CustomButton
+                                    className="ms-auto p-2 font-size-3 rounded-3 btn-primary border-0 ml-2 flex-end justify-content-right"
+                                    title={"Update consultation"}
+                                    onClick={() => setShowConsultationForm(true)}
                                   >
                                     <PiPencilDuotone />
                                   </CustomButton>
@@ -1121,7 +1162,7 @@ const NewUserProfile = (props) => {
                                 )}
                                 {!PersonalDetail.contact_no ||
                                   PersonalDetail.contact_no === 0 ||
-                                  PersonalDetail.contact_no ===  "0" ||
+                                  PersonalDetail.contact_no === "0" ||
                                   user_type === "company" ? null : (
                                   <div>
                                     <Link
@@ -1212,6 +1253,7 @@ const NewUserProfile = (props) => {
                                   props.self === "yes" ? null : (
                                   <CustomButton
                                     className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                                    title="Add / Update skills"
                                     onClick={() => setShowItSkills(true)}
                                   >
                                     <PiPencilDuotone />
@@ -1260,6 +1302,7 @@ const NewUserProfile = (props) => {
                                   props.self === "yes" ? null : (
                                   <CustomButton
                                     className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                                    title="Update Education details"
                                     onClick={() => setShowEducation(true)}
                                   >
                                     <PiPencilDuotone />
@@ -1339,6 +1382,7 @@ const NewUserProfile = (props) => {
                                   props.self === "yes" ? null : (
                                   <CustomButton
                                     className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                                    title="Update career details"
                                     onClick={() =>
                                       setShowEmplyomentDetails(true)
                                     }
@@ -1947,6 +1991,13 @@ const NewUserProfile = (props) => {
           close={() => setShowPersonalDetails(false)}
         />
       ) : null}
+      {showConsultationForm ? (<AddConsultationInCandidate
+        show={showConsultationForm}
+        employeeId={PersonalDetail}
+        apiCall={apiCall}
+        setApiCall={setApiCall}
+        close={() => setShowConsultationForm(false)}
+      />) : null}
     </div>
   );
 };

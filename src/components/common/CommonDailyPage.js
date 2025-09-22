@@ -3,6 +3,7 @@ import ManageDailyCallLog from '../admin/ManageDailyCallLog';
 import ManageHourlyLog from '../admin/ManageHourlyLog';
 import ManageConsultation from '../admin/ManageConsultation'; 
 import { useLocation } from 'react-router-dom';
+import ManagePayment from '../admin/ManagePaymentInvoices';
 
 const CommonDailyPage = () => {
   const location = useLocation();
@@ -39,6 +40,11 @@ const CommonDailyPage = () => {
             id: 3,
             title: 'Manage Consultation',
             content: <ManageConsultation/>
+        },
+         {
+            id: 4,
+            title: 'Manage Payments',
+            content: <ManagePayment/>
         }
     ];
 
@@ -59,7 +65,7 @@ const CommonDailyPage = () => {
                         {cardData.map((card) => (
                             <div
                                 key={card.id}
-                                className={`col-12 col-md-4 mb-3`}
+                                className={`col-12 col-md-3 mb-3`}
                             >
                                 <div
                                     className={`card text-center h-100 shadow daily-page-card-hover ${selectedCard === card.id ? 'border-primary daily-page-selected' : ''

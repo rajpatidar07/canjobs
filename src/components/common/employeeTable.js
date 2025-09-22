@@ -639,7 +639,7 @@ export default function EmployeeTable(props) {
         children={
           <CommentTaskBox
             userId={employeeId?.employee_id}
-            taskType={"applicant_type_candidate_chat"}
+            taskType={props.ApplicantType?"applicant_type_candidate_chat":"note"}
             taskUserType={"employee"}
             setOpenReplyBox={setShowChatModal}
             openReplyBox={showChatModal}
@@ -651,7 +651,7 @@ export default function EmployeeTable(props) {
         {showChatModal ? (
           <CommentTaskBox
             userId={employeeId?.employee_id}
-            taskType={"applicant_type_candidate_chat"}
+            taskType={props.ApplicantType?"applicant_type_candidate_chat":"note"}
             taskUserType={"employee"}
             setOpenReplyBox={setShowChatModal}
             openReplyBox={showChatModal}
@@ -956,14 +956,12 @@ export default function EmployeeTable(props) {
                       Name
                     </Link>
                   </th>
-                  {props.ApplicantType ? (
                     <th
                       scope="col"
                       className=" border-0 font-size-4 font-weight-normal text-truncate"
                     >
                       Discussion
                     </th>
-                  ) : null}
                   {props.heading === "Dashboard" ? (
                     ""
                   ) : (
@@ -1272,7 +1270,7 @@ export default function EmployeeTable(props) {
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || employeeData.length === 0 ? (
                   <tr>
-                    <th colSpan={props.pageName === "consultation" ? 18 : 14} className="bg-white text-center">
+                    <th colSpan={props.pageName === "consultation" ? 18 : 15} className="bg-white text-center">
                       No Data Found
                     </th>
                   </tr>
@@ -1282,7 +1280,7 @@ export default function EmployeeTable(props) {
                       <tr style={{ border: "0" }}>
                         <td
                           style={{ paddingBottom: "0!important" }}
-                          colSpan="14"
+                          colSpan="15"
                           className={
                             empdata.applicant_process_status
                               ? "bg-white text-center m-0"
@@ -1511,7 +1509,6 @@ export default function EmployeeTable(props) {
                             </span>
                           ) : null}
                         </td>
-                        {props.ApplicantType ? (
                           <td>
                             <Link
                               onClick={() => {
@@ -1525,7 +1522,6 @@ export default function EmployeeTable(props) {
                               </span>
                             </Link>
                           </td>
-                        ) : null}
                         {props.heading === "Dashboard" ? (
                           ""
                         ) : (

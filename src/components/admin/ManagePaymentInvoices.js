@@ -74,7 +74,7 @@ const ManagePayment = () => {
       <AdminHeader heading={"Manage Payment"} />
       <AdminSidebar heading={"Manage Payment"} />
 
-      <div className="dashboard-main-container mt-14" id="dashboard-body">
+      <div className="dashboard-main-container " id="dashboard-body">
         <div className="container-fluid">
           <div className="mb-18">
             <div className="mb-4 align-items-center">

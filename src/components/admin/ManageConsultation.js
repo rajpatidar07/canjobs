@@ -18,6 +18,8 @@ const ManageConsultation = () => {
   const [consultationOptedFilterValue, setConsultationOptedFilterValue] = useState("");
   const [consultationStartDateFilterValue, setConsultationStartDateFilterValue] = useState("");
   const [consultationEndDateFilterValue, setConsultationEndDateFilterValue] = useState("");
+  const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
+
   // const [selectedAdminId, setSelectedAdminId] = useState(null);
   // const [selectedAdminType, setSelectedAdminType] = useState(null);
   const [showAddItemForm, setShowAddItemForm] = useState(false);
@@ -177,6 +179,24 @@ const ManageConsultation = () => {
                   selectsRange
                 />
               </div>
+              <div
+                className={"col form_group p-0"}      >
+                <p className="input_label">Search by ID:</p>
+                <div className="select_div">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder={"Search by ID"}
+                    value={filterByEmployeeId}
+                    id="id"
+                    name="id"
+                    onChange={(e) => {
+                      setFilterByEmployeeId(e.target.value);
+                      setPageNo(1);
+                    }}
+                  />
+                </div>
+              </div>
               {/* <div className="position-relative" ref={dropdownRef}>
                 <button
                   className="font-size-4 rounded-3 border-0 btn bg-white p-2 mr-4"
@@ -246,6 +266,7 @@ const ManageConsultation = () => {
                   setConsultationOptedFilterValue("")
                   setConsultationStartDateFilterValue("")
                   setSearchCandidate("")
+                  setFilterByEmployeeId("")
                   // setResetWithoutConsultationId(true);
                   const newUrl = window.location.pathname;
                   window.history.replaceState({}, document.title, newUrl);
@@ -279,7 +300,7 @@ const ManageConsultation = () => {
               // categoryFilterValue={categoryFilterValue}
               // localFilterValue={localFilterValue}
               // webFilterValue={webFilterValue}
-              // filterByEmployeeId={filterByEmployeeId}
+              filterByEmployeeId={filterByEmployeeId}
               consultationOptedFilterValue={consultationOptedFilterValue}
               consultationStartDateFilterValue={consultationStartDateFilterValue}
               consultationEndDateFilterValue={consultationEndDateFilterValue}

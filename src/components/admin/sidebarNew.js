@@ -1067,11 +1067,12 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Manage Payment"] = el)}
           className={
-            admin_type === "agent" || portal === "study"
-              ? "d-none"
-              : props.heading === "Manage Payment"
-                ? "active"
-                : ""
+            // admin_type === "agent" || portal === "study"
+            //   ? 
+              "d-none"
+              // : props.heading === "Manage Payment"
+              //   ? "active"
+              //   : ""
           }
         >
           <Link

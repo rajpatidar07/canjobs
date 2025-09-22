@@ -4,6 +4,7 @@ import useValidation from '../../common/useValidation';
 import { toast } from 'react-toastify';
 import { AddUpdatePaymentInvoiceApi } from '../../../api/api';
 import { Link } from 'react-router-dom';
+import SelectBox from '../../common/Common function/SelectBox';
 
 export default function UploadPaymentInvoice(props) {
     const fileInputRef = useRef(null);
@@ -28,7 +29,7 @@ export default function UploadPaymentInvoice(props) {
 
     // Updated validators for the single file field
     let validators = {
-        file: props.singleInvoiceData.id ? null : [
+        file: props.singleInvoiceData?.id ? null : [
             (value) => (value === "" || value === null ? "File is required" : null),
         ],
         // Add other validators as needed for other fields
@@ -37,6 +38,12 @@ export default function UploadPaymentInvoice(props) {
         due_date: [],
         due_amount: [],
         received_amount: [],
+        user_id: [
+            (value) =>
+                value === "" || value === null || value === undefined
+                    ? "User is required"
+                    : "",
+        ],
     };
 
     const { state, setState, onInputChange, errors, validate, setErrors } =
@@ -46,7 +53,6 @@ export default function UploadPaymentInvoice(props) {
         e.preventDefault();
         setIsDragging(true);
     };
-    console.log(props.singleInvoiceData)
     useEffect(() => {
         if (props.singleInvoiceData) {
             setState({
@@ -171,11 +177,11 @@ export default function UploadPaymentInvoice(props) {
     const onFormSubmit = async () => {
         // Ensure file validation is considered
         const isValid = validate();
+        console.log(isValid, validate(), "ppppppppp", errors, "ppppppppppppppppppppppppppp", state)
         if (!state.file && !props.singleInvoiceData?.id) { // Explicitly check if a file is selected
             setErrors(prevErrors => ({ ...prevErrors, file: "File is required" }));
             return;
         }
-
         if (isValid) {
             setLoading(true)
             try {
@@ -228,6 +234,60 @@ export default function UploadPaymentInvoice(props) {
                         className=" align-items-center mt-2 mb-2"
                         style={{ padding: "0!important" }}
                     >
+                        <div className="form-group col mt-5">
+                            <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
+                                Customer
+                            </label>
+                            <div className={errors.user_id ? "border border-danger rounded" : ""}>
+                                <SelectBox
+                                    Width={"yes"}
+                                    options={(props.employee_employer_list || []).map((item) => {
+                                        const value = item.employee_id
+                                            ? `${item.employee_id},employee`
+                                            : item.company_id
+                                                ? `${item.company_id},employer`
+                                                : `${item.id},applicant_type`;
+
+                                        const label = item.employee_id
+                                            ? `${item.name} (Candidate)`
+                                            : item.company_id
+                                                ? `${item.company_name} (Client)`
+                                                : item.title
+                                                    ? `${item.title} (Applicant Type)`
+                                                    : "Unknown User";
+
+                                        return {
+                                            value,
+                                            label,
+                                        };
+                                    })}
+                                    type="userId"
+                                    selectedValue={
+                                        state.user_id && state.user_type
+                                            ? `${state.user_id},${state.user_type}`
+                                            : ""
+                                    }
+                                    onChange={(e) => {
+                                        const val = e ? e.value.split(",") : ["", ""];
+                                        setState((prev) => ({
+                                            ...prev,
+                                            user_id: val[0],
+                                            user_type: val[1],
+                                            user_email: props.employee_employer_list.find((item) => item.employee_id === val[0] || item.company_id === val[0])?.email
+                                        }));
+                                    }}
+                                    isDisabled={!!(state.user_id && state.user_type)}
+                                />
+                            </div>
+                            {errors.user_id && (
+                                <span
+                                    key={errors.user_id}
+                                    className="text-danger font-size-3"
+                                >
+                                    {errors.user_id}
+                                </span>
+                            )}
+                        </div>
                         <div className="form-group col mt-5">
                             <label
                                 htmlFor="term"

@@ -51,13 +51,13 @@ const PaymentInvoiceForm = (props) => {
   const validators = {
     user_id: [
       (value) =>
-        value === "" || value === null || value.trim() === ""
+        value === "" || value === null
           ? "User is required"
           : "",
     ],
   }
   const { state, setState, onInputChange, errors, validate } = useValidation(
-    initialFormState,);
+    initialFormState, validators,);
   /*Function to get the  payment invoice terms list */
   let GetAllJsonList = async () => {
     try {
@@ -128,42 +128,44 @@ const PaymentInvoiceForm = (props) => {
   /*function to submit payment invoice  form */
   const handleSubmit = async (e, send) => {
     e.preventDefault();
-    // console.log("Submitted ", state);
-    try {
-      let data = {
-        ...state,
-        is_send_mail: send ? send : 0,
-        due_amount:
-          // recAmt ?
-          //   parseFloat(state.due_amount) - parseFloat(recAmt)
-          //   :
-          Number(parseFloat(state.due_amount) + parseFloat(state.total)).toFixed(2),
-        // received_amount: parseFloat(state.received_amount||0) + parseFloat(recAmt)
-      }
-      setLoading(true)
-      let res = await AddUpdatePaymentInvoiceApi(data)
-      if (res.data.status === 1 || res.data.status === "1") {
-        toast.success("Payment invoice Created successful", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        close()
-        props.setApiCall(true)
-      }
-      if (res.data.status === 0 || res.data.status === "0") {
-        if (res.data.message ===
-          "Duplicate Invoice no.!") {
-          toast.error("Payment invoice No can not be same", {
+    console.log("Submitted ", state.user_id, errors);
+    if (validate()) {
+      try {
+        let data = {
+          ...state,
+          is_send_mail: send ? send : 0,
+          due_amount:
+            // recAmt ?
+            //   parseFloat(state.due_amount) - parseFloat(recAmt)
+            //   :
+            Number(parseFloat(state.due_amount) + parseFloat(state.total)).toFixed(2),
+          // received_amount: parseFloat(state.received_amount||0) + parseFloat(recAmt)
+        }
+        setLoading(true)
+        let res = await AddUpdatePaymentInvoiceApi(data)
+        if (res.data.status === 1 || res.data.status === "1") {
+          toast.success("Payment invoice Created successful", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
+          close()
           props.setApiCall(true)
         }
+        if (res.data.status === 0 || res.data.status === "0") {
+          if (res.data.message ===
+            "Duplicate Invoice no.!") {
+            toast.error("Payment invoice No can not be same", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            props.setApiCall(true)
+          }
+        }
+        setLoading(false)
+      } catch (err) {
+        setLoading(false)
+        console.log(err)
       }
-      setLoading(false)
-    } catch (err) {
-      setLoading(false)
-      console.log(err)
     }
     // Here you can send the data to an API or process it further.
   };
@@ -243,7 +245,7 @@ const PaymentInvoiceForm = (props) => {
                   <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
                     Customer
                   </label>
-                  <div className={errors.reffer_by ? "border border-danger rounded" : ""}>
+                  <div className={errors.user_id ? "border border-danger rounded" : ""}>
                     <SelectBox
                       Width={"yes"}
                       options={(props.employee_employer_list || []).map((item) => {
@@ -278,19 +280,20 @@ const PaymentInvoiceForm = (props) => {
                           ...prev,
                           user_id: val[0],
                           user_type: val[1],
+                          user_email: props.employee_employer_list.find((item) => item.employee_id === val[0] || item.company_id === val[0])?.email
                         }));
                       }}
                       isDisabled={!!(state.user_id && state.user_type)}
                     />
-                    {errors.user_id && (
-                      <span
-                        key={errors.user_id}
-                        className="text-danger font-size-3"
-                      >
-                        {errors.user_id}
-                      </span>
-                    )}
                   </div>
+                  {errors.user_id && (
+                    <span
+                      key={errors.user_id}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.user_id}
+                    </span>
+                  )}
                 </div>
                 <div className="form-group col-md-3">
                   <div className="d-flex justify-content-end align-items-start">
