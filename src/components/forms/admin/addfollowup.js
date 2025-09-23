@@ -1653,7 +1653,16 @@ function Addfollowup(props) {
                       <td>
                         <Link
                           className="d-flex align-items-center"
-                          to={`/${res.employee_id}?note=true&noteid=${res.id}`}
+                          to={`/${res.employee_type === "employee" ? res.employee_id : res.employee_type === "employer" ? "client_detail" : res.employee_type === "job" ? "job_detail" : "partner_profile"}?note=true&noteid=${res.id}`}
+                          onClick={() => {
+                            if (res.employee_type === "employer") {
+                              localStorage.setItem("company_id", res.employee_id)
+                            } else if (res.employee_type === "job") {
+                              localStorage.setItem("job_id", res.employee_id)
+                            } else if (res.employee_type === "agent") {
+                              localStorage.setItem("agent_id", res.employee_id)
+                            }
+                          }}
                         >
                           <div className="d-flex profile_box gx-2">
                             <div className="media  align-items-center">

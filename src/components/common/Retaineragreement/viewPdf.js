@@ -91,7 +91,7 @@
 //             {/* <div className={`"d-flex justify-content-between p-4 d-none`}>
 //               <button
 //                 className={
-//                   agreementData.initial ? "d-none" : "btn btn-secondary"
+//                   agreementData?.initial ? "d-none" : "btn btn-secondary"
 //                 }
 //                 onClick={() => addSignatureCLick()}
 //               >
@@ -144,6 +144,7 @@ export default function ViewPdf({
   let [adminList, setAdminList] = useState([])
   let [partnerList, setPartnerist] = useState([])
   let [apicall, setApiCall] = useState(false)
+
   let GetPdfDocument = async () => {
     try {
       let res = await getSharePointParticularFolders(
@@ -151,7 +152,8 @@ export default function ViewPdf({
         new_emp_user_type,
         new_folderId
       );
-      if (res.data.data === "Lifetime validation failed, the token is expired.") {
+      console.log(res.data.data,new_folderId,pdf)
+      if (res.data?.data === "Lifetime validation failed, the token is expired.") {
         try {
           let response = await GetSharePointData()
           if (response.status === 1 || "1") {
@@ -161,15 +163,15 @@ export default function ViewPdf({
           console.log(err);
         }
       }
-      if (res.data.status === 1) {
+      if (res.data?.status === 1) {
         setNewDocLoder(false);
-        // setDocTypeList(res.data.data)
-        if (res.data.data.find((item) => item.id === new_document_id)) {
-          let data = res.data.data.find((item) => item.id === new_document_id)
+        // setDocTypeList(res.data?.data)
+        if (res.data?.data?.find((item) => item.id === new_document_id)) {
+          let data = res.data?.data?.find((item) => item.id === new_document_id)
           setNewPdf(data);
           getCommentsList(data)
           ConvertionFUnctionForAllDoc(data)
-        } else if (res.data.data === "No Documents Found") {
+        } else if (res.data?.data === "No Documents Found") {
           setNewDocLoder(false);
         } else {
           setNewDocLoder(false);
@@ -180,19 +182,20 @@ export default function ViewPdf({
       setNewDocLoder(false);
     }
   }
+
   let ConvertionFUnctionForAllDoc = async (data) => {
-    // console.log(data,"pppp",data.file)
+    // console.log(data,"pppp",data?.file)
     if (
-      data.file.mimeType === "image/jpeg" ||
-      data.file.mimeType === "image/png" ||
-      data.file.mimeType === "image/jpg"
+      data?.file?.mimeType === "image/jpeg" ||
+      data?.file?.mimeType === "image/png" ||
+      data?.file?.mimeType === "image/jpg"
     ) {
       // Await the conversion if convertUrlToPDF is asynchronous
       convertUrlToPDF(data["@microsoft.graph.downloadUrl"]);
     } else if (
-      data.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" || data.file.mimeType === "application/vnd.ms-powerpoint" ||
-      data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-      data.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      data?.file?.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" || data?.file?.mimeType === "application/vnd.ms-powerpoint" ||
+      data?.file?.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+      data?.file?.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     ) {
       let res = await ConvertPPT(data)
       if (res) {
@@ -201,10 +204,10 @@ export default function ViewPdf({
         setNewDocLoder(false);
         setNewPdfUrl("");
       }
-    } else if (data.file.mimeType === "application/pdf") {
+    } else if (data?.file?.mimeType === "application/pdf") {
       setNewPdfUrl(data["@microsoft.graph.downloadUrl"]);
     } else if (
-      data.file.mimeType ===
+      data?.file?.mimeType ===
       "application/vnd.ms-excel"
     ) {
       if (data["@microsoft.graph.downloadUrl"]) {
@@ -226,7 +229,7 @@ export default function ViewPdf({
     else {
       setNewDocLoder(false);
       setNewPdfUrl("");
-      window.open(data.webUrl);
+      window.open(data?.webUrl);
     }
   }
   /*Function to convert the Image into pdf */
@@ -272,14 +275,14 @@ export default function ViewPdf({
       localStorage.setItem("mentionAdmin", "");
       try {
         let res = await GetCommentsAndAssign(
-          data.id, //docId,
+          data?.id, //docId,
           "", // adminid,
           "", // annotationStatus,
           "document"
         );
-        if (res.data.status === (1 || "1")) {
-          setCommentsList(res.data.data.data);
-        } else if (res.data.message === "Task data not found") {
+        if (res.data?.status === (1 || "1")) {
+          setCommentsList(res.data?.data?.data);
+        } else if (res.data?.message === "Task data not found") {
           setCommentsList([]);
         }
       } catch (err) {
@@ -297,15 +300,15 @@ export default function ViewPdf({
       if (localStorage.getItem("userType") === "admin" || localStorage.getItem("userType") === "agent") {
         const Partnerdata = await GetAgent();
         const userData = await getallAdminData();
-        let newPartnerList = Partnerdata.data.data.filter(
+        let newPartnerList = Partnerdata?.data?.data?.filter(
           (item) => item.id === Partner_id
         );
         setPartnerist(newPartnerList);
 
-        if (userData.data.length === 0) {
+        if (userData?.data?.length === 0) {
           setAdminList([]);
         } else {
-          setAdminList(userData.data);
+          setAdminList(userData?.data);
         }
       }
     } catch (err) {
@@ -315,14 +318,19 @@ export default function ViewPdf({
   useEffect(() => {
     GetPdfDocument()
     AdminData()
-    if (page === "consultation") {
-      ConvertionFUnctionForAllDoc(pdf)
-    }
+
     if (apicall === true) {
       setApicall(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apicall])
+
+  useEffect(() => {
+    if (pdf) {//page === "consultation"
+      ConvertionFUnctionForAllDoc(pdf)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pdf])
 
   if (type === "modal") {
     return (
@@ -350,7 +358,7 @@ export default function ViewPdf({
               </div>
             ) : (
               <AdobePDFViewer
-                url={page === "consultation" ? newPdfUrl : pdf["@microsoft.graph.downloadUrl"]}
+                url={newPdfUrl}
                 data={pdf}
                 userId={user_id}
                 commentsList={commentsList}

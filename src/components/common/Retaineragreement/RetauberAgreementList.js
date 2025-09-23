@@ -186,7 +186,10 @@ export default function RetauberAgreementList({
             >
               Add Agreement
             </button>
-            <button className="btn btn-primary" onClick={() => setOpenUploadAgreementForm(true)}>
+            <button className="btn btn-primary" onClick={() => {
+              setOpenUploadAgreementForm(true)
+              setAgreementData("")
+            }}>
               Upload Agreement
             </button>
           </div>
@@ -558,7 +561,7 @@ export default function RetauberAgreementList({
             setApicall={setApicall}
             folderId={folderId}
             felidData={agreementData}
-
+            setAgreementData={setAgreementData}
           />
         ) : null}
         {openViewAgreement ? (

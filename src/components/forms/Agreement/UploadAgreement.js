@@ -33,6 +33,7 @@ export default function UploadAgreement(props) {
         useValidation(initialFormState, validators);
 
     useEffect(() => {
+        console.log(props.felidDat)
         if (props.felidData) {
             setState({
                 ...state, type: props.felidData.type, "signature_status": props.felidData.signature_status,
@@ -46,6 +47,7 @@ export default function UploadAgreement(props) {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.felidData])
+
     const handleDragOver = (e) => {
         e.preventDefault();
         setIsDragging(true);
@@ -79,7 +81,7 @@ export default function UploadAgreement(props) {
         }
 
         const maxSize = 1024 * 8000; // 8 MB
-        const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
+        const allowedTypes = [".pdf", ".jpg", ".jpeg", ".png"];
 
         // Start with existing files or initialize
         const existingFiles = Array.isArray(docFileBase) ? [...docFileBase] : [];
@@ -102,7 +104,7 @@ export default function UploadAgreement(props) {
             const fileType = `.${fileExtension.toLowerCase()}`;
             if (!allowedTypes.includes(fileType)) {
                 toast.error(
-                    `Invalid document type for file '${finalFileName}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
+                    `Invalid document type for file '${finalFileName}'. Allowed types: PDF, JPG, JPEG, PNG`,
                     {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 1000,
@@ -135,18 +137,22 @@ export default function UploadAgreement(props) {
         // Save states
         setDocFileBase(updatedFiles); // List of files
     };
+
     /*Function to remove the file from the selected file list */
     const removeFile = (fileName) => {
         setDocFileBase((prevFiles) =>
             prevFiles.filter((file) => file.name !== fileName)
         ); // Remove file by name
     };
+
     /*function to close the modal */
     const close = () => {
         props.close()
         setState(initialFormState)
         setErrors("")
+        props.setAgreementData("")
     }
+
     /*Function to submit the form */
     const onFormSubmit = async () => {
         console.log(validate(), (docFileBase || state.id));
@@ -177,8 +183,8 @@ export default function UploadAgreement(props) {
                             });
                             console.log(resApi);
                             props.setApicall(true);
-                            close();
                             setLoading(false);
+                            close();
                         } catch (err) {
                             console.log(err);
                             setLoading(false);

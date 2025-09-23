@@ -106,14 +106,14 @@ export default function UploadPaymentInvoice(props) {
         }
 
         const maxSize = 1024 * 8000; // 8 MB
-        const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
+        const allowedTypes = [".pdf", ".jpg", ".jpeg", ".png"];
         const fileExtension = file.name.split('.').pop().toLowerCase();
         const fileType = `.${fileExtension}`;
 
         // Validate file type
         if (!allowedTypes.includes(fileType)) {
             toast.error(
-                `Invalid document type for file '${file.name}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
+                `Invalid document type for file '${file.name}'. Allowed types: PDF, JPG, JPEG, PNG`,
                 {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 1000,

@@ -51,7 +51,7 @@ const PaymentInvoiceForm = (props) => {
   const validators = {
     user_id: [
       (value) =>
-        value === "" || value === null
+        value === "" || value === null || value === undefined
           ? "User is required"
           : "",
     ],
@@ -128,7 +128,7 @@ const PaymentInvoiceForm = (props) => {
   /*function to submit payment invoice  form */
   const handleSubmit = async (e, send) => {
     e.preventDefault();
-    console.log("Submitted ", state.user_id, errors);
+    console.log("Submitted ", state, errors);
     if (validate()) {
       try {
         let data = {

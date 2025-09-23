@@ -119,13 +119,16 @@ const PaymentPage = (props) => {
 
   /*Function to get invoice pdf */
   const GetInvoicePdf = async (data) => {
+    console.log(data)
     setDocLoder(true);
     try {
       let res = await getSharePointParticularFolders(
-        props.user_id,
-        props.user_type,
-        props.folderId
+        props.user_id || data.user_id,
+        props.user_type || data.user_type,
+        props.folderId || data.doc_folder_id,
+        "", "", 10, 1, data.document_id
       );
+      console.log(res)
       if (res.data.data === "Lifetime validation failed, the token is expired.") {
         try {
           let response = await GetSharePointData()
@@ -363,6 +366,7 @@ const PaymentPage = (props) => {
             close={() => setOpenSignfPspdfkit(false)}
             />
             ) : null} */}
+        {console.log(invoicePdf, "lpplprffgejr ebfsdjk sjkdf jksdf")}
         {openViewInvoice ? (
           <ViewPdf
             show={openViewInvoice}
