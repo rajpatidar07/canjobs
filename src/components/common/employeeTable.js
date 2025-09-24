@@ -639,7 +639,7 @@ export default function EmployeeTable(props) {
         children={
           <CommentTaskBox
             userId={employeeId?.employee_id}
-            taskType={props.ApplicantType?"applicant_type_candidate_chat":"note"}
+            taskType={props.ApplicantType ? "applicant_type_candidate_chat" : "note"}
             taskUserType={"employee"}
             setOpenReplyBox={setShowChatModal}
             openReplyBox={showChatModal}
@@ -651,7 +651,7 @@ export default function EmployeeTable(props) {
         {showChatModal ? (
           <CommentTaskBox
             userId={employeeId?.employee_id}
-            taskType={props.ApplicantType?"applicant_type_candidate_chat":"note"}
+            taskType={props.ApplicantType ? "applicant_type_candidate_chat" : "note"}
             taskUserType={"employee"}
             setOpenReplyBox={setShowChatModal}
             openReplyBox={showChatModal}
@@ -926,7 +926,8 @@ export default function EmployeeTable(props) {
                 <tr className="">
                   <th
                     scope="col"
-                    className=" border-0 font-size-4 font-weight-normal text-truncate"
+                    className=" border-0 font-size-3 font-weight-normal table_sticky_col sticky_col1   "
+                    style={{ background: "rgb(252, 182, 182)", transition: "background 0.3s", minWidth: "50px", position: "sticky", }}
                   >
                     <Link
                       to={""}
@@ -942,7 +943,8 @@ export default function EmployeeTable(props) {
                   </th>
                   <th
                     scope="col"
-                    className=" border-0 font-size-4 font-weight-normal text-truncate"
+                    className="border-0 font-size-3 font-weight-normal table_sticky_col sticky_col1   table_sticky_col"
+                    style={{ background: "rgb(252, 182, 182)", transition: "background 0.3s", minWidth: "150px", left: "50px" }}
                   >
                     <Link
                       to={""}
@@ -956,12 +958,17 @@ export default function EmployeeTable(props) {
                       Name
                     </Link>
                   </th>
-                    <th
-                      scope="col"
-                      className=" border-0 font-size-4 font-weight-normal text-truncate"
-                    >
-                      Discussion
-                    </th>
+                  <th
+                    scope="col"
+                    className="border-0 font-size-3 font-weight-normal  sticky_col1  "
+                    style={{
+                      background: "rgb(252, 182, 182)", position: "sticky",
+                      transition: "background 0.3s ease",
+                      minWidth: "50px", left: "250px",
+                    }}
+                  >
+                    Discussion
+                  </th>
                   {props.heading === "Dashboard" ? (
                     ""
                   ) : (
@@ -1277,7 +1284,7 @@ export default function EmployeeTable(props) {
                 ) : (
                   (employeeData || []).map((empdata, index) => (
                     <React.Fragment key={index}>
-                      <tr style={{ border: "0" }}>
+                      <tr style={{ border: "0", position: "sticky" }}>
                         <td
                           style={{ paddingBottom: "0!important" }}
                           colSpan="15"
@@ -1315,12 +1322,13 @@ export default function EmployeeTable(props) {
                         }
                         key={empdata.employee_id}
                       >
-                        <td className=" py-5" title={empdata.employee_id}>
+                        <td className=" sticky_col1 py-5  text-capitalize  py-5" title={empdata.employee_id} style={{ position: "sticky", transition: "background 0.3s", backgroundColor: "rgb(244, 244, 244)", minWidth: "50px", }}>
                           <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                             {empdata.employee_id}
                           </p>
                         </td>
-                        <td className=" py-5">
+                        <td className=" table_sticky_col sticky_col1 py-5  text-capitalize py-5"
+                          style={{ left: "50px", backgroundColor: "rgb(244, 244, 244)", }}>
                           <div>
                             <div className="d-flex profile_box gx-2">
                               <div className="media  align-items-center">
@@ -1509,19 +1517,24 @@ export default function EmployeeTable(props) {
                             </span>
                           ) : null}
                         </td>
-                          <td>
-                            <Link
-                              onClick={() => {
-                                setShowChatModal(true);
-                                setemployeeId(empdata);
-                              }}
-                              title="Discussion"
-                            >
-                              <span className="text-gray px-2">
-                                <BsChat />
-                              </span>
-                            </Link>
-                          </td>
+                        <td className="  sticky_col1 py-5  text-capitalize"
+                          style={{
+                            left: "250px", position: "sticky",
+                            transition: "background 0.3s ease",
+                            minWidth: "50px", backgroundColor: "rgb(244, 244, 244)",
+                          }}>
+                          <Link
+                            onClick={() => {
+                              setShowChatModal(true);
+                              setemployeeId(empdata);
+                            }}
+                            title="Discussion"
+                          >
+                            <span className="text-gray px-2">
+                              <BsChat />
+                            </span>
+                          </Link>
+                        </td>
                         {props.heading === "Dashboard" ? (
                           ""
                         ) : (

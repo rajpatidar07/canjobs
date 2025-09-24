@@ -16,7 +16,7 @@ export default function SelectBox(props) {
         onChange={(e) => {
           props.onChange(e);
         }}
-        className="text-capitalize w-100"
+        className={`text-capitalize w-100 ${props.className}`}
         isClearable={true}
         styles={{
           control: (base) => ({
@@ -30,6 +30,7 @@ export default function SelectBox(props) {
           }),
         }}
         isDisabled={props.isDisabled || false}
+        placeholder={props.placeholder}
       />
     </div>
   );

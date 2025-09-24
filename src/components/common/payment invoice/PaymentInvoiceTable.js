@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { AiOutlineFilePdf } from 'react-icons/ai'
 import { CiEdit, CiTrash } from 'react-icons/ci'
-import { FaAmazonPay, FaEye } from 'react-icons/fa'
+import { FaAmazonPay, FaDownload, FaEye } from 'react-icons/fa'
 import { HiOutlineInboxIn } from 'react-icons/hi'
 import CommonRetainerAgreementDate from '../Retaineragreement/CommonRetainerAgreementDate'
 import ConvertTime from '../Common function/ConvertTime'
 import { FiAlertCircle } from 'react-icons/fi'
-import { GetFilter } from '../../../api/api'
+import { GetFilter, getSharePointParticularFolders } from '../../../api/api'
 import { Link } from 'react-router-dom'
 
 export default function PaymentInvoiceTable(props) {
@@ -26,6 +26,29 @@ export default function PaymentInvoiceTable(props) {
         GetAllUserData()
     }, [])
 
+    const handleDownloadInvoice = async (data) => {
+        let res = await getSharePointParticularFolders(
+            props.user_id || data.user_id,
+            props.user_type || data.user_type,
+            props.folderId || data.doc_folder_id,
+            "", "", 10, 1, data.document_id
+        );
+        let fileData = res.data.data.find((item) => item.id === data.document_id)
+        // Create an anchor element dynamically
+        const link = document.createElement('a');
+        link.href = fileData["@microsoft.graph.downloadUrl"];
+        link.setAttribute('download', fileData["@microsoft.graph.downloadUrl"]);
+
+        // Append the link to the body
+        document.body.appendChild(link);
+
+        // Trigger the click event
+        link.click();
+
+        // Clean up by removing the link
+        document.body.removeChild(link);
+    };
+
     return (
         <div>
             <table className="table table-striped main_data_table">
@@ -37,6 +60,14 @@ export default function PaymentInvoiceTable(props) {
                         >
                             <Link to="" className="text-dark" onClick={() => { props.handleSort("invoice_no") }}>
                                 Invoice No.
+                            </Link>
+                        </th>
+                        <th
+                            scope="col"
+                            className={window.location.pathname === "/daily_pages" ? "border-0 font-size-4 font-weight-normal" : "d-none"}
+                        >
+                            <Link to="" className="text-dark" onClick={() => { props.handleSort("user_id") }}>
+                                User
                             </Link>
                         </th>
                         <th
@@ -94,7 +125,7 @@ export default function PaymentInvoiceTable(props) {
                 <tbody>
                     {props.totalData === 0 || props.invoiceList.length === 0 ? (
                         <tr>
-                            <th colSpan={6} className="bg-white text-center">
+                            <th colSpan={window.location.pathname === "/daily_pages" ? 9 : 8} className="bg-white text-center">
                                 No Data Found
                             </th>
                         </tr>
@@ -102,6 +133,22 @@ export default function PaymentInvoiceTable(props) {
                         (props.invoiceList || []).map((item, index) =>
                             <tr key={index}>
                                 <td>{item.invoice_no}</td>
+                                <td className={window.location.pathname === "/daily_pages" ? "" : "d-none"}>
+                                    <Link
+                                        to={item.user_type === "employee" ? `/${item.user_id}` : `/client_detail`}
+                                        onClick={() => {
+                                            if (item.user_type === "employer") {
+                                                localStorage.setItem("company_id", item.user_id);
+                                            }
+                                        }}
+                                        className={"text-dark"}
+                                    >
+                                        {props.employeeEmployerlist.filter(res =>
+                                            (item.user_type === "employee" && item.user_id === res?.employee_id) ||
+                                            (item.user_type === "employer" && item.user_id === res?.company_id)
+                                        )[0]?.[item.user_type === "employee" ? 'name' : 'company_name'] + (item.user_type === "employee" ? " (Candidate)" : " (Client)")}
+                                    </Link>
+                                </td>
                                 <td className=" py-5">
                                     <p className="font-size-2 font-weight-normal text-black-2 mb-0">
                                         <span className="p-1">
@@ -219,6 +266,13 @@ export default function PaymentInvoiceTable(props) {
                                         >
                                             <span className="text-gray px-2">
                                                 <FaEye />
+                                            </span>
+                                        </button>
+                                        <button className="btn btn-outline-info action_btn"
+                                            onClick={() => { handleDownloadInvoice(item) }}
+                                            title="Download Invoice">
+                                            <span className="text-gray px-2">
+                                                <FaDownload />
                                             </span>
                                         </button>
                                         {/* <button

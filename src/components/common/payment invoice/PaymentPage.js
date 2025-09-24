@@ -28,6 +28,7 @@ const PaymentPage = (props) => {
   const [invoiceData, setInvoiceData] = useState("");
   const [startDateFilterValue, setStartDateFilterValue] = useState("");
   const [endDateFilterValue, setEndDateFilterValue] = useState("");
+  const [filterByInvoiceNumber, setFilterByInvoiceNumber] = useState("")
   let [json, setJson] = useState()
   /*Pagination */
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,9 +49,31 @@ const PaymentPage = (props) => {
       console.log(err);
     }
     try {
+      const userData = await getallEmployeeData();
+      const CompanyData = await getAllEmployer();
+      const lastInvoice = await GetLastPaymentInvoiceApi()
+      let allUserData = [];
+      if (userData?.data?.length === 0 && CompanyData?.data?.length === 0) {
+        setEmployeeEmployerlist([]);
+        setIsLoading(false)
+      } else {
+        allUserData = [...userData.data, ...CompanyData.data,]; // Merge the arrays
+        setEmployeeEmployerlist(allUserData);
+        setIsLoading(false)
+      }
+      setLastInvoiceNo(lastInvoice.data.data.invoice_no)
+
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false)
+    }
+  };
+
+  const GetInvoiceList = async () => {
+    try {
       setIsLoading(true)
-      let invoiceData = {
-        "invoice_no": "",
+      let sentInvoiceData = {
+        "invoice_no": filterByInvoiceNumber,
         "user_id": props.user_id,
         "user_type": props.user_type,
         "page": currentPage,
@@ -60,29 +83,17 @@ const PaymentPage = (props) => {
         "start_date": startDateFilterValue,
         "end_date": endDateFilterValue
       }
-      const userData = await getallEmployeeData();
-      const CompanyData = await getAllEmployer();
-      const InvoiceData = await getAllInvioce(invoiceData);
-      const lastInvoice = await GetLastPaymentInvoiceApi()
-      let allUserData = [];
-      setInvoicelist(InvoiceData.data.data)
-      if (userData?.data?.length === 0 && CompanyData?.data?.length === 0) {
-        setEmployeeEmployerlist([]);
-        setIsLoading(false)
-      } else {
-        allUserData = [...userData.data, ...CompanyData.data,]; // Merge the arrays
-        setEmployeeEmployerlist(allUserData);
+      const ResInvoiceData = await getAllInvioce(sentInvoiceData);
+      if (ResInvoiceData) {
+        setInvoicelist(ResInvoiceData.data.data)
+        setTotalData(ResInvoiceData.data.total_data)
         setIsLoading(false)
       }
-      setTotalData(InvoiceData.data.total_data)
-      setLastInvoiceNo(lastInvoice.data.data.invoice_no)
-
     } catch (err) {
-      console.log(err);
+      console.log(err)
       setIsLoading(false)
     }
-  };
-
+  }
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
   useEffect(() => {
@@ -91,8 +102,12 @@ const PaymentPage = (props) => {
       setApiCall(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiCall, currentPage, columnName, sortOrder, startDateFilterValue, endDateFilterValue])
+  }, [apiCall,])
 
+  useEffect(() => {
+    GetInvoiceList()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage, columnName, sortOrder, startDateFilterValue, endDateFilterValue, filterByInvoiceNumber])
   /*Function to cancel the delete pop up */
   const CancelDelete = () => {
     setDeleteAlert(false);
@@ -119,7 +134,6 @@ const PaymentPage = (props) => {
 
   /*Function to get invoice pdf */
   const GetInvoicePdf = async (data) => {
-    console.log(data)
     setDocLoder(true);
     try {
       let res = await getSharePointParticularFolders(
@@ -128,7 +142,6 @@ const PaymentPage = (props) => {
         props.folderId || data.doc_folder_id,
         "", "", 10, 1, data.document_id
       );
-      console.log(res)
       if (res.data.data === "Lifetime validation failed, the token is expired.") {
         try {
           let response = await GetSharePointData()
@@ -167,6 +180,8 @@ const PaymentPage = (props) => {
     setStartDateFilterValue(startDate);
     setEndDateFilterValue(endDate);
   };
+
+ 
   return (
     <div className="response_main_div w-100">
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
@@ -184,12 +199,31 @@ const PaymentPage = (props) => {
                 selectsRange
               />
             </div>
+            <div
+              className={"col form_group p-0"}
+            >
+              <p className="input_label">Search by Invoice number:</p>
+              <div className="select_div">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder={"Search by Invoice number"}
+                  value={filterByInvoiceNumber}
+                  id="invoice_number"
+                  name="invoice_number"
+                  onChange={(e) => {
+                    setFilterByInvoiceNumber(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
             <div className="col form_group ">
               <button
                 className="btn btn-primary mx-2 mt-5"
                 onClick={() => {
                   setStartDateFilterValue("");
                   setEndDateFilterValue("");
+                  setFilterByInvoiceNumber("");
                 }}
               >
                 Reset
@@ -280,6 +314,7 @@ const PaymentPage = (props) => {
               json={json}
               invoiceList={invoiceList}
               totalData={totalData}
+              employeeEmployerlist={employeeEmployerlist}
             />
           }
           <div className="pt-2">
@@ -366,7 +401,6 @@ const PaymentPage = (props) => {
             close={() => setOpenSignfPspdfkit(false)}
             />
             ) : null} */}
-        {console.log(invoicePdf, "lpplprffgejr ebfsdjk sjkdf jksdf")}
         {openViewInvoice ? (
           <ViewPdf
             show={openViewInvoice}

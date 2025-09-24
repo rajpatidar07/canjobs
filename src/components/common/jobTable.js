@@ -647,7 +647,7 @@ export default function JobTable(props) {
                         )}
                         <tr
                           className={
-                            /*job.is_applied === "1" ? "d-none" : */ "col-12job_row"
+                            /*job.is_applied === "1" ? "d-none" : */ "col-12 job_row"
                           }
                         >
                           <td className=" sticky_col1 py-5  text-capitalize " style={{

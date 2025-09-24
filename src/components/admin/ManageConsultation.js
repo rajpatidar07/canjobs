@@ -1,5 +1,5 @@
 
-import React, { /*useEffect, useRef,*/ useState } from "react";
+import React, { /*useEffect, useRef,*/ useEffect, useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { CiSearch } from "react-icons/ci";
@@ -11,6 +11,8 @@ import { CiSearch } from "react-icons/ci";
 import EmployeeTable from "../common/employeeTable";
 import DatePicker from "react-datepicker";
 import PersonalDetails from "../forms/user/personal";
+import SelectBox from "../common/Common function/SelectBox";
+import filterjson from "../json/filterjson";
 
 const ManageConsultation = () => {
   // const [showdropdown, setShowdropdown] = useState(false);
@@ -19,7 +21,7 @@ const ManageConsultation = () => {
   const [consultationStartDateFilterValue, setConsultationStartDateFilterValue] = useState("");
   const [consultationEndDateFilterValue, setConsultationEndDateFilterValue] = useState("");
   const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
-
+  const [statusFilterValue, setStatusFilterValue] = useState("");
   // const [selectedAdminId, setSelectedAdminId] = useState(null);
   // const [selectedAdminType, setSelectedAdminType] = useState(null);
   const [showAddItemForm, setShowAddItemForm] = useState(false);
@@ -74,6 +76,16 @@ const ManageConsultation = () => {
     setShowAddItemForm(true);
     setEmployeeId(e);
   };
+  const getThirtyDaysAgo = () => {
+    const date = new Date();
+    date.setDate(date.getDate() - 30);
+    return date;
+  };
+  useEffect(() => {
+    // Set default date range to the last 30 days when the component mounts
+    setConsultationStartDateFilterValue(getThirtyDaysAgo());
+    setConsultationEndDateFilterValue(new Date());
+  }, []);
   return (
     <div className="site-wrapper overflow-hidden bg-default-2">
       {showAddItemForm ? (
@@ -98,7 +110,7 @@ const ManageConsultation = () => {
               </div>
             </div>
 
-            <div className="d-flex justify-content-start">
+            <div className="d-flex ">
               {/* New Item Dropdown */}
               {/* <div className="position-relative mr-2">
                 <button
@@ -152,48 +164,71 @@ const ManageConsultation = () => {
                 />
               </div>
               <div className="col form_group mr-4 ">
-                <p className="input_label">
-                  Filter by Consultation Opted  :
-                </p>
-                <select
-                  className={"form-control"}
-                  value={consultationOptedFilterValue}
-                  onChange={(e) => setConsultationOptedFilterValue(e.target.value)}
-                  id="consultation_opted"
-                  name="consultation_opted"
-                >
-                  <option value={""}>Select</option>
-                  <option value={"1"}>Yes</option>
-                  <option value={"0"}>No</option>
-                </select>
+                <div className="select_div">
+                  <select
+                    className={"form-control"}
+                    value={consultationOptedFilterValue}
+                    onChange={(e) => setConsultationOptedFilterValue(e.target.value)}
+                    id="consultation_opted"
+                    name="consultation_opted"
+                    style={{ height: "2.5rem" }}
+
+                  >
+                    <option value={""}> Filter by Consultation Opted</option>
+                    <option value={"1"}>Yes</option>
+                    <option value={"0"}>No</option>
+                  </select>
+                </div>
               </div>
-              <div className="col form_group mr-4 ">
-                <p className="input_label">
-                  Filter by Consultation Date  :
-                </p>
-                <DatePicker
-                  selected={consultationStartDateFilterValue}
-                  onChange={handleChange}
-                  startDate={consultationStartDateFilterValue}
-                  endDate={consultationEndDateFilterValue}
-                  selectsRange
-                />
-              </div>
+
               <div
-                className={"col form_group p-0"}      >
-                <p className="input_label">Search by ID:</p>
+                className={"col form_group"}      >
                 <div className="select_div">
                   <input
                     type="text"
                     className="form-control"
                     placeholder={"Search by ID"}
                     value={filterByEmployeeId}
+                    style={{ height: "2.5rem" }}
                     id="id"
                     name="id"
                     onChange={(e) => {
                       setFilterByEmployeeId(e.target.value);
                       setPageNo(1);
                     }}
+                  />
+                </div>
+              </div>
+              <div
+                className={"col form_group "}>
+                <div className="select_div">
+                  <SelectBox
+                    Width={"yes"}
+                    options={(filterjson.employee_status.map((option, index) => ({
+                      value: option.value,
+                      label: option.label,
+                    })) || [])}
+                    selectedValue={statusFilterValue}
+                    onChange={(e) => {
+                      setStatusFilterValue(e ? e.value : null);
+                      setPageNo(1);
+                    }}
+                    type={"status"}
+                    placeholder={"Filter by status"}
+                  />
+                </div>
+              </div>
+              <div className="col form_group">
+                <div className="select_div" style={{ height: "2.5rem" }}>
+                  <DatePicker
+                    selected={consultationStartDateFilterValue}
+                    onChange={handleChange}
+                    startDate={consultationStartDateFilterValue}
+                    endDate={consultationEndDateFilterValue}
+                    selectsRange
+                    dateFormat="dd-MM-yyyy"
+                    className="form-control"
+                    placeholderText="Filter by Consultation Date"
                   />
                 </div>
               </div>
@@ -267,6 +302,7 @@ const ManageConsultation = () => {
                   setConsultationStartDateFilterValue("")
                   setSearchCandidate("")
                   setFilterByEmployeeId("")
+                  setStatusFilterValue("")
                   // setResetWithoutConsultationId(true);
                   const newUrl = window.location.pathname;
                   window.history.replaceState({}, document.title, newUrl);
@@ -300,6 +336,7 @@ const ManageConsultation = () => {
               // categoryFilterValue={categoryFilterValue}
               // localFilterValue={localFilterValue}
               // webFilterValue={webFilterValue}
+              statustFilterValue={statusFilterValue}
               filterByEmployeeId={filterByEmployeeId}
               consultationOptedFilterValue={consultationOptedFilterValue}
               consultationStartDateFilterValue={consultationStartDateFilterValue}

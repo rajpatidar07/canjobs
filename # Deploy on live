@@ -1,12 +1,19 @@
 # Deploy on live
 
+1. Added navigation to candidate and client profiles from the payment invoice table.
+2. Added filter by invoice number in both User Profile and Manage Payments tabs.
+3. Added status filter in the consultation table.
+4. Added option to download invoices.
+5. Fixed ID, name, and chat box in the applicant table.
+
+Date: 23/09/25
 1. Added a consultation filter and consultation details on the Manage Applicant page.
 2. Remove the administration fee and add discount and made the necessary changes to the retainer agreements for both HTML and native code, as well as to the add/update form.
 3. Change the Assigned by admin in applicant table to assigned admin.
 4. Updated the employer RA HTML and PDF.
-5. Resolved the issue with columns on Dynamic RA.
-6. Added disbursement to all RAs where required.
-7. Added option to upload RA and give view option to view it .
+5. Resolved the issue with names of the columns on Dynamic RA.
+6. Added disbursement to all RAs where required. 
+7. Added option to upload RA and give view option to view it . 
 8. Correct the spelling of Attachments in email list.
 9. Add Consultation list in consultation page.
 10. Add a "retained" status to the new applicant page to change the applicant's status.
