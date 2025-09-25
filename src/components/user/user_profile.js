@@ -62,6 +62,7 @@ const NewUserProfile = (props) => {
   const user_email = searchParams.get("user_email");
   const emailId = searchParams.get("emailId");
   const user_payment = searchParams.get("user_payment");
+  const invoiceId = searchParams.get("invoiceId");
   const Payment_id = searchParams.get("Pid");
   const notes = searchParams.get("note");
   const docParentId = searchParams.get("docParentId");
@@ -98,7 +99,7 @@ const NewUserProfile = (props) => {
                 ? "email"
                 : "profile"
   );
-  const [selectedPaymentTab, setSelectedPaymentTab] = useState("payment_records");
+  const [selectedPaymentTab, setSelectedPaymentTab] = useState(invoiceId ? "invoice" : "payment_records");
   const [userDetail, setuserDetail] = useState([]);
   const [userFound, setuserFound] = useState();
   const [PersonalDetail, setPersonalDetail] = useState([]);
@@ -1868,6 +1869,7 @@ const NewUserProfile = (props) => {
                             user_email={PersonalDetail.email}
                             folderId={PersonalDetail.documents_folder_id}
                             userData={PersonalDetail}
+                            invoiceId={invoiceId || ""}
                           />
                         ) : (
                           <PayentForm

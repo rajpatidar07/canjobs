@@ -131,11 +131,12 @@ export default function PaymentInvoiceTable(props) {
                         </tr>
                     ) :
                         (props.invoiceList || []).map((item, index) =>
-                            <tr key={index}>
+                            <tr key={index} style={{ backgroundColor: props.invoiceId === item.id ? "#c2e3ef63" : "" }}>
+                                {console.log(props.invoiceId === item.id)}
                                 <td>{item.invoice_no}</td>
                                 <td className={window.location.pathname === "/daily_pages" ? "" : "d-none"}>
                                     <Link
-                                        to={item.user_type === "employee" ? `/${item.user_id}` : `/client_detail`}
+                                        to={item.user_type === "employee" ? `/${item.user_id}?user_payment=true&invoiceId=${item.id}` : `/client_detail?user_payment=true&invoiceId=${item.id}`}
                                         onClick={() => {
                                             if (item.user_type === "employer") {
                                                 localStorage.setItem("company_id", item.user_id);

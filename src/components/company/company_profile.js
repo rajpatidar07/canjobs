@@ -41,6 +41,7 @@ function CompanyProfileDetail(props) {
   const docTaskId = searchParams.get("taskId");
   const user_payment = searchParams.get("user_payment");
   const Payment_id = searchParams.get("Pid");
+  const invoiceId = searchParams.get("invoiceId");
   const notes = searchParams.get("note");
   const note_id = searchParams.get("noteid");
   const agreement = searchParams.get("agreement");
@@ -74,7 +75,7 @@ function CompanyProfileDetail(props) {
   );
   const [addNote, setAddNote] = useState(false);
   const [employerData, setEmployerData] = useState("");
-  const [selectedPaymentTab, setSelectedPaymentTab] = useState("payment_records");
+  const [selectedPaymentTab, setSelectedPaymentTab] = useState(invoiceId ? "invoice" : "payment_records");
   const [employerKycData, setEmployerKycData] = useState("");
   const [jobPageNo, setJobPageNO] = useState(1);
   const [interviewPageNo, setInterviewPageNO] = useState(1);
@@ -371,7 +372,7 @@ function CompanyProfileDetail(props) {
                       Jobs
                     </Link>
                   </li>
-                   <li className="tab-menu-items nav-item">
+                  <li className="tab-menu-items nav-item">
                     <Link
                       className={
                         TabActive === "lmia"
@@ -867,7 +868,7 @@ function CompanyProfileDetail(props) {
                                       <BiPhoneCall className="text-secondary font-size-5 mr-2" />
                                       {employerData?.contact_no}
                                     </Link>
-                                     <Link
+                                    <Link
                                       className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
                                       to={`tel:${employerData?.contact_no_other}`}
                                     >
@@ -1153,6 +1154,7 @@ function CompanyProfileDetail(props) {
                           user_email={employerData.email}
                           folderId={employerData.documents_folder_id}
                           userData={employerData}
+                          invoiceId={invoiceId || ""}
                         />
                       ) : (
                         <PayentForm
@@ -1173,7 +1175,7 @@ function CompanyProfileDetail(props) {
                   }
                 >
                   {TabActive === "contact" ? (
-                    <ContactPage email={employerData?.email} admin_id={employerData?.created_by_admin}/>
+                    <ContactPage email={employerData?.email} admin_id={employerData?.created_by_admin} />
                   ) : null}
                 </div>
                 <div

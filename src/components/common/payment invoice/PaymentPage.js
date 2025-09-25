@@ -98,6 +98,7 @@ const PaymentPage = (props) => {
   const nPages = Math.ceil(totalData / recordsPerPage);
   useEffect(() => {
     GetAllUserData()
+    GetInvoiceList()
     if (apiCall === true) {
       setApiCall(false)
     }
@@ -181,7 +182,7 @@ const PaymentPage = (props) => {
     setEndDateFilterValue(endDate);
   };
 
- 
+
   return (
     <div className="response_main_div w-100">
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
@@ -315,6 +316,7 @@ const PaymentPage = (props) => {
               invoiceList={invoiceList}
               totalData={totalData}
               employeeEmployerlist={employeeEmployerlist}
+              invoiceId={props.invoiceId}
             />
           }
           <div className="pt-2">

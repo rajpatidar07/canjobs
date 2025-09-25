@@ -964,7 +964,7 @@ export default function EmployeeTable(props) {
                     style={{
                       background: "rgb(252, 182, 182)", position: "sticky",
                       transition: "background 0.3s ease",
-                      minWidth: "50px", left: "250px",
+                      minWidth: "50px", left: "230px",
                     }}
                   >
                     Discussion
@@ -1519,7 +1519,7 @@ export default function EmployeeTable(props) {
                         </td>
                         <td className="  sticky_col1 py-5  text-capitalize"
                           style={{
-                            left: "250px", position: "sticky",
+                            left: "230px", position: "sticky",
                             transition: "background 0.3s ease",
                             minWidth: "50px", backgroundColor: "rgb(244, 244, 244)",
                           }}>

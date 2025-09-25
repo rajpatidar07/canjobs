@@ -13,13 +13,20 @@ import DatePicker from "react-datepicker";
 import PersonalDetails from "../forms/user/personal";
 import SelectBox from "../common/Common function/SelectBox";
 import filterjson from "../json/filterjson";
+import CommonThreeDots from "../common/Common function/commonThreeDots";
+import { getallEmployeeData } from "../../api/api";
 
+  const getThirtyDaysAgo = () => {
+    const date = new Date();
+    date.setDate(date.getDate() - 30);
+    return date;
+  };
 const ManageConsultation = () => {
   // const [showdropdown, setShowdropdown] = useState(false);
   // const [searchQuery, setSearchQuery] = useState("");
   const [consultationOptedFilterValue, setConsultationOptedFilterValue] = useState("");
-  const [consultationStartDateFilterValue, setConsultationStartDateFilterValue] = useState("");
-  const [consultationEndDateFilterValue, setConsultationEndDateFilterValue] = useState("");
+  const [consultationStartDateFilterValue, setConsultationStartDateFilterValue] = useState(getThirtyDaysAgo());
+  const [consultationEndDateFilterValue, setConsultationEndDateFilterValue] = useState(new Date());
   const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
   const [statusFilterValue, setStatusFilterValue] = useState("");
   // const [selectedAdminId, setSelectedAdminId] = useState(null);
@@ -28,7 +35,7 @@ const ManageConsultation = () => {
   const [employeeId, setEmployeeId] = useState();
   const [apiCall, setApiCall] = useState(false);
   // const [dayFilterValue, setDayFilterValue] = useState("");
-  // const [filterData, setFilterData] = useState([]);
+  const [exportrData, setExportData] = useState([]);
   const [pageNo, setPageNo] = useState(1);
   // const [showfilterdropdown, setShowfilterdropdown] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -37,17 +44,102 @@ const ManageConsultation = () => {
   // const [resetWithoutConsultationId, setResetWithoutConsultationId] = useState(false);
   // const dropdownRef = useRef(null);
 
-  // let getAdminData = async () => {
-  //   try {
-  //     let response = await getallAdminData();
-  //     setAdminList(response.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-  // useEffect(() => {
-  //   getAdminData();
-  // }, []);
+  let getExportedConsultationData = async () => {
+    try {
+      const userData = await getallEmployeeData(
+        searchCandidate,
+        "",// props.experienceFilterValue,
+        "",// props.skillFilterValue,
+        "",// props.educationFilterValue,
+        null,// props.pageNo,
+        null,//recordsPerPage,
+        "",//columnName,
+        "",//sortOrder,
+        "",// props.filter_by_time,
+        "",
+        statusFilterValue,
+        "",// props.job_id
+        filterByEmployeeId,
+        "",// location.pathname === "/slots"? props?.ApplicantType: props.interestFilterValue,
+        "",
+        "",// user_type === "agent" ? agentId : props.agentFilterValue,
+        "",//props.adminFilterValue,
+        "", // props.categoryFilterValue,
+        "",//  props.localFilterValue,
+        "",//  props.webFilterValue,
+        consultationOptedFilterValue,
+        consultationStartDateFilterValue,
+        consultationEndDateFilterValue,
+        // props.subCategoryFilterValue
+      );
+      console.log(userData.data,"p")
+      // const newArray = transformUserData(userData.data);
+      // console.log(newArray);
+      setExportData(userData.data)
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  // key mapping
+// const keyMap = {
+//   employee_id: "EID",
+//   name: "Name",
+//   created_by_admin: "Created by",
+//   assigned_by: "Assigned Admin",
+//   last_updated_by_name: "Last Modified",
+//   created_at: "Date added",
+//   reffer_by: "Partner",
+//   applicant_process_status: "Applicant Stage",
+//   interested_in_id: "Applicant Type",
+//   status: "Status",
+//   consultation_opted: "Consultation Opted",
+//   consultation_date: "Consultation Date",
+//   signature_status: "RA Signature status",
+//   received_date: "RA Received date",
+//   payment_mode: "Payment Mode",
+//   payment_date: "Payment Date",
+//   email: "email",
+//   contact_no: "contact_no",
+//   description: "description",
+//   date_of_birth: "date_of_birth",
+//   gender: "gender",
+//   marital_status: "marital_status",
+//   nationality: "nationality",
+//   current_location: "current_location",
+//   currently_located_country: "currently_located_country",
+//   experience: "experience",
+//   work_permit_canada: "work_permit_canada",
+//   work_permit_other_country: "work_permit_other_country",
+//   category: "category",
+//   profile_complete: "profile"
+// };
+
+// function transformUserData(userData) {
+//   return userData.map(user => {
+//     let newObj = {};
+//     for (let key in keyMap) {
+//       newObj[keyMap[key]] = user[key] ?? null;
+//     }
+//     return newObj;
+//   });
+// }
+
+
+  useEffect(() => {
+    console.log(consultationOptedFilterValue,
+    consultationStartDateFilterValue,
+    consultationEndDateFilterValue,
+    searchCandidate,
+    statusFilterValue,
+    filterByEmployeeId)
+    getExportedConsultationData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [consultationOptedFilterValue,
+    consultationStartDateFilterValue,
+    consultationEndDateFilterValue,
+    searchCandidate,
+    statusFilterValue,
+    filterByEmployeeId,]);
   // const filteredAdmins = adminList
   //   ? adminList?.filter((admin) =>
   //     admin?.name?.toLowerCase().includes(searchQuery.toLowerCase())
@@ -76,16 +168,6 @@ const ManageConsultation = () => {
     setShowAddItemForm(true);
     setEmployeeId(e);
   };
-  const getThirtyDaysAgo = () => {
-    const date = new Date();
-    date.setDate(date.getDate() - 30);
-    return date;
-  };
-  useEffect(() => {
-    // Set default date range to the last 30 days when the component mounts
-    setConsultationStartDateFilterValue(getThirtyDaysAgo());
-    setConsultationEndDateFilterValue(new Date());
-  }, []);
   return (
     <div className="site-wrapper overflow-hidden bg-default-2">
       {showAddItemForm ? (
@@ -312,6 +394,14 @@ const ManageConsultation = () => {
               >
                 Reset
               </button>
+              {console.log(exportrData)}
+              <CommonThreeDots
+                tableName={"Consultation"}
+                local={""}
+                portal={""}
+                exportCandidatestatus={""}
+                tableData={exportrData}
+              />
             </div>
             <EmployeeTable
               // showEmployeeProfile={showEmployeeProfile}

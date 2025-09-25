@@ -5,6 +5,7 @@
 3. Added status filter in the consultation table.
 4. Added option to download invoices.
 5. Fixed ID, name, and chat box in the applicant table.
+6. Add an option to export consultation data based on filters, with a feature to send the CSV file via email and download it.
 
 Date: 23/09/25
 1. Added a consultation filter and consultation details on the Manage Applicant page.
