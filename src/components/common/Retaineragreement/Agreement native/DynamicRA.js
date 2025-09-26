@@ -25,7 +25,6 @@ const DynamicRA = () => {
     /*COnvert blob to file  */
     useEffect(() => {
         const convertBlob = async () => {
-            console.log(blobData)
             try {
                 if (!blobData) {
                     console.error("Invalid blob data");
@@ -42,7 +41,6 @@ const DynamicRA = () => {
                     `${felidData?.type.replaceAll(" ", "_") + `_${felidData?.id}`}.pdf`,
                     { type: "application/pdf" }
                 );
-                console.log(file)
                 try {
                     let res = await AddSharePointDOcument(
                         user_id,

@@ -56,7 +56,7 @@ function GlobalSearch() {
       mergeData(data3);
 
       setSearchData(mergedData);
-      console.log("Merged Data:", mergedData);
+      // console.log("Merged Data:", mergedData);
       // setIsLoading(false);
     } catch (err) {
       console.log(err);

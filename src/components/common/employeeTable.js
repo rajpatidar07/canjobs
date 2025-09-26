@@ -958,7 +958,9 @@ export default function EmployeeTable(props) {
                       Name
                     </Link>
                   </th>
-                  <th
+                  {props.heading === "Dashboard" ? (
+                    ""
+                  ) : <th
                     scope="col"
                     className="border-0 font-size-3 font-weight-normal  sticky_col1  "
                     style={{
@@ -968,7 +970,7 @@ export default function EmployeeTable(props) {
                     }}
                   >
                     Discussion
-                  </th>
+                  </th>}
                   {props.heading === "Dashboard" ? (
                     ""
                   ) : (
@@ -1517,7 +1519,9 @@ export default function EmployeeTable(props) {
                             </span>
                           ) : null}
                         </td>
-                        <td className="  sticky_col1 py-5  text-capitalize"
+                        {props.heading === "Dashboard" ? (
+                          ""
+                        ) : <td className="  sticky_col1 py-5  text-capitalize"
                           style={{
                             left: "230px", position: "sticky",
                             transition: "background 0.3s ease",
@@ -1534,7 +1538,7 @@ export default function EmployeeTable(props) {
                               <BsChat />
                             </span>
                           </Link>
-                        </td>
+                        </td>}
                         {props.heading === "Dashboard" ? (
                           ""
                         ) : (

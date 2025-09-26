@@ -33,7 +33,6 @@ export default function UploadAgreement(props) {
         useValidation(initialFormState, validators);
 
     useEffect(() => {
-        console.log(props.felidDat)
         if (props.felidData) {
             setState({
                 ...state, type: props.felidData.type, "signature_status": props.felidData.signature_status,
@@ -155,7 +154,6 @@ export default function UploadAgreement(props) {
 
     /*Function to submit the form */
     const onFormSubmit = async () => {
-        console.log(validate(), (docFileBase || state.id));
         if (validate() && (docFileBase || state.id)) {
             setLoading(true);
             try {

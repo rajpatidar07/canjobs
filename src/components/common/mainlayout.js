@@ -247,24 +247,24 @@ function MainLayout() {
 
           // Check if path matches any user type patterns based on allowedPaths
           const pathLower = path.toLowerCase();
-          console.log("first", allowedPaths.user.some(route => pathLower.includes(route)), "pp", (allowedPaths.company.some(route => pathLower.includes(route))))
+          // console.log("first", allowedPaths.user.some(route => pathLower.includes(route)), "pp", (allowedPaths.company.some(route => pathLower.includes(route))))
           if (allowedPaths.company.some(route => pathLower.includes(route)) === true) {
             targetUserType = "company";
-            console.log("company", allowedPaths.company, allowedPaths.company.some(route => pathLower.includes(route)), pathLower)
+            // console.log("company", allowedPaths.company, allowedPaths.company.some(route => pathLower.includes(route)), pathLower)
           } else if (allowedPaths.agent.some(route => pathLower.includes(route)) === true) {
             // Check agent routes
             targetUserType = "agent";
-            console.log("agent", allowedPaths.agent, allowedPaths.agent.some(route => pathLower.includes(route)), pathLower)
+            // console.log("agent", allowedPaths.agent, allowedPaths.agent.some(route => pathLower.includes(route)), pathLower)
           } else if (allowedPaths.admin.some(route => pathLower.includes(route)) === true) {
             // Check admin routes (default fallback)
             targetUserType = "admin";
-            console.log("admin", allowedPaths.agent, allowedPaths.agent.some(route => pathLower.includes(route)), pathLower)
+            // console.log("admin", allowedPaths.agent, allowedPaths.agent.some(route => pathLower.includes(route)), pathLower)
           } else if (allowedPaths.user.some(route => pathLower.includes(route)) === true) {
             // Check user routes (default fallback)
             targetUserType = "user";
-            console.log("user", allowedPaths.user, allowedPaths.user.some(route => route, pathLower), pathLower)
+            // console.log("user", allowedPaths.user, allowedPaths.user.some(route => route, pathLower), pathLower)
           }
-          console.log(targetUserType, "pppppppppppppppp", loginRoutes[targetUserType])
+          // console.log(targetUserType, "pppppppppppppppp", loginRoutes[targetUserType])
           if (targetUserType && loginRoutes[targetUserType]) {
             navigate(loginRoutes[targetUserType]);
           } else {

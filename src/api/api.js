@@ -3655,7 +3655,6 @@ export const getSharePointParticularFolders = async (Id, User, folderId, columnN
 export const AddSharePointFolders = async (folder, parentId, isPrivate, userId, userType) => {
   let create_by_type = user_type === "user" ? "employee" : user_type === "company" ? "employer" : admin_type;
   let create_by_id = user_type === "user" ? user_id : user_type === "company" ? employer_id : admin_id;
-  console.log(userId, "llll")
   const response = await axios.post(
     `${API_URL}admin/createSharepointFolder_new`,
     {

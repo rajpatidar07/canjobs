@@ -128,7 +128,6 @@ const PaymentInvoiceForm = (props) => {
   /*function to submit payment invoice  form */
   const handleSubmit = async (e, send) => {
     e.preventDefault();
-    console.log("Submitted ", state, errors);
     if (validate()) {
       try {
         let data = {

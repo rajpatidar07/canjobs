@@ -394,7 +394,6 @@ const ManageConsultation = () => {
               >
                 Reset
               </button>
-              {console.log(exportrData)}
               <CommonThreeDots
                 tableName={"Consultation"}
                 local={""}

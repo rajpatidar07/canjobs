@@ -18,6 +18,7 @@ export default function EmployerNotesTable({ search }) {
   /* Shorting states */
   const [columnName, setcolumnName] = useState("id");
   const [sortOrder, setSortOrder] = useState("DESC");
+
   /*Function to get Employee's notes */
   const EmployerNotes = async () => {
     try {
@@ -40,6 +41,7 @@ export default function EmployerNotesTable({ search }) {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
     EmployerNotes();
     if (apiCall === true) {
@@ -57,6 +59,7 @@ export default function EmployerNotesTable({ search }) {
     setcolumnName(columnName);
     setCurrentPage(1);
   };
+  
   /*function to change Notes status */
   const OnStatusChange = async (e, value) => {
     // e.preventDefault()

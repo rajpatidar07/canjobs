@@ -8,7 +8,6 @@ function BraintreeDropIn(props) {
     props;
   let userType = localStorage.getItem("userType")
   let name = userType === "admin" ? localStorage.getItem("admin") : localStorage.getItem("name");
-  console.log(name)
   const [braintreeInstance, setBraintreeInstance] = useState(undefined);
   // authorization: "sandbox_s9gd7m2p_vp62s592633kc5p5", // insert your tokenization key or client token here
   useEffect(() => {
@@ -52,14 +51,12 @@ function BraintreeDropIn(props) {
                   console.error(error);
                 } else {
                   const paymentMethodNonce = payload.nonce;
-                  console.log(name)
                   try {
                     let res = await AddBrainTressPayment(
                       amount,
                       paymentMethodNonce,
                       name
                     );
-                    console.log("first", res)
                     if (res.data.success === true) {
                       let data = {
                         paymentID: res.data.paymentReceipt.id,
@@ -72,7 +69,6 @@ function BraintreeDropIn(props) {
                         "Braintree",
                         props.user
                       );
-                      console.log(response)
                       if (response.status === 1 || "1") {
                         toast.success("Payment Successful.", {
                           position: toast.POSITION.TOP_RIGHT,

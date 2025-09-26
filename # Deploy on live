@@ -1,5 +1,6 @@
 # Deploy on live
 
+Date: 26/09/25
 1. Added navigation to candidate and client profiles from the payment invoice table.
 2. Added filter by invoice number in both User Profile and Manage Payments tabs.
 3. Added status filter in the consultation table.

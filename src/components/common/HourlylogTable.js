@@ -788,7 +788,6 @@ function Hourlylogtable(props) {
                             onConfirm={() => deleteHourLog(deleteAlertHourLogData.id)}
                             showCancelButton={true}
                             onCancel={() => {
-                                console.log("Cancel Clicked");
                                 setDeleteAlertHourLog(false);
                             }}
                         />

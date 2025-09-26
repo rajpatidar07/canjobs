@@ -334,7 +334,6 @@ export default function SharePointDocument({
     setDocLoder(true);
     setBreadCrumbLoder(true);
     try {
-      console.log(user_id,"lllll")
       // if (folderID) {
       let res = await getSharePointParticularFolders(
         user_id,

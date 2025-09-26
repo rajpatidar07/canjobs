@@ -177,7 +177,6 @@ export default function UploadPaymentInvoice(props) {
     const onFormSubmit = async () => {
         // Ensure file validation is considered
         const isValid = validate();
-        console.log(isValid, validate(), "ppppppppp", errors, "ppppppppppppppppppppppppppp", state)
         if (!state.file && !props.singleInvoiceData?.id) { // Explicitly check if a file is selected
             setErrors(prevErrors => ({ ...prevErrors, file: "File is required" }));
             return;
@@ -304,7 +303,6 @@ export default function UploadPaymentInvoice(props) {
                                 className='form-control'
                             />
                         </div>
-                        {console.log(state.invoice_date)}
                         <div className="form-group col mt-5">
                             <label htmlFor='invoice_date'>Invoice Date</label>
                             <input

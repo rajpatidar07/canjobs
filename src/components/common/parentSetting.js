@@ -30,7 +30,6 @@ export default function ParentSetting({ setopenAdminSettings, setApiCall }) {
     keys.forEach(k => {
       defaultPermissions[k] = k === activeKey ? 1 : 0;
     });
-    console.log(defaultPermissions)
     return defaultPermissions;
   };
 

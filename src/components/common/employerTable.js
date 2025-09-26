@@ -11,12 +11,14 @@ import Loader from "../common/loader";
 import { LiaEdit } from "react-icons/lia";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { PiAddressBookLight } from "react-icons/pi";
-import { BsArrow90DegRight } from "react-icons/bs";
+import { BsArrow90DegRight, BsChat } from "react-icons/bs";
 // import { AiOutlineFileZip } from "react-icons/ai";
 import AddJobModal from "../forms/employer/job";
 import { LiaBriefcaseMedicalSolid } from "react-icons/lia";
 import { getInitials } from "./GetInitials";
 import MondayBadge from "./MondayBadge";
+import CommentTaskBox from "./commonTaskBox";
+import ModalSidebar from "./modalSidebar";
 export default function EmployerTable(props) {
   /*show modal and data , id state */
   let [apiCall, setApiCall] = useState(false);
@@ -26,6 +28,7 @@ export default function EmployerTable(props) {
   let [addJObModal, setAddJObModal] = useState(false);
   const [employerData, setemployerData] = useState([]);
   const [employerId, setEmployerID] = useState();
+  const [showChatModal, setShowChatModal] = useState();
   let [isLoading, setIsLoading] = useState(true);
 
   /*delete state */
@@ -163,8 +166,8 @@ export default function EmployerTable(props) {
                 <tr>
                   <th
                     scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
-                  >
+                    className=" border-0 font-size-3 font-weight-normal table_sticky_col sticky_col1   "
+                    style={{ background: "rgb(252, 182, 182)", transition: "background 0.3s", minWidth: "50px", position: "sticky", }}                  >
                     <Link
                       to={""}
                       onClick={() => {
@@ -179,7 +182,8 @@ export default function EmployerTable(props) {
                   </th>
                   <th
                     scope="col"
-                    className="border-0 font-size-4 font-weight-normal"
+                    className="border-0 font-size-3 font-weight-normal table_sticky_col sticky_col1   table_sticky_col"
+                    style={{ background: "rgb(252, 182, 182)", transition: "background 0.3s", minWidth: "150px", left: "50px" }}
                   >
                     <Link
                       to={""}
@@ -193,6 +197,19 @@ export default function EmployerTable(props) {
                       Employer name
                     </Link>
                   </th>
+                  {props.heading === "Dashboard" ? (
+                    ""
+                  ) : <th
+                    scope="col"
+                    className="border-0 font-size-3 font-weight-normal  sticky_col1  "
+                    style={{
+                      background: "rgb(252, 182, 182)", position: "sticky",
+                      transition: "background 0.3s ease",
+                      minWidth: "50px", left: "230px",
+                    }}
+                  >
+                    Discussion
+                  </th>}
                   {props.heading === "Dashboard" ? (
                     ""
                   ) : (
@@ -296,8 +313,8 @@ export default function EmployerTable(props) {
                   </tr>
                 ) : (
                   (employerData || []).map((empdata) => (
-                    <tr className="" key={empdata.company_id}>
-                      <td className=" py-5">
+                    <tr key={empdata.company_id}>
+                      <td className=" sticky_col1 py-5  text-capitalize  py-5" title={empdata.employee_id} style={{ position: "sticky", transition: "background 0.3s", backgroundColor: "rgb(244, 244, 244)", minWidth: "50px", }}>
                         {(empdata.is_monday_data === 1 || empdata.is_monday_data === "1") && (
                           <MondayBadge />
                         )}
@@ -305,7 +322,8 @@ export default function EmployerTable(props) {
                           {empdata.company_id}
                         </p>
                       </td>
-                      <td className="pl-5 py-5 pr-0   ">
+                      <td className=" table_sticky_col sticky_col1 py-5  text-capitalize py-5"
+                        style={{ left: "50px", backgroundColor: "rgb(244, 244, 244)", }}>
                         <Link
                           to={`/client_detail`}
                           title="Client Details"
@@ -361,6 +379,26 @@ export default function EmployerTable(props) {
                           </div>
                         </Link>
                       </td>
+                      {props.heading === "Dashboard" ? (
+                        ""
+                      ) : <td className="  sticky_col1 py-5  text-capitalize"
+                        style={{
+                          left: "230px", position: "sticky",
+                          transition: "background 0.3s ease",
+                          minWidth: "50px", backgroundColor: "rgb(244, 244, 244)",
+                        }}>
+                        <Link
+                          onClick={() => {
+                            setShowChatModal(true);
+                            setEmployerID(empdata);
+                          }}
+                          title="Discussion"
+                        >
+                          <span className="text-gray px-2">
+                            <BsChat />
+                          </span>
+                        </Link>
+                      </td>}
                       {props.heading === "Dashboard" ? (
                         ""
                       ) : (
@@ -419,7 +457,7 @@ export default function EmployerTable(props) {
                                 empdata.country
                               ]
                                 .filter(Boolean)
-                                .join(', ')||"N/A"}
+                                .join(', ') || "N/A"}
 
                             </p>
                           )}
@@ -588,6 +626,34 @@ export default function EmployerTable(props) {
           />
         </div>
       </div>
+      <ModalSidebar
+        show={showChatModal}
+        onClose={() => {
+          setShowChatModal(false);
+          setEmployerID();
+        }}
+        children={
+          <CommentTaskBox
+            userId={employerId?.company_id}
+            taskType={"note"}
+            taskUserType={"employer"}
+            setOpenReplyBox={setShowChatModal}
+            openReplyBox={showChatModal}
+            taskName={"Discussion for Employer"}
+          />
+        }
+      >
+        {showChatModal ? (
+          <CommentTaskBox
+            userId={employerId?.company_id}
+            taskType={"note"}
+            taskUserType={"employer"}
+            setOpenReplyBox={setShowChatModal}
+            openReplyBox={showChatModal}
+            taskName={"Discussion for Employer"}
+          />
+        ) : null}
+      </ModalSidebar>
       {showAddEmployerModal ? (
         <CompanyDetails
           show={showAddEmployerModal}
