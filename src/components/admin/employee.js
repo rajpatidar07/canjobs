@@ -5,6 +5,7 @@ import PersonalDetails from "../forms/user/personal";
 import UserProfile from "../user/profile";
 import EmployeeTable from "../common/employeeTable";
 import ApplicantsFilter from "../common/applicantsFilter";
+import GetThirtyDaysAgo from "../common/Common function/GetThirtyDaysAgo";
 function Employee(props) {
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
@@ -23,8 +24,8 @@ function Employee(props) {
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [interestFilterValue, setinterestFilterValue] = useState("");
   const [consultationOptedFilterValue, setConsultationOptedFilterValue] = useState("");
-  const [consultationStartDateFilterValue, setConsultationStartDateFilterValue] = useState("");
-  const [consultationEndDateFilterValue, setConsultationEndDateFilterValue] = useState("");
+  const [consultationStartDateFilterValue, setConsultationStartDateFilterValue] = useState(GetThirtyDaysAgo());
+  const [consultationEndDateFilterValue, setConsultationEndDateFilterValue] = useState(new Date());
   const [webFilterValue, setWebFilterValue] = useState("");
   const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
   const [localFilterValue, setLocalFilterValue] = useState("");

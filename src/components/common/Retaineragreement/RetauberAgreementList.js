@@ -231,6 +231,22 @@ export default function RetauberAgreementList({
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
                   >
+                    <Link to="" className="text-dark" onClick={() => { handleSort("created_by_name") }}>
+                      Created By
+                    </Link>
+                  </th>
+                  <th
+                    scope="col"
+                    className="border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link to="" className="text-dark" onClick={() => { handleSort("updated_by_name") }}>
+                      Last Updated By
+                    </Link>
+                  </th>
+                  <th
+                    scope="col"
+                    className="border-0 font-size-4 font-weight-normal"
+                  >
                     <Link onClick={() => {
                       handleSort("send_date")
                     }} className="text-dark">
@@ -296,7 +312,21 @@ export default function RetauberAgreementList({
                         }
                       </td>
                       <td className="text-capitalize ">{data?.agreement_subject ? data.agreement_subject : data.type || "N/A"}</td>
-                      <td className="text-capitalize ">
+
+                      <td className=" py-5">
+                        <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                          <span className="p-1">
+                            {data.created_by_name || "N/A"}
+                          </span>
+                        </p>
+                      </td>
+                      <td className=" py-5">
+                        <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                          <span className="p-1">
+                            {data.updated_by_name || "N/A"}
+                          </span>
+                        </p>
+                      </td><td className="text-capitalize ">
                         {data.send_date ? moment(data.send_date).format("DD-MM-YYYY") : "N/A"}
                       </td>
                       <td className="text-capitalize ">

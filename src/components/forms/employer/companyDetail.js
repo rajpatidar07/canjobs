@@ -261,7 +261,7 @@ function CompanyDetails(props) {
           <form onSubmit={onCompanyDetailClick}>
             <h5 className="text-center pt-2 mb-7">
               {/* {user_type === "company" ? "Company Details" : "Employer Details"} */}
-              Employer's Details
+              Business Details
             </h5>
             <input type="hidden" value={state.company_id || ""} />
             <div className="row">

@@ -463,6 +463,9 @@ export default function ApplicantsFilter({
               startDate={consultationStartDateFilterValue}
               endDate={consultationEndDateFilterValue}
               selectsRange
+              dateFormat="dd-MM-yyyy"
+              className="form-control"
+              placeholderText="Filter by Consultation Date"
             />
           </div>
         </>}

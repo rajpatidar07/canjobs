@@ -1,6 +1,11 @@
 # Deploy on live
 
+1. Change employer details to the Business details title in add update employer's form.
+2. Add Secondary contact persons details for the employer.
+3. Added _Created By_ and _Updated By_ for the invoice and RA as requested, along with several other changes.
+
 Date: 26/09/25
+
 1. Added navigation to candidate and client profiles from the payment invoice table.
 2. Added filter by invoice number in both User Profile and Manage Payments tabs.
 3. Added status filter in the consultation table.
@@ -9,13 +14,14 @@ Date: 26/09/25
 6. Add an option to export consultation data based on filters, with a feature to send the CSV file via email and download it.
 
 Date: 23/09/25
+
 1. Added a consultation filter and consultation details on the Manage Applicant page.
 2. Remove the administration fee and add discount and made the necessary changes to the retainer agreements for both HTML and native code, as well as to the add/update form.
 3. Change the Assigned by admin in applicant table to assigned admin.
 4. Updated the employer RA HTML and PDF.
 5. Resolved the issue with names of the columns on Dynamic RA.
-6. Added disbursement to all RAs where required. 
-7. Added option to upload RA and give view option to view it . 
+6. Added disbursement to all RAs where required.
+7. Added option to upload RA and give view option to view it .
 8. Correct the spelling of Attachments in email list.
 9. Add Consultation list in consultation page.
 10. Add a "retained" status to the new applicant page to change the applicant's status.
@@ -24,7 +30,6 @@ Date: 23/09/25
 13. Allow adding and updating consultation data from both the applicant management and user profile pages.
 14. Add an employee ID filter to the consultation table.
 15. Link notes in the applicant table and apply several changes.
-
 
 Date=>02(pura kiya tha) & 03/09/25(changes krk kiya tha)
 

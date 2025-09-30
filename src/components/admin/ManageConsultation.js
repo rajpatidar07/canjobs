@@ -15,17 +15,14 @@ import SelectBox from "../common/Common function/SelectBox";
 import filterjson from "../json/filterjson";
 import CommonThreeDots from "../common/Common function/commonThreeDots";
 import { getallEmployeeData } from "../../api/api";
+import GetThirtyDaysAgo from "../common/Common function/GetThirtyDaysAgo";
 
-  const getThirtyDaysAgo = () => {
-    const date = new Date();
-    date.setDate(date.getDate() - 30);
-    return date;
-  };
+
 const ManageConsultation = () => {
   // const [showdropdown, setShowdropdown] = useState(false);
   // const [searchQuery, setSearchQuery] = useState("");
   const [consultationOptedFilterValue, setConsultationOptedFilterValue] = useState("");
-  const [consultationStartDateFilterValue, setConsultationStartDateFilterValue] = useState(getThirtyDaysAgo());
+  const [consultationStartDateFilterValue, setConsultationStartDateFilterValue] = useState(GetThirtyDaysAgo());
   const [consultationEndDateFilterValue, setConsultationEndDateFilterValue] = useState(new Date());
   const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
   const [statusFilterValue, setStatusFilterValue] = useState("");
@@ -72,7 +69,7 @@ const ManageConsultation = () => {
         consultationEndDateFilterValue,
         // props.subCategoryFilterValue
       );
-      console.log(userData.data,"p")
+      console.log(userData.data, "p")
       // const newArray = transformUserData(userData.data);
       // console.log(newArray);
       setExportData(userData.data)
@@ -81,57 +78,51 @@ const ManageConsultation = () => {
     }
   };
   // key mapping
-// const keyMap = {
-//   employee_id: "EID",
-//   name: "Name",
-//   created_by_admin: "Created by",
-//   assigned_by: "Assigned Admin",
-//   last_updated_by_name: "Last Modified",
-//   created_at: "Date added",
-//   reffer_by: "Partner",
-//   applicant_process_status: "Applicant Stage",
-//   interested_in_id: "Applicant Type",
-//   status: "Status",
-//   consultation_opted: "Consultation Opted",
-//   consultation_date: "Consultation Date",
-//   signature_status: "RA Signature status",
-//   received_date: "RA Received date",
-//   payment_mode: "Payment Mode",
-//   payment_date: "Payment Date",
-//   email: "email",
-//   contact_no: "contact_no",
-//   description: "description",
-//   date_of_birth: "date_of_birth",
-//   gender: "gender",
-//   marital_status: "marital_status",
-//   nationality: "nationality",
-//   current_location: "current_location",
-//   currently_located_country: "currently_located_country",
-//   experience: "experience",
-//   work_permit_canada: "work_permit_canada",
-//   work_permit_other_country: "work_permit_other_country",
-//   category: "category",
-//   profile_complete: "profile"
-// };
+  // const keyMap = {
+  //   employee_id: "EID",
+  //   name: "Name",
+  //   created_by_admin: "Created by",
+  //   assigned_by: "Assigned Admin",
+  //   last_updated_by_name: "Last Modified",
+  //   created_at: "Date added",
+  //   reffer_by: "Partner",
+  //   applicant_process_status: "Applicant Stage",
+  //   interested_in_id: "Applicant Type",
+  //   status: "Status",
+  //   consultation_opted: "Consultation Opted",
+  //   consultation_date: "Consultation Date",
+  //   signature_status: "RA Signature status",
+  //   received_date: "RA Received date",
+  //   payment_mode: "Payment Mode",
+  //   payment_date: "Payment Date",
+  //   email: "email",
+  //   contact_no: "contact_no",
+  //   description: "description",
+  //   date_of_birth: "date_of_birth",
+  //   gender: "gender",
+  //   marital_status: "marital_status",
+  //   nationality: "nationality",
+  //   current_location: "current_location",
+  //   currently_located_country: "currently_located_country",
+  //   experience: "experience",
+  //   work_permit_canada: "work_permit_canada",
+  //   work_permit_other_country: "work_permit_other_country",
+  //   category: "category",
+  //   profile_complete: "profile"
+  // };
 
-// function transformUserData(userData) {
-//   return userData.map(user => {
-//     let newObj = {};
-//     for (let key in keyMap) {
-//       newObj[keyMap[key]] = user[key] ?? null;
-//     }
-//     return newObj;
-//   });
-// }
+  // function transformUserData(userData) {
+  //   return userData.map(user => {
+  //     let newObj = {};
+  //     for (let key in keyMap) {
+  //       newObj[keyMap[key]] = user[key] ?? null;
+  //     }
+  //     return newObj;
+  //   });
+  // }
 
 
   useEffect(() => {
-    console.log(consultationOptedFilterValue,
-    consultationStartDateFilterValue,
-    consultationEndDateFilterValue,
-    searchCandidate,
-    statusFilterValue,
-    filterByEmployeeId)
     getExportedConsultationData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [consultationOptedFilterValue,

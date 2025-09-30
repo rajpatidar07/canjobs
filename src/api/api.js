@@ -34,44 +34,44 @@ export const encryptPassword = (password) => {
 
   return encrypted.toString(); // base64 string
 }
-axios.interceptors.response.use(
-  response => {
-    if (
-      response.data &&
-      response.data.status === false &&
-      response.data.message === "Unauthorised Token"
-    ) {
-      if (user_type === "employee") {
-        window.location.href = "/candidate_login";
-      } else if (user_type === "employer") {
-        window.location.href = "/client_login";
-      } else if (user_type === "admin") {
-        window.location.href = "/adminlogin";
-      } else if (user_type === "agent") {
-        window.location.href = "/partnerlogin";
-      } else {
-        window.location.href = "/";
-      }
-    }
-    return response;
-  },
-  error => {
-    if (error.message === "Network Error" || error.message === "Request failed with status code 401") {
-      console.log(error)
-      if (user_type === "user") {
-        window.location.href = "/candidate_login";
-      } else if (user_type === "company") {
-        window.location.href = "/client_login";
-      } else if (user_type === "admin") {
-        window.location.href = "/adminlogin";
-      } else if (user_type === "agent") {
-        window.location.href = "/partnerlogin";
-      } else {
-        window.location.href = "/";
-      }
-    }
-  }
-);
+// axios.interceptors.response.use(
+//   response => {
+//     if (
+//       response.data &&
+//       response.data.status === false &&
+//       response.data.message === "Unauthorised Token"
+//     ) {
+//       if (user_type === "employee") {
+//         window.location.href = "/candidate_login";
+//       } else if (user_type === "employer") {
+//         window.location.href = "/client_login";
+//       } else if (user_type === "admin") {
+//         window.location.href = "/adminlogin";
+//       } else if (user_type === "agent") {
+//         window.location.href = "/partnerlogin";
+//       } else {
+//         window.location.href = "/";
+//       }
+//     }
+//     return response;
+//   },
+//   error => {
+//     if (error.message === "Network Error" || error.message === "Request failed with status code 401") {
+//       console.log(error)
+//       if (user_type === "user") {
+//         window.location.href = "/candidate_login";
+//       } else if (user_type === "company") {
+//         window.location.href = "/client_login";
+//       } else if (user_type === "admin") {
+//         window.location.href = "/adminlogin";
+//       } else if (user_type === "agent") {
+//         window.location.href = "/partnerlogin";
+//       } else {
+//         window.location.href = "/";
+//       }
+//     }
+//   }
+// );
 
 // Location Api
 /*Country*/
@@ -3941,7 +3941,10 @@ export const GetAgreement = async (Id, receiver, receiver_type, sort, column, ty
 export const AddUpdateAgreement = async (data) => {
   const response = await axios.put(
     `${API_URL}api/Agreement_api/addUpdateAgreement`,
-    data,
+    {
+      ...data,
+      admin_id: admin_id
+    },
     {
       headers: {
         "Content-Type": "application/json",
@@ -4193,7 +4196,8 @@ export const AddUpdatePaymentInvoiceApi = async (data) => {
   const response = await axios.post(`${API_URL}common/addUpdatePaymentInvoice`,
     {
       ...data,
-      driveId: driveId
+      driveId: driveId,
+      admin_id: admin_id
     }, {
     headers: {
       "Content-Type": "application/json",

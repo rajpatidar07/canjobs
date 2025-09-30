@@ -11,6 +11,7 @@ import ReceiveAmountModal from "../../forms/admin/ReceiveAmountModal";
 import UploadPaymentInvoice from '../../forms/payment invoice/UploadPaymentInvoice';
 import PaymentInvoiceTable from "./PaymentInvoiceTable";
 import DatePicker from "react-datepicker";
+import GetThirtyDaysAgo from "../Common function/GetThirtyDaysAgo";
 const PaymentPage = (props) => {
   const [openAddPaymentForm, setOpenAddPaymentForm] = useState(false);
   const [openUploadPaymentForm, setOpenUploadPaymentForm] = useState(false);
@@ -26,8 +27,8 @@ const PaymentPage = (props) => {
   const [invoicePdf, setInvoicePdf] = useState("");
   const [openViewInvoice, setOpenViewInvoice] = useState("");
   const [invoiceData, setInvoiceData] = useState("");
-  const [startDateFilterValue, setStartDateFilterValue] = useState("");
-  const [endDateFilterValue, setEndDateFilterValue] = useState("");
+  const [startDateFilterValue, setStartDateFilterValue] = useState(GetThirtyDaysAgo());
+  const [endDateFilterValue, setEndDateFilterValue] = useState(new Date());
   const [filterByInvoiceNumber, setFilterByInvoiceNumber] = useState("")
   let [json, setJson] = useState()
   /*Pagination */

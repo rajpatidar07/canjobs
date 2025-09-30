@@ -82,6 +82,22 @@ export default function PaymentInvoiceTable(props) {
                             scope="col"
                             className="border-0 font-size-4 font-weight-normal"
                         >
+                            <Link to="" className="text-dark" onClick={() => { props.handleSort("created_by_name") }}>
+                                Created By
+                            </Link>
+                        </th>
+                        <th
+                            scope="col"
+                            className="border-0 font-size-4 font-weight-normal"
+                        >
+                            <Link to="" className="text-dark" onClick={() => { props.handleSort("updated_by_name") }}>
+                                Last Updated By
+                            </Link>
+                        </th>
+                        <th
+                            scope="col"
+                            className="border-0 font-size-4 font-weight-normal"
+                        >
                             <Link to="" className="text-dark" onClick={() => { props.handleSort("created_at") }}>
                                 Created On
                             </Link>
@@ -132,7 +148,6 @@ export default function PaymentInvoiceTable(props) {
                     ) :
                         (props.invoiceList || []).map((item, index) =>
                             <tr key={index} style={{ backgroundColor: props.invoiceId === item.id ? "#c2e3ef63" : "" }}>
-                                {console.log(props.invoiceId === item.id)}
                                 <td>{item.invoice_no}</td>
                                 <td className={window.location.pathname === "/daily_pages" ? "" : "d-none"}>
                                     <Link
@@ -154,6 +169,20 @@ export default function PaymentInvoiceTable(props) {
                                     <p className="font-size-2 font-weight-normal text-black-2 mb-0">
                                         <span className="p-1">
                                             {json?.payment_invoice_terms.find((res) => res.id === parseInt(item.terms))?.value || "N/A"}
+                                        </span>
+                                    </p>
+                                </td>
+                                <td className=" py-5">
+                                    <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                                        <span className="p-1">
+                                            {item.created_by_name || "N/A"}
+                                        </span>
+                                    </p>
+                                </td>
+                                <td className=" py-5">
+                                    <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                                        <span className="p-1">
+                                            {item.updated_by_name || "N/A"}
                                         </span>
                                     </p>
                                 </td>
