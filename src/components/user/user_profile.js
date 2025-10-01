@@ -894,9 +894,10 @@ const NewUserProfile = (props) => {
                                   </span>
                                 ) : null}
                                 {PersonalDetail.marital_status ? (
-                                  <span className="bg-info rounded-pill font-size-3 px-3 py-2 text-white mr-2 text-capitalize">
+                                  <><span className="bg-info rounded-pill font-size-3 px-3 py-2 text-white mr-2 text-capitalize">
                                     {PersonalDetail.marital_status}
                                   </span>
+                                  </>
                                 ) : null}
                                 {PersonalDetail.date_of_birth &&
                                   PersonalDetail.date_of_birth !==
@@ -1061,17 +1062,41 @@ const NewUserProfile = (props) => {
                                         ""
                                       )}
                                     </div>
-                                    {/* {PersonalDetail.nationality ? (
-                                    <div
-                                      className="info_box text-left"
-                                      title="Nationality"
-                                    >
-                                      <span className="font-size-3 text-smoke  mr-7 text-capitalize">
-                                        Nationality:
-                                        <b> {PersonalDetail.nationality}</b>
-                                      </span>
-                                    </div>
-                                  ) : null} */}
+                                    {PersonalDetail.marital_status === ("married" || "Married") ? (
+                                      <div
+                                        className="info_box text-left"
+                                        title="Partner Name"
+                                      >
+                                        <span className="font-size-3 text-smoke  mr-7 text-capitalize">
+                                          Partner Name:
+                                          <b>   {PersonalDetail.partner_name}</b>
+                                        </span>
+                                      </div>
+                                    ) : null}
+                                    {PersonalDetail.marital_status === ("married" || "Married") ? (
+                                      <div
+                                        className="info_box text-left"
+                                        title="Child Name"
+                                      >
+                                        <span className="font-size-3 text-smoke  mr-7 text-capitalize">
+                                          Child Name:
+                                          <b>
+                                            {PersonalDetail.child_name}</b>
+                                        </span>
+                                      </div>
+                                    ) : null}
+                                    {PersonalDetail.marital_status === ("married" || "Married") ? (
+                                      <div
+                                        className="info_box text-left"
+                                        title="Country of residence"
+                                      >
+                                        <span className="font-size-3 text-smoke  mr-7 text-capitalize">
+                                          Country of residence:
+                                          <b>
+                                            {PersonalDetail.country_of_residence}</b>
+                                        </span>
+                                      </div>
+                                    ) : null}
                                     {PersonalDetail.work_permit_canada ? (
                                       <div className="info_box text-left">
                                         <span

@@ -453,7 +453,7 @@ export default function FolderList({
               <div className=" rounded shadow-sm col-12">
                 {/* Table Header */}
                 <div className="d-flex bg-light py-2 px-3 border-bottom fw-bold">
-                  <div className="col-3 ">
+                  <div className="col-2 ">
                     <Link
                       onClick={() => {
                         handleSort("name");
@@ -464,7 +464,7 @@ export default function FolderList({
                       Name
                     </Link>
                   </div>
-                  <div className="col-3 ">
+                  <div className="col-2 ">
                     <Link
                       onClick={() => {
                         handleSort("createdDateTime");
@@ -475,7 +475,18 @@ export default function FolderList({
                       Created At
                     </Link>
                   </div>
-                  <div className="col-3 ">
+                  <div className="col-2 ">
+                    <Link
+                      onClick={() => {
+                        handleSort("created_by_name");
+                        setPageNo(1);
+                      }}
+                      className="text-decoration-none  text-gray"
+                    >
+                      Created By
+                    </Link>
+                  </div>
+                  <div className="col-2 ">
                     <Link
                       onClick={() => {
                         handleSort("lastModifiedDateTime");
@@ -486,7 +497,18 @@ export default function FolderList({
                       Last Modified
                     </Link>
                   </div>
-                  <div className="col-3 ">
+                  <div className="col-2 ">
+                    <Link
+                      onClick={() => {
+                        handleSort("updated_by_name");
+                        setPageNo(1);
+                      }}
+                      className="text-decoration-none  text-gray"
+                    >
+                      Last Modified By
+                    </Link>
+                  </div>
+                  <div className="col-2 ">
                     <Link
                       onClick={() => {
                         handleSort("mimeType");
@@ -507,7 +529,7 @@ export default function FolderList({
                     style={{ fontSize: "14px" }}
                   >
                     {/* Name and Dropdown */}
-                    <div className="col-3">
+                    <div className="col-2">
                       {showDropDown === item.id && (() => {
                         const isFolder = item.folder;
                         const isTextFile = item.file?.mimeType === "text/plain";
@@ -734,22 +756,29 @@ export default function FolderList({
                       </Link>
                     </div>
                     {/* Created At */}
-                    <div className="col-3">
+                    <div className="col-2">
                       <ConvertTime
                         _date={item.createdDateTime}
-                        format={".fromNow()"}
+                        format={"DD-MM-YYYY"}
                       />
                     </div>
-
+                    {/* Created By */}
+                    <div className="col-2">
+                      {item.created_by_name  || "N/A"}
+                    </div>
                     {/* Last Modified */}
-                    <div className="col-3">
+                    <div className="col-2">
                       <ConvertTime
                         _date={item.lastModifiedDateTime}
-                        format={".fromNow()"}
+                        format={"DD-MM-YYYY"}
                       />
                     </div>
+                    {/* Last Modified */}
+                    <div className="col-2">
+                      {item.updated_by_name || "N/A"}
+                    </div>
                     {/* Type */}
-                    <div className="col-3">
+                    <div className="col-2">
                       {item.folder
                         ? "Folder"
                         : item.file.mimeType.includes("pdf")

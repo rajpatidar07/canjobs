@@ -66,12 +66,15 @@ function PersonalDetails(props) {
     work_permit_other_country: "",
     resume: "",
     profile_photo: "",
-    is_featured: "",
+    // is_featured: "",
     status: props.employeeId === "0" ? "1" : "",
     reffer_by: user_type === "agent" ? localStorage.getItem("agent_id") : "",
     permission: props.employeeId === "0" ? JSON.stringify(Permissions) : null,
     assigned_by: "",
     other_contact_no: "",
+    partner_name: "",
+    child_name: "",
+    country_of_residence: ""
 
   };
 
@@ -278,7 +281,7 @@ function PersonalDetails(props) {
       setApplicantTypeList([]);
     }
   };
-  
+
   /*Function to set data to the search agent  */
   // const onSelectChange = (option) => {
   //   setState({ ...state, reffer_by: option.value });
@@ -851,38 +854,102 @@ function PersonalDetails(props) {
                     )}
                   </div>
                   {/* THIRD LINE */}
-                  {/* <div className="form-group col-md-4">
+                  <div className={state.marital_status === ("married" || "Married") ? "form-group col-md-4" : "d-none"}>
                     <label
-                      htmlFor="nationality"
+                      htmlFor="partner_name"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Nationality / Citizenship:
-                      
+                      Partner Name:
+
                     </label>
                     <input
                       maxLength={60}
                       type="text"
-                      placeholder="nationality / Citizenship"
-                      name="nationality"
-                      value={state.nationality || ""}
+                      placeholder="Partner Name"
+                      name="partner_name"
+                      value={state.partner_name || ""}
                       onChange={onInputChange}
                       className={
-                        errors.nationality
+                        errors.partner_name
                           ? "form-control border border-danger"
                           : "form-control"
                       }
-                      id="nationality"
+                      id="partner_name"
                     />
-                    // ----ERROR MESSAGE FOR nationality----
-                    {errors.nationality && (
+                    {/* // ----ERROR MESSAGE FOR partner_name---- */}
+                    {errors.partner_name && (
                       <span
-                        key={errors.nationality}
+                        key={errors.partner_name}
                         className="text-danger font-size-3"
                       >
-                        {errors.nationality}
+                        {errors.partner_name}
                       </span>
                     )}
-                  </div> */}
+                  </div>
+                  <div className={state.marital_status === ("married" || "Married") ? "form-group col-md-4" : "d-none"}>
+                    <label
+                      htmlFor="child_name"
+                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                    >
+                      Child Name:
+
+                    </label>
+                    <input
+                      maxLength={60}
+                      type="text"
+                      placeholder="Child Name"
+                      name="child_name"
+                      value={state.child_name || ""}
+                      onChange={onInputChange}
+                      className={
+                        errors.child_name
+                          ? "form-control border border-danger"
+                          : "form-control"
+                      }
+                      id="child_name"
+                    />
+                    {/* // ----ERROR MESSAGE FOR child_name---- */}
+                    {errors.child_name && (
+                      <span
+                        key={errors.child_name}
+                        className="text-danger font-size-3"
+                      >
+                        {errors.child_name}
+                      </span>
+                    )}
+                  </div>
+                  <div className={state.marital_status === ("married" || "Married") ? "form-group col-md-4" : "d-none"}>
+                    <label
+                      htmlFor="country_of_residence"
+                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                    >
+                      Country of Residence:
+
+                    </label>
+                    <input
+                      maxLength={60}
+                      type="text"
+                      placeholder="Country of Residence"
+                      name="country_of_residence"
+                      value={state.country_of_residence || ""}
+                      onChange={onInputChange}
+                      className={
+                        errors.country_of_residence
+                          ? "form-control border border-danger"
+                          : "form-control"
+                      }
+                      id="country_of_residence"
+                    />
+                    {/* // ----ERROR MESSAGE FOR country_of_residence---- */}
+                    {errors.country_of_residence && (
+                      <span
+                        key={errors.country_of_residence}
+                        className="text-danger font-size-3"
+                      >
+                        {errors.country_of_residence}
+                      </span>
+                    )}
+                  </div>
                   <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="current_location"
@@ -1167,10 +1234,10 @@ function PersonalDetails(props) {
                             "Training Modules",
                             "Admission/student/college"
                           ].some(it => item.title.includes(it))))
-                          ).map(item => ({
-                            value: item.id,
-                            label: item.title,
-                          }))
+                        ).map(item => ({
+                          value: item.id,
+                          label: item.title,
+                        }))
                         }
                         type="interested_in_id"
                         selectedValue={main}
@@ -1542,7 +1609,7 @@ function PersonalDetails(props) {
                     )}
                   </div>
                   {user_type === "admin" ? (
-                    <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser"
+                    <div className={`form-group d-none col-md-4 ${props.user_of_page === "assignedUser"
                       || props.pageNameForForm === "ApplicantType"
                       || props.pageNameForForm === "Category"
                       || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
