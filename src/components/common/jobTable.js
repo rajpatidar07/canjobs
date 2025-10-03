@@ -20,7 +20,7 @@ import EmployeeModal from "../admin/Modal/employeeModal";
 import JobResponse from "../admin/response";
 import LmiaStatus from "../forms/admin/lmiastatus";
 import { LiaUserEditSolid, LiaUserTieSolid } from "react-icons/lia";
-import { BsArrow90DegRight } from "react-icons/bs";
+import { BsArrow90DegRight, BsChat } from "react-icons/bs";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import { GrDocumentUpload } from "react-icons/gr";
@@ -29,6 +29,8 @@ import LmiaInfo from "../forms/admin/lmiaInfo";
 import MondayBadge from "./MondayBadge";
 import determineBackgroundColor from "./Common function/DetermineBackgroundColour";
 import filterjson from "../json/filterjson";
+import CommentTaskBox from "./commonTaskBox";
+import ModalSidebar from "./modalSidebar";
 export default function JobTable(props) {
   /*show Modal and props state */
   let [isLoading, setIsLoading] = useState(true);
@@ -38,6 +40,7 @@ export default function JobTable(props) {
   let [openLimia, setOpenLimia] = useState(false);
   let [showCandidateModal, setShowCandidateModal] = useState(false);
   let [showLmiaAdditionalInfobModal, setShowLmiaAdditionalInfobModal] = useState(false);
+  const [showChatModal, setShowChatModal] = useState();
   let [apiCall, setApiCall] = useState(false);
   const [jobData, setjobData] = useState([]);
   const [lmiaStatus, setLmiaStatus] = useState([]);
@@ -211,12 +214,11 @@ export default function JobTable(props) {
   const GetDashboardPermissionData = async () => {
     try {
       let Response = await GetAdminrSetting();
-      const lmia_column_permission = JSON.parse(
-        Response.data.lmia_column_permission
-      );
-      if (lmia_column_permission === null) {
+      const permissionKey = props.page === "job" ? "job_column_permission" : "lmia_column_permission";
+      const permissions = JSON.parse(Response.data[permissionKey]);
+      if (permissions === null) {
         const updatedPermissions = {
-          lmia_column_permission: {},
+          [permissionKey]: {},
         }
         try {
           const response = await AddAdminPermission(updatedPermissions)
@@ -227,17 +229,16 @@ export default function JobTable(props) {
           console.error(err)
         }
       }
-      setFieldsPermited(lmia_column_permission);
+      setFieldsPermited(permissions);
     } catch (err) {
       console.log(err);
     }
   };
-
   /*Render function to get the job */
   useEffect(() => {
     JobData();
     JsonData()
-    if (props.response === "lmia") {
+    if (props.page === "lmia" || props.page === "job") {
       GetDashboardPermissionData()
     }
     if (apiCall === true || props.apiCall === true) {
@@ -357,6 +358,7 @@ export default function JobTable(props) {
   const columns = [
     { key: "job_id", label: "Job ID", sticky: true },
     { key: "job_title", label: "Job Title", sticky: true },
+    { key: "Note", label: "Note", sticky: true },
 
     // Add Job Type & Address if not on Dashboard
     ...(props.heading !== "Dashboard"
@@ -417,7 +419,7 @@ export default function JobTable(props) {
         : []
     ),
   ];
-  
+
   const FilterdColumns = columns?.filter((col) => {
     // Always show if it's not part of config OR config says 1
     return fieldsPermited[col.key] === undefined || fieldsPermited[col.key] === 1 || col.isAction;
@@ -440,7 +442,12 @@ export default function JobTable(props) {
                         }  ${col.hidden ? "d-none" : ""} ${col.key === "job_title" ? "table_sticky_col" : ""}`}
                       style={{
                         ...(col.sticky && { background: "#fcb6b6", transition: "background 0.3s ease" }),
-                        ...(col.key === "job_title" && { left: "50px" }),
+                        ...(col.key === "job_title" && { left: "49px" }),
+                        ...(col.key === "Note" && {
+                          background: "rgb(252, 182, 182)", position: "sticky",
+                          transition: "background 0.3s ease",
+                          minWidth: "20px", left: "210px",
+                        }),
                         ...(col.key === "job_id" ? {
                           minWidth: "50px ", maxWidth: "auto", position: "sticky",
                           transition: " background 0.3s ease"
@@ -468,7 +475,7 @@ export default function JobTable(props) {
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || jobData.length === 0 ? (
                   <tr>
-                    <th colSpan={props.response === "lmia" ? 21 : 11} className="bg-white text-center">
+                    <th colSpan={props.page === "lmia" ? 21 : 11} className="bg-white text-center">
                       No Data Found
                     </th>
                   </tr>
@@ -496,7 +503,7 @@ export default function JobTable(props) {
 
                             <td
                               style={{ paddingBottom: "0!important" }}
-                              colSpan={props.response === "lmia" ? 21 : 11}
+                              colSpan={props.page === "lmia" ? 21 : 11}
                               className={
                                 job.lmia_status ? "bg-white text-center" : "d-none"
                               }
@@ -664,7 +671,7 @@ export default function JobTable(props) {
                               title={job.job_title}
                             >{job.job_id}</Link>
                           </td>
-                          <td className="table_sticky_col sticky_col1 py-5  text-capitalize " style={{ left: "50px", backgroundColor: "#f4f4f4 " }}>
+                          <td className="table_sticky_col sticky_col1 py-5  text-capitalize " style={{ left: "49px", backgroundColor: "#f4f4f4 " }}>
                             <div className="d-flex align-items-center">
                               {(job.is_monday_data === 1 || job.is_monday_data === "1") && (
                                 <MondayBadge />
@@ -703,6 +710,26 @@ export default function JobTable(props) {
                               </div>
                             </div>
                           </td>
+                          {props.heading === "Dashboard" ? (
+                            ""
+                          ) : <td className="  sticky_col1 py-5  text-capitalize"
+                            style={{
+                              left: "210px", position: "sticky",
+                              transition: "background 0.3s ease",
+                              minWidth: "20px", backgroundColor: "rgb(244, 244, 244)",
+                            }}>
+                            <Link
+                              onClick={() => {
+                                setShowChatModal(true);
+                                setJobId(job);
+                              }}
+                              title="Note"
+                            >
+                              <span className="text-gray px-2">
+                                <BsChat />
+                              </span>
+                            </Link>
+                          </td>}
                           {props.heading === "Dashboard" ? null : (
                             <td className=" text-capitalize  py-5"
                               title={job.job_type}>
@@ -722,7 +749,7 @@ export default function JobTable(props) {
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                   {job.industry_type || job.location
                                     ? `${job.industry_type ? job.industry_type + "," : ""} ${job.location}`
-                                    : "N/A"}
+                                    : "N/A"}cc
                                 </h3>
                               </td>
                             )
@@ -1071,23 +1098,21 @@ export default function JobTable(props) {
                               )}
                             </h3>
                           </td>
-                          {FilterdColumns.find(col => col.key === "profile_complete") && <td
-                            className={"py-5 "
-                            }
-                          >
-                            <p className="font-size-2 font-weight-normal text-black-2 mb-0"
-                              title={job.profile_complete >= 99.0 ? "Complete" : "Incomplete"}>
-                              {job.profile_complete >= 99.0 ? (
-                                <span className="p-1 bg-primary-opacity-8 text-white text-center  border rounded-pill">
-                                  Complete
-                                </span>
-                              ) : (
-                                <span className="p-1 bg-warning text-white text-center  border rounded-pill">
-                                  Incomplete
-                                </span>
-                              )}
-                            </p>
-                          </td>}
+                          {FilterdColumns.find(col => col.key === "profile_complete") &&
+                            <td className={"py-5 "}>
+                              <p className="font-size-2 font-weight-normal text-black-2 mb-0"
+                                title={job.profile_complete >= 99.0 ? "Complete" : "Incomplete"}>
+                                {job.profile_complete >= 99.0 ? (
+                                  <span className="p-1 bg-primary-opacity-8 text-white text-center  border rounded-pill">
+                                    Complete
+                                  </span>
+                                ) : (
+                                  <span className="p-1 bg-warning text-white text-center  border rounded-pill">
+                                    Incomplete
+                                  </span>
+                                )}
+                              </p>
+                            </td>}
                           {props.heading === "Dashboard" ||
                             user_type === "user" ||
                             user_type === "company" || user_type === "agent" ? null : (
@@ -1385,7 +1410,34 @@ export default function JobTable(props) {
           </div>
         )}
       </div >
-
+      <ModalSidebar
+        show={showChatModal}
+        onClose={() => {
+          setShowChatModal(false);
+          setJobId();
+        }}
+        children={
+          <CommentTaskBox
+            userId={JobId?.job_id}
+            taskType={"note"}
+            taskUserType={"job"}
+            setOpenReplyBox={setShowChatModal}
+            openReplyBox={showChatModal}
+            taskName={"Note for Job"}
+          />
+        }
+      >
+        {showChatModal ? (
+          <CommentTaskBox
+            userId={JobId?.job_id}
+            taskType={"note"}
+            taskUserType={"job"}
+            setOpenReplyBox={setShowChatModal}
+            openReplyBox={showChatModal}
+            taskName={"Note for Job"}
+          />
+        ) : null}
+      </ModalSidebar>
       {
         showAddCompanyDocModal ? (
           <EmployerDocumentModal

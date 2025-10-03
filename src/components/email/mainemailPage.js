@@ -30,7 +30,7 @@ const MainEmailPage = ({ email, emailId }) => {
     setIsLoading(true);
     try {
       let userData;
-      console.log(emailType, "ooooooooooooo")
+      // console.log(emailType, "ooooooooooooo", email, emailId)
       if (emailType === "ALL") {
         userData = await ReadAllEmail(
           currentPage,
@@ -115,6 +115,8 @@ const MainEmailPage = ({ email, emailId }) => {
     search /*, columnName, sortOrder*/,
     apiCall,
     emailType,
+    email,
+    emailId
   ]);
 
   /*Pagination Calculation */

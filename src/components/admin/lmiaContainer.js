@@ -256,7 +256,7 @@ function LimaContainer(props) {
                         {/* <div className="mt-4">
                         <CommonThreeDots tableName={"job"} tableData={allJob} />
                       </div> */}
-                        {/*<-- AddLmia feilds permssion  Modal -->*/}
+                        {/*<-- Add Lmia fields permission  Modal -->*/}
                         <button className=" btn-sm btn-primary border-0 mx-2"
                           onClick={() => setOpenPermission("0")}
                           title="Hide Columns "
@@ -286,6 +286,7 @@ function LimaContainer(props) {
                 pageNo={pageNo}
                 setpageNo={setpageNo}
                 company_id={props?.company_id}
+                page="lmia"
               />
             </div>
           </div>
@@ -340,6 +341,7 @@ function LimaContainer(props) {
           apiCall={apiCall}
           setApiCall={setApiCall}
           close={() => setOpenPermission(false)}
+          page="lmia"
         />
         : null}
       {userType === "company" ? <EmployeeFooter /> : null}

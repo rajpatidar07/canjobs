@@ -208,7 +208,7 @@ export default function EmployerTable(props) {
                       minWidth: "50px", left: "230px",
                     }}
                   >
-                    Discussion
+                    Note
                   </th>}
                   {props.heading === "Dashboard" ? (
                     ""
@@ -392,7 +392,7 @@ export default function EmployerTable(props) {
                             setShowChatModal(true);
                             setEmployerID(empdata);
                           }}
-                          title="Discussion"
+                          title="Note"
                         >
                           <span className="text-gray px-2">
                             <BsChat />
@@ -639,7 +639,7 @@ export default function EmployerTable(props) {
             taskUserType={"employer"}
             setOpenReplyBox={setShowChatModal}
             openReplyBox={showChatModal}
-            taskName={"Discussion for Employer"}
+            taskName={"Note for Employer"}
           />
         }
       >
@@ -650,7 +650,7 @@ export default function EmployerTable(props) {
             taskUserType={"employer"}
             setOpenReplyBox={setShowChatModal}
             openReplyBox={showChatModal}
-            taskName={"Discussion for Employer"}
+            taskName={"Note for Employer"}
           />
         ) : null}
       </ModalSidebar>

@@ -7,8 +7,10 @@ import AddJobModal from "../forms/employer/job";
 import { GetAllJobs, GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import JobTable from "../common/jobTable";
-import CommonThreeDots from  "../common/Common function/commonThreeDots";
+import CommonThreeDots from "../common/Common function/commonThreeDots";
 import SelectBox from "../common/Common function/SelectBox";
+import LmiafieldsPermission from "../forms/admin/LmiafieldsPermission";
+import { FaEyeSlash } from "react-icons/fa";
 
 function Job(props) {
   /*show Modal and props state */
@@ -21,6 +23,7 @@ function Job(props) {
   const [SkillFilterValue, setSkillFilterValue] = useState(
     /*props ? props.skill : */ ""
   );
+  const [openPermission, setOpenPermission] = useState(false);
   const [locationFilterValue, setLocationFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   const [search, setSearch] = useState("");
@@ -293,7 +296,11 @@ function Job(props) {
                       <div className="mt-4">
                         <CommonThreeDots tableName={"job"} tableData={allJob} />
                       </div>
-                      {/*<-- Add Job Modal -->*/}
+                      <button className=" btn-sm btn-primary border-0 mx-2"
+                        onClick={() => setOpenPermission("0")}
+                        title="Hide Columns "
+                      >
+                        <FaEyeSlash /></button>
                     </div>
                     <small className="text-danger">{searcherror}</small>
                   </div>
@@ -317,6 +324,7 @@ function Job(props) {
                 pageNo={pageNo}
                 setpageNo={setpageNo}
                 jobCall={props.jobCall}
+                page="job"
               />
             </div>
           </div>
@@ -365,6 +373,15 @@ function Job(props) {
           close={() => setShowAddJobsModal(false)}
         />
       ) : null}
+      {openPermission ?
+        <LmiafieldsPermission
+          show={openPermission}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => setOpenPermission(false)}
+          page="job"
+        />
+        : null}
     </>
   );
 }

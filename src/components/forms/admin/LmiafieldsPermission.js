@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { AddAdminPermission, GetAdminrSetting } from '../../../api/api'
 import { Modal } from 'react-bootstrap'
 
-const defaultPermissions = {
+const defaultLmiaPermissions = {
   location: 0,
   lmia_number: 0,
   lmia_status: 0,
@@ -17,14 +17,21 @@ const defaultPermissions = {
   lmia_payment_by: 0,
   type_of_lmia: 0,
   lmia_notes: 0,
-  education: 0,
-  keyskill: 0,
+  // education: 0,
+  // keyskill: 0,
   experience_required: 0,
   applied_by_admin: 0,
   profile_complete: 0,
 }
 
-const labelMap = {
+const defaultJobPermissions = {
+  location: 0,
+  experience_required: 0,
+  applied_by_admin: 0,
+  profile_complete: 0,
+}
+
+const lmiaLabelMap = {
   location: 'Address',
   lmia_number: 'LMIA Number',
   lmia_status: 'LMIA Status',
@@ -39,14 +46,27 @@ const labelMap = {
   lmia_payment_by: 'LMIA Payment By',
   type_of_lmia: 'Type of LMIA',
   lmia_notes: 'LMIA Notes',
-  education: 'Education',
-  keyskill: 'Skills',
+  // education: 'Education',
+  // keyskill: 'Skills',
   experience_required: 'Experience',
   applied_by_admin: 'Vacancies / Responses',
   profile_complete: 'Profile',
 }
 
+const jobLabelMap = {
+  location: 'Address',
+  experience_required: 'Experience',
+  applied_by_admin: 'Vacancies / Responses',
+  profile_complete: 'Profile',
+}
+
+
 export default function LmiafieldsPermission(props) {
+  const page = props.page || 'lmia'
+  const defaultPermissions = page === 'job' ? defaultJobPermissions : defaultLmiaPermissions
+  const labelMap = page === 'job' ? jobLabelMap : lmiaLabelMap
+  const permissionsKey = page + '_column_permission'
+
   const [permissions, setPermissions] = useState(defaultPermissions)
   const [loading, setLoading] = useState(false)
 
@@ -60,12 +80,18 @@ export default function LmiafieldsPermission(props) {
   const fetchPermissions = async () => {
     try {
       const response = await GetAdminrSetting()
-      const lmiaPermissions = JSON.parse(response.data.lmia_column_permission)
-      if (Object.keys(lmiaPermissions).length === 0
-      ) {
+      let parsedPermissions = response ? JSON.parse(response?.data[permissionsKey] || '{}') : {}
+      if (Object.keys(parsedPermissions).length === 0) {
         setPermissions(defaultPermissions)
       } else {
-        setPermissions(lmiaPermissions)
+        // Filter out education and keyskill
+        const filteredPermissions = {}
+        Object.keys(parsedPermissions).forEach(key => {
+          if (key !== "education" && key !== "keyskill") {
+            filteredPermissions[key] = parsedPermissions[key]
+          }
+        })
+        setPermissions(filteredPermissions)
       }
     } catch (err) {
       console.error(err)
@@ -84,7 +110,7 @@ export default function LmiafieldsPermission(props) {
 
   /*Onsubmit function of adding permissions for  the column */
   const onSubmitForm = async () => {
-    let data = { lmia_column_permission: { ...permissions } }
+    let data = { [permissionsKey]: { ...permissions } }
     try {
       setLoading(true)
       const response = await AddAdminPermission(data)
@@ -102,7 +128,7 @@ export default function LmiafieldsPermission(props) {
   useEffect(() => {
     fetchPermissions()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [page])
 
   return (
     <Modal
@@ -126,9 +152,8 @@ export default function LmiafieldsPermission(props) {
             {permissions &&
               Object.keys(permissions).map((field, index) => (
                 <div
-                  className="text-dark text-decoration-none d-flex justify-content-between col-6"
-                  key={index}
-                >
+                  className={(field === "education" || field === "keyskill") ? "d-none" : "text-dark text-decoration-none d-flex justify-content-between col-6"}
+                  key={index}>
                   <label>
                     <input
                       type="checkbox"
@@ -136,7 +161,7 @@ export default function LmiafieldsPermission(props) {
                       onChange={() => handleCheckboxChange(field)}
                     />
                     <span className="px-2 text-capitalize">
-                      {labelMap[field] || field}
+                      {labelMap[field]}
                     </span>
                   </label>
                 </div>
@@ -144,23 +169,23 @@ export default function LmiafieldsPermission(props) {
           </div>
           <div className='d-flex justify-content-space-between p-4'>
             <button type="button" className="btn btn-light" onClick={() => close()}>Cancel</button>
-             {loading === true ? (
-                <button
-                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                  type="button"
-                  disabled
-                >
-                  <span
-                    className="spinner-border spinner-border-sm "
-                    role="status"
-                    aria-hidden="true"
-                  ></span>
-                  <span className="sr-only">Loading...</span>
-                </button>
-              ) : (
-                 <button type="button" className="btn btn-primary btn-small w-25 rounded-5 text-uppercase" onClick={() => onSubmitForm()}>Save</button>
-              )}
-         
+            {loading === true ? (
+              <button
+                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                type="button"
+                disabled
+              >
+                <span
+                  className="spinner-border spinner-border-sm "
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                <span className="sr-only">Loading...</span>
+              </button>
+            ) : (
+              <button type="button" className="btn btn-primary btn-small w-25 rounded-5 text-uppercase" onClick={() => onSubmitForm()}>Save</button>
+            )}
+
           </div>
         </form>
       </div>

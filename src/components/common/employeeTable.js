@@ -643,7 +643,7 @@ export default function EmployeeTable(props) {
             taskUserType={"employee"}
             setOpenReplyBox={setShowChatModal}
             openReplyBox={showChatModal}
-            taskName={"Discussion for Candidate"}
+            taskName={"Note for Candidate"}
             TaskId={taskID}
           />
         }
@@ -655,7 +655,7 @@ export default function EmployeeTable(props) {
             taskUserType={"employee"}
             setOpenReplyBox={setShowChatModal}
             openReplyBox={showChatModal}
-            taskName={"Discussion for Candidate"}
+            taskName={"Note for Candidate"}
             TaskId={taskID}
           />
         ) : null}
@@ -969,7 +969,7 @@ export default function EmployeeTable(props) {
                       minWidth: "50px", left: "230px",
                     }}
                   >
-                    Discussion
+                    Note
                   </th>}
                   {props.heading === "Dashboard" ? (
                     ""
@@ -1532,7 +1532,7 @@ export default function EmployeeTable(props) {
                               setShowChatModal(true);
                               setemployeeId(empdata);
                             }}
-                            title="Discussion"
+                            title="Note"
                           >
                             <span className="text-gray px-2">
                               <BsChat />
