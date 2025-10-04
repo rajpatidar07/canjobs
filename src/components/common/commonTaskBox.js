@@ -286,6 +286,7 @@ export default function CommentTaskBox(props) {
     //         }
     //     }
     // };
+
     const addAnnotation = async (annotation) => {
         const email = selectedAdmin ? selectedAdmin?.map((item) => item.email).toString() : "";
         const admin = adminList.find((item) => item.admin_id === admin_id) || {};
@@ -468,6 +469,7 @@ export default function CommentTaskBox(props) {
             }
         }
     };
+
     /*Function to update comment */
     const OnHandleUpdateCommentStatus = async (originalData, status) => {
         // const {
@@ -733,6 +735,7 @@ export default function CommentTaskBox(props) {
 
         }
     };
+
     /*Function to get comment list */
     const Getcomments = async (annotStatus, adminfilter) => {
         try {
@@ -772,6 +775,7 @@ export default function CommentTaskBox(props) {
             console.log(err);
         }
     };
+
     /*Function to delete comment Replies*/
     const OnDeleteCommentReplies = async (id) => {
         try {
@@ -840,7 +844,7 @@ export default function CommentTaskBox(props) {
                             onChange={(e) => setEndDate(e.target.value)}
                         />
                     </div>
-                    <div className="comment-input-container  m-0">
+                    <div className="comment-input-container w-100">
                         <label className="input_label m-0">Add new {props.taskName}:</label>
 
                         <textarea

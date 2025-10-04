@@ -304,6 +304,7 @@ export default function SendEmailAgreement({
     subject: `${(felidData.agreement_subject ? felidData.agreement_subject : felidData.type).replace(/\b\w/g, char => char.toUpperCase())}`,
     email: felidData.client_email,
     adminemail: emails,
+    agreement_id: felidData?.id,
     description: `<!DOCTYPE html>
 <html lang="en">
 

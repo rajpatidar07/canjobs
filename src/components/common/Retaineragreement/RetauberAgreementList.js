@@ -7,6 +7,7 @@ import {
   getSharePointParticularFolders,
   DeleteAgreement,
   GetSharePointData,
+  SendEmail,
 } from "../../../api/api";
 import { Link } from "react-router-dom";
 import { FaFilePdf, FaFileSignature, FaPlus } from "react-icons/fa";
@@ -132,7 +133,7 @@ export default function RetauberAgreementList({
     // // Cleanup function to clear the timer if the component unmounts or myState changes
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apicall]);
+  }, [apicall, sortOrder]);
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
     setDeleteID(e.id);
@@ -169,6 +170,25 @@ export default function RetauberAgreementList({
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setColumnName(columnName);
   };
+  const ReSendMail = async (fileData) => {
+    try {
+      let data = {
+        agreement_id: fileData.id,
+        resend: "1"
+      }
+      const response = await SendEmail(data, [])
+      console.log(response)
+      if (response.message === "email sent successfully") {
+        toast.success("Email Resend successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+      }
+    } catch (err) {
+      console.log(err)
+
+    }
+  }
   return (
     <div className="response_main_div w-100">
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
@@ -449,6 +469,23 @@ export default function RetauberAgreementList({
                           >
                             <span className="text-gray px-2">
                               <IoMdMail />
+                            </span>
+                          </button>
+                          <button
+                            className={data.added_type === "uploaded_agreement" ? "d-none" : "btn btn-outline-info action_btn "}
+                            onClick={() => {
+                              ReSendMail(data);
+                            }}
+                            disabled={
+                              (data.agreement_sent
+                                ? false
+                                : true
+                              )
+                            }
+                            title="Send Retainer Agreement"
+                          >
+                            <span className="text-gray px-2">
+                              ReSend
                             </span>
                           </button>
                           <button

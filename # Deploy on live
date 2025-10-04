@@ -9,6 +9,8 @@
 7. Added partner name, child name, and country of residence for candidates with marital status "Married".
 8. Added show/hide columns feature on the Job page.
 9. Added a note option in the Job table.
+10. Added contact details to the Candidate and Employer profile pages based on the assigned admin and Canada portal contact information.
+11. Added an option to resend the email for signing the Retainer Agreement.
 
 Date: 26/09/25
 

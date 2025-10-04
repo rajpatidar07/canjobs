@@ -803,7 +803,7 @@ export default function ApplicantTypeDocuments(props) {
                         className="btn-sm btn-secondary"
                         onClick={() => setOPenFolderModal(true)}
                       >
-                        + Add New Folder
+                        + + Folder Sign
                       </button>
                     </div>
 

@@ -1065,7 +1065,7 @@ export default function SharePointDocument({
                           style={{ maxHeight: 34 }}
                           id="dropdown-basic"
                         >
-                          + Add New Folder
+                          + + Folder Sign
                         </Dropdown.Toggle>
                         <Dropdown.Menu
                           style={{ height: "400px", overflowY: "scroll" }}

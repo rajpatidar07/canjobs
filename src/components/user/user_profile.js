@@ -1914,7 +1914,9 @@ const NewUserProfile = (props) => {
                         : "d-none"}
                   >
                     {TabActive === "contact" ? (
-                      <ContactPage email={PersonalDetail.email} admin_id={PersonalDetail.assigned_by} agent_id={PersonalDetail.reffer_by} />
+                      <ContactPage email={PersonalDetail.email} admin_id={PersonalDetail.assigned_by || "10001" || "1"}
+                      /*agent_id={PersonalDetail.reffer_by}*/
+                      />
                     ) : null}
                   </div>
                   <div

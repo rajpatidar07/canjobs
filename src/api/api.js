@@ -34,44 +34,44 @@ export const encryptPassword = (password) => {
 
   return encrypted.toString(); // base64 string
 }
-axios.interceptors.response.use(
-  response => {
-    if (
-      response.data &&
-      response.data.status === false &&
-      response.data.message === "Unauthorised Token"
-    ) {
-      if (user_type === "employee") {
-        window.location.href = "/candidate_login";
-      } else if (user_type === "employer") {
-        window.location.href = "/client_login";
-      } else if (user_type === "admin") {
-        window.location.href = "/adminlogin";
-      } else if (user_type === "agent") {
-        window.location.href = "/partnerlogin";
-      } else {
-        window.location.href = "/";
-      }
-    }
-    return response;
-  },
-  error => {
-    if (error.message === "Network Error" || error.message === "Request failed with status code 401") {
-      console.log(error)
-      if (user_type === "user") {
-        window.location.href = "/candidate_login";
-      } else if (user_type === "company") {
-        window.location.href = "/client_login";
-      } else if (user_type === "admin") {
-        window.location.href = "/adminlogin";
-      } else if (user_type === "agent") {
-        window.location.href = "/partnerlogin";
-      } else {
-        window.location.href = "/";
-      }
-    }
-  }
-);
+// axios.interceptors.response.use(
+//   response => {
+//     if (
+//       response.data &&
+//       response.data.status === false &&
+//       response.data.message === "Unauthorised Token"
+//     ) {
+//       if (user_type === "employee") {
+//         window.location.href = "/candidate_login";
+//       } else if (user_type === "employer") {
+//         window.location.href = "/client_login";
+//       } else if (user_type === "admin") {
+//         window.location.href = "/adminlogin";
+//       } else if (user_type === "agent") {
+//         window.location.href = "/partnerlogin";
+//       } else {
+//         window.location.href = "/";
+//       }
+//     }
+//     return response;
+//   },
+//   error => {
+//     if (error.message === "Network Error" || error.message === "Request failed with status code 401") {
+//       console.log(error)
+//       if (user_type === "user") {
+//         window.location.href = "/candidate_login";
+//       } else if (user_type === "company") {
+//         window.location.href = "/client_login";
+//       } else if (user_type === "admin") {
+//         window.location.href = "/adminlogin";
+//       } else if (user_type === "agent") {
+//         window.location.href = "/partnerlogin";
+//       } else {
+//         window.location.href = "/";
+//       }
+//     }
+//   }
+// );
 
 // Location Api
 /*Country*/
@@ -2964,37 +2964,42 @@ export const RemoveReservedEmployeeForJob = async (apply_id, employee_id) => {
 
 /*Api to Send email to the user and company*/
 export const SendEmail = async (data, FileList, url) => {
-  // console.log(FileList);
   const formData = new FormData();
-  formData.append("to", data.email);
-  formData.append("subject", data.subject);
-  formData.append("body", data.description);
-  formData.append("cc_email", data.adminemail);
-  formData.append("attachments_url", url);
-  formData.append("bcc_email", data.bccemail);
-  formData.append("signature", data.signature);
-  formData.append("sender_id", data.sender_id);
-  for (let i = 0; i < FileList.length; i++) {
-    formData.append(`attachments[${i}]`, FileList[i]);
-  }
-  const response = await axios.post(
-    `${API_URL}sendEmailTest`,
-    // {
-    //   to: data.email,
-    //   subject: data.subject,
-    //   body: data.description,
-    //   cc_email: data.adminemail,
-    // }
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: Token,
-      },
+
+  // Helper function to append only valid values
+  const appendIfValid = (key, value) => {
+    if (value !== undefined && value !== null && value !== "") {
+      formData.append(key, value);
     }
-  );
+  };
+
+  appendIfValid("to", data.email);
+  appendIfValid("subject", data.subject);
+  appendIfValid("body", data.description);
+  appendIfValid("cc_email", data.adminemail);
+  appendIfValid("attachments_url", url);
+  appendIfValid("agreement_id", data.agreement_id);
+  appendIfValid("resend", data.resend);
+  appendIfValid("bcc_email", data.bccemail);
+  appendIfValid("signature", data.signature);
+  appendIfValid("sender_id", data.sender_id);
+
+  if (Array.isArray(FileList) && FileList.length > 0) {
+    FileList.forEach((file, i) => {
+      if (file) formData.append(`attachments[${i}]`, file);
+    });
+  }
+
+  const response = await axios.post(`${API_URL}sendEmailTest`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: Token,
+    },
+  });
+
   return response.data;
 };
+
 
 /*Api to forward  email to the user and company*/
 export const forwardMail = async (data, FileList, url) => {

@@ -290,6 +290,7 @@ const AgreementOneForm = ({
       openSignature === "no"
     ) {
       let filteredState = { ...state, email_for: index === "final" ? "admin" : "" };
+      delete filteredState.created_by_name;
       // Conditionally include signature_status
       if (!(index === "rcic_signature" || index === "final" || state.initial)) {
         delete filteredState.signature_status;
