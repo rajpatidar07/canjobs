@@ -50,6 +50,7 @@ function PersonalDetails(props) {
   const initialFormStateuser = {
     name: "",
     email: "",
+    // secondary_email: "",
     contact_no: "",
     description: "",
     date_of_birth: "",
@@ -596,6 +597,38 @@ function PersonalDetails(props) {
                         {errors.email}
                       </span>
                     )}
+                  </div>
+                   <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : "d-none"}`}>
+                    <label
+                      htmlFor="secondary_email"
+                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                    >
+                    Secondary Email Id:
+                    </label>
+                    <input
+                      maxLength={60}
+                      type="email"
+                      name="secondary_email"
+                      value={state.secondary_email || ""}
+                      onChange={onInputChange}
+                      className={
+                        errors.secondary_email
+                          ? "form-control border border-danger"
+                          : "form-control "
+                      }
+                      id="secondary_email"
+                      placeholder="secondary_email"
+                      disabled={user_type === "user"}
+                    />
+                    {/*----ERROR MESSAGE FOR secondary_email----*/}
+                    {/* {errors.secondary_email && (
+                      <span
+                        key={errors.secondary_email}
+                        className="text-danger font-size-3"
+                      >
+                        {errors.secondary_email}
+                      </span>
+                    )} */}
                   </div>
                   <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                     <label

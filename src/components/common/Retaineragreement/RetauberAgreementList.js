@@ -22,10 +22,10 @@ import Newpdf from "../Adobe/newpdf";
 import { IoDocumentTextSharp } from "react-icons/io5";
 import { FaEdit } from "react-icons/fa";
 import AddClientForm from "../../forms/Agreement/AddClientForm";
-import moment from "moment";
 import Loader from "../loader";
 import AddPaymentDetailsForm from "../../forms/Agreement/AddPaymentdetailsForm";
 import UploadAgreement from "../../forms/Agreement/UploadAgreement";
+import ConvertTime from "../Common function/ConvertTime";
 export default function RetauberAgreementList({
   user_id,
   emp_user_type,
@@ -346,11 +346,21 @@ export default function RetauberAgreementList({
                             {data.updated_by_name || "N/A"}
                           </span>
                         </p>
-                      </td><td className="text-capitalize ">
-                        {data.send_date ? moment(data.send_date).format("DD-MM-YYYY") : "N/A"}
                       </td>
-                      <td className="text-capitalize ">
-                        {data.received_date ? moment(data.received_date).format("DD-MM-YYYY") : "N/A"}
+                      <td className="text-capitalize "
+                        title={
+                          ConvertTime({ _date: data.send_date, format: "D-MM-YYYY" })
+                        }>
+                        {data.send_date ?
+                          <ConvertTime _date={data.send_date} format={"D-MM-YYYY"} />
+                          : "N/A"}
+                      </td>
+                      <td className="text-capitalize " title={
+                        ConvertTime({ _date: data.received_date, format: "D-MM-YYYY" })
+                      }>
+                        {data.received_date ?
+                          <ConvertTime _date={data.received_date} format={"D-MM-YYYY"} />
+                          : "N/A"}
                       </td>
                       <td className="text-center py-5">
                         <p className="font-size-2 font-weight-normal text-black-2 mb-0">
@@ -557,7 +567,7 @@ export default function RetauberAgreementList({
             felidData={agreementData}
             pdf={pdf}
             setApicall={setApicall}
-
+            userData={userData}
           />
         ) : null}
         {openAddAgreementFelids ? (

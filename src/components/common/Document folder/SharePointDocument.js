@@ -133,6 +133,7 @@ export default function SharePointDocument({
       console.log(err);
     }
   };
+
   // Generate a list of comments from the state for image annotation
   const getCommentsList = async (data) => {
     if (data) {
@@ -190,6 +191,7 @@ export default function SharePointDocument({
       setCommentsList([]);
     }
   };
+  
   /*Function to set the image and docx to pdf */
   const SetPdfDocUrl = async (data) => {
     if (

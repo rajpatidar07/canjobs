@@ -352,7 +352,9 @@ function Notifications({
                                                                   ? data.action_user_type === "employee"
                                                                     ? `/${data.action_id}?user_email=true&emailId=${data.mention_id}`
                                                                     : `/client_detail?cId=${data.action_id}&user_email=true&emailId=${data.mention_id}`
-                                                                  : ""
+                                                                  :  data.subject === "employee_update"
+                                                                  ?`/${data.employee_id}?user_timeline=true&timeLineId=${data.mention_id}`
+                                                                  :""
                       }
                       onClick={() => {
                         try {

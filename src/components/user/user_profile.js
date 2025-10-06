@@ -60,6 +60,7 @@ const NewUserProfile = (props) => {
   const docId = searchParams.get("docId");
   const agreement = searchParams.get("agreement");
   const user_email = searchParams.get("user_email");
+  const user_timeline = searchParams.get("user_timeline");
   const emailId = searchParams.get("emailId");
   const user_payment = searchParams.get("user_payment");
   const invoiceId = searchParams.get("invoiceId");
@@ -70,6 +71,7 @@ const NewUserProfile = (props) => {
   const docTaskId = searchParams.get("taskId");
   const partnerChat = searchParams.get("partner");
   const note_id = searchParams.get("noteid");
+  const TimeLineId = searchParams.get("timeLineId");
   let navigate = useNavigate();
 
   const [apiCall, setApiCall] = useState(false);
@@ -97,7 +99,9 @@ const NewUserProfile = (props) => {
               ? "payment"
               : user_email === "yes"
                 ? "email"
-                : "profile"
+                : user_timeline === "true"
+                  ? "timline"
+                  : "profile"
   );
   const [selectedPaymentTab, setSelectedPaymentTab] = useState(invoiceId ? "invoice" : "payment_records");
   const [userDetail, setuserDetail] = useState([]);
@@ -259,8 +263,11 @@ const NewUserProfile = (props) => {
     if (user_email) {
       setTabActive("email")
     }
+    if (user_timeline === "true") {
+      setTabActive("timline")
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiCall, eid, docParentId, docId, notes, agreement, location.key]);
+  }, [apiCall, eid, docParentId, docId, TimeLineId, notes, agreement, location.key]);
   /*Function to See uploaded resume */
   const handleViewResume = (pdfUrl) => {
     window.open(`/userpdf?pdfUrl=${encodeURIComponent(pdfUrl)}`, "_blank");
@@ -1958,6 +1965,7 @@ const NewUserProfile = (props) => {
                       userEmail={PersonalDetail.email}
                       userName={PersonalDetail.name}
                       userType={"employee"}
+                      TimeLineId={TimeLineId}
                     />
                   ) : null}
                   <div

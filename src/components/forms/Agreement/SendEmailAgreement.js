@@ -295,14 +295,17 @@ export default function SendEmailAgreement({
   felidData,
   pdf,
   setApicall,
+  userData
 }) {
   const [emails, setEmails] = useState([]);
   const [input, setInput] = useState("");
   const [fileBase, setFileBase] = useState("");
   const [loading, setLoading] = useState(false);
+  const prioritizedEmail = userData.email;
+  const [selectedEmail, setSelectedEmail] = useState(prioritizedEmail);
   const initialFormState = {
     subject: `${(felidData.agreement_subject ? felidData.agreement_subject : felidData.type).replace(/\b\w/g, char => char.toUpperCase())}`,
-    email: felidData.client_email,
+    email: prioritizedEmail,
     adminemail: emails,
     agreement_id: felidData?.id,
     description: `<!DOCTYPE html>
@@ -415,6 +418,12 @@ export default function SendEmailAgreement({
     setState({ ...state, adminemail: updatedEmails });
   };
 
+  const handleEmailSelect = (e) => {
+    const email = e.target.value;
+    setSelectedEmail(email);
+    setState({ ...state, email });
+  };
+
   const fileToBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -507,13 +516,58 @@ export default function SendEmailAgreement({
               Subject :
             </label>
             <input
-              type="test"
+              type="text"
               value={state.subject}
               onChange={(e) => setState({ ...state, subject: e.target.value })}
               placeholder="Enter Subject"
               id="subject"
               className="form-control w-100"
             />
+          </div>
+          {/* Email Selection - To (Recipient) */}
+          <div className="row mb-4 mx-3">
+            <label
+              className="col-sm-3 col-form-label text-md-end text-start fw-semibold"
+            >
+              Recipient Email:
+            </label>
+            <div className="col-sm-9">
+              <div id="selectemail" className="d-flex flex-column gap-2 p-3 border rounded bg-light">
+                {/* Primary Email Option */}
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="emailChoice"
+                    id="primaryEmail"
+                    value={userData.email}
+                    checked={selectedEmail === userData.email}
+                    onChange={handleEmailSelect}
+                  />
+                  <label className="form-check-label ms-2" htmlFor="primaryEmail">
+                    <strong>Primary:</strong> {userData.email}
+                  </label>
+                </div>
+
+                {/* Secondary Email Option (if available) */}
+                {userData.secondary_email && (
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="emailChoice"
+                      id="secondaryEmail"
+                      value={userData.secondary_email}
+                      checked={selectedEmail === userData.secondary_email}
+                      onChange={handleEmailSelect}
+                    />
+                    <label className="form-check-label ms-2" htmlFor="secondaryEmail">
+                      <strong>Secondary:</strong> {userData.secondary_email}
+                    </label>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
           <div className="form-group d-flex mb-3 p-0">
             <label
@@ -541,7 +595,7 @@ export default function SendEmailAgreement({
           <div className="form-group">
             <ul className="list-unstyled d-flex align-items-center flex-wrap">
               <li className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                {felidData.client_email}
+                {selectedEmail}
               </li>
               {emails.map((email) => (
                 <li
