@@ -17,11 +17,12 @@ export default function UserTimline({ userId, userType, TimeLineId }) {
     try {
       let res = await getActivityLog(1, "", "", "", "", "", userId, userType);
       setTimeData(res.data.data);
-      console.log(res)
-      const newUrl = window.location.pathname;
-      window.history.replaceState({}, document.title, newUrl);
-      localStorage.setItem("navigation_url", "");
-      setLoader(false)
+      if (res.data.status === 1) {
+        const newUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, newUrl);
+        localStorage.setItem("navigation_url", "");
+        setLoader(false)
+      }
       // setTotalRows(res.data);
     } catch (err) {
       console.log(err);

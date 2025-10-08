@@ -79,18 +79,6 @@ function Education(props) {
       (value) =>
         value === null || value.trim() === "" ? "Course is required" : null,
     ],
-    // specialization: [
-    //   (value) =>
-    //     value === null || value.trim() === ""
-    //       ? "Specialization is required"
-    //       : null,
-    // ],
-    // institute_location: [
-    //   (value) =>
-    //     value === null || value.trim() === ""
-    //       ? "Institute location is required"
-    //       : null,
-    // ],
     passing_year: [
       (value) =>
         value === "" || value === null
@@ -112,7 +100,8 @@ function Education(props) {
     try {
       let EducationDetails = await EmployeeEducationDetails(
         props.employeeId
-      ); /*"No Employee found"*/
+      ); 
+      /*"No Employee found"*/
       if (EducationDetails.data.education.length === 0) {
         setEducationData([]);
       } else {
@@ -188,10 +177,12 @@ function Education(props) {
     setDeleteName(e.course);
     setDeleteAlert(true);
   };
+
   /*To cancel the delete alert box */
   const CancelDelete = () => {
     setDeleteAlert(false);
   };
+
   /*To call Api to delete Skill */
   async function deleteEducation(e) {
     try {
@@ -228,7 +219,6 @@ function Education(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onEducationSubmitClick}>
             <h5 className="text-center pt-2 mb-7">Education Details</h5>
@@ -462,7 +452,7 @@ function Education(props) {
                   htmlFor="specialization"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Specialisation:
+                  Specialization:
                 </label>
                 <input
                   className={
@@ -476,24 +466,6 @@ function Education(props) {
                   onChange={onInputChange}
                   placeholder="Specialization"
                 />
-                {/* <select
-                  className={
-                    errors.specialization
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  name="specialization"
-                  id="specialization"
-                  value={state.specialization||""}
-                  onChange={onInputChange}
-                >
-                  <option value={""}>Select Specialization</option>
-                  {(FilterJson.Specialization || []).map((Specialization) => (
-                    <option value={Specialization} key={Specialization}>
-                      {Specialization}
-                    </option>
-                  ))}
-                </select> */}
                 {/*----ERROR MESSAGE FOR SPECIALIZATION----*/}
                 {errors.specialization && (
                   <span
@@ -571,7 +543,6 @@ function Education(props) {
               </button>
             </div>
           </form>
-          {/* </div> */}
           <SAlert
             show={deleteAlert}
             title={deleteName}

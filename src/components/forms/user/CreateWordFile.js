@@ -114,20 +114,16 @@ const CreateWordFile = (props) => {
                 },
             ],
         });
-
         const blob = await Packer.toBlob(doc);
         const fileName = `formatted-word-${Date.now()}.docx`;
-
         const wordFile = new File([blob], fileName, {
             type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             lastModified: new Date().getTime(),
         });
-
         if (!wordFile.name) {
             toast.error("File name is undefined");
             return;
         }
-
         try {
             setLoading(true);
             const res = await AddSharePointDOcument(
@@ -138,31 +134,21 @@ const CreateWordFile = (props) => {
                 [wordFile],
                 userType === "admin" ? isDocPrivate : 0
             );
-
             if (res.data.message === "Document Upload") {
                 toast.success("Word file Created successfully!");
                 props.setApiCall(true);
                 handleWordClose();
                 localStorage.removeItem("writerContent");
+                setLoading(false);
             }
         } catch (error) {
+            setLoading(false);
             console.error("Upload failed:", error);
             toast.error("Upload failed");
         } finally {
             setLoading(false);
         }
-
     };
-
-    // const uploadImageCallBack = (file) => {
-    //     return new Promise((resolve, reject) => {
-    //         const reader = new FileReader();
-    //         reader.onloadend = () => {
-    //             resolve({ data: { link: reader.result } });
-    //         };
-    //         reader.readAsDataURL(file);
-    //     });
-    // };
 
     return (
         <Modal

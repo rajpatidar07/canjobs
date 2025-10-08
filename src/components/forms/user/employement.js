@@ -17,7 +17,7 @@ import SelectBox from "../../common/Common function/SelectBox";
 function EmployementDetails(props) {
   /*Data state */
   let [apiCall, setApiCall] = useState(false);
-  let [employementData, setEmployementData] = useState("");
+  let [employmentData, setEmploymentData] = useState("");
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
@@ -86,20 +86,6 @@ function EmployementDetails(props) {
                 ? "Designation should have 2 or more letters"
                 : "",
     ],
-    // company_location: [
-    //   (value) =>
-    //     value === "" || value.trim() === ""
-    //       ? "location is required"
-    //       : /[^A-Za-z 0-9]/g.test(value)
-    //       ? "Cannot use special character "
-    //       : /[-]?\d+(\.\d+)?/.test(value)
-    //       ? "location can not have a number."
-    //       : value.length < 2
-    //       ? "location should have 2 or more letters"
-    //       : "",
-    // ],
-    // industry: [(value) => (value ? null : "Industry is required")],
-    // functional_area: [(value) => (value ? null : "Area is required")],
     start_date: [
       (value) =>
         value === "" || value.trim() === "" ? "Start Date is required" : null,
@@ -118,23 +104,20 @@ function EmployementDetails(props) {
             ? "End Date is required"
             : null,
     ],
-    // work_level: [
-    //   (value) =>
-    //     value === "" || value.trim() === "" ? "Work Level is required" : null,
-    // ],
   };
+
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, setErrors, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
   // API CALL
-  const EmployeementData = async (data) => {
+  const EmploymentData = async (data) => {
     try {
       let Employment = await EmployeeDetails(props.employeeId);
-      // setEmployementData(Employment.data.career);
+      // setEmploymentData(Employment.data.career);
       if (Employment.data.career.length === 0) {
-        setEmployementData([]);
+        setEmploymentData([]);
       } else {
-        setEmployementData(Employment.data.career);
+        setEmploymentData(Employment.data.career);
       }
       if (data !== undefined || data) {
         setState(data);
@@ -143,11 +126,12 @@ function EmployementDetails(props) {
       console.log(err);
     }
   };
+  
   useEffect(() => {
     if (props.employeeId === undefined || deleteAlert === true) {
       setState(initialFormState);
     } else {
-      EmployeementData();
+      EmploymentData();
     }
     JsonData();
     if (apiCall === true) {
@@ -157,7 +141,7 @@ function EmployementDetails(props) {
   }, [props, apiCall]);
 
   // USER CARRER PROFILE SUBMIT BUTTON
-  const onCarrerProfileClick = async (event) => {
+  const onCareerProfileClick = async (event) => {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
@@ -228,27 +212,23 @@ function EmployementDetails(props) {
         show={props.show}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
+        centered>
         <button
           type="button"
           className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
           data-dismiss="modal"
-          onClick={close}
-        >
+          onClick={close}>
           <i className="fas fa-times"></i>
         </button>
-        {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
-          <form onSubmit={onCarrerProfileClick}>
+          <form onSubmit={onCareerProfileClick}>
             <h5 className="text-center pt-2 mb-7">Add Employment</h5>
             <div className="row mb-5 bg-light py-5 pr-10 pl-4 rounded">
-              {(employementData || []).map((CareerDetails, index) => (
+              {(employmentData || []).map((CareerDetails, index) => (
                 <div className="col-12 text-capitalize p-0" key={index}>
                   <div
                     className="w-100 card px-6 py-3 shadow-8 border-0 mb-2" //"w-100 border mb-3 rounded-5 text-capitalize"
-                    key={CareerDetails.career_id}
-                  >
+                    key={CareerDetails.career_id}>
                     <div className="d-flex align-items-center text-break  mb-1 flex-wrap flex-sm-nowrap justify-content-md-between ">
                       <div className="media align-items-center company_box  p-0">
                         <div className="text_box text-left w-100 mt-n2">
@@ -270,17 +250,11 @@ function EmployementDetails(props) {
                       <div className="d-flex ">
                         <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
                           <span className="font-size-4 text-gray w-100">
-                            {/* {moment(CareerDetails.start_date).format(
-                              "DD MMMM, YYYY"
-                            )}{" "} */}
                             <ConvertTime _date={CareerDetails.start_date} format={"DD MMMM, YYYY"} />
                             -
                             {CareerDetails.currently_work_here === ("1" || 1)
                               ? "Currently working"
                               : <ConvertTime _date={CareerDetails.end_date} format={"DD MMMM, YYYY"} />
-                              //  moment(CareerDetails.end_date).format(
-                              //     "DD MMMM, YYYY"
-                              // )
                             }
                           </span>
                           <span className="d-none font-size-3 text-gray w-100">
@@ -292,8 +266,7 @@ function EmployementDetails(props) {
                             >
                               <img
                                 src="image/svg/icon-loaction-pin-black.svg"
-                                alt=""
-                              />
+                                alt=""/>
                             </span>
                             {CareerDetails.company_location}
                           </span>
@@ -302,21 +275,15 @@ function EmployementDetails(props) {
                       <div className="w-auto education_btn_grp">
                         <Link
                           to=""
-                          onClick={() => EmployeementData(CareerDetails)}
+                          onClick={() => EmploymentData(CareerDetails)}
                         >
-                          <i
-                            className="fa fa-edit text-gray px-5"
-                            aria-hidden="true"
-                          ></i>
+                          <i className="fa fa-edit text-gray px-5" aria-hidden="true"></i>
                         </Link>
                         <Link
                           to=""
                           onClick={() => ShowDeleteAlert(CareerDetails)}
                         >
-                          <i
-                            className="fa fa-trash px-5"
-                            aria-hidden="true"
-                          ></i>
+                          <i className="fa fa-trash px-5" aria-hidden="true" ></i>
                         </Link>
                       </div>
                     </div>
@@ -464,8 +431,7 @@ function EmployementDetails(props) {
               <div className="form-group col-md-6">
                 <label
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                  htmlFor="functional_area"
-                >
+                  htmlFor="functional_area">
                   Functional Area:
                 </label>
                 <div className="position-relative">
@@ -620,13 +586,6 @@ function EmployementDetails(props) {
                 >
                   I Currently Work Here
                 </label>
-                {/*----ERROR MESSAGE FOR ENDDATE----*/}
-                {/* {errors.currently_work_here && (
-                  <span
-                    key={errors.currently_work_here}
-                    className="text-danger font-size-3"
-                  ></span>
-                )} */}
               </div>
             </div>
             <SAlert
@@ -669,7 +628,6 @@ function EmployementDetails(props) {
               </button>
             </div>
           </form>
-          {/* </div> */}
         </div>
       </Modal>
     </>

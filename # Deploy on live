@@ -13,6 +13,7 @@
 11. Added an option to resend the email for signing the Retainer Agreement.
 12. Add a Functionality to choose between the primary and secondary email from the Candidate data when sending the Retainer Agreement.
 13. Implement candidate activity notifications.
+14. Change the default value of assigned by to satvir from sam.
 
 Date: 26/09/25
 

@@ -34,7 +34,7 @@ function PersonalDetails(props) {
   const [imgError, setImgError] = useState("");
   const [loading, setLoading] = useState(false);
   const [agentList, setAgentList] = useState([]);
-  const [admiinList, setAdminList] = useState([]);
+  const [adminList, setAdminList] = useState([]);
   const [applicantTypeList, setApplicantTypeList] = useState([]);
   let [apiCall, setApiCall] = useState(false);
   let [showAddEAgentModal, setShowAgentMOdal] = useState(false);
@@ -47,7 +47,7 @@ function PersonalDetails(props) {
   let admin_id = user_type === "agent" ? localStorage.getItem("agent_id") : localStorage.getItem("admin_id");
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
-  const initialFormStateuser = {
+  const initialFormStateUser = {
     name: "",
     email: "",
     // secondary_email: "",
@@ -112,102 +112,10 @@ function PersonalDetails(props) {
               ? "Mobile no should be of 13 digits"
               : "",
     ],
-    // description: [
-    //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "Description is required"
-    //       : value.length < 5
-    //       ? "Description should have 5 or more letter"
-    //       : null,
-    // ],
-    // date_of_birth: [
-    //   (value) => (value === "" || value === null ? "Dob is required" : ""),
-    // ],
-    // gender: [
-    //   (value) => (value === "" || value === null ? "Gender is required" : null),
-    // ],
-    // marital_status: [
-    //   (value) => (value === "" || value === null ? "Status is required" : null),
-    // ],
-    // nationality: [
-    //   (value) =>
-    //     value === "" || value === null
-    //       ? "Nationality is required"
-    //       : /[^A-Za-z 0-9]/g.test(value)
-    //       ? "Cannot use special character "
-    //       : value.length < 3
-    //       ? "Nationality should have 3 or more letter"
-    //       : /[-]?\d+(\.\d+)?/.test(value)
-    //       ? "Nationality can not have a number."
-    //       : "",
-    // ],
-    // current_location: [
-    //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "Location is required"
-    //       : /[^A-Za-z 0-9]/g.test(value)
-    //         ? "Cannot use special character "
-    //         : value.length < 3
-    //           ? "Location should have 3 or more letter"
-    //           : /[-]?\d+(\.\d+)?/.test(value)
-    //             ? "Location can not have a number."
-    //             : "",
-    // ],
-    // currently_located_country: [
-    //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "Country is required"
-    //       : /[^A-Za-z 0-9]/g.test(value)
-    //       ? "Cannot use special character "
-    //       : value.length < 3
-    //       ? "Country should have 3 or more letter"
-    //       : /[-]?\d+(\.\d+)?/.test(value)
-    //       ? "Country can not have a number."
-    //       : "",
-    // ],
-    // language: [
-    //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "Language is required"
-    //       : "",
-    // ],
-    // religion: [
-    //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "Religion is required"
-    //       : /[^A-Za-z 0-9]/g.test(value)
-    //       ? "Cannot use special character "
-    //       : value.length < 3
-    //       ? "Religion should have 3 or more letter"
-    //       : /[-]?\d+(\.\d+)?/.test(value)
-    //       ? "Religion can not have a number."
-    //       : "",
-    // ],
     interested_in_id: user_type === "user"
       ? null
       : [(value) => (value === "" ? "Applicant Type is required" : null),
       ],
-    // experience: [
-    //   (value) =>
-    //     value === "" || value === null ? "Experience is required" : null,
-    // ],
-    // resume: [
-    //   // (value) => (value === "" || value === null ? "Resume is required" : null),
-    // ],
-    // work_permit_canada: [
-    //   (value) =>
-    //     value === "" || value === null ? "Work Permit is required" : null,
-    // ],
-    // work_permit_other_country: [
-    //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "Other Permit is required"
-    //       : /[^A-Za-z 0-9]/g.test(value)
-    //       ? "Cannot use special character "
-    //       : value.length < 2
-    //       ? "Other permit sholud have 2 or more letters"
-    //       : "",
-    // ],
     reffer_by:
       props.employeeId !== "0" || user_type === "user"
         ? null
@@ -215,17 +123,11 @@ function PersonalDetails(props) {
           (value) =>
             value === "" || value === null ? "Refferer is required" : null,
         ],
-    // assigned_by: props.employeeId !== "0" || user_type === "user" || user_type === "agent"
-    //   ? null
-    //   : [
-    //     (value) =>
-    //       value === "" || value === null ? "Assigned To is required" : null,
-    //   ],
   };
 
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, onInputChange, errors, validate, setErrors } =
-    useValidation(initialFormStateuser, validators);
+    useValidation(initialFormStateUser, validators);
   // const handleEditorChange = (content, editor) => {
   //   setState({ ...state, description: content });
   // };
@@ -295,7 +197,7 @@ function PersonalDetails(props) {
       AdminJson()
     }
     if (props.employeeId === "0" || props.employeeId === undefined) {
-      setState(initialFormStateuser);
+      setState(initialFormStateUser);
     } else {
       UserData();
     }
@@ -422,28 +324,28 @@ function PersonalDetails(props) {
 
   /* Functionality to close the modal */
   const close = () => {
-    setState(initialFormStateuser);
+    setState(initialFormStateUser);
     setErrors("");
     setLoading(false);
     props.close();
   };
   const getHierarchy = (id) => {
     const selected = applicantTypeList.find(item => item.id === id);
-    if (!selected) return { main: "", sub: "", subsub: "" };
+    if (!selected) return { main: "", sub: "", subSub: "" };
 
     if (selected.level === "0") {
-      return { main: selected.id, sub: "", subsub: "" };
+      return { main: selected.id, sub: "", subSub: "" };
     } else if (selected.level === "1") {
-      return { main: selected.parent_id, sub: selected.id, subsub: "" };
+      return { main: selected.parent_id, sub: selected.id, subSub: "" };
     } else if (selected.level === "2") {
       const sub = applicantTypeList.find(item => item.id === selected.parent_id);
-      return { main: sub?.parent_id || "", sub: sub?.id || "", subsub: selected.id };
+      return { main: sub?.parent_id || "", sub: sub?.id || "", subSub: selected.id };
     }
 
-    return { main: "", sub: "", subsub: "" };
+    return { main: "", sub: "", subSub: "" };
   };
 
-  const { main, sub, subsub } = getHierarchy(state.interested_in_id);
+  const { main, sub, subSub } = getHierarchy(state.interested_in_id);
   // Calculate min and max dates dynamically
   // const currentYear = moment().year();
   // const minDate = moment().subtract(10, 'years').format("YYYY-MM-DD");
@@ -829,17 +731,6 @@ function PersonalDetails(props) {
                       id="description"
                       placeholder="Description"
                     ></textarea> */}
-                    {/* <FroalaEditor
-                      model={state.description}
-                      onModelChange={(newContent) =>
-                        setState({ ...state, description: newContent })
-                      }
-                      className={
-                        errors.description
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
-                    /> */}
                     {/*----ERROR MESSAGE FOR GENDER----*/}
                     {errors.description && (
                       <span
@@ -1057,7 +948,7 @@ function PersonalDetails(props) {
                       htmlFor="language"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      English level {/*(Max 3)*/}:
+                      English level 
                     </label>
                     <select
                       name="language"
@@ -1339,7 +1230,7 @@ function PersonalDetails(props) {
                             }))
                           }
                           type="interested_in_id"
-                          selectedValue={subsub}
+                          selectedValue={subSub}
                           onChange={(e) =>
                             onInputChange({
                               target: {
@@ -1428,7 +1319,7 @@ function PersonalDetails(props) {
                       }`}
                   >
                     <label
-                      htmlFor="otherpermit"
+                      htmlFor="work_permit_other_country"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
                       Candidate Status:
@@ -1439,7 +1330,7 @@ function PersonalDetails(props) {
                         value: item,
                         label: item,
                       }))}
-                      type="work_permit_other_country"
+                      type=""
                       selectedValue={state.work_permit_other_country || ""}
                       onChange={(e) =>
                         onInputChange({
@@ -1478,14 +1369,6 @@ function PersonalDetails(props) {
                       >
                         Referred By<span className="text-danger">*</span>:
                       </label>
-                      {/* <Select
-                      options={agentList || []} 
-                      name="reffer_by"
-                      defaultValue={agentList && agentList.find(item => item.value === state.reffer_by) ? agentList.find(item => item.value === state.reffer_by).label : ""}
-                      id="reffer_by"
-                      onChange={onSelectChange}
-                      className={errors.reffer_by ? "form-control border border-danger px-0 pt-4" : "form-control px-0 pt-4 border-0"}
-                    /> */}
                       <div className={errors.reffer_by ? "border border-danger rounded" : ""}>
                         <SelectBox
                           Width={"yes"}
@@ -1550,21 +1433,9 @@ function PersonalDetails(props) {
                     >
                       Assigned To:
                     </label>
-                    {/* <Select
-                      options={"" || admiinList}
-                      name="assigned_by"
-                      value={state.assigned_by}
-                      id="assigned_by"
-                      onChange={onAdminSelectChange}
-                      className={
-                        errors.assigned_by
-                          ? "form-control border border-danger px-0 pt-4 "
-                          : "form-control px-0 pt-4 border-0"
-                      }
-                    /> */}
                     <SelectBox
                       Width={"yes"}
-                      options={(admiinList || []).map((item) => ({
+                      options={(adminList || []).map((item) => ({
                         value: item.admin_id,
                         label: item.name,
                       }))}
@@ -1647,13 +1518,12 @@ function PersonalDetails(props) {
                       || props.pageNameForForm === "Category"
                       || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                       <label
-                        htmlFor="fetured"
-                        className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                      >
+                        htmlFor="featured"
+                        className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
                         <input
                           type="checkbox"
-                          id="fetured"
-                          name="fetured"
+                          id="featured"
+                          name="featured"
                           checked={state.is_featured === "1"}
                           value={state.is_featured}
                           onChange={(e) =>
@@ -1724,7 +1594,6 @@ function PersonalDetails(props) {
                   )}
                 </div>
               </form>
-              {/* </div> */}
             </div>
           </>
         )}

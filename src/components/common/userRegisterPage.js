@@ -76,7 +76,7 @@ function UserRegisterPage() {
     // is_featured: "",
     status: "1",
     reffer_by: ref === "" || ref === null || ref === undefined ? 39 : ref, //39
-    assigned_by: "1", //26
+    assigned_by: "10001", //26
     permission: JSON.stringify(Permissions),
   };
   /* Functionality to close the modal */
