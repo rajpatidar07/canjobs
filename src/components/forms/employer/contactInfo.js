@@ -58,15 +58,13 @@ function ContactInfo(props) {
       (v) =>
         !v || v.trim() === ""
           ? "Phone no is required"
-          : v.length < 10
-            ? "Mobile number should be more than 10 digits"
-            : v.length > 13
-              ? "Mobile no should be of 13 digits"
-              : "",
+          : v.length !== 13
+            ? "Mobile no should be of 13 digits"
+            : "",
     ],
     designation: [
       (v) =>
-        !v
+        !v || v.trim() === ""
           ? "Designation is required"
           : v.length < 2
             ? "Designation should have 2 or more letters"
@@ -96,23 +94,23 @@ function ContactInfo(props) {
       (v) =>
         !v || v.trim() === ""
           ? "Email is required"
-          : /\S+@\S+\.\S+/.test(v)
-            ? null
-            : "Email is invalid",
+          : !/\S+@\S+\.\S+/.test(v)
+            ? "Email is invalid"
+            : v === state.email
+              ? "The secondary email is the same as the primary email."
+              : null
     ],
     secondary_contact_no: [
       (v) =>
         !v || v.trim() === ""
           ? "Phone no is required"
-          : v.length < 10
-            ? "Mobile number should be more than 10 digits"
-            : v.length > 13
-              ? "Mobile no should be of 13 digits"
-              : "",
+          : v.length !== 13
+            ? "Mobile no should be of 13 digits"
+            : "",
     ],
     secondary_designation: [
       (v) =>
-        !v
+        !v || v.trim() === ""
           ? "Designation is required"
           : v.length < 2
             ? "Designation should have 2 or more letters"
@@ -175,6 +173,7 @@ function ContactInfo(props) {
   // SUBMIT HANDLER
   const onCompanyContactClick = async (event) => {
     event.preventDefault();
+    console.log(validate, errors, state)
     if (validate()) {
       setLoading(true);
       try {
@@ -452,64 +451,6 @@ function renderPrimaryFields(state, errors, onInputChange) {
       <div className="row">
         <div className="form-group col-md-6">
           <label
-            htmlFor="city"
-            className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-          >
-            City:
-          </label>
-          <input
-            maxLength={60}
-            type="text"
-            placeholder="City"
-            id="city"
-            name="city"
-            value={state.city || ""}
-            onChange={onInputChange}
-            className={
-              errors.city
-                ? "form-control border border-danger"
-                : "form-control"
-            }
-          />
-          {/*----ERROR MESSAGE FOR CITY----*/}
-          {errors.city && (
-            <span key={errors.city} className="text-danger font-size-3">
-              {errors.city}
-            </span>
-          )}
-        </div>
-        <div className="form-group col-md-6">
-          <label
-            htmlFor="state"
-            className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-          >
-            Province :
-          </label>
-          <input
-            type="text"
-            placeholder="State"
-            id="state"
-            name="state"
-            value={state.state || ""}
-            onChange={onInputChange}
-            className={
-              errors.state
-                ? "form-control border border-danger"
-                : "form-control"
-            }
-          />
-          {/*----ERROR MESSAGE FOR STATE----*/}
-          {errors.state && (
-            <span key={errors.state} className="text-danger font-size-3">
-              {errors.state}
-            </span>
-          )}
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="form-group col-md-6">
-          <label
             htmlFor="country"
             className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
           >
@@ -541,6 +482,66 @@ function renderPrimaryFields(state, errors, onInputChange) {
         </div>
         <div className="form-group col-md-6">
           <label
+            htmlFor="state"
+            className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+          >
+            Province :
+          </label>
+          <input
+            type="text"
+            placeholder="State"
+            id="state"
+            name="state"
+            value={state.state || ""}
+            onChange={onInputChange}
+            className={
+              errors.state
+                ? "form-control border border-danger"
+                : "form-control"
+            }
+          />
+          {/*----ERROR MESSAGE FOR STATE----*/}
+          {errors.state && (
+            <span key={errors.state} className="text-danger font-size-3">
+              {errors.state}
+            </span>
+          )}
+        </div>
+
+      </div>
+
+      <div className="row">
+        <div className="form-group col-md-6">
+          <label
+            htmlFor="city"
+            className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+          >
+            City:
+          </label>
+          <input
+            maxLength={60}
+            type="text"
+            placeholder="City"
+            id="city"
+            name="city"
+            value={state.city || ""}
+            onChange={onInputChange}
+            className={
+              errors.city
+                ? "form-control border border-danger"
+                : "form-control"
+            }
+          />
+          {/*----ERROR MESSAGE FOR CITY----*/}
+          {errors.city && (
+            <span key={errors.city} className="text-danger font-size-3">
+              {errors.city}
+            </span>
+          )}
+        </div>
+
+        <div className="form-group col-md-6">
+          <label
             htmlFor="designation"
             className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
           >
@@ -561,7 +562,7 @@ function renderPrimaryFields(state, errors, onInputChange) {
               placeholder="Designation"
               id="designation"
             />
-            {/*----ERROR MESSAGE FOR DESIGNTION----*/}
+            {/*----ERROR MESSAGE FOR DESIGNATION----*/}
             {errors.designation && (
               <span
                 key={errors.designation}
@@ -764,32 +765,36 @@ function renderSecondaryFields(state, errors, onInputChange) {
       <div className="row">
         <div className="form-group col-md-6">
           <label
-            htmlFor="secondary_city"
+            htmlFor="secondary_country"
             className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
           >
-            City:
+            Country:
           </label>
           <input
-            maxLength={60}
             type="text"
-            placeholder="City"
-            id="secondary_city"
-            name="secondary_city"
-            value={state.secondary_city || ""}
+            placeholder="Country"
+            id="secondary_country"
+            name="secondary_country"
+            maxLength={60}
+            value={state.secondary_country || ""}
             onChange={onInputChange}
             className={
-              errors.secondary_city
+              errors.secondary_country
                 ? "form-control border border-danger"
                 : "form-control"
             }
           />
-          {/*----ERROR MESSAGE FOR CITY----*/}
-          {errors.secondary_city && (
-            <span key={errors.secondary_city} className="text-danger font-size-3">
-              {errors.secondary_city}
+          {/*----ERROR MESSAGE FOR COUNTRY----*/}
+          {errors.secondary_country && (
+            <span
+              key={errors.secondary_country}
+              className="text-danger font-size-3"
+            >
+              {errors.secondary_country}
             </span>
           )}
         </div>
+
         <div className="form-group col-md-6">
           <label
             htmlFor="secondary_state"
@@ -821,32 +826,29 @@ function renderSecondaryFields(state, errors, onInputChange) {
       <div className="row">
         <div className="form-group col-md-6">
           <label
-            htmlFor="secondary_country"
+            htmlFor="secondary_city"
             className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
           >
-            Country:
+            City:
           </label>
           <input
-            type="text"
-            placeholder="Country"
-            id="secondary_country"
-            name="secondary_country"
             maxLength={60}
-            value={state.secondary_country || ""}
+            type="text"
+            placeholder="City"
+            id="secondary_city"
+            name="secondary_city"
+            value={state.secondary_city || ""}
             onChange={onInputChange}
             className={
-              errors.secondary_country
+              errors.secondary_city
                 ? "form-control border border-danger"
                 : "form-control"
             }
           />
-          {/*----ERROR MESSAGE FOR COUNTRY----*/}
-          {errors.secondary_country && (
-            <span
-              key={errors.secondary_country}
-              className="text-danger font-size-3"
-            >
-              {errors.secondary_country}
+          {/*----ERROR MESSAGE FOR CITY----*/}
+          {errors.secondary_city && (
+            <span key={errors.secondary_city} className="text-danger font-size-3">
+              {errors.secondary_city}
             </span>
           )}
         </div>

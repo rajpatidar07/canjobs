@@ -34,49 +34,65 @@ export const encryptPassword = (password) => {
 
   return encrypted.toString(); // base64 string
 }
-// axios.interceptors.response.use(
-//   response => {
-//     if (
-//       response.data &&
-//       response.data.status === false &&
-//       response.data.message === "Unauthorised Token"
-//     ) {
-//       if (user_type === "employee") {
-//         window.location.href = "/candidate_login";
-//       } else if (user_type === "employer") {
-//         window.location.href = "/client_login";
-//       } else if (user_type === "admin") {
-//         window.location.href = "/adminlogin";
-//       } else if (user_type === "agent") {
-//         window.location.href = "/partnerlogin";
-//       } else {
-//         window.location.href = "/";
-//       }
-//     }
-//     return response;
-//   },
-//   error => {
-//     if (error.message === "Network Error" || error.message === "Request failed with status code 401") {
-//       console.log(error)
-//       if (user_type === "user") {
-//         window.location.href = "/candidate_login";
-//       } else if (user_type === "company") {
-//         window.location.href = "/client_login";
-//       } else if (user_type === "admin") {
-//         window.location.href = "/adminlogin";
-//       } else if (user_type === "agent") {
-//         window.location.href = "/partnerlogin";
-//       } else {
-//         window.location.href = "/";
-//       }
-//     }
-//   }
-// );
+axios.interceptors.response.use(
+  response => {
+    if (
+      response.data &&
+      response.data.status === false &&
+      response.data.message === "Unauthorised Token"
+    ) {
+      if (user_type === "employee") {
+        window.location.href = "/candidate_login";
+      } else if (user_type === "employer") {
+        window.location.href = "/client_login";
+      } else if (user_type === "admin") {
+        window.location.href = "/adminlogin";
+      } else if (user_type === "agent") {
+        window.location.href = "/partnerlogin";
+      } else {
+        window.location.href = "/";
+      }
+    }
+    return response;
+  },
+  error => {
+    if (error.message === "Network Error" || error.message === "Request failed with status code 401") {
+      console.log(error)
+      if (user_type === "user") {
+        window.location.href = "/candidate_login";
+      } else if (user_type === "company") {
+        window.location.href = "/client_login";
+      } else if (user_type === "admin") {
+        window.location.href = "/adminlogin";
+      } else if (user_type === "agent") {
+        window.location.href = "/partnerlogin";
+      } else {
+        window.location.href = "/";
+      }
+    }
+  }
+);
 
 // Location Api
 /*Country*/
 export const GetCountry = async () => {
   const response = await axios.get(`${API_URL}getCountryList`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};
+
+/*Api function to get the country , state and city */
+export const GetLocationByType = async (type, id) => {
+  console.log(id)
+  const response = await axios.post(`${API_URL}common/getLocation`, {
+    "type": type,
+    "parent_id": id,
+    "search": "",
+  }, {
     headers: {
       "Content-Type": "application/json",
       Authorization: Token,

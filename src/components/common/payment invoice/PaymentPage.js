@@ -257,7 +257,6 @@ const PaymentPage = (props) => {
             </button>
           </div>
         </div>
-
         {openAddPaymentForm && (
           <PaymentInvoiceForm
             close={() => setOpenAddPaymentForm(false)}
@@ -265,6 +264,7 @@ const PaymentPage = (props) => {
             userId={props.user_id}
             userType={props.user_type}
             userEmail={props.user_email}
+            userSecondaryEmail={props.user_secondary_email}
             employee_employer_list={employeeEmployerlist}
             totalData={totalData}
             setApiCall={setApiCall}
@@ -318,6 +318,8 @@ const PaymentPage = (props) => {
               totalData={totalData}
               employeeEmployerlist={employeeEmployerlist}
               invoiceId={props.invoiceId}
+              userSecondaryEmail={props.user_secondary_email}
+
             />
           }
           <div className="pt-2">
@@ -341,6 +343,8 @@ const PaymentPage = (props) => {
             invoiceData={singleInvoiceData}
             employee_employer_list={employeeEmployerlist}
             folderId={props.folderId}
+            userSecondaryEmail={props.user_secondary_email}
+            userName={props.user_name}
           />
         )}
 

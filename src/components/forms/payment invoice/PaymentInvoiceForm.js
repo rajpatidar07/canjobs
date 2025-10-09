@@ -3,10 +3,11 @@ import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 // import Fatrash from "react-icons/fa"
 import { CiTrash } from "react-icons/ci";
-import { AddFIlter, AddUpdatePaymentInvoiceApi, GetFilter } from "../../../api/api";
+import { AddFIlter, AddUpdatePaymentInvoiceApi, GetFilter, EmployerDetails } from "../../../api/api";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import SelectBox from "../../common/Common function/SelectBox";
+import EmailSelectionModal from "../../common/EmailSelectionModal";
 
 const PaymentInvoiceForm = (props) => {
   let [loading, setLoading] = useState(false)
@@ -16,6 +17,8 @@ const PaymentInvoiceForm = (props) => {
   let [termsErrors, setTermsErrors] = useState("")
   let [addTermsloading, setAddTermsLoading] = useState(false)
   let [saveType, setSaveType] = useState("")
+  let [showEmailModal, setShowEmailModal] = useState(false)
+  let [selectedEmail, setSelectedEmail] = useState(props.userEmail || "")
   // const [recAmt, setRecAmt] = useState(0);
 
   const initialFormState =
@@ -23,7 +26,7 @@ const PaymentInvoiceForm = (props) => {
     invoice_no: parseFloat(props.lastInvoiceNo) + 1,
     user_id: props.userId,//Employee /employer id
     user_type: props.userType,//Employee /employer type
-    user_email: props.userEmail,//Employee /employer email
+    user_email: selectedEmail,//Employee /employer email
     referred_by_id: "",//Creating by admin id
     referred_by_type: "",//Creating by admin type
     manager_id: "",//assigning manger ( admin id)
@@ -75,8 +78,8 @@ const PaymentInvoiceForm = (props) => {
         due_amount: parseFloat(props.singleInvoiceData?.due_amount) - parseFloat(props.singleInvoiceData?.total),
         product_json: props.singleInvoiceData?.product_json ? JSON.parse(props.singleInvoiceData.product_json) : [], // Convert string to array
       };
-
       setState(updatedData); // Set updated state
+
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.singleInvoiceData]);
@@ -84,7 +87,6 @@ const PaymentInvoiceForm = (props) => {
   /*Function to add the new term */
   let onAddNewTermsClick = async (event) => {
     event.preventDefault();
-
     if (newTerms) {
       let data = {
         json_item: newTerms,
@@ -126,7 +128,7 @@ const PaymentInvoiceForm = (props) => {
   }
 
   /*function to submit payment invoice  form */
-  const handleSubmit = async (e, send) => {
+  const handleSubmit = async (e, send, email) => {
     e.preventDefault();
     if (validate()) {
       try {
@@ -139,6 +141,7 @@ const PaymentInvoiceForm = (props) => {
             //   :
             Number(parseFloat(state.due_amount) + parseFloat(state.total)).toFixed(2),
           // received_amount: parseFloat(state.received_amount||0) + parseFloat(recAmt)
+          user_email: email ? email : selectedEmail,
         }
         setLoading(true)
         let res = await AddUpdatePaymentInvoiceApi(data)
@@ -207,6 +210,16 @@ const PaymentInvoiceForm = (props) => {
   //   });
   // };
 
+  /*Function to handle sending with selected email */
+  const handleSendWithEmail = async (email) => {
+    setState({ ...state, user_email: email });
+    setSelectedEmail(email);
+
+    setShowEmailModal(false);
+    await handleSubmit({ preventDefault: () => { } }, 1, email);
+
+  };
+
   return (
     <Modal
       show={props.show}
@@ -273,13 +286,24 @@ const PaymentInvoiceForm = (props) => {
                           ? `${state.user_id},${state.user_type}`
                           : ""
                       }
-                      onChange={(e) => {
+                      onChange={async (e) => {
                         const val = e ? e.value.split(",") : ["", ""];
+                        const email = props.employee_employer_list.find((item) => item.employee_id === val[0] || item.company_id === val[0])?.email;
+                        let secondaryEmail = "";
+                        if (val[1] === 'employer') {
+                          try {
+                            const res = await EmployerDetails(val[0]);
+                            secondaryEmail = res.data.data.secondary_email || "";
+                          } catch (err) {
+                            console.log(err);
+                          }
+                        }
                         setState((prev) => ({
                           ...prev,
                           user_id: val[0],
                           user_type: val[1],
-                          user_email: props.employee_employer_list.find((item) => item.employee_id === val[0] || item.company_id === val[0])?.email
+                          user_email: email,
+                          secondary_email: secondaryEmail
                         }));
                       }}
                       isDisabled={!!(state.user_id && state.user_type)}
@@ -321,7 +345,6 @@ const PaymentInvoiceForm = (props) => {
                 <div className="form-group col-md-3 d-none">
                   <div className="d-flex justify-content-end align-items-start">
                     <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
-                      {" "}
                       Online Payment
                     </label>
                     <button className=" d-none position-absolute border-0 bg-transparent text-blue font-size-3 " style={{ top: "-15px" }}>
@@ -752,14 +775,25 @@ const PaymentInvoiceForm = (props) => {
               className={"btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"}
               disabled={loading}
               onClick={(e) => {
-                handleSubmit(e, 1)
-                setSaveType("send")
-              }}
+                setShowEmailModal(true);
+                setSaveType("send");
+              }
+              }
+
             >
               {saveType === "send" && loading ? "Sending..." : "save and send"}
             </button>
           </div>
         </form>
+        <EmailSelectionModal
+          show={showEmailModal}
+          onHide={() => setShowEmailModal(false)}
+          userEmail={props.userEmail}
+          userSecondaryEmail={props.userSecondaryEmail}
+          selectedEmail={selectedEmail}
+          onSelectEmail={handleSendWithEmail}
+          title={"Select Email to Send Invoice"}
+        />
       </div>
     </Modal>
   );

@@ -1152,6 +1152,8 @@ function CompanyProfileDetail(props) {
                           user_id={cid}
                           user_type={"employer"}
                           user_email={employerData.email}
+                          user_secondary_email={employerData.secondary_email}
+                          user_name={employerData.company_name}
                           folderId={employerData.documents_folder_id}
                           userData={employerData}
                           invoiceId={invoiceId || ""}

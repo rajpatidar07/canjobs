@@ -1899,6 +1899,8 @@ const NewUserProfile = (props) => {
                             user_id={eid}
                             user_type={"employee"}
                             user_email={PersonalDetail.email}
+                            user_secondary_email={PersonalDetail.secondary_email}
+                            user_name={PersonalDetail.name}
                             folderId={PersonalDetail.documents_folder_id}
                             userData={PersonalDetail}
                             invoiceId={invoiceId || ""}

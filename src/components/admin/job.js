@@ -4,7 +4,7 @@ import CustomButton from "../common/button";
 // import AdminHeader from "./header";
 // import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
-import { GetAllJobs, GetFilter } from "../../api/api";
+import { GetAllJobs, GetFilter, GetLocationByType } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import JobTable from "../common/jobTable";
 import CommonThreeDots from "../common/Common function/commonThreeDots";
@@ -18,6 +18,7 @@ function Job(props) {
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [showJobDetails, setShowJobDetails] = useState(false);
   const [JobId, setJobId] = useState([]);
+  const [states, seStates] = useState([]);
   /*Filter and search state */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState(
@@ -46,6 +47,12 @@ function Job(props) {
     } catch (err) {
       console.log(err);
     }
+    try {
+      let StateRes = await GetLocationByType("state");
+      seStates(StateRes.data)
+    } catch (err) {
+      console.log(err)
+    };
     try {
       let allJobData = await GetAllJobs();
       setAllJob(allJobData.data.data);
@@ -271,16 +278,20 @@ function Job(props) {
                     <p className="input_label">Filter by Job Location:</p>
                     <div className="select_div">
                       <SelectBox
-                        Width={"yes"} options={(FilterJson.location.map((option) => ({
-                          value: option.country,
-                          label: option.country,
-                        })) || [])}
-                        selectedValue={locationFilterValue}
-                        onChange={(e) => {
+                        Width={"yes"}
+                        options={(states || []).map((state) => ({
+                          value: state.name,
+                          id: state.id,
+                          label: state.name,
+                        }))}
+                        type="location"
+                        selectedValue={locationFilterValue || ""}
+                        onChange={async (e) => {
                           setLocationFilterValue(e ? e.value : null);
                           setpageNo(1);
+
                         }}
-                        type={"location"}
+
                       />
                     </div>
                   </div>

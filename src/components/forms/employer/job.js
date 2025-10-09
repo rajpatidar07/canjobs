@@ -5,9 +5,8 @@ import useValidation from "../../common/useValidation";
 import FilterJson from "./../../json/filterjson";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { GetJob, AddJob, getAllEmployer, GetFilter } from "../../../api/api";
+import { GetJob, AddJob, getAllEmployer, GetFilter, GetLocationByType } from "../../../api/api";
 import { useLocation } from "react-router-dom";
-import states from "../../json/states";
 import TextEditor from "../../common/TextEditor";
 import SelectBox from "../../common/Common function/SelectBox";
 // import FroalaEditor from "react-froala-wysiwyg";
@@ -17,6 +16,8 @@ import SelectBox from "../../common/Common function/SelectBox";
 // import Select from "react-select";
 function AddJobModal(props) {
   const [company, setCompany] = useState([]);
+  const [states, seStates] = useState([]);
+  const [city, setCity] = useState([]);
   const [loading, setLoading] = useState(false);
   let token = localStorage.getItem("token");
   const company_id =
@@ -28,6 +29,7 @@ function AddJobModal(props) {
   let location = useLocation();
   const user_type = localStorage.getItem("userType");
   let [Json, setJson] = useState([]);
+
   /*Function to get the jSon */
   const JsonData = async () => {
     try {
@@ -41,7 +43,13 @@ function AddJobModal(props) {
     } catch (err) {
       console.log(err);
     }
-  };
+    try {
+      let StateRes = await GetLocationByType("state");
+      seStates(StateRes.data)
+    } catch (err) {
+      console.log(err)
+    };
+  }
 
 
   // CKEDITOR
@@ -166,7 +174,7 @@ function AddJobModal(props) {
   };
 
   /* Function to get Employer data*/
-  const CompnayData = async () => {
+  const CompanyData = async () => {
     try {
       const userData = await getAllEmployer();
       if (userData.data.length === 0) {
@@ -187,7 +195,7 @@ function AddJobModal(props) {
   };
   useEffect(() => {
     if (user_type === "admin" && props.admin === "admin") {
-      CompnayData();
+      CompanyData();
     }
     if (token) {
       JsonData();
@@ -589,20 +597,31 @@ function AddJobModal(props) {
                 <div className={errors.location ? "border border-danger rounded" : ""}>
                   <SelectBox
                     Width={"yes"}
-                    options={(Object.keys(states) || []).map((state) => ({
-                      value: state,
-                      label: state,
+                    options={(states || []).map((state) => ({
+                      value: state.name,
+                      id: state.id,
+                      label: state.name,
                     }))}
                     type="location"
                     selectedValue={state.location || ""}
-                    onChange={(e) => {
+                    onChange={async (e) => {
                       onInputChange({
                         target: {
                           name: "location",
                           value: e ? e.value : "",
                         },
                       });
+
+                      if (e && e.id) {
+                        try {
+                          const CityRes = await GetLocationByType("city", e.id);
+                          setCity(CityRes.data);
+                        } catch (error) {
+                          console.error("Error fetching city:", error);
+                        }
+                      }
                     }}
+
                   />
                 </div>
 
@@ -627,9 +646,10 @@ function AddJobModal(props) {
                   </label>
                   <SelectBox
                     Width={"yes"}
-                    options={(states[state.location] || []).map((city) => ({
-                      value: city,
-                      label: city,
+                    options={(city || []).map((city) => ({
+                      value: city.name,
+                      id: city.id,
+                      label: city.name,
                     }))}
                     type="industry_type"
                     selectedValue={state.industry_type || ""}
