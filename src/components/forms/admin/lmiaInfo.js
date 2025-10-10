@@ -300,9 +300,9 @@ export default function LmiaInfo(props) {
                                 multiple={false}
                             >
                                 <option value={""}>Select</option>
-                                <option value={"employer"}>Client</option>
-                                <option value={"employee"}>Candidate</option>
-                                <option value={"canpathway"}>Canpathway</option>
+                                <option value={"employer"}>Employer</option>
+                                <option value={"canpathways"}>CAN Pathways</option>
+                                <option value={"other"}>Other</option>
                             </select>
                             {/*----ERROR MESSAGE FOR PAYMENT BY----*/}
                             {errors.payment_by && (

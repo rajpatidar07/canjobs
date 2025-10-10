@@ -80,7 +80,7 @@ const NewUserProfile = (props) => {
   const [lima, setLmia] = useState(false);
   const [visaStatusRejectComment, setVisaStatusRejectComment] = useState([]);
   const [lmiaStatusRejectComment, setLmiaStatusRejectComment] = useState([]);
-  const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
+  const [showEmploymentDetails, setShowEmploymentDetails] = useState(false);
   const [showPersonalDetails, setShowPersonalDetails] = useState(false);
   const [showConsultationForm, setShowConsultationForm] = useState(false);
   const [showEducation, setShowEducation] = useState(false);
@@ -100,7 +100,7 @@ const NewUserProfile = (props) => {
               : user_email === "yes"
                 ? "email"
                 : user_timeline === "true"
-                  ? "timline"
+                  ? "timeLine"
                   : "profile"
   );
   const [selectedPaymentTab, setSelectedPaymentTab] = useState(invoiceId ? "invoice" : "payment_records");
@@ -109,7 +109,7 @@ const NewUserProfile = (props) => {
   const [PersonalDetail, setPersonalDetail] = useState([]);
   const [appliedJob, setAppliedJob] = useState([]);
   const [visaStatus, setVisaStatus] = useState([]);
-  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
+  const [pageNo, setPageNo] = useState(localStorage.getItem("PageNo") || 1);
   let [isLoading, setIsLoading] = useState(true);
   let [applicantTypeList, setApplicantTypeList] = useState([]);
   const user_type = localStorage.getItem("userType");
@@ -162,7 +162,7 @@ const NewUserProfile = (props) => {
     }
   };
   /*Function to get Lmia */
-  const getLimaOfuser = async () => {
+  const getLimaOfUser = async () => {
     try {
       let response = await GetEmployeeByLima(
         "",
@@ -225,16 +225,13 @@ const NewUserProfile = (props) => {
   const params = new URLSearchParams(window.location.search);
   const transactionId = params.get("payment_intent");
   /*Render function to get user Data */
-  // useEffect(() => {
-  //   UserData();
-  // }, [eid]);
   useEffect(() => {
     if (appliedJob) {
       AppliedJob();
     }
     UserData();
     if (user_type === "admin") {
-      getLimaOfuser();
+      getLimaOfUser();
     }
     if (apiCall === true) {
       setApiCall(false);
@@ -264,7 +261,7 @@ const NewUserProfile = (props) => {
       setTabActive("email")
     }
     if (user_timeline === "true") {
-      setTabActive("timline")
+      setTabActive("timeLine")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiCall, eid, docParentId, docId, TimeLineId, notes, agreement, location.key]);
@@ -532,7 +529,7 @@ const NewUserProfile = (props) => {
                         aria-selected="true"
                         onClick={() => {
                           setTabActive("jobs")
-                          setpageNo(1)
+                          setPageNo(1)
                         }}
                       >
                         Applied Jobs
@@ -738,7 +735,7 @@ const NewUserProfile = (props) => {
                     >
                       <Link
                         className={
-                          TabActive === "timline"
+                          TabActive === "timeLine"
                             ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
                             : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
                         }
@@ -747,7 +744,7 @@ const NewUserProfile = (props) => {
                         role="tab"
                         aria-controls="docTab"
                         aria-selected="true"
-                        onClick={() => setTabActive("timline")}
+                        onClick={() => setTabActive("timeLine")}
                       >
                         TimeLine
                       </Link>
@@ -1193,6 +1190,18 @@ const NewUserProfile = (props) => {
                                     </Link>
                                   </div>
                                 )}
+                                {!PersonalDetail.secondary_email ||
+                                  user_type === "company" ? null : (
+                                  <div>
+                                    <Link
+                                      className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
+                                      to={`mailto:${PersonalDetail.secondary_email}`}
+                                    >
+                                      <BsEnvelope className="font-size-3 mr-4" />
+                                      {PersonalDetail.secondary_email}
+                                    </Link>
+                                  </div>
+                                )}
                                 {!PersonalDetail.contact_no ||
                                   PersonalDetail.contact_no === 0 ||
                                   PersonalDetail.contact_no === "0" ||
@@ -1204,6 +1213,20 @@ const NewUserProfile = (props) => {
                                     >
                                       <BiPhoneCall className="font-size-3 mr-4" />
                                       {PersonalDetail.contact_no}
+                                    </Link>
+                                  </div>
+                                )}
+                                {!PersonalDetail.other_contact_no ||
+                                  PersonalDetail.other_contact_no === 0 ||
+                                  PersonalDetail.other_contact_no === "0" ||
+                                  user_type === "company" ? null : (
+                                  <div>
+                                    <Link
+                                      className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
+                                      to={`tel:${PersonalDetail.other_contact_no}`}
+                                    >
+                                      <BiPhoneCall className="font-size-3 mr-4" />
+                                      {PersonalDetail.other_contact_no}
                                     </Link>
                                   </div>
                                 )}
@@ -1417,7 +1440,7 @@ const NewUserProfile = (props) => {
                                     className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
                                     title="Update career details"
                                     onClick={() =>
-                                      setShowEmplyomentDetails(true)
+                                      setShowEmploymentDetails(true)
                                     }
                                   >
                                     <PiPencilDuotone />
@@ -1594,7 +1617,7 @@ const NewUserProfile = (props) => {
                         statusCall={statusCall}
                         setStatusCall={setStatusCall}
                         pageNo={pageNo}
-                        setpageNo={setpageNo}
+                        setpageNo={setPageNo}
                       />
                     ) : null}
                     {/* <!-- Top Start --> */}
@@ -1961,7 +1984,7 @@ const NewUserProfile = (props) => {
                       />
                     ) : null}
                   </div>
-                  {TabActive === "timline" ? (
+                  {TabActive === "timeLine" ? (
                     <UserTimline
                       userId={eid}
                       userEmail={PersonalDetail.email}
@@ -2011,13 +2034,13 @@ const NewUserProfile = (props) => {
           close={() => setShowEducation(false)}
         />
       ) : null}
-      {showEmplyomentDetails ? (
+      {showEmploymentDetails ? (
         <EmployementDetails
-          show={showEmplyomentDetails}
+          show={showEmploymentDetails}
           employeeId={employeeId}
           apiCall={apiCall}
           setApiCall={setApiCall}
-          close={() => setShowEmplyomentDetails(false)}
+          close={() => setShowEmploymentDetails(false)}
         />
       ) : null}
 

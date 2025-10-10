@@ -17,7 +17,7 @@ function SelfApplicat(props) {
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
   let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
   /*data and id states */
-  let [employeeId, setemployeeId] = useState();
+  let [employeeId, setEmployeeId] = useState();
   /*Filter and search state */
   const [experienceFilterValue, setExperienceFilterValue] = useState("");
   const [skillFilterValue, setSkillFilterValue] = useState(
@@ -41,12 +41,12 @@ function SelfApplicat(props) {
   /* Function to show the single data to update Employee*/
   const employeeDetails = (e) => {
     setShowEmployeeProfile(true);
-    setemployeeId(e);
+    setEmployeeId(e);
   };
   /* Function to show the single data to update Employee*/
   const editEmployee = (e) => {
     setShowEmployeeMOdal(true);
-    setemployeeId(e);
+    setEmployeeId(e);
   };
   /*Function to search the employee */
   const onSearch = (e) => {

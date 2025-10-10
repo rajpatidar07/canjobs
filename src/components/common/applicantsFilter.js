@@ -153,7 +153,7 @@ export default function ApplicantsFilter({
           <input
             required
             type="text"
-            className="form-control"
+            className="form-control input-height"
             placeholder={`Search ${portal === "study" ? "Student" : "Candidate"
               }`}
             name="Employee_name"
@@ -172,6 +172,7 @@ export default function ApplicantsFilter({
                 borderTopRightRadius: 5,
                 borderBottomRightRadius: 5,
                 outline: 0,
+                height:"40px"
               }}
             >
               <CiSearch />
@@ -392,7 +393,7 @@ export default function ApplicantsFilter({
         <div className="select_div">
           <input
             type="text"
-            className="form-control"
+            className="form-control input-height"
             placeholder={"Search by ID"}
             value={filterByEmployeeId}
             id="id"
@@ -442,7 +443,7 @@ export default function ApplicantsFilter({
               Filter by Consultation Opted  :
             </p>
             <select
-              className={"form-control"}
+              className={"form-control input-height"}
               value={consultationOptedFilterValue}
               onChange={(e) => setConsultationOptedFilterValue(e.target.value)}
               id="consultation_opted"
@@ -464,7 +465,7 @@ export default function ApplicantsFilter({
               endDate={consultationEndDateFilterValue}
               selectsRange
               dateFormat="dd-MM-yyyy"
-              className="form-control"
+              className="form-control input-height"
               placeholderText="Filter by Consultation Date"
             />
           </div>

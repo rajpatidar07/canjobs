@@ -2348,3 +2348,8 @@ ul.css-8tnble li {
 .css-1nmdiq5-menu{
 z-index: 3;
 }
+/*Height as like select box of 3rd party library*/
+.input-height{
+  height:39px !important;
+  border-color: hsl(0, 0%, 80%)
+}

@@ -172,7 +172,7 @@ export default function Visa() {
                     <input
                       required
                       type="text"
-                      className="form-control"
+                      className="form-control input-height"
                       placeholder={"Search Candidate"}
                       value={search}
                       name={"Employee_name"}

@@ -238,7 +238,7 @@ function CompanyLoginForm(props) {
     }
   }, []);
 
-  /*Functiom to login with facebook */
+  /*Function to login with facebook */
   // const responseFacebook = async (response) => {
   //   if (response.graphDomain === "facebook") {
   //     let data = await SocialCompanyLogin(response.userID, response.email, response.name, response.picture.data.url, "Facebook");

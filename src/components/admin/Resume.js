@@ -277,7 +277,6 @@ function ResumeGrerator(props) {
               {/* <View style={styles.contactRow}>
                 {User.nationality ? (
                   <>
-                   
                     <Text style={styles.icon}>Nationality:</Text>
                     <Text style={styles.conValue}>{User.nationality}</Text>
                   </>

@@ -129,7 +129,7 @@ function Employer() {
                     <input
                       required
                       type="text"
-                      className="form-control"
+                      className="form-control input-height"
                       placeholder={"Employer name"}
                       value={search}
                       name={"Employer_name"}

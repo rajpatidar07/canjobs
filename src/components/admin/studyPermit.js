@@ -7,20 +7,20 @@ export default function StudyPermit() {
   /*Filter and search state */
   const [experienceFilterValue, setExperienceFilterValue] = useState("");
   const [skillFilterValue, setSkillFilterValue] = useState("");
-  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
+  const [pageNo, setPageNo] = useState(localStorage.getItem("PageNo") || 1);
   const [educationFilterValue, setEducationFilterValue] = useState("");
   const [agentFilterValue, setAgentFilterValue] = useState("");
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [interestFilterValue, setinterestFilterValue] = useState("");
   const [search, setSearch] = useState("");
-  const [searcherror, setSearchError] = useState("");
+  const [searchError, setSearchError] = useState("");
   let user_type = localStorage.getItem("userType");
   let [apiCall, setApiCall] = useState(false);
   /*Function to search the employee */
   const onSearch = (e) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
-    setpageNo(1);
+    setPageNo(1);
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Candidate Name cannot start with a number.");
@@ -63,7 +63,7 @@ export default function StudyPermit() {
                     setSkillFilterValue={setSkillFilterValue}
                     educationFilterValue={educationFilterValue}
                     setEducationFilterValue={setEducationFilterValue}
-                    setpageNo={setpageNo}
+                    setPageNo={setPageNo}
                     agentFilterValue={agentFilterValue}
                     setAgentFilterValue={setAgentFilterValue}
                     adminFilterValue={adminFilterValue}
@@ -75,7 +75,7 @@ export default function StudyPermit() {
                     pageName={"study_permit"}
                   />
                 </div>
-                <small className="text-danger">{searcherror}</small>
+                <small className="text-danger">{searchError}</small>
               </div>
               {/*<-- study permit Table -->*/}
               <EmployeeTable
@@ -95,7 +95,7 @@ export default function StudyPermit() {
                 // self={"no"}
                 status={"-1"}
                 pageNo={pageNo}
-                setpageNo={setpageNo}
+                setpageNo={setPageNo}
                 ApplicantType={"13"}
               />
             </div>

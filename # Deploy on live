@@ -1,6 +1,6 @@
 # Deploy on live
 
-1. Change employer details to the Business details title in add update employer's   form.
+1. Change employer details to the Business details title in add update employer's form.
 2. Add Secondary contact persons details for the employer.
 3. Added _Created By_ and _Updated By_ for the invoice and RA as requested, along with several other changes.
 4. Added _Created By_ and _Updated By_ for the documents.
@@ -13,7 +13,8 @@
 11. Added an option to resend the email for signing the Retainer Agreement.
 12. Add functionality to choose between the primary and secondary email from the candidate data when sending the Retainer Agreement and Payment Invoice. Also, include this feature in both the employer and candidate profiles.
 13. Implement candidate activity notifications.
-14. Change the default value of assigned by to satvir from sam.
+14. Changed the default value of Assigned By from Sam to Satvir, and verified that emails and notifications (such as activities, emails, etc.) are working correctly according to the updated assigned admin for the candidate.
+15. 
 
 Date: 26/09/25
 
@@ -132,13 +133,12 @@ Date=>19/06/25
 
 1. Fix the issue with the invoice date in the payment invoice email template for users, and also add the invoice number.
    ate:17-06-25(staging)18/06/25(on live)
-1. Add text for the invoice and state in the payment invoice; fix the time zone.
-1. Add conditions to include the subject in the Retainer Agreement.
-1. Update the copyright year in all emails.
-1. Update the email template for the RCIC signed agreement mail.
-1. Resolve the issue with the notification for agreements signed by clients.
-1. Resolve the issue with the received date.
-1.
+2. Add text for the invoice and state in the payment invoice; fix the time zone.
+3. Add conditions to include the subject in the Retainer Agreement.
+4. Update the copyright year in all emails.
+5. Update the email template for the RCIC signed agreement mail.
+6. Resolve the issue with the notification for agreements signed by clients.
+7. Resolve the issue with the received date.
 
 Date=>10-06-25
 
@@ -184,14 +184,14 @@ Date=>27/05/25.
 
 Date=>22/05/25
 
-1. Resolve the issue of cleint login and add docuemnts and notes by the client and use.
+1. Resolve the issue of client login and add documents and notes by the client and use.
 2. Resolve the issue of getting ssatvir's email on the portal.
 
 Date=>20/05/25
 
 Date=>19/05/25Only frontend
 
-1. Add the Latest agreements updating and set the canadine date time changes.
+1. Add the Latest agreements updating and set the canadian date time changes.
 
 Date=>15/05/25
 
@@ -301,11 +301,37 @@ Date=>21/01/25
 2. Add an option to update tasks.
 3. Added an option to show all documents in the document tab of the user.
 
-Date=>10/01/25 10. Resolve the issue of not showing the Word file from the document. 11. Add a highlight to the task table on the task dashboard. 12. Add an "Assigned By" column to the applicants table. 13. Add show/hide password icons and functionality to all password inputs. 14. Add a confirmation alert box on the job details page before applying for a job. 15. Add the company name's initials to the company logo on the job and company detail pages. 16. Resolve the issue with commenting and assigning the admin, where the name is still displayed. 17. Set view all button at task task dashboard and also add pagination.
+Date=>10/01/25
 
-Date=>04/01/24 18. Add an option to forward mail . 19. Created a new WES applicant type along with its dashboard. 20. Created a new ATIP applicant type along with its dashboard. 21. Change the design of the document note by adding a modal. 22. Resolve the issue of replacing the name of the task creator. 23. Resolve the issue of not getting the latest notes on the dashboard 24. Remove the table from the "Manage Table" sidebar on the dashboard. 25. Add all applicant types to the group by options for adding a task. 26. Add a filter to show only the tasks added from the task dashboard. 27. Correct the spelling of "mange" to "manage" in the "Manage Table" section of the dashboard. 28. Resolve the issue of email notifications not being sent for completed tasks from assigned tasks. 29. Remove pagination from the task table on the task dashboard. 30. Display all notifications for documents as per Satvir's instructions.
+1.  Resolve the issue of not showing the Word file from the document.
+2.  Add a highlight to the task table on the task dashboard.
+3.  Add an "Assigned By" column to the applicants table.
+4.  Add show/hide password icons and functionality to all password inputs.
+5.  Add a confirmation alert box on the job details page before applying for a job.
+6.  Add the company name's initials to the company logo on the job and company detail pages.
+7.  Resolve the issue with commenting and assigning the admin, where the name is still displayed.
+8.  Set view all button at task task dashboard and also add pagination.
 
-Date=> 20/12/24(just frontend) 31. Created a note for the document, made it open for updates, and updated the same document. 32. Resolve the issue of retrieving applicants' documents.
+Date=>04/01/24
+
+1.  Add an option to forward mail .
+2.  Created a new WES applicant type along with its dashboard.
+3.  Created a new ATIP applicant type along with its dashboard.
+4.  Change the design of the document note by adding a modal.
+5.  Resolve the issue of replacing the name of the task creator.
+6.  Resolve the issue of not getting the latest notes on the dashboard
+7.  Remove the table from the "Manage Table" sidebar on the dashboard.
+8.  Add all applicant types to the group by options for adding a task.
+9.  Add a filter to show only the tasks added from the task dashboard.
+10. Correct the spelling of "mange" to "manage" in the "Manage Table" section of the dashboard.
+11. Resolve the issue of email notifications not being sent for completed tasks from assigned tasks.
+12. Remove pagination from the task table on the task dashboard.
+13. Display all notifications for documents as per Satvir's instructions.
+
+Date=> 20/12/24(just frontend)
+
+1. Created a note for the document, made it open for updates, and updated the same document.
+2. Resolve the issue of retrieving applicants' documents.
 
 Date=>20/12/24
 
@@ -344,9 +370,20 @@ Date=>29/11/24
 6. Add a preview of the comment in the email notification when the admin adds comments and tags users in the comments section of the document. The tagged person also receives an email notification.
 7. Resolve the issue of notes and documents not opening when the admin is tagged.
 
-Date=>26/11/24 8. Reset the placing of dashboard first, followed by the task dashboard, new applicants, and then manage applicants. 9. Add a CC email option to the user's email in the user profile. 10. Add four agreements based on the new agreements provided by Khushboo.
+Date=>26/11/24
 
-Date=>04/11/24 11. Change the PNP applicant type name to Alberta PNP. 12. Add 4 more applicant types to the applicant type list: - Humanitarian and Compassionate Cases - Passport - Citizenship - Permanent Resident Cards 13. Add "tourism and hospitality" to sub type for the pnn. 14. Created four dashboards for the following applicant types: - Humanitarian and Compassionate Cases - Passport - Citizenship - Permanent Resident Cards 15. Change all instances of 'signup' and 'create a free account' with 'create an account' throughout the project. 16. Study portal
+1. Reset the placing of dashboard first, followed by the task dashboard, new applicants, and then manage applicants.
+2. Add a CC email option to the user's email in the user profile.
+3. Add four agreements based on the new agreements provided by Khushboo.
+
+Date=>04/11/24
+
+1. Change the PNP applicant type name to Alberta PNP.
+2. Add 4 more applicant types to the applicant type list: - Humanitarian and Compassionate Cases - Passport - Citizenship - Permanent Resident Cards
+3. Add "tourism and hospitality" to sub type for the pnn.
+4. Created four dashboards for the following applicant types: - Humanitarian and Compassionate Cases - Passport - Citizenship - Permanent Resident Cards
+5. Change all instances of 'signup' and 'create a free account' with 'create an account' throughout the project.
+6. Study portal
 
 Date=>15/10/24
 
@@ -378,7 +415,22 @@ Date=>25/09/24:
 1. Add "Study Permit" in the "Application Type" dropdown and create a separate dashboard.
 2. Some design changes .
 
-Date=>24/09/24: 3. Complete the design and dynamic details and functionalities for the job list and detail box similar to the one shown in the link: https://ca.indeed.com/viewjob?jk=faf095d0fec97520&tk=1i70o4lv8ge6k820&from=serp&vjs=3. 4. Add export buttons to export Excel data for both employees and employers. 5. Add the candidate's name along with the signup and registration time on the signup page. 6. Add the admin's name and the last modified date and time to the manage applicant page. 7. Fix the issue with deleting candidates in the global search. 8. Add the candidate ID to the candidate's profile page, right after their name. 9. Add the comment section at the beginning, whether there is any highlight or mark in the document or not. 10. Keep the pagination on the same page when using the back button to return to the applicant from their profile for candidate management. 11. Removed the applicant status tabs from the dashboards for the different applicant types. 12. Made changes to the timeline for the LMIA, visa, and applicant process arrows. 13. Removed the text limit from the subject field of notes for both employees and employers. 14. after the clients signature it will not update agreement data and enable button top sign by rcic. 15. Enable signature pad for signing. 16. show all applicant types dashboard aft6er candidates status is retained.
+Date=>24/09/24:
+
+1. Complete the design and dynamic details and functionalities for the job list and detail box similar to the one shown in the link: https://ca.indeed.com/viewjob?jk=faf095d0fec97520&tk=1i70o4lv8ge6k820&from=serp&vjs=3.
+2. Add export buttons to export Excel data for both employees and employers.
+3. Add the candidate's name along with the signup and registration time on the signup page.
+4. Add the admin's name and the last modified date and time to the manage applicant page.
+5. Fix the issue with deleting candidates in the global search.
+6. Add the candidate ID to the candidate's profile page, right after their name.
+7. Add the comment section at the beginning, whether there is any highlight or mark in the document or not.
+8. Keep the pagination on the same page when using the back button to return to the applicant from their profile for candidate management.
+9. Removed the applicant status tabs from the dashboards for the different applicant types.
+10. Made changes to the timeline for the LMIA, visa, and applicant process arrows.
+11. Removed the text limit from the subject field of notes for both employees and employers.
+12. after the clients signature it will not update agreement data and enable button top sign by rcic.
+13. Enable signature pad for signing.
+14. show all applicant types dashboard aft6er candidates status is retained.
 
 Date=>05/09/24
 

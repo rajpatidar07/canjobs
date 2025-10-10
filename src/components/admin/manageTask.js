@@ -160,7 +160,7 @@ export default function ManageTask() {
                   <input
                     required
                     type="text"
-                    className="form-control"
+                    className="form-control input-height"
                     placeholder="Search"
                     name="Employee_name"
                     value={search}
@@ -181,6 +181,7 @@ export default function ManageTask() {
                         borderTopRightRadius: 5,
                         borderBottomRightRadius: 5,
                         outline: 0,
+                        height:"39px"
                       }}
                     >
                       <CiSearch />

@@ -32,7 +32,7 @@ const ManageConsultation = () => {
   const [employeeId, setEmployeeId] = useState();
   const [apiCall, setApiCall] = useState(false);
   // const [dayFilterValue, setDayFilterValue] = useState("");
-  const [exportrData, setExportData] = useState([]);
+  const [exportData, setExportData] = useState([]);
   const [pageNo, setPageNo] = useState(1);
   // const [showfilterdropdown, setShowfilterdropdown] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -69,7 +69,6 @@ const ManageConsultation = () => {
         consultationEndDateFilterValue,
         // props.subCategoryFilterValue
       );
-      console.log(userData.data, "p")
       // const newArray = transformUserData(userData.data);
       // console.log(newArray);
       setExportData(userData.data)
@@ -183,7 +182,7 @@ const ManageConsultation = () => {
               </div>
             </div>
 
-            <div className="d-flex ">
+            <div className="d-flex mb-3">
               {/* New Item Dropdown */}
               {/* <div className="position-relative mr-2">
                 <button
@@ -212,13 +211,12 @@ const ManageConsultation = () => {
               >
                 <div className="input-group-append">
                   <button
-                    className="form-control"
+                    className="form-control input-height"
                     type="button"
                     style={{
                       background: "#fff",
                       border: "none",
                       outline: 0,
-                      height: "2.5rem",
                     }}
                   >
                     <CiSearch />
@@ -227,7 +225,7 @@ const ManageConsultation = () => {
                 <input
                   required
                   type="text"
-                  className="form-control"
+                  className="form-control input-height"
                   placeholder="Search"
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => setIsFocused(false)}
@@ -239,7 +237,7 @@ const ManageConsultation = () => {
               <div className="col form_group mr-4 ">
                 <div className="select_div">
                   <select
-                    className={"form-control"}
+                    className={"form-control input-height"}
                     value={consultationOptedFilterValue}
                     onChange={(e) => setConsultationOptedFilterValue(e.target.value)}
                     id="consultation_opted"
@@ -259,7 +257,7 @@ const ManageConsultation = () => {
                 <div className="select_div">
                   <input
                     type="text"
-                    className="form-control"
+                    className="form-control input-height"
                     placeholder={"Search by ID"}
                     value={filterByEmployeeId}
                     style={{ height: "2.5rem" }}
@@ -292,7 +290,7 @@ const ManageConsultation = () => {
                 </div>
               </div>
               <div className="col form_group">
-                <div className="select_div" style={{ height: "2.5rem" }}>
+                <div className="select_div" >
                   <DatePicker
                     selected={consultationStartDateFilterValue}
                     onChange={handleChange}
@@ -300,7 +298,7 @@ const ManageConsultation = () => {
                     endDate={consultationEndDateFilterValue}
                     selectsRange
                     dateFormat="dd-MM-yyyy"
-                    className="form-control"
+                    className="form-control input-height"
                     placeholderText="Filter by Consultation Date"
                   />
                 </div>
@@ -390,7 +388,7 @@ const ManageConsultation = () => {
                 local={""}
                 portal={""}
                 exportCandidatestatus={""}
-                tableData={exportrData}
+                tableData={exportData}
               />
             </div>
             <EmployeeTable

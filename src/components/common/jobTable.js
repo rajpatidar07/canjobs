@@ -451,7 +451,7 @@ export default function JobTable(props) {
                         ...(col.key === "job_id" ? {
                           minWidth: "50px ", maxWidth: "auto", position: "sticky",
                           transition: " background 0.3s ease"
-                        } : { minWidth: "150px" }),
+                        } : { minWidth: "50px" }),
                       }}
 
                       title={col.isAction ? "Actions" : `Sort by ${col.label}`}

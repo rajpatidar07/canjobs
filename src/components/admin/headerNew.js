@@ -226,7 +226,7 @@ const AdminHeader = (props) => {
           </div> */}
         </nav>
       </div>
-      {/* Setteings modal */}
+      {/* Settings modal */}
       {showSettings ? (
         <AdminSetting
           setShowChangePass={setShowChangePass}

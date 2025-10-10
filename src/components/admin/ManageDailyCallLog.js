@@ -9,12 +9,12 @@ import { Link } from "react-router-dom";
 import { getallAdminData } from "../../api/api";
 
 const ManageDailyCallLog = () => {
-  const [showdropdown, setShowdropdown] = useState(false);
+  const [showDropDown, setShowDropDown] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedAdminId, setSelectedAdminId] = useState(null);
   // const [showItemdropdown, setShowItemdropdown] = useState(false);
   const [showAddItemForm, setShowAddItemForm] = useState(false);
-  const [showfilterdropdown, setShowfilterdropdown] = useState(false);
+  const [showFilterDropDown, setShowFilterDropDown] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [adminList, setAdminList] = useState([false]);
   const [searchCandidate, setSearchCandidate] = useState("");
@@ -43,7 +43,7 @@ const ManageDailyCallLog = () => {
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowdropdown(false);
+        setShowDropDown(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -74,8 +74,8 @@ const ManageDailyCallLog = () => {
                   onClick={() => {
                     // Toggle new item dropdown and close others
                     // setShowItemdropdown((prev) => !prev);
-                    setShowdropdown(false);
-                    setShowfilterdropdown(false);
+                    setShowDropDown(false);
+                    setShowFilterDropDown(false);
                     setShowAddItemForm(true);
                   }}
                 >
@@ -152,9 +152,9 @@ const ManageDailyCallLog = () => {
                                 <button
                                     className="font-size-4 rounded-3 border-0 btn bg-white p-2 mr-4"
                                     onClick={() => {
-                                        setShowdropdown((prev) => !prev);
+                                        setShowDropDown((prev) => !prev);
                                         // setShowItemdropdown(false);
-                                        setShowfilterdropdown(false);
+                                        setShowFilterDropDown(false);
                                     }}
                                 >
                                     <IoPersonCircleOutline />
@@ -162,7 +162,7 @@ const ManageDailyCallLog = () => {
                                 </button>
 
                                 <div
-                                    className={`position-absolute bg-white z-index-4 p-8 shadow-lg ${showdropdown ? "d-block" : "d-none"
+                                    className={`position-absolute bg-white z-index-4 p-8 shadow-lg ${showDropDown ? "d-block" : "d-none"
                                         }`}
                                     style={{ width: "500px" }}
                                 >
@@ -211,13 +211,13 @@ const ManageDailyCallLog = () => {
               <div className="position-relative" ref={dropdownRef}>
                 <button
                   className="font-size-4 rounded-3 border-0 btn bg-white p-2 mr-4"
-                  onClick={() => setShowdropdown((prev) => !prev)}
+                  onClick={() => setShowDropDown((prev) => !prev)}
                 >
                   <IoPersonCircleOutline />
                   <span className="ml-2">Person</span>
                 </button>
 
-                {showdropdown && (
+                {showDropDown && (
                   <div
                     className="position-absolute bg-white z-index-4 p-8 shadow-lg"
                     style={{ width: "500px" }}
@@ -247,8 +247,8 @@ const ManageDailyCallLog = () => {
                             <Link
                               onClick={() => {
                                 setSelectedAdminId(admin.admin_id);
-                                setShowfilterdropdown((prev) => !prev);
-                                setShowdropdown(false);
+                                setShowFilterDropDown((prev) => !prev);
+                                setShowDropDown(false);
                                 setSearchQuery("");
                               }}
                             >
@@ -272,8 +272,8 @@ const ManageDailyCallLog = () => {
                 <button
                   className="font-size-4 rounded-3 border-0 bg-white btn p-2 mr-4"
                   onClick={() => {
-                    setShowfilterdropdown((prev) => !prev);
-                    setShowdropdown(false);
+                    setShowFilterDropDown((prev) => !prev);
+                    setShowDropDown(false);
                     // setShowItemdropdown(false);
                   }}
                 >
@@ -281,7 +281,7 @@ const ManageDailyCallLog = () => {
                   <span className="ml-2">Filter</span>
                 </button>
                 <div
-                  className={`position-absolute bg-white z-index-4 p-8 shadow-lg right-25 ${showfilterdropdown ? "d-block" : "d-none"
+                  className={`position-absolute bg-white z-index-4 p-8 shadow-lg right-25 ${showFilterDropDown ? "d-block" : "d-none"
                     }`}
                   style={{ width: "800px" }}
                 >

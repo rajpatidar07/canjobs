@@ -30,7 +30,7 @@ function Job(props) {
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   // const [company, setCompany] = useState("");
-  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
+  const [pageNo, setPageNo] = useState(localStorage.getItem("PageNo") || 1);
   let [Json, setJson] = useState([]);
   let [allJob, setAllJob] = useState([]);
   // let location = useLocation();
@@ -96,7 +96,7 @@ function Job(props) {
   const onSearch = (e) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
-    setpageNo(1);
+    setPageNo(1);
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Job cannot start with a number.");
@@ -170,7 +170,7 @@ function Job(props) {
                     <input
                       required
                       type="text"
-                      className="form-control w-100"
+                      className="form-control w-100 input-height"
                       placeholder={"Search Job / Client"}
                       value={search}
                       name={"name"}
@@ -194,7 +194,7 @@ function Job(props) {
                       name={"compnay_name"}
                       onChange={(e) => {
                         setCompany(e.target.value);
-                        setpageNo(1);
+                        setPageNo(1);
                         }}
                         />
                         </div> */}
@@ -215,7 +215,7 @@ function Job(props) {
                         selectedValue={categoryFilterValue}
                         onChange={(e) => {
                           setCategoryFilterValue(e ? e.value : null);
-                          setpageNo(1);
+                          setPageNo(1);
                         }}
                         type={"category"}
                       />
@@ -239,7 +239,7 @@ function Job(props) {
                         onChange={(e) => {
                           console.log(e)
                           setJobSwapFilterValue(e ? e.value : null);
-                          setpageNo(1);
+                          setPageNo(1);
                         }}
                         type={"job_type"}
                       />
@@ -262,7 +262,7 @@ function Job(props) {
                         selectedValue={SkillFilterValue}
                         onChange={(e) => {
                           setSkillFilterValue(e ? e.value : null);
-                          setpageNo(1);
+                          setPageNo(1);
                         }}
                         type={"skill"}
                       />
@@ -288,7 +288,7 @@ function Job(props) {
                         selectedValue={locationFilterValue || ""}
                         onChange={async (e) => {
                           setLocationFilterValue(e ? e.value : null);
-                          setpageNo(1);
+                          setPageNo(1);
 
                         }}
 
@@ -333,46 +333,13 @@ function Job(props) {
                 selfJob={"no"}
                 response={"response"}
                 pageNo={pageNo}
-                setpageNo={setpageNo}
+                setpageNo={setPageNo}
                 jobCall={props.jobCall}
                 page="job"
               />
             </div>
           </div>
         </div>
-        {/*<-- Job Detail -->*/}
-        {/* {showJobDetails === true ? (
-          <div
-            className={
-              props.skill === null ||
-              props.skill === undefined ||
-              Object.keys(props.skill).length === 0
-                ? "dashboard-main-container mt-14 "
-                : ""
-            }
-          >
-            <div className="container-fluid">
-              <div className="row justify-content-center">
-                <div className="col-12 dark-mode-texts">
-                  <div className="mb-9">
-                    <                      to={""}
-                      onClick={() => setShowJobDetails(false)}
-                      className="d-flex align-items-center ml-4"
-                    >
-                      <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
-                      <span className="text-uppercase font-size-3 font-weight-bold text-gray">
-                        Back
-                      </span>
-                    </
-                  </div>
-                </div>
-              </div>
-              <div className="mb-18">
-                <JobDetailsBox jobdata={JobId} />
-              </div>
-            </div>
-          </div>
-        ) : null} */}
       </div>
       {showAddJobsModal ? (
         <AddJobModal

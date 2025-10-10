@@ -87,7 +87,7 @@ export const GetCountry = async () => {
 
 /*Api function to get the country , state and city */
 export const GetLocationByType = async (type, id) => {
-  console.log(id)
+  // console.log(id)
   const response = await axios.post(`${API_URL}common/getLocation`, {
     "type": type,
     "parent_id": id,

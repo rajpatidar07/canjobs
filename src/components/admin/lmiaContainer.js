@@ -17,7 +17,7 @@ function LimaContainer(props) {
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [showJobDetails, setShowJobDetails] = useState(false);
   const [JobId, setJobId] = useState([]);
-  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
+  const [pageNo, setPageNo] = useState(localStorage.getItem("PageNo") || 1);
   /*Filter and search state */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [openPermission, setOpenPermission] = useState(false);
@@ -79,7 +79,7 @@ function LimaContainer(props) {
   const onSearch = (e) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
-    setpageNo(1);
+    setPageNo(1);
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Job cannot start with a number.");
@@ -151,7 +151,7 @@ function LimaContainer(props) {
                       <input
                         required
                         type="text"
-                        className="form-control w-100"
+                        className="form-control input-height w-100"
                         placeholder={"Search Job"}
                         value={search}
                         name={"name"}
@@ -164,13 +164,13 @@ function LimaContainer(props) {
                       <input
                         required
                         type="text"
-                        className="form-control w-100"
+                        className="form-control input-height w-100"
                         placeholder={"Client name"}
                         value={company}
-                        name={"compnay_name"}
+                        name={"company_name"}
                         onChange={(e) => {
                           setCompany(e.target.value);
-                          setpageNo(1);
+                          setPageNo(1);
                         }}
                       />
                     </div>
@@ -185,7 +185,7 @@ function LimaContainer(props) {
                           selectedValue={categoryFilterValue}
                           onChange={(e) => {
                             setCategoryFilterValue(e ? e.value : null);
-                            setpageNo(1);
+                            setPageNo(1);
                           }}
                           type={"category"}
                         />
@@ -203,7 +203,7 @@ function LimaContainer(props) {
                           onChange={(e) => {
                             console.log(e)
                             setJobSwapFilterValue(e ? e.value : null);
-                            setpageNo(1);
+                            setPageNo(1);
                           }}
                           type={"job_type"}
                         />
@@ -221,7 +221,7 @@ function LimaContainer(props) {
                           selectedValue={SkillFilterValue}
                           onChange={(e) => {
                             setSkillFilterValue(e ? e.value : null);
-                            setpageNo(1);
+                            setPageNo(1);
                           }}
                           type={"skill"}
                         />
@@ -238,7 +238,7 @@ function LimaContainer(props) {
                           selectedValue={locationFilterValue}
                           onChange={(e) => {
                             setLocationFilterValue(e ? e.value : null);
-                            setpageNo(1);
+                            setPageNo(1);
                           }}
                           type={"location"}
                         />
@@ -284,7 +284,7 @@ function LimaContainer(props) {
                 selfJob={"no"}
                 response="lmia"
                 pageNo={pageNo}
-                setpageNo={setpageNo}
+                setpageNo={setPageNo}
                 company_id={props?.company_id}
                 page="lmia"
               />

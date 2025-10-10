@@ -10,7 +10,7 @@ import Hourlylogtable from "../common/HourlylogTable";
 import SelectBox from "../common/Common function/SelectBox";
 
 const ManageHourlyLog = () => {
-  const [showdropdown, setShowdropdown] = useState(false);
+  const [showDropDown, setShowDropDown] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [FilterByHour, setFilterByHour] = useState("");
   const [selectedAdminId, setSelectedAdminId] = useState(null);
@@ -19,7 +19,7 @@ const ManageHourlyLog = () => {
   const [dayFilterValue, setDayFilterValue] = useState("");
   const [filterData, setFilterData] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [showfilterdropdown, setShowfilterdropdown] = useState(false);
+  const [showFilterDropDown, setShowFilterDropDown] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [adminList, setAdminList] = useState([false]);
   const [searchCandidate, setSearchCandidate] = useState("");
@@ -37,6 +37,7 @@ const ManageHourlyLog = () => {
   useEffect(() => {
     getAdminData();
   }, []);
+
   const filteredAdmins = adminList
     ? adminList?.filter((admin) =>
       admin?.name?.toLowerCase().includes(searchQuery.toLowerCase())
@@ -46,7 +47,7 @@ const ManageHourlyLog = () => {
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowdropdown(false);
+        setShowDropDown(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -54,12 +55,12 @@ const ManageHourlyLog = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
   return (
     <div className="site-wrapper overflow-hidden bg-default-2">
       {/* Header & Sidebar */}
       <AdminHeader heading={"Manage Daily Hourly Log"} />
       <AdminSidebar heading={"Manage Daily Hourly Log"} />
-
       <div className="dashboard-main-container " id="dashboard-body">
         {/*removing class for now mt-14 */}
         <div className="container-fluid">
@@ -69,16 +70,15 @@ const ManageHourlyLog = () => {
                 <h3 className="font-size-6 mb-0">Manage Daily Hourly Log</h3>
               </div>
             </div>
-
             <div className="d-flex justify-content-start">
               {/* New Item Dropdown */}
               <div className="position-relative mr-2">
                 <button
-                  className="font-size-4 rounded-3 border-0 btn btn-primary p-2 mr-4"
+                  className="font-size-4 rounded-3 border-0 btn btn-primary p-2 mr-4 mt-6"
                   onClick={() => {
                     // Toggle new item dropdown and close others
-                    setShowdropdown(false);
-                    setShowfilterdropdown(false);
+                    setShowDropDown(false);
+                    setShowFilterDropDown(false);
                     setShowAddItemForm(true);
                   }}
                 >
@@ -125,14 +125,14 @@ const ManageHourlyLog = () => {
               </div>
               <div className="position-relative" ref={dropdownRef}>
                 <button
-                  className="font-size-4 rounded-3 border-0 btn bg-white p-2 mr-4"
-                  onClick={() => setShowdropdown((prev) => !prev)}
+                  className="font-size-4 rounded-3 border-0 btn bg-white p-2 mr-4 mt-6"
+                  onClick={() => setShowDropDown((prev) => !prev)}
                 >
                   <IoPersonCircleOutline />
                   <span className="ml-2">Person</span>
                 </button>
 
-                {showdropdown && (
+                {showDropDown && (
                   <div
                     className="position-absolute bg-white z-index-4 p-8 shadow-lg"
                     style={{ width: "500px" }}
@@ -163,8 +163,8 @@ const ManageHourlyLog = () => {
                               onClick={() => {
                                 setSelectedAdminId(admin.admin_id);
                                 setSelectedAdminType(admin.admin_type);
-                                setShowfilterdropdown((prev) => !prev);
-                                setShowdropdown(false);
+                                setShowFilterDropDown((prev) => !prev);
+                                setShowDropDown(false);
                                 setSearchQuery("");
                                 setPageNo(1);
                               }}
@@ -202,7 +202,8 @@ const ManageHourlyLog = () => {
                     />
                   </div>
                 </div>
-                <div className={"col  form_group "}>
+                <div className={"col  form_group "}
+                  style={{ marginLeft: "-21px" }}>
                   <p className="input_label">Filter by Total Hour</p>
                   <div className="select_div">
                     <input
@@ -213,7 +214,8 @@ const ManageHourlyLog = () => {
                         setFilterByHour(e.target.value);
                         setPageNo(1);
                       }}
-                      className="text-capitalize form-control"
+                      placeholder="Hours"
+                      className="text-capitalize form-control input-height"
                     />
                   </div>
                 </div>
@@ -223,8 +225,8 @@ const ManageHourlyLog = () => {
                 <button
                   className="font-size-4 rounded-3 border-0 bg-white btn p-2 mr-4"
                   onClick={() => {
-                    setShowfilterdropdown((prev) => !prev);
-                    setShowdropdown(false);
+                    setShowFilterDropDown((prev) => !prev);
+                    setShowDropDown(false);
                   }}
                 >
                   <CiFilter />
@@ -232,7 +234,7 @@ const ManageHourlyLog = () => {
                 </button>
 
                 <div
-                  className={`position-absolute bg-white z-index-4 p-8 shadow-lg right-25 ${showfilterdropdown ? "d-block" : "d-none"
+                  className={`position-absolute bg-white z-index-4 p-8 shadow-lg right-25 ${showFilterDropDown ? "d-block" : "d-none"
                     }`}
                   style={{ width: "800px" }}
                 >
@@ -290,7 +292,8 @@ const ManageHourlyLog = () => {
                 </div>
               </div>
               <button
-                className="btn btn-primary"
+                className="btn btn-primary mt-6"
+                 style={{ marginLeft: "-10px" }}
                 onClick={() => {
                   setSelectedAdminId("");
                   setSelectedAdminType("");

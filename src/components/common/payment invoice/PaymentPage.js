@@ -95,6 +95,7 @@ const PaymentPage = (props) => {
       setIsLoading(false)
     }
   }
+
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
   useEffect(() => {
@@ -110,6 +111,7 @@ const PaymentPage = (props) => {
     GetInvoiceList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, columnName, sortOrder, startDateFilterValue, endDateFilterValue, filterByInvoiceNumber])
+
   /*Function to cancel the delete pop up */
   const CancelDelete = () => {
     setDeleteAlert(false);
@@ -176,6 +178,7 @@ const PaymentPage = (props) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setColumnName(columnName);
   };
+
   /*on change function of date piker of consultation */
   const handleChange = (range) => {
     const [startDate, endDate] = range;
@@ -199,6 +202,7 @@ const PaymentPage = (props) => {
                 startDate={startDateFilterValue}
                 endDate={endDateFilterValue}
                 selectsRange
+                className="form-control input-height"
               />
             </div>
             <div
@@ -208,8 +212,8 @@ const PaymentPage = (props) => {
               <div className="select_div">
                 <input
                   type="text"
-                  className="form-control"
-                  placeholder={"Search by Invoice number"}
+                  className="form-control input-height"
+                  placeholder={"Search by Invoice no."}
                   value={filterByInvoiceNumber}
                   id="invoice_number"
                   name="invoice_number"

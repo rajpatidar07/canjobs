@@ -86,7 +86,7 @@ function CompanySingupForm(props) {
       (value) =>
         otpBox
           ? value === null || value === ""
-            ? "Otp is requried"
+            ? "Otp is required"
             : otpErr === "Invalid Otp"
               ? "Invalid Otp"
               : ""

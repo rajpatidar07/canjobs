@@ -328,7 +328,7 @@ export default function AddTaskForm(props) {
           </label>
           <input
             type="text"
-            className="form-control"
+            className="form-control input-height"
             value={taskTitle}
             onChange={(e) => setTaskTitle(e.target.value)}
             placeholder="Enter Text comment"
@@ -345,7 +345,7 @@ export default function AddTaskForm(props) {
           <input
             id="start_date"
             type="date"
-            className="form-control"
+            className="form-control input-height"
             value={stardivate}
             onChange={(e) => setStardivate(e.target.value)}
           />
@@ -360,7 +360,7 @@ export default function AddTaskForm(props) {
           <input
             id="end_date"
             type="date"
-            className="form-control"
+            className="form-control input-height"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
           />
@@ -465,7 +465,7 @@ export default function AddTaskForm(props) {
                 <div>
                   <input
                     type="text"
-                    className="form-control mb-2"
+                    className="form-control input-height mb-2"
                     placeholder="Enter status"
                     value={newStatus}
                     onChange={(e) => setNewStatus(e.target.value)}

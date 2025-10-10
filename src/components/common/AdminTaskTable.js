@@ -399,14 +399,15 @@ export default function AdminTaskTable(props) {
                           /> : <p className="font-size-3  mb-0">N/A</p>}
                         </td>
                         <td className="text-capitalize py-5 text-center">
-                          {data.assigned_user_type_new ? <AssignedUserList
-                            assined_to_user_id={data.assined_to_user_id}
-                            assigned_to_name={data.assigned_to_name}
-                            assigned_to_profile_image={
-                              data.assigned_to_profile_image
-                            }
-                            assigned_user_type_new={data.assigned_user_type_new}
-                          /> : <p className="font-size-3  mb-0">N/A</p>}
+                          {data.assined_to_user_id ?
+                            <AssignedUserList
+                              assined_to_user_id={data.assined_to_user_id}
+                              assigned_to_name={data.assigned_to_name}
+                              assigned_to_profile_image={
+                                data.assigned_to_profile_image
+                              }
+                              assigned_user_type_new={data.assigned_user_type_new}
+                            /> : <p className="font-size-3  mb-0">N/A</p>}
                         </td>
                         <td className="py-5">
                           {data.subject_description === null ||

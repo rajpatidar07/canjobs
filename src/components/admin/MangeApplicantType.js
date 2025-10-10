@@ -10,7 +10,7 @@ export default function ManageApplicantType(props) {
   // let [search, setSearch] = useState("");
     let [loading, setLoading] = useState(false);
   const [parentApplicant, setParentApplicant] = useState("");
-  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
+  const [pageNo, setPageNo] = useState(localStorage.getItem("PageNo") || 1);
   const [allApplicantType, setAllApplicantType] = useState([]);
   const [allAdmin, setAllAdmin] = useState([]);
   const [apiCall, setApiCall] = useState(false);
@@ -24,16 +24,16 @@ export default function ManageApplicantType(props) {
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setColumnName(columnName);
-    setpageNo(1)
+    setPageNo(1)
   };
 
   const getAllSlotsData = async () => {
     try {
       setLoading(true)
       let response = await getApplicanTypeApi("", columnName, sortOrder);
-      let Adminresponse = await getallAdminData();
+      let AdminResponse = await getallAdminData();
       setAllApplicantType(response.data.data.reverse());
-      setAllAdmin(Adminresponse.data);
+      setAllAdmin(AdminResponse.data);
       setLoading(false)
     } catch (err) {
       console.log(err);
@@ -59,7 +59,7 @@ export default function ManageApplicantType(props) {
   // const onSearch = (e) => {
   //   const inputValue = e.target.value;
   //   setSearch(inputValue);
-  //   setpageNo(1);
+  //   setPageNo(1);
   //   if (inputValue.length > 0) {
   //     if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
   //       setSearchError("Applicant name cannot start with a number.");
@@ -127,7 +127,7 @@ export default function ManageApplicantType(props) {
            <Loader load={"yes"} />
            : <ApplicantTypeTable
               heading={"Applicant Type"}
-              setpageNo={setpageNo}
+              setpageNo={setPageNo}
               pageNo={pageNo}
               allApplicantType={allApplicantType}
               setApiCall={setApiCall}

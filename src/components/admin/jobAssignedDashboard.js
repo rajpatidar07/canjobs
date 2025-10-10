@@ -10,7 +10,7 @@ export default function JobAssignedDashboard() {
   const [apiCall, setApiCall] = useState(false);
   let [adminData, setAdminData] = useState([]);
   const [search, setSearch] = useState("");
-  const [searcherror, setSearchError] = useState("");
+  const [searchError, setSearchError] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -102,7 +102,7 @@ export default function JobAssignedDashboard() {
                     />
                   </div>
                 </div>
-                <small className="text-danger">{searcherror}</small>
+                <small className="text-danger">{searchError}</small>
               </div>
               {isLoading ? (
                 <div className="table-responsive main_table_div">

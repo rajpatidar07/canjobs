@@ -849,6 +849,13 @@ function CompanyProfileDetail(props) {
                                         <BsEnvelope className="text-secondary font-size-5 mr-2" />
                                         {employerData?.email}
                                       </Link>
+                                      {employerData?.secondary_email && <Link
+                                        className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4 mx-2"
+                                        to={`mailto:${employerData?.secondary_email}`}
+                                      >
+                                        <BsEnvelope className="text-secondary font-size-5 mr-2" />
+                                        {employerData?.secondary_email}
+                                      </Link>}
                                       {user_type === "admin" ||
                                         props.self === "no" ? (
                                         <CustomButton
@@ -868,13 +875,13 @@ function CompanyProfileDetail(props) {
                                       <BiPhoneCall className="text-secondary font-size-5 mr-2" />
                                       {employerData?.contact_no}
                                     </Link>
-                                    <Link
+                                    {employerData.secondary_contact_no && <Link
                                       className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
-                                      to={`tel:${employerData?.contact_no_other}`}
+                                      to={`tel:${employerData?.secondary_contact_no}`}
                                     >
                                       <BiPhoneCall className="text-secondary font-size-5 mr-2" />
-                                      {employerData?.contact_no_other}
-                                    </Link>
+                                      {employerData?.secondary_contact_no}
+                                    </Link>}
                                   </div>
                                 )}
                               </div>

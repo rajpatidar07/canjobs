@@ -27,7 +27,7 @@ function SelfJob(props) {
   const [searcherror, setSearchError] = useState("");
   const [company, setCompany] = useState("");
   let [Json, setJson] = useState([]);
-  let [pageNo, setpageNo] = useState(1);
+  let [pageNo, setPageNo] = useState(1);
 
   /*Function to get the jSon */
   const JsonData = async () => {
@@ -80,7 +80,7 @@ function SelfJob(props) {
   const onSearch = (e) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
-    setpageNo(1);
+    setPageNo(1);
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Job cannot start with a number.");
@@ -166,17 +166,17 @@ function SelfJob(props) {
                         : "col p-1 form_group"
                     }
                   >
-                    <p className="input_label">Client Name:</p>
+                    <p className="input_label">Employer Name:</p>
                     <input
                       required
                       type="text"
                       className="form-control w-100"
-                      placeholder={"Client name"}
+                      placeholder={"Employer name"}
                       value={company}
-                      name={"compnay_name"}
+                      name={"company_name"}
                       onChange={(e) => {
                         setCompany(e.target.value);
-                        setpageNo(1);
+                        setPageNo(1);
                       }}
                     />
                   </div>
@@ -197,7 +197,7 @@ function SelfJob(props) {
                         selectedValue={categoryFilterValue}
                         onChange={(e) => {
                           setCategoryFilterValue(e ? e.value : null);
-                          setpageNo(1);
+                          setPageNo(1);
                         }}
                         type={"category"}
                       />
@@ -221,7 +221,7 @@ function SelfJob(props) {
                         onChange={(e) => {
                           console.log(e)
                           setJobSwapFilterValue(e ? e.value : null);
-                          setpageNo(1);
+                          setPageNo(1);
                         }}
                         type={"job_type"}
                       />
@@ -244,7 +244,7 @@ function SelfJob(props) {
                         selectedValue={SkillFilterValue}
                         onChange={(e) => {
                           setSkillFilterValue(e ? e.value : null);
-                          setpageNo(1);
+                          setPageNo(1);
                         }}
                         type={"skill"}
                       />
@@ -267,7 +267,7 @@ function SelfJob(props) {
                         selectedValue={locationFilterValue}
                         onChange={(e) => {
                           setLocationFilterValue(e ? e.value : null);
-                          setpageNo(1);
+                          setPageNo(1);
                         }}
                         type={"location"}
                       />
@@ -304,7 +304,7 @@ function SelfJob(props) {
                 selfJob={"yes"}
                 response={"self"}
                 pageNo={pageNo}
-                setpageNo={setpageNo}
+                setpageNo={setPageNo}
               />
             </div>
           </div>
