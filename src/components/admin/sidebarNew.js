@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link ,useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   MdOutlineDashboardCustomize,
   MdOutlinePhotoFilter,
@@ -57,7 +57,7 @@ const AdminSidebar = (props) => {
   let portal = localStorage.getItem("portal")
   // const [openParent, setOpenParent] = useState(null);
   const [apiCall, setApiCall] = useState(false);
-    const location = useLocation();
+  const location = useLocation();
   // const [items, setItems] = useState(
   //   applicanttypedata.filter((item) => item.parent_id === "0")
   // );
@@ -391,7 +391,10 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo("New Applicants")}
+            onClick={() => {
+              clearPageNo("New Applicants")
+              localStorage.setItem("StatusTab", "");
+            }}
             to="/selfemployee"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -408,7 +411,10 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo("Manage Applicants")}
+            onClick={() => {
+              clearPageNo("Manage Applicants")
+              localStorage.setItem("StatusTab", "");
+            }}
             to="/employee"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -1069,10 +1075,10 @@ const AdminSidebar = (props) => {
           className={
             // admin_type === "agent" || portal === "study"
             //   ? 
-              "d-none"
-              // : props.heading === "Manage Payment"
-              //   ? "active"
-              //   : ""
+            "d-none"
+            // : props.heading === "Manage Payment"
+            //   ? "active"
+            //   : ""
           }
         >
           <Link
@@ -1273,10 +1279,10 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Manage Daily Hourly Log"] = el)}
           className={`d-none ${admin_type === "agent" || portal === "study"
-              ? "d-none"
-              : props.heading === "Manage Daily Hourly Log"
-                ? "active"
-                : ""}`
+            ? "d-none"
+            : props.heading === "Manage Daily Hourly Log"
+              ? "active"
+              : ""}`
           }
         >
           <Link
