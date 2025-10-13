@@ -1285,7 +1285,7 @@ export default function EmployeeTable(props) {
                   </tr>
                 ) : (
                   (employeeData || []).map((empdata, index) => (
-                    <React.Fragment key={index}>
+                    <React.Fragment key={empdata.employee_id}>
                       <tr style={{ border: "0", position: "sticky" }}>
                         <td
                           style={{ paddingBottom: "0!important" }}
@@ -1795,7 +1795,7 @@ export default function EmployeeTable(props) {
                             className="text-center"
                             style={{ width: "15%", zIndex: 9999 }}
                           >
-                            <p className="exclude-mark-read py-5">
+                            <div className="exclude-mark-read py-5">
                               {empdata.interested_in_id === null ||
                                 empdata.interested_in_id === undefined ||
                                 empdata.interested_in_id === "undefined" ||
@@ -1865,7 +1865,7 @@ export default function EmployeeTable(props) {
                                   </DropdownButton>
                                 </div>
                               )}
-                            </p>
+                            </div>
                           </td>
                         )}
 
@@ -2027,7 +2027,7 @@ export default function EmployeeTable(props) {
                                                   ? "Completed" : ""}
                               </span>
                             </p> */}
-                            <td className="exclude-mark-read py-5">
+                            <div className="exclude-mark-read py-5">
                               {empdata.status === null ||
                                 empdata.status === undefined ||
                                 empdata.status === "undefined" ||
@@ -2122,7 +2122,7 @@ export default function EmployeeTable(props) {
                                   </div>
                                 </>
                               )}
-                            </td>
+                            </div>
                           </td>
                         )}
                         <td className="text-center py-5">
@@ -2174,7 +2174,8 @@ export default function EmployeeTable(props) {
                                 ConvertTime({ _date: empdata.consultation_date, format: "DD MMMM, YYYY" })
                               }
                             >
-                              <ConvertTime _date={empdata.consultation_date} format={"DD MMMM, YYYY"} />                            </p>
+                              <ConvertTime _date={empdata.consultation_date} format={"DD MMMM, YYYY"} />
+                            </p>
                           </td>
                           : null}
                         {props.pageName === "consultation" ?

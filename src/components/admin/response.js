@@ -170,7 +170,9 @@ function JobResponse(props) {
         try {
           const subStagePromises = response.map(async (res) => {
             const limiaSubRes = await GetLimaSubStages(res.id); // Fetch substage data from API
-            return limiaSubRes.data.data;
+            if (limiaSubRes.message === 'Successfully') {
+              return limiaSubRes.data.data;
+            }
           });
 
           // Resolve all promises and set the result to lmiaSubStages

@@ -23,6 +23,7 @@ import SAlert from "./sweetAlert";
 // import ExcelToPdfConverter from "./Common function/ExcelToPdfConverter";
 import AddFolderModal from "./Document folder/AddFolderModal";
 import ConvertPPT from "./Common function/ConvertPPT";
+import { FaFolderPlus } from "react-icons/fa";
 // import ConvertAnyFileToPdf from "./Common function/ConvertAnyFileTopdf";
 // import ConvertAnyFileToPdf from "./Common function/ConvertAnyFileTopdf";
 // import convertPPTtoPDF from "./Common function/PpttoPdf";
@@ -66,7 +67,8 @@ export default function ApplicantTypeDocuments(props) {
     recordsPerPage: 10,
     columnName: "lastModifiedDateTime",
     sortOrder: "DESC",
-    uploadProgress: 0
+    uploadProgress: 0,
+    folderTypeName: ""
   });
 
   /*On change function to upload bulk document in 1 array*/
@@ -234,49 +236,21 @@ export default function ApplicantTypeDocuments(props) {
   const handleDocumentConversion = async (data) => {
     const mimeType = data?.file?.mimeType;
     const downloadUrl = data["@microsoft.graph.downloadUrl"];
-    if (["image/jpeg", "image/png", "image/jpg"].includes(mimeType)) {
-      let res = await convertUrlToPDF(downloadUrl);
-      setState((prev) => ({
-        ...prev,
-        convertedDoc: res,
-      }));
-      //  if (state.base64String) {
-      setState((prev) => ({
-        ...prev,
-        imgConRes: "imageConverted",
-      }));
-      // }
-    } else if (
-      mimeType ===
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    ) {
-      let res = await convertWordToPDF(data);
-      // console.log(res)s
-      if (res) {
+    if (mimeType) {
+      if (["image/jpeg", "image/png", "image/jpg"].includes(mimeType)) {
+        let res = await convertUrlToPDF(downloadUrl);
         setState((prev) => ({
           ...prev,
           convertedDoc: res,
         }));
-      } else {
+        //  if (state.base64String) {
         setState((prev) => ({
           ...prev,
-          convertedDoc: "",
-          docPreview: false,
+          imgConRes: "imageConverted",
         }));
-      }
-    } else if (mimeType === "text/plain") {
-      GetNoteText(data, true);
-    } else if (mimeType === "application/pdf") {
-      setState((prev) => ({
-        ...prev,
-        convertedDoc: downloadUrl,
-      }));
-    } else
-      if (
-        data.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" || data.file.mimeType === "application/vnd.ms-powerpoint"
-        // || data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      ) {
-        let res = await ConvertPPT(data)
+        // }
+      } else if (mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+        let res = await convertWordToPDF(data);
         if (res) {
           setState((prev) => ({
             ...prev,
@@ -289,47 +263,73 @@ export default function ApplicantTypeDocuments(props) {
             docPreview: false,
           }));
         }
-      }
-      // else if (
-      //   data.file.mimeType ===
-      //   "application/vnd.ms-excel"
-      // ) {
-      //   if (data["@microsoft.graph.downloadUrl"]) {
-      //     try {
-      //       let res = await ConvertAnyFileToPdf(
-      //         data
-      //       );
-      //       // console.log(res);
-      //       setState((prev) => ({
-      //         ...prev,
-      //         convertedDoc: `data:application/pdf;base64,${res}`,
-      //       }));
-      //     } catch (error) {
-      //       console.error("Error converting Excel to PDF:", error);
-      //       setState((prev) => ({
-      //         ...prev,
-      //         convertedDoc: "",
-      //         docPreview: false,
-      //       }));
-      //     }
-      //   }
-      // }
-      else {
-        // console.log(data, "other")
-        window.open(data.webUrl);
+      } else if (mimeType === "text/plain") {
+        GetNoteText(data, true);
+      } else if (mimeType === "application/pdf") {
         setState((prev) => ({
           ...prev,
-          convertedDoc: "",
-          docPreview: false,
+          convertedDoc: downloadUrl,
         }));
-        // convertPPTtoPDF(data["@microsoft.graph.downloadUrl"])
-        //   let res = await ConvertAnyFileToPdf(data)
-        //   console.log(res)
-        //   setState((prev) => ({
-        //     ...prev,
-        //     convertedDoc: `data:application/pdf;base64,${res}`,
-        //   }));
-      }
+      } else
+        if (
+          data.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" || data.file.mimeType === "application/vnd.ms-powerpoint"
+          // || data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        ) {
+          let res = await ConvertPPT(data)
+          if (res) {
+            setState((prev) => ({
+              ...prev,
+              convertedDoc: res,
+            }));
+          } else {
+            setState((prev) => ({
+              ...prev,
+              convertedDoc: "",
+              docPreview: false,
+            }));
+          }
+        }
+        // else if (
+        //   data.file.mimeType ===
+        //   "application/vnd.ms-excel"
+        // ) {
+        //   if (data["@microsoft.graph.downloadUrl"]) {
+        //     try {
+        //       let res = await ConvertAnyFileToPdf(
+        //         data
+        //       );
+        //       // console.log(res);
+        //       setState((prev) => ({
+        //         ...prev,
+        //         convertedDoc: `data:application/pdf;base64,${res}`,
+        //       }));
+        //     } catch (error) {
+        //       console.error("Error converting Excel to PDF:", error);
+        //       setState((prev) => ({
+        //         ...prev,
+        //         convertedDoc: "",
+        //         docPreview: false,
+        //       }));
+        //     }
+        //   }
+        // }
+        else {
+          // console.log(data, "other")
+          window.open(data.webUrl);
+          setState((prev) => ({
+            ...prev,
+            convertedDoc: "",
+            docPreview: false,
+          }));
+          // convertPPTtoPDF(data["@microsoft.graph.downloadUrl"])
+          //   let res = await ConvertAnyFileToPdf(data)
+          //   console.log(res)
+          //   setState((prev) => ({
+          //     ...prev,
+          //     convertedDoc: `data:application/pdf;base64,${res}`,
+          //   }));
+        }
+    }
   };
 
   const showDeleteAlert = (data) =>
@@ -353,10 +353,11 @@ export default function ApplicantTypeDocuments(props) {
         ...prev,
         docLoader: true,
       }));
+      // console.log(props?.docId ? "pppp" + props?.folderId : "lllllll" + state?.folderID)
       const res = await getSharePointParticularFolders(
         props?.user_id,
         props?.emp_user_type,
-        props?.docId ? props?.folderId : state?.folderID,
+        state.folderID,
         state?.columnName,
         state?.sortOrder,
         state?.recordsPerPage,
@@ -384,17 +385,21 @@ export default function ApplicantTypeDocuments(props) {
           showDropDown: false,
           docLoader: false,
           docNoteData: res.data.notes ? res.data.notes : {},
+          folderTypeName: ""
         }));
         if (props?.notification === "yes") {
-          const currentDoc = res.data.data.find((item) =>
-            item.id === state?.fileID ? state?.fileID : props?.docId
-          );
-          if (currentDoc) {
+          const currentDoc = res.data.data.filter((item) =>
+            item.id === props?.docId 
+        )[0]
+        
+          console.log(currentDoc, props?.docId,)
+          if (currentDoc && currentDoc?.file) {
             setState({
               ...state,
               docPreview: true,
               docSingleDate: currentDoc,
               fileID: currentDoc.id,
+              folderTypeName: ""
             });
             // console.log(currentDoc);
             handleDocumentConversion(currentDoc);
@@ -403,6 +408,13 @@ export default function ApplicantTypeDocuments(props) {
             const newUrl = window.location.pathname;
             window.history.replaceState({}, document.title, newUrl);
             localStorage.setItem("navigation_url", "");
+          } else if (currentDoc.folder) {
+            setState({
+              ...state,
+              docSingleDate: currentDoc,
+              fileID: currentDoc.id,
+              folderTypeName: ""
+            });
           } else {
             toast.error("This document is no longer available.", {
               position: "top-right",
@@ -419,6 +431,7 @@ export default function ApplicantTypeDocuments(props) {
           showDropDown: false,
           docLoader: false,
           docNoteData: [],
+          folderTypeName: ""
         }));
       }
     } catch (err) {
@@ -431,6 +444,7 @@ export default function ApplicantTypeDocuments(props) {
         showDropDown: false,
         docLoader: false,
         docNoteData: [],
+        folderTypeName: ""
       }));
     }
     try {
@@ -486,7 +500,6 @@ export default function ApplicantTypeDocuments(props) {
 
   useEffect(() => {
     fetchAllShareType();
-    // console.log(state.folderID, "oooooo")
     if (state.apiCall) {
       setState((prev) => ({
         ...prev,
@@ -500,7 +513,9 @@ export default function ApplicantTypeDocuments(props) {
   }, [state.columnName, state.sortOrder, props.folderApiCall, state.apiCall, state.folderID, state.pageNo, state.recordsPerPage, props.notification === "yes" ? location.key : null]);
 
   useEffect(() => {
-    if (props.folderId !== state.folderID || props?.notification === "yes") {
+    // console.log("wwwwwwwwww", props.folderId !== state.folderID, state.folderTypeName)
+
+    if ((props.folderId !== state.folderID || props?.notification === "yes") && state.folderTypeName !== "back") {
       setState((prev) => ({
         ...prev,
         folderID: props.folderId,
@@ -683,14 +698,14 @@ export default function ApplicantTypeDocuments(props) {
                           // getCommentsList(state.docSingleDate.id);
                           setState((prev) => ({
                             ...prev,
-                            docSingleDate: "",
                             docPreview: false,
-                            folderID: state?.docSingleDate.parentReference.id,
+                            folderID: state?.docSingleDate?.parentReference.id,
                             convertedDoc: "",
                             showDropDown: "",
                             commentsList: [],
                             taggedAdmin: [],
                             apiCall: true,
+                            folderTypeName: "back"
                           }));
                           // fetchAllShareType();
                         }}
@@ -803,7 +818,7 @@ export default function ApplicantTypeDocuments(props) {
                         className="btn-sm btn-secondary"
                         onClick={() => setOPenFolderModal(true)}
                       >
-                        + + Folder Sign
+                        <FaFolderPlus />
                       </button>
                     </div>
 

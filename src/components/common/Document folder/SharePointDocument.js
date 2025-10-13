@@ -32,6 +32,7 @@ import CreateWordFile from "../../forms/user/CreateWordFile";
 import ConvertPPT from "../Common function/ConvertPPT";
 // import ConvertAnyFileToPdf from "../Common function/ConvertAnyFileTopdf";
 import convertWordToPDF from "../Common function/ConvertWordToPdf";
+import { FaFolderPlus } from "react-icons/fa";
 // import DocViewer from "react-doc-viewer";
 // import { PDFDocument } from 'pdf-lib';
 
@@ -1067,7 +1068,7 @@ export default function SharePointDocument({
                           style={{ maxHeight: 34 }}
                           id="dropdown-basic"
                         >
-                          + + Folder Sign
+                          <FaFolderPlus />
                         </Dropdown.Toggle>
                         <Dropdown.Menu
                           style={{ height: "400px", overflowY: "scroll" }}

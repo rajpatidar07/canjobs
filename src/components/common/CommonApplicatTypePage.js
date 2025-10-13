@@ -39,27 +39,19 @@ export default function CommonApplicatTypePage() {
   );
 
   const [search, setSearch] = useState("");
-  const [searcherror, setSearchError] = useState("");
+  const [searchError, setSearchError] = useState("");
   const [apiCall, setApiCall] = useState(false);
   const [showGrpChatBox, setShowGrpChatBox] = useState(false);
   const [folderApiCall, setFolderApiCall] = useState(false);
   const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
   const [applicantTypeList, setApplicantTypeList] = useState([]);
-  const [main, setMain] = useState(sId || state.applicantType || localApplicantTypeId
-  );
+  const [main, setMain] = useState(sId || state.applicantType || localApplicantTypeId);
   const [sub, setSub] = useState(sCId || state.applicantTypeChild || localApplicantTypeChildId);
-  const [applicantTypeId, setApplicantTypeId] = useState(
-    sId || state.applicantType || localApplicantTypeId
-  );
-  const [applicantTypeChildId, setApplicantTypeChildId] = useState(
-    sCId || state.applicantTypeChild || localApplicantTypeChildId
-  );
-  const [applicantTypeFolderId, setApplicantTypeFolderId] = useState(
-    state.folderId || localApplicantTypeFolderId
-  );
+  const [applicantTypeId, setApplicantTypeId] = useState(sId || state.applicantType || localApplicantTypeId);
+  const [applicantTypeChildId, setApplicantTypeChildId] = useState(sCId || state.applicantTypeChild || localApplicantTypeChildId);
+  const [applicantTypeFolderId, setApplicantTypeFolderId] = useState(state.folderId || localApplicantTypeFolderId);
   const [applicantTypeIdForApi, setApplicantTypeIdForApi] = useState("");
   const [applicantTypeName, setApplicantTypeName] = useState("");
-
   const [pageNo, setPageNo] = useState(localStorage.getItem("PageNo") || 1);
   const [experienceFilterValue, setExperienceFilterValue] = useState("");
   const [skillFilterValue, setSkillFilterValue] = useState("");
@@ -67,6 +59,7 @@ export default function CommonApplicatTypePage() {
   const [agentFilterValue, setAgentFilterValue] = useState("");
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [interestFilterValue, setInterestFilterValue] = useState("");
+
   const onSearch = (e) => {
     const inputValue = e//.target.value;
     setSearch(inputValue);
@@ -83,6 +76,7 @@ export default function CommonApplicatTypePage() {
       setSearchError("");
     }
   };
+  
   // Handle tab switch and task assignment
   useEffect(() => {
     if (taskIdParam) {
@@ -341,7 +335,7 @@ export default function CommonApplicatTypePage() {
                     setFilterByEmployeeId={setFilterByEmployeeId}
                     filterByEmployeeId={filterByEmployeeId}
                   />
-                  <small className="text-danger">{searcherror}</small>
+                  <small className="text-danger">{searchError}</small>
                 </div>
                 {/*<-- Employee Table according to applicant Type -->*/}
                 <EmployeeTable
