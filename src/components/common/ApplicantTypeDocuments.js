@@ -8,6 +8,7 @@ import {
   getFolderBreadcrumb,
   GetSharePointData,
   getSharePointParticularFolders,
+  AddSharePointFolders,
 } from "../../api/api";
 import convertUrlToPDF from "./Common function/convertUrlToPdf";
 import convertWordToPDF from "./Common function/ConvertWordToPdf";
@@ -21,15 +22,17 @@ import FolderList from "./Document folder/FolderList";
 import EditDocNameForm from "./Document folder/EditDocNameFOrm";
 import SAlert from "./sweetAlert";
 // import ExcelToPdfConverter from "./Common function/ExcelToPdfConverter";
-import AddFolderModal from "./Document folder/AddFolderModal";
+// import AddFolderModal from "./Document folder/AddFolderModal";
 import ConvertPPT from "./Common function/ConvertPPT";
-import { FaFolderPlus } from "react-icons/fa";
+import { Dropdown, Form } from "react-bootstrap";
+import CreateExcelSheet from "./Document folder/CreateExcelSheet";
+import CreateWordFile from "../forms/user/CreateWordFile";
 // import ConvertAnyFileToPdf from "./Common function/ConvertAnyFileTopdf";
 // import ConvertAnyFileToPdf from "./Common function/ConvertAnyFileTopdf";
 // import convertPPTtoPDF from "./Common function/PpttoPdf";
 export default function ApplicantTypeDocuments(props) {
   const [docFileBase, setDocFileBase] = useState([]);
-  let [openFolderModal, setOPenFolderModal] = useState(false);
+  // let [openFolderModal, setOPenFolderModal] = useState(false);
 
   let location = useLocation();
   const [state, setState] = useState({
@@ -68,8 +71,71 @@ export default function ApplicantTypeDocuments(props) {
     columnName: "lastModifiedDateTime",
     sortOrder: "DESC",
     uploadProgress: 0,
-    folderTypeName: ""
+    folderTypeName: "",
+
   });
+
+  const { docTypeName, openNoteForm, newType, openExcelSheet, openWordForm, noteText, docSingleDate } = state;
+
+  const setDocTypeName = (value) => setState(prev => ({...prev, docTypeName: value}));
+  const setOpenNoteForm = (value) => setState(prev => ({...prev, openNoteForm: value}));
+  const setNewType = (value) => setState(prev => ({...prev, newType: value}));
+  const setOpenExcelSheet = (value) => setState(prev => ({...prev, openExcelSheet: value}));
+  const setOpenWordForm = (value) => setState(prev => ({...prev, openWordForm: value}));
+  const setNoteText = (value) => setState(prev => ({...prev, noteText: value}));
+  const setApiCall = (value) => setState(prev => ({...prev, apiCall: value}));
+
+  const userType = localStorage.getItem("userType");
+
+  const handleNewTypeChange = (e) => setNewType(e.target.value);
+
+  const handleDocTypeChange = async (selectedType) => {
+    setDocTypeName(selectedType);
+    setState(prev => ({...prev, showDropDown: false}));
+    if (selectedType === "other") {
+      setNewType("");
+    } else if (selectedType === "document") {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '*/*';
+      input.style.display = 'none';
+      input.multiple = true;
+
+      input.onchange = (e) => {
+        handleBulkFileChange(e)
+      };
+
+      document.body.appendChild(input);
+      input.click();
+      document.body.removeChild(input);
+    } else {
+      try {
+        let res = await AddSharePointFolders(selectedType,
+          state.folderID,
+          userType === "admin" ? 1 : 0,
+          props?.user_id,
+          props?.emp_user_type
+        );
+        if (
+          res.data.data.name &&
+          res.data.message === "Folder created successfully!"
+        ) {
+          toast.success(`Folder Created successfully`, {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setApiCall(true);
+        } else if (res.data.data.error.message === "Name already exists") {
+          toast.error(`Type Already exists`, {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+        }
+      } catch (Err) {
+        console.log(Err);
+      }
+    }
+  };
 
   /*On change function to upload bulk document in 1 array*/
   const handleBulkFileChange = async (event, id) => {
@@ -389,9 +455,9 @@ export default function ApplicantTypeDocuments(props) {
         }));
         if (props?.notification === "yes") {
           const currentDoc = res.data.data.filter((item) =>
-            item.id === props?.docId 
-        )[0]
-        
+            item.id === props?.docId
+          )[0]
+
           console.log(currentDoc, props?.docId,)
           if (currentDoc && currentDoc?.file) {
             setState({
@@ -802,24 +868,115 @@ export default function ApplicantTypeDocuments(props) {
                     />
                   )}
                   <div className="new_folder_create d-flex">
-                    {openFolderModal && (
-                      <AddFolderModal
-                        emp_user_type={props.emp_user_type}
-                        user_id={props.user_id}
-                        folderId={state.folderID}
-                        close={() => setOPenFolderModal(false)}
-                        show={openFolderModal}
-                        setFolderApiCall={props.setFolderApiCall}
-                      />
-                    )}
+                    {/* Button to add folder or type and upload documents */}
+                    <div className="new_folder_create d-flex">
+                      {docTypeName === "other" ? (
+                        <>
+                          <Form.Control
+                            type="text"
+                            value={newType}
+                            placeholder="Enter new type"
+                            height={34}
+                            style={{ Height: 34 }}
+                            onChange={handleNewTypeChange}
+                            className="px-2"
+                          />
+                          <button
+                            className="btn btn-sm btn-primary"
+                            type="button"
+                            style={{ maxHeight: 34, minWidth: "auto" }}
+                            onClick={() => handleDocTypeChange(newType)}
+                          >
+                            Save
+                          </button>
+                          <button
+                            className="btn btn-sm btn-secondry"
+                            type="button"
+                            style={{ maxHeight: 34, minWidth: "auto" }}
+                            onClick={() => setDocTypeName("")}
+                          >
+                            Cancel
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <Dropdown>
+                            <Dropdown.Toggle
+                              variant="secondary"
+                              size={"sm"}
+                              style={{ maxHeight: 34 }}
+                              id="dropdown-basic"
+                            >
+                              Create
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu
+                            // style={{ height: "400px", overflowY: "scroll" }}
+                            >
+                              {/* <Dropdown.Item
+                            onClick={() => handleDocTypeChange("")}
+                            key={-1}
+                          >
+                            Select Folder Name
+                          </Dropdown.Item> */}
+                              {/* {DocTypeData.map((item, index) => (
+                            <Dropdown.Item
+                              onClick={() => handleDocTypeChange(item)}
+                              key={index}
+                              className="text-capitalize"
+                            >
+                              {item.replaceAll("_", " ")}
+                            </Dropdown.Item>
+                          ))} */}
+                              <Dropdown.Item
+                                onClick={() => handleDocTypeChange("other")}
+                              >
+                                Add Folder
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                onClick={() => handleDocTypeChange("document")}
+                              >
+                                Add Document
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        </>
+                      )}
+                      <>
+                        {openNoteForm
+                          ? <DocumentsNotes
+                            user_id={props?.user_id}
+                            emp_user_type={props?.emp_user_type}
+                            folderID={state?.folderID}
+                            docTypeName={state?.docTypeName}
+                            setApiCall={setApiCall}
+                            setOpenNoteForm={setOpenNoteForm}
+                            show={openNoteForm}
+                            convertedDoc={noteText}
+                            docSingleDate={docSingleDate}
+                            setConvertedDoc={setNoteText}
+                          />
+                          : null}
 
-                    <div>
-                      <button
-                        className="btn-sm btn-secondary"
-                        onClick={() => setOPenFolderModal(true)}
-                      >
-                        <FaFolderPlus />
-                      </button>
+                        <CreateExcelSheet show={openExcelSheet}
+                          close={() => setOpenExcelSheet(false)}
+                          user_id={props?.user_id}
+                          emp_user_type={props?.emp_user_type}
+                          folderID={state?.folderID}
+                          docTypeName={state?.docTypeName}
+                          setApiCall={setApiCall}
+                        />
+                        {openWordForm && <CreateWordFile
+                          user_id={props?.user_id}
+                          emp_user_type={props?.emp_user_type}
+                          folderID={state?.folderID}
+                          docTypeName={state?.docTypeName}
+                          setApiCall={setApiCall}
+                          show={openWordForm}
+                          close={() => setOpenWordForm(false)}
+
+                        />}
+
+                      </>
                     </div>
 
                     <DocumentsNotes

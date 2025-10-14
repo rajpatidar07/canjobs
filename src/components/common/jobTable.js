@@ -260,6 +260,28 @@ export default function JobTable(props) {
     props.apiCall,
     props.heading,
   ]);
+
+  /* useEffect to handle Escape key to close all modals */
+  useEffect(() => {
+    const handleEscapeKey = (event) => {
+      if (event.key === 'Escape') {
+        setShowAddJobsModal(false);
+        setShowAddCompanyDocModal(false);
+        setOpenLimia(false);
+        setShowCandidateModal(false);
+        setShowLmiaAdditionalInfobModal(false);
+        setShowChatModal(false);
+        setDeleteAlert(false);
+        setresponseDropDown(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleEscapeKey);
+
+    return () => {
+      window.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, []);
   /* Function to show the Job detail data */
   // const JobDetail = (e) => {
   //   props.JobDetail(e);
@@ -358,11 +380,11 @@ export default function JobTable(props) {
   const columns = [
     { key: "job_id", label: "Job ID", sticky: true },
     { key: "job_title", label: "Job Title", sticky: true },
-    { key: "Note", label: "Note", sticky: true },
-
+    
     // Add Job Type & Address if not on Dashboard
     ...(props.heading !== "Dashboard"
       ? [
+        { key: "Note", label: "Note", sticky: true },
         { key: "job_type", label: "Job Type" },
         { key: "location", label: "Address" },
       ]
@@ -749,7 +771,7 @@ export default function JobTable(props) {
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                   {job.industry_type || job.location
                                     ? `${job.industry_type ? job.industry_type + "," : ""} ${job.location}`
-                                    : "N/A"}cc
+                                    : "N/A"}
                                 </h3>
                               </td>
                             )
@@ -1043,6 +1065,7 @@ export default function JobTable(props) {
                               title={job.experience_required + (
                                 job.experience_required === "1-3 " ||
                                   job.experience_required === "1-2 " ||
+                                  job.experience_required === "2-3 " ||
                                   job.experience_required === "3-5 " ||
                                   job.experience_required === "5-7 " ||
                                   job.experience_required === "7+ "
@@ -1053,6 +1076,7 @@ export default function JobTable(props) {
                               {job.experience_required}
                               {job.experience_required === "1-3 " ||
                                 job.experience_required === "1-2 " ||
+                                job.experience_required === "2-3 " ||
                                 job.experience_required === "3-5 " ||
                                 job.experience_required === "5-7 " ||
                                 job.experience_required === "7+ "
@@ -1064,11 +1088,7 @@ export default function JobTable(props) {
                             </h3>
                           </td>}
                           <td
-                            className={
-
-                              user_type === "user" || !FilterdColumns.find(col => col.key === "applied_by_admin") ? "d-none" : "py-5 "
-                            }
-                          >
+                            className={user_type === "user" || !FilterdColumns.find(col => col.key === "applied_by_admin") ? "d-none" : "py-5 "}>
                             <h3 className="font-size-3 font-weight-bold text-black-2 mb-0"
                               title={`${job.role_category} /${props.selfJob === "yes"
                                 ? job.applied_by_self

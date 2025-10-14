@@ -32,7 +32,6 @@ import CreateWordFile from "../../forms/user/CreateWordFile";
 import ConvertPPT from "../Common function/ConvertPPT";
 // import ConvertAnyFileToPdf from "../Common function/ConvertAnyFileTopdf";
 import convertWordToPDF from "../Common function/ConvertWordToPdf";
-import { FaFolderPlus } from "react-icons/fa";
 // import DocViewer from "react-doc-viewer";
 // import { PDFDocument } from 'pdf-lib';
 
@@ -192,7 +191,7 @@ export default function SharePointDocument({
       setCommentsList([]);
     }
   };
-  
+
   /*Function to set the image and docx to pdf */
   const SetPdfDocUrl = async (data) => {
     if (
@@ -285,51 +284,51 @@ export default function SharePointDocument({
     setDeleteAlert(false);
     setEditNameForm(false);
   };
-  const DocTypeData =
-    emp_user_type === "employer"
-      ? [
-        "Business T2",
-        "Recent PD7A",
-        "Business T4",
-        "Business Incorporation Certificate",
-        "Employment Contract",
-        "Schedule A",
-        "Signed Job Offer",
-        "PD7A of year",
-        "T2 Schedule 100 and 125",
-        "Certificate of incorporation",
-        "Business license",
-        "T4 summary of year",
-        "Request for Exception from English Language Requirement for LMIA Application",
-        "CPA Attestation Letter",
-        "Representative Submission Letter",
-      ]
-      : [
-        "passport",
-        "drivers_license",
-        "photograph",
-        "immigration_status",
-        "lmia",
-        "job_offer_letter",
-        "provincial_nominee_letter",
-        "proof_of_funds",
-        "proof_of_employment",
-        "marriage_certificate",
-        "education_metric",
-        "education_higher_secondary",
-        "education_graduation",
-        "education_post_graduation",
-        "resume_or_cv",
-        "ielts",
-        "medical",
-        "police_clearance",
-        "refusal_letter",
-        "Employment Contract",
-        "Reference Letters",
-        "Client Info",
-        "Representative Submission Letter",
-        "Bank Statement",
-      ];
+  // const DocTypeData =
+  //   emp_user_type === "employer"
+  //     ? [
+  //       "Business T2",
+  //       "Recent PD7A",
+  //       "Business T4",
+  //       "Business Incorporation Certificate",
+  //       "Employment Contract",
+  //       "Schedule A",
+  //       "Signed Job Offer",
+  //       "PD7A of year",
+  //       "T2 Schedule 100 and 125",
+  //       "Certificate of incorporation",
+  //       "Business license",
+  //       "T4 summary of year",
+  //       "Request for Exception from English Language Requirement for LMIA Application",
+  //       "CPA Attestation Letter",
+  //       "Representative Submission Letter",
+  //     ]
+  //     : [
+  //       "passport",
+  //       "drivers_license",
+  //       "photograph",
+  //       "immigration_status",
+  //       "lmia",
+  //       "job_offer_letter",
+  //       "provincial_nominee_letter",
+  //       "proof_of_funds",
+  //       "proof_of_employment",
+  //       "marriage_certificate",
+  //       "education_metric",
+  //       "education_higher_secondary",
+  //       "education_graduation",
+  //       "education_post_graduation",
+  //       "resume_or_cv",
+  //       "ielts",
+  //       "medical",
+  //       "police_clearance",
+  //       "refusal_letter",
+  //       "Employment Contract",
+  //       "Reference Letters",
+  //       "Client Info",
+  //       "Representative Submission Letter",
+  //       "Bank Statement",
+  //     ];
   /*Variable to set the data according to next previous file or doc id from the mail or notification */
   let newdocId = fileID ? fileID : docId
   /*Function to call api to get all folders list of employees document from sharepoint */
@@ -341,7 +340,7 @@ export default function SharePointDocument({
       let res = await getSharePointParticularFolders(
         user_id,
         emp_user_type,
-         folderID,
+        folderID,
         columnName,
         sortOrder,
         recordsPerPage,
@@ -400,6 +399,7 @@ export default function SharePointDocument({
         setDocTypeList([]);
         setShowDropDown(false);
         setDocLoder(false);
+        setTotalData("")
       } else {
         setDocTypeList([]);
         setShowDropDown(false);
@@ -694,7 +694,22 @@ export default function SharePointDocument({
     if (selectedType === "other") {
       // If "other" is selected, clear newType
       setNewType("");
-    } else {
+    } else if (selectedType === "document") {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '*/*'; // e.g. 'image/*' or '.pdf'
+      input.style.display = 'none';
+      input.multiple = true;
+
+      input.onchange = (e) => {
+          handleBulkFileChange(e)
+      };
+
+      document.body.appendChild(input);
+      input.click();
+      document.body.removeChild(input);
+    }
+    else {
       try {
         let res = await AddSharePointFolders(selectedType,
           folderID,
@@ -706,7 +721,7 @@ export default function SharePointDocument({
           res.data.data.name &&
           res.data.message === "Folder created successfully!"
         ) {
-          toast.success(`Type Created successfully`, {
+          toast.success(`Folder Created successfully`, {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
@@ -1068,18 +1083,18 @@ export default function SharePointDocument({
                           style={{ maxHeight: 34 }}
                           id="dropdown-basic"
                         >
-                          <FaFolderPlus />
+                          Create
                         </Dropdown.Toggle>
                         <Dropdown.Menu
-                          style={{ height: "400px", overflowY: "scroll" }}
+                          // style={{ height: "400px", overflowY: "scroll" }}
                         >
-                          <Dropdown.Item
+                          {/* <Dropdown.Item
                             onClick={() => handleDocTypeChange("")}
                             key={-1}
                           >
                             Select Folder Name
-                          </Dropdown.Item>
-                          {DocTypeData.map((item, index) => (
+                          </Dropdown.Item> */}
+                          {/* {DocTypeData.map((item, index) => (
                             <Dropdown.Item
                               onClick={() => handleDocTypeChange(item)}
                               key={index}
@@ -1087,11 +1102,16 @@ export default function SharePointDocument({
                             >
                               {item.replaceAll("_", " ")}
                             </Dropdown.Item>
-                          ))}
+                          ))} */}
                           <Dropdown.Item
                             onClick={() => handleDocTypeChange("other")}
                           >
-                            Other
+                            Add Folder
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() => handleDocTypeChange("document")}
+                          >
+                            Add Document
                           </Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>

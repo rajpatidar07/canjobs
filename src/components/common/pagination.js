@@ -26,8 +26,10 @@ function Pagination(props) {
     props.setCurrentPage(1);
     props.setRecordsPerPage(newRecordsPerPage);
   };
+  console.log(props.total, "pppp", props.count,)
   return (
-    <div className="d-flex justify-content-between align-items-center">
+    <div className={props.count ===( "0" || 0) ? "d-none":"d-flex justify-content-between align-items-center"
+}>
       <small
         className={
           props.nPages > 1 ? " d-flex justify-content-center" : "d-none"
@@ -92,43 +94,45 @@ function Pagination(props) {
           </li>
         </ul>
       </nav>
-      {props.page === "document" ? (
-        <div className="form-group">
-          <select
-            className="form-control ml-3"
-            style={{
-              width: "120px",
-              height: "40px",
-              fontSize: "14px",
-              fontWeight: "bold",
-            }}
-            value={props.recordsPerPage}
-            onChange={handleRecordsPerPageChange}
-          >
-            <option value={10}>Show 10</option>
-            <option value={50}>Show 50</option>
-            <option value={100}>Show 100</option>
-            <option value={200}>Show 200</option>
-          </select>
-        </div>
-      ) : (
-        (props.nPages > 1 || props.total > 10) &&
-        (props.page === "task" || props.page === "document") && (
-          <button
-            className="page-link font-size-3 py-2 font-weight-semibold px-3 rounded"
-            style={{ height: "max-content" }}
-            onClick={() => {
-              props.setCurrentPage(1);
-              props.setRecordsPerPage(
-                props.recordsPerPage === props.total ? 10 : props.total
-              );
-            }}
-          >
-            {props.recordsPerPage === props.total ? "View Less" : "View All"}
-          </button>
-        )
-      )}
+{
+  props.page === "document" ? (
+    <div className="form-group">
+      <select
+        className="form-control ml-3"
+        style={{
+          width: "120px",
+          height: "40px",
+          fontSize: "14px",
+          fontWeight: "bold",
+        }}
+        value={props.recordsPerPage}
+        onChange={handleRecordsPerPageChange}
+      >
+        <option value={10}>Show 10</option>
+        <option value={50}>Show 50</option>
+        <option value={100}>Show 100</option>
+        <option value={200}>Show 200</option>
+      </select>
     </div>
+  ) : (
+  (props.nPages > 1 || props.total > 10) &&
+  (props.page === "task" || props.page === "document") && (
+    <button
+      className="page-link font-size-3 py-2 font-weight-semibold px-3 rounded"
+      style={{ height: "max-content" }}
+      onClick={() => {
+        props.setCurrentPage(1);
+        props.setRecordsPerPage(
+          props.recordsPerPage === props.total ? 10 : props.total
+        );
+      }}
+    >
+      {props.recordsPerPage === props.total ? "View Less" : "View All"}
+    </button>
+  )
+)
+}
+    </div >
   );
 }
 

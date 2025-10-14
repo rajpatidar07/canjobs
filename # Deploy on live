@@ -14,7 +14,8 @@
 12. Add functionality to choose between the primary and secondary email from the candidate data when sending the Retainer Agreement and Payment Invoice. Also, include this feature in both the employer and candidate profiles.
 13. Implement candidate activity notifications.
 14. Changed the default value of Assigned By from Sam to Satvir, and verified that emails and notifications (such as activities, emails, etc.) are working correctly according to the updated assigned admin for the candidate.
-15. 
+15. Removed the folder list as per the requirements and made the necessary changes accordingly.
+16. Added Add Folder and Add Document options in the folder list, and implemented their functionalities for Employee, Employer, Job, and Applicant types.
 
 Date: 26/09/25
 
