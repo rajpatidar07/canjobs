@@ -130,21 +130,19 @@ export default function EmployerRetainerAgreement({ page,
               above, the RCIC agrees to do the following:
             </small>
             <ul type="a">
-              <li>[Summary of preliminary advice given to the client
+              <li>Summary of preliminary advice given to the client
                 ${felidData?.summary
       ? `<span class="para_gap">${felidData?.summary || ""
       }</span>`
       : "If any_____________________________"
-    }]</li>
-              <li>[Consultation on providing document checklists and intake
-                sheet, file opening]</li>
-              [Consultation and providing document checklists and intake sheet,
-              file opening]
-              <li>[Data gathering, filling out forms]</li
-                <li>[Information verification, completeness check]</li
-                  <li>[Application submission]</li
-                    <li>[File maintenance and correspondence with client and
-                      IRCC]</li
+    }</li>
+              <li>Consultation on providing document checklists and intake
+                sheet, file opening</li>
+              <li>Data gathering, filling out forms</li>
+                <li>Information verification, completeness check</li>
+                  <li>Application submission</li>
+                    <li>File maintenance and correspondence with client and
+                      IRCC</li>
                     </ul>
                     <p>
                       The RCIC shall provide the Client with a finalized, signed

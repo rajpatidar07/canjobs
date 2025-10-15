@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense, lazy } from "react";
 import {
   Route,
   BrowserRouter,
@@ -7,124 +7,140 @@ import {
   useNavigate,
   matchPath,
 } from "react-router-dom";
-import EmployerHome from "../company/home";
-import CompanyProfile from "../company/profile";
-import ManageJobs from "../company/manageJob";
-import Response from "../company/response";
-// import EmployeeHomePage from "../user/home";
-import EmployeeHomePage from "../user/Home2";
 
-import JobDetail from "../user/jobdetail";
-import JobSearch from "../user/jobs";
-import UserProfile from "../user/profile";
-import AdminDashboard from "../admin/dashboard";
-import Job from "../admin/job";
-import Category from "../admin/category";
-import Employee from "../admin/employee";
-import Employer from "../admin/employer";
-import EmployeeSearch from "../company/employeeSearch";
-import ManageAdmin from "../admin/manageadmin";
-import Followup from "../admin/followup";
-import AdminLoginFrom from "../admin/login";
-import FilterList from "../admin/filterList";
-import ResumeGrerator from "../admin/Resume";
-import ManageInterview from "../admin/interview";
-import JobResponse from "../admin/response";
-import NotFound from "./notfound";
-import ResetPassword from "./resetPassword";
-import EmailTemplate from "../admin/email";
-import Loader from "../common/loader";
+// Non-lazy imports for critical components
 import { LinkedInCallback } from "react-linkedin-login-oauth2";
-import Visa from "../admin/visa";
-import Document from "../admin/document";
-import EmployerLMIA from "../company/lmia";
-import SelfApplicat from "../admin/selfApplicat";
-import SelfJob from "../admin/selfJob";
-import LimaContainer from "../admin/lmiaContainer";
-import NewUserProfile from "../user/user_profile";
-import CompanyProfileDetail from "../company/company_profile";
-import JobDetailpageAdmim from "../admin/job_Detail_page";
-import PDFViewer from "../user/user_pdf";
-import JobAssignedDashboard from "../admin/jobAssignedDashboard";
-import RazorPay from "./payButton";
-import Agent from "../admin/agent";
-import Notes from "../admin/notes";
-import AgentLogin from "../agent/agentLogin";
-import MainEmailPage from "../email/mainemailPage";
-import SinUpPage from "../user/sinUpPage";
-import CandidateLoginForm from "../user/candidate_login";
-import CandidateSignup from "../user/candidate_signup";
-import CompanyLoginForm from "../company/company_login";
-import CompanySingupForm from "../company/company_singup";
-import GoogleDrive from "./googleDrive";
-import Anotation from "./anotation";
-import BusinessVIsa from "../admin/businessVisa";
-import ExpressEntry from "../admin/expressEntry";
-import VisitorVisa from "../admin/visitorVisa";
-import Pnp from "../admin/pnp";
-import PartnerDashboard from "./partner_dashboard";
-import ActivityLog from "./activity_log";
-import Credentional from "../admin/Credentional";
-import AsiignedAdmin from "./asiigned_admin";
-import Federalpr from "../admin/federalpr";
-import PartnerDetails from "../agent/partnerDetails";
-import SharePointDocument from "./Document folder/SharePointDocument";
-import Newpdf from "./Adobe/newpdf";
-import ExpressEntryPdf from "./Retaineragreement/Agreement native/ExpressEntryPdf";
-import SignaturePadComponent from "./Retaineragreement/SignaturePadComponent";
-import ExpressEntryHtml from "./Retaineragreement/Html/ExpressEntryHtml";
-import WebhookComponent from "./webHook";
 import { ToastContainer } from "react-toastify";
-import UserSigningPage from "./Retaineragreement/UserSigningPage";
-import AboutUs from "../user/AboutUs";
-import LocalCandidate from "../admin/localCandidate";
-import PGWP from "../admin/pgwp";
-import DemoJob from "../user/demoJob";
-import StudyPermit from "../admin/studyPermit";
-import ViewPdf from "./Retaineragreement/viewPdf";
-import TemporaryResident from "../admin/TemporaryResident";
-import EconomicImmigration from "../admin/EcomonicImmigration";
-import FamilySponsorship from "../admin/FamilySponsorship";
-import ManageTask from "../admin/manageTask";
-import Humanitarian from "../admin/humanitarian";
-import TypePassport from "../admin/typePassport";
-import TypeCitizenship from "../admin/typeCitizenship";
-import ParmanentResidentCard from "../admin/ParmanentResidentCard";
-import StudyHome from "../Study/StudyComman/studyHome";
-import StudentProfile from "../Study/student/studentProfile";
-import StudentDocument from "../Study/student/studentDocument";
-import MainHomePage from "../Study/mainHomePage";
-import Programs from "../Study/student/programs";
-import EducationLoan from "../Study/student/educationLoans";
-import PersonalLoan from "../Study/student/personalLoan";
-import Accommodation from "../Study/student/accommodation";
-import StudyDashboard from "../Study/Study admin/studyDashboard";
-import StudentList from "../Study/Study admin/studentsList";
-import StudyAdminLoginFrom from "../Study/Study admin/studyAdminLogin";
-import AppliedPrograms from "../Study/Study admin/appliedPrograms";
-import StudyPartnerLogin from "../Study/StudyComman/studyPartnerLogin";
-import InitialConsultationAgreement from "./Retaineragreement/Agreement native/initialConsulation";
-import RecruitmentAgrement from "./Retaineragreement/Agreement native/RecruitmentAgrement";
-import Wes from "../admin/wes";
-import Atip from "../admin/atip";
-import CommonApplicatTypePage from "./CommonApplicatTypePage";
-import MangeApplicantType from "../admin/MangeApplicantType";
-import ManageDailyCallLog from "../admin/ManageDailyCallLog";
-import ManagePayment from "../admin/ManagePaymentInvoices";
-import RenewalApplicantionsPdf from "./Retaineragreement/Agreement native/RenewalApplicantionsPdf";
-import MoreThanOneApplicantAgreementPdf from "./Retaineragreement/Agreement native/MoreThanOneApplicantAgreementPdf";
-import EmployerRetainerAgreementPdf from "./Retaineragreement/Agreement native/EmployerRetainerAgreementPdf";
-import ThreeColumnRerainerAgreement from "./Retaineragreement/Agreement native/ThreeColumnRerainerAgreement";
-import ManageHourlyLog from "../admin/ManageHourlyLog";
-import ConvertAnyFileToPdf from "./Common function/ConvertAnyFileTopdf";
-import WorkPermitPdf from "./Retaineragreement/Agreement native/WorkPermitPdf";
-import AlbertaPnpPdf from "./Retaineragreement/Agreement native/AlbertaPnpPdf";
-import AdminMain from "../admin/AdminMain";
-import CommonAdminExtraLinkSetting from "../admin/CommonAdminExtraLinkSetting";
-import ManageConsultation from "../admin/ManageConsultation";
-import CommonDailyPage from "./CommonDailyPage";
-import WorkPermitApplicantTwoStagePdf from "./Retaineragreement/Agreement native/WorkPermitApplicantTwoStagePdf";
-import DynamicRA from "./Retaineragreement/Agreement native/DynamicRA"
+import Loader from "../common/loader";
+
+// Lazy load all route components for code splitting
+const EmployerHome = lazy(() => import("../company/home"));
+const CompanyProfile = lazy(() => import("../company/profile"));
+const ManageJobs = lazy(() => import("../company/manageJob"));
+const Response = lazy(() => import("../company/response"));
+const EmployeeHomePage = lazy(() => import("../user/Home2"));
+const JobDetail = lazy(() => import("../user/jobdetail"));
+const JobSearch = lazy(() => import("../user/jobs"));
+const UserProfile = lazy(() => import("../user/profile"));
+const AdminDashboard = lazy(() => import("../admin/dashboard"));
+const Job = lazy(() => import("../admin/job"));
+const Category = lazy(() => import("../admin/category"));
+const Employee = lazy(() => import("../admin/employee"));
+const Employer = lazy(() => import("../admin/employer"));
+const EmployeeSearch = lazy(() => import("../company/employeeSearch"));
+const ManageAdmin = lazy(() => import("../admin/manageadmin"));
+const Followup = lazy(() => import("../admin/followup"));
+const AdminLoginFrom = lazy(() => import("../admin/login"));
+const FilterList = lazy(() => import("../admin/filterList"));
+const ResumeGrerator = lazy(() => import("../admin/Resume"));
+const ManageInterview = lazy(() => import("../admin/interview"));
+const JobResponse = lazy(() => import("../admin/response"));
+const NotFound = lazy(() => import("./notfound"));
+const ResetPassword = lazy(() => import("./resetPassword"));
+const EmailTemplate = lazy(() => import("../admin/email"));
+
+const Visa = lazy(() => import("../admin/visa"));
+const Document = lazy(() => import("../admin/document"));
+const EmployerLMIA = lazy(() => import("../company/lmia"));
+const SelfApplicat = lazy(() => import("../admin/selfApplicat"));
+const SelfJob = lazy(() => import("../admin/selfJob"));
+const LimaContainer = lazy(() => import("../admin/lmiaContainer"));
+const NewUserProfile = lazy(() => import("../user/user_profile"));
+const CompanyProfileDetail = lazy(() => import("../company/company_profile"));
+const JobDetailpageAdmim = lazy(() => import("../admin/job_Detail_page"));
+const PDFViewer = lazy(() => import("../user/user_pdf"));
+const JobAssignedDashboard = lazy(() => import("../admin/jobAssignedDashboard"));
+const RazorPay = lazy(() => import("./payButton"));
+const Agent = lazy(() => import("../admin/agent"));
+const Notes = lazy(() => import("../admin/notes"));
+const AgentLogin = lazy(() => import("../agent/agentLogin"));
+const MainEmailPage = lazy(() => import("../email/mainemailPage"));
+const SinUpPage = lazy(() => import("../user/sinUpPage"));
+const CandidateLoginForm = lazy(() => import("../user/candidate_login"));
+const CandidateSignup = lazy(() => import("../user/candidate_signup"));
+const CompanyLoginForm = lazy(() => import("../company/company_login"));
+const CompanySingupForm = lazy(() => import("../company/company_singup"));
+const GoogleDrive = lazy(() => import("./googleDrive"));
+const Anotation = lazy(() => import("./anotation"));
+const BusinessVIsa = lazy(() => import("../admin/businessVisa"));
+const ExpressEntry = lazy(() => import("../admin/expressEntry"));
+const VisitorVisa = lazy(() => import("../admin/visitorVisa"));
+const Pnp = lazy(() => import("../admin/pnp"));
+const PartnerDashboard = lazy(() => import("./partner_dashboard"));
+const ActivityLog = lazy(() => import("./activity_log"));
+const Credentional = lazy(() => import("../admin/Credentional"));
+const AsiignedAdmin = lazy(() => import("./asiigned_admin"));
+const Federalpr = lazy(() => import("../admin/federalpr"));
+const PartnerDetails = lazy(() => import("../agent/partnerDetails"));
+const SharePointDocument = lazy(() => import("./Document folder/SharePointDocument"));
+const Newpdf = lazy(() => import("./Adobe/newpdf"));
+const ExpressEntryPdf = lazy(() => import("./Retaineragreement/Agreement native/ExpressEntryPdf"));
+const SignaturePadComponent = lazy(() => import("./Retaineragreement/SignaturePadComponent"));
+const ExpressEntryHtml = lazy(() => import("./Retaineragreement/Html/ExpressEntryHtml"));
+const WebhookComponent = lazy(() => import("./webHook"));
+const UserSigningPage = lazy(() => import("./Retaineragreement/UserSigningPage"));
+const AboutUs = lazy(() => import("../user/AboutUs"));
+const LocalCandidate = lazy(() => import("../admin/localCandidate"));
+const PGWP = lazy(() => import("../admin/pgwp"));
+const DemoJob = lazy(() => import("../user/demoJob"));
+const StudyPermit = lazy(() => import("../admin/studyPermit"));
+const ViewPdf = lazy(() => import("./Retaineragreement/viewPdf"));
+const TemporaryResident = lazy(() => import("../admin/TemporaryResident"));
+const EconomicImmigration = lazy(() => import("../admin/EcomonicImmigration"));
+const FamilySponsorship = lazy(() => import("../admin/FamilySponsorship"));
+const ManageTask = lazy(() => import("../admin/manageTask"));
+const Humanitarian = lazy(() => import("../admin/humanitarian"));
+const TypePassport = lazy(() => import("../admin/typePassport"));
+const TypeCitizenship = lazy(() => import("../admin/typeCitizenship"));
+const ParmanentResidentCard = lazy(() => import("../admin/ParmanentResidentCard"));
+const StudyHome = lazy(() => import("../Study/StudyComman/studyHome"));
+const StudentProfile = lazy(() => import("../Study/student/studentProfile"));
+const StudentDocument = lazy(() => import("../Study/student/studentDocument"));
+const MainHomePage = lazy(() => import("../Study/mainHomePage"));
+const Programs = lazy(() => import("../Study/student/programs"));
+const EducationLoan = lazy(() => import("../Study/student/educationLoans"));
+const PersonalLoan = lazy(() => import("../Study/student/personalLoan"));
+const Accommodation = lazy(() => import("../Study/student/accommodation"));
+const StudyDashboard = lazy(() => import("../Study/Study admin/studyDashboard"));
+const StudentList = lazy(() => import("../Study/Study admin/studentsList"));
+const StudyAdminLoginFrom = lazy(() => import("../Study/Study admin/studyAdminLogin"));
+const AppliedPrograms = lazy(() => import("../Study/Study admin/appliedPrograms"));
+const StudyPartnerLogin = lazy(() => import("../Study/StudyComman/studyPartnerLogin"));
+const InitialConsultationAgreement = lazy(() => import("./Retaineragreement/Agreement native/initialConsulation"));
+const RecruitmentAgrement = lazy(() => import("./Retaineragreement/Agreement native/RecruitmentAgrement"));
+const Wes = lazy(() => import("../admin/wes"));
+const Atip = lazy(() => import("../admin/atip"));
+const CommonApplicatTypePage = lazy(() => import("./CommonApplicatTypePage"));
+const MangeApplicantType = lazy(() => import("../admin/MangeApplicantType"));
+const ManageDailyCallLog = lazy(() => import("../admin/ManageDailyCallLog"));
+const ManagePayment = lazy(() => import("../admin/ManagePaymentInvoices"));
+const RenewalApplicantionsPdf = lazy(() => import("./Retaineragreement/Agreement native/RenewalApplicantionsPdf"));
+const MoreThanOneApplicantAgreementPdf = lazy(() => import("./Retaineragreement/Agreement native/MoreThanOneApplicantAgreementPdf"));
+const EmployerRetainerAgreementPdf = lazy(() => import("./Retaineragreement/Agreement native/EmployerRetainerAgreementPdf"));
+const ThreeColumnRerainerAgreement = lazy(() => import("./Retaineragreement/Agreement native/ThreeColumnRerainerAgreement"));
+const ManageHourlyLog = lazy(() => import("../admin/ManageHourlyLog"));
+const ConvertAnyFileToPdf = lazy(() => import("./Common function/ConvertAnyFileTopdf"));
+const WorkPermitPdf = lazy(() => import("./Retaineragreement/Agreement native/WorkPermitPdf"));
+const AlbertaPnpPdf = lazy(() => import("./Retaineragreement/Agreement native/AlbertaPnpPdf"));
+const AdminMain = lazy(() => import("../admin/AdminMain"));
+const CommonAdminExtraLinkSetting = lazy(() => import("../admin/CommonAdminExtraLinkSetting"));
+const ManageConsultation = lazy(() => import("../admin/ManageConsultation"));
+const CommonDailyPage = lazy(() => import("./CommonDailyPage"));
+const WorkPermitApplicantTwoStagePdf = lazy(() => import("./Retaineragreement/Agreement native/WorkPermitApplicantTwoStagePdf"));
+const DynamicRA = lazy(() => import("./Retaineragreement/Agreement native/DynamicRA"));
+
+// Loading component for Suspense fallback
+const LoadingFallback = () => (
+  <div style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+    backgroundColor: '#f8f9fa'
+  }}>
+    <Loader load={"yes"} />
+  </div>
+);
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const path = location.pathname;
@@ -293,7 +309,8 @@ function MainLayout() {
       <ToastContainer />
       {/* <CurrentRoute /> */}
       <RouterHandler token={token} userType={userType} employeeId={employeeId} />
-      <Routes>
+      <Suspense fallback={<LoadingFallback />}>
+        <Routes>
         {/* Employee */}
         <Route path="/" element={<EmployeeHomePage />} />
         <Route path="/main_home" element={<MainHomePage />} />
@@ -314,8 +331,8 @@ function MainLayout() {
         <Route path="/jobdetail" element={<JobDetail />} />
         <Route path="/outside_booking" element={<WebhookComponent />} />
         <Route path="/resetpassword/:id" element={<ResetPassword />} />
-        <Route exact path="/linkedin" component={LinkedInCallback} />
-        <Route exact path="/signagreement" element={<UserSigningPage />} />
+        <Route path="/linkedin" element={<LinkedInCallback />} />
+        <Route path="/signagreement" element={<UserSigningPage />} />
         <Route path="/agreeone" element={<ExpressEntryPdf />} />
         <Route path="/dynamic_ra" element={<DynamicRA />} />
         <Route path="/work_permit_application_2_stage" element={<WorkPermitApplicantTwoStagePdf />} />
@@ -575,6 +592,7 @@ function MainLayout() {
           <Route path="*" element={<NotFound userType={userType} />} />
         )}
       </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }

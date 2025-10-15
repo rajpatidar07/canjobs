@@ -68,8 +68,8 @@ export default function SharePointDocument({
   const [editNameForm, setEditNameForm] = useState(false);
   const [docSingleDate, setDocSingleDate] = useState("");
   const [docPreview, setDocPreview] = useState(false);
-  const [docLoder, setDocLoder] = useState(false);
-  const [docBreadCrumbLoder, setBreadCrumbLoder] = useState(false);
+  const [docLoader, setDocLoader] = useState(false);
+  const [docBreadCrumbLoader, setBreadCrumbLoader] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
   /*delete state */
@@ -80,7 +80,7 @@ export default function SharePointDocument({
   let defaultAdminMention = localStorage.getItem("mentionAdmin")
     ? JSON.parse(localStorage.getItem("mentionAdmin"))
     : [];
-  const [taggedadmin, setTaggedAdmin] = useState([]);
+  const [taggedAdmin, setTaggedAdmin] = useState([]);
   const [commentsList, setCommentsList] = useState([]);
   // const [commentsRes, setCommentsRes] = useState();
   // const [imgConRes, setImgConRes] = useState();
@@ -333,8 +333,8 @@ export default function SharePointDocument({
   let newdocId = fileID ? fileID : docId
   /*Function to call api to get all folders list of employees document from sharepoint */
   const AllShareType = async () => {
-    setDocLoder(true);
-    setBreadCrumbLoder(true);
+    setDocLoader(true);
+    setBreadCrumbLoader(true);
     try {
       // if (folderID) {
       let res = await getSharePointParticularFolders(
@@ -362,7 +362,7 @@ export default function SharePointDocument({
         setDocTypeList(res.data.data);
         setTotalData(res.data.total_rows)
         setShowDropDown(false);
-        setDocLoder(false);
+        setDocLoader(false);
         // console.log(res.data.data.find((item) => item.id == "01PMN6UKSLPU7GEEOZYRHKRHGNYGHU47J2"),"1295 Gurdeep Singh PDF Format.pdf")
         // console.log(res.data.data.find((item) => item.id == "01PMN6UKVMY4ZY7L2XLBGJI3PLMFV3IS55"), "name: Police Clearance Certificate Akshay Kumar.pdf")
         // if (res?.data?.notes.length !== 0) {
@@ -398,12 +398,12 @@ export default function SharePointDocument({
       } else if (res.data.data === "No Documents Found") {
         setDocTypeList([]);
         setShowDropDown(false);
-        setDocLoder(false);
+        setDocLoader(false);
         setTotalData("")
       } else {
         setDocTypeList([]);
         setShowDropDown(false);
-        setDocLoder(false);
+        setDocLoader(false);
       }
       // } else {
       //     let res = await getSharePointFoldersList(user_id, emp_user_type)
@@ -414,7 +414,7 @@ export default function SharePointDocument({
     } catch (Err) {
       console.log(Err);
       setShowDropDown(false);
-      setDocLoder(false);
+      setDocLoader(false);
     }
     /*Api for breadcrumb */
     try {
@@ -439,17 +439,17 @@ export default function SharePointDocument({
           }
         }
         setShowDropDown(false);
-        setBreadCrumbLoder(false);
+        setBreadCrumbLoader(false);
       } else {
         setBreadcrumbData([]);
         setShowDropDown(false);
-        setBreadCrumbLoder(false);
+        setBreadCrumbLoader(false);
       }
     } catch (err) {
       console.log(err);
       setBreadcrumbData([]);
       setShowDropDown(false);
-      setBreadCrumbLoder(false);
+      setBreadCrumbLoader(false);
     }
   };
   useEffect(() => {
@@ -900,7 +900,7 @@ export default function SharePointDocument({
                           </Link>
                           {(defaultAdminMention.length > 0
                             ? defaultAdminMention
-                            : taggedadmin
+                            : taggedAdmin
                           ).map(
                             (user, index) =>
                               user.profile_image === null ||
@@ -1024,7 +1024,7 @@ export default function SharePointDocument({
             <div className={"document_container bg-white"}>
               <div className="row m-0 bg-white justify-content-between p-2">
                 {/* Breadcrumbs */}
-                {docBreadCrumbLoder ? (
+                {docBreadCrumbLoader ? (
                   <ul className="breadcrumb">
                     <li
                       className="breadcrumb-item "
@@ -1172,7 +1172,7 @@ export default function SharePointDocument({
               </div>
               <div className="row m-0 bg-white px-2 pb-2">
                 {/* List of documents docTypeList */}
-                {docLoder ? (
+                {docLoader ? (
                   <div className="table-responsive main_table_div">
                     <Loader />
                   </div>

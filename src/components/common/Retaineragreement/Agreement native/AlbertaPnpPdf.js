@@ -243,24 +243,24 @@ const AlbertaPnpPdf = () => {
                         </Text>
                         <View style={{ paddingLeft: 10 }}>
                             <Text>
-                                (a) [Summary of preliminary advice given to the client
+                                (a) Summary of preliminary advice given to the client
                                 {felidData?.summary ? <Text style={styles.textunderline} >
                                     {felidData?.summary}
                                 </Text> : <Text>_____________________________________</Text>}
-                                ]
+                                
                             </Text>
                             <Text>
-                                (b) [Consultation and providing document checklists and intake
-                                sheet, file opening]
+                                (b) Consultation and providing document checklists and intake
+                                sheet, file opening
                             </Text>
-                            <Text>(c) [Data gathering, filling out forms]</Text>
-                            <Text>(d) [Information verification, completeness check]</Text>
-                            <Text>(e) [Application submission]</Text>
+                            <Text>(c) Data gathering, filling out forms</Text>
+                            <Text>(d) Information verification, completeness check</Text>
+                            <Text>(e) Application submission</Text>
                             <Text>
-                                (f) [File maintenance and correspondence with client and IRCC]
+                                (f) File maintenance and correspondence with client and IRCC
                             </Text>
-                            <Text>  (g)[Application submission]</Text>
-                            <Text> (h)[File maintenance and correspondence with client and IRCC]</Text>
+                            <Text>  (g)Application submission</Text>
+                            <Text> (h)File maintenance and correspondence with client and IRCC</Text>
                         </View>
                         <Text style={{ marginTop: 15, paddingLeft: 10 }}>
                             The RCIC shall provide the Client with a finalized, signed copy of

@@ -16,6 +16,8 @@
 14. Changed the default value of Assigned By from Sam to Satvir, and verified that emails and notifications (such as activities, emails, etc.) are working correctly according to the updated assigned admin for the candidate.
 15. Removed the folder list as per the requirements and made the necessary changes accordingly.
 16. Added Add Folder and Add Document options in the folder list, and implemented their functionalities for Employee, Employer, Job, and Applicant types.
+17. Replaced the existing logo with the Recruitment logo in the Retainer Agreement section.
+18. Remove the brackets from all retainer agreements as per Harpreet’s requirement.
 
 Date: 26/09/25
 

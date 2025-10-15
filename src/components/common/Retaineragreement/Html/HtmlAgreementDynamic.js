@@ -159,25 +159,25 @@ export default function HtmlAgreementDynamic({
             <p>
             <ol id="l2">
               <li data-list-text="a)">
-                  [Summary of preliminary advice given to the client
+                  Summary of preliminary advice given to the client
                    ${felidData?.summary
       ? `<span class="para_gap text-capitalize">${felidData?.summary || ""
       }</span>`
       : "_____________________________"
-    }]
+    }
               </li>
               <li data-list-text="b)">
-                  [Consultation and providing document checklists and intake
-                  sheet, file opening]
+                  Consultation and providing document checklists and intake
+                  sheet, file opening
               </li>
               <li data-list-text="c)">
-                [Data gathering, filling out forms]
+                Data gathering, filling out forms
               </li>
               <li data-list-text="d)">
-                [Information verification, completeness check]
+                Information verification, completeness check
               </li>
-               <li> [Application submission]</li>
-                 <li>[File maintenance and correspondence with client and IRCC]</li>
+               <li> Application submission</li>
+                 <li>File maintenance and correspondence with client and IRCC</li>
             </ol>
             </p>
             

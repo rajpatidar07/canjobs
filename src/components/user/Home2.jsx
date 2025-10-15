@@ -1,42 +1,43 @@
 import React, { useEffect, useState } from "react";
-import EmployeeHeader from "../common/header";
-import EmployeeFooter from "../common/footer";
-import SearchForm from "../common/search_form";
-import { GetAllDataCount, getJson } from "../../api/api";
-import SelectBox from "../common/Common function/SelectBox";
+// import EmployeeHeader from "../common/header";
+// import EmployeeFooter from "../common/footer";
+// import SearchForm from "../common/search_form";
+import { GetAllDataCount/*, getJson*/ } from "../../api/api";
+import { Link } from "react-router-dom";
+// import SelectBox from "../common/Common function/SelectBox";
 
 function Home2() {
     const [Count, setCount] = useState([]);
-    const [jobsNo, setJobsNo] = useState(6);
-    const [jobCount, setJobCount] = useState();
-    const [totaljob, setTotalJob] = useState();
-    const [search, setSearch] = useState();
-    const [categoryFilterValue, setCategoryFilterValue] = useState("");
-    const [SkillFilterValue, setSkillFilterValue] = useState("");
-    const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
-    const [jobLocation, setJobLocation] = useState("");
-    let [Json, setJson] = useState([]);
+    // const [jobsNo, setJobsNo] = useState(6);
+    // const [jobCount, setJobCount] = useState();
+    // const [totaljob, setTotalJob] = useState();
+    // const [search, setSearch] = useState();
+    // const [categoryFilterValue, setCategoryFilterValue] = useState("");
+    // const [SkillFilterValue, setSkillFilterValue] = useState("");
+    // const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
+    // const [jobLocation, setJobLocation] = useState("");
+    // let [Json, setJson] = useState([]);
 
-    const JsonData = async () => {
-        try {
-            let Json = await getJson();
-            setJson(Json);
-        } catch (err) {
-            console.log(err);
-        }
-    };
+    // const JsonData = async () => {
+    //     try {
+    //         let Json = await getJson();
+    //         setJson(Json);
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // };
 
-    useEffect(() => {
-        JsonData();
-    }, [categoryFilterValue, SkillFilterValue, jobSwapFilterValue, jobLocation]);
+    // useEffect(() => {
+    //     JsonData();
+    // }, [categoryFilterValue, SkillFilterValue, jobSwapFilterValue, jobLocation]);
 
-    let onReset = () => {
-        setCategoryFilterValue("");
-        setSkillFilterValue("");
-        setJobSwapFilterValue("");
-        setJobLocation("");
-        setSearch("");
-    };
+    // let onReset = () => {
+    //     setCategoryFilterValue("");
+    //     setSkillFilterValue("");
+    //     setJobSwapFilterValue("");
+    //     setJobLocation("");
+    //     setSearch("");
+    // };
 
     const CountData = async () => {
         const res = await GetAllDataCount();
@@ -145,7 +146,7 @@ function Home2() {
                                 </h4>
                                 <p className="font-size-4 text-default-color text-center line-height-1-8">
                                     To become the leading job portal, recognized for our
-                                    commitment to innovation, inclusivity, and excellence. We
+                                    commitment to innovation, inclusively, and excellence. We
                                     strive to create a positive impact on the lives of job seekers
                                     and employers worldwide.
                                 </p>
@@ -168,7 +169,7 @@ function Home2() {
                                 </h4>
                                 <p className="font-size-4 text-default-color text-center line-height-1-8">
                                     Innovation drives us forward, integrity guides our actions,
-                                    and inclusivity ensures everyone has equal opportunities. We
+                                    and inclusively ensures everyone has equal opportunities. We
                                     believe in transparency, excellence, and building lasting
                                     relationships.
                                 </p>
@@ -414,19 +415,19 @@ function Home2() {
                                         Follow us on:
                                     </li>
                                     <li className="d-flex flex-column justify-content-center px-3 mr-3">
-                                        <a href="#" className="hover-color-primary heading-default-color">
+                                        <Link to="" className="hover-color-primary heading-default-color">
                                             <i className="fab fa-facebook-f font-size-3 pt-2"></i>
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li className="d-flex flex-column justify-content-center px-3 mr-3">
-                                        <a href="#" className="hover-color-primary heading-default-color">
+                                        <Link to="" className="hover-color-primary heading-default-color">
                                             <i className="fab fa-twitter font-size-3 pt-2"></i>
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li className="d-flex flex-column justify-content-center px-3 mr-3">
-                                        <a href="#" className="hover-color-primary heading-default-color">
+                                        <Link to="" className="hover-color-primary heading-default-color">
                                             <i className="fab fa-linkedin-in font-size-3 pt-2"></i>
-                                        </a>
+                                        </Link>
                                     </li>
                                 </ul>
                             </div>
