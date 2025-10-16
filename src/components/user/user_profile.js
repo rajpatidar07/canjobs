@@ -1008,7 +1008,7 @@ const NewUserProfile = (props) => {
                                       )}
                                     </>
                                   ) : <div>
-                                    <p className="text-center">No Spouse and children Data Found</p>
+                                    <p className="text-center">No Spouse and Children Data Found</p>
                                   </div>}
                                 </div>
                               </div>
