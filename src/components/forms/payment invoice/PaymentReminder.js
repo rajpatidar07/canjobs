@@ -38,6 +38,7 @@ const PaymentReminder = (props) => {
         });
         setState(initialFormState)
         setLoading(false)
+        setShowEmailModal(false);
         props.close()
       } else {
         setLoading(false)
@@ -53,8 +54,8 @@ const PaymentReminder = (props) => {
     setState({ ...state, user_email: email });
     setSelectedEmail(email);
 
-    setShowEmailModal(false);
-    await handleSubmit({ preventDefault: () => { } }, email);
+    
+    // await handleSubmit({ preventDefault: () => { } }, email);
 
   };
 
@@ -141,6 +142,7 @@ const PaymentReminder = (props) => {
         selectedEmail={selectedEmail}
         onSelectEmail={handleSendWithEmail}
         title={"Select Email to Send Reminder"}
+        handleSubmit={handleSubmit}
       />
     </Modal>
   );

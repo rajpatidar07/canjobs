@@ -171,7 +171,7 @@ function Job(props) {
                       required
                       type="text"
                       className="form-control w-100 input-height"
-                      placeholder={"Search Job / Client"}
+                      placeholder={"Search Job / Employer"}
                       value={search}
                       name={"name"}
                       onChange={(e) => onSearch(e)}
@@ -189,7 +189,7 @@ function Job(props) {
                       required
                       type="text"
                       className="form-control w-100"
-                      placeholder={"Client name"}
+                      placeholder={"Employer name"}
                       value={company}
                       name={"compnay_name"}
                       onChange={(e) => {

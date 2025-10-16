@@ -229,6 +229,7 @@ export default function JobTable(props) {
           console.error(err)
         }
       }
+      // console.log(permissions)
       setFieldsPermited(permissions);
     } catch (err) {
       console.log(err);
@@ -238,7 +239,9 @@ export default function JobTable(props) {
   useEffect(() => {
     JobData();
     JsonData()
+    // console.log(props.page)
     if (props.page === "lmia" || props.page === "job") {
+      console.log("ppppppp")
       GetDashboardPermissionData()
     }
     if (apiCall === true || props.apiCall === true) {
@@ -380,7 +383,7 @@ export default function JobTable(props) {
   const columns = [
     { key: "job_id", label: "Job ID", sticky: true },
     { key: "job_title", label: "Job Title", sticky: true },
-    
+
     // Add Job Type & Address if not on Dashboard
     ...(props.heading !== "Dashboard"
       ? [
@@ -444,7 +447,12 @@ export default function JobTable(props) {
 
   const FilterdColumns = columns?.filter((col) => {
     // Always show if it's not part of config OR config says 1
-    return fieldsPermited[col.key] === undefined || fieldsPermited[col.key] === 1 || col.isAction;
+    return col.key === "job_id" ||
+      col.key === "job_title" ||
+      col.key === "Note" ||
+      fieldsPermited[col.key] === undefined ||
+      fieldsPermited[col.key] === "1" ||
+      fieldsPermited[col.key] === 1 || col.isAction;
   });
   return (
     <>

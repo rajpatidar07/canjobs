@@ -968,8 +968,53 @@ const NewUserProfile = (props) => {
                                     </DropdownButton>
                                   )}
                               </div>
+                              <hr className={PersonalDetail.marital_status &&
+                                PersonalDetail.marital_status.toLowerCase() === "married" ? "my-3" : "d-none"} />
+                              <div className={PersonalDetail.marital_status &&
+                                PersonalDetail.marital_status.toLowerCase() === "married" ? "d-flex align-items-center" : "d-none"}>
+                                <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
+
+                                  {PersonalDetail.marital_status &&
+                                    PersonalDetail.marital_status.toLowerCase() === "married" &&
+                                    (PersonalDetail.partner_name ||
+                                      PersonalDetail.child_name ||
+                                      PersonalDetail.country_of_residence) ? (
+                                    <>
+                                      {PersonalDetail.partner_name && (
+                                        <div className="info_box text-left text-capitalize" title="Partner Name">
+                                          <span className="font-size-3 text-smoke mr-7 text-capitalize">
+                                            Partner Name: <b>{PersonalDetail.partner_name}</b>
+                                          </span>
+                                        </div>
+                                      )}
+
+                                      {PersonalDetail.child_name && (
+                                        <div className="info_box text-left text-capitalize" title="Child Name">
+                                          <span className="font-size-3 text-smoke mr-7 text-capitalize">
+                                            Child Name: <b>{PersonalDetail.child_name}</b>
+                                          </span>
+                                        </div>
+                                      )}
+
+                                      {PersonalDetail.country_of_residence && (
+                                        <div
+                                          className="info_box text-left text-capitalize"
+                                          title="Country of Residence"
+                                        >
+                                          <span className="font-size-3 text-smoke mr-7 text-capitalize">
+                                            Country of Residence: <b>{PersonalDetail.country_of_residence}</b>
+                                          </span>
+                                        </div>
+                                      )}
+                                    </>
+                                  ) : <div>
+                                    <p className="text-center">No Spouse and children Data Found</p>
+                                  </div>}
+                                </div>
+                              </div>
                               <hr className="my-3" />
                               <div className="d-flex align-items-center">
+
                                 {PersonalDetail.email === "" ||
                                   PersonalDetail.length === 0 ||
                                   (!PersonalDetail.current_location &&
@@ -986,6 +1031,7 @@ const NewUserProfile = (props) => {
                                 ) : (
                                   <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
                                     <div className="info_box text-left text-capitalize">
+
                                       {PersonalDetail.current_location ? (
                                         <span
                                           className="font-size-3 text-smoke  mr-7"
@@ -1066,41 +1112,6 @@ const NewUserProfile = (props) => {
                                         ""
                                       )}
                                     </div>
-                                    {PersonalDetail.marital_status === ("married" || "Married") ? (
-                                      <div
-                                        className="info_box text-left"
-                                        title="Partner Name"
-                                      >
-                                        <span className="font-size-3 text-smoke  mr-7 text-capitalize">
-                                          Partner Name:
-                                          <b>   {PersonalDetail.partner_name}</b>
-                                        </span>
-                                      </div>
-                                    ) : null}
-                                    {PersonalDetail.marital_status === ("married" || "Married") ? (
-                                      <div
-                                        className="info_box text-left"
-                                        title="Child Name"
-                                      >
-                                        <span className="font-size-3 text-smoke  mr-7 text-capitalize">
-                                          Child Name:
-                                          <b>
-                                            {PersonalDetail.child_name}</b>
-                                        </span>
-                                      </div>
-                                    ) : null}
-                                    {PersonalDetail.marital_status === ("married" || "Married") ? (
-                                      <div
-                                        className="info_box text-left"
-                                        title="Country of residence"
-                                      >
-                                        <span className="font-size-3 text-smoke  mr-7 text-capitalize">
-                                          Country of residence:
-                                          <b>
-                                            {PersonalDetail.country_of_residence}</b>
-                                        </span>
-                                      </div>
-                                    ) : null}
                                     {PersonalDetail.work_permit_canada ? (
                                       <div className="info_box text-left">
                                         <span
@@ -1125,10 +1136,9 @@ const NewUserProfile = (props) => {
                                       </div>
                                     ) : null}
 
+
                                   </div>
-
                                 )}
-
                                 {user_type === "company" ||
                                   props.self === "yes" ? null : (
                                   <CustomButton

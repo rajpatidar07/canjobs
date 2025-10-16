@@ -26,7 +26,7 @@ function Pagination(props) {
     props.setCurrentPage(1);
     props.setRecordsPerPage(newRecordsPerPage);
   };
-  console.log(props.total, "pppp", props.count,)
+  // console.log(props.total, "pppp", props.count,)
   return (
     <div className={props.count ===( "0" || 0) ? "d-none":"d-flex justify-content-between align-items-center"
 }>

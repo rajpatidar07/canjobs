@@ -471,7 +471,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
                       </span>
                     </h5>
                     <p className="font-size-4 font-weight-normal text-gray mb-0">
-                      Total Clients
+                      Total Employer
                     </p>
                   </div>
                 </Link>
@@ -742,7 +742,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
                   <div className="bg-white dashboard_card mb-7">
                     <div className="d-flex justify-content-between p-5 align-items-center">
                       <h3 className="font-size-5 px-3 m-0  ">
-                        Recently Added Clients
+                        Recently Added Employer
                       </h3>
                       <div className="d-flex justify-content-between p-0">
                         <div className="select_div mr-5">
@@ -770,7 +770,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
                           <Link
                             className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
                             to={"/adminclient"}
-                            title="View All Clients"
+                            title="View All Employer"
                           >
                             View All
                           </Link>
@@ -1210,7 +1210,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
                                   : tableName === "employeeTable"
                                   ? "Recent Added Candidate"
                                   : tableName === "employerTable"
-                                  ? "Recent Added Client"
+                                  ? "Recent Added Employer"
                                   : tableName === "taskTable"
                                   ? "Recent Added Task"
                                   : tableName === "lmiaTable"

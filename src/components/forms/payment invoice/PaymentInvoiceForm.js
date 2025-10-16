@@ -129,7 +129,7 @@ const PaymentInvoiceForm = (props) => {
 
   /*function to submit payment invoice  form */
   const handleSubmit = async (e, send, email) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     if (validate()) {
       try {
         let data = {
@@ -144,6 +144,7 @@ const PaymentInvoiceForm = (props) => {
           user_email: email ? email : selectedEmail,
         }
         setLoading(true)
+        setShowEmailModal(false);
         let res = await AddUpdatePaymentInvoiceApi(data)
         if (res.data.status === 1 || res.data.status === "1") {
           toast.success("Payment invoice Created successful", {
@@ -215,8 +216,8 @@ const PaymentInvoiceForm = (props) => {
     setState({ ...state, user_email: email });
     setSelectedEmail(email);
 
-    setShowEmailModal(false);
-    await handleSubmit({ preventDefault: () => { } }, 1, email);
+    // setShowEmailModal(false);
+    // await handleSubmit({ preventDefault: () => { } }, 1, email);
 
   };
 
@@ -793,6 +794,7 @@ const PaymentInvoiceForm = (props) => {
           selectedEmail={selectedEmail}
           onSelectEmail={handleSendWithEmail}
           title={"Select Email to Send Invoice"}
+          handleSubmit={handleSubmit}
         />
       </div>
     </Modal>
