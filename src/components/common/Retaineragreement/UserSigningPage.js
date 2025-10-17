@@ -250,7 +250,7 @@ export default function UserSigningPage() {
                                 <span key={index}>Client Name {index + 1}: <span className="text-capitalize">{item.client_first_name + " " + item.client_last_name + "   "} </span><br />
                                     <button className="btn btn-primary text-decoration-none flex-end" disabled={felidData.initial ? false : true} style={{ fontFamily: "cursive" }}
                                         onClick={(e) => addSign(e, index)}>
-                                        {" "}Add Signature
+                                        Add Signature
                                     </button>
                                 </span>
                         ))}

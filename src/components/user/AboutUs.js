@@ -20,7 +20,7 @@ export default function AboutUs() {
                                     </div>
                                 </div>
                             </div>
-                            {/* <!-- End Hero Form --> */}{" "}
+                            {/* <!-- End Hero Form --> */}
                         </div>
 
                     </div>

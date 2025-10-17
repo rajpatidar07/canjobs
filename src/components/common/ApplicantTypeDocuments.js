@@ -776,7 +776,7 @@ export default function ApplicantTypeDocuments(props) {
                           // fetchAllShareType();
                         }}
                       >
-                        <IoMdArrowBack />{" "}
+                        <IoMdArrowBack />
                         <span style={{ fontSize: 18 }}>Back to Folder</span>
                       </Link>
                     </div>

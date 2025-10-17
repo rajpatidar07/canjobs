@@ -45,7 +45,7 @@ export default function MainHomePage() {
                     textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
                   }}
                 >
-                  Best Immigration Consultancy in Calgary{" "}
+                  Best Immigration Consultancy in Calgary
                 </h2>
                 <p
                   className="card-text text-center text-white"

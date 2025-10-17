@@ -337,7 +337,7 @@ const PaymentInvoiceForm = (props) => {
                   {/* <div className="d-flex justify-content-start g-2 mt-3">
                     <input type="checkbox" className="pr-2 mr-2" />
                     <label htmlFor="" className="form-check-label">
-                      {" "}
+                      
                       Send Later
                     </label>
                   </div> */}
@@ -514,7 +514,7 @@ const PaymentInvoiceForm = (props) => {
           <div className={" row mt-8"}>
             <div className="form-group col-sm-6 p-0 pr-10">
               <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
-                Tags{" "}
+                Tags
               </label>
               <input type="text" className="form-control" name="tags" value={state.tags} onChange={onInputChange} />
               <button
@@ -526,7 +526,7 @@ const PaymentInvoiceForm = (props) => {
             </div>
             <div className="col-md-6 form-group">
               <label className="text-black-2 line-height-reset font-weight-semibold font-size-4">
-                Amounts are{" "}
+                Amounts are
               </label>
               <select name="amounts_are" value={state.amounts_are} onChange={onInputChange} id="" className="form-control">
                 <option value="Inclusive of tax">Inclusive of tax</option>
@@ -720,7 +720,7 @@ const PaymentInvoiceForm = (props) => {
             </div>
             <div className="py-1" style={{ minWidth: "250px" }}>
               <ul className="d-flex justify-content-between">
-                <li className="list-unstyled ">Sub Total {" "}</li>
+                <li className="list-unstyled ">Sub Total </li>
                 <li className="list-unstyled text-center" style={{
                   display: "inline-block",
                   width: 100,

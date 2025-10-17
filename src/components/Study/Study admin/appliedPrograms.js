@@ -107,7 +107,7 @@ export default function AppliedPrograms(props) {
               <AdminSidebar heading={"Applied Programs"} />
             ) : (
               <StudyAdminSidebar heading={"Applied Programs"} />
-            )}{" "}
+            )}
           </>
         ) : null}
 

@@ -283,7 +283,7 @@ function JobDetailPage(props) {
                         </span>
                         <p className="font-size-4 text-black-2 mb-7">
                           {jobDetatilsData.your_duties}
-                        </p>{" "}
+                        </p>
                       </>
                     ) : (
                       ""
@@ -295,7 +295,7 @@ function JobDetailPage(props) {
                         </span>
                         <p className="font-size-4 text-black-2 mb-7">
                           {jobDetatilsData.requirement}
-                        </p>{" "}
+                        </p>
                       </>
                     ) : (
                       ""

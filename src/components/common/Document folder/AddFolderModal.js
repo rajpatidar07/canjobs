@@ -152,7 +152,7 @@ export default function AddFolderModal(props) {
                       Cancel
                     </Button>
                   </div>
-                </div>{" "}
+                </div>
               </>
             ) : (
               <div className="form-group text-center">

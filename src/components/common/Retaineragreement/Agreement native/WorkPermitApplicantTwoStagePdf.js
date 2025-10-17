@@ -126,14 +126,14 @@ const WorkPermitApplicantTwoStagePdf = () => {
                             target="_blank"
                         >   info@canpathways.ca </Link> located at
                         <Text style={styles.textunderline}>
-                            {" "} 2618 Hopewell Pl NE #310, Calgary, AB T1Y 7J7,
+                             2618 Hopewell Pl NE #310, Calgary, AB T1Y 7J7,
                         </Text>
                         <Text style={styles.textunderline}></Text> Canada and Client
                         <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
 
                             {" " + (familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
                         </Text>
-                        {" "}(the “Client”)
+                        (the “Client”)
                         <Text className="p"> , located at </Text>
                         <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
 
@@ -823,18 +823,18 @@ const WorkPermitApplicantTwoStagePdf = () => {
                         <Text style={{ marginTop: 15, paddingLeft: 10 }}>
                             If application is refused because of an error or omission on the
                             part of the RCIC or the professional staff, Unused and/or unearned
-                            fees will be refunded in accordance with the {" "}
+                            fees will be refunded in accordance with the 
                             <Text style={styles.textunderline}>
                                 Client File Management Regulation
                             </Text>
-                            , the {" "}
+                            , the 
                             <Text style={[styles.textunderline, { paddingRight: 2 }]}>
                                 Client Account Regulation
                             </Text>
-                            and the {" "}
+                            and the 
                             <Text style={[styles.textunderline, { paddingRight: 2 }]}>
                                 Retainer Agreement Regulation
-                            </Text> {" "}
+                            </Text> 
                             and in the following manner:
                         </Text>
                         <Text style={{ marginTop: 5, paddingLeft: 10 }}>Cheque ___________________________________________________________________________</Text>
@@ -1047,7 +1047,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                             <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>15.2</Text>
                                 <Text style={{ flex: 1 }}>
-                                    Pursuant to Article 11 of the{" "}
+                                    Pursuant to Article 11 of the
                                     <Text style={styles.textunderline}>
                                         Code of Professional Ethics
                                     </Text>
@@ -1265,7 +1265,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                                     </View>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}>Family Name:{" "}: </Text>
+                                            <Text style={{ fontWeight: 'bold' }}>Family Name:: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     {familyJsonArray[0]?.client_last_name || ''}
@@ -1278,7 +1278,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                                 <View style={styles.clientForm}>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}>Address{" "}: </Text>
+                                            <Text style={{ fontWeight: 'bold' }}>Address: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     {felidData?.client_address.trim() !== "" ||
@@ -1292,7 +1292,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                                     </View>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}>Telephone Number{" "}: </Text>
+                                            <Text style={{ fontWeight: 'bold' }}>Telephone Number: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     {felidData?.client_telephone || ""}
@@ -1305,7 +1305,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                                 <View style={styles.clientForm}>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}> Cellphone Number{" "}: </Text>
+                                            <Text style={{ fontWeight: 'bold' }}> Cellphone Number: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     {felidData?.client_cellphone || ""}
@@ -1315,7 +1315,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                                     </View>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}> Fax Number{" "}: </Text>
+                                            <Text style={{ fontWeight: 'bold' }}> Fax Number: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     {felidData?.client_fax || ""}
@@ -1327,7 +1327,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                                 <View style={styles.clientForm}>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}>  E-mail Address:{" "} </Text>
+                                            <Text style={{ fontWeight: 'bold' }}>  E-mail Address: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     {felidData?.client_email || ""}
@@ -1344,7 +1344,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                                 <View style={styles.clientForm}>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}>  Given Name:{" "} </Text>
+                                            <Text style={{ fontWeight: 'bold' }}>  Given Name: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     Harpreet
@@ -1354,7 +1354,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                                     </View>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}>  Family Name:{" "} </Text>
+                                            <Text style={{ fontWeight: 'bold' }}>  Family Name: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     Kaur
@@ -1367,7 +1367,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                                 <View style={styles.clientForm}>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}> Address:{" "} </Text>
+                                            <Text style={{ fontWeight: 'bold' }}> Address: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7
@@ -1377,7 +1377,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                                     </View>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}> Telephone Number:{" "} </Text>
+                                            <Text style={{ fontWeight: 'bold' }}> Telephone Number: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     403-888-5308
@@ -1390,7 +1390,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                                 <View style={styles.clientForm}>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}> Fax Number:{" "} </Text>
+                                            <Text style={{ fontWeight: 'bold' }}> Fax Number: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}></Text>
                                             </View>
@@ -1398,7 +1398,7 @@ const WorkPermitApplicantTwoStagePdf = () => {
                                     </View>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}> E-mail Address:{" "} </Text>
+                                            <Text style={{ fontWeight: 'bold' }}> E-mail Address: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     <Link

@@ -83,7 +83,7 @@ export default function PayentForm({ data, user_id, user_type, Payment_id }) {
                       className={""} key={index}>
                       <div className="d-flex justify-content-between">
                         <p className="text-italic font-size-3 m-0">
-                          Payment on:{" "}
+                          Payment on:
                           <ConvertTime _date={res.created_at} format={"Do MM YYYY, h:mm:ss a"} />
                         </p>
                       </div>

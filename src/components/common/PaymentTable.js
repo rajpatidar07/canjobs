@@ -287,7 +287,7 @@ const PaymentTable = (props) => {
 
                       </td>
                       <td>
-                        {" "}
+                        
                         <td style={{ minWidth: "150px" }}>
                           <SelectBox
                             Width={"yes"} options={(props.adminList.map((option) => ({
@@ -348,7 +348,7 @@ const PaymentTable = (props) => {
                         />
                       </td>
                       <td>
-                        {" "}
+                        
                         <TableInput
                           value={state.due_date}
                           onChange={onInputChange}
@@ -358,7 +358,7 @@ const PaymentTable = (props) => {
                         />
                       </td>
                       <td>
-                        {" "}
+                        
                         <TableInput
                           value={state.payment_method}
                           onChange={onInputChange}
@@ -497,7 +497,7 @@ const PaymentTable = (props) => {
                           />
                         </td>
                         <td>
-                          {" "}
+                          
                           <TableInput
                             value={record.duplicate_payment}
                             onChange={(e) => handleUpdateChange(e, record.id, "duplicate_payment")}
@@ -507,7 +507,7 @@ const PaymentTable = (props) => {
                           />
                         </td>
                         <td>
-                          {" "}
+                          
                           <TableInput
                             value={record.due_date}
                             onChange={(e) => handleUpdateChange(e, record.id, "due_date")}
@@ -517,7 +517,7 @@ const PaymentTable = (props) => {
                           />
                         </td>
                         <td>
-                          {" "}
+                          
                           <TableInput
                             value={record.payment_method}
                             onChange={(e) => handleUpdateChange(e, record.id, "payment_method")}

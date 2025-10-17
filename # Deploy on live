@@ -1,5 +1,8 @@
 # Deploy on live
 
+Date: 17/10/25:Only frontend
+1. Remove the default values of consultation and payment invoice date selection box.
+
 Date: 16/10/25
 
 1. Change employer details to the Business details title in add update employer's form.

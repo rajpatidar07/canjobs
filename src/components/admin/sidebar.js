@@ -904,7 +904,7 @@ const AdminSidebar = (props) => {
                     <TbUser />
                   </span>
                   <span>
-                    {" "}
+                    
                     <TableInput
                       value={item.title}
                       onChange={(newValue) =>
@@ -947,7 +947,7 @@ const AdminSidebar = (props) => {
                   }}
                   onClick={() => toggleChildren(item.id, hasChildren)}
                 >
-                  {" "}
+                  
                   {hasChildren && <FaChevronDown />}
                 </div>
               </div>
@@ -997,7 +997,7 @@ const AdminSidebar = (props) => {
                               }}
                               className="text-danger"
                             >
-                              {" "}
+                              
                               Delete
                             </Link>
                           </li>

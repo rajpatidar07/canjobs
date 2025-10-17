@@ -719,7 +719,7 @@ export default function JobTable(props) {
                                 >
                                   <>
                                     <p className="m-0 text-truncate text-black-2 font-weight-bold text-capitalize">
-                                      {job.job_title}{" "}
+                                      {job.job_title}
                                       {job.employement
                                         ? `(${job.employement})`
                                         : ""}

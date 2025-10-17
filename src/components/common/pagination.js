@@ -35,8 +35,8 @@ function Pagination(props) {
           props.nPages > 1 ? " d-flex justify-content-center" : "d-none"
         }
       >
-        Showing{" "}
-        {props.count === "1" || props.count === 1 ? props.count : props.count}{" "}
+        Showing
+        {props.count === "1" || props.count === 1 ? props.count : props.count}
         of {props.total} records
       </small>
       <nav aria-label="Page navigation example ">

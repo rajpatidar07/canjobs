@@ -76,7 +76,7 @@ const NoteReply = () => {
                 //   );
                 // }}
               >
-                {" "}
+                
                 <CiEdit />
               </Link>
 
@@ -95,7 +95,7 @@ const NoteReply = () => {
                   //   ShowDeleteAlert(res);
                 }}
               >
-                {" "}
+                
                 <CiTrash color={"red"} />
               </Link>
             </p>

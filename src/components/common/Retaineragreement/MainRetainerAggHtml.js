@@ -173,7 +173,7 @@ export default function MainRetainerAggHtml({
               setApicall(true);
             }}
           >
-            <IoMdArrowBack />{" "}
+            <IoMdArrowBack />
             <span style={{ fontSize: 16 }}>Back to Agreements</span>
           </Link>
         </div>

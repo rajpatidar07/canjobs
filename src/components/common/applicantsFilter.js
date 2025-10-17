@@ -466,7 +466,7 @@ export default function ApplicantsFilter({
               selectsRange
               dateFormat="dd-MM-yyyy"
               className="form-control input-height"
-              placeholderText="Filter by Consultation Date"
+              placeholderText="DD-MM-YYYY DD-MM-YYYY"
             />
           </div>
         </>}
@@ -506,7 +506,7 @@ export default function ApplicantsFilter({
             onChange={(e) =>
               setLocalFilterValue(localFilterValue === 1 ? 0 : 1)
             }
-          />{" "}
+          />
           <span>Local</span>
         </label>
       </div>

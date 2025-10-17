@@ -98,8 +98,8 @@ const InitialConsultationAgreement = () => {
           <Text style={{ textAlign: "center", fontSize: "18px", marginBottom: 15 }}>INITIAL CONSULTATION AGREEMENT{"\n"}
             <Text style={{ textAlign: "center", fontSize: "12px", marginBottom: 15 }}>Between {"\n"} CAN Pathways Immigration Consultancy Ltd.{"\n"}</Text >
             <Text style={[styles.bold, { textAlign: "center", fontSize: "12px", marginBottom: 15 }]}>Client:</Text>
-            <Text style={[styles.textunderline, { textAlign: "center", fontSize: "12px", marginBottom: 15 }]}> {familyJsonArray[0]?.client_first_name || ""}{" "}
-              {familyJsonArray[0]?.client_last_name || ""}{" "}</Text>
+            <Text style={[styles.textunderline, { textAlign: "center", fontSize: "12px", marginBottom: 15 }]}> {familyJsonArray[0]?.client_first_name || ""}
+              {familyJsonArray[0]?.client_last_name || ""}</Text>
             {"\n"}{"\n"}
           </Text>
 
@@ -112,15 +112,15 @@ const InitialConsultationAgreement = () => {
           <Text style={styles.paragraph}>BY AND BETWEEN{"\n"}{"\n"}</Text>
           <Text>
             <Text style={styles.bold}>Harpreet Kaur</Text> (the "RCIC") Located
-            at:{" "}
+            at:
             <Text style={styles.bold}>
               CAN Pathways Immigration Consultancy Ltd.
-            </Text>{" "}
-            Address:{" "}
+            </Text>
+            Address:
             <Text style={styles.bold}>
               Unit #310, 2618 Hopewell Pl. NE, Calgary, AB, T1Y 717, Canada
-            </Text>{" "}
-            here in after referred to as:{" "}
+            </Text>
+            here in after referred to as:
             <Text style={styles.bold}>"Legal Representative/RCIC"{"\n"}{"\n"}</Text>
           </Text>
           <Text>

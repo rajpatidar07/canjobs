@@ -933,7 +933,7 @@ const AdminSidebar = (props) => {
                     <TbUser />
                   </span>
                   <span>
-                    {" "}
+                    
                     <TableInput
                       value={item.title}
                       onChange={(newValue) =>

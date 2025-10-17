@@ -15,15 +15,14 @@ import SelectBox from "../common/Common function/SelectBox";
 import filterjson from "../json/filterjson";
 import CommonThreeDots from "../common/Common function/commonThreeDots";
 import { getallEmployeeData } from "../../api/api";
-import GetThirtyDaysAgo from "../common/Common function/GetThirtyDaysAgo";
 
 
 const ManageConsultation = () => {
   // const [showdropdown, setShowdropdown] = useState(false);
   // const [searchQuery, setSearchQuery] = useState("");
   const [consultationOptedFilterValue, setConsultationOptedFilterValue] = useState("");
-  const [consultationStartDateFilterValue, setConsultationStartDateFilterValue] = useState(GetThirtyDaysAgo());
-  const [consultationEndDateFilterValue, setConsultationEndDateFilterValue] = useState(new Date());
+  const [consultationStartDateFilterValue, setConsultationStartDateFilterValue] = useState("");
+  const [consultationEndDateFilterValue, setConsultationEndDateFilterValue] = useState("");
   const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
   const [statusFilterValue, setStatusFilterValue] = useState("");
   // const [selectedAdminId, setSelectedAdminId] = useState(null);
@@ -299,7 +298,7 @@ const ManageConsultation = () => {
                     selectsRange
                     dateFormat="dd-MM-yyyy"
                     className="form-control input-height"
-                    placeholderText="Filter by Consultation Date"
+                    placeholderText="DD-MM-YYYY DD-MM-YYYY"
                   />
                 </div>
               </div>

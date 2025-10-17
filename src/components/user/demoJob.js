@@ -53,7 +53,7 @@ function DemoJob() {
                         <div className="col-lg-12 col-12 translateY-25 pt-lg-12 pb-lg-33 pb-md-28 pb-xs-26 pb-29 pt-md-20">
                             <SearchForm />
                         </div>
-                        {/* <!-- End Hero Form --> */}{" "}
+                        {/* <!-- End Hero Form --> */}
                     </div>
 
                 </div>

@@ -71,7 +71,7 @@ function EmployeeHomePage() {
                 setSearch={setSearch}
               />
             </div>
-            {/* <!-- End Hero Form --> */}{" "}
+            {/* <!-- End Hero Form --> */}
           </div>
 
         </div>
@@ -311,7 +311,7 @@ function EmployeeHomePage() {
                                 <a className="btn btn-outline-green text-uppercase" href="http://localhost:3000/">Explore All</a>
                             </div>
                         </div> */}
-            {/* <!-- Section Button End --> */}{" "}
+            {/* <!-- Section Button End --> */}
           </div>
           {/* <!-- End Section Top --> */}
           <div className="row justify-content-center">
@@ -634,7 +634,7 @@ function EmployeeHomePage() {
                 </div>
               </a>
             </div> */}
-            {/* <!-- End Single Category --> */}{" "}
+            {/* <!-- End Single Category --> */}
           </div>
         </div>
       </div>
@@ -657,7 +657,7 @@ function EmployeeHomePage() {
                   plug-and-play networks. Dynamically procrastinate
                 </p>
               </div>
-              {/* <!-- section-title end --> */}{" "}
+              {/* <!-- section-title end --> */}
             </div>
           </div>
           <div className="row justify-content-center d-none">
@@ -675,7 +675,7 @@ function EmployeeHomePage() {
                   src="image/l2/png/blog-img1.png"
                   className="card-img-top"
                   alt="..."
-                />{" "}
+                />
                 {/* <!-- card img end --> */}
                 {/* <!-- card-body start --> */}
                 <div className="card-body pt-11 px-0 pb-0">
@@ -728,13 +728,13 @@ function EmployeeHomePage() {
                         </a>
                       </p>
                     </div>
-                    {/* <!-- media body start --> */}{" "}
+                    {/* <!-- media body start --> */}
                   </div>
-                  {/* <!-- media end --> */}{" "}
+                  {/* <!-- media end --> */}
                 </div>
-                {/* <!-- card-body end --> */}{" "}
+                {/* <!-- card-body end --> */}
               </div>
-              {/* <!-- card end --> */}{" "}
+              {/* <!-- card end --> */}
             </div>
             {/* <!-- single blog end --> */}
             {/* <!-- single blog start --> */}
@@ -806,13 +806,13 @@ function EmployeeHomePage() {
                         </a>
                       </p>
                     </div>
-                    {/* <!-- media body start --> */}{" "}
+                    {/* <!-- media body start --> */}
                   </div>
-                  {/* <!-- media end --> */}{" "}
+                  {/* <!-- media end --> */}
                 </div>
-                {/* <!-- card-body end --> */}{" "}
+                {/* <!-- card-body end --> */}
               </div>
-              {/* <!-- card end --> */}{" "}
+              {/* <!-- card end --> */}
             </div>
             {/* <!-- single blog end --> */}
             {/* <!-- single blog start --> */}
@@ -861,7 +861,7 @@ function EmployeeHomePage() {
                       src="image/l2/png/blog-user-img3.png"
                       className="align-self-center circle-54 mr-3"
                       alt=""
-                    />{" "}
+                    />
                     {/* <!-- media img start --> */}
                     {/* <!-- media body start --> */}
                     <div className="media-body pl-4 pt-2">
@@ -882,15 +882,15 @@ function EmployeeHomePage() {
                         </a>
                       </p>
                     </div>
-                    {/* <!-- media body start --> */}{" "}
+                    {/* <!-- media body start --> */}
                   </div>
-                  {/* <!-- media end --> */}{" "}
+                  {/* <!-- media end --> */}
                 </div>
-                {/* <!-- card-body end --> */}{" "}
+                {/* <!-- card-body end --> */}
               </div>
-              {/* <!-- card end --> */}{" "}
+              {/* <!-- card end --> */}
             </div>
-            {/* <!-- single blog end --> */}{" "}
+            {/* <!-- single blog end --> */}
           </div>
         </div>
       </div>

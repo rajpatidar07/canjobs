@@ -232,7 +232,7 @@ function FollowupTable(props) {
                     <th className="bg-white">No Data Found</th>
                   ) : (
                     <th className="bg-white"></th>
-                  )}{" "}
+                  )}
                   <th className="bg-white"></th>
                   <th className="bg-white"></th>
                   <th className="bg-white"></th>

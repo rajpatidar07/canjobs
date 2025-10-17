@@ -100,7 +100,7 @@ function RazorPay() {
     <div>
       <Button className="btn btn-primary" onClick={handlePay}>
         PAY
-      </Button>{" "}
+      </Button>
       {loading && <h3>...Loading please wait</h3>}
     </div>
   );

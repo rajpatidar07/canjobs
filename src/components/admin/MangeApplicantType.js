@@ -84,7 +84,7 @@ export default function ManageApplicantType(props) {
             <div className="mb-4 align-items-center">
               <div className="page___heading">
                 <h3 className="font-size-6 mb-0">Applicant Type</h3>
-              </div>{" "}
+              </div>
             </div>
             {showApplicantTypeForm && (
               <AddApplicantType

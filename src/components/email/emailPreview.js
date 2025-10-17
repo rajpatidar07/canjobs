@@ -108,15 +108,15 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
           <div className="email-content">
             <div className="email-header">
               <p className="px-5 py-3 border-bottom">
-                <b className="font-size-2">FROM:</b>{" "}
+                <b className="font-size-2">FROM:</b>
                 {singleEmailData.sender.emailAddress.address}
               </p>
               <p className="px-5 py-3 border-bottom">
-                <b className="font-size-2">TO:</b>{" "}
+                <b className="font-size-2">TO:</b>
                 {singleEmailData.toRecipients[0].emailAddress.address}
               </p>
               <p className="font-size-3 font-weight-bold px-5 py-3 border-bottom">
-                <b className="font-size-2">SUBJECT:</b>{" "}
+                <b className="font-size-2">SUBJECT:</b>
                 {decodeEmailSubject(singleEmailData.subject)}
               </p>
             </div>

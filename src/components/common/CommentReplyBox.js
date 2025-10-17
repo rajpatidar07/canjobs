@@ -71,7 +71,7 @@ export default function CommentReplyBox({
                           handleUpdateReplyLinkClick(replyItem);
                         }}
                       >
-                        {" "}
+                        
                         <CiEdit />
                       </Link>
                       <span

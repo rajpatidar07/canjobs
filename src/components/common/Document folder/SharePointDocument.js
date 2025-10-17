@@ -852,7 +852,7 @@ export default function SharePointDocument({
                         setMentionAdminShowDropDown(false);
                       }}
                     >
-                      <IoMdArrowBack />{" "}
+                      <IoMdArrowBack />
                       <span style={{ fontSize: 18 }}>Back to Folder</span>
                     </Link>
                     {/* Mention admin code */}

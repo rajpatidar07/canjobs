@@ -172,7 +172,7 @@ const EmployerRetainerAgreementPdf = () => {
             Retainer Agreement
           </Text>
           <Text style={[styles.mb5]}>
-            THIS RETAINER AGREEMENT is made on{" "}
+            THIS RETAINER AGREEMENT is made on
             {felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" ? (
               <Text style={[{ borderBottomWidth: 1, borderBottomColor: "black" }, styles.underline]}>
                 {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <CommonRetainerAgreementDate _date={felidData?.agreement_date} format={"llll"} />}as
@@ -182,7 +182,7 @@ const EmployerRetainerAgreementPdf = () => {
             )}
           </Text>
           <Text>
-            Program:{" "}
+            Program:
             <Text style={[styles.textBold, styles.mb5, styles.underline]}>
               Application for Labour Market Impact Assessment (LMIA)+ Recruitment (if applicable)
             </Text>
@@ -193,23 +193,23 @@ const EmployerRetainerAgreementPdf = () => {
             <Text style={[styles.subtitle]}>1. Contact Information</Text>
             <Text style={[styles.textBold, { marginVertical: 5 }]}>Between Client</Text>
             <Text>
-              • Name Of Client:{" "}
+              • Name Of Client:
               {familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name ? (
                 <Text style={[{ borderBottomWidth: 1, borderBottomColor: "black", textTransform: "capitalize" }, styles.underline]}>
                   {familyJsonArray[0]?.client_first_name} {familyJsonArray[0]?.client_last_name || ""}
                 </Text>
               ) : (
                 "_____________________"
-              )}{" "}
+              )}
               (here in after called the "Client")
             </Text>
             <Text>  • Name of Business {felidData?.business_name ? <Text style={[{ borderBottomWidth: 1, borderBottomColor: "black" }, styles.underline]}>{felidData?.business_name}</Text> : "____________________________"}(here in after called the "Client")</Text>
             <Text>
-              • Business Address:{" "}
+              • Business Address:
               {felidData?.client_address ? <Text style={[{ borderBottomWidth: 1, borderBottomColor: "black" }, styles.underline]}>{felidData?.client_address}</Text> : "____________________________"}
             </Text>
             <Text>
-              • Phone:{" "}
+              • Phone:
               {felidData?.client_contact ? (
                 <Text style={[{ borderBottomWidth: 1, borderBottomColor: "black" }, styles.underline]}>{felidData?.client_contact}</Text>
               ) : (
@@ -217,7 +217,7 @@ const EmployerRetainerAgreementPdf = () => {
               )}
             </Text>
             <Text>
-              • Email:{" "}
+              • Email:
 
               {felidData?.client_email ? <Text style={[{ borderBottomWidth: 1, borderBottomColor: "black" }, styles.underline]}>{felidData?.client_email}</Text> : "____________________________"}
             </Text>

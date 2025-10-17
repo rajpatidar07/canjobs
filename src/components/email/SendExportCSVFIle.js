@@ -151,7 +151,7 @@ export default function SendExportCSVFIle(props) {
                                             size="sm"
                                             role="status"
                                             aria-hidden="true"
-                                        />{" "}
+                                        />
                                         Sending...
                                     </>
                                 ) : (

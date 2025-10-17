@@ -245,7 +245,7 @@ function CompanyProfileDetail(props) {
                           ? getInitials(employerData?.company_name)
                           : ""}
                       </p>
-                    )}{" "}
+                    )}
                   </div>
                   <div className="text_box text-left w-100 text-capitalize">
                     <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center">

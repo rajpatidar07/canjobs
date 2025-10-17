@@ -174,7 +174,7 @@ export default function ActivityTable(props) {
                         {data.Candidate_name === ("" || undefined || null)
                           ? "Candidate"
                           : data.Candidate_name}
-                      </Link>{" "}
+                      </Link>
                         <span className="text-capitalize">{activity_json[`${data.status}`]?.replace("Miscellaneous", data.action_type)}</span>
                         {/* {" for "} */}
                         {" by "}

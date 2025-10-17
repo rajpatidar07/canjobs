@@ -122,14 +122,14 @@ const AlbertaPnpPdf = () => {
                             target="_blank"
                         >   info@canpathways.ca </Link> located at
                         <Text style={styles.textunderline}>
-                            {" "}   Hopewell Pl NE #310 Calgary, AB T1Y 7J7,
+                               Hopewell Pl NE #310 Calgary, AB T1Y 7J7,
                         </Text>
                         <Text style={styles.textunderline}></Text> Canada and Client
                         <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
 
                             {" " + (familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
                         </Text>
-                        {" "}(the “Client”)
+                        (the “Client”)
                         <Text className="p"> , located at </Text>
                         <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
 
@@ -797,18 +797,18 @@ const AlbertaPnpPdf = () => {
                         <Text style={{ marginTop: 15, paddingLeft: 10 }}>
                             If application is refused because of an error or omission on the
                             part of the RCIC or the professional staff, Unused and/or unearned
-                            fees will be refunded in accordance with the {" "}
+                            fees will be refunded in accordance with the 
                             <Text style={styles.textunderline}>
                                 Client File Management Regulation
                             </Text>
-                            , the {" "}
+                            , the 
                             <Text style={styles.textunderline}>
                                 Client Account Regulation
                             </Text>
-                            and the {" "}
+                            and the 
                             <Text style={styles.textunderline}>
                                 Retainer Agreement Regulation
-                            </Text> {" "}
+                            </Text> 
                             and in the following manner:
                         </Text>
                         <Text style={{ marginTop: 5, paddingLeft: 10 }}>Cheque ___________________________________________________________________________</Text>
@@ -1021,7 +1021,7 @@ const AlbertaPnpPdf = () => {
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>15.2</Text>
                                 <Text style={{ flex: 1 }}>
-                                    Pursuant to Article 11 of the{" "}
+                                    Pursuant to Article 11 of the
                                     <Text style={styles.textunderline}>
                                         Code of Professional Ethics
                                     </Text>
@@ -1239,7 +1239,7 @@ const AlbertaPnpPdf = () => {
                                     </View>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}>Family Name:{" "}: </Text>
+                                            <Text style={{ fontWeight: 'bold' }}>Family Name:: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     {familyJsonArray[0]?.client_last_name || ''}
@@ -1252,7 +1252,7 @@ const AlbertaPnpPdf = () => {
                                 <View style={styles.clientForm}>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}>Address{" "}: </Text>
+                                            <Text style={{ fontWeight: 'bold' }}>Address: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     {felidData?.client_address.trim() !== "" ||
@@ -1266,7 +1266,7 @@ const AlbertaPnpPdf = () => {
                                     </View>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}>Telephone Number{" "}: </Text>
+                                            <Text style={{ fontWeight: 'bold' }}>Telephone Number: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     {felidData?.client_telephone || ""}
@@ -1279,7 +1279,7 @@ const AlbertaPnpPdf = () => {
                                 <View style={styles.clientForm}>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}> Cellphone Number{" "}: </Text>
+                                            <Text style={{ fontWeight: 'bold' }}> Cellphone Number: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     {felidData?.client_cellphone || ""}
@@ -1289,7 +1289,7 @@ const AlbertaPnpPdf = () => {
                                     </View>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}> Fax Number{" "}: </Text>
+                                            <Text style={{ fontWeight: 'bold' }}> Fax Number: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     {felidData?.client_fax || ""}
@@ -1301,7 +1301,7 @@ const AlbertaPnpPdf = () => {
                                 <View style={styles.clientForm}>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}>  E-mail Address:{" "} </Text>
+                                            <Text style={{ fontWeight: 'bold' }}>  E-mail Address: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     {felidData?.client_email || ""}
@@ -1318,7 +1318,7 @@ const AlbertaPnpPdf = () => {
                                 <View style={styles.clientForm}>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}>  Given Name:{" "} </Text>
+                                            <Text style={{ fontWeight: 'bold' }}>  Given Name: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     Harpreet
@@ -1328,7 +1328,7 @@ const AlbertaPnpPdf = () => {
                                     </View>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}>  Family Name:{" "} </Text>
+                                            <Text style={{ fontWeight: 'bold' }}>  Family Name: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     Kaur
@@ -1341,7 +1341,7 @@ const AlbertaPnpPdf = () => {
                                 <View style={styles.clientForm}>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}> Address:{" "} </Text>
+                                            <Text style={{ fontWeight: 'bold' }}> Address: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7
@@ -1351,7 +1351,7 @@ const AlbertaPnpPdf = () => {
                                     </View>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}> Telephone Number:{" "} </Text>
+                                            <Text style={{ fontWeight: 'bold' }}> Telephone Number: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     403-888-5308
@@ -1364,7 +1364,7 @@ const AlbertaPnpPdf = () => {
                                 <View style={styles.clientForm}>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}> Fax Number:{" "} </Text>
+                                            <Text style={{ fontWeight: 'bold' }}> Fax Number: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}></Text>
                                             </View>
@@ -1372,7 +1372,7 @@ const AlbertaPnpPdf = () => {
                                     </View>
                                     <View style={styles.clientFormChild}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontWeight: 'bold' }}> E-mail Address:{" "} </Text>
+                                            <Text style={{ fontWeight: 'bold' }}> E-mail Address: </Text>
                                             <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                                                 <Text style={{ textTransform: 'capitalize' }}>
                                                     <Link
@@ -1423,11 +1423,11 @@ const AlbertaPnpPdf = () => {
                         AUTHORIZATION
                     </Text>
                     <Text style={{ marginTop: 15 }}>
-                        I {" "}
+                        I 
                         <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
                             {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
                         </Text>
-                        {" "} ( here in after referred to as the “client”), here by authorize and
+                         ( here in after referred to as the “client”), here by authorize and
                         appoint Harpreet kaur (here in after referred to as the “RCIC” with a
                         CICC# R533393), of CAN Pathways Immigration consultancy
                         ltd.,(here in after referred to as the “firm”), to represent me in my

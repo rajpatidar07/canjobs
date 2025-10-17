@@ -936,7 +936,7 @@ const getHierarchy = (id) => {
                     <option value={""}>Select partner</option>
                     {agentList.map((item) => (
                       <option value={item.id}>
-                        {item.u_id + " " + item.name}{" "}
+                        {item.u_id + " " + item.name}
                       </option>
                     ))}
                   </select>
@@ -991,7 +991,7 @@ const getHierarchy = (id) => {
                     htmlFor="work_permit_canada"
                     className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                   >
-                    Work Permit Of Canada:{" "}
+                    Work Permit Of Canada:
                     <span className="text-danger">*</span>
                   </label>
                   <select

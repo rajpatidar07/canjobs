@@ -124,7 +124,7 @@ function SearchForm({ setSearch, setJobLocation, setCategoryFilterValue }) {
                         {item.label}
                       </option>
                     );
-                  })}{" "}
+                  })}
                 </select> */}
                 <SelectBox
                   Width={"yes"}
@@ -134,7 +134,7 @@ function SearchForm({ setSearch, setJobLocation, setCategoryFilterValue }) {
                   onChange={onSelectChange}
                 />
               </div>
-            )}{" "}
+            )}
           </div>
           {/* <!-- ./select-city ends --> */}
           <button
@@ -167,7 +167,7 @@ function SearchForm({ setSearch, setJobLocation, setCategoryFilterValue }) {
               setCategoryFilterValue={setCategoryFilterValue}
             />
           </div>
-        )}{" "}
+        )}
       </div>
     </form>
   );

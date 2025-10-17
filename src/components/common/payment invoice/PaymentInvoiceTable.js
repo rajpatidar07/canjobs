@@ -251,7 +251,7 @@ export default function PaymentInvoiceTable(props) {
                                   title="Record Payment"
                                 >
                                   <span className="text-gray px-2">
-                                    <BsRecordCircle />{" "}
+                                    <BsRecordCircle />
                                   </span>
                                 </button> */}
 
@@ -313,7 +313,7 @@ export default function PaymentInvoiceTable(props) {
                                   title="Payment Method"
                                 >
                                   <span className="text-gray px-2">
-                                    {" "}
+                                    
                                     <RiSecurePaymentLine />
                                   </span>
                                 </button> */}

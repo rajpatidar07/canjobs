@@ -104,7 +104,7 @@ export default function StudyHome() {
                                     </div>
                                 </div>
                             </>}
-                        {/* <!-- End Hero Form --> */}{" "}
+                        {/* <!-- End Hero Form --> */}
                     </div>
 
                 </div>

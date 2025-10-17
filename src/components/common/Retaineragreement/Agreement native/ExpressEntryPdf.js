@@ -214,7 +214,7 @@ const ExpressEntryPdf = () => {
             RCIC Membership Number: R533393
           </Text>
           <Text style={{ fontWeight: "bold" }}>
-            Client File Number:{" "}
+            Client File Number:
             {felidData?.client_file_no ? <Text style={styles.textunderline}>{felidData?.client_file_no}</Text> : "________________"}
           </Text>
         </View>
@@ -240,12 +240,12 @@ const ExpressEntryPdf = () => {
               className="a"
               target="_blank"
             >
-              {" "}
-              info@canpathways.ca{" "}
+              
+              info@canpathways.ca
             </Link>
             located at
             <Text style={styles.textunderline}>
-              {" "}
+              
               2618 Hopewell Pl NE #310, Calgary, AB T1Y 7J7
             </Text>
             <Text style={styles.textunderline}></Text> Canada and Client
@@ -257,7 +257,7 @@ const ExpressEntryPdf = () => {
                 (familyJsonArray[0]?.client_first_name || "") +
                 " " +
                 (familyJsonArray[0]?.client_last_name || " ")}
-            </Text>{" "}
+            </Text>
             (the “Client”)
             <Text className="p"> , located at </Text>
             <Text
@@ -269,7 +269,7 @@ const ExpressEntryPdf = () => {
             ,{"\n"}
             <Text >
               Email<Text style={styles.textunderline} className="para_gap">{" " + (felidData?.client_email || "     ")},
-              </Text></Text>{" "}
+              </Text></Text>
             <Text >
               Contact number   <Text style={styles.textunderline} className="para_gap">{" " + (felidData?.client_contact || "     ")}</Text>.
             </Text>
@@ -373,7 +373,7 @@ const ExpressEntryPdf = () => {
             </Text>
             <View style={{ paddingLeft: 10 }}>
               <Text>
-                (a)Summary of preliminary advice given to the client{" "}
+                (a)Summary of preliminary advice given to the client
                 {felidData?.summary ? (
                   <Text style={styles.textunderline}>{felidData?.summary}</Text>
                 ) : (
@@ -1032,18 +1032,18 @@ const ExpressEntryPdf = () => {
             <Text style={{ marginTop: 15, paddingLeft: 10 }}>
               If application is refused because of an error or omission on the
               part of the RCIC or the professional staff, Unused and/or unearned
-              fees will be refunded in accordance with the{" "}
+              fees will be refunded in accordance with the
               <Text style={styles.textunderline}>
                 Client File Management Regulation
               </Text>
-              , the{" "}
+              , the
               <Text style={styles.textunderline}>
                 Client Account Regulation
               </Text>
-              and the{" "}
+              and the
               <Text style={styles.textunderline}>
                 Retainer Agreement Regulation
-              </Text>{" "}
+              </Text>
               and in the following manner:
             </Text>
             <Text style={{ marginTop: 5, paddingLeft: 10 }}>
@@ -1267,7 +1267,7 @@ const ExpressEntryPdf = () => {
               <View style={{ marginTop: 20, flexDirection: "row" }}>
                 <Text style={{ width: 40, fontWeight: "bold" }}>15.2</Text>
                 <Text style={{ flex: 1 }}>
-                  Pursuant to Article 11 of the{" "}
+                  Pursuant to Article 11 of the
                   <Text style={styles.textunderline}>
                     Code of Professional Ethics
                   </Text>
@@ -1530,7 +1530,7 @@ const ExpressEntryPdf = () => {
                   </View>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}>Family Name:{" "}: </Text>
+                      <Text style={{ fontWeight: 'bold' }}>Family Name:: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           {familyJsonArray[0]?.client_last_name || ''}
@@ -1543,7 +1543,7 @@ const ExpressEntryPdf = () => {
                 <View style={styles.clientForm}>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}>Address{" "}: </Text>
+                      <Text style={{ fontWeight: 'bold' }}>Address: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           {felidData?.client_address.trim() !== "" ||
@@ -1557,7 +1557,7 @@ const ExpressEntryPdf = () => {
                   </View>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}>Telephone Number{" "}: </Text>
+                      <Text style={{ fontWeight: 'bold' }}>Telephone Number: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           {felidData?.client_telephone || ""}
@@ -1570,7 +1570,7 @@ const ExpressEntryPdf = () => {
                 <View style={styles.clientForm}>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}> Cellphone Number{" "}: </Text>
+                      <Text style={{ fontWeight: 'bold' }}> Cellphone Number: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           {felidData?.client_cellphone || ""}
@@ -1580,7 +1580,7 @@ const ExpressEntryPdf = () => {
                   </View>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}> Fax Number{" "}: </Text>
+                      <Text style={{ fontWeight: 'bold' }}> Fax Number: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           {felidData?.client_fax || ""}
@@ -1592,7 +1592,7 @@ const ExpressEntryPdf = () => {
                 <View style={styles.clientForm}>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}>  E-mail Address:{" "} </Text>
+                      <Text style={{ fontWeight: 'bold' }}>  E-mail Address: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           {felidData?.client_email || ""}
@@ -1609,7 +1609,7 @@ const ExpressEntryPdf = () => {
                 <View style={styles.clientForm}>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}>  Given Name:{" "} </Text>
+                      <Text style={{ fontWeight: 'bold' }}>  Given Name: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           Harpreet
@@ -1619,7 +1619,7 @@ const ExpressEntryPdf = () => {
                   </View>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}>  Family Name:{" "} </Text>
+                      <Text style={{ fontWeight: 'bold' }}>  Family Name: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           Kaur
@@ -1632,7 +1632,7 @@ const ExpressEntryPdf = () => {
                 <View style={styles.clientForm}>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}> Address:{" "} </Text>
+                      <Text style={{ fontWeight: 'bold' }}> Address: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7
@@ -1642,7 +1642,7 @@ const ExpressEntryPdf = () => {
                   </View>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}> Telephone Number:{" "} </Text>
+                      <Text style={{ fontWeight: 'bold' }}> Telephone Number: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           403-888-5308
@@ -1655,7 +1655,7 @@ const ExpressEntryPdf = () => {
                 <View style={styles.clientForm}>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}> Fax Number:{" "} </Text>
+                      <Text style={{ fontWeight: 'bold' }}> Fax Number: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}></Text>
                       </View>
@@ -1663,7 +1663,7 @@ const ExpressEntryPdf = () => {
                   </View>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}> E-mail Address:{" "} </Text>
+                      <Text style={{ fontWeight: 'bold' }}> E-mail Address: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           <Link
@@ -1785,7 +1785,7 @@ const ExpressEntryPdf = () => {
             AUTHORIZATION
           </Text>
           <Text style={{ marginTop: 15 }}>
-            I{" "}
+            I
             <Text
               style={[styles.textunderline, { textTransform: "capitalize" }]}
               className="para_gap"
@@ -2003,7 +2003,7 @@ const ExpressEntryPdf = () => {
                         }}
                       />
                     )}
-                  </View>{" "}
+                  </View>
                 </View>
               </View>
             </View>

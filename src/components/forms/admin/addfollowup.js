@@ -1077,7 +1077,7 @@ function Addfollowup(props) {
                                   </div>
                                   <div className="mb-0">
                                     <div className=" font-size-3 text-capitalize font-weight-bold">
-                                      {res.task_creator_user_name}{" "}
+                                      {res.task_creator_user_name}
                                     </div>
                                     <div
                                       className="  text-capitalize text-gray"
@@ -1142,7 +1142,7 @@ function Addfollowup(props) {
                                       );
                                     }}
                                   >
-                                    {" "}
+                                    
                                     <CiEdit />
                                   </Link>
 
@@ -1162,7 +1162,7 @@ function Addfollowup(props) {
                                       ShowDeleteAlert(res);
                                     }}
                                   >
-                                    {" "}
+                                    
                                     <CiTrash color={"red"} />
                                   </Link>
                                 </p>

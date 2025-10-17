@@ -79,7 +79,7 @@ function CompanyProfile(props) {
           {/* <!-- back Button End --> */}
           {isLoading ? (
             <div className="table-responsive main_table_div">
-              <Loader />{" "}
+              <Loader />
             </div>
           ) : (
             <div

@@ -99,8 +99,8 @@ const RecruitmentAgrement = () => {
           <Text style={{ textAlign: "center", fontSize: "18px", marginBottom: 15 }}>RETAINER AGREEMENT{"\n"}
             <Text style={{ textAlign: "center", fontSize: "12px", marginBottom: 15 }}>Between Harpreet Kaur{"\n"} CAN Pathways Immigration Consultancy Ltd.{"\n"}</Text >
             <Text style={[styles.bold, { textAlign: "center", fontSize: "12px", marginBottom: 15 }]}>Client:</Text>
-            <Text style={[styles.textunderline, { textAlign: "center", fontSize: "12px", marginBottom: 15 }]}> {familyJsonArray[0]?.client_first_name || "______________"}{" "}
-              {familyJsonArray[0]?.client_last_name || "_____________"}{" "}</Text>
+            <Text style={[styles.textunderline, { textAlign: "center", fontSize: "12px", marginBottom: 15 }]}> {familyJsonArray[0]?.client_first_name || "______________"}
+              {familyJsonArray[0]?.client_last_name || "_____________"}</Text>
           </Text>
           <Text style={styles.paragraph}>
             This Agreement ("the <Text style={styles.bold}>Agreement</Text>") is made on the date mentioned below.{"\n"}{"\n"}
@@ -108,7 +108,7 @@ const RecruitmentAgrement = () => {
             This <Text style={styles.bold}>RECRUITMENT AGREEMENT</Text> entered by and between{"\n"}
             <Text style={styles.bold}>CAN Pathways Immigration Consultancy Ltd.</Text> (the "Agency") with address at
             Unit #310, 2618 Hopewell PI. NE Calgary, AB. T1Y 717, Canada, represented by Registered Canadian Immigration
-            Consultant referred to as (RCIC) Harpreet Kaur, herein{" "}
+            Consultant referred to as (RCIC) Harpreet Kaur, herein
             <Text style={styles.bold}>"Legal Representative / Agent / Recruiter"</Text>.
             {"\n"}{"\n"}AND{"\n"}{"\n"}
             The <Text style={styles.bold}>"Candidate"</Text>, as his/her details appear in Appendix I of this present
@@ -126,8 +126,8 @@ const RecruitmentAgrement = () => {
         <View style={styles.section}>
           <View >
             <Text style={styles.text}>
-              1. The Candidate agrees to engage the services of{" "}
-              <Text style={styles.bold}>CAN Pathways Immigration Consultants Ltd.</Text>{" "}
+              1. The Candidate agrees to engage the services of
+              <Text style={styles.bold}>CAN Pathways Immigration Consultants Ltd.</Text>
               to assist in finding a suitable employer. The candidate agrees to utilize
               the services of the Agency for tasks such as candidate sourcing, resume
               screening, interview coordination, reference checks, and assistance with
@@ -240,7 +240,7 @@ const RecruitmentAgrement = () => {
                   </View>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}>Family Name:{" "}: </Text>
+                      <Text style={{ fontWeight: 'bold' }}>Family Name:: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           {familyJsonArray[0]?.client_last_name || ''}
@@ -253,7 +253,7 @@ const RecruitmentAgrement = () => {
                 <View style={styles.clientForm}>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}>Address{" "}: </Text>
+                      <Text style={{ fontWeight: 'bold' }}>Address: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           {felidData?.client_address.trim() !== "" ||
@@ -267,7 +267,7 @@ const RecruitmentAgrement = () => {
                   </View>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}>Telephone Number{" "}: </Text>
+                      <Text style={{ fontWeight: 'bold' }}>Telephone Number: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           {felidData?.client_telephone || ""}
@@ -280,7 +280,7 @@ const RecruitmentAgrement = () => {
                 <View style={styles.clientForm}>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}> Cellphone Number{" "}: </Text>
+                      <Text style={{ fontWeight: 'bold' }}> Cellphone Number: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           {felidData?.client_cellphone || ""}
@@ -290,7 +290,7 @@ const RecruitmentAgrement = () => {
                   </View>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}> Fax Number{" "}: </Text>
+                      <Text style={{ fontWeight: 'bold' }}> Fax Number: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           {felidData?.client_fax || ""}
@@ -302,7 +302,7 @@ const RecruitmentAgrement = () => {
                 <View style={styles.clientForm}>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}>  E-mail Address:{" "} </Text>
+                      <Text style={{ fontWeight: 'bold' }}>  E-mail Address: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           {felidData?.client_email || ""}
@@ -319,7 +319,7 @@ const RecruitmentAgrement = () => {
                 <View style={styles.clientForm}>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}>  Given Name:{" "} </Text>
+                      <Text style={{ fontWeight: 'bold' }}>  Given Name: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           Harpreet
@@ -329,7 +329,7 @@ const RecruitmentAgrement = () => {
                   </View>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}>  Family Name:{" "} </Text>
+                      <Text style={{ fontWeight: 'bold' }}>  Family Name: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           Kaur
@@ -342,7 +342,7 @@ const RecruitmentAgrement = () => {
                 <View style={styles.clientForm}>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}> Address:{" "} </Text>
+                      <Text style={{ fontWeight: 'bold' }}> Address: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7
@@ -352,7 +352,7 @@ const RecruitmentAgrement = () => {
                   </View>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}> Telephone Number:{" "} </Text>
+                      <Text style={{ fontWeight: 'bold' }}> Telephone Number: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           403-888-5308
@@ -365,7 +365,7 @@ const RecruitmentAgrement = () => {
                 <View style={styles.clientForm}>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}> Fax Number:{" "} </Text>
+                      <Text style={{ fontWeight: 'bold' }}> Fax Number: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}></Text>
                       </View>
@@ -373,7 +373,7 @@ const RecruitmentAgrement = () => {
                   </View>
                   <View style={styles.clientFormChild}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold' }}> E-mail Address:{" "} </Text>
+                      <Text style={{ fontWeight: 'bold' }}> E-mail Address: </Text>
                       <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
                         <Text style={{ textTransform: 'capitalize' }}>
                           <Link
@@ -417,11 +417,11 @@ const RecruitmentAgrement = () => {
                 AUTHORIZATION
               </Text>
               <Text style={{ marginTop: 5 }}>
-                I {" "}
+                I 
                 <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
                   {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
                 </Text>
-                {" "} ( here in after referred to as the “client”), here by authorize and
+                 ( here in after referred to as the “client”), here by authorize and
                 appoint Harpreet kaur (here in after referred to as the “RCIC” with a
                 CICC# R533393), of CAN Pathways Immigration consultancy
                 ltd.,(here in after referred to as the “firm”), to represent me in my

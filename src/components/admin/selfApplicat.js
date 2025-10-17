@@ -9,7 +9,7 @@ import UserProfile from "../user/profile";
 // import { GetFilter, GetAgentJson,getallAdminData } from "../../api/api";
 import EmployeeTable from "../common/employeeTable";
 import ApplicantsFilter from "../common/applicantsFilter";
-import GetThirtyDaysAgo from "../common/Common function/GetThirtyDaysAgo";
+// import GetThirtyDaysAgo from "../common/Common function/GetThirtyDaysAgo";
 
 function SelfApplicat(props) {
   /*Show modal states */
@@ -30,8 +30,8 @@ function SelfApplicat(props) {
   const [educationFilterValue, setEducationFilterValue] = useState("");
   const [interestFilterValue, setinterestFilterValue] = useState("");
   const [consultationOptedFilterValue, setConsultationOptedFilterValue] = useState("");
-  const [consultationStartDateFilterValue, setConsultationStartDateFilterValue] = useState(GetThirtyDaysAgo());
-  const [consultationEndDateFilterValue, setConsultationEndDateFilterValue] = useState(new Date());
+  const [consultationStartDateFilterValue, setConsultationStartDateFilterValue] = useState("");
+  const [consultationEndDateFilterValue, setConsultationEndDateFilterValue] = useState("");
   const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");

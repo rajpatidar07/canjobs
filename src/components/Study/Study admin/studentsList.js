@@ -71,7 +71,7 @@ export default function StudentList(props) {
               <AdminSidebar heading={"Students"} />
             ) : (
               <StudyAdminSidebar heading={"Students"} />
-            )}{" "}
+            )}
           </>
         ) : null}
 
