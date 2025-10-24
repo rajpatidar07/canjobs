@@ -49,6 +49,7 @@ import PaymentPage from "../common/payment invoice/PaymentPage";
 import PayentForm from "../forms/admin/payentForm";
 import ConvertTime from "../common/Common function/ConvertTime";
 import AddConsultationInCandidate from "../forms/admin/AddConsultationInCandidate";
+import ChatbotIcon from "../common/ChatBot.js/ChatbotIcon";
 // import ApplicantTypeTimeLine from "../common/ApplicantTypeTimeLine";
 // import useSessionCheck from "../common/user_session";
 // import AdobePDFViewer from "../common/Adobe/adobeFile";
@@ -1527,6 +1528,12 @@ const NewUserProfile = (props) => {
                                 )
                               )}
                             </div>
+                            <ChatbotIcon
+                              userDetails={{
+                                user_id: PersonalDetail.employee_id,
+                                user_type: "employee",
+                              }}
+                            />
                           </div>
                         </div>
                       </div>

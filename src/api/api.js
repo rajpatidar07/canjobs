@@ -4397,3 +4397,18 @@ export const DeleteConsultation = async (data) => {
   );
   return response;
 }
+
+/*Chat bot get api */
+export const getChat = async (user_id, user_type) => {
+  const res = await axios.post(`${API_URL}common/getChat`, {
+    context_user_id: user_id,
+    context_user_type: user_type,
+  });
+  return res.data;
+};
+
+/*Chat bot add update api */
+export const addUpdateChat = async data => {
+  const res = await axios.post(`${API_URL}common/addUpdateChat`, data);
+  return res.data;
+};

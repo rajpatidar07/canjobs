@@ -29,6 +29,7 @@ import { getInitials } from "../common/GetInitials";
 import PaymentPage from "../common/payment invoice/PaymentPage";
 import PayentForm from "../forms/admin/payentForm";
 import LimaContainer from "../admin/lmiaContainer";
+import ChatbotIcon from "../common/ChatBot.js/ChatbotIcon";
 // import LimaArrowProfile from "../common/LimaArrowProfile";
 function CompanyProfileDetail(props) {
   const user_type = localStorage.getItem("userType");
@@ -896,6 +897,11 @@ function CompanyProfileDetail(props) {
                               </CustomButton>
                             </div> */}
                           </div>
+                          <ChatbotIcon
+                            userDetails={{
+                              user_id: cid,
+                              user_type: "employer",
+                            }} />
                           <div className="col-md-12 col-lg-12 p-8 mt-5 bg-light rounded">
                             <div>
                               <h4 className="text-black-2 mb-0 font-size-5 d-flex align-items-center justify-content-space-between text-break">
