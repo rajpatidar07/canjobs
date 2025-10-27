@@ -28,7 +28,7 @@ export default function ChatbotModal({ show, handleClose, userDetails }) {
             sender_id:
                 user_type === "user"
                     ? user_id
-                    : user_type === "employer"
+                    : user_type === "company"
                         ? employer_id
                         : user_type === "admin"
                             ? admin_id
@@ -36,7 +36,7 @@ export default function ChatbotModal({ show, handleClose, userDetails }) {
             sender_type:
                 user_type === "user"
                     ? "employee"
-                    : user_type === "employer"
+                    : user_type === "company"
                         ? "employer"
                         : user_type === "admin"
                             ? admin_type
@@ -68,7 +68,7 @@ export default function ChatbotModal({ show, handleClose, userDetails }) {
             onHide={handleClose}
             centered
             size="md"
-            contentClassName="border-0 rounded-4 shadow-lg d-flex flex-row-reverse"
+            contentClassName="border-0 rounded-4 d-flex flex-row-reverse"
         >
             <div
                 className="card shadow-lg border-0"
@@ -108,7 +108,7 @@ export default function ChatbotModal({ show, handleClose, userDetails }) {
                                 msg.sender_id ===
                                 (user_type === "user"
                                     ? user_id
-                                    : user_type === "employer"
+                                    : user_type === "company"
                                         ? employer_id
                                         : user_type === "admin"
                                             ? admin_id
@@ -116,7 +116,7 @@ export default function ChatbotModal({ show, handleClose, userDetails }) {
                                 msg.sender_type ===
                                 (user_type === "user"
                                     ? "employee"
-                                    : user_type === "employer"
+                                    : user_type === "company"
                                         ? "employer"
                                         : user_type === "admin"
                                             ? admin_type
