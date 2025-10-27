@@ -767,7 +767,7 @@ function GlobalSearch() {
                 <div className="mt-3">
                   <p className="w-100 border-bottom font-weight-bold">Do you want to create a profile? Please consider one of the links below:</p>
                   <Link to="/selfemployee" className="btn btn-primary mr-2">Create Applicant</Link>
-                  <Link to="/adminclient" className="btn btn-primary">Create Employer</Link>
+                  <Link to="/employer" className="btn btn-primary">Create Employer</Link>
                 </div>
               </div>
                 : null)}

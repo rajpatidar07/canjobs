@@ -12,17 +12,30 @@ export default function ChatMessage({ message, isSender }) {
                 }`}
         >
             <div
-                className={`p-3 rounded-4 shadow-sm ${isSender ? "bg-primary text-white" : "bg-light text-dark border"
+                className={`p-3 shadow-sm ${isSender ? "text-white" : "text-dark bg-light border"
                     }`}
                 style={{
-                    maxWidth: "70%",
-                    wordWrap: "break-word",
+                    backgroundColor: isSender ? "#FA474A" : "#f1f1f1",
+                    borderRadius: isSender
+                        ? "18px 18px 4px 18px"
+                        : "18px 18px 18px 4px",
+                    maxWidth: "75%",
+                    wordBreak: "break-word",
+                    fontSize: "0.95rem",
+                    lineHeight: "1.5",
                 }}
             >
-                <p className="mb-1 small">{message.message}</p>
-                <p className="mb-0 text-end text-muted" style={{ fontSize: "0.7rem" }}>
+                <div>{message.message}</div>
+                <div
+                    style={{
+                        fontSize: "0.75rem",
+                        opacity: 0.7,
+                        textAlign: isSender ? "right" : "left",
+                        marginTop: "4px",
+                    }}
+                >
                     {formattedTime}
-                </p>
+                </div>
             </div>
         </div>
     );

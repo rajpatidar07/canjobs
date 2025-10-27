@@ -175,7 +175,7 @@ function MainLayout() {
     const allowedPaths = {
       admin: [
         "/adminprofile", "/dashboard", "/job", "/selfjob", "/category", "/lmia", "/visa", "/document", "/employee", "/selfemployee",
-        "/adminclient", "/assignedjobs", "/:eid", "/userpdf", "/managetasks", "/sharepoint_document",
+        "/employer", "/assignedjobs", "/:eid", "/userpdf", "/managetasks", "/sharepoint_document",
         "/client_detail", "/job_detail", "/partner_profile", "/followup", "/partner", "/partner_dashboard", "/daily_call_log",
         "/daily_hours_log", "/consultation", "/assigned_admin", "/activity_log", "/filter", "/interview", "/responses",
         "/lmia_dashboard", "/emailtemplate", "/notes", "/credentials", "/testpdfurl", "/resume/:id", "/daily_pages", "/email",
@@ -494,7 +494,7 @@ function MainLayout() {
               <Route path="/document" element={<Document />} />
               <Route path="/employee" element={<Employee />} />
               <Route path="/selfemployee" element={<SelfApplicat />} />
-              <Route path="/adminclient" element={<Employer />} />
+              <Route path="/employer" element={<Employer />} />
               <Route path="/adminprofile" element={<ManageAdmin />} />
               <Route path="/assignedjobs" element={<JobAssignedDashboard />} />
               <Route path="/:eid" element={<ValidateRoute />} />

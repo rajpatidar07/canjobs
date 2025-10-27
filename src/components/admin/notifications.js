@@ -258,7 +258,7 @@ function Notifications({
                         data.subject === "new_user_registered"
                           ? "/selfemployee"
                           : data.subject === "new_employer_registered"
-                            ? "/adminclient"
+                            ? "/employer"
                             : data.subject === "added_new_job"
                               ? "/job"
                               : data.subject === "applied_on_job"

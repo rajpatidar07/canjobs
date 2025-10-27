@@ -621,6 +621,16 @@ function CompanyProfileDetail(props) {
                       >
                         {/* <!-- Company Profile --> */}
 
+                        <div className="col-md-12  px-15 pt-5 pb-4 d-flex flex-row-reverse"
+                          style={{ top: "200px" }}>
+                          <div className="">
+                            <ChatbotIcon
+                              userDetails={{
+                                user_id: cid,
+                                user_type: "employer",
+                              }} />
+                          </div>
+                        </div>
                         <div className="company_detail_box w-100 row m-0 p-8">
                           <div className="bg-white row m-0 w-100 ">
                             <div className="col-md-12 col-sm-12 p-0 media align-items-center company_box media bg-light rounded p-8">
@@ -897,11 +907,6 @@ function CompanyProfileDetail(props) {
                               </CustomButton>
                             </div> */}
                           </div>
-                          <ChatbotIcon
-                            userDetails={{
-                              user_id: cid,
-                              user_type: "employer",
-                            }} />
                           <div className="col-md-12 col-lg-12 p-8 mt-5 bg-light rounded">
                             <div>
                               <h4 className="text-black-2 mb-0 font-size-5 d-flex align-items-center justify-content-space-between text-break">

@@ -230,7 +230,7 @@ const AdminSidebar = (props) => {
       "/managetasks": "Task Dashboard",
       "/selfemployee": "New Applicants",
       "/employee": "Manage Applicants",
-      "/adminclient": "Manage Employers",
+      "/employer": "Manage Employers",
       "/job": "Manage Jobs",
       "/selfjob": "Manage Self Jobs",
       "/visa": "Visa",
@@ -432,7 +432,7 @@ const AdminSidebar = (props) => {
         >
           <Link
             onClick={() => clearPageNo("Manage Employers")}
-            to="/adminclient"
+            to="/employer"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <BsBuildings className="sidebar_icon" />

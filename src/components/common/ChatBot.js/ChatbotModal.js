@@ -3,6 +3,7 @@ import { Modal, FormControl, Button } from "react-bootstrap";
 import { getChat, addUpdateChat } from "../../../api/api";
 import { FaPaperPlane } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
+import ChatMessage from "./ChatMessage";
 
 export default function ChatbotModal({ show, handleClose, userDetails }) {
     const [messages, setMessages] = useState([]);
@@ -60,17 +61,14 @@ export default function ChatbotModal({ show, handleClose, userDetails }) {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
-    const formatTime = (timestamp) => {
-        const date = new Date(timestamp);
-        return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-    };
+
 
     return (
         <Modal show={show}
             onHide={handleClose}
             centered
             size="md"
-            contentClassName="border-0 rounded-4 shadow-lg"
+            contentClassName="border-0 rounded-4 shadow-lg d-flex flex-row-reverse"
         >
             <div
                 className="card shadow-lg border-0"
@@ -125,38 +123,7 @@ export default function ChatbotModal({ show, handleClose, userDetails }) {
                                             : "agent");
 
                             return (
-                                <div
-                                    key={idx}
-                                    className={`d-flex mb-3 ${isSender ? "justify-content-end" : "justify-content-start"
-                                        }`}
-                                >
-                                    <div
-                                        className={`p-3 shadow-sm ${isSender ? "text-white" : "text-dark bg-light border"
-                                            }`}
-                                        style={{
-                                            backgroundColor: isSender ? "#FA474A" : "#f1f1f1",
-                                            borderRadius: isSender
-                                                ? "18px 18px 4px 18px"
-                                                : "18px 18px 18px 4px",
-                                            maxWidth: "75%",
-                                            wordBreak: "break-word",
-                                            fontSize: "0.95rem",
-                                            lineHeight: "1.5",
-                                        }}
-                                    >
-                                        <div>{msg.message}</div>
-                                        <div
-                                            style={{
-                                                fontSize: "0.75rem",
-                                                opacity: 0.7,
-                                                textAlign: isSender ? "right" : "left",
-                                                marginTop: "4px",
-                                            }}
-                                        >
-                                            {msg.created_at ? formatTime(msg.created_at) : ""}
-                                        </div>
-                                    </div>
-                                </div>
+                                <ChatMessage key={idx} message={msg} isSender={isSender} />
                             );
                         })
                     ) : (

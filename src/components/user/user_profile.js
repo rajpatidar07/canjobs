@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import EmployeeFooter from "../common/footer";
 import EmployementDetails from "../forms/user/employement";
 import PersonalDetails from "../forms/user/personal";
@@ -835,9 +835,25 @@ const NewUserProfile = (props) => {
                       role="tabpanel"
                       aria-labelledby="home-tab"
                     >
-                      {/*----About Employee----*/}
-                      <div className="row m-0 ">
-                        <div className="col-md-12 px-8 pt-8 pb-4">
+
+                      <div>
+
+                        {/*----Chatbot Icon----*/}
+                        <div className="row m-0 ">
+                          <div className="col-12 px-15 pt-5 pb-4 d-flex flex-row-reverse"
+                            style={{ top: "200px" }}>
+                            <div className="">
+                              <ChatbotIcon
+                                userDetails={{
+                                  user_id: eid,
+                                  user_type: "employee",
+                                }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        {/*----About Employee----*/}
+                        <div className="row m-0 ">
                           <div className="d-flex align-items-center rounded bg-light p-8 position-relative">
                             <Link
                               className="position-relative text-white"
@@ -889,85 +905,86 @@ const NewUserProfile = (props) => {
                               </h2>
                               <hr className="my-3" />
                               <div className="m-0 age_gender d-flex align-items-center">
-                                {PersonalDetail.gender ? (
-                                  <span className="bg-secondary rounded-pill font-size-3 px-3 py-2 text-white mr-2">
-                                    {PersonalDetail.gender === "female"
-                                      ? "Female"
-                                      : PersonalDetail.gender === "male"
-                                        ? "Male"
-                                        : "Other"}
-                                  </span>
-                                ) : null}
-                                {PersonalDetail.marital_status ? (
-                                  <><span className="bg-info rounded-pill font-size-3 px-3 py-2 text-white mr-2 text-capitalize">
-                                    {PersonalDetail.marital_status}
-                                  </span>
-                                  </>
-                                ) : null}
-                                {PersonalDetail.date_of_birth &&
-                                  PersonalDetail.date_of_birth !==
-                                  "0000-00-00" ? (
-                                  <span className="bg-warning rounded-pill font-size-3 px-3 py-2 text-white mr-2">
-                                    {moment().diff(
-                                      PersonalDetail.date_of_birth,
-                                      "years"
-                                    )}
-                                    Y
-                                  </span>
-                                ) : null}
-                                {(user_type === "admin" ||
-                                  user_type === "agent") && (
-                                    <DropdownButton
-                                      as={ButtonGroup}
-                                      title={
-                                        status === "1"
-                                          ? "New"
-                                          : status === "2"
-                                            ? "Prospect"
-                                            : status === "3"
-                                              ? "Lead"
-                                              : status === "4"
-                                                ? "Retained"
-                                                : status === "5"
-                                                  ? "Lost"
-                                                  : status === "6"
-                                                    ? "Dead"
-                                                    : status === "7"
-                                                      ? "Working on"
-                                                      : status === "8"
-                                                        ? "Submitted"
-                                                        : status === "0"
-                                                          ? "New"
-                                                          : status === "9"
-                                                            ? "Complete"
-                                                            : status === "10"
-                                                              ? "Consultation"
-                                                              : "status"
-                                      }
-                                      size="sm"
-                                      className="user_status_btn btn-primary rounded-pill font-size-3 px-3 py-1 text-white mr-2"
-                                      onSelect={OnStatusChange}
-                                    >
-                                      {(FilterJson.employee_status || []).sort(
-                                        (a, b) =>
-                                          ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"]
-                                            .indexOf(a.label.toLowerCase()) -
-                                          ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"]
-                                            .indexOf(b.label.toLowerCase())
-                                      ).map(
-                                        (item, index) => (
-                                          <Dropdown.Item
-                                            key={index}
-                                            value={item.value}
-                                            eventKey={index + 1}
-                                            className="text-capitalize"
-                                          >
-                                            {item.label}
-                                          </Dropdown.Item>
-                                        )
+                                <React.Fragment>
+                                  {PersonalDetail.gender ? (
+                                    <span className="bg-secondary rounded-pill font-size-3 px-3 py-2 text-white mr-2">
+                                      {PersonalDetail.gender === "female"
+                                        ? "Female"
+                                        : PersonalDetail.gender === "male"
+                                          ? "Male"
+                                          : "Other"}
+                                    </span>
+                                  ) : null}
+                                  {PersonalDetail.marital_status ? (
+                                    <span className="bg-info rounded-pill font-size-3 px-3 py-2 text-white mr-2 text-capitalize">
+                                      {PersonalDetail.marital_status}
+                                    </span>
+                                  ) : null}
+                                  {PersonalDetail.date_of_birth &&
+                                    PersonalDetail.date_of_birth !==
+                                    "0000-00-00" ? (
+                                    <span className="bg-warning rounded-pill font-size-3 px-3 py-2 text-white mr-2">
+                                      {moment().diff(
+                                        PersonalDetail.date_of_birth,
+                                        "years"
                                       )}
-                                    </DropdownButton>
-                                  )}
+                                      Y
+                                    </span>
+                                  ) : null}
+                                  {(user_type === "admin" ||
+                                    user_type === "agent") && (
+                                      <DropdownButton
+                                        as={ButtonGroup}
+                                        title={
+                                          status === "1"
+                                            ? "New"
+                                            : status === "2"
+                                              ? "Prospect"
+                                              : status === "3"
+                                                ? "Lead"
+                                                : status === "4"
+                                                  ? "Retained"
+                                                  : status === "5"
+                                                    ? "Lost"
+                                                    : status === "6"
+                                                      ? "Dead"
+                                                      : status === "7"
+                                                        ? "Working on"
+                                                        : status === "8"
+                                                          ? "Submitted"
+                                                          : status === "0"
+                                                            ? "New"
+                                                            : status === "9"
+                                                              ? "Complete"
+                                                              : status === "10"
+                                                                ? "Consultation"
+                                                                : "status"
+                                        }
+                                        size="sm"
+                                        className="user_status_btn btn-primary rounded-pill font-size-3 px-3 py-1 text-white mr-2"
+                                        onSelect={OnStatusChange}
+                                      >
+                                        {(FilterJson.employee_status || []).sort(
+                                          (a, b) =>
+                                            ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"]
+                                              .indexOf(a.label.toLowerCase()) -
+                                            ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"]
+                                              .indexOf(b.label.toLowerCase())
+                                        ).map(
+                                          (item, index) => (
+                                            <Dropdown.Item
+                                              key={index}
+                                              value={item.value}
+                                              eventKey={index + 1}
+                                              className="text-capitalize"
+                                            >
+                                              {item.label}
+                                            </Dropdown.Item>
+                                          )
+                                        )}
+                                      </DropdownButton>
+                                    )}
+                                </React.Fragment>
                               </div>
                               <hr className={PersonalDetail.marital_status &&
                                 PersonalDetail.marital_status.toLowerCase() === "married" ? "my-3" : "d-none"} />
@@ -1015,141 +1032,142 @@ const NewUserProfile = (props) => {
                               </div>
                               <hr className="my-3" />
                               <div className="d-flex align-items-center">
+                                <Fragment>
+                                  {PersonalDetail.email === "" ||
+                                    PersonalDetail.length === 0 ||
+                                    (!PersonalDetail.current_location &&
+                                      !PersonalDetail.language &&
+                                      !PersonalDetail.currently_located_country &&
+                                      !PersonalDetail.experience &&
+                                      // !PersonalDetail.nationality &&
+                                      !PersonalDetail.experience &&
+                                      !PersonalDetail.work_permit_canada &&
+                                      !PersonalDetail.work_permit_other_country) ? (
+                                    <div>
+                                      <p className="text-center">No Data Found</p>
+                                    </div>
+                                  ) : (
+                                    <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
+                                      <div className="info_box text-left text-capitalize">
 
-                                {PersonalDetail.email === "" ||
-                                  PersonalDetail.length === 0 ||
-                                  (!PersonalDetail.current_location &&
-                                    !PersonalDetail.language &&
-                                    !PersonalDetail.currently_located_country &&
-                                    !PersonalDetail.experience &&
-                                    // !PersonalDetail.nationality &&
-                                    !PersonalDetail.experience &&
-                                    !PersonalDetail.work_permit_canada &&
-                                    !PersonalDetail.work_permit_other_country) ? (
-                                  <div>
-                                    <p className="text-center">No Data Found</p>
-                                  </div>
-                                ) : (
-                                  <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
-                                    <div className="info_box text-left text-capitalize">
-
-                                      {PersonalDetail.current_location ? (
-                                        <span
-                                          className="font-size-3 text-smoke  mr-7"
-                                          title="Current Location"
-                                        >
-                                          <img
-                                            className="mr-1"
-                                            height={"16px"}
-                                            src="image/icons/marker.svg"
-                                            alt="Location"
-                                          />
-                                          {PersonalDetail.current_location}
-                                        </span>
-                                      ) : (
-                                        ""
-                                      )}
-                                    </div>
-                                    <div className="info_box text-left text-capitalize">
-                                      {PersonalDetail.language ? (
-                                        <span
-                                          className="font-size-3 text-smoke  mr-7"
-                                          title="User Language"
-                                        >
-                                          <img
-                                            className="mr-1"
-                                            height={"16px"}
-                                            src="image/icons/language.svg"
-                                            alt="language"
-                                          />
-                                          {PersonalDetail.language}
-                                        </span>
-                                      ) : (
-                                        ""
-                                      )}
-                                    </div>
-                                    <div className="info_box text-left text-capitalize">
-                                      {PersonalDetail.currently_located_country ? (
-                                        <span
-                                          className="font-size-3 text-smoke  mr-7"
-                                          title="Currently Located Country"
-                                        >
-                                          <img
-                                            className="mr-1"
-                                            height={"16px"}
-                                            src="image/icons/address-book.svg"
-                                            alt="Address"
-                                          />
-                                          {
-                                            PersonalDetail.currently_located_country
-                                          }
-                                        </span>
-                                      ) : (
-                                        ""
-                                      )}
-                                    </div>
-                                    <div className="info_box text-left text-capitalize">
-                                      {PersonalDetail.experience ? (
-                                        <span
-                                          className="font-size-3 text-smoke  mr-7"
-                                          title="Total Experience"
-                                        >
-                                          <img
-                                            className="mr-1"
-                                            height={"16px"}
-                                            src="image/icons/envelope.svg"
-                                            alt="Email"
-                                          />
-                                          {PersonalDetail.experisence ===
-                                            "fresher" ||
-                                            PersonalDetail.experience ===
-                                            "Other" ||
-                                            PersonalDetail.experience === "other"
-                                            ? PersonalDetail.experience
-                                            : PersonalDetail.experience +
-                                            " Years"}
-                                        </span>
-                                      ) : (
-                                        ""
-                                      )}
-                                    </div>
-                                    {PersonalDetail.work_permit_canada ? (
-                                      <div className="info_box text-left">
-                                        <span
-                                          className="font-size-3 text-smoke  mr-7 text-capitalize"
-                                          title="Canada Work Permit"
-                                        >
-                                          Canada Work Permit:
-                                          <b>
-                                            {` ${PersonalDetail.work_permit_canada}`}
-                                          </b>
-                                        </span>
+                                        {PersonalDetail.current_location ? (
+                                          <span
+                                            className="font-size-3 text-smoke  mr-7"
+                                            title="Current Location"
+                                          >
+                                            <img
+                                              className="mr-1"
+                                              height={"16px"}
+                                              src="image/icons/marker.svg"
+                                              alt="Location"
+                                            />
+                                            {PersonalDetail.current_location}
+                                          </span>
+                                        ) : (
+                                          ""
+                                        )}
                                       </div>
-                                    ) : null}
-                                    {PersonalDetail.work_permit_other_country ? (
-                                      <div className="info_box text-left">
-                                        <span className="font-size-3 text-smoke  mr-7 text-capitalize">
-                                          Work Status:
-                                          <b>
-                                            {` ${PersonalDetail.work_permit_other_country}`}
-                                          </b>
-                                        </span>
+                                      <div className="info_box text-left text-capitalize">
+                                        {PersonalDetail.language ? (
+                                          <span
+                                            className="font-size-3 text-smoke  mr-7"
+                                            title="User Language"
+                                          >
+                                            <img
+                                              className="mr-1"
+                                              height={"16px"}
+                                              src="image/icons/language.svg"
+                                              alt="language"
+                                            />
+                                            {PersonalDetail.language}
+                                          </span>
+                                        ) : (
+                                          ""
+                                        )}
                                       </div>
-                                    ) : null}
+                                      <div className="info_box text-left text-capitalize">
+                                        {PersonalDetail.currently_located_country ? (
+                                          <span
+                                            className="font-size-3 text-smoke  mr-7"
+                                            title="Currently Located Country"
+                                          >
+                                            <img
+                                              className="mr-1"
+                                              height={"16px"}
+                                              src="image/icons/address-book.svg"
+                                              alt="Address"
+                                            />
+                                            {
+                                              PersonalDetail.currently_located_country
+                                            }
+                                          </span>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                      <div className="info_box text-left text-capitalize">
+                                        {PersonalDetail.experience ? (
+                                          <span
+                                            className="font-size-3 text-smoke  mr-7"
+                                            title="Total Experience"
+                                          >
+                                            <img
+                                              className="mr-1"
+                                              height={"16px"}
+                                              src="image/icons/envelope.svg"
+                                              alt="Email"
+                                            />
+                                            {PersonalDetail.experisence ===
+                                              "fresher" ||
+                                              PersonalDetail.experience ===
+                                              "Other" ||
+                                              PersonalDetail.experience === "other"
+                                              ? PersonalDetail.experience
+                                              : PersonalDetail.experience +
+                                              " Years"}
+                                          </span>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                      {PersonalDetail.work_permit_canada ? (
+                                        <div className="info_box text-left">
+                                          <span
+                                            className="font-size-3 text-smoke  mr-7 text-capitalize"
+                                            title="Canada Work Permit"
+                                          >
+                                            Canada Work Permit:
+                                            <b>
+                                              {` ${PersonalDetail.work_permit_canada}`}
+                                            </b>
+                                          </span>
+                                        </div>
+                                      ) : null}
+                                      {PersonalDetail.work_permit_other_country ? (
+                                        <div className="info_box text-left">
+                                          <span className="font-size-3 text-smoke  mr-7 text-capitalize">
+                                            Work Status:
+                                            <b>
+                                              {` ${PersonalDetail.work_permit_other_country}`}
+                                            </b>
+                                          </span>
+                                        </div>
+                                      ) : null}
 
 
-                                  </div>
-                                )}
-                                {user_type === "company" ||
-                                  props.self === "yes" ? null : (
-                                  <CustomButton
-                                    className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
-                                    title="Update profile"
-                                    onClick={() => setShowPersonalDetails(true)}
-                                  >
-                                    <PiPencilDuotone />
-                                  </CustomButton>
-                                )}
+                                    </div>
+                                  )}
+                                  {user_type === "company" ||
+                                    props.self === "yes" ? null : (
+                                    <CustomButton
+                                      className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                                      title="Update profile"
+                                      onClick={() => setShowPersonalDetails(true)}
+                                    >
+                                      <PiPencilDuotone />
+                                    </CustomButton>
+                                  )}
+                                </Fragment>
                               </div>
                               <hr className="my-3" />
                               <div className="personal_info_box d-flex align-items-center  flex-wrap w-100">
@@ -1528,12 +1546,7 @@ const NewUserProfile = (props) => {
                                 )
                               )}
                             </div>
-                            <ChatbotIcon
-                              userDetails={{
-                                user_id: PersonalDetail.employee_id,
-                                user_type: "employee",
-                              }}
-                            />
+
                           </div>
                         </div>
                       </div>

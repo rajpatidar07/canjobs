@@ -383,7 +383,7 @@ const AdminSidebar = (props) => {
         >
           <Link
             onClick={() => clearPageNo()}
-            to="/adminclient"
+            to="/employer"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <BsBuildings className="sidebar_icon" />
