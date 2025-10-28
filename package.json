@@ -12,6 +12,7 @@
     "@react-oauth/google": "^0.12.1",
     "@react-pdf/renderer": "^4.3.0",
     "@react-pdf/textkit": "^4.4.1",
+    "@ringcentral/sdk": "^5.0.5",
     "@stripe/react-stripe-js": "^2.7.0",
     "@stripe/stripe-js": "^3.3.0",
     "@sweetalert/with-react": "^0.1.1",

@@ -62,7 +62,7 @@ function ApplicantTypeTable(props) {
                 setDeleteName("");
                 props.setApiCall(true); // Trigger refetch from parent
             } else if (response.message === "This applicant type cannot be deleted because it is used for applicant" ||
-                       response.message === "This applicant type cannot be deleted because it is used for applicant.") {
+                response.message === "This applicant type cannot be deleted because it is used for applicant.") {
                 toast.error(response.message, {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 2000,
@@ -234,7 +234,14 @@ function ApplicantTypeTable(props) {
                                                                 <Link
                                                                     to={`/slots`}
                                                                     className="text-black-2"
-                                                                    state={{ applicantType: data.id, folderId: data.doc_folder_id }}>
+                                                                    state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId: data.doc_folder_id
+                                                                    }}>
                                                                     {data.title}
                                                                 </Link>
                                                             </div>

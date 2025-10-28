@@ -101,6 +101,8 @@ const AdminSidebar = (props) => {
   const clearPageNo = (title) => {
     localStorage.removeItem("PageNo");
     localStorage.setItem("admin_heading", title);
+    localStorage.setItem("applicantType", "");
+    localStorage.setItem("applicantTypeFolderId", "");
     props.setPageHeading(title);
   };
   const liRefs = useRef([]);
@@ -259,6 +261,9 @@ const AdminSidebar = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.key]);
+
+  const defaultState = { applicantType: "", applicantTypeChild: "", folderId: "" };
+
   return (
     <div className={`sidebar_parent show`} id="sidebar">
       {/* <SAlert
@@ -314,8 +319,9 @@ const AdminSidebar = (props) => {
               }
             >
               <Link
-                onClick={() => clearPageNo()}
+                onClick={() => clearPageNo("Partner Dashboard")}
                 to="/partner_profile"
+                state={defaultState}
                 className={
                   "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
                 }
@@ -333,8 +339,9 @@ const AdminSidebar = (props) => {
               }
             >
               <Link
-                onClick={() => clearPageNo()}
+                onClick={() => clearPageNo("Students")}
                 to="/students"
+                state={defaultState}
                 className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
               >
                 <SiStudyverse className="sidebar_icon" />
@@ -356,6 +363,7 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Dashboard")}
             to="/dashboard"
+            state={defaultState}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <MdOutlineDashboardCustomize className="sidebar_icon" />
@@ -375,6 +383,7 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Task Dashboard")}
             to="/managetasks"
+            state={defaultState}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <FaTasks className="sidebar_icon" />
@@ -396,6 +405,7 @@ const AdminSidebar = (props) => {
               localStorage.setItem("StatusTab", "");
             }}
             to="/selfemployee"
+            state={defaultState}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <LiaUsersSolid className="sidebar_icon" />
@@ -416,6 +426,7 @@ const AdminSidebar = (props) => {
               localStorage.setItem("StatusTab", "");
             }}
             to="/employee"
+            state={defaultState}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <LiaUsersSolid className="sidebar_icon" />
@@ -433,6 +444,7 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Manage Employers")}
             to="/employer"
+            state={defaultState}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <BsBuildings className="sidebar_icon" />
@@ -452,6 +464,7 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Manage Jobs")}
             to="/job"
+            state={defaultState}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <LiaAddressCardSolid className="sidebar_icon" />
@@ -471,6 +484,7 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Manage Self Jobs")}
             to="/selfjob"
+            state={defaultState}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <LiaAddressCardSolid className="sidebar_icon" />
@@ -490,6 +504,7 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Visa")}
             to="/visa"
+            state={defaultState}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <LiaCcVisa className="sidebar_icon" />
@@ -509,6 +524,7 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("LMIA status")}
             to="/lmia"
+            state={defaultState}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <MdOutlinePhotoFilter className="sidebar_icon" />
@@ -528,6 +544,7 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Local Candidate")}
             to="/localcandidates"
+            state={defaultState}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <FaPersonShelter className="sidebar_icon" />
@@ -547,6 +564,14 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo()}
             to="/pnp"
+            state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId:""
+                                                                    }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <IoLogoPinterest className="sidebar_icon" />
@@ -566,6 +591,14 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("PGWP")}
             to="/pgwp"
+            state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId:""
+                                                                    }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <FaGraduationCap className="sidebar_icon" />
@@ -585,6 +618,14 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("WES")}
             to="/wes"
+            state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId:""
+                                                                    }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <TbMapWest className="sidebar_icon" />
@@ -604,6 +645,14 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo()}
             to="/atip"
+            state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId:""
+                                                                    }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <FaAcquisitionsIncorporated className="sidebar_icon" />
@@ -623,6 +672,14 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Visitors Visa")}
             to="/visitorsvisa"
+            state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId:""
+                                                                    }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <GrVisa className="sidebar_icon" />
@@ -642,6 +699,14 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Study Permit")}
             to="/studypermit"
+            state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId:""
+                                                                    }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <SiStudyverse className="sidebar_icon" />
@@ -661,6 +726,14 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Temporary Resident")}
             to="/temporaryresident"
+            state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId:""
+                                                                    }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <GiTemporaryShield className="sidebar_icon" />
@@ -680,6 +753,14 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Economic Immigration")}
             to="/economicimmigration"
+            state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId:""
+                                                                    }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <TbUserDollar className="sidebar_icon" />
@@ -699,6 +780,14 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Family Sponsorship")}
             to="/familysponsorship"
+            state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId:""
+                                                                    }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <MdFamilyRestroom className="sidebar_icon" />
@@ -719,6 +808,14 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Express Entry")}
             to="/expressentry"
+            state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId:""
+                                                                    }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <SiExpress className="sidebar_icon" />
@@ -738,6 +835,14 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Business Visa")}
             to="/businessvisa
+            state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId:""
+                                                                    }}
               "
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -758,6 +863,14 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Federal PR")}
             to="/federal_pr
+            state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId:""
+                                                                    }}
               "
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -778,6 +891,14 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Humanitarian and Compassionate Cases")}
             to="/humanitarian_and_Compassionate
+            state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId:""
+                                                                    }}
               "
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -800,6 +921,14 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Passport")}
             to="/passport
+            state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId:""
+                                                                    }}
               "
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -822,6 +951,14 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Citizenship")}
             to="/citizenship
+            state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId:""
+                                                                    }}
               "
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -844,6 +981,14 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Permanent Resident Cards" )}
             to="/permanent_resident_cards
+            state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId:""
+                                                                    }}
               "
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -1065,6 +1210,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             title={"Application types"}
             to="/slots"
+            state={defaultState}
           >
             <TbUser className="sidebar_icon" />
             <span className="text-truncate">Application types</span>
@@ -1088,6 +1234,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             title={"Manage Payment"}
             to="/payment_records"
+            state={defaultState}
           >
             <MdOutlinePayments className="sidebar_icon" />
             <span className="text-truncate">Manage Payment</span>
@@ -1106,6 +1253,7 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Interview")}
             to="/interview"
+            state={defaultState}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <PiApplePodcastsLogoThin className="sidebar_icon" />
@@ -1125,6 +1273,7 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Manage Notes")}
             to="/notes"
+            state={defaultState}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center d-none"
           >
             <FaNotesMedical className="sidebar_icon" />
@@ -1145,6 +1294,7 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Manager's Dashboard")}
             to="/assignedjobs"
+            state={defaultState}
             className={
               "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             }
@@ -1167,6 +1317,7 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Manage Admin")}
             to="/adminprofile"
+            state={defaultState}
             className={
               "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             }
@@ -1188,6 +1339,7 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Manage Partner")}
             to="/partner_dashboard"
+            state={defaultState}
             className={
               "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             }
@@ -1210,6 +1362,14 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Job Category")}
             to="/category"
+            state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId:""
+                                                                    }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <BsQrCodeScan className="sidebar_icon" />
@@ -1229,6 +1389,14 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Filter List")}
             to="/filter"
+            state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId:""
+                                                                    }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <TbFilterPlus className="sidebar_icon" />
@@ -1248,6 +1416,14 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo("Credentials")}
             to="/credentials"
+            state={{
+                                                                        applicantType: applicantLevel === "child"
+                                                                            ? (applicantType || [])?.find((item) => item.id === data.parent_id)?.id
+                                                                            : data.id,
+                                                                        applicantTypeChild: applicantLevel === "child"
+                                                                            ? data.id : "",
+                                                                        folderId:""
+                                                                    }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <LuFileKey className="sidebar_icon" />
@@ -1271,6 +1447,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             title={"Manage Daily Pages"}
             to="/daily_pages"
+            state={defaultState}
           >
             <BiLogoDailymotion className="sidebar_icon" />
             <span className="text-truncate">Manage Daily Pages</span>
@@ -1292,6 +1469,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             title={"Manage Daily Hourly Log"}
             to="/daily_hours_log"
+            state={defaultState}
           >
             <LiaHourglassHalfSolid className="sidebar_icon" />
             <span className="text-truncate">Manage Daily Hour Log</span>
@@ -1314,6 +1492,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             title={"Manage Consultation"}
             to="/consultation"
+            state={defaultState}
           >
             <LuMessagesSquare className="sidebar_icon" />
             <span className="text-truncate">Manage Consultation</span>
@@ -1336,6 +1515,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             title={"Setting"}
             to="/setting"
+            state={defaultState}
           >
             <FaGear className="sidebar_icon" />
             <span className="text-truncate">Setting</span>

@@ -24,8 +24,6 @@ import Addfollowup from "../forms/admin/addfollowup";
 import { toast } from "react-toastify";
 import Loader from "../common/loader";
 import { PiPencilDuotone } from "react-icons/pi";
-// import AdminHeader from "../admin/header";
-// import AdminSidebar from "../admin/sidebar";
 // import DocumrentContainer from "../common/employeeDocumrentContainer";
 import { BiPhoneCall } from "react-icons/bi";
 import { BsEnvelope } from "react-icons/bs";
@@ -50,6 +48,7 @@ import PayentForm from "../forms/admin/payentForm";
 import ConvertTime from "../common/Common function/ConvertTime";
 import AddConsultationInCandidate from "../forms/admin/AddConsultationInCandidate";
 import ChatbotIcon from "../common/ChatBot.js/ChatbotIcon";
+// import CallFunctionRIngCentral from "../common/Common function/CallFunctionRIngCentral";
 // import ApplicantTypeTimeLine from "../common/ApplicantTypeTimeLine";
 // import useSessionCheck from "../common/user_session";
 // import AdobePDFViewer from "../common/Adobe/adobeFile";
@@ -74,7 +73,6 @@ const NewUserProfile = (props) => {
   const note_id = searchParams.get("noteid");
   const TimeLineId = searchParams.get("timeLineId");
   let navigate = useNavigate();
-
   const [apiCall, setApiCall] = useState(false);
   const [status, setStatus] = useState("");
   const [statusCall, setStatusCall] = useState(false);
@@ -1239,6 +1237,7 @@ const NewUserProfile = (props) => {
                                     <Link
                                       className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
                                       to={`tel:${PersonalDetail.contact_no}`}
+                                    // onClick={()=>CallFunctionRIngCentral(PersonalDetail.contact_no)}
                                     >
                                       <BiPhoneCall className="font-size-3 mr-4" />
                                       {PersonalDetail.contact_no}
@@ -1253,6 +1252,7 @@ const NewUserProfile = (props) => {
                                     <Link
                                       className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
                                       to={`tel:${PersonalDetail.other_contact_no}`}
+                                    // onClick={()=>CallFunctionRIngCentral(PersonalDetail.other_contact_no)}
                                     >
                                       <BiPhoneCall className="font-size-3 mr-4" />
                                       {PersonalDetail.other_contact_no}
