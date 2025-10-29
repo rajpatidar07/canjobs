@@ -1,7 +1,7 @@
 Today's Update
 Date:29/10/25
-1. Added a condition to navigate to the Sub Applicants List on the Manage Application Type page and reset the required variables.
-2. Created an app for CanPathwaysJobs to integrate RingCentral calling into the portal and added the corresponding code (currently not working from the frontend).
+1. Integrated all functionalities and APIs related to calling from RingCentral.
+2. Check the signature and links in the email preview on the job portal for both the emails sent by the user and the ones received in the inbox.
 
 # Deploy on live
 

@@ -328,6 +328,33 @@ const NewUserProfile = (props) => {
     const id = employee_id;
     window.open(`/resume/${id}`, "_blank");
   };
+   useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://ringcentral.github.io/ringcentral-embeddable-voice/adapter.js";
+    script.async = true;
+    script.onload = () => {
+      // Once adapter is loaded
+      window.RCAdapter = new window.RingCentralEmbeddableVoiceAdapter({
+        // optional settings
+        enableAnalytics: true,
+        appName: "Canpathwaysjobs",
+      });
+    };
+    document.body.appendChild(script);
+
+    return () => document.body.removeChild(script);
+  }, []);
+
+  const makeCall = (phoneNumber) => {
+    if (window.RCAdapter) {
+      window.postMessage({
+        type: "rc-adapter-new-call",
+        phoneNumber: phoneNumber,
+      }, "*");
+    } else {
+      alert("RingCentral adapter not loaded yet!");
+    }
+  };
   return (
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden bg-default-2">
@@ -1237,7 +1264,7 @@ const NewUserProfile = (props) => {
                                     <Link
                                       className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
                                       // to={`tel:${PersonalDetail.contact_no}`}
-                                      onClick={() => CallFunctionRIngCentral(PersonalDetail.contact_no, PersonalDetail.name, PersonalDetail.profile_photo
+                                      onClick={() => makeCall(PersonalDetail.contact_no, PersonalDetail.name, PersonalDetail.profile_photo
                                         ? PersonalDetail.profile_photo
                                         : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`)}
                                     >
@@ -1254,7 +1281,7 @@ const NewUserProfile = (props) => {
                                     <Link
                                       className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
                                       // to={`tel:${PersonalDetail.other_contact_no}`}
-                                      onClick={() => CallFunctionRIngCentral(PersonalDetail.other_contact_no, PersonalDetail.name, PersonalDetail.profile_photo
+                                      onClick={() => makeCall(PersonalDetail.other_contact_no, PersonalDetail.name, PersonalDetail.profile_photo
                                         ? PersonalDetail.profile_photo
                                         : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`)}
                                     >
