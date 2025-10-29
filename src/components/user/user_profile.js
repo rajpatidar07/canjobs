@@ -48,7 +48,7 @@ import PayentForm from "../forms/admin/payentForm";
 import ConvertTime from "../common/Common function/ConvertTime";
 import AddConsultationInCandidate from "../forms/admin/AddConsultationInCandidate";
 import ChatbotIcon from "../common/ChatBot.js/ChatbotIcon";
-// import CallFunctionRIngCentral from "../common/Common function/CallFunctionRIngCentral";
+import { CallFunctionRIngCentral } from "../common/Common function/CallFunctionRIngCentral";
 // import ApplicantTypeTimeLine from "../common/ApplicantTypeTimeLine";
 // import useSessionCheck from "../common/user_session";
 // import AdobePDFViewer from "../common/Adobe/adobeFile";
@@ -1236,8 +1236,10 @@ const NewUserProfile = (props) => {
                                   <div>
                                     <Link
                                       className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
-                                      to={`tel:${PersonalDetail.contact_no}`}
-                                    // onClick={()=>CallFunctionRIngCentral(PersonalDetail.contact_no)}
+                                      // to={`tel:${PersonalDetail.contact_no}`}
+                                      onClick={() => CallFunctionRIngCentral(PersonalDetail.contact_no, PersonalDetail.name, PersonalDetail.profile_photo
+                                        ? PersonalDetail.profile_photo
+                                        : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`)}
                                     >
                                       <BiPhoneCall className="font-size-3 mr-4" />
                                       {PersonalDetail.contact_no}
@@ -1251,8 +1253,10 @@ const NewUserProfile = (props) => {
                                   <div>
                                     <Link
                                       className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
-                                      to={`tel:${PersonalDetail.other_contact_no}`}
-                                    // onClick={()=>CallFunctionRIngCentral(PersonalDetail.other_contact_no)}
+                                      // to={`tel:${PersonalDetail.other_contact_no}`}
+                                      onClick={() => CallFunctionRIngCentral(PersonalDetail.other_contact_no, PersonalDetail.name, PersonalDetail.profile_photo
+                                        ? PersonalDetail.profile_photo
+                                        : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`)}
                                     >
                                       <BiPhoneCall className="font-size-3 mr-4" />
                                       {PersonalDetail.other_contact_no}

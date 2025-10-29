@@ -66,6 +66,7 @@
     "scheduler": "^0.26.0",
     "sweetalert": "^1.1.2",
     "sweetalert-react": "^0.4.11",
+    "sweetalert2": "^11.26.3",
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
   },

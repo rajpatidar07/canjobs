@@ -4412,3 +4412,25 @@ export const addUpdateChat = async data => {
   const res = await axios.post(`${API_URL}common/addUpdateChat`, data);
   return res.data;
 };
+
+/*Call from rincentral api */
+export const CallFromRingCentral = async (number) => {
+  const res = await axios.post(`${API_URL}api/Ringcentral/call`, {
+    "phoneNumber": number
+  });
+  return res.data;
+};
+
+/*Call status from rincentral api */
+export const CallFromRingCentralStatus = async (callerId) => {
+  const res = await axios.post(`${API_URL}api/Ringcentral/call_status`,
+    { "callId": callerId });
+  return res.data;
+};
+
+/*Call Cancel from rincentral api */
+export const CallFromRingCentralCancel = async (callerId) => {
+  const res = await axios.post(`${API_URL}api/Ringcentral/cancel_call`,
+    { "callId": callerId });
+  return res.data;
+};

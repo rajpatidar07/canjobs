@@ -128,6 +128,7 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
                   }}
                 />
               )}
+              {console.log(singleEmailData.body.content)}
               <div className="attachments py-3 d-flex flex-wrap">
                 {/* {emailData &&
                 emailData.map((item, index) => (
@@ -262,11 +263,11 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
                             Add Reply
                           </button>
                           <button
-                      className="btn btn-primary"
-                      onClick={toggleForwardFormClick}
-                    >
-                      Forward mail
-                    </button>
+                            className="btn btn-primary"
+                            onClick={toggleForwardFormClick}
+                          >
+                            Forward mail
+                          </button>
                         </>
                       )}
                     </>
