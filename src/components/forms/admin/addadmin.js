@@ -14,6 +14,7 @@ import SelectBox from "../../common/Common function/SelectBox";
 import { LiaFileSignatureSolid } from "react-icons/lia";
 import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import SignatureTextEditor from "../../SignatureTextEditor";
 // import Permissions from "../../json/emailPermisionJson";
 
 function Addadmin(props) {
@@ -170,6 +171,7 @@ function Addadmin(props) {
       try {
         let data = { ...state, password: encryptPassword(state.password) }
         const responseData = await AddAdmin(data);
+        console.log( state.signature)
         if (responseData.message === "admin added successfully") {
           // await AddChildPermission(Permissions);
           toast.success("Admin added successfully", {
@@ -177,8 +179,10 @@ function Addadmin(props) {
             autoClose: 1000,
           });
           props.setApiCall(true);
-          localStorage.setItem("admin_signature", signatureImage)
-          localStorage.setItem("admin_signature_text", state.signature_text)
+          if (props.adminId === admin_id) {
+            localStorage.setItem("admin_signature", signatureImage)
+            localStorage.setItem("admin_signature_text", state.signature)
+          }
           return close();
         }
         if (responseData.message === "admin updated successfully") {
@@ -187,8 +191,10 @@ function Addadmin(props) {
             autoClose: 1000,
           });
           props.setApiCall(true);
-          localStorage.setItem("admin_signature", signatureImage)
-          localStorage.setItem("admin_signature_text", state.signature_text)
+          if (props.adminId === admin_id) {
+            localStorage.setItem("admin_signature", signatureImage)
+            localStorage.setItem("admin_signature_text", state.signature)
+          }
           return close();
         }
         if (responseData.message === "Admin already exists") {
@@ -426,12 +432,10 @@ function Addadmin(props) {
               >
                 Signature Text:
               </label>
-              <textarea
+              <SignatureTextEditor
                 name="signature"
-                value={state.signature || ""}
-                onChange={onInputChange}
-                rows={4}
-                className="form-control"
+                state={state.signature || ""}
+                setState={setState}
                 placeholder="Enter Signature text here"
                 id="signature"
               />

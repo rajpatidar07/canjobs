@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { ReplyToMail } from "../../api/api"
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TextEditor from "../common/TextEditor";
+import SignatureTextEditor from "../SignatureTextEditor";
+// import TextEditor from "../common/TextEditor";
 const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall, toggleReplyFormClick }) => {
     const [message, setMessage] = useState('');
     // console.log(mesId, emailType)
@@ -32,15 +33,17 @@ const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall, toggle
         <form onSubmit={onReplyClick}>
             <div className="form-group">
                 <label>Message:</label>
-                {/* <textarea
-                    className="form-control"
-                    value={message}
-                    onChange={handleMessageChange}
-                ></textarea> */}
-                <TextEditor
+                 {/*<TextEditor
                     setState={setMessage}
                     state={message}
-                    page={"emailReplyPage"} />
+                    page={"emailReplyPage"} /> */}
+                <SignatureTextEditor
+                    name="message"
+                    state={message || ""}
+                    setState={setMessage}
+                    placeholder="Enter message here"
+                    id="message"
+                />
             </div>
             <div className="d-flex">
                 <button type="submit" className="btn btn-primary">

@@ -92,7 +92,7 @@ const EmailSelectionModal = ({
                 </div>
               </div>
             </div>
-            <button className="btn btn-primary" onClick={() => handleSubmit(null, title === "Select Email to Send Invoice" ? 1 : 0, selectedEmail)}>send</button>
+            <button className="btn btn-primary" onClick={(e) => handleSubmit(e, title === "Select Email to Send Invoice" ? 1 : 0, selectedEmail)}>send</button>
           </div>
         </div>
       </Modal>

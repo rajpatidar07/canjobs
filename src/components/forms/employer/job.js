@@ -7,8 +7,9 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GetJob, AddJob, getAllEmployer, GetFilter, GetLocationByType } from "../../../api/api";
 import { useLocation } from "react-router-dom";
-import TextEditor from "../../common/TextEditor";
+// import TextEditor from "../../common/TextEditor";
 import SelectBox from "../../common/Common function/SelectBox";
+import SignatureTextEditor from "../../SignatureTextEditor";
 // import FroalaEditor from "react-froala-wysiwyg";
 // import "froala-editor/css/froala_editor.pkgd.min.css";
 // import "froala-editor/css/froala_style.min.css";
@@ -715,36 +716,20 @@ function AddJobModal(props) {
                   //     : "border rounded overflow-hidden"
                   // }
                   >
-                    {/* <CKEditor
-                      type={"classic"}
+                    <SignatureTextEditor
                       name="job_description"
-                      row={6}
-                      id={"job_description"}
-                      data={state.job_description}
-                      value={state.job_description}
-                   onChange={onInputChange}
-                      initData="Job Description"
-                    /> */}
-                    {/* <textarea
-                      maxLength={5000}
-                      placeholder="Job Description"
-                      name="job_description"
-                      value={state.job_description || ""}
-                      onChange={onInputChange}
-                      className={
-                        errors.job_description
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
+                      state={state.job_description || ""}
+                      setState={setState}
+                      placeholder="Enter description here"
                       id="job_description"
-                    ></textarea> */}
-                    <TextEditor
+                    />
+                    {/* <TextEditor
                       setState={setState}
                       state={state}
                       page={"jobDescription"}
                       identifier={"unique_identifier_1"}
                     //variable name at the place of page becoz it has 2 text area feilds
-                    />
+                    /> */}
                     {/* <FroalaEditor
                       model={state.job_description}
                       onModelChange={(newContent) =>
@@ -785,35 +770,20 @@ function AddJobModal(props) {
                   //     : "border rounded overflow-hidden"
                   // }
                   >
-                    {/* //    <CKEditor
-                  //     type={"classic"}
-                  //     name="your_duties"
-                  //     id={"your_duties"}
-                  //     data={state.your_duties}
-                  //     value={state.your_duties}
-                  //  onChange={onInputChange}
-                  //     initData="your duties"
-                  //   />  */}
-                    {/* <textarea
-                      maxLength={5000}
-                      placeholder="Full Address"
+                    <SignatureTextEditor
                       name="your_duties"
-                      value={state.your_duties || ""}
-                      onChange={onInputChange}
-                      className={
-                        errors.your_duties
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
+                      state={state.your_duties || ""}
+                      setState={setState}
+                      placeholder="Enter your duties here"
                       id="your_duties"
-                    ></textarea> */}
-                    <TextEditor
+                    />
+                    {/* <TextEditor
                       setState={setState}
                       state={state}
                       identifier={"unique_identifier_2"}
                       page={"yourDuties"}
                     //variable name at the place of page becoz it has 2 text area feilds
-                    />
+                    /> */}
                     {/* <FroalaEditor
                       model={state.your_duties}
                       onModelChange={(newContent) =>
@@ -854,46 +824,20 @@ function AddJobModal(props) {
                   //     : "border rounded overflow-hidden"
                   // }
                   >
-                    {/* <CKEditor
-                      type={"classic"}
+                    <SignatureTextEditor
                       name="requirement"
-                      id={"requirement"}
-                      data={state.requirement}
-                      value={state.requirement}
-                      onChange={onInputChange}
-                      initData="Add Requirement"
-                    /> */}
-                    {/* <FroalaEditor
-                      model={state.requirement}
-                      onModelChange={(newContent) =>
-                        setState({ ...state, requirement: newContent })
-                      }
-                      className={
-                        errors.requirement
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
-                    /> */}
-                    {/* <textarea
-                      maxLength={5000}
-                      placeholder="Requirements"
-                      name="requirement"
-                      value={state.requirement || ""}
-                      onChange={onInputChange}
-                      className={
-                        errors.requirement
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
+                      state={state.requirement || ""}
+                      setState={setState}
+                      placeholder="Enter requirement here"
                       id="requirement"
-                    ></textarea> */}
-                    <TextEditor
+                    />
+                    {/* <TextEditor
                       setState={setState}
                       state={state}
                       identifier={"unique_identifier_3"}
                       page={"requirement"}
                     //variable name at the place of page becoz it has 2 text area feilds
-                    />
+                    /> */}
                   </div>
                   {/*----ERROR MESSAGE FOR DESRIPTION----*/}
                   {errors.requirement && (

@@ -25,8 +25,8 @@ import FilterJson from "../../json/filterjson";
 // import { Link } from "react-router-dom";
 import AddNewAgent from "../admin/add_agent";
 import Permissions from "../../json/emailPermisionJson";
-import TextEditor from "../../common/TextEditor";
 import SelectBox from "../../common/Common function/SelectBox";
+import SignatureTextEditor from "../../SignatureTextEditor";
 // import ContactNoWithCountryCode from "../../common/ContactNoWithCountryCode";
 
 function PersonalDetails(props) {
@@ -720,23 +720,18 @@ function PersonalDetails(props) {
                     >
                       About:
                     </label>
-                    <TextEditor
+                    {/* <TextEditor
                       state={state}
                       setState={setState}
                       page={"description"}
-                    />
-                    {/* <textarea
-                      name="description"
-                      value={state.description || ""}
-                      onChange={onInputChange}
-                      className={
-                        errors.description
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
-                      id="description"
-                      placeholder="Description"
-                    ></textarea> */}
+                    /> */}
+                     <SignatureTextEditor
+                                          name="description"
+                                          state={state.description || ""}
+                                          setState={setState}
+                                          placeholder="Enter description here"
+                                          id="description"
+                                        />
                     {/*----ERROR MESSAGE FOR GENDER----*/}
                     {errors.description && (
                       <span

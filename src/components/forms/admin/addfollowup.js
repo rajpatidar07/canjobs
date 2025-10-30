@@ -632,7 +632,7 @@ function Addfollowup(props) {
           "" //end date
         );
         if (responseData.data.message === "task inserted successfully!") {
-          toast.success("Followup Updated successfully", {
+          toast.success("Note Updated successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
@@ -731,7 +731,7 @@ function Addfollowup(props) {
       setLoading(true);
       let res = await UpdateDocuentcommentAssign(updatedData, props.userType);
       if (res.message === "Task updated successfully!") {
-        toast.success("Task completed Successfully", {
+        toast.success("Note completed Successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
@@ -764,7 +764,7 @@ function Addfollowup(props) {
         assigned_by_type
       );
       if (res.data.message === "Task deleted successfully!") {
-        toast.success("Task Deleted Successfully", {
+        toast.success("Note Deleted Successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
