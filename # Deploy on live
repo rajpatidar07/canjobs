@@ -1,9 +1,11 @@
 Today's Update
-Date:29/10/25
-1. Integrated all functionalities and APIs related to calling from RingCentral.
-2. Check the signature and links in the email preview on the job portal for both the emails sent by the user and the ones received in the inbox.
+Date:30/10/25
+1. Added colored text, clickable links, and multiple images to the signature section, and updated the text editor everywhere it needed to be used.
+2. Fixed the issue with sending emails for payment reminders.
 
 # Deploy on live
+1. Added colored text, clickable links, and multiple images to the signature section, and updated the text editor everywhere it needed to be used.
+2. Fixed the issue with sending emails for payment reminders.
 
 Date: 17/10/25:Only frontend
 1. Remove the default values of consultation and payment invoice date selection box.
