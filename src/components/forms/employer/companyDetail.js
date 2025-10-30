@@ -16,8 +16,9 @@ import {
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Permissions from "../../json/emailPermisionJson";
-import TextEditor from "../../common/TextEditor";
+// import TextEditor from "../../common/TextEditor";
 import SelectBox from "../../common/Common function/SelectBox";
+import SignatureTextEditor from "../../SignatureTextEditor";
 function CompanyDetails(props) {
   const [loading, setLoading] = useState(false);
   const [imgError, setImgError] = useState("");
@@ -655,31 +656,17 @@ function CompanyDetails(props) {
                   //     : "border rounded overflow-hidden"
                   // }
                   >
-                    {/* <CKEditor
-                      type={"classic"}
-                      name={"about"}
-                      id={"about"}
-                      data={state.about}
-                      value={state.about}
-                      onChange={onInputChange}
-                      initData="About Company"
-                    /> */}
-                    {/* <textarea
-                      name="about"
-                      value={state.about || ""}
-                      onChange={onInputChange}
-                      className={
-                        errors.about
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
-                      id="about"
-                      placeholder="Employer's Description"
-                    ></textarea> */}
-                    <TextEditor
+                    {/* <TextEditor
                       setState={setState}
                       state={state}
                       page={"companyDetails"}
+                    /> */}
+                    <SignatureTextEditor
+                      name="about"
+                      state={state.about || ""}
+                      setState={setState}
+                      placeholder="Enter description here"
+                      id="about"
                     />
                     {/* <FroalaEditor
                       model={state.about}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useValidation from "./useValidation";
 import { getSingleCompanyFollowup, AddCompanyFollowup } from "../../api/api";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TextEditor from "./TextEditor";
 import ConvertTime from "./Common function/ConvertTime";

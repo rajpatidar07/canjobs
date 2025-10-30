@@ -3,10 +3,11 @@ import useValidation from "../../common/useValidation";
 import { AddAdmin, SendEmail } from "../../../api/api";
 import { toast } from "react-toastify";
 import { AiOutlineCloudUpload } from "react-icons/ai";
-import TextEditor from "../../common/TextEditor";
+// import TextEditor from "../../common/TextEditor";
 import { Link } from "react-router-dom"
 import { LiaFileSignatureSolid } from "react-icons/lia";
 import { IoMdClose } from "react-icons/io";
+import SignatureTextEditor from "../../SignatureTextEditor";
 function SendMailForm({ email, setApiCall }) {
   const [loading, setLoading] = useState(false);
   const [fileBase, setFileBase] = useState("");
@@ -64,7 +65,7 @@ function SendMailForm({ email, setApiCall }) {
             ? "Subject should have 2 or more letters"
             // : /[^A-Za-z 0-9]/g.test(value)
             //   ? "Cannot use special character "
-              : "",
+            : "",
     ],
     description: [
       (value) =>
@@ -460,26 +461,19 @@ function SendMailForm({ email, setApiCall }) {
                   cursor: "pointer",
                 }}
               >
-                {/* <textarea
+                <SignatureTextEditor
                   name="description"
-                  value={state.description}
-                  onChange={onInputChange}
-                  rows={8}
-                  style={{ height: "140px" }}
-                  className={
-                    errors.description
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
+                  state={state.description || ""}
+                  setState={setState}
+                  placeholder="Enter description  here"
                   id="description"
-                  placeholder="Add Note here"
-                ></textarea> */}
-                <TextEditor
+                />
+                {/* <TextEditor
                   state={state}
                   setState={setState}
                   adminSignature={adminSignature}
                   page={"mail"}// has same variable as description
-                />
+                /> */}
                 <div style={{ marginTop: "10px", fontSize: "14px", color: "#666" }}>
                   Drag and drop files here or click "Attach Files" button to upload attachments.
                 </div>
@@ -502,7 +496,14 @@ function SendMailForm({ email, setApiCall }) {
             >
               Signature Text:
             </label>
-            <textarea
+            <SignatureTextEditor
+              name="signature_text"
+              state={state.signature_text || ""}
+              setState={setState}
+              placeholder="Enter signature text here"
+              id="signature_text"
+            />
+            {/* <textarea
               name="signature_text"
               value={state.signature_text || ""}
               onChange={onInputChange}
@@ -510,7 +511,7 @@ function SendMailForm({ email, setApiCall }) {
               className="form-control"
               placeholder="Enter Signature text here"
               id="signature_text"
-            />
+            /> */}
           </div>
           <div className="mb-2 col-12">
             <label className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0">
