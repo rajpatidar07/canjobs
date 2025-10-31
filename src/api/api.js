@@ -2884,17 +2884,22 @@ export const ReadAllEmail = async (page, limit, search, email) => {
 };
 
 /*Api to reply email */
-export const ReplyToMail = async (msgId, type, msg) => {
+export const ReplyToMail = async (msgId, type, msg, attachments) => {
+  const formData = new FormData();
+  formData.append("msg_id", msgId);
+  formData.append("inbox_type", type);
+  formData.append("replyMsg", msg);
+  if (attachments && attachments.length > 0) {
+    attachments.forEach((file, i) => {
+      formData.append(`attachments[${i}]`, file);
+    });
+  }
   const response = await axios.post(
     `${API_URL}common/replyToOutlookEmail`,
-    {
-      msg_id: msgId,
-      inbox_type: type,
-      replyMsg: msg,
-    },
+    formData,
     {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
         Authorization: Token,
       },
     }

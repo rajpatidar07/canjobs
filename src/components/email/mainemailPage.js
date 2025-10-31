@@ -19,15 +19,21 @@ const MainEmailPage = ({ email, emailId }) => {
   /* Pagination states */
   // const [totalData, setTotalData] = useState(0);
   const [currentPage, setCurrentPage] = useState("");
+  const [nextLink, setNextLink] = useState("");
+  const [loadingMore, setLoadingMore] = useState(false);
   // const [pageToken, setPageToken] = useState([]);
-  const [recordsPerPage, setRecordsPerPage] = useState(10);
+  const [recordsPerPage] = useState(10);
   /* Shorting states */
   //   const [columnName, setcolumnName] = useState("msgno");
   //   const [sortOrder, setSortOrder] = useState("DESC");
 
   /* Function to get Email data*/
   const EmailData = async () => {
-    setIsLoading(true);
+    if (currentPage !== "") {
+      setLoadingMore(true);
+    } else {
+      setIsLoading(true);
+    }
     try {
       let userData;
       // console.log(emailType, "ooooooooooooo", email, emailId)
@@ -49,23 +55,30 @@ const MainEmailPage = ({ email, emailId }) => {
         userData = await ReadEmail(currentPage, recordsPerPage, search, email?.trim(""));
       if (
         // userData.messsage === "No data found" ||
-        userData.status === "0" ||
-        userData.status === 0 ||
-        userData.data.value === undefined ||
-        userData.data.value.length === 0 ||
-        userData.data.message === "No Mail Data Found"
+        (userData.status === "0" ||
+          userData.status === 0 ||
+          userData.data.value === undefined ||
+          userData.data.value.length === 0 ||
+          userData.data.message === "No Mail Data Found") && !nextLink && currentPage === ""
       ) {
         setemailData([]);
         setIsLoading(false);
+        setLoadingMore(false);
         // setTotalData(0);
         // setPageToken([]);
       } else {
-        let reversedData = userData.data.value.slice(); // Create a copy of the array
-        setemailData(reversedData);
+        let newData = userData.data.value.slice(); // Create a copy of the array
+        if (currentPage === "") {
+          setemailData(newData);
+        } else {
+          setemailData(prev => [...prev, ...newData]);
+        }
+        setNextLink(userData.data['@odata.nextLink'] || "");
         const newUrl = window.location.pathname;
         window.history.replaceState({}, document.title, newUrl);
         localStorage.setItem("navigation_url", "")
         setIsLoading(false);
+        setLoadingMore(false);
         // if (emailType === "SENT") {
         //   reversedData.reverse(); // Reverse the array if emailType is "SENT"
         // }
@@ -92,14 +105,14 @@ const MainEmailPage = ({ email, emailId }) => {
       // setTotalData(0);
       // setPageToken([]);
       setIsLoading(false);
+      setLoadingMore(false);
     }
   };
   /*Function to load more data while scrolling */
   let handelScroll = (e) => {
-    if ((recordsPerPage === 10 || recordsPerPage + 10) <= emailData.length) {
-      setRecordsPerPage(recordsPerPage + 10);
-    } else {
-      // setRecordsPerPage(emailData.length);
+    const { scrollTop, scrollHeight, clientHeight } = e.target;
+    if (scrollTop + clientHeight >= scrollHeight - 10 && nextLink && !loadingMore) {
+      setCurrentPage(nextLink);
     }
   };
   /*Render function to get the email data*/
@@ -126,7 +139,8 @@ const MainEmailPage = ({ email, emailId }) => {
   const onSearch = (e) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
-    setCurrentPage(1);
+    setCurrentPage("");
+    setNextLink("");
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Employer's Name cannot start with a number.");
@@ -372,6 +386,7 @@ const MainEmailPage = ({ email, emailId }) => {
               email={email}
               handelScroll={handelScroll}
               EmailId={emailId}
+              setNextLink={setNextLink}
             // setPageToken={setPageToken}
             />
           </div>

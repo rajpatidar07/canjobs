@@ -291,6 +291,10 @@ const AgreementOneForm = ({
     ) {
       let filteredState = { ...state, email_for: index === "final" ? "admin" : "" };
       delete filteredState.created_by_name;
+      if (state.id) {
+        delete filteredState.updated_by_name;
+        delete filteredState.agreement_sent;
+      }
       // Conditionally include signature_status
       if (!(index === "rcic_signature" || index === "final" || state.initial)) {
         delete filteredState.signature_status;
