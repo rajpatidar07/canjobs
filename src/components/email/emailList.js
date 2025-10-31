@@ -13,7 +13,7 @@ const EmailList = ({
   data,
   isLoading,
   // totalData,
-  // setCurrentPage,
+  setCurrentPage,
   // currentPage,
   // nPages,
   setApiCall,
@@ -23,7 +23,8 @@ const EmailList = ({
   // pageToken,
   // setPageToken,
   handelScroll,
-  EmailId
+  EmailId,
+  setNextLink
 }) => {
   const [emailId, setEmailId] = useState(EmailId);
   const [singleEmailData, setSingleEmailData] = useState(EmailId ? data?.find((item) => item.id === EmailId) : {});
@@ -88,6 +89,8 @@ const EmailList = ({
                       onClick={() => {
                         setEmailType("SENT");
                         setEmailId();
+                        setNextLink()
+                        setCurrentPage("")
                       }}
                     >
                       {user_type === "company" || user_type === "user" ? "Sent" : "Inbox"}
@@ -102,6 +105,8 @@ const EmailList = ({
                       onClick={() => {
                         setEmailType("INBOX");
                         setEmailId();
+                        setNextLink()
+                        setCurrentPage("")
                       }}
                     >
                       {user_type === "company" || user_type === "user" ? "Inbox" : "Sent"}

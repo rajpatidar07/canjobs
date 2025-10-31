@@ -5,6 +5,7 @@ import { getallAdminData, getApplicanTypeApi, GlobalSearchResult, GlobalSearchRe
 import { FaSearch } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { Link } from "react-router-dom";
+import Loader from "../common/loader";
 function GlobalSearch() {
   const [show, setShow] = useState(false);
   let [search, setSearch] = useState("");
@@ -25,7 +26,7 @@ function GlobalSearch() {
   const GlobalSearchAPICall = async (admin) => {
     // let search = "";
     // search = e.target.value;
-    // setIsLoading(true);
+    setSearchData([]); // Clear previous data to show loader
     try {
       const userData = await GlobalSearchResult(search, admin ? admin_id : "", admin ? admin_type : "");
       const userDataOther = await GlobalSearchResultOther(search, admin ? admin_id : "", admin ? admin_type : "");
@@ -154,8 +155,10 @@ function GlobalSearch() {
             ></i>
           </div>
           <div className="global_search_result py-2 px-8 mb-12">
-            {/* Display search results or Not Found message */}
-            {Object.keys(searchData).some(key => searchData[key] && searchData[key].length > 0) ? (
+            {/* Display loader if searchData is empty and search is not empty */}
+            {search && Object.keys(searchData).length === 0 ? (
+              <Loader load="yes" />
+            ) : Object.keys(searchData).some(key => searchData[key] && searchData[key].length > 0) ? (
               <>
                 {searchData["employee"] && searchData["employee"].length > 0 && (
                   <div className="row">
