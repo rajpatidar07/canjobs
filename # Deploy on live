@@ -1,11 +1,16 @@
 Today's Update
-Date:30/10/25
-1. Added colored text, clickable links, and multiple images to the signature section, and updated the text editor everywhere it needed to be used.
-2. Fixed the issue with sending emails for payment reminders.
+Date:31/10/25
+1. Fixed the issue with updating the Retainer Agreement.
+2. Checked the flow for the missing notes related to the users Harpreet and Satvir’s concerns.
+3. Checked the payment invoices added by Priya and verified that the filter functionality is working properly.
+4. Fixed the issue with loading more emails on scroll and ensured that all emails are now being fetched.
+5. Added the option to include attachments in the reply feature.
 
 # Deploy on live
 1. Added colored text, clickable links, and multiple images to the signature section, and updated the text editor everywhere it needed to be used.
 2. Fixed the issue with sending emails for payment reminders.
+4. Added the option to include attachments in the reply feature.
+5. Fixed the issue with updating the Retainer Agreement.
 
 Date: 17/10/25:Only frontend
 1. Remove the default values of consultation and payment invoice date selection box.
