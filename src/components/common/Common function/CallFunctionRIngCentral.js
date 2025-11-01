@@ -122,7 +122,7 @@ export const CallFunctionRIngCentral = async (phoneNumber, name, profile_photo) 
               }
 
               if (
-                ["Failed", "Cancelled", "CannotReach", "NoAnswer", "Busy"].includes(callStatus)
+                ["Failed", "Cancelled", "CannotReach", "NoAnswer", "Busy", "Invalid"].includes(callStatus)
               ) {
                 polling = false;
                 clearInterval(pollInterval);
@@ -189,6 +189,8 @@ const mapStatusText = (callStatus, callerStatus, calleeStatus) => {
       return "Call Cancelled";
     case "Failed":
       return "Call Failed";
+    case "Invalid":
+      return "Invalid Call";
     default:
       return ` ${callStatus || callerStatus || calleeStatus || "Unknown Status"}`;
   }
