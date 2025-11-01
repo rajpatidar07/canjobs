@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import Loader from "../common/loader";
 function GlobalSearch() {
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
   let [search, setSearch] = useState("");
   let [adminList, setAdminList] = useState([]);
   let [applicantTypeList, setApplicantTypeList] = useState([]);
@@ -28,6 +29,7 @@ function GlobalSearch() {
     // search = e.target.value;
     setSearchData([]); // Clear previous data to show loader
     try {
+      setLoading(true)
       const userData = await GlobalSearchResult(search, admin ? admin_id : "", admin ? admin_type : "");
       const userDataOther = await GlobalSearchResultOther(search, admin ? admin_id : "", admin ? admin_type : "");
       const userDataRelated = await GlobalSearchResultRelated(search, admin ? admin_id : "", admin ? admin_type : "");
@@ -57,11 +59,11 @@ function GlobalSearch() {
       mergeData(data3);
 
       setSearchData(mergedData);
+      setLoading(false)
       // console.log("Merged Data:", mergedData);
-      // setIsLoading(false);
     } catch (err) {
       console.log(err);
-      // setIsLoading(false);
+      setLoading(false)
     }
   };
   const handleKeyPress = (event) => {
@@ -156,8 +158,8 @@ function GlobalSearch() {
           </div>
           <div className="global_search_result py-2 px-8 mb-12">
             {/* Display loader if searchData is empty and search is not empty */}
-            {search && Object.keys(searchData).length === 0 ? (
-              <Loader load="yes" />
+            {loading ? (
+              <Loader />
             ) : Object.keys(searchData).some(key => searchData[key] && searchData[key].length > 0) ? (
               <>
                 {searchData["employee"] && searchData["employee"].length > 0 && (
