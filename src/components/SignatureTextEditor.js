@@ -19,7 +19,12 @@ export default function SignatureTextEditor({ name, state, setState, placeholder
       const editor = quillRef.current?.getEditor();
       if (state === "") {
         setEditorValue("");
-        editor?.setText(""); // ensures truly blank editor
+        // Clear the editor content to show placeholder
+        if (editor) {
+          editor.setContents([]);
+          editor.focus();
+          editor.blur(); // Remove focus to show placeholder
+        }
       } else {
         setEditorValue(state);
         if (editor && editor.root.innerHTML !== state) {
