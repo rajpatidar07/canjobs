@@ -34,44 +34,44 @@ export const encryptPassword = (password) => {
 
   return encrypted.toString(); // base64 string
 }
-axios.interceptors.response.use(
-  response => {
-    if (
-      response.data &&
-      response.data.status === false &&
-      response.data.message === "Unauthorised Token"
-    ) {
-      if (user_type === "employee") {
-        window.location.href = "/candidate_login";
-      } else if (user_type === "employer") {
-        window.location.href = "/client_login";
-      } else if (user_type === "admin") {
-        window.location.href = "/adminlogin";
-      } else if (user_type === "agent") {
-        window.location.href = "/partnerlogin";
-      } else {
-        window.location.href = "/";
-      }
-    }
-    return response;
-  },
-  error => {
-    if (error.message === "Network Error" || error.message === "Request failed with status code 401") {
-      console.log(error)
-      if (user_type === "user") {
-        window.location.href = "/candidate_login";
-      } else if (user_type === "company") {
-        window.location.href = "/client_login";
-      } else if (user_type === "admin") {
-        window.location.href = "/adminlogin";
-      } else if (user_type === "agent") {
-        window.location.href = "/partnerlogin";
-      } else {
-        window.location.href = "/";
-      }
-    }
-  }
-);
+// axios.interceptors.response.use(
+//   response => {
+//     if (
+//       response.data &&
+//       response.data.status === false &&
+//       response.data.message === "Unauthorised Token"
+//     ) {
+//       if (user_type === "employee") {
+//         window.location.href = "/candidate_login";
+//       } else if (user_type === "employer") {
+//         window.location.href = "/client_login";
+//       } else if (user_type === "admin") {
+//         window.location.href = "/adminlogin";
+//       } else if (user_type === "agent") {
+//         window.location.href = "/partnerlogin";
+//       } else {
+//         window.location.href = "/";
+//       }
+//     }
+//     return response;
+//   },
+//   error => {
+//     if (error.message === "Network Error" || error.message === "Request failed with status code 401") {
+//       console.log(error)
+//       if (user_type === "user") {
+//         window.location.href = "/candidate_login";
+//       } else if (user_type === "company") {
+//         window.location.href = "/client_login";
+//       } else if (user_type === "admin") {
+//         window.location.href = "/adminlogin";
+//       } else if (user_type === "agent") {
+//         window.location.href = "/partnerlogin";
+//       } else {
+//         window.location.href = "/";
+//       }
+//     }
+//   }
+// );
 
 // Location Api
 /*Country*/
@@ -2889,6 +2889,7 @@ export const ReplyToMail = async (msgId, type, msg, attachments) => {
   formData.append("msg_id", msgId);
   formData.append("inbox_type", type);
   formData.append("replyMsg", msg);
+  formData.append("sender_id", admin_id);
   if (attachments && attachments.length > 0) {
     attachments.forEach((file, i) => {
       formData.append(`attachments[${i}]`, file);
@@ -4402,3 +4403,64 @@ export const DeleteConsultation = async (data) => {
   );
   return response;
 }
+
+/*Api to save draft outlook email */
+export const SaveDraftOutlookEmail = async (data, FileList, url) => {
+  const formData = new FormData();
+  const appendIfValid = (key, value) => {
+    if (value !== undefined && value !== null && value !== "") {
+      formData.append(key, value);
+    }
+  };
+
+
+  appendIfValid("to", data.to);
+  appendIfValid("subject", data.subject);
+  appendIfValid("body", data.body);
+  appendIfValid("cc_email", data.cc_email);
+  appendIfValid("bcc_email", data.bcc_email);
+  appendIfValid("message_id", data.message_id);
+  appendIfValid("sender_id", data.sender_id);
+
+  if (Array.isArray(FileList) && FileList.length > 0) {
+    FileList.forEach((file, i) => {
+      if (file) formData.append(`attachments[${i}]`, file);
+    });
+  }
+  console.log(formData,data,FileList)
+  const response = await axios.post(`${API_URL}common/saveDraftOutlookEmail`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};
+
+/*Api to get draft outlook email */
+export const GetDraftOutlookEmail = async (email) => {
+  const response = await axios.post(`${API_URL}common/readOutlookDraftEmail`,
+    {
+      "filter_by_email_id": email
+    }, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};
+
+/*Api to Delete draft outlook email */
+export const DeleteDraftOutlookEmail = async (id) => {
+  const response = await axios.post(`${API_URL}common/deleteOutlookDraftEmail`,
+    {
+      "message_id": id
+    }, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};
