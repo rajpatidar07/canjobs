@@ -228,7 +228,6 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
                     );
                   })}
               </div>
-
               {/* Render form conditionally */}
               {showReplyForm ? (
                 <>
@@ -257,7 +256,7 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
                       {userType === "agent" || userType === "company" || userType === "user" ? null : (
                         <>
                           <button
-                            className="btn btn-primary mx-2"
+                            className={emailType === "INBOX" ? "d-none" : "btn btn-primary mx-2"}
                             onClick={toggleReplyFormClick}
                           >
                             Add Reply

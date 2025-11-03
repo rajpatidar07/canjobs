@@ -1,6 +1,6 @@
-import React, { /*useEffect,*/ useState } from "react";
+import React, { useEffect, useState } from "react";
 import useValidation from "../../common/useValidation";
-import { AddAdmin, SendEmail } from "../../../api/api";
+import { AddAdmin, SendEmail, SaveDraftOutlookEmail, GetDraftOutlookEmail, DeleteDraftOutlookEmail, GetPreviewAttchmentEmail } from "../../../api/api";
 import { toast } from "react-toastify";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 // import TextEditor from "../../common/TextEditor";
@@ -8,9 +8,12 @@ import { Link } from "react-router-dom"
 import { LiaFileSignatureSolid } from "react-icons/lia";
 import { IoMdClose } from "react-icons/io";
 import SignatureTextEditor from "../../SignatureTextEditor";
+import SAlert from "../../common/sweetAlert";
 function SendMailForm({ email, setApiCall }) {
   const [loading, setLoading] = useState(false);
-  const [fileBase, setFileBase] = useState("");
+  const [deleteAlert, setDeleteAlert] = useState(false);
+  const [deleteData, setDeleteData] = useState();
+  const [fileBase, setFileBase] = useState({});
   const [fileNames, setFileNames] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
   let adminSignature = localStorage.getItem("admin_signature");
@@ -19,7 +22,10 @@ function SendMailForm({ email, setApiCall }) {
   let AdminEmail = localStorage.getItem("admin_email");
   let AdminId = localStorage.getItem("admin_id");
   let userrType = localStorage.getItem("userType");
-
+  // --- NEW DRAFT STATE ---
+  const [drafts, setDrafts] = useState([]);
+  const [selectedDraftId, setSelectedDraftId] = useState(null);
+  const [draftLoading, setDraftLoading] = useState(false);
   // Drag and drop handlers
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -167,69 +173,65 @@ function SendMailForm({ email, setApiCall }) {
   /* Function to add files in bulk*/
   const AddAttachmentChange = async (event, id) => {
     const files = event.target.files;
-    {
-      // Check the number of files selected
-      if (files.length > 15) {
-        toast.error("You can only upload a maximum of 15 files at a time", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+    // Check the number of files selected
+    if (files.length > 15) {
+      toast.error("You can only upload a maximum of 15 files at a time", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      return;
+    }
+
+    const maxSize = 1024 * 8000; // 8 MB
+    const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
+
+    // Start with existing files object
+    const existingFileBase = { ...fileBase };
+    const existingFileNames = [...fileNames];
+    const newFiles = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+
+      // Check file type
+      const fileType = `.${file.name.split(".").pop()}`;
+      if (!allowedTypes.includes(fileType.toLowerCase())) {
+        toast.error(
+          `Invalid document type for file '${file.name}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
+          {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          }
+        );
         return;
       }
 
-      const maxSize = 1024 * 8000; // 8 MB
-      const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
-
-      // Start with existing files array or empty
-      const existingFiles = Array.isArray(fileBase) ? [...fileBase] : [];
-      const newFiles = [];
-
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-
-        // Check file type
-        const fileType = `.${file.name.split(".").pop()}`;
-        if (!allowedTypes.includes(fileType.toLowerCase())) {
-          toast.error(
-            `Invalid document type for file '${file.name}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
-            {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            }
-          );
-          return;
-        }
-
-        // Check file size
-        if (file.size > maxSize) {
-          toast.error(
-            `Document size can't be more than 8 MB for file '${file.name}'`,
-            {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            }
-          );
-          return;
-        }
-
-        // Check if file already exists by name
-        if (!existingFiles.some(f => f.name === file.name) && !newFiles.some(f => f.name === file.name)) {
-          newFiles.push(file);
-        }
+      // Check file size
+      if (file.size > maxSize) {
+        toast.error(
+          `Document size can't be more than 8 MB for file '${file.name}'`,
+          {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          }
+        );
+        return;
       }
 
-      // Append new files to existing files
-      const updatedFiles = [...existingFiles, ...newFiles];
-
-      // Read files as base64 and update fileBase state
-      const fileBaseData = {};
-      for (const file of updatedFiles) {
-        const encoded = await convertToBase64(file);
-        fileBaseData[file.name] = encoded.base64;
+      // Check if file already exists by name
+      if (!existingFileNames.includes(file.name)) {
+        newFiles.push(file);
       }
-      setFileBase(updatedFiles);
-      setFileNames(updatedFiles.map(f => f.name));
     }
+
+    // Read new files as base64 and update fileBase state
+    for (const file of newFiles) {
+      const encoded = await convertToBase64(file);
+      existingFileBase[file.name] = encoded.base64;
+      existingFileNames.push(file.name);
+    }
+    setFileBase(existingFileBase);
+    setFileNames(existingFileNames);
   };
 
   //Function to Remove any attachments
@@ -360,8 +362,223 @@ function SendMailForm({ email, setApiCall }) {
   const triggerFileInput = () => {
     document.getElementById("signatureImageInput").click();
   };
+
+  // --- DRAFT FUNCTIONALITY START ---
+
+  // Fetch drafts on component mount
+  useEffect(() => {
+    fetchDrafts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [AdminId]);
+
+  const fetchDrafts = async () => {
+    if (!AdminId) return;
+    try {
+      setDraftLoading(true);
+      // Fetch drafts for the current recipient email
+      const response = await GetDraftOutlookEmail(email);
+      setDraftLoading(false);
+
+      if (response.data && response.status === 1) {
+        // Assuming response.data.value is an object with drafts and body
+        setDrafts(response.data.value || []);
+      } else {
+        setDrafts([]);
+      }
+    } catch (error) {
+      console.error("Failed to fetch drafts:", error);
+      setDraftLoading(false);
+      setDrafts([]);
+    }
+  };
+
+  /* Function to load a selected draft */
+  const onLoadDraft = async (draft) => {
+    // Convert comma-separated string back to array if needed, or just set the string for the input field
+    const ccEmails = draft.cc_email ? draft.cc_email.split(',').map(e => e.trim()).filter(e => e) : [];
+    const bccEmails = draft.bcc_email ? draft.bcc_email.split(',').map(e => e.trim()).filter(e => e) : [];
+
+    setState({
+      ...state,
+      subject: draft.subject,
+      description: draft.body.content,
+      adminemail: ccEmails.join(', '),
+      bccemail: bccEmails.join(', '),
+      // Keep existing signature data
+    });
+
+    setSelectedDraftId(draft.id);
+    console.log(draft)
+    // *** 1. HANDLE DRAFT ATTACHMENTS (New Logic) ***
+    if (draft.hasAttachments === true) {
+      try {
+        const Res = await GetPreviewAttchmentEmail("", draft.id);
+        console.log(Res.data.value);
+
+        const newFileBase = {};
+        const newFileNames = [];
+
+        // Loop through attachments from API response
+        if (Res?.data?.value?.length > 0) {
+          Res.data.value.forEach((att) => {
+            if (att.name && att.contentBytes) {
+              newFileBase[att.name] = att.contentBytes;
+              newFileNames.push(att.name);
+            }
+          });
+        }
+
+        // Update state with fetched attachments
+        setFileBase(newFileBase);
+        setFileNames(newFileNames);
+      } catch (error) {
+        console.error("Error fetching attachments:", error);
+        setFileBase({});
+        setFileNames([]);
+      }
+    } else {
+      // Clear any existing attachments if the loaded draft has none
+      setFileBase({});
+      setFileNames([]);
+    }
+
+
+    toast.info(`Draft loaded: ${draft.subject.substring(0, 30)}${draft.subject.length > 30 ? '...' : ''}`, { autoClose: 1500 });
+  };
+
+
+  /* Function to save email as a draft (now includes draft_id for update) */
+  const onSaveDraftClick = async () => {
+    if (!AdminId || !state.email) {
+      toast.error("Cannot save draft without sender or recipient email.");
+      return;
+    }
+    try {
+      setDraftLoading(true);
+
+      const ccString = state.adminemail || "";
+      const bccString = state.bccemail || "";
+
+      let payload = {
+        to: state.email,
+        subject: state.subject || "",
+        body: state.description || "",
+        cc_email: ccString,
+        bcc_email: bccString,
+        sender_id: AdminId,
+        // *** 4. PASS DRAFT ID ON UPDATE (Already done, just confirming) ***
+        message_id: selectedDraftId, // This is null for a new draft, or the ID for an update
+      };
+
+      // Note: Attachments (fileBase) are NOT sent to the Save Draft API based on the original request's payload, 
+      // only included in SendEmail. Keep this in mind if you need to update your API logic.
+
+      let Response = await SaveDraftOutlookEmail(payload, fileBase);
+      setDraftLoading(false);
+
+      if (Response.message === "Success" || Response.message === "Draft updated successfully" || Response.message === "Draft saved successfully" || Response.message === "Draft created successfully") {
+        toast.success(selectedDraftId ? "Draft updated successfully!" : "Draft saved successfully!", { autoClose: 1500 });
+        // After saving, refresh the list to see the update
+        fetchDrafts();
+        // If it was a new save, update the selected ID in case the user wants to update it again
+        if (!selectedDraftId && Response.data && Response.data.id) {
+          setSelectedDraftId(Response.data.id);
+        }
+      } else {
+        toast.error("Failed to save draft.");
+      }
+    } catch (err) {
+      console.error(err);
+      setDraftLoading(false);
+      toast.error("An error occurred while saving the draft.");
+    }
+  };
+
+  /* Function to delete a draft */
+  const onDeleteDraft = async (draftId) => {
+    try {
+      setDraftLoading(true);
+      // ** You must ensure DeleteDraftOutlookEmail is defined and imported **
+      const Response = await DeleteDraftOutlookEmail(draftId);
+      setDraftLoading(false);
+
+      if (Response.message.includes("success") || Response.status === 1) {
+        toast.success("Draft deleted successfully!", { autoClose: 1500 });
+        fetchDrafts(); // Refresh the list
+        setDeleteAlert(false)
+        // If the deleted draft was the one currently loaded, clear the form.
+        if (selectedDraftId === draftId) {
+          setState(initialFormState);
+          setFileBase({});
+          setFileNames([]);
+          setSelectedDraftId(null);
+        }
+      } else {
+        toast.error("Failed to delete draft.");
+        setDeleteAlert(false)
+      }
+    } catch (err) {
+      console.error(err);
+      setDraftLoading(false);
+      toast.error("An error occurred while deleting the draft.");
+      setDeleteAlert(false)
+    }
+  };
+
+  // --- DRAFT FUNCTIONALITY END ---
   return (
     <div>
+      <div className="row pt-1">
+        {/* --- SAVED DRAFTS DISPLAY (UPDATED) --- */}
+        {drafts.length > 0 && (
+          <div className="mb-3 col-12">
+            <label className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-1">
+              Drafts:
+              {draftLoading && <span className="spinner-border spinner-border-sm ml-2" role="status" aria-hidden="true"></span>}
+            </label>
+            <div className="d-flex flex-wrap" style={{ gap: '10px' }}>
+              {drafts.map((draft) => (
+                <div key={draft.id} className="position-relative text-break p-1" style={{ maxWidth: '300px', minHeight: '40px' }}>
+                  <button
+                    type="button"
+                    className={`btn btn-sm ${selectedDraftId === draft.id ? 'btn-success' : 'btn-outline-secondary'} w-100`}
+                    onClick={() => onLoadDraft(draft)}
+                    style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                    title={draft.subject}
+                    disabled={draftLoading}
+                  >
+                    {draft.subject ? draft.subject.substring(0, 25) : 'No Subject'}
+                    {draft.subject && draft.subject.length > 25 ? '...' : ''}
+                  </button>
+                  {/* *** 2. DELETE DRAFT BUTTON (Updated to cross in top-right corner) *** */}
+                  <Link
+                    type="button"
+                    className="position-absolute"
+                    style={{
+                      top: '-5px',
+                      right: '-2px',
+                      background: '#fbf4f4',
+                      border: 'none',
+                      color: '#dc3545',
+                      padding: '0',
+                      fontSize: '16px',
+                      borderRadius:"50%"
+                    }}
+                    onClick={(e) => {
+                      e.preventDefault(); setDeleteAlert(true);
+                      setDeleteData(draft)
+                    }}
+                    title="Delete Draft"
+                    disabled={draftLoading}
+                  >
+                    <IoMdClose />
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
       <form>
         <div className="row pt-1">
           <div className="mb-2 col-12">
@@ -603,31 +820,67 @@ function SendMailForm({ email, setApiCall }) {
               Attach Files
             </label>
           </div>
-          <div className="mb-2 col-12 text-center">
-            {loading === true ? (
-              <button
-                className="btn btn-primary btn-small w-100 rounded-5 text-uppercase "
-                type="button"
-                disabled
-              >
-                <span
-                  className="spinner-border spinner-border-sm "
-                  role="status"
-                  aria-hidden="true"
-                ></span>
-                <span className="sr-only">Loading...</span>
-              </button>
-            ) : (
-              <button
-                onClick={(e) => onSendMailClick(e)}
-                className="btn btn-primary btn-small rounded-5 text-uppercase w-100"
-                type="button"
-              >
-                Submit
-              </button>
-            )}
+          <div className="mb-2 col-12 d-flex justify-content-between">
+            {/* Submit Button */}
+            <div className="w-50 pr-1">
+              {loading === true ? (
+                <button
+                  className="btn btn-primary btn-small w-100 rounded-5 text-uppercase "
+                  type="button"
+                  disabled
+                >
+                  <span
+                    className="spinner-border spinner-border-sm "
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span className="sr-only">Sending...</span>
+                </button>
+              ) : (
+                <button
+                  onClick={(e) => onSendMailClick(e)}
+                  className="btn btn-primary btn-small rounded-5 text-uppercase w-100"
+                  type="button"
+                >
+                  Send
+                </button>
+              )}
+            </div>
+            {/* Save Draft Button */}
+            <div className="w-50 pl-1">
+              {draftLoading === true ? (
+                <button
+                  className="btn btn-info btn-small w-100 rounded-5 text-uppercase"
+                  type="button"
+                  disabled
+                >
+                  <span
+                    className="spinner-border spinner-border-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span className="sr-only">Saving...</span>
+                </button>
+              ) : (
+                <button
+                  onClick={(e) => { e.preventDefault(); onSaveDraftClick(); }}
+                  className="btn btn-info btn-small rounded-5 text-uppercase w-100"
+                  type="button"
+                >
+                  {selectedDraftId ? "Update Draft" : "Save Draft"}
+                </button>
+              )}
+            </div>
           </div>
         </div>
+        <SAlert
+          show={deleteAlert}
+          title={deleteData?.subject}
+          text="Are you Sure you want to delete !"
+          onConfirm={() => onDeleteDraft(deleteData?.id)}
+          showCancelButton={true}
+          onCancel={() => setDeleteAlert(false)}
+        />
       </form>
     </div>
   );
