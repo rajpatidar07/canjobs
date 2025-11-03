@@ -16,7 +16,7 @@ import {
   GetEmployeeByLima,
   GetLimaSubStages,
   AddUpdateVisa,
-  getApplicanTypeApi,
+  getApplicanTypeApi, 
   // AddPaymentToDataBase,
 } from "../../api/api";
 import moment from "moment";

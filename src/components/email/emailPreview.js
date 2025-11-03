@@ -15,7 +15,7 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
   /* states */
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
-  const [emailData, setemailData] = useState([]);
+  const [emailData, setEmailData] = useState([]);
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [showForwardForm, setShowForwardForm] = useState(false);
 
@@ -38,17 +38,17 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
         Res.data.value === undefined ||
         Res.data.value.length === 0 // && JSON.parse(Res.data)[0])
       ) {
-        setemailData([]);
+        setEmailData([]);
         setIsLoading(false);
       } else {
-        setemailData(Res.data.value);
+        setEmailData(Res.data.value);
         // setTotalData(Res.data.total_rows);
         setIsLoading(false);
       }
     } catch (err) {
       console.log(err);
       setIsLoading(false);
-      setemailData([]);
+      setEmailData([]);
     }
   };
   /*Render function to get the employee data*/

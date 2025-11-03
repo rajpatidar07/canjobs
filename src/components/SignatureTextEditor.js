@@ -16,19 +16,15 @@ export default function SignatureTextEditor({ name, state, setState, placeholder
   // Update editor when parent state changes
   useEffect(() => {
     if (state !== undefined && state !== editorValue) {
-      const editor = quillRef.current?.getEditor();
-      if (state === "") {
-        setEditorValue("");
-        // Clear the editor content to show placeholder
+      setEditorValue(state);
+      if (quillRef.current) {
+        const editor = quillRef.current.getEditor();
         if (editor) {
-          editor.setContents([]);
-          editor.focus();
-          editor.blur(); // Remove focus to show placeholder
-        }
-      } else {
-        setEditorValue(state);
-        if (editor && editor.root.innerHTML !== state) {
-          editor.root.innerHTML = state;
+          if (state === "") {
+            editor.setContents([]);
+          } else {
+            editor.setContents(editor.clipboard.convert(state));
+          }
         }
       }
     }
@@ -98,7 +94,7 @@ export default function SignatureTextEditor({ name, state, setState, placeholder
   ];
 
   const handleChange = (content) => {
-    console.log(content,editorValue)
+    // console.log(content,editorValue)
     setEditorValue(content);
     setState((prev) => ({ ...prev, [name]: content }));
   };
