@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { /*useEffect,*/ useState } from "react";
 import useValidation from "../../common/useValidation";
-import { AddAdmin, SendEmail, SaveDraftOutlookEmail, GetDraftOutlookEmail, DeleteDraftOutlookEmail, GetPreviewAttchmentEmail } from "../../../api/api";
+import { AddAdmin, SendEmail,/* SaveDraftOutlookEmail, GetDraftOutlookEmail, DeleteDraftOutlookEmail, GetPreviewAttchmentEmail*/ } from "../../../api/api";
 import { toast } from "react-toastify";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 // import TextEditor from "../../common/TextEditor";
@@ -8,11 +8,11 @@ import { Link } from "react-router-dom"
 import { LiaFileSignatureSolid } from "react-icons/lia";
 import { IoMdClose } from "react-icons/io";
 import SignatureTextEditor from "../../SignatureTextEditor";
-import SAlert from "../../common/sweetAlert";
+// import SAlert from "../../common/sweetAlert";
 function SendMailForm({ email, setApiCall }) {
   const [loading, setLoading] = useState(false);
-  const [deleteAlert, setDeleteAlert] = useState(false);
-  const [deleteData, setDeleteData] = useState();
+  // const [deleteAlert, setDeleteAlert] = useState(false);
+  // const [deleteData, setDeleteData] = useState();
   const [fileBase, setFileBase] = useState({});
   const [fileNames, setFileNames] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
@@ -23,9 +23,9 @@ function SendMailForm({ email, setApiCall }) {
   let AdminId = localStorage.getItem("admin_id");
   let userrType = localStorage.getItem("userType");
   // --- NEW DRAFT STATE ---
-  const [drafts, setDrafts] = useState([]);
-  const [selectedDraftId, setSelectedDraftId] = useState(null);
-  const [draftLoading, setDraftLoading] = useState(false);
+  // const [drafts, setDrafts] = useState([]);
+  // const [selectedDraftId, setSelectedDraftId] = useState(null);
+  // const [draftLoading, setDraftLoading] = useState(false);
   // Drag and drop handlers
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -366,170 +366,170 @@ function SendMailForm({ email, setApiCall }) {
   // --- DRAFT FUNCTIONALITY START ---
 
   // Fetch drafts on component mount
-  useEffect(() => {
-    fetchDrafts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [AdminId]);
+  // useEffect(() => {
+  //   fetchDrafts();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [AdminId]);
 
-  const fetchDrafts = async () => {
-    if (!AdminId) return;
-    try {
-      setDraftLoading(true);
-      // Fetch drafts for the current recipient email
-      const response = await GetDraftOutlookEmail(email);
-      setDraftLoading(false);
+  // const fetchDrafts = async () => {
+  //   if (!AdminId) return;
+  //   try {
+  //     setDraftLoading(true);
+  //     // Fetch drafts for the current recipient email
+  //     const response = await GetDraftOutlookEmail(email);
+  //     setDraftLoading(false);
 
-      if (response.data && response.status === 1) {
-        // Assuming response.data.value is an object with drafts and body
-        setDrafts(response.data.value || []);
-      } else {
-        setDrafts([]);
-      }
-    } catch (error) {
-      console.error("Failed to fetch drafts:", error);
-      setDraftLoading(false);
-      setDrafts([]);
-    }
-  };
+  //     if (response.data && response.status === 1) {
+  //       // Assuming response.data.value is an object with drafts and body
+  //       setDrafts(response.data.value || []);
+  //     } else {
+  //       setDrafts([]);
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed to fetch drafts:", error);
+  //     setDraftLoading(false);
+  //     setDrafts([]);
+  //   }
+  // };
 
-  /* Function to load a selected draft */
-  const onLoadDraft = async (draft) => {
-    // Convert comma-separated string back to array if needed, or just set the string for the input field
-    const ccEmails = draft.cc_email ? draft.cc_email.split(',').map(e => e.trim()).filter(e => e) : [];
-    const bccEmails = draft.bcc_email ? draft.bcc_email.split(',').map(e => e.trim()).filter(e => e) : [];
+  // /* Function to load a selected draft */
+  // const onLoadDraft = async (draft) => {
+  //   // Convert comma-separated string back to array if needed, or just set the string for the input field
+  //   const ccEmails = draft.cc_email ? draft.cc_email.split(',').map(e => e.trim()).filter(e => e) : [];
+  //   const bccEmails = draft.bcc_email ? draft.bcc_email.split(',').map(e => e.trim()).filter(e => e) : [];
 
-    setState({
-      ...state,
-      subject: draft.subject,
-      description: draft.body.content,
-      adminemail: ccEmails.join(', '),
-      bccemail: bccEmails.join(', '),
-      // Keep existing signature data
-    });
+  //   setState({
+  //     ...state,
+  //     subject: draft.subject,
+  //     description: draft.body.content,
+  //     adminemail: ccEmails.join(', '),
+  //     bccemail: bccEmails.join(', '),
+  //     // Keep existing signature data
+  //   });
 
-    setSelectedDraftId(draft.id);
-    console.log(draft)
-    // *** 1. HANDLE DRAFT ATTACHMENTS (New Logic) ***
-    if (draft.hasAttachments === true) {
-      try {
-        const Res = await GetPreviewAttchmentEmail("", draft.id);
-        console.log(Res.data.value);
+  //   setSelectedDraftId(draft.id);
+  //   console.log(draft)
+  //   // *** 1. HANDLE DRAFT ATTACHMENTS (New Logic) ***
+  //   if (draft.hasAttachments === true) {
+  //     try {
+  //       const Res = await GetPreviewAttchmentEmail("", draft.id);
+  //       console.log(Res.data.value);
 
-        const newFileBase = {};
-        const newFileNames = [];
+  //       const newFileBase = {};
+  //       const newFileNames = [];
 
-        // Loop through attachments from API response
-        if (Res?.data?.value?.length > 0) {
-          Res.data.value.forEach((att) => {
-            if (att.name && att.contentBytes) {
-              newFileBase[att.name] = att.contentBytes;
-              newFileNames.push(att.name);
-            }
-          });
-        }
+  //       // Loop through attachments from API response
+  //       if (Res?.data?.value?.length > 0) {
+  //         Res.data.value.forEach((att) => {
+  //           if (att.name && att.contentBytes) {
+  //             newFileBase[att.name] = att.contentBytes;
+  //             newFileNames.push(att.name);
+  //           }
+  //         });
+  //       }
 
-        // Update state with fetched attachments
-        setFileBase(newFileBase);
-        setFileNames(newFileNames);
-      } catch (error) {
-        console.error("Error fetching attachments:", error);
-        setFileBase({});
-        setFileNames([]);
-      }
-    } else {
-      // Clear any existing attachments if the loaded draft has none
-      setFileBase({});
-      setFileNames([]);
-    }
-
-
-    toast.info(`Draft loaded: ${draft.subject.substring(0, 30)}${draft.subject.length > 30 ? '...' : ''}`, { autoClose: 1500 });
-  };
+  //       // Update state with fetched attachments
+  //       setFileBase(newFileBase);
+  //       setFileNames(newFileNames);
+  //     } catch (error) {
+  //       console.error("Error fetching attachments:", error);
+  //       setFileBase({});
+  //       setFileNames([]);
+  //     }
+  //   } else {
+  //     // Clear any existing attachments if the loaded draft has none
+  //     setFileBase({});
+  //     setFileNames([]);
+  //   }
 
 
-  /* Function to save email as a draft (now includes draft_id for update) */
-  const onSaveDraftClick = async () => {
-    if (!AdminId || !state.email) {
-      toast.error("Cannot save draft without sender or recipient email.");
-      return;
-    }
-    try {
-      setDraftLoading(true);
+  //   toast.info(`Draft loaded: ${draft.subject.substring(0, 30)}${draft.subject.length > 30 ? '...' : ''}`, { autoClose: 1500 });
+  // };
 
-      const ccString = state.adminemail || "";
-      const bccString = state.bccemail || "";
 
-      let payload = {
-        to: state.email,
-        subject: state.subject || "",
-        body: state.description || "",
-        cc_email: ccString,
-        bcc_email: bccString,
-        sender_id: AdminId,
-        // *** 4. PASS DRAFT ID ON UPDATE (Already done, just confirming) ***
-        message_id: selectedDraftId, // This is null for a new draft, or the ID for an update
-      };
+  // /* Function to save email as a draft (now includes draft_id for update) */
+  // const onSaveDraftClick = async () => {
+  //   if (!AdminId || !state.email) {
+  //     toast.error("Cannot save draft without sender or recipient email.");
+  //     return;
+  //   }
+  //   try {
+  //     setDraftLoading(true);
 
-      // Note: Attachments (fileBase) are NOT sent to the Save Draft API based on the original request's payload, 
-      // only included in SendEmail. Keep this in mind if you need to update your API logic.
+  //     const ccString = state.adminemail || "";
+  //     const bccString = state.bccemail || "";
 
-      let Response = await SaveDraftOutlookEmail(payload, fileBase);
-      setDraftLoading(false);
+  //     let payload = {
+  //       to: state.email,
+  //       subject: state.subject || "",
+  //       body: state.description || "",
+  //       cc_email: ccString,
+  //       bcc_email: bccString,
+  //       sender_id: AdminId,
+  //       // *** 4. PASS DRAFT ID ON UPDATE (Already done, just confirming) ***
+  //       message_id: selectedDraftId, // This is null for a new draft, or the ID for an update
+  //     };
 
-      if (Response.message === "Success" || Response.message === "Draft updated successfully" || Response.message === "Draft saved successfully" || Response.message === "Draft created successfully") {
-        toast.success(selectedDraftId ? "Draft updated successfully!" : "Draft saved successfully!", { autoClose: 1500 });
-        // After saving, refresh the list to see the update
-        fetchDrafts();
-        // If it was a new save, update the selected ID in case the user wants to update it again
-        if (!selectedDraftId && Response.data && Response.data.id) {
-          setSelectedDraftId(Response.data.id);
-        }
-      } else {
-        toast.error("Failed to save draft.");
-      }
-    } catch (err) {
-      console.error(err);
-      setDraftLoading(false);
-      toast.error("An error occurred while saving the draft.");
-    }
-  };
+  //     // Note: Attachments (fileBase) are NOT sent to the Save Draft API based on the original request's payload, 
+  //     // only included in SendEmail. Keep this in mind if you need to update your API logic.
 
-  /* Function to delete a draft */
-  const onDeleteDraft = async (draftId) => {
-    try {
-      setDraftLoading(true);
-      // ** You must ensure DeleteDraftOutlookEmail is defined and imported **
-      const Response = await DeleteDraftOutlookEmail(draftId);
-      setDraftLoading(false);
+  //     let Response = await SaveDraftOutlookEmail(payload, fileBase);
+  //     setDraftLoading(false);
 
-      if (Response.message.includes("success") || Response.status === 1) {
-        toast.success("Draft deleted successfully!", { autoClose: 1500 });
-        fetchDrafts(); // Refresh the list
-        setDeleteAlert(false)
-        // If the deleted draft was the one currently loaded, clear the form.
-        if (selectedDraftId === draftId) {
-          setState(initialFormState);
-          setFileBase({});
-          setFileNames([]);
-          setSelectedDraftId(null);
-        }
-      } else {
-        toast.error("Failed to delete draft.");
-        setDeleteAlert(false)
-      }
-    } catch (err) {
-      console.error(err);
-      setDraftLoading(false);
-      toast.error("An error occurred while deleting the draft.");
-      setDeleteAlert(false)
-    }
-  };
+  //     if (Response.message === "Success" || Response.message === "Draft updated successfully" || Response.message === "Draft saved successfully" || Response.message === "Draft created successfully") {
+  //       toast.success(selectedDraftId ? "Draft updated successfully!" : "Draft saved successfully!", { autoClose: 1500 });
+  //       // After saving, refresh the list to see the update
+  //       fetchDrafts();
+  //       // If it was a new save, update the selected ID in case the user wants to update it again
+  //       if (!selectedDraftId && Response.data && Response.data.id) {
+  //         setSelectedDraftId(Response.data.id);
+  //       }
+  //     } else {
+  //       toast.error("Failed to save draft.");
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //     setDraftLoading(false);
+  //     toast.error("An error occurred while saving the draft.");
+  //   }
+  // };
+
+  // /* Function to delete a draft */
+  // const onDeleteDraft = async (draftId) => {
+  //   try {
+  //     setDraftLoading(true);
+  //     // ** You must ensure DeleteDraftOutlookEmail is defined and imported **
+  //     const Response = await DeleteDraftOutlookEmail(draftId);
+  //     setDraftLoading(false);
+
+  //     if (Response.message.includes("success") || Response.status === 1) {
+  //       toast.success("Draft deleted successfully!", { autoClose: 1500 });
+  //       fetchDrafts(); // Refresh the list
+  //       setDeleteAlert(false)
+  //       // If the deleted draft was the one currently loaded, clear the form.
+  //       if (selectedDraftId === draftId) {
+  //         setState(initialFormState);
+  //         setFileBase({});
+  //         setFileNames([]);
+  //         setSelectedDraftId(null);
+  //       }
+  //     } else {
+  //       toast.error("Failed to delete draft.");
+  //       setDeleteAlert(false)
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //     setDraftLoading(false);
+  //     toast.error("An error occurred while deleting the draft.");
+  //     setDeleteAlert(false)
+  //   }
+  // };
 
   // --- DRAFT FUNCTIONALITY END ---
   return (
     <div>
-      <div className="row pt-1">
-        {/* --- SAVED DRAFTS DISPLAY (UPDATED) --- */}
+      {/* <div className="row pt-1">
+         --- SAVED DRAFTS DISPLAY (UPDATED) --- 
         {drafts.length > 0 && (
           <div className="mb-3 col-12">
             <label className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-1">
@@ -550,7 +550,7 @@ function SendMailForm({ email, setApiCall }) {
                     {draft.subject ? draft.subject.substring(0, 25) : 'No Subject'}
                     {draft.subject && draft.subject.length > 25 ? '...' : ''}
                   </button>
-                  {/* *** 2. DELETE DRAFT BUTTON (Updated to cross in top-right corner) *** */}
+                   *** 2. DELETE DRAFT BUTTON (Updated to cross in top-right corner) *** 
                   <Link
                     type="button"
                     className="position-absolute"
@@ -578,7 +578,7 @@ function SendMailForm({ email, setApiCall }) {
             </div>
           </div>
         )}
-      </div>
+      </div> */}
       <form>
         <div className="row pt-1">
           <div className="mb-2 col-12">
@@ -822,7 +822,7 @@ function SendMailForm({ email, setApiCall }) {
           </div>
           <div className="mb-2 col-12 d-flex justify-content-between">
             {/* Submit Button */}
-            <div className="w-50 pr-1">
+            <div className="w-100 pr-1">
               {loading === true ? (
                 <button
                   className="btn btn-primary btn-small w-100 rounded-5 text-uppercase "
@@ -847,7 +847,7 @@ function SendMailForm({ email, setApiCall }) {
               )}
             </div>
             {/* Save Draft Button */}
-            <div className="w-50 pl-1">
+            {/* <div className="w-50 pl-1 d-none">
               {draftLoading === true ? (
                 <button
                   className="btn btn-info btn-small w-100 rounded-5 text-uppercase"
@@ -870,17 +870,17 @@ function SendMailForm({ email, setApiCall }) {
                   {selectedDraftId ? "Update Draft" : "Save Draft"}
                 </button>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
-        <SAlert
+        {/* <SAlert
           show={deleteAlert}
           title={deleteData?.subject}
           text="Are you Sure you want to delete !"
           onConfirm={() => onDeleteDraft(deleteData?.id)}
           showCancelButton={true}
           onCancel={() => setDeleteAlert(false)}
-        />
+        /> */}
       </form>
     </div>
   );

@@ -373,10 +373,13 @@ const AgreementOneForm = ({
         ) {
           setLoading(false);
           setState(initialFormState);
-          toast.success("Felids added successfully.", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
+          if (index !== "update details" && index !== "final") {
+            const message = state.id ? "Fields updated successfully." : "Fields added successfully.";
+            toast.success(message, {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+          }
           // if (openSignature === "yes") {
           try {
             let res = await GetAgreement(
