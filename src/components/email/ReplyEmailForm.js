@@ -11,6 +11,7 @@ const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall, toggle
     const [fileBase, setFileBase] = useState([]);
     const [fileNames, setFileNames] = useState([]);
     const [isDragging, setIsDragging] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     // Drag and drop handlers
     const handleDragOver = (e) => {
@@ -104,6 +105,7 @@ const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall, toggle
 
     const onReplyClick = async (e) => {
         e.preventDefault();
+        setLoading(true);
         // Handle form submission here
         // You can access subject, message, and attachment here
         // Don't forget to call setShowReplyForm to hide the form
@@ -120,9 +122,12 @@ const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall, toggle
                 setFileBase([]);
                 setFileNames([]);
             }
-        } catch (err) { console.log(err) }
+            setLoading(false);
+        } catch (err) {
+            console.log(err);
+            setLoading(false);
+        }
     };
-    console.log(formData.message, "pppp")
     return (
         <form onSubmit={onReplyClick}>
             <div className="form-group">
@@ -209,10 +214,10 @@ const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall, toggle
                 </label>
             </div>
             <div className="d-flex">
-                <button type="submit" className="btn btn-primary">
-                    Send
+                <button type="submit" className="btn btn-primary" disabled={loading === true}>
+                    {loading === true ? "Sending..." : "Send"}
                 </button>
-                <button className="btn btn-outline-primary" onClick={toggleReplyFormClick}>
+                <button className="btn btn-outline-primary" onClick={toggleReplyFormClick} disabled={loading}>
                     Cancel
                 </button></div>
         </form>
