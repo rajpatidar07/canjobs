@@ -9,13 +9,17 @@ import { LiaFileSignatureSolid } from "react-icons/lia";
 import { IoMdClose } from "react-icons/io";
 import SignatureTextEditor from "../../SignatureTextEditor";
 import SAlert from "../../common/sweetAlert";
+import AttachmentPreviewModal from "./AttachmentPreviewModal";
+
+
 function SendMailForm({ email, setApiCall }) {
   const [loading, setLoading] = useState(false);
-  const [deleteAlert, setDeleteAlert] = useState(false);
-  const [deleteData, setDeleteData] = useState();
   const [fileBase, setFileBase] = useState([]);
   const [fileNames, setFileNames] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
+  const [previewFile, setPreviewFile] = useState(null);
+  const [viewFile, setViewFile] = useState(false);
+  const [previewFileUrl, setPreviewFileUrl] = useState(null); // Temporary URL for iframe
   let adminSignature = localStorage.getItem("admin_signature");
   let adminSignatureText = localStorage.getItem("admin_signature_text");
   const [signatureImage, setSignatureImage] = useState(adminSignature || null);
@@ -26,6 +30,8 @@ function SendMailForm({ email, setApiCall }) {
   const [drafts, setDrafts] = useState([]);
   const [selectedDraftId, setSelectedDraftId] = useState(null);
   const [draftLoading, setDraftLoading] = useState(false);
+  const [deleteAlert, setDeleteAlert] = useState(false);
+  const [deleteData, setDeleteData] = useState();
   // Drag and drop handlers
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -240,6 +246,7 @@ function SendMailForm({ email, setApiCall }) {
     setFileNames(newFileNames);
   };
 
+
   /*Function to sent email*/
   const onSendMailClick = async () => {
     // console.log(state.signature);
@@ -415,7 +422,7 @@ function SendMailForm({ email, setApiCall }) {
     if (draft.hasAttachments === true) {
       try {
         const Res = await GetPreviewAttchmentEmail("DRAFT", draft.id);
-        console.log(Res.data.value);
+        // console.log(Res.data.value);
 
         // const newFileBase = [];
         // const newFileNames = [];
@@ -548,6 +555,34 @@ function SendMailForm({ email, setApiCall }) {
       toast.error("An error occurred while deleting the draft.");
       setDeleteAlert(false)
     }
+  };
+
+  // Function to handle file preview (UPDATED)
+  const handlePreviewFile = async (file) => {
+    if (!file) return;
+
+    // 1. Clean up any previous temporary URL
+    if (previewFileUrl) {
+      URL.revokeObjectURL(previewFileUrl);
+    }
+
+    // 2. Create a temporary URL for the file object in the browser's memory
+    const tempUrl = URL.createObjectURL(file);
+
+    // 3. Set the state
+    setPreviewFile(file);
+    setPreviewFileUrl(tempUrl);
+    setViewFile(true); // Open the modal
+  };
+
+  // Cleanup function for when the modal closes (NEW)
+  const handleCloseViewFile = () => {
+    if (previewFileUrl) {
+      URL.revokeObjectURL(previewFileUrl); // Clean up the temporary URL
+    }
+    setViewFile(false);
+    setPreviewFile(null);
+    setPreviewFileUrl(null);
   };
 
   // --- DRAFT FUNCTIONALITY END ---
@@ -796,7 +831,7 @@ function SendMailForm({ email, setApiCall }) {
           <div className="mail-file-attachments">
             {fileNames.map((fileName) => (
               <div key={fileName} className="mail-file-attachment">
-                <p>{fileName}</p>
+                <p><Link className="" onClick={() => handlePreviewFile(fileBase.find(f => f.name === fileName))}>{fileName}</Link></p>
                 <button
                   type="button"
                   className="mail-remove-file"
@@ -907,6 +942,14 @@ function SendMailForm({ email, setApiCall }) {
           onCancel={() => setDeleteAlert(false)}
         />
       </form>
+
+      {/* File Preview Modal */}
+      <AttachmentPreviewModal
+        show={viewFile}
+        onHide={() => handleCloseViewFile()} // Use the new cleanup function
+        file={previewFile}
+        fileUrl={previewFileUrl}
+      />
     </div>
   );
 }

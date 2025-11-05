@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState } from "react";
 import { ReplyToMail } from "../../api/api"
 import { toast } from "react-toastify";
@@ -160,6 +161,11 @@ const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall, toggle
                         Drag and drop files here or click "Attach Files" button to upload attachments.
                     </div>
                 </div>
+            </div>
+            <div className="form-group">
+                <div dangerouslySetInnerHTML={{ __html: localStorage.getItem("admin_signature_text") }} />
+                {/* // eslint-disable-next-line jsx-a11y/img-redundant-alt */}
+                <img src={localStorage.getItem("admin_signature")} alt="signature image" style={{ maxWidth: "200px", maxHeight: "100px" }} />
             </div>
             <div className="mail-file-attachments">
                 {fileNames.map((fileName) => (
