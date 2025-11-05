@@ -1,15 +1,27 @@
 Today's Update
-Date:01/11/25
-1. Made changes to enable draft deletion.
-2. Added a condition to fetch attachments for drafts.
-3. Tested sending the Retainer Agreement and signature by the user, as requested by Satvir to verify the reported bug.e.
+Date:05/11/25
+1. Fixed the spacing issue in the signature and made major updates to the editor.
+2. Added a signature preview in the email reply.
+3. Added an option to preview attachments before sending the email.
 
 # Deploy on live
+1. Fixed the spacing issue in the signature and made major updates to the editor.
+2. Added a signature preview in the email reply.
+3. Added an option to preview attachments before sending the email.
+
+Date:04/11/25
 1. Added colored text, clickable links, and multiple images to the signature section, and updated the text editor everywhere it needed to be used.
 2. Fixed the issue with sending emails for payment reminders.
 4. Added the option to include attachments in the reply feature.
-5. Fixed the issue with updating the Retainer Agreement.
+5. Fixed the issue with updating the Retainer Agreement and payment invoice.
 6. Added a signature to the reply feature.
+7. Removed activity from the notifications.
+8. Added a notification for Satvir when any employer sends an email to the portal.
+9. Fixed issues related to the Retainer Agreement (RA) signature.
+10. Added an option to include multiple images within the signature text itself.
+11. Fixed the issue with sending the Retainer Agreement to the user.
+12. Verified that sending payment reminders is working correctly.
+
 
 Date: 17/10/25:Only frontend
 1. Remove the default values of consultation and payment invoice date selection box.
