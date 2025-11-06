@@ -1263,7 +1263,7 @@ const NewUserProfile = (props) => {
                                   <div>
                                     <Link
                                       className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
-                                      // to={`tel:${PersonalDetail.contact_no}`}
+                                      to={`tel:${PersonalDetail.contact_no}`}
                                       onClick={() => makeCall(PersonalDetail.contact_no, PersonalDetail.name, PersonalDetail.profile_photo
                                         ? PersonalDetail.profile_photo
                                         : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`)}
