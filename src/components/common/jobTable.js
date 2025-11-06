@@ -241,7 +241,6 @@ export default function JobTable(props) {
     JsonData()
     // console.log(props.page)
     if (props.page === "lmia" || props.page === "job") {
-      console.log("ppppppp")
       GetDashboardPermissionData()
     }
     if (apiCall === true || props.apiCall === true) {

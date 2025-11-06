@@ -12,9 +12,9 @@ function FollowUpDashBoard(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
   /*Shorting states */
-  const [columnName, setcolumnName] = useState("id");
+  const [columnName, setColumnName] = useState("id");
   const [sortOrder, setSortOrder] = useState("DESC");
-  const [isLoading, setIsloading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   /* Function to get the FollowUp data*/
   const FollowUpData = async () => {
@@ -28,11 +28,11 @@ function FollowUpDashBoard(props) {
       );
       if (userData.data.length === 0) {
         setFollowUpData([]);
-        setIsloading(false);
+        setIsLoading(false);
       } else {
         setFollowUpData(userData.data);
         setTotalData(userData.total_rows);
-        setIsloading(false);
+        setIsLoading(false);
       }
     } catch (err) {
       console.log(err);
@@ -42,6 +42,7 @@ function FollowUpDashBoard(props) {
   /*Render function to get the interview*/
   useEffect(() => {
     FollowUpData();
+    // eslint-disable-next-line
   }, [
     props,
     currentPage,
@@ -56,7 +57,7 @@ function FollowUpDashBoard(props) {
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
-    setcolumnName(columnName);
+    setColumnName(columnName);
   };
 
   return (

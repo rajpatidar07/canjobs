@@ -107,7 +107,7 @@ export default function AdminLoginFrom({
   //Function to forgot password
   const onForgoteClick = async (event) => {
     event.preventDefault();
-    console.log(errors);
+    // console.log(errors);
     if (validate()) {
       setLoading(true);
       try {

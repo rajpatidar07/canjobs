@@ -173,7 +173,7 @@ function ContactInfo(props) {
   // SUBMIT HANDLER
   const onCompanyContactClick = async (event) => {
     event.preventDefault();
-    console.log(validate, errors, state)
+    // console.log(validate, errors, state)
     if (validate()) {
       setLoading(true);
       try {

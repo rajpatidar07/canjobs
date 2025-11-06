@@ -49,7 +49,6 @@ const DynamicRA = () => {
                         "",
                         [file]
                     );
-                    console.log(res)
                     if (res.data.message === "Document Upload") {
                         try {
                             let resApi = await AddDocIdToAGreementApiFun({

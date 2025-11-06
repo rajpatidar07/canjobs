@@ -458,7 +458,7 @@ export default function ApplicantTypeDocuments(props) {
             item.id === props?.docId
           )[0]
 
-          console.log(currentDoc, props?.docId,)
+          // console.log(currentDoc, props?.docId,)
           if (currentDoc && currentDoc?.file) {
             setState({
               ...state,

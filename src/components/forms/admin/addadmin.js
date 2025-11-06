@@ -171,7 +171,6 @@ function Addadmin(props) {
       try {
         let data = { ...state, password: encryptPassword(state.password) }
         const responseData = await AddAdmin(data);
-        console.log( state.signature)
         if (responseData.message === "admin added successfully") {
           // await AddChildPermission(Permissions);
           toast.success("Admin added successfully", {

@@ -81,17 +81,78 @@ function AttachmentPreviewModal({ show, onHide, file, fileUrl }) {
     }
 
     return (
-        <Modal show={show} onHide={onHide} size="lg" centered>
-            <Modal.Header closeButton style={{ backgroundColor: '#f8f9fa', borderBottom: '1px solid #dee2e6' }}>
-                <Modal.Title><span>Preview: {fileName}</span>
-                    <button type="button" className="close" onClick={onHide} style={{ border: 'none', background: 'transparent' }}>
+        <Modal
+            show={show}
+            onHide={onHide}
+            size="lg"
+            centered
+            dialogClassName="custom-modal"
+        >
+            <Modal.Header
+                closeButton
+                style={{
+                    background: "linear-gradient(90deg, #f0f4f7, #ffffff)",
+                    borderBottom: "1px solid #e0e0e0",
+                    borderTopLeftRadius: "12px",
+                    borderTopRightRadius: "12px",
+                    padding: "16px 24px",
+                }}
+            >
+                <Modal.Title
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        width: "100%",
+                        fontWeight: "600",
+                        color: "#333",
+                        fontSize: "1.15rem",
+                    }}
+                >
+                    <span>📄 Preview: {fileName}</span>
+                    <button
+                        type="button"
+                        onClick={onHide}
+                        style={{
+                            border: "none",
+                            background: "transparent",
+                            cursor: "pointer",
+                            color: "#555",
+                            transition: "color 0.3s ease",
+                        }}
+                        onMouseEnter={(e) => (e.target.style.color = "#000")}
+                        onMouseLeave={(e) => (e.target.style.color = "#555")}
+                    >
                         <IoMdClose size={24} />
                     </button>
                 </Modal.Title>
             </Modal.Header>
-            <Modal.Body style={{ maxHeight: '70vh', overflow: 'auto', backgroundColor: '#ffffff', padding: '20px' }}>
+
+            <Modal.Body
+                style={{
+                    maxHeight: "70vh",
+                    overflowY: "auto",
+                    backgroundColor: "#ffffff",
+                    padding: "24px",
+                    borderBottomLeftRadius: "12px",
+                    borderBottomRightRadius: "12px",
+                }}
+            >
+                <div
+                    style={{
+                        backgroundColor: "#fdfdfd",
+                        border: "1px solid #e6e6e6",
+                        borderRadius: "8px",
+                        boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.05)",
+                        padding: "20px",
+                        lineHeight: "1.6",
+                        fontSize: "0.95rem",
+                        color: "#444",
+                    }}
+                >
                     {content}
-                </Modal.Body>
+                </div>
+            </Modal.Body>
         </Modal>
     );
 }

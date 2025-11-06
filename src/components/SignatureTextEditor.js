@@ -83,12 +83,14 @@ function cleanSignatureHTML(html) {
 export default function SignatureTextEditor({ name, state, setState, placeholder, id }) {
   const quillRef = useRef(null);
   const [editorValue, setEditorValue] = useState(state || "");
+  const isUserChange = useRef(false);
+  const debounceTimeout = useRef(null);
 
   // console.log("Is empty:", state === "", "Current value:", state);
 
   // Update editor when parent state changes
   useEffect(() => {
-    if (state !== undefined && state !== editorValue) {
+    if (state !== undefined && state !== editorValue && !isUserChange.current) {
       setEditorValue(state);
       if (quillRef.current) {
         const editor = quillRef.current.getEditor();
@@ -101,6 +103,7 @@ export default function SignatureTextEditor({ name, state, setState, placeholder
         }
       }
     }
+    isUserChange.current = false;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
@@ -166,37 +169,30 @@ export default function SignatureTextEditor({ name, state, setState, placeholder
     "code-block",
   ];
   const handleChange = (content, delta, source, editor) => {
-    // 1. Update local state immediately for a smooth typing experience
+    // Update local state immediately for a smooth typing experience
     setEditorValue(content);
 
-    // 2. ONLY update the parent state when you are ready to save/finalize.
-    // For continuous saving, you might use a debounce function or check the 'source' argument.
-    // Since you want to fix the jumping, we'll keep the update local for now.
-    // To update the parent, you should clean the HTML:
-    // const cleaned = cleanSignatureHTML(content);
-
-    // TEMPORARY: If you MUST update parent on change, try checking the source:
-    if (source === 'user') {
-      // Debounce this call or only call it on a blur/save button click
-      // For demonstration, let's keep it local for now to fix the jumping.
+    // Debounce parent state update to avoid jumping
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
     }
-
-    // *** REMOVE OR MOVE THIS LINE to a separate save function or a debounced handler ***
-    // setState((prev) => ({ ...prev, [name]: cleaned })); 
-
-    // console.log("Cleaned signature HTML:", cleaned);
+    debounceTimeout.current = setTimeout(() => {
+      const cleaned = cleanSignatureHTML(content);
+      isUserChange.current = true;
+      setState((prev) => ({ ...prev, [name]: cleaned }));
+    }, 300); // 300ms debounce
   };
 
-  // You need a way to **trigger** the parent state update (setState) when the user is done editing, 
-  // e.g., on a blur event or an explicit save button click.
-
-  // Example for handling blur (when user clicks outside the editor)
-  const handleBlur = (previousRange, source, editor) => {
-    const content = editor.getHTML();
-    const cleaned = cleanSignatureHTML(content);
-    setState((prev) => ({ ...prev, [name]: cleaned }));
-    // console.log("Parent state updated on BLUR.");
-  }
+  // Handle blur to update parent state immediately
+  // const handleBlur = (previousRange, source, editor) => {
+  //   if (debounceTimeout.current) {
+  //     clearTimeout(debounceTimeout.current);
+  //   }
+  //   const content = editor.getHTML();
+  //   const cleaned = cleanSignatureHTML(content);
+  //   isUserChange.current = true;
+  //   setState((prev) => ({ ...prev, [name]: cleaned }));
+  // };
 
 
   return (
@@ -223,7 +219,6 @@ export default function SignatureTextEditor({ name, state, setState, placeholder
         theme="snow"
         value={editorValue}
         onChange={handleChange}
-        onBlur={handleBlur}
         modules={modules}
         formats={formats}
         placeholder={placeholder || "Start typing..."}

@@ -177,7 +177,7 @@ export default function RetauberAgreementList({
         resend: "1"
       }
       const response = await SendEmail(data, [])
-      console.log(response)
+      // console.log(response)
       if (response.message === "email sent successfully") {
         toast.success("Email Resend successfully", {
           position: toast.POSITION.TOP_RIGHT,

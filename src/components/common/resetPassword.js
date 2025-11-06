@@ -47,7 +47,7 @@ export default function ResetPassword() {
       setLoading(true);
       // handle form submission
       if (userType === "user") {
-        console.log(state)
+        // console.log(state)
         try {
           let updatedTodo = await EmployeeResetPasswordApi(state);
           if (

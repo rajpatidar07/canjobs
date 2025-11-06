@@ -237,7 +237,6 @@ function Job(props) {
                         })) || [])}
                         selectedValue={jobSwapFilterValue}
                         onChange={(e) => {
-                          console.log(e)
                           setJobSwapFilterValue(e ? e.value : null);
                           setPageNo(1);
                         }}

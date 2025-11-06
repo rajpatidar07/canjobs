@@ -53,7 +53,6 @@ export default function AddConsultationInCandidate(props) {
                     ...state,
                     employee_id: props.employeeId.employee_id
                 }
-                console.log(data)
                 const responseData = await AddEmployeeDetails(data);
                 if (responseData.message === "Employee data inserted successfully") {
                     try {
