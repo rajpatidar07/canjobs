@@ -11,7 +11,6 @@ import SignatureTextEditor from "../../SignatureTextEditor";
 import SAlert from "../../common/sweetAlert";
 import AttachmentPreviewModal from "./AttachmentPreviewModal";
 
-
 function SendMailForm({ email, setApiCall }) {
   const [loading, setLoading] = useState(false);
   const [fileBase, setFileBase] = useState([]);
@@ -249,7 +248,7 @@ function SendMailForm({ email, setApiCall }) {
 
   /*Function to sent email*/
   const onSendMailClick = async () => {
-    // console.log(state.signature);
+    // console.log(state);
     if (validate()) {
       if (state.signature_text || signatureImage) {
         let data = {
@@ -755,7 +754,7 @@ function SendMailForm({ email, setApiCall }) {
                   Drag and drop files here or click "Attach Files" button to upload attachments.
                 </div>
               </div>
-              {/*----ERROR MESSAGE FOR DESRIPTION----*/}
+              {/*----ERROR MESSAGE FOR DESCRIPTION----*/}
               {errors.description && (
                 <span
                   key={errors.description}

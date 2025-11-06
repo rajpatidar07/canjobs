@@ -8,12 +8,21 @@ import { AddSharePointDOcument } from '../../../api/api';
 import { AddDocIdToAGreementApiFun } from '../../common/Retaineragreement/CommonThings/AddDocIdToAGreementApiFun';
 import { Link } from 'react-router-dom';
 
+const agreementOptions = [
+    ...(filterjson.Rerainer_Agreement_subCategories || []),
+    "Other"
+].map((item, index) => ({
+    value: item,
+    label: item,
+}));
+
 export default function UploadAgreement(props) {
     const fileInputRef = useRef(null);
     const [isDragging, setIsDragging] = useState(false);
     const [loading, setLoading] = useState(false);
     const [docFileBase, setDocFileBase] = useState("");
     const [docFileBaseErr, setDocFileBaseErr] = useState("");
+    const [isOtherSelected, setIsOtherSelected] = useState(false);
     let initialFormState = {
         "type": "",
         "signature_status": "0",
@@ -43,6 +52,9 @@ export default function UploadAgreement(props) {
                 "added_type": props.felidData.added_type,
                 id: props.felidData.id
             })
+            // Check if the type is "Other" or not in the predefined list
+            const isCustom = props.felidData.type === "Other" || !(filterjson.Rerainer_Agreement_subCategories || []).includes(props.felidData.type);
+            setIsOtherSelected(isCustom);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.felidData])
@@ -248,24 +260,36 @@ export default function UploadAgreement(props) {
                                 Agreement Type  : <span className="text-danger">*</span>
                             </label>
                             <div className={errors.type ? "border border-danger rounded" : ""}>
-
                                 <SelectBox
                                     Width={"yes"}
-                                    options={(filterjson.Rerainer_Agreement_subCategories || []).map((item, index) => ({
-                                        value: item,
-                                        label: item,
-                                    }))}
+                                    options={agreementOptions}
                                     type="type"
-                                    selectedValue={state.type || ""}
+                                    isDisabled={isOtherSelected}
+                                    selectedValue={isOtherSelected ? "Other" : state.type || ""}
                                     onChange={(e) => {
-                                        onInputChange({
-                                            target: {
-                                                name: "type",
-                                                value: e ? e.value : "",
-                                            },
-                                        });
+                                        if (e && e.value === "Other") {
+                                            setIsOtherSelected(true);
+                                            setState({ ...state, type: "" });
+                                        } else {
+                                            setIsOtherSelected(false);
+                                            onInputChange({
+                                                target: {
+                                                    name: "type",
+                                                    value: e ? e.value : "",
+                                                },
+                                            });
+                                        }
                                     }}
                                 />
+                                {isOtherSelected && (
+                                    <input
+                                        type="text"
+                                        className="form-control mt-2"
+                                        placeholder="Enter custom agreement type"
+                                        value={state.type}
+                                        onChange={(e) => setState({ ...state, type: e.target.value })}
+                                    />
+                                )}
                             </div>
                             {/*----ERROR MESSAGE FOR WORK PERMIT----*/}
                             {errors.type && (
@@ -362,7 +386,7 @@ export default function UploadAgreement(props) {
                         </div>
                         <div className=' d-flex justify-content-center'>
                             <button type="button" disabled={loading} onClick={(e) => { onFormSubmit(e) }} className="btn btn-primary">
-                                {loading ? "submitting..." : "submit"}
+                                {loading ? "Submitting..." : "Submit"}
                             </button>
                         </div>
                     </div>

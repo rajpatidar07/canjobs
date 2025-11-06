@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { GetAllJobs, getAllJobsCategory } from "../../api/api";
+import { GetAllJobs,/* getAllJobsCategory*/ } from "../../api/api";
 import JobResponse from "./response";
 import { Pagination } from "react-bootstrap";
 
 function FollowupTable(props) {
   /*show Modal and props state */
-  const [jobData, setjobData] = useState([]);
+  const [jobData, setJobData] = useState([]);
   const [JobId, setJobId] = useState([]);
   /*Delete state */
   /*Filter and search state */
-  const [Categorylist, setCategoryList] = useState([]);
+  // const [Categorylist, setCategoryList] = useState([]);
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
   /*Shorting states */
-  const [columnName, setcolumnName] = useState("job_id");
+  const [columnName, setColumnName] = useState("job_id");
   const [sortOrder, setSortOrder] = useState("DESC");
-  const [responseId, setresponseId] = useState();
+  const [responseId, setResponseId] = useState();
 
   /* Function to get Job data*/
   const JobData = async () => {
@@ -34,19 +34,19 @@ function FollowupTable(props) {
       sortOrder
     );
     if (userData.data.length === 0) {
-      setjobData([]);
-      setresponseId();
+      setJobData([]);
+      setResponseId();
     } else {
-      setjobData(userData.data.data);
+      setJobData(userData.data.data);
       setTotalData(userData.data.total_rows);
-      setresponseId(userData.data.data[0].job_id);
+      setResponseId(userData.data.data[0].job_id);
     }
   };
 
   /*Render function to get the job */
   useEffect(() => {
     JobData();
-    CategoryData();
+    // CategoryData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -67,14 +67,14 @@ function FollowupTable(props) {
   };
 
   /* Function to get the job category data*/
-  const CategoryData = async () => {
-    const userData = await getAllJobsCategory();
-    if (userData.data.length === 0) {
-      setCategoryList([]);
-    } else {
-      setCategoryList(userData.data);
-    }
-  };
+  // const CategoryData = async () => {
+  //   const userData = await getAllJobsCategory();
+  //   if (userData.data.length === 0) {
+  //     setCategoryList([]);
+  //   } else {
+  //     setCategoryList(userData.data);
+  //   }
+  // };
 
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
@@ -82,13 +82,13 @@ function FollowupTable(props) {
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
-    setcolumnName(columnName);
+    setColumnName(columnName);
   };
   /*Category type array to filter*/
-  const CategoryType = (Categorylist || []).filter(
-    (thing, index, self) =>
-      index === self.findIndex((t) => t.category_type === thing.category_type)
-  );
+  // const CategoryType = (Categorylist || []).filter(
+  //   (thing, index, self) =>
+  //     index === self.findIndex((t) => t.category_type === thing.category_type)
+  // );
 
   return (
     <>
@@ -249,6 +249,7 @@ function FollowupTable(props) {
                       data-aos-once="true"
                       key={job.job_id}
                     >
+                      {/* // eslint-disable-next-line jsx-a11y/scope */}
                       <td scope="row" className="py-5 ">
                         <div className="">
                           <Link
@@ -311,7 +312,7 @@ function FollowupTable(props) {
                           <div className="btn-group button_group" role="group">
                             <button
                               className="btn btn-outline-info action_btn"
-                              onClick={() => setresponseId(job.job_id)}
+                              onClick={() => setResponseId(job.job_id)}
                               title="Job Responses"
                             >
                               Responses

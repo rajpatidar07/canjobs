@@ -152,7 +152,7 @@ export default function ViewPdf({
         new_emp_user_type,
         new_folderId
       );
-      console.log(res.data.data,new_folderId,pdf)
+      // console.log(res.data.data,new_folderId,pdf)
       if (res.data?.data === "Lifetime validation failed, the token is expired.") {
         try {
           let response = await GetSharePointData()

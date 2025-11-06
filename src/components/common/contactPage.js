@@ -14,7 +14,6 @@ export default function ContactPage(props) {
   const getData = async () => {
     try {
       setLoading(true)
-      console.log(props.admin_id, props.admin_id && (props.admin_id !== "0"))
       let adminRes = await getallAdminData()
       if (props.admin_id && (props.admin_id !== "0")) {
         // Safely find admin data with proper null checks

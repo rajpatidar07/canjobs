@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { GetJobDetail } from "../../api/api";
-import moment from "moment";
 import ConvertTime from "../common/Common function/ConvertTime";
 function JobDetail({ ids }) {
   const [jobData, setJobData] = useState("");

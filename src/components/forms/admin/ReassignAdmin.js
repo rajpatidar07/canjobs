@@ -131,7 +131,6 @@ function ReassignAdmin(props) {
                             >
                                 Assign Admin<span className="text-danger">*</span> :
                             </label>
-                            {console.log(AdminOption, AdminOption?.Admin)}
                             <SelectBox
                                 Width={"yes"}
                                 options={AdminOption ? AdminOption?.Admin : []} // Remove null entries

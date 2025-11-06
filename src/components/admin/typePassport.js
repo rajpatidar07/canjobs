@@ -8,7 +8,7 @@ export default function TypePassport() {
   /*Filter and search state */
   const [experienceFilterValue, setExperienceFilterValue] = useState("");
   const [skillFilterValue, setSkillFilterValue] = useState("");
-  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
+  const [pageNo, setPageNo] = useState(localStorage.getItem("PageNo") || 1);
   const [educationFilterValue, setEducationFilterValue] = useState("");
   const [agentFilterValue, setAgentFilterValue] = useState("");
   const [adminFilterValue, setAdminFilterValue] = useState("");
@@ -21,7 +21,7 @@ export default function TypePassport() {
   const onSearch = (e) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
-    setpageNo(1);
+    setPageNo(1);
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Candidate Name cannot start with a number.");
@@ -63,7 +63,7 @@ export default function TypePassport() {
                     setSkillFilterValue={setSkillFilterValue}
                     educationFilterValue={educationFilterValue}
                     setEducationFilterValue={setEducationFilterValue}
-                    setpageNo={setpageNo}
+                    setpageNo={setPageNo}
                     agentFilterValue={agentFilterValue}
                     setAgentFilterValue={setAgentFilterValue}
                     adminFilterValue={adminFilterValue}
@@ -95,7 +95,7 @@ export default function TypePassport() {
                 // self={"no"}
                 status={"-1"}
                 pageNo={pageNo}
-                setpageNo={setpageNo}
+                setpageNo={setPageNo}
                 ApplicantType={"18"}
               />
             </div>

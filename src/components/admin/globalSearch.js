@@ -655,7 +655,6 @@ function GlobalSearch() {
                     </h4>
                     {searchData["documents_data"].map((data) => (
                       <div className="col-lg-2 col-sm-6">
-                        {console.log(data, data.type === "folder" ? "pppp" : "'''''''''",)}
                         <GlobalSearchCard
                           close={close}
                           key={data.employee_id}

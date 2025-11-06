@@ -259,7 +259,6 @@ function ManageAdmin() {
                           })) || [])}
                           selectedValue={typeFilterValue}
                           onChange={(e) => {
-                            console.log(e)
                             setTypeFilterValue(e ? e.value : null);
                             setCurrentPage(1);
                           }}
