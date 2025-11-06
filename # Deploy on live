@@ -1,13 +1,17 @@
 Today's Update
-Date:05/11/25
-1. Fixed the spacing issue in the signature and made major updates to the editor.
-2. Added a signature preview in the email reply.
-3. Added an option to preview attachments before sending the email.
+Date:06/11/25
+1. Added an option to manually enter the Retainer Name while uploading the document.
+2. Fixed the issue where emails could not be sent due to the description field showing a required field validation error.
+3. Made changes to the design of the email preview and attachment section.
+4. Cleared the console logs and fixed other minor issues in the portal.
+5. Fixed the issue with the loader in the global search.
 
 # Deploy on live
 1. Fixed the spacing issue in the signature and made major updates to the editor.
 2. Added a signature preview in the email reply.
 3. Added an option to preview attachments before sending the email.
+4. Add draft option for the email.
+5. Added an option to manually enter the Retainer Name while uploading the document.
 
 Date:04/11/25
 1. Added colored text, clickable links, and multiple images to the signature section, and updated the text editor everywhere it needed to be used.
