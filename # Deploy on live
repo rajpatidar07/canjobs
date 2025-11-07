@@ -1,10 +1,10 @@
 Today's Update
-Date:06/11/25
-1. Added an option to manually enter the Retainer Name while uploading the document.
-2. Fixed the issue where emails could not be sent due to the description field showing a required field validation error.
-3. Made changes to the design of the email preview and attachment section.
-4. Cleared the console logs and fixed other minor issues in the portal.
-5. Fixed the issue with the loader in the global search.
+Date:07/11/25
+1. Create a design and functionality to set a schedule for sending payment reminders to users.
+2. Added functionality to hide the job description in the user module.
+3. Fixed package-related issues that occurred while switching to the latest branch and other related problems.
+4. Added a tags field to the upload payment invoice form.
+
 
 # Deploy on live
 1. Fixed the spacing issue in the signature and made major updates to the editor.

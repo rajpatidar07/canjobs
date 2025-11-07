@@ -11,14 +11,16 @@ import ReceiveAmountModal from "../../forms/admin/ReceiveAmountModal";
 import UploadPaymentInvoice from '../../forms/payment invoice/UploadPaymentInvoice';
 import PaymentInvoiceTable from "./PaymentInvoiceTable";
 import DatePicker from "react-datepicker";
+import SetReminderSchedule from "../../forms/payment invoice/SetReminderSchedule";
 const PaymentPage = (props) => {
   const [openAddPaymentForm, setOpenAddPaymentForm] = useState(false);
   const [openUploadPaymentForm, setOpenUploadPaymentForm] = useState(false);
   const [openRecPaymentForm, setOpenRecPaymentForm] = useState(false);
   const [openPaymentReminder, setOpenPaymentReminder] = useState(false);
+  const [showReminderScheduleModal, setShowReminderScheduleModal] = useState(false);
   const [apiCall, setApiCall] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [employeeEmployerlist, setEmployeeEmployerlist] = useState([]);
+  const [employeeEmployerList, setEmployeeEmployerList] = useState([]);
   const [invoiceList, setInvoicelist] = useState([]);
   const [singleInvoiceData, setSingleInvoiceData] = useState();
   const [lastInvoiceNo, setLastInvoiceNo] = useState();
@@ -54,11 +56,11 @@ const PaymentPage = (props) => {
       const lastInvoice = await GetLastPaymentInvoiceApi()
       let allUserData = [];
       if (userData?.data?.length === 0 && CompanyData?.data?.length === 0) {
-        setEmployeeEmployerlist([]);
+        setEmployeeEmployerList([]);
         setIsLoading(false)
       } else {
         allUserData = [...userData.data, ...CompanyData.data,]; // Merge the arrays
-        setEmployeeEmployerlist(allUserData);
+        setEmployeeEmployerList(allUserData);
         setIsLoading(false)
       }
       setLastInvoiceNo(lastInvoice.data.data.invoice_no)
@@ -269,7 +271,7 @@ const PaymentPage = (props) => {
             userType={props.user_type}
             userEmail={props.user_email}
             userSecondaryEmail={props.user_secondary_email}
-            employee_employer_list={employeeEmployerlist}
+            employee_employer_list={employeeEmployerList}
             totalData={totalData}
             setApiCall={setApiCall}
             singleInvoiceData={singleInvoiceData}
@@ -289,7 +291,7 @@ const PaymentPage = (props) => {
             lastInvoiceNo={lastInvoiceNo}
             setApiCall={setApiCall}
             singleInvoiceData={singleInvoiceData}
-            employee_employer_list={employeeEmployerlist}
+            employee_employer_list={employeeEmployerList}
 
           />
         }
@@ -297,7 +299,7 @@ const PaymentPage = (props) => {
           <ReceiveAmountModal
             close={() => setOpenRecPaymentForm(false)}
             show={openRecPaymentForm}
-            employee_employer_list={employeeEmployerlist}
+            employee_employer_list={employeeEmployerList}
             setApiCall={setApiCall}
             singleInvoiceData={singleInvoiceData} />
         ) : null}
@@ -320,10 +322,11 @@ const PaymentPage = (props) => {
               json={json}
               invoiceList={invoiceList}
               totalData={totalData}
-              employeeEmployerlist={employeeEmployerlist}
+              employeeEmployerlist={employeeEmployerList}
               invoiceId={props.invoiceId}
               userSecondaryEmail={props.user_secondary_email}
-
+              showReminderScheduleModal={showReminderScheduleModal}
+              setShowReminderScheduleModal={setShowReminderScheduleModal}
             />
           }
           <div className="pt-2">
@@ -345,13 +348,24 @@ const PaymentPage = (props) => {
             userType={props.user_type}
             userEmail={props.user_email}
             invoiceData={singleInvoiceData}
-            employee_employer_list={employeeEmployerlist}
+            employee_employer_list={employeeEmployerList}
             folderId={props.folderId}
             userSecondaryEmail={props.user_secondary_email}
             userName={props.user_name}
           />
         )}
-
+        {showReminderScheduleModal &&
+          <SetReminderSchedule
+            show={showReminderScheduleModal}
+            close={() => setShowReminderScheduleModal(false)}
+            userId={props.user_id}
+            userType={props.user_type}
+            userEmail={props.user_email}
+            invoiceData={singleInvoiceData}
+            userSecondaryEmail={props.user_secondary_email}
+            userName={props.user_name}
+          />
+        }
         {/* {openSendMail ? (
             <SendEmailAgreement
               show={openSendMail}

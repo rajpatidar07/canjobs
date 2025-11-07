@@ -228,6 +228,7 @@ export default function PaymentInvoiceTable(props) {
                                     <div className="btn-group button_group" role="group">
 
                                         <button
+                                            type="button"
                                             className={item.is_send_mail === 1 || item.is_send_mail === "1" ? "d-none" : "btn btn-outline-info action_btn"}
                                             onClick={() => {
                                                 if (item.added_type === "uploaded_invoice") {
@@ -243,19 +244,19 @@ export default function PaymentInvoiceTable(props) {
                                                 <CiEdit />
                                             </span>
                                         </button>
-                                        {/* <button
-                                  className="btn btn-outline-info action_btn"
-                                  onClick={() => {
-                                    setOpenPaymentReminder(true);
-                                  }}
-                                  title="Record Payment"
-                                >
-                                  <span className="text-gray px-2">
-                                    <BsRecordCircle />
-                                  </span>
-                                </button> */}
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-info action_btn"
+                                            onClick={() => {
+                                                props.setShowReminderScheduleModal(true);
+                                                props.setSingleInvoiceData(item)
+                                            }}
+                                            title="Set Reminder Schedule"                                        >
+                                            Set Reminder Schedule
+                                        </button>
 
                                         <button
+                                            type="button"
                                             className={item.added_type === "uploaded_invoice" ? "d-none" : "btn btn-outline-info action_btn"}
                                             onClick={() => {
                                                 props.setOpenPaymentReminder(true);
@@ -268,6 +269,7 @@ export default function PaymentInvoiceTable(props) {
                                             </span>
                                         </button>
                                         <button
+                                            type="button"
                                             className={item.added_type === "uploaded_invoice" ? "d-none" : "btn btn-outline-info action_btn "}
                                             title="Receive amount"
                                             onClick={() => {
@@ -285,6 +287,7 @@ export default function PaymentInvoiceTable(props) {
                                             <span className="text-gray px-2"><AiOutlineFilePdf /></span>
                                         </button>
                                         <button
+                                            type="button"
                                             className="btn btn-outline-info action_btn "
                                             disabled={!item.document_id}
                                             onClick={() => {
@@ -298,7 +301,7 @@ export default function PaymentInvoiceTable(props) {
                                                 <FaEye />
                                             </span>
                                         </button>
-                                        <button className="btn btn-outline-info action_btn"
+                                        <button type="button" className="btn btn-outline-info action_btn"
                                             onClick={() => { handleDownloadInvoice(item) }}
                                             title="Download Invoice">
                                             <span className="text-gray px-2">
@@ -318,6 +321,7 @@ export default function PaymentInvoiceTable(props) {
                                   </span>
                                 </button> */}
                                         <button
+                                            type="button"
                                             className="btn btn-outline-info action_btn"
                                             onClick={() => {
                                                 props.setDeleteAlert(true);
