@@ -5,7 +5,6 @@ Date:07/11/25
 3. Fixed package-related issues that occurred while switching to the latest branch and other related problems.
 4. Added a tags field to the upload payment invoice form.
 
-
 # Deploy on live
 1. Fixed the spacing issue in the signature and made major updates to the editor.
 2. Added a signature preview in the email reply.
