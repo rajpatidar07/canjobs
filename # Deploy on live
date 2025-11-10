@@ -1,11 +1,10 @@
 Today's Update
-Date:07/11/25
-1. Create a design and functionality to set a schedule for sending payment reminders to users.
-2. Added functionality to hide the job description in the user module.
-3. Fixed package-related issues that occurred while switching to the latest branch and other related problems.
-4. Added a tags field to the upload payment invoice form.
+Date:10/11/25
+1. 
 
 # Deploy on live
+
+Date:10/11/25
 1. Fixed the spacing issue in the signature and made major updates to the editor.
 2. Added a signature preview in the email reply.
 3. Added an option to preview attachments before sending the email.
