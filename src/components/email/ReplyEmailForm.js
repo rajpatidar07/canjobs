@@ -6,6 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import SignatureTextEditor from "../SignatureTextEditor";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
+import { Link } from "react-router-dom";
+import AttachmentPreviewModal from "../forms/user/AttachmentPreviewModal";
 // import TextEditor from "../common/TextEditor";
 const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall, toggleReplyFormClick }) => {
     const [formData, setFormData] = useState({ message: '' });
@@ -13,6 +15,9 @@ const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall, toggle
     const [fileNames, setFileNames] = useState([]);
     const [isDragging, setIsDragging] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [previewFile, setPreviewFile] = useState(null);
+    const [viewFile, setViewFile] = useState(false);
+    const [previewFileUrl, setPreviewFileUrl] = useState(null); // Temporary URL for iframe
 
     // Drag and drop handlers
     const handleDragOver = (e) => {
@@ -104,6 +109,34 @@ const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall, toggle
         setFileNames(newFileNames);
     };
 
+    // Function to handle file preview (UPDATED)
+    const handlePreviewFile = async (file) => {
+        if (!file) return;
+
+        // 1. Clean up any previous temporary URL
+        if (previewFileUrl) {
+            URL.revokeObjectURL(previewFileUrl);
+        }
+
+        // 2. Create a temporary URL for the file object in the browser's memory
+        const tempUrl = URL.createObjectURL(file);
+
+        // 3. Set the state
+        setPreviewFile(file);
+        setPreviewFileUrl(tempUrl);
+        setViewFile(true); // Open the modal
+    };
+
+    // Cleanup function for when the modal closes (NEW)
+    const handleCloseViewFile = () => {
+        if (previewFileUrl) {
+            URL.revokeObjectURL(previewFileUrl); // Clean up the temporary URL
+        }
+        setViewFile(false);
+        setPreviewFile(null);
+        setPreviewFileUrl(null);
+    };
+
     const onReplyClick = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -130,6 +163,7 @@ const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall, toggle
         }
     };
     return (
+        <>
         <form onSubmit={onReplyClick}>
             <div className="form-group">
                 <label>Message:</label>
@@ -170,7 +204,7 @@ const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall, toggle
             <div className="mail-file-attachments">
                 {fileNames.map((fileName) => (
                     <div key={fileName} className="mail-file-attachment">
-                        <p>{fileName}</p>
+                        <p><Link className="" onClick={() => handlePreviewFile(fileBase.find(f => f.name === fileName))}>{fileName}</Link></p>
                         <button
                             type="button"
                             className="mail-remove-file"
@@ -227,6 +261,15 @@ const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall, toggle
                     Cancel
                 </button></div>
         </form>
+
+        {/* File Preview Modal */}
+        <AttachmentPreviewModal
+            show={viewFile}
+            onHide={() => handleCloseViewFile()} // Use the new cleanup function
+            file={previewFile}
+            fileUrl={previewFileUrl}
+        />
+        </>
     );
 };
 export default ReplyEmailForm;
