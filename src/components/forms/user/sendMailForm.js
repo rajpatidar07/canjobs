@@ -31,6 +31,7 @@ function SendMailForm({ email, setApiCall }) {
   const [draftLoading, setDraftLoading] = useState(false);
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteData, setDeleteData] = useState();
+  
   // Drag and drop handlers
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -95,6 +96,7 @@ function SendMailForm({ email, setApiCall }) {
 
     // ],
   };
+
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, onInputChange, errors, setErrors, validate } =
     useValidation(initialFormState, validators);
@@ -238,9 +240,8 @@ function SendMailForm({ email, setApiCall }) {
 
   //Function to Remove any attachments
   const handleRemoveFile = (fileName) => {
-    const newFileBase = { ...fileBase };
+    const newFileBase = fileBase.filter(f => f.name !== fileName);
     const newFileNames = fileNames.filter((name) => name !== fileName);
-    delete newFileBase[fileName];
     setFileBase(newFileBase);
     setFileNames(newFileNames);
   };
@@ -320,7 +321,6 @@ function SendMailForm({ email, setApiCall }) {
         console.log(err);
         setLoading(false);
         setSignatureImage(null);
-        setFileNames([]);
         setErrors("");
         setState(initialFormState);
         setFileBase("");
@@ -356,6 +356,7 @@ function SendMailForm({ email, setApiCall }) {
       bccemail: [...emailArray], // Ensure AdminEmail is always first
     }));
   };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -407,6 +408,10 @@ function SendMailForm({ email, setApiCall }) {
     const ccEmails = draft.cc_email ? draft.cc_email.split(',').map(e => e.trim()).filter(e => e) : [];
     const bccEmails = draft.bcc_email ? draft.bcc_email.split(',').map(e => e.trim()).filter(e => e) : [];
 
+    // Clear previous attachments at the start
+    setFileNames([]);
+    setFileBase([]);
+
     setState({
       ...state,
       subject: draft.subject,
@@ -423,11 +428,7 @@ function SendMailForm({ email, setApiCall }) {
         const Res = await GetPreviewAttchmentEmail("DRAFT", draft.id);
         // console.log(Res.data.value);
 
-        // const newFileBase = [];
-        // const newFileNames = [];
-
         if (Res?.data?.value?.length > 0) {
-          const existingFiles = Array.isArray(fileBase) ? [...fileBase] : [];
           const newFiles = [];
 
           for (const att of Res.data.value) {
@@ -439,39 +440,42 @@ function SendMailForm({ email, setApiCall }) {
                 byteNumbers[i] = byteCharacters.charCodeAt(i);
               }
               const byteArray = new Uint8Array(byteNumbers);
-              const blob = new Blob([byteArray]);
+
+              // Determine MIME type based on file extension
+              let mimeType = "application/octet-stream";
+              const lowerName = att.name.toLowerCase();
+              if (lowerName.endsWith('.pdf')) mimeType = "application/pdf";
+              else if (lowerName.endsWith('.jpg') || lowerName.endsWith('.jpeg')) mimeType = "image/jpeg";
+              else if (lowerName.endsWith('.png')) mimeType = "image/png";
+              else if (lowerName.endsWith('.gif')) mimeType = "image/gif";
+              else if (lowerName.endsWith('.doc')) mimeType = "application/msword";
+              else if (lowerName.endsWith('.docx')) mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+
+              const blob = new Blob([byteArray], { type: mimeType });
 
               // Create File object
-              const file = new File([blob], att.name, {
-                type: blob.type || "application/octet-stream",
-              });
+              const file = new File([blob], att.name, { type: mimeType });
 
-              // Avoid duplicates based on name
-              if (!existingFiles.some(f => f.name === file.name)) {
+              // Avoid duplicates within new files
+              if (!newFiles.some(f => f.name === file.name)) {
                 newFiles.push(file);
               }
             }
           }
 
-          // Merge files
-          const updatedFiles = [...existingFiles, ...newFiles];
-          setFileBase(updatedFiles);
-          setFileNames(updatedFiles.map(f => f.name));
+          setFileBase(newFiles);
+          setFileNames(newFiles.map(f => f.name));
 
-          // console.log("Updated Files:", updatedFiles); // ✅ shows File objects
+          // console.log("Updated Files:", newFiles); // ✅ shows File objects
         }
 
 
       } catch (error) {
         console.error("Error fetching attachments:", error);
-        setFileBase([]);
-        setFileNames([]);
+        // Already cleared at start
       }
-    } else {
-      // Clear any existing attachments if the loaded draft has none
-      setFileBase([]);
-      setFileNames([]);
     }
+    // No else needed, as attachments are already cleared at the start
 
 
     toast.info(`Draft loaded: ${draft.subject.substring(0, 30)}${draft.subject.length > 30 ? '...' : ''}`, { autoClose: 1500 });
