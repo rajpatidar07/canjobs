@@ -1,84 +1,113 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
-import { IoMdClose } from 'react-icons/io';
+import { IoMdClose, IoMdDownload, IoMdImage, IoMdDocument, IoMdVideocam } from 'react-icons/io';
+import './AttachmentPreviewModal.css';
 
 function AttachmentPreviewModal({ show, onHide, file, fileUrl }) {
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     if (!file || !fileUrl) {
         return null;
     }
 
     const fileType = file.type;
     const fileName = file.name;
+    const fileSize = (file.size / 1024 / 1024).toFixed(2) + ' MB';
 
-    let content;
+    const handleDownload = () => {
+        const link = document.createElement('a');
+        link.href = fileUrl;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
 
-    // --- Logic for different file types ---
+    const getFileIcon = () => {
+        if (fileType.includes("image/")) return <IoMdImage />;
+        if (fileType === "application/pdf") return <IoMdDocument />;
+        if (fileType.includes("video/")) return <IoMdVideocam />;
+        return <IoMdDocument />;
+    };
 
-    if (fileType.includes("image/")) {
-        // Direct Image Preview
-        content = (
-            <img
-                src={fileUrl}
-                alt={fileName}
-                style={{ maxWidth: '100%', maxHeight: '80vh', objectFit: 'contain' }}
-            />
-        );
-    } else if (fileType === "application/pdf") {
-        // PDF Preview using iframe
-        content = (
-            <iframe
-                src={fileUrl}
-                title={fileName}
-                width="100%"
-                height="800px"
-                style={{ border: 'none' }}
-                allowFullScreen
-            >
-                <p>Your browser does not support iframes. You can download the PDF instead.</p>
-            </iframe>
-        );
-    } else if (fileType.includes("word") || fileName.endsWith('.doc') || fileName.endsWith('.docx')) {
-        // Word Document Preview using Google Docs Viewer (Best effort preview, requires CORS/public access, but often works for in-memory files)
-        // For local File objects, we rely on the object URL being compatible with Google Viewer
-        // Fallback: If Google Viewer fails, you might have to prompt the user to download.
-        // NOTE: The object URL might not work directly with the Google Viewer proxy. 
-        // For client-side File objects, direct iframe with fileUrl is often the only option that works reliably in most modern browsers for simple text/docs, but Word is tricky.
+    const renderContent = () => {
+        if (error) {
+            return (
+                <div className="error-message">
+                    <div className="file-icon">{getFileIcon()}</div>
+                    <h4>Preview Error</h4>
+                    <p>{error}</p>
+                    <button className="download-btn" onClick={handleDownload}>
+                        <IoMdDownload /> Download File
+                    </button>
+                </div>
+            );
+        }
 
-        // Option 1: Direct iframe for better local security (might work for simple text/RTF but not complex DOCX)
-        // content = (
-        //     <iframe
-        //         src={fileUrl}
-        //         title={fileName}
-        //         width="100%"
-        //         height="800px"
-        //         style={{ border: 'none' }}
-        //     />
-        // );
-
-        // Option 2: Inform the user (Word preview in browser is notoriously difficult without external services)
-        content = (
-            <div className="p-4 text-center">
-                <h4>Preview Not Available</h4>
-                <p>Direct preview of Word documents (.doc/.docx) is often not supported by browsers without downloading or using a licensed third-party service.</p>
-                <p className="mt-3">The file will be attached when you send the email: {fileName}</p>
-            </div>
-        );
-
-
-    } else {
-        // General fallback for any other supported type (like plain text, other viewer-supported types)
-        content = (
-            <iframe
-                src={fileUrl}
-                title={fileName}
-                width="100%"
-                height="800px"
-                style={{ border: 'none' }}
-            >
-                <p>Preview not directly supported. The file is attached.</p>
-            </iframe>
-        );
-    }
+        if (fileType.includes("image/")) {
+            return (
+                <div>
+                    <img
+                        src={fileUrl}
+                        alt={fileName}
+                        onLoad={() => setIsLoading(false)}
+                        onError={() => {
+                            setIsLoading(false);
+                            setError("Failed to load image preview.");
+                        }}
+                    />
+                    {isLoading && <div className="loading-spinner"></div>}
+                </div>
+            );
+        } else if (fileType === "application/pdf") {
+            return (
+                <>
+                    <iframe
+                        src={fileUrl}
+                        title={fileName}
+                        onLoad={() => setIsLoading(false)}
+                        onError={() => {
+                            setIsLoading(false);
+                            setError("Failed to load PDF preview.");
+                        }}
+                    >
+                        <p>Your browser does not support iframes. <a href={fileUrl} download={fileName}>Download the PDF</a> instead.</p>
+                    </iframe>
+                    {isLoading && <div className="loading-spinner"></div>}
+                </>
+            );
+        } else if (fileType.includes("word") || fileName.endsWith('.doc') || fileName.endsWith('.docx')) {
+            return (
+                <div className="preview-not-available">
+                    <div className="file-icon">{getFileIcon()}</div>
+                    <h4>Preview Not Available</h4>
+                    <p>Direct preview of Word documents (.doc/.docx) is not supported in browsers without external services.</p>
+                    <p>The file will be attached when you send the email.</p>
+                    <button className="download-btn" onClick={handleDownload}>
+                        <IoMdDownload /> Download File
+                    </button>
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    <iframe
+                        src={fileUrl}
+                        title={fileName}
+                        onLoad={() => setIsLoading(false)}
+                        onError={() => {
+                            setIsLoading(false);
+                            setError("Failed to load file preview.");
+                        }}
+                    >
+                        <p>Preview not directly supported. <a href={fileUrl} download={fileName}>Download the file</a> instead.</p>
+                    </iframe>
+                    {isLoading && <div className="loading-spinner"></div>}
+                </div>
+            );
+        }
+    };
 
     return (
         <Modal
@@ -86,71 +115,30 @@ function AttachmentPreviewModal({ show, onHide, file, fileUrl }) {
             onHide={onHide}
             size="lg"
             centered
-            dialogClassName="custom-modal"
+            className="attachment-preview-modal"
         >
-            <Modal.Header
-                closeButton
-                style={{
-                    background: "linear-gradient(90deg, #f0f4f7, #ffffff)",
-                    borderBottom: "1px solid #e0e0e0",
-                    borderTopLeftRadius: "12px",
-                    borderTopRightRadius: "12px",
-                    padding: "16px 24px",
-                }}
-            >
-                <Modal.Title
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        width: "100%",
-                        fontWeight: "600",
-                        color: "#333",
-                        fontSize: "1.15rem",
-                    }}
-                >
-                    <span>📄 Preview: {fileName}</span>
+            <Modal.Header>
+                <Modal.Title>
+                    <span>
+                        {getFileIcon()} Preview: {fileName}
+                    </span>
+                    <span style={{ fontSize: '0.9rem', color: '#ccc', marginLeft: '10px' }}>
+                        ({fileSize})
+                    </span>
                     <button
                         type="button"
+                        className="close-btn"
                         onClick={onHide}
-                        style={{
-                            border: "none",
-                            background: "transparent",
-                            cursor: "pointer",
-                            color: "#555",
-                            transition: "color 0.3s ease",
-                        }}
-                        onMouseEnter={(e) => (e.target.style.color = "#000")}
-                        onMouseLeave={(e) => (e.target.style.color = "#555")}
+                        aria-label="Close preview"
                     >
-                        <IoMdClose size={24} />
+                        <IoMdClose />
                     </button>
                 </Modal.Title>
             </Modal.Header>
 
-            <Modal.Body
-                style={{
-                    maxHeight: "70vh",
-                    overflowY: "auto",
-                    backgroundColor: "#ffffff",
-                    padding: "24px",
-                    borderBottomLeftRadius: "12px",
-                    borderBottomRightRadius: "12px",
-                }}
-            >
-                <div
-                    style={{
-                        backgroundColor: "#fdfdfd",
-                        border: "1px solid #e6e6e6",
-                        borderRadius: "8px",
-                        boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.05)",
-                        padding: "20px",
-                        lineHeight: "1.6",
-                        fontSize: "0.95rem",
-                        color: "#444",
-                    }}
-                >
-                    {content}
+            <Modal.Body>
+                <div className="attachment-preview-content">
+                    {renderContent()}
                 </div>
             </Modal.Body>
         </Modal>
