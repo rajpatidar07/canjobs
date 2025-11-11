@@ -86,7 +86,7 @@ export default function SignatureTextEditor({ name, state, setState, placeholder
   const isUserChange = useRef(false);
   const debounceTimeout = useRef(null);
 
-  // console.log("Is empty:", state === "", "Current value:", state);
+  // console.log("Is empty:" , state === "", "Current value:", state);
 
   // Update editor when parent state changes
   useEffect(() => {

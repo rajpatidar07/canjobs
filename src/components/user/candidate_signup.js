@@ -20,7 +20,7 @@ import SelectBox from "../common/Common function/SelectBox";
 // import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 export default function CandidateSignup(props) {
   const [isChecked, setIsChecked] = useState(false);
-  const [termsErr, settermsErr] = useState("");
+  const [termsErr, setTermsErr] = useState("");
   const [agentList, setAgentList] = useState([]);
   const [SingUpSuccess, setSingUpSuccess] = useState("");
   let [loading, setLoading] = useState(false);
@@ -88,7 +88,7 @@ export default function CandidateSignup(props) {
     if (validate() && state.otp) {
       /*Api to signup */
       if (isChecked) {
-        settermsErr("");
+        setTermsErr("");
         setLoading(true);
         try {
           const signUpData = await EmployeeSignUp(state, Permission);
@@ -97,7 +97,7 @@ export default function CandidateSignup(props) {
             setLoading(false);
           } else if (signUpData.message === "Email already exists") {
             setLoading(false);
-            settermsErr("Email already exist");
+            setTermsErr("Email already exist");
           } else if (signUpData.message === " incorrect otp ") {
             setLoading(false);
             setErrors({ ...errors, otp: "Invalid Otp" });
@@ -113,7 +113,7 @@ export default function CandidateSignup(props) {
         }
       } else {
         setLoading(false);
-        settermsErr("Accept terms and conditions");
+        setTermsErr("Accept terms and conditions");
       }
     } else if (otpBox === false && validate()) {
       /*Api to get otp */
@@ -128,16 +128,16 @@ export default function CandidateSignup(props) {
           setOtpBox(true);
           setLoading(false);
           setErrors("");
-          settermsErr("");
+          setTermsErr("");
         }
         if (updatedTodo.message === "Email already exists") {
-          settermsErr("Email already exist");
+          setTermsErr("Email already exist");
           setState(initialFormState);
           setOtpBox(false);
           setLoading(false);
         }
         if (updatedTodo.message === "Invalid Credentials !") {
-          settermsErr("Invalid Credentials !");
+          setTermsErr("Invalid Credentials !");
           setState(initialFormState);
           setOtpBox(false);
           setLoading(false);
@@ -265,7 +265,7 @@ export default function CandidateSignup(props) {
     AgentJson();
   }, []);
 
-  /*Functiom to Sign Up with facebook */
+  /*Function to Sign Up with facebook */
   // const responseFacebook = async (response) => {
   //   if (response.graphDomain === "facebook") {
   //     try {
@@ -286,6 +286,7 @@ export default function CandidateSignup(props) {
   //     }
   //   }
   // }
+
   /*Function to convert file to base64 */
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -299,6 +300,7 @@ export default function CandidateSignup(props) {
       };
     });
   };
+
   /*Onchange function of Resume */
   const handleUploadFile = async (e) => {
     // const allowedFormats = ["image/jpeg", "image/png", "application/pdf"]; // List of allowed formats
@@ -319,6 +321,7 @@ export default function CandidateSignup(props) {
       });
     }
   };
+
   /*Function to get agent json list */
   const AgentJson = async () => {
     let response = await GetAgentJson();
