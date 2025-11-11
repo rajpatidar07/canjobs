@@ -4,8 +4,6 @@ import Loader from "../common/loader";
 import { Link } from "react-router-dom";
 import PreviewEmail from "./emailPreview";
 import SendMailForm from "../forms/user/sendMailForm";
-// import { BsFillPencilFill } from "react-icons/bs";
-// import { ImCross } from "react-icons/im";
 // import MailPaination from "./mailPaination";
 import { TiAttachment } from "react-icons/ti";
 import ConvertTime from "../common/Common function/ConvertTime";

@@ -5,12 +5,12 @@ import { Modal } from 'react-bootstrap';
 // import filterjson from '../../json/filterjson';
 // import Select from "react-select"
 export default function ApplicantCategory(props) {
-    const [category, setcategory] = useState(props.data.categor);
+    const [category, setCategory] = useState(props.data.categor);
     const [loading, setLoading] = useState(false);
     // console.log(props.data)
     /*Function to set data to the search Category  */
     // const onCategorySelectChange = (option) => {
-    //     setcategory(option.value);
+    //     setCategory(option.value);
     // };
     /*function to change applicants category */
     const OnCategoryClick = async (e) => {
@@ -64,7 +64,7 @@ export default function ApplicantCategory(props) {
                         <select
                             name="category"
                             value={category}
-                            onChange={(e) => setcategory(e.target.value)}
+                            onChange={(e) => setCategory(e.target.value)}
                             className={
                                 // errors.category
                                 //     ? "form-control border border-danger"

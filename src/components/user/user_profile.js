@@ -16,7 +16,7 @@ import {
   GetEmployeeByLima,
   GetLimaSubStages,
   AddUpdateVisa,
-  getApplicanTypeApi, 
+  getApplicanTypeApi,
   // AddPaymentToDataBase,
 } from "../../api/api";
 import moment from "moment";
@@ -24,7 +24,6 @@ import Addfollowup from "../forms/admin/addfollowup";
 import { toast } from "react-toastify";
 import Loader from "../common/loader";
 import { PiPencilDuotone } from "react-icons/pi";
-// import DocumrentContainer from "../common/employeeDocumrentContainer";
 import { BiPhoneCall } from "react-icons/bi";
 import { BsEnvelope } from "react-icons/bs";
 import JobProfileResponse from "../admin/profile_response";
@@ -327,7 +326,7 @@ const NewUserProfile = (props) => {
     const id = employee_id;
     window.open(`/resume/${id}`, "_blank");
   };
-   useEffect(() => {
+  useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://ringcentral.github.io/ringcentral-embeddable-voice/adapter.js";
     script.async = true;
