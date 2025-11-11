@@ -24,7 +24,7 @@ function SendMailForm({ email, setApiCall }) {
   const [signatureImage, setSignatureImage] = useState(adminSignature || null);
   let AdminEmail = localStorage.getItem("admin_email");
   let AdminId = localStorage.getItem("admin_id");
-  let userrType = localStorage.getItem("userType");
+  let userType = localStorage.getItem("userType");
   // --- NEW DRAFT STATE ---
   const [drafts, setDrafts] = useState([]);
   const [selectedDraftId, setSelectedDraftId] = useState(null);
@@ -329,12 +329,12 @@ function SendMailForm({ email, setApiCall }) {
     }
   };
 
-  // Update adminemail state to ensure multiple emails are comma-separated
+  // Update admin email state to ensure multiple emails are comma-separated
   const handleAdminCCEmailChange = (e) => {
     const value = e.target.value;
     const emailArray = value.split(",").map((email) => email.trim()); // Split emails and trim whitespace
 
-    if (userrType === "admin") {
+    if (userType === "admin") {
       setState((prevState) => ({
         ...prevState,
         adminemail: [AdminEmail, ...emailArray.filter((email) => email !== AdminEmail)], // Ensure AdminEmail is always first
@@ -346,7 +346,7 @@ function SendMailForm({ email, setApiCall }) {
       }))
     }
   };
-  // Update adminemail state to ensure multiple emails are comma-separated
+  // Update admin email state to ensure multiple emails are comma-separated
   const handleAdminBBEmailChange = (e) => {
     const value = e.target.value;
     const emailArray = value.split(",").map((email) => email.trim()); // Split emails and trim whitespace

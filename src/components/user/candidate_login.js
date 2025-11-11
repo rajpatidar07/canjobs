@@ -278,7 +278,7 @@ export default function CandidateLoginForm(props) {
     }
   }, []);
 
-  /*Functiom to login with facebook */
+  /*Function to login with facebook */
   // const responseFacebook = async (response) => {
   //   if (response.graphDomain === "facebook") {
   //     try {
