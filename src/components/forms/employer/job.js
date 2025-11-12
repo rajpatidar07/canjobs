@@ -21,13 +21,15 @@ function AddJobModal(props) {
   const [city, setCity] = useState([]);
   const [loading, setLoading] = useState(false);
   let token = localStorage.getItem("token");
+  let location = useLocation();
   const company_id =
     props.jobdata === "0"
-      ? ""
+      ? location?.state?.company_id
+        ? location?.state?.company_id
+        : ""
       : props.company_id
         ? props.company_id
-        : localStorage.getItem("company_id");
-  let location = useLocation();
+        : localStorage.getItem("company_id")
   const user_type = localStorage.getItem("userType");
   let [Json, setJson] = useState([]);
 
