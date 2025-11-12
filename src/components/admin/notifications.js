@@ -352,9 +352,14 @@ function Notifications({
                                                                   ? data.action_user_type === "employee"
                                                                     ? `/${data.action_id}?user_email=true&emailId=${data.mention_id}`
                                                                     : `/client_detail?cId=${data.action_id}&user_email=true&emailId=${data.mention_id}`
-                                                                  :  data.subject === "employee_update"
-                                                                  ?`/${data.employee_id}?user_timeline=true&timeLineId=${data.mention_id}`
-                                                                  :""
+                                                                  : data.subject === "employee_update"
+                                                                    ? `/${data.employee_id}?user_timeline=true&timeLineId=${data.mention_id}`
+                                                                    : data.subject === "new_message"
+                                                                      ? data.action_user_type === 'employee'
+                                                                        ? `/${data.employee_id}?chat_bot=true&charBotId=${data.mention_id}`
+                                                                        : `/client_detail?cId=${data.action_id}&chat_bot=true&charBotId=${data.mention_id}`
+                                                                      : ""
+
                       }
                       onClick={() => {
                         try {
@@ -390,7 +395,7 @@ function Notifications({
                                 "applicantTypeFolderId",
                                 parseJsonSafely(data?.notif_json).doc_parent_id
                               );
-                            } else if (data.document_user_type === "employer"||data.action_user_type==="employer") {
+                            } else if (data.document_user_type === "employer" || data.action_user_type === "employer") {
                               localStorage.setItem(
                                 "company_id",
                                 data.subject === 'new_mail' ? data.action_id : data.employee_id

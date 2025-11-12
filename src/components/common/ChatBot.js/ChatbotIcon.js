@@ -1,9 +1,33 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from "react";
 import { AiOutlineMessage } from "react-icons/ai";
 import ChatbotModal from "../ChatBot.js/ChatbotModal";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function ChatbotIcon({ userDetails }) {
-    const [show, setShow] = useState(false);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const searchParams = new URLSearchParams(location.search);
+    const chat_bot = searchParams.get("chat_bot");
+    const charBotId = searchParams.get("charBotId");
+    const [show, setShow] = useState(chat_bot ? true : false);
+    const [charBotIdState, setCharBotIdState] = useState(chat_bot && charBotId ? charBotId : "");
+
+    const clearParams = () => {
+        searchParams.delete("chat_bot");
+        searchParams.delete("charBotId");
+        navigate({
+            pathname: location.pathname,
+            search: searchParams.toString(),
+        }, { replace: true });
+    };
+
+    useEffect(() => {
+        if (chat_bot && charBotId) {
+            setCharBotIdState(charBotId);
+            clearParams();
+        }
+    }, [chat_bot, charBotId]);
 
     return (
         <>
@@ -33,7 +57,14 @@ export default function ChatbotIcon({ userDetails }) {
                     <ChatbotModal
                         userDetails={userDetails}
                         show={show}
-                        handleClose={() => setShow(false)}
+                        handleClose={() => {
+                            setShow(false);
+                            setCharBotIdState("");
+                            if (charBotIdState) {
+                                clearParams();
+                            }
+                        }}
+                        charBotId={charBotIdState}
                     />
                 )}
             </div>

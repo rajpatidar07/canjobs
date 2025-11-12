@@ -5,7 +5,7 @@ import { FaPaperPlane } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
 import ChatMessage from "./ChatMessage";
 
-export default function ChatbotModal({ show, handleClose, userDetails }) {
+export default function ChatbotModal({ show, handleClose, userDetails , charBotId}) {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
     const messagesEndRef = useRef(null);
@@ -122,8 +122,10 @@ export default function ChatbotModal({ show, handleClose, userDetails }) {
                                             ? admin_type
                                             : "agent");
 
+                            const isHighlighted = charBotId && msg.id === charBotId;
+
                             return (
-                                <ChatMessage key={idx} message={msg} isSender={isSender} />
+                                <ChatMessage key={idx} message={msg} isSender={isSender} isHighlighted={isHighlighted}/>
                             );
                         })
                     ) : (
