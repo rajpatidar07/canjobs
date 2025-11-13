@@ -3,6 +3,8 @@ Date:10/11/25
 1. 
 
 # Deploy on live
+1. Added a chatbot for the user, admin, and partner modules.
+2. Added a global search feature for all task chat replies.
 
 Date:10/11/25
 1. Fixed the spacing issue in the signature and made major updates to the editor.

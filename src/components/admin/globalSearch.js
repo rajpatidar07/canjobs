@@ -262,7 +262,7 @@ function GlobalSearch() {
                               .id || ""}&taskId=${data?.id || ""
                             }`
                             : data.employee_type === "job"
-                              ? `/job_detail?job_id=${data.employee_id}docId=${data.type === "folder" ? "" : data.doc_id
+                              ? `/job_detail?job_id=${data.employee_id}&docId=${data.type === "folder" ? "" : data.doc_id
                               }&docParentId=${data.doc_parent_id}&annotationId=${parseJsonSafely(data?.doctaskjson)
                                 .id || ""
                               }&taskId=${data?.id || ""
@@ -301,41 +301,41 @@ function GlobalSearch() {
                       <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.employee_id}
-                        name={data.msg}
-                        to={data.employee_type === "employer"
+                        name={data.employee_name || data.msg}
+                        to={data.emp_type === "employer"
                           ? `/client_detail?cId=${data.employee_id}&docId=${data.doc_id
                           }&docParentId=${data.doc_parent_id
                           }&annotationId=${parseJsonSafely(data?.doctaskjson)
                             .id || ""
-                          }&taskId=${data?.id || ""
+                          }&taskId=${data?.task_id || ""
                           }`
-                          : data.employee_type === "applicant_type"
+                          : data.emp_type === "applicant_type"
                             ? `/slots?sId=${data.employee_id}&docId=${data.type === "folder" ? "" : data.doc_id}&docParentId=${data.doc_parent_id
                             }&annotationId=${parseJsonSafely(data?.doctaskjson)
-                              .id || ""}&taskId=${data?.id || ""
+                              .id || ""}&taskId=${data?.task_id || ""
                             }`
-                            : data.employee_type === "job"
+                            : data.emp_type === "job"
                               ? `/job_detail?job_id=${data.employee_id}&docId=${data.type === "folder" ? "" : data.doc_id
                               }&docParentId=${data.doc_parent_id}&annotationId=${parseJsonSafely(data?.doctaskjson)
                                 .id || ""
-                              }&taskId=${data?.id || ""
+                              }&taskId=${data?.task_id || ""
                               }`
                               : `/${data.employee_id}?docId=${data.type === "folder" ? "" : data.doc_id
                               }&docParentId=${data.doc_parent_id}&annotationId=${parseJsonSafely(data?.doctaskjson)
                                 .id || ""
-                              }&taskId=${data?.id || ""
+                              }&taskId=${data?.task_id || ""
                               }`}
                         email={data.document_name || data.assigned_to}
                         onClick={() => {
-                          if (data.employee_type === "applicant_type") {
+                          if (data.emp_type === "applicant_type") {
                             localStorage.setItem("applicantType", data.employee_id);
                             localStorage.setItem(
                               "applicantTypeFolderId",
                               data.doc_parent_id
                             );
-                          } else if (data.employee_type === "employer") {
+                          } else if (data.emp_type === "employer") {
                             localStorage.setItem("company_id", data.employee_id);
-                          } else if (data.employee_type === "job") {
+                          } else if (data.emp_type === "job") {
                             localStorage.setItem("job_id", data.employee_id);
                           }
                         }}
@@ -354,10 +354,8 @@ function GlobalSearch() {
                       <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.employee_id}
-                        name={data.employee_name || data.subject_description}
-                        to={`/managetasks?taskId=${data?.id || ""
-                          }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""
-                          }`}
+                        name={data.employee_name + data.subject_description}
+                        to={`/managetasks?taskId=${data?.id || ""}`}
                         email={data.document_name || data.assigned_to}
                       />
                       </div>
@@ -373,7 +371,7 @@ function GlobalSearch() {
                       <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
                         close={close}
                         key={data.employee_id}
-                        name={data.msg}
+                        name={data.employee_name + data.msg}
                         to={`/managetasks?taskId=${data?.task_id || ""
                           }&replyId=${data?.id || ""
                           }`}
@@ -415,7 +413,7 @@ function GlobalSearch() {
                 {searchData["note_reply_data"] && searchData["note_reply_data"].length > 0 && (
                   <div className="row">
                     <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#20c997' }}>
-                      Note
+                      Note Reply
                     </h4>
                     {searchData["note_reply_data"].map((data) => (
                       <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
@@ -424,14 +422,14 @@ function GlobalSearch() {
                         name={data.msg}
                         mobile={data.subject}
                         email={data.employee_name ? `${data.employee_name} (Applicant)` : ""}
-                        to={data.employee_type === "employer"
+                        to={data.emp_type === "employer"
                           ? `/client_detail?cId=${data.employee_id}&note=true&noteid=${data.task_id}&replyId=${data.id || ""}`
-                          : data.employee_type === "agent" &&
+                          : data.emp_type === "agent" &&
                             window.location.pathname === "/partner_profile"
-                            ? `?note=true&noteid=${data?.id}&replyId=${data.id || ""}`
-                            : data.employee_type === "agent"
-                              ? `/partner_profile?note=true&noteid=${data?.id}&replyId=${data.id || ""}`
-                              : data.employee_type === "job"
+                            ? `?note=true&noteid=${data?.task_id}&replyId=${data.id || ""}`
+                            : data.emp_type === "agent"
+                              ? `/partner_profile?note=true&noteid=${data?.task_id}&replyId=${data.id || ""}`
+                              : data.emp_type === "job"
                                 ? `/job_detail?job_id=${data.employee_id}&note=true&noteid=${data.task_id
                                 }&replyId=${data.id || ""}`
                                 : `/${data.employee_id}?note=true&noteid=${data.task_id
@@ -569,7 +567,7 @@ function GlobalSearch() {
                               data.employee_id)
                           }}
                           to={`/slots?sId=${data.employee_id}&notifiType=group&taskId=${data.id || ""
-                            }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`}
+                            }`}
                         />
                       </div>
                     ))}
@@ -593,8 +591,8 @@ function GlobalSearch() {
                               "applicantType",
                               data.employee_id)
                           }}
-                          to={`/slots?sId=${data.employee_id}&notifiType=group&taskId=${data.id || ""
-                            }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`}
+                          to={`/slots?sId=${data.employee_id}&notifiType=group&taskId=${data.task_id || ""
+                            }&replyId=${data.id || ""}`}
                         />
                       </div>
                     ))}
@@ -634,15 +632,15 @@ function GlobalSearch() {
                         close={close}
                         key={data.id}
                         name={data.msg}
-                        email={applicantTypeList?.find((item) => item.id === data.employee_id)?.title}
+                        email={applicantTypeList?.find((item) => item.id === data.interested_in_id)?.title}
                         mobile={data.employee_name}
                         onClick={() => {
                           localStorage.setItem(
                             "applicantType",
-                            data.employee_id)
+                            data.interested_in_id)
                         }}
-                        to={`/slots?sId=${data.interested_in_id}&notifiType=candidate&taskId=${data.id || ""
-                          }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}&canId=${data.employee_id}`}
+                        to={`/slots?sId=${data.interested_in_id}&notifiType=candidate&taskId=${data.task_id || ""
+                          }&replyId=${data.id || ""}&canId=${data.employee_id}`}
                       />
                       </div>
                     ))}
@@ -708,6 +706,24 @@ function GlobalSearch() {
                     ))}
                   </div>
                 )}
+                {searchData["call_log_chat_reply_data"] && searchData["call_log_chat_reply_data"].length > 0 && (
+                  <div className="row">
+                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#e83e8c' }}>
+                      Daily call logs Reply
+                    </h4>
+                    {searchData["call_log_chat_reply_data"].map((data) => (
+                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
+                        close={close}
+                        key={data.id}
+                        name={data.name || data.msg}
+                        mobile={data.phone}
+                        email={data.purpose}
+                        to={`/daily_pages?call_logId=${data.employee_id}&taskId=${data.task_id}`}
+                      />
+                      </div>
+                    ))}
+                  </div>
+                )}
                 {searchData["call_log_chat_data"] && searchData["call_log_chat_data"].length > 0 && (
                   <div className="row">
                     <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#e83e8c' }}>
@@ -724,6 +740,40 @@ function GlobalSearch() {
                       />
                       </div>
                     ))}
+                  </div>
+                )}
+                {searchData["hour_log_chat_data"] && searchData["hour_log_chat_data"].length > 0 && (
+                  <div className="row">
+                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#20c997' }}>
+                      Daily Hour logs
+                    </h4>
+                    {searchData["hour_log_chat_data"].map((data) => (
+                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
+                        close={close}
+                        key={data.id}
+                        name={data.subject_description}
+                        mobile={adminList.find((item) => item.admin_id === data.hour_log_of_admin)?.email}
+                        email={data.email}
+                        to={`/daily_pages?hour_logId=${data.employee_id}&taskIdA=${data.id}`}
+                      />
+                      </div>))}
+                  </div>
+                )}
+                {searchData["hour_log_chat_reply_data"] && searchData["hour_log_chat_reply_data"].length > 0 && (
+                  <div className="row">
+                    <h4 className="w-100 border-bottom font-weight-bold m-0  text-uppercase" style={{ color: '#20c997' }}>
+                      Daily Hour logs reply
+                    </h4>
+                    {searchData["hour_log_chat_reply_data"].map((data) => (
+                      <div className="col-lg-2 col-sm-6"> <GlobalSearchCard
+                        close={close}
+                        key={data.id}
+                        name={data.msg}
+                        mobile={adminList.find((item) => item.admin_id === data.hour_log_of_admin)?.email}
+                        email={data.email}
+                        to={`/daily_pages?hour_logId=${data.employee_id}&taskId=${data.task_id}`}
+                      />
+                      </div>))}
                   </div>
                 )}
                 {searchData["daily_hour_log"] && searchData["daily_hour_log"].length > 0 && (

@@ -131,7 +131,7 @@ export default function ChatbotModal({ show, handleClose, userDetails , charBotI
                     ) : (
                         <div className="text-center text-secondary mt-4">
                             <p>No messages yet. Start a conversation 👋</p>
-                        </div>
+                        </div> 
                     )}
                     <div ref={messagesEndRef} />
                 </Modal.Body>
