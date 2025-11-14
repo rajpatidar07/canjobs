@@ -15,9 +15,7 @@ export default function VisaArrowProfile({
               item.visa_status === undefined ||
               item.visa_status === "undefined" ? null : (
               <div
-                className={
-                  "arrow-steps p-1 pl-2 pr-6 col-md-12 d-flex border-right border-bottom "
-                }
+                className={"arrow-steps p-1 pl-2 pr-6 col-md-12 d-flex border-right border-bottom "}
                 key={i}
               >
                 <div className="job_name text-dark">

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import EmailList from "./emailList";
-// import AdminHeader from "../admin/header";
-// import AdminSidebar from "../admin/sidebar";
 import {
   ReadEmail, ReadAllEmail,
   ReadSentEmail /*, GetAllEmailPagination*/,
@@ -10,10 +8,10 @@ const MainEmailPage = ({ email, emailId }) => {
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
-  const [searcherror, setSearchError] = useState("");
+  const [searchError, setSearchError] = useState("");
   const [emailType, setEmailType] = useState(emailId ? "SENT" : "INBOX");
   /* data and id states */
-  const [emailData, setemailData] = useState([]);
+  const [emailData, setEmailData] = useState([]);
   // let [emailSing, setemailSing] = useState();
   // let [lmiaStatus, setLmiaStatus] = useState();
   /* Pagination states */
@@ -34,80 +32,81 @@ const MainEmailPage = ({ email, emailId }) => {
     } else {
       setIsLoading(true);
     }
-    try {
-      let userData;
-      // console.log(emailType, "ooooooooooooo", email, emailId)
-      if (emailType === "ALL") {
-        userData = await ReadAllEmail(
-          currentPage,
-          recordsPerPage,
-          search,
-          email?.trim("")
-        );
-      } else if (emailType === "SENT") {
-        userData = await ReadSentEmail(
-          currentPage,
-          recordsPerPage,
-          search,
-          email?.trim("")
-        );
-      } else
-        userData = await ReadEmail(currentPage, recordsPerPage, search, email?.trim(""));
-      if (
-        // userData.messsage === "No data found" ||
-        (userData.status === "0" ||
-          userData.status === 0 ||
-          userData.data.value === undefined ||
-          userData.data.value.length === 0 ||
-          userData.data.message === "No Mail Data Found") && !nextLink && currentPage === ""
-      ) {
-        setemailData([]);
-        setIsLoading(false);
-        setLoadingMore(false);
-        // setTotalData(0);
-        // setPageToken([]);
-      } else {
-        let newData = userData.data.value.slice(); // Create a copy of the array
-        if (currentPage === "") {
-          setemailData(newData);
+    if (email) {
+      try {
+        let userData;
+        if (emailType === "ALL") {
+          userData = await ReadAllEmail(
+            currentPage,
+            recordsPerPage,
+            search,
+            email?.trim("")
+          );
+        } else if (emailType === "SENT") {
+          userData = await ReadSentEmail(
+            currentPage,
+            recordsPerPage,
+            search,
+            email?.trim("")
+          );
+        } else
+          userData = await ReadEmail(currentPage, recordsPerPage, search, email?.trim(""));
+        if (
+          (userData.status === "0" ||
+            userData.status === 0 ||
+            userData.data.value === undefined ||
+            userData.data.value.length === 0 ||
+            userData.data.message === "No Mail Data Found") && !nextLink && currentPage === ""
+        ) {
+          setEmailData([]);
+          setIsLoading(false);
+          setLoadingMore(false);
+          // setTotalData(0);
+          // setPageToken([]);
         } else {
-          setemailData(prev => [...prev, ...newData]);
+          let newData = userData.data.value.slice(); // Create a copy of the array
+          if (currentPage === "") {
+            setEmailData(newData);
+          } else {
+            setEmailData(prev => [...prev, ...newData]);
+          }
+          setNextLink(userData.data['@odata.nextLink'] || "");
+          const newUrl = window.location.pathname;
+          window.history.replaceState({}, document.title, newUrl);
+          localStorage.setItem("navigation_url", "")
+          setIsLoading(false);
+          setLoadingMore(false);
+          // if (emailType === "SENT") {
+          //   reversedData.reverse(); // Reverse the array if emailType is "SENT"
+          // }
+          // setPageToken([]);
+          // setTotalData(0);
+          // try {
+          //   let PageRes = await GetAllEmailPagination(email);
+          //   setPageToken(
+          //     PageRes.data.paginationData.map((item) => item.split("=")[4])
+          //   );
+          //   setTotalData(PageRes.data.paginationDataCount || 0);
+          // } catch (err) {
+          //   console.log(err);
+          // }
+          // setPageToken(
+          //   userData.data.paginationData &&
+          //     userData.data.paginationData.map((item) => item.split("=")[4])
+          // );
+          // setTotalData(userData.data.paginationDataCount || 0);
         }
-        setNextLink(userData.data['@odata.nextLink'] || "");
-        const newUrl = window.location.pathname;
-        window.history.replaceState({}, document.title, newUrl);
-        localStorage.setItem("navigation_url", "")
+      } catch (err) {
+        console.log(err);
+        setEmailData([]);
+        // setTotalData(0);
+        // setPageToken([]);
         setIsLoading(false);
         setLoadingMore(false);
-        // if (emailType === "SENT") {
-        //   reversedData.reverse(); // Reverse the array if emailType is "SENT"
-        // }
-        // setPageToken([]);
-        // setTotalData(0);
-        // try {
-        //   let PageRes = await GetAllEmailPagination(email);
-        //   setPageToken(
-        //     PageRes.data.paginationData.map((item) => item.split("=")[4])
-        //   );
-        //   setTotalData(PageRes.data.paginationDataCount || 0);
-        // } catch (err) {
-        //   console.log(err);
-        // }
-        // setPageToken(
-        //   userData.data.paginationData &&
-        //     userData.data.paginationData.map((item) => item.split("=")[4])
-        // );
-        // setTotalData(userData.data.paginationDataCount || 0);
       }
-    } catch (err) {
-      console.log(err);
-      setemailData([]);
-      // setTotalData(0);
-      // setPageToken([]);
-      setIsLoading(false);
-      setLoadingMore(false);
     }
   };
+
   /*Function to load more data while scrolling */
   let handelScroll = (e) => {
     const { scrollTop, scrollHeight, clientHeight } = e.target;
@@ -115,6 +114,7 @@ const MainEmailPage = ({ email, emailId }) => {
       setCurrentPage(nextLink);
     }
   };
+  
   /*Render function to get the email data*/
   useEffect(() => {
     EmailData();
@@ -365,7 +365,6 @@ const MainEmailPage = ({ email, emailId }) => {
                   </div>
                 </div>
                 </div> */}
-            {/* <small className="text-danger">{searcherror}</small> */}
           </div>
           <div>
             <EmailList
@@ -381,7 +380,7 @@ const MainEmailPage = ({ email, emailId }) => {
               setEmailType={setEmailType}
               emailType={emailType}
               onSearch={onSearch}
-              searcherror={searcherror}
+              searcherror={searchError}
               search={search}
               email={email}
               handelScroll={handelScroll}
