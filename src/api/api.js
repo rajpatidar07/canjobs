@@ -4427,7 +4427,7 @@ export const SaveDraftOutlookEmail = async (data, FileList, url) => {
       if (file) formData.append(`attachments[${i}]`, file);
     });
   }
-  console.log(formData,data,FileList)
+  // console.log(formData,data,FileList)
   const response = await axios.post(`${API_URL}common/saveDraftOutlookEmail`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",

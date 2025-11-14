@@ -31,7 +31,7 @@ import VisaTable from "../common/visaTable";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-  import EmployeeHeader from "../common/header";
+import EmployeeHeader from "../common/header";
 import VisaArrowProfile from "../common/visaArrowProfile";
 import MainEmailPage from "../email/mainemailPage";
 import AgentConversation from "../common/AgentConversation";
