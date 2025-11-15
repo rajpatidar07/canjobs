@@ -133,6 +133,7 @@ const MainEmailPage = ({ email, emailId }) => {
   ]);
 
   /*Pagination Calculation */
+  
   // const nPages = Math.ceil(totalData / recordsPerPage);
 
   /*Function to search the employee */

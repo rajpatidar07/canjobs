@@ -7,6 +7,7 @@ export default function SendExportCSVFIle(props) {
     const [sendEmail, setSendEmail] = useState(false);
     const [email, setEmail] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    
     /*Function to download the file */
     const downloadFile = () => {
         const link = document.createElement('a');
