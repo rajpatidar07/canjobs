@@ -38,13 +38,12 @@ export default function SetReminderSchedule(props) {
       default:
         intervalTime = 0;
     }
-
     // Simulated automatic reminder using setInterval
     const intervalId = setInterval(() => {
       console.log(`🔔 Reminder sent automatically (${schedule})!`);
       alert(`🔔 Reminder sent automatically (${schedule})!`);
     }, intervalTime);
-
+    console.log(schedule, intervalId)
     setReminderInterval(intervalId);
     handleClose();
   };

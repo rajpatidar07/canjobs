@@ -53,8 +53,8 @@ function EmployeeBox({ featured, categorye, Skill, Swap, Exp, candian }) {
     //Function to replace the url path after searching Employee
     if (search) {
       const newUrl = window.location.pathname;
-     window.history.replaceState({}, document.title, newUrl);
-localStorage.setItem("navigation_url", "")
+      window.history.replaceState({}, document.title, newUrl);
+      localStorage.setItem("navigation_url", "")
     }
     // eslint-disable-next-line
   }, [search, categorye, Skill, Swap, Exp, candian]);
@@ -101,9 +101,9 @@ localStorage.setItem("navigation_url", "")
                   <Link
                     className="text_box text-left w-100"
                     to={`/${empdata.employee_id}`}
-                    // onClick={() =>
-                    //   localStorage.setItem("employee_id", empdata.employee_id)
-                    // }
+                  // onClick={() =>
+                  //   localStorage.setItem("employee_id", empdata.employee_id)
+                  // }
                   >
                     <p className="font-size-3 text-default-color line-height-2 m-0 text-capitalize">
                       {empdata.name}
@@ -124,9 +124,9 @@ localStorage.setItem("navigation_url", "")
                     data-toggle="modal"
                     data-target="#signup"
                     to={`/${empdata.employee_id}`} // to={"/profile"}
-                    // onClick={() =>
-                    //   localStorage.setItem("employee_id", empdata.employee_id)
-                    // }
+                  // onClick={() =>
+                  //   localStorage.setItem("employee_id", empdata.employee_id)
+                  // }
                   >
                     View
                   </Link>
@@ -177,7 +177,11 @@ localStorage.setItem("navigation_url", "")
               </div>
               <div className="row pt-4">
                 <div className="col-md-12 text-left">
-                  <p className="text-truncate-1 ">{empdata.description}</p>
+                  <div className="text-truncate-1 "
+                    dangerouslySetInnerHTML={{
+                      __html: empdata.description,
+                    }}
+                  />
                 </div>
                 <div className="col-md-12">
                   <ul className="d-flex list-unstyled mr-n3 flex-wrap">

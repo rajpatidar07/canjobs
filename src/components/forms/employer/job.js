@@ -147,7 +147,7 @@ function AddJobModal(props) {
       (value) =>
         value === "" ? "Job category is required" : null,
     ],
-    company_id: [(value) => (value === "" ? "Client is required" : null)],
+    company_id: [(value) => (value === "" ? "Employer is required" : null)],
     // salary: [
     //   (value) =>
     //     !/^\d*\.?\d*$/.test(value) ?  "Salary can not have a characters":"",
@@ -347,7 +347,7 @@ function AddJobModal(props) {
                   <label
                     className="font-size-4 text-black-2  line-height-reset"
                   >
-                    Client:<span className="text-danger">*</span>
+                    Employer:<span className="text-danger">*</span>
                   </label>
                   <div className="position-relative">
                     <div className={errors.company_id ? "border border-danger rounded" : ""}>

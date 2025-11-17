@@ -494,7 +494,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
                       </span>
                     </h5>
                     <p className="font-size-4 font-weight-normal text-gray mb-0">
-                      Active Client's
+                      Active Employer's
                     </p>
                   </div>
                 </Link>

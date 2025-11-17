@@ -91,7 +91,7 @@ export default function LmiaInfo(props) {
             }
         }
     }
-    console.log(state)
+    // console.log(state)
     return (
         <>
             <Modal

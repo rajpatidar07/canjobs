@@ -162,7 +162,7 @@ export default function PaymentInvoiceTable(props) {
                                         {props.employeeEmployerlist.filter(res =>
                                             (item.user_type === "employee" && item.user_id === res?.employee_id) ||
                                             (item.user_type === "employer" && item.user_id === res?.company_id)
-                                        )[0]?.[item.user_type === "employee" ? 'name' : 'company_name'] + (item.user_type === "employee" ? " (Candidate)" : " (Client)")}
+                                        )[0]?.[item.user_type === "employee" ? 'name' : 'company_name'] + (item.user_type === "employee" ? " (Candidate)" : " (Employer)")}
                                     </Link>
                                 </td>
                                 <td className=" py-5">

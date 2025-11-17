@@ -158,7 +158,7 @@ function EmployeeFooter() {
                         // onClick={() => setShowSingUp(true)}
                         className={userType === "company" ? "d-none" : "heading-default-color font-size-4 font-weight-normal"}
                       >
-                        Client Login
+                        Employer Login
                       </Link>
                     </li>
                     <li className="mb-3">

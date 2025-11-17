@@ -204,7 +204,7 @@ function JobDetailpageAdmim(props) {
                       {/* <b title="Operating Name">
                         {jobData.franchise
                           ? jobData.franchise
-                          : "Unknown Client"}
+                          : "Unknown Employer"}
                       </b> */}
                     </span>
                     {/* {jobData.address ? (

@@ -335,12 +335,12 @@ function Notes() {
               </div>
               <div className="col-6 mb-18">
                 <div className="col p-1 form_group mb-3">
-                  <p className="input_label">Search by Client:</p>
+                  <p className="input_label">Search by Employer:</p>
                   <input
                     required
                     type="text"
                     className="form-control"
-                    placeholder={"Search Client"}
+                    placeholder={"Search Employer"}
                     value={Companysearch}
                     name={"company_name"}
                     onChange={(e) => {

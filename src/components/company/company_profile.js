@@ -662,7 +662,7 @@ function CompanyProfileDetail(props) {
                                     <b title="Operating Name">
                                       {employerData?.franchise
                                         ? employerData?.franchise
-                                        : "Unknown Client"}
+                                        : "Unknown Employer"}
                                     </b>
                                   </span>
                                 </h3>

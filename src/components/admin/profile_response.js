@@ -318,7 +318,7 @@ function JobProfileResponse(props) {
                   required
                   type="text"
                   className="form-control"
-                  placeholder={"Search Client / Name"}
+                  placeholder={"Search Employer / Name"}
                   value={search}
                   name={"category_name"}
                   onChange={(e) => {
@@ -468,9 +468,9 @@ function JobProfileResponse(props) {
                           props.setpageNo(1);
                         }}
                         className="text-gray"
-                        title="Sort Job's by Client"
+                        title="Sort Job's by Employer"
                       >
-                        Client
+                        Employer
                       </Link>
                     </th>
 
@@ -621,8 +621,8 @@ function JobProfileResponse(props) {
                                 <Link
                                   to={user_type === "agent"
                                     ? null
-                                    : `/client_detail`}
-                                  title={user_type === "agent" ? "" : "Client Details"}
+                                    : `/Employer_detail`}
+                                  title={user_type === "agent" ? "" : "Employer Details"}
                                   onClick={user_type === "agent"
                                     ? null
                                     : () =>

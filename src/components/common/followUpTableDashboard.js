@@ -128,9 +128,9 @@ function FollowUpDashBoard(props) {
                                 setCurrentPage(1);
                               }}
                               className="text-gray"
-                              title="Sort by Client"
+                              title="Sort by Employer"
                             >
-                              Client Name
+                              Employer Name
                             </Link>
                           </th>
 

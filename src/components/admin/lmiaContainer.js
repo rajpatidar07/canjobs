@@ -160,12 +160,12 @@ function LimaContainer(props) {
                       <small className="text-danger">{searcherror}</small>
                     </div>
                     <div className="col p-1 form_group mb-3">
-                      <p className="input_label">Client Name:</p>
+                      <p className="input_label">Employer Name:</p>
                       <input
                         required
                         type="text"
                         className="form-control input-height w-100"
-                        placeholder={"Client name"}
+                        placeholder={"Employer name"}
                         value={company}
                         name={"company_name"}
                         onChange={(e) => {

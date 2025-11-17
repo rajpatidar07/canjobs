@@ -25,7 +25,7 @@ const ExportExcelButton = ({ tableName, portal, applicantType, status, local, ty
     const getDownloadTitle = () => {
         if (portal === "study") return "Student";
         if (tableName === "employee") return "Candidate";
-        if (tableName === "employer") return "Client";
+        if (tableName === "employer") return "Employer";
         if (tableName === "admin") return "Admin";
         if (tableName === "job") return "Jobs";
         if (tableName === "visa") return "Visa";

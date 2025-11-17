@@ -298,7 +298,7 @@ function EmployementDetails(props) {
                   htmlFor="Company"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Client: <span className="text-danger">*</span>
+                  Employer: <span className="text-danger">*</span>
                 </label>
                 <input
                   maxLength={60}
@@ -362,7 +362,7 @@ function EmployementDetails(props) {
                   htmlFor="company_location"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Client Location:
+                  Employer Location:
                 </label>
                 <input
                   type="text"
@@ -411,7 +411,7 @@ function EmployementDetails(props) {
                           },
                         });
                       }}
-                      placeholder="Industry user Client belongs to"
+                      placeholder="Industry user Employer belongs to"
                     />
                   </div>
 

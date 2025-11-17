@@ -415,7 +415,7 @@ function JobResponse(props) {
                       required
                       type="text"
                       className="form-control"
-                      placeholder={"Search Client / Name"}
+                      placeholder={"Search Employer / Name"}
                       value={search}
                       name={"category_name"}
                       onChange={(e) => {

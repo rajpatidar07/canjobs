@@ -129,10 +129,10 @@ export default function AssignedJobTable(props) {
                       onClick={() => {
                         handleSort("company_name");
                       }}
-                      title="Sort by Client"
+                      title="Sort by Employer"
                       className="text-gray"
                     >
-                      Client
+                      Employer
                     </Link>
                   </th>
                   <th
@@ -210,7 +210,7 @@ export default function AssignedJobTable(props) {
                           </th>
                           <th className=" py-5">
                             <Link
-                              to={`/client_detail`}
+                              to={`/Employer_detail`}
                               title={job.company_name}
                               onClick={() =>
                                 localStorage.setItem(

@@ -312,14 +312,14 @@ function AddJobsModal(props) {
                   htmlFor="About_Company"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  About Client :
+                  About Employer :
                 </label>
                 <div className="position-relative">
                   <input
                     type="text"
                     className="form-control"
                     id="About_Company"
-                    placeholder="About Client "
+                    placeholder="About Employer "
                   />
                 </div>
               </div>

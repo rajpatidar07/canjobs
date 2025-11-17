@@ -81,7 +81,7 @@ function EmployeeHeader() {
         <nav className="navbar site-navbar offcanvas-active navbar-expand-lg  px-0 py-0">
           {/* <!-- Brand Logo--> */}
           <div className="brand-logo">
-            <Link to={userType ? "/" : "/main_home"}>
+            <Link to={userType === "company" ? "/client" : userType === "user" ? "/" : "/main_home"}>
               {/* <!-- light version logo (logo must be black // eslint-disable-next-line)--> */}
               <img
                 src="image/00logo-main-black.png"
@@ -166,7 +166,7 @@ function EmployeeHeader() {
                       to={"/client_login"}
                     // onClick={() => setShowCompanyLogin(true)}
                     >
-                      Client
+                      Employer
                     </Link>
                   </li>
                   <li className="drop-menu-item">
@@ -436,7 +436,7 @@ function EmployeeHeader() {
                   <Link
                     className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
                     to={
-                     "/"
+                      "/"
                     }
                     onClick={() => {
                       localStorage.clear(); // clear the local storage

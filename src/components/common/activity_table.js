@@ -38,11 +38,11 @@ export default function ActivityTable(props) {
     9: "Candidate document updated",
     10: "Candidate visa inserted",
     11: "Candidate visa updated",
-    12: "Client details updated",
-    13: "Client details inserted",
-    14: "Client contact details updated",
-    15: "Client kyc details inserted",
-    16: "Client kyc details updated",
+    12: "Employer details updated",
+    13: "Employer details inserted",
+    14: "Employer contact details updated",
+    15: "Employer kyc details inserted",
+    16: "Employer kyc details updated",
     17: "Job details updated",
     18: "Job details inserted",
     19: "Job switch",
@@ -50,8 +50,8 @@ export default function ActivityTable(props) {
     21: "Interview schedule",
     22: "Lmia updated",
     23: "Lmia inserted",
-    24: "Client document inserted",
-    25: "Client document updated",
+    24: "Employer document inserted",
+    25: "Employer document updated",
     26: "Candidate lmia substage added",
     27: "Candidate lmia substage updated",
     28: "Job lmia substage inserted",
@@ -75,12 +75,12 @@ export default function ActivityTable(props) {
     46: "Candidate reserve remove",
     47: "Candidate setting update",
     48: "Job post delete",
-    49: "Client delete",
+    49: "Employer delete",
     50: "Job category delete",
     51: "Job delete",
-    52: "Client password update",
-    53: "Client document delete",
-    54: "Client setting update",
+    52: "Employer password update",
+    53: "Employer document delete",
+    54: "Employer setting update",
     55: " Partner updated",
     56: " Partner delete",
     57: "Created comment's on document",
@@ -124,7 +124,7 @@ export default function ActivityTable(props) {
   //     const markup = { __html: htmll };
   //     return { markup };
   //   };
-  /*Render function to get the Client*/
+  /*Render function to get the Employer*/
   useEffect(() => {
     ActivityLog();
     if (callapi === true) {
@@ -167,7 +167,7 @@ export default function ActivityTable(props) {
                 (activityData || []).map((data) => (
                   <tr key={data.id} className="font-size-3">
                     {hide ? null : <td>{data.user_id}</td>}
-                    {hide ? null : <td>{data.user_type === "employee" ? "candidate" : data.user_type === "employer" ? "client" : data.user_type}</td>}
+                    {hide ? null : <td>{data.user_type === "employee" ? "candidate" : data.user_type === "employer" ? "Employer" : data.user_type}</td>}
                     {hide ? null : <td>{data.created_by || data.employer_name || data.employee_name_stackholder}</td>}
                     <td>
                       {data.created_by ? <span> <Link to={"/" + data.action_id}>
@@ -180,7 +180,7 @@ export default function ActivityTable(props) {
                         {" by "}
                         {data.user_type === "agent"
                           ? "partner"
-                          : data.user_type === "employee" ? "candidate" : data.user_type === "employer" ? "client" : data.user_type + " " + data.created_by ? data.created_by : "unknown user"}
+                          : data.user_type === "employee" ? "candidate" : data.user_type === "employer" ? "Employer" : data.user_type + " " + data.created_by ? data.created_by : "unknown user"}
                       </span> : <div dangerouslySetInnerHTML={{ __html: data.msg }} />}
                     </td>
                     <td>

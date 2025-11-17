@@ -326,7 +326,7 @@ export default function EmployerTable(props) {
                         style={{ left: "50px", backgroundColor: "rgb(244, 244, 244)", }}>
                         <Link
                           to={`/client_detail`}
-                          title="Client Details"
+                          title="Employer Details"
                           onClick={() =>
                             localStorage.setItem(
                               "company_id",
@@ -405,7 +405,7 @@ export default function EmployerTable(props) {
                         <th className="py-5 pr-0">
                           <Link
                             to={`/client_detail`}
-                            title="Client Details"
+                            title="Employer Details"
                             onClick={() =>
                               localStorage.setItem(
                                 "company_id",
@@ -589,7 +589,7 @@ export default function EmployerTable(props) {
                             <button
                               className="btn btn-outline-info action_btn"
                               onClick={() => editEmployer(empdata.company_id)}
-                              title="Edit Client"
+                              title="Edit Employer"
                             >
                               <span className="text-gray px-1">
                                 <LiaEdit />

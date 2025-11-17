@@ -100,7 +100,7 @@ export default function EmployerNotesTable({ search }) {
                         handleSort("company_id");
                       }}
                       className="text-gray"
-                      title="Sort by Client Id"
+                      title="Sort by Employer Id"
                     >
                       CID
                     </Link>
@@ -192,8 +192,8 @@ export default function EmployerNotesTable({ search }) {
                         </td>
                         <td className=" py-5">
                           <Link
-                            to={`/client_detail`}
-                            title="Client Details"
+                            to={`/Employer_detail`}
+                            title="Employer Details"
                             onClick={() =>
                               localStorage.setItem(
                                 "company_id",

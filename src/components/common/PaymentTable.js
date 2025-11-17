@@ -265,7 +265,7 @@ const PaymentTable = (props) => {
                               option.employee_id
                                 ? `${option.employee_id} - ${option.name} (Candidate)`
                                 : option.company_id
-                                  ? `${option.company_id} - ${option.company_name} (Client)`
+                                  ? `${option.company_id} - ${option.company_name} (Employer)`
                                   : `${option.id} - ${option.title} (Applicant Type)` || "Unknown User"
                           })) || [])}
                           selectedValue={state.user_id + "," + state.user_type}
@@ -287,7 +287,7 @@ const PaymentTable = (props) => {
 
                       </td>
                       <td>
-                        
+
                         <td style={{ minWidth: "150px" }}>
                           <SelectBox
                             Width={"yes"} options={(props.adminList.map((option) => ({
@@ -348,7 +348,7 @@ const PaymentTable = (props) => {
                         />
                       </td>
                       <td>
-                        
+
                         <TableInput
                           value={state.due_date}
                           onChange={onInputChange}
@@ -358,7 +358,7 @@ const PaymentTable = (props) => {
                         />
                       </td>
                       <td>
-                        
+
                         <TableInput
                           value={state.payment_method}
                           onChange={onInputChange}
@@ -435,7 +435,7 @@ const PaymentTable = (props) => {
                                     option.employee_id
                                       ? `${option.name} (${option.employee_id} - Candidate)`
                                       : option.company_id
-                                        ? `${option.company_name} (${option.company_id} - Client)`
+                                        ? `${option.company_name} (${option.company_id} - Employer)`
                                         : `${option.title} (Applicant Type)` || "Unknown User"
                                 })) || []) : []}
                                 selectedValue={record.user_id + "," + record.user_type}
@@ -497,7 +497,6 @@ const PaymentTable = (props) => {
                           />
                         </td>
                         <td>
-                          
                           <TableInput
                             value={record.duplicate_payment}
                             onChange={(e) => handleUpdateChange(e, record.id, "duplicate_payment")}
@@ -507,7 +506,6 @@ const PaymentTable = (props) => {
                           />
                         </td>
                         <td>
-                          
                           <TableInput
                             value={record.due_date}
                             onChange={(e) => handleUpdateChange(e, record.id, "due_date")}
@@ -517,7 +515,6 @@ const PaymentTable = (props) => {
                           />
                         </td>
                         <td>
-                          
                           <TableInput
                             value={record.payment_method}
                             onChange={(e) => handleUpdateChange(e, record.id, "payment_method")}
@@ -540,7 +537,8 @@ const PaymentTable = (props) => {
                           }
                           title="Delete Payment Record">
                           <FaTrash />
-                        </button></td>
+                        </button>
+                        </td>
                       </tr>
                     ))}
                 </tbody>

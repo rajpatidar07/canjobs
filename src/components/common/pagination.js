@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function Pagination(props) {
-  // console.log(props);
   // Create state to manage visible page numbers
   const [visiblePageNumbers, setVisiblePageNumbers] = React.useState([]);
+  // console.log(props);
+  
   useEffect(() => {
     // Calculate the start and end index for visible page numbers
     const pageSize = 10;
