@@ -133,7 +133,6 @@ const MainEmailPage = ({ email, emailId }) => {
   ]);
 
   /*Pagination Calculation */
-  
   // const nPages = Math.ceil(totalData / recordsPerPage);
 
   /*Function to search the employee */
@@ -157,12 +156,6 @@ const MainEmailPage = ({ email, emailId }) => {
   return (
     <>
       <div className={"email_container overflow-hidden bg-default-2"}>
-        {/* <!-- Header Area --> */}
-        {/* <AdminHeader heading={"Email"} /> */}
-        {/* <!-- navbar- --> */}
-        {/* <AdminSidebar heading={"Email"} /> */}
-
-
         <div
           className={"container-fluid document_container bg-white px-0"}
           id="dashboard-body"

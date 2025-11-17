@@ -8,7 +8,6 @@ import { AiOutlineCloudUpload } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
 import { Link } from "react-router-dom";
 import AttachmentPreviewModal from "../forms/user/AttachmentPreviewModal";
-// import TextEditor from "../common/TextEditor";
 const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall, toggleReplyFormClick }) => {
     const [formData, setFormData] = useState({ message: '' });
     const [fileBase, setFileBase] = useState([]);
@@ -112,15 +111,12 @@ const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall, toggle
     // Function to handle file preview (UPDATED)
     const handlePreviewFile = async (file) => {
         if (!file) return;
-
         // 1. Clean up any previous temporary URL
         if (previewFileUrl) {
             URL.revokeObjectURL(previewFileUrl);
         }
-
         // 2. Create a temporary URL for the file object in the browser's memory
         const tempUrl = URL.createObjectURL(file);
-
         // 3. Set the state
         setPreviewFile(file);
         setPreviewFileUrl(tempUrl);

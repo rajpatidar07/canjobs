@@ -18,7 +18,6 @@ const ForwardEmailForm = ({ data, emailType, setShowForwardForm, setApiCall, tog
             originalDate: data.sentDateTime,
             originalFrom: data.from.emailAddress.address
         }
-
         try {
             setLoading(true)
             let res = await forwardMail(new_data);
@@ -53,22 +52,22 @@ const ForwardEmailForm = ({ data, emailType, setShowForwardForm, setApiCall, tog
                 {loading ?
                     <button
                         className="btn btn-primary mx-2"
-                        type="button"
-                        disabled
+                        type="button" disabled
                     >
                         <span
                             className="spinner-border spinner-border-sm "
-                            role="status"
-                            aria-hidden="true"
+                            role="status" aria-hidden="true"
                         ></span>
                         <span className="sr-only">Loading...</span>
                     </button>
                     : <button type="submit" className="btn btn-primary mx-2">
                         Send
-                    </button>}
+                    </button>
+                }
                 <button className="btn btn-outline-primary" onClick={toggleForwardFormClick}>
                     Cancel
-                </button></div>
+                </button>
+            </div>
         </form>
     );
 };
