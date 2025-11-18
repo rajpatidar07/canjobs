@@ -1,10 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { CiBellOn } from "react-icons/ci"; // modern icon
-
+import { SetReminderApi, GetSetReminderApi } from "../../../api/api"
+import { toast } from "react-toastify";
 export default function SetReminderSchedule(props) {
   const [schedule, setSchedule] = useState("");
   const [reminderInterval, setReminderInterval] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchReminderSetting = async () => {
+      if (props.Data && props.Data.id) {
+        try {
+          const res = await GetSetReminderApi(props.Data.id, props.type);
+          console.log(res.data.data[0].reminder)
+          if (res.data.status === 1 && res.data.data[0].reminder) {
+            setSchedule(res.data.data[0].reminder);
+          }
+        } catch (err) {
+          console.log("Error fetching reminder setting:", err);
+        }
+      }
+    };
+    fetchReminderSetting();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.Data]);
 
   const handleClose = () => {
     props.close()
@@ -12,7 +32,7 @@ export default function SetReminderSchedule(props) {
     setSchedule("")
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!schedule) {
       alert("Please select a schedule type!");
       return;
@@ -20,32 +40,48 @@ export default function SetReminderSchedule(props) {
 
     // Clear any existing interval before starting new one
     if (reminderInterval) clearInterval(reminderInterval);
-
-    let intervalTime;
-    switch (schedule) {
-      case "daily":
-        intervalTime = 24 * 60 * 60 * 1000; // 24 hours
-        break;
-      case "weekly":
-        intervalTime = 7 * 24 * 60 * 60 * 1000; // 7 days
-        break;
-      case "quarterly":
-        intervalTime = 90 * 24 * 60 * 60 * 1000; // 3 months approx
-        break;
-      case "yearly":
-        intervalTime = 365 * 24 * 60 * 60 * 1000; // 1 year
-        break;
-      default:
-        intervalTime = 0;
+    try {
+      setLoading(true)
+      let res = await SetReminderApi(props.Data.id, props.type, schedule)
+      console.log(res)
+      if (res.data.status === 1) {
+        setLoading(false)
+        toast.success("Reminder set for Payment invoice successful", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        handleClose();
+      }
+    } catch (err) {
+      console.log(err)
+      setLoading(false)
     }
+    // let intervalTime;
+    // switch (schedule) {
+    //   case "daily":
+    //     intervalTime = 24 * 60 * 60 * 1000; // 24 hours
+    //     break;
+    //   case "weekly":
+    //     intervalTime = 7 * 24 * 60 * 60 * 1000; // 7 days
+    //     break;
+    //   case "quarterly":
+    //     intervalTime = 90 * 24 * 60 * 60 * 1000; // 3 months approx
+    //     break;
+    //   case "yearly":
+    //     intervalTime = 365 * 24 * 60 * 60 * 1000; // 1 year
+    //     break;
+    //   default:
+    //     intervalTime = 0;
+    // }
+
     // Simulated automatic reminder using setInterval
-    const intervalId = setInterval(() => {
-      console.log(`🔔 Reminder sent automatically (${schedule})!`);
-      alert(`🔔 Reminder sent automatically (${schedule})!`);
-    }, intervalTime);
-    console.log(schedule, intervalId)
-    setReminderInterval(intervalId);
-    handleClose();
+    // const intervalId = setInterval(() => {
+    //   console.log(`🔔 Reminder sent automatically (${schedule})!`);
+    //   alert(`🔔 Reminder sent automatically (${schedule})!`);
+    // }, intervalTime);
+    // console.log(schedule, intervalId)
+    // setReminderInterval(intervalId);
+
   };
 
   // Cleanup interval on unmount
@@ -160,8 +196,9 @@ export default function SetReminderSchedule(props) {
           style={{
             borderRadius: "8px",
           }}
+          disabled={loading}
         >
-          Save Schedule
+          {loading ? "Saving....." : "Save Schedule"}
         </Button>
       </Modal.Footer>
     </Modal>

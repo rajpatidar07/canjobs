@@ -251,7 +251,8 @@ export default function PaymentInvoiceTable(props) {
                                                 props.setShowReminderScheduleModal(true);
                                                 props.setSingleInvoiceData(item)
                                             }}
-                                            title="Set Reminder Schedule"                                        >
+                                            title="Set Reminder Schedule"
+                                            disabled={!item.due_amount || item.due_amount === 0 || item.due_amount === "0"}>
                                             Set Reminder Schedule
                                         </button>
 

@@ -26,6 +26,7 @@ import Loader from "../loader";
 import AddPaymentDetailsForm from "../../forms/Agreement/AddPaymentdetailsForm";
 import UploadAgreement from "../../forms/Agreement/UploadAgreement";
 import ConvertTime from "../Common function/ConvertTime";
+import SetReminderSchedule from "../../forms/payment invoice/SetReminderSchedule";
 export default function RetauberAgreementList({
   user_id,
   emp_user_type,
@@ -45,9 +46,11 @@ export default function RetauberAgreementList({
   const [openViewAgreementSign, setOpenViewAgreementSign] = useState("");
   const [agreementList, setAgreementList] = useState([]);
   const [agreementData, setAgreementData] = useState("");
-  const [apicall, setApicall] = useState(false);
+  const [apicall, setApiCall] = useState(false);
   let [docLoader, setDocLoder] = useState(false);
   let [pdf, setPdf] = useState("");
+  const [showReminderScheduleModal, setShowReminderScheduleModal] = useState(false);
+
   /*delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
@@ -128,7 +131,7 @@ export default function RetauberAgreementList({
     }, 20000);
 
     if (apicall) {
-      setApicall(false);
+      setApiCall(false);
     }
     // // Cleanup function to clear the timer if the component unmounts or myState changes
     return () => clearTimeout(timer);
@@ -153,7 +156,7 @@ export default function RetauberAgreementList({
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setApicall(true);
+        setApiCall(true);
         setDeleteAlert(false);
       }
     } catch (err) {
@@ -224,7 +227,7 @@ export default function RetauberAgreementList({
               folderId={folderId}
               setOpenAgreement={setOpenAgreement}
               agreementData={agreementData}
-              setApicall={setApicall}
+              setApicall={setApiCall}
             />
           ) : (
 
@@ -461,6 +464,24 @@ export default function RetauberAgreementList({
                             </span>
                           </button>
                           <button
+                            type="button"
+                            className="btn btn-outline-info action_btn"
+                            onClick={() => {
+                              setShowReminderScheduleModal(true);
+                              setAgreementData(data)
+                            }}
+                            title="Set Reminder Schedule"
+                            disabled={
+                              (!data.client_email && !data.document_id) ||
+                              (data.initial
+                                ? data.rcic_signature
+                                  ? true
+                                  : false
+                                : false)
+                            }>
+                            Set Reminder Schedule
+                          </button>
+                          <button
                             className={data.added_type === "uploaded_agreement" ? "d-none" : "btn btn-outline-info action_btn "}
                             onClick={() => {
                               setOpenSendMail(true);
@@ -566,7 +587,7 @@ export default function RetauberAgreementList({
             folderId={folderId}
             felidData={agreementData}
             pdf={pdf}
-            setApicall={setApicall}
+            setApicall={setApiCall}
             userData={userData}
           />
         ) : null}
@@ -578,7 +599,7 @@ export default function RetauberAgreementList({
               setOpenViewAgreementSign("");
             }}
             userData={userData}
-            setApicall={setApicall}
+            setApicall={setApiCall}
             felidData={agreementData}
             emp_user_type={emp_user_type}
             user_id={user_id}
@@ -595,7 +616,7 @@ export default function RetauberAgreementList({
               setOpenViewAgreementSign("");
             }}
             userData={userData}
-            setApicall={setApicall}
+            setApicall={setApiCall}
             felidData={agreementData}
             emp_user_type={emp_user_type}
             user_id={user_id}
@@ -611,7 +632,7 @@ export default function RetauberAgreementList({
               setOpenViewAgreementSign("");
             }}
             userData={userData}
-            setApicall={setApicall}
+            setApicall={setApiCall}
             felidData={agreementData}
             emp_user_type={emp_user_type}
             user_id={user_id}
@@ -626,7 +647,7 @@ export default function RetauberAgreementList({
             close={() => setOpenAddAgreementForm(false)}
             emp_user_type={emp_user_type}
             userData={userData}
-            setApicall={setApicall}
+            setApicall={setApiCall}
           />
         ) : null}
         {openUploadAgreementForm ? (
@@ -635,7 +656,7 @@ export default function RetauberAgreementList({
             close={() => setOpenUploadAgreementForm(false)}
             emp_user_type={emp_user_type}
             userData={userData}
-            setApicall={setApicall}
+            setApicall={setApiCall}
             folderId={folderId}
             felidData={agreementData}
             setAgreementData={setAgreementData}
@@ -648,7 +669,7 @@ export default function RetauberAgreementList({
             agreementData={agreementData}
             emp_user_type={emp_user_type}
             userData={userData}
-            setApicall={setApicall}
+            setApicall={setApiCall}
             folderId={folderId}
             user_id={user_id}
             setOpenAddAgreementFelids={setOpenAddAgreementFelids}
@@ -659,6 +680,14 @@ export default function RetauberAgreementList({
             page={"agreement"}
           />
         ) : null}
+        {showReminderScheduleModal &&
+          <SetReminderSchedule
+            show={showReminderScheduleModal}
+            close={() => setShowReminderScheduleModal(false)}
+            Data={agreementData}
+            type={"signed_agreement"}
+          />
+        }
         {openSignfPspdfkit ? (
           <Newpdf
             document={pdf["@microsoft.graph.downloadUrl"]}

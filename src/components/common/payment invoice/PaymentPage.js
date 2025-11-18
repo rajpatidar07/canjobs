@@ -358,12 +358,8 @@ const PaymentPage = (props) => {
           <SetReminderSchedule
             show={showReminderScheduleModal}
             close={() => setShowReminderScheduleModal(false)}
-            userId={props.user_id}
-            userType={props.user_type}
-            userEmail={props.user_email}
-            invoiceData={singleInvoiceData}
-            userSecondaryEmail={props.user_secondary_email}
-            userName={props.user_name}
+            Data={singleInvoiceData}
+            type={"payment_invoice"}
           />
         }
         {/* {openSendMail ? (

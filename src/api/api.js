@@ -2994,7 +2994,7 @@ export const SendEmail = async (data, FileList, url) => {
       formData.append(key, value);
     }
   };
- 
+
   appendIfValid("to", data.email);
   appendIfValid("subject", data.subject);
   appendIfValid("body", data.description);
@@ -3011,7 +3011,7 @@ export const SendEmail = async (data, FileList, url) => {
       if (file) formData.append(`attachments[${i}]`, file);
     });
   }
-console.log(FileList , formData)
+  console.log(FileList, formData)
   const response = await axios.post(`${API_URL}sendEmailTest`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -4272,6 +4272,43 @@ export const SendPaymentInvoiceReminderApi = async (data) => {
     }
   );
   return response;
+
+}
+/*Api to set shedulue for invoice and Ra reminder */
+export const SetReminderApi = async (id, type, reminder) => {
+  const response = await axios.post(`${API_URL}common/addUpdateReminderSetting`,
+    {
+      "type": type,
+      "reminder": reminder,
+      "action_id": id
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+
+
+}
+/*Api to set shedulue for invoice and Ra reminder */
+export const GetSetReminderApi = async (id, type,) => {
+  const response = await axios.post(`${API_URL}/common/getReminderSetting`,
+    {
+      "type": type,
+      "action_id": id
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+
 
 }
 

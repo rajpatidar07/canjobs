@@ -343,6 +343,7 @@ const NewUserProfile = (props) => {
     return () => document.body.removeChild(script);
   }, []);
 
+  /*Function to make call with embed ring central code  */
   const makeCall = (phoneNumber) => {
     if (window.RCAdapter) {
       window.postMessage({
