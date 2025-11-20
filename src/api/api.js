@@ -34,6 +34,7 @@ export const encryptPassword = (password) => {
 
   return encrypted.toString(); // base64 string
 }
+/*Code to navigate to the home page if token expires */
 axios.interceptors.response.use(
   response => {
     if (

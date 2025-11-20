@@ -876,16 +876,16 @@ const NewUserProfile = (props) => {
                             </div>
                           </div>
                         </div>
+
                         {/*----About Employee----*/}
                         <div className="row m-0 ">
-                          <div className="d-flex align-items-center rounded bg-light p-8 position-relative">
+                          <div className="d-flex align-items-center rounded bg-light p-8 position-relative w-100">
                             <Link
                               className="position-relative text-white"
                               onClick={
                                 user_type === "company" || props.self === "yes"
                                   ? null
-                                  : () => setShowPersonalDetails(true)
-                              }
+                                  : () => setShowPersonalDetails(true)}
                               title="Update profile"
                             >
                               {user_type === "admin" ? (
