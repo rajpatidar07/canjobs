@@ -12,6 +12,7 @@ import ApplicantsFilter from "../common/applicantsFilter";
 // import GetThirtyDaysAgo from "../common/Common function/GetThirtyDaysAgo";
 
 function SelfApplicat(props) {
+  let StatusTab = localStorage.getItem("StatusTab");
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
@@ -24,7 +25,7 @@ function SelfApplicat(props) {
     props ? props.skill : ""
   );
   const [localFilterValue, setLocalFilterValue] = useState("");
-  const [webFilterValue, setWebFilterValue] = useState("");
+  const [webFilterValue, setWebFilterValue] = useState(StatusTab === "0" ? "0" : "");
   const [agentFilterValue, setAgentFilterValue] = useState("");
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [educationFilterValue, setEducationFilterValue] = useState("");

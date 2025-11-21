@@ -63,7 +63,7 @@ export default function EmployeeTable(props) {
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
-  const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
+  const [showEmploymentDetails, setShowEmploymentDetails] = useState(false);
   const [showAddConsultationForm, setShowAddConsultationForm] = useState(false);
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
   let [showVisaModal, setVisaModal] = useState(false);
@@ -76,7 +76,7 @@ export default function EmployeeTable(props) {
   let [showStatusChangeModal, setShowStatusChange] = useState(false);
   let [showChatModal, setShowChatModal] = useState(false);
   /*data and id states */
-  const [employeeData, setemployeeData] = useState([]);
+  const [employeeData, setEmployeeData] = useState([]);
   const [alredyApplied, setAlredyApplied] = useState(false);
   let [employeeId, setemployeeId] = useState();
   /*delete state */
@@ -88,7 +88,11 @@ export default function EmployeeTable(props) {
   /*Pagination states */
   const [status, setStatus] = useState(
     StatusTab
-      ? StatusTab
+      ? StatusTab === "0"
+        ? props.self === "yes"
+          ? "-1,0,1,2,3,5,6,10"
+          : "4,7,8,9"
+        : StatusTab
       : props.pageName === "local_candidate"
         ? ""
         : props.pageName === "consultation"
@@ -165,17 +169,17 @@ export default function EmployeeTable(props) {
           // props.subCategoryFilterValue
         );
         if (userData.data.length === 0) {
-          setemployeeData([]);
+          setEmployeeData([]);
           setIsLoading(false);
           setTotalData(0);
         } else {
           /*Condition for candidate with PGWP applicant type can not able to apply  for the job */
           if (props.skill) {
-            setemployeeData(
+            setEmployeeData(
               userData.data.filter((item) => item.interested_in !== "pgwp")
             );
           } else {
-            setemployeeData(userData.data);
+            setEmployeeData(userData.data);
             if (TaskId && CandidateId && notifiType === "candidate") {
               setShowChatModal(true);
               setemployeeId(userData.data[0] || "");
@@ -198,7 +202,7 @@ export default function EmployeeTable(props) {
         setIsLoading(false);
       }
     } else {
-      setemployeeData([]);
+      setEmployeeData([]);
       setIsLoading(false);
       setTotalData(0);
     }
@@ -299,7 +303,7 @@ export default function EmployeeTable(props) {
 
   /* Function to show the single data to update Employee Career*/
   // const editEmployeeCareer = (e) => {
-  // setShowEmplyomentDetails(true);
+  // setShowEmploymentDetails(true);
   // setemployeeId(e);
   // };
 
@@ -548,6 +552,7 @@ export default function EmployeeTable(props) {
   //   (item) => item.parent_id === empdata?.interested_in_id
   // );
 
+  console.log(status)
   return (
     <>
       {showAddEmployeeModal ? (
@@ -598,13 +603,13 @@ export default function EmployeeTable(props) {
           self={props.self}
         />
       ) : null}
-      {showEmplyomentDetails ? (
+      {showEmploymentDetails ? (
         <EmployementDetails
-          show={showEmplyomentDetails}
+          show={showEmploymentDetails}
           employeeId={employeeId}
           apiCall={apiCall}
           setApiCall={setApiCall}
-          close={() => setShowEmplyomentDetails(false)}
+          close={() => setShowEmploymentDetails(false)}
         />
       ) : null}
       {showAddConsultationForm ?

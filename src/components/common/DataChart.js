@@ -19,6 +19,8 @@ const DataChart = ({ data, dataType }) => {
     "Working on": "7",
     Submitted: "8",
     Web: "0",
+    Consultation: "10",
+    Completed: "9",
   };
   const statuses = data.map(
     (item) =>
@@ -38,9 +40,13 @@ const DataChart = ({ data, dataType }) => {
                     ? "Working on"
                     : item.status === "8"
                       ? "Submitted"
-                      : item.status === "0"
-                        ? "Web"
-                        : "status"
+                      : item.status === "9"
+                        ? "Complete"
+                        : item.status === "10"
+                          ? "Consultation"
+                          : item.status === "0"
+                            ? "Web"
+                            : "status"
       }`
   );
   //Applicants types data
@@ -75,7 +81,8 @@ const DataChart = ({ data, dataType }) => {
       clickedStatusNumber === "3" ||
       clickedStatusNumber === "5" ||
       clickedStatusNumber === "6" ||
-      clickedStatusNumber === "0"
+      clickedStatusNumber === "0" ||
+      clickedStatusNumber === "10"
     ) {
       navigate("/selfemployee");
       localStorage.setItem("StatusTab", clickedStatusNumber);

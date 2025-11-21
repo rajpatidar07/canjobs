@@ -172,7 +172,7 @@ export default function ApplicantsFilter({
                 borderTopRightRadius: 5,
                 borderBottomRightRadius: 5,
                 outline: 0,
-                height:"40px"
+                height: "40px"
               }}
             >
               <CiSearch />
@@ -485,7 +485,7 @@ export default function ApplicantsFilter({
             type="checkbox"
             id="web"
             name="web"
-            checked={webFilterValue === 0}
+            checked={webFilterValue === 0 || webFilterValue === "0"}
             value={webFilterValue}
             onChange={(e) =>
               setWebFilterValue(webFilterValue === "" ? 0 : "")
@@ -525,6 +525,8 @@ export default function ApplicantsFilter({
                 setAgentFilterValue("");
                 setcandidateSearch("");
                 setSearch("");
+                setWebFilterValue("");
+                localStorage.setItem("StatusTab", "");
                 if (portal === "study") {
                   setStatustFilterValue("");
                   setSearch("");
