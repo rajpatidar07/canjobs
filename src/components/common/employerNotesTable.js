@@ -192,7 +192,7 @@ export default function EmployerNotesTable({ search }) {
                         </td>
                         <td className=" py-5">
                           <Link
-                            to={`/Employer_detail`}
+                            to={`/client_detail`}
                             title="Employer Details"
                             onClick={() =>
                               localStorage.setItem(

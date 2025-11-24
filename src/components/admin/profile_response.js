@@ -621,7 +621,7 @@ function JobProfileResponse(props) {
                                 <Link
                                   to={user_type === "agent"
                                     ? null
-                                    : `/Employer_detail`}
+                                    : `/client_detail`}
                                   title={user_type === "agent" ? "" : "Employer Details"}
                                   onClick={user_type === "agent"
                                     ? null

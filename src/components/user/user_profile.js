@@ -47,6 +47,7 @@ import ConvertTime from "../common/Common function/ConvertTime";
 import AddConsultationInCandidate from "../forms/admin/AddConsultationInCandidate";
 import ChatbotIcon from "../common/ChatBot.js/ChatbotIcon";
 import { CallFunctionRIngCentral } from "../common/Common function/CallFunctionRIngCentral";
+// import CommonMakeCallFunction from "../common/Common function/CommonMakeCallFunction";
 // import ApplicantTypeTimeLine from "../common/ApplicantTypeTimeLine";
 // import useSessionCheck from "../common/user_session";
 // import AdobePDFViewer from "../common/Adobe/adobeFile";
@@ -343,17 +344,6 @@ const NewUserProfile = (props) => {
     return () => document.body.removeChild(script);
   }, []);
 
-  /*Function to make call with embed ring central code  */
-  const makeCall = (phoneNumber) => {
-    if (window.RCAdapter) {
-      window.postMessage({
-        type: "rc-adapter-new-call",
-        phoneNumber: phoneNumber,
-      }, "*");
-    } else {
-      alert("RingCentral adapter not loaded yet!");
-    }
-  };
   return (
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden bg-default-2">
@@ -1262,13 +1252,13 @@ const NewUserProfile = (props) => {
                                   <div>
                                     <Link
                                       className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
-                                      to={`tel:${PersonalDetail.contact_no}`}
-                                      onClick={() => makeCall(PersonalDetail.contact_no, PersonalDetail.name, PersonalDetail.profile_photo
-                                        ? PersonalDetail.profile_photo
-                                        : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`)}
+                                      to={`tel:+${PersonalDetail.contact_no}`}
+                                      // onClick={() => CommonMakeCallFunction(`+${PersonalDetail.contact_no}`, PersonalDetail.name, PersonalDetail.profile_photo
+                                      //   ? PersonalDetail.profile_photo
+                                      //   : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`)}
                                     >
                                       <BiPhoneCall className="font-size-3 mr-4" />
-                                      {PersonalDetail.contact_no}
+                                      +{PersonalDetail.contact_no}
                                     </Link>
                                   </div>
                                 )}
@@ -1285,7 +1275,7 @@ const NewUserProfile = (props) => {
                                         : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`)}
                                     >
                                       <BiPhoneCall className="font-size-3 mr-4" />
-                                      {PersonalDetail.other_contact_no}
+                                      +{PersonalDetail.other_contact_no}
                                     </Link>
                                   </div>
                                 )}

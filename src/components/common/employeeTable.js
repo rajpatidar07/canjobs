@@ -552,7 +552,6 @@ export default function EmployeeTable(props) {
   //   (item) => item.parent_id === empdata?.interested_in_id
   // );
 
-  console.log(status)
   return (
     <>
       {showAddEmployeeModal ? (

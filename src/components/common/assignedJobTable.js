@@ -210,7 +210,7 @@ export default function AssignedJobTable(props) {
                           </th>
                           <th className=" py-5">
                             <Link
-                              to={`/Employer_detail`}
+                              to={`/client_detail`}
                               title={job.company_name}
                               onClick={() =>
                                 localStorage.setItem(
