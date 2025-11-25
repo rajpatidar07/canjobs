@@ -1482,7 +1482,7 @@ export default function EmployeeTable(props) {
                                     +
                                     <Link
                                       className="text-dark font-size-2"
-                                      to={`tel:${empdata.contact_no}`}
+                                      to={`tel:+${empdata.contact_no}`}
                                     >
                                       {empdata.contact_no}
                                     </Link>

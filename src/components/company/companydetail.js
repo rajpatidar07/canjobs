@@ -99,7 +99,7 @@ function CompanyDetailPage(props) {
             {employerData.contact_no && (
               <div className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7 d-none" title="Contact No">
                 <i className="fas fa-phone-alt mr-2"></i>
-                <Link className="text-dark" to={`tel:${employerData.contact_no}`}>
+                <Link className="text-dark" to={`tel:+${employerData.contact_no}`}>
                   {employerData.contact_no}
                 </Link>
               </div>
@@ -107,7 +107,7 @@ function CompanyDetailPage(props) {
             {employerData.contact_no_other && (
               <div className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7 d-none" title="Contact No Other">
                 <i className="fas fa-phone-alt mr-2"></i>
-                <Link className="text-dark" to={`tel:${employerData.contact_no_other}`}>
+                <Link className="text-dark" to={`tel:+${employerData.contact_no_other}`}>
                   {employerData.contact_no_other}
                 </Link>
               </div>
@@ -164,7 +164,7 @@ function CompanyDetailPage(props) {
               {employerData.secondary_contact_no && (
                 <div className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7 d-none" title="Secondary Contact No">
                   <i className="fas fa-phone-alt mr-2"></i>
-                  <Link className="text-dark" to={`tel:${employerData.secondary_contact_no}`}>
+                  <Link className="text-dark" to={`tel:+${employerData.secondary_contact_no}`}>
                     {employerData.secondary_contact_no}
                   </Link>
                 </div>
@@ -172,7 +172,7 @@ function CompanyDetailPage(props) {
               {employerData.secondary_contact_no_other && (
                 <div className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7 d-none" title="Secondary Contact No Other">
                   <i className="fas fa-phone-alt mr-2"></i>
-                  <Link className="text-dark" to={`tel:${employerData.secondary_contact_no_other}`}>
+                  <Link className="text-dark" to={`tel:+${employerData.secondary_contact_no_other}`}>
                     {employerData.secondary_contact_no_other}
                   </Link>
                 </div>

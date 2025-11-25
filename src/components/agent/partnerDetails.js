@@ -125,18 +125,17 @@ export default function PartnerDetails({ setLoginCondition }) {
               user_type === "agent"
                 ? null
                 : () => {
-                    if (TabActive === "notes") {
-                      navigate(-1);
-                    } else {
-                      setAddNote(true);
-                    }
+                  if (TabActive === "notes") {
+                    navigate(-1);
+                  } else {
+                    setAddNote(true);
                   }
+                }
             }
           >
             <i
-              className={`icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8 ${
-                user_type === "agent" ? "d-none" : ""
-              }`}
+              className={`icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8 ${user_type === "agent" ? "d-none" : ""
+                }`}
             ></i>
             <span className="text-uppercase font-size-3 font-weight-bold text-white">
               <h3 className="font-size-6 mb-0 text-capitalize text-white">
@@ -187,9 +186,8 @@ export default function PartnerDetails({ setLoginCondition }) {
         }
       >
         <div
-          className={`container${
-            user_type === "admin" || user_type === "agent" ? "-fluid" : ""
-          }`}
+          className={`container${user_type === "admin" || user_type === "agent" ? "-fluid" : ""
+            }`}
         >
           <div className="row text-left mt-5 pt-0">
             <div className="col-12 order-2 order-xl-1">
@@ -388,8 +386,8 @@ export default function PartnerDetails({ setLoginCondition }) {
                                     className="company_logo"
                                     src={
                                       data.profile_image === null ||
-                                      !data.profile_image ||
-                                      data.profile_image === undefined
+                                        !data.profile_image ||
+                                        data.profile_image === undefined
                                         ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                         : data.profile_image
                                     }
@@ -442,23 +440,21 @@ export default function PartnerDetails({ setLoginCondition }) {
                                     {(data.address ||
                                       data.city ||
                                       data.state) && (
-                                      <span
-                                        className="font-size-3 text-smoke  mr-7 text-capitalize"
-                                        title="Current Location"
-                                      >
-                                        <img
-                                          className="mr-1"
-                                          height={"16px"}
-                                          src="image/icons/marker.svg"
-                                          alt="Location"
-                                        />
-                                        {`${data.address} ${
-                                          data.city ? " , " + data.city : ""
-                                        } ${
-                                          data.state ? " , " + data.state : ""
-                                        }`}
-                                      </span>
-                                    )}
+                                        <span
+                                          className="font-size-3 text-smoke  mr-7 text-capitalize"
+                                          title="Current Location"
+                                        >
+                                          <img
+                                            className="mr-1"
+                                            height={"16px"}
+                                            src="image/icons/marker.svg"
+                                            alt="Location"
+                                          />
+                                          {`${data.address} ${data.city ? " , " + data.city : ""
+                                            } ${data.state ? " , " + data.state : ""
+                                            }`}
+                                        </span>
+                                      )}
                                   </div>
                                   <hr className="my-3" />
                                   {!data.email || user_type === "user" ? (
@@ -472,9 +468,9 @@ export default function PartnerDetails({ setLoginCondition }) {
                                         data.contact_no !== (0 || "0") && (
                                           <Link
                                             className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
-                                            to={`tel:${data.contact_no}`}
+                                            to={`tel:+${data.contact_no}`}
                                           >
-                                            <BiPhoneCall className="text-secondary font-size-5 mr-2" />
+                                            <BiPhoneCall className="font-size-5 mr-2" />
                                             {data.contact_no}
                                           </Link>
                                         )}

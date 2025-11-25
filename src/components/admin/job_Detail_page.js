@@ -252,7 +252,7 @@ function JobDetailpageAdmim(props) {
                     {jobData.contact_no_other && (
                       <Link
                         className="text-dark font-size-5 w-100"
-                        to={`tel:${jobData.contact_no_other}`}
+                        to={`tel:+${jobData.contact_no_other}`}
                       >
                         <BiPhoneCall className="text-primary font-size-5" />
                         {jobData.contact_no_other}
@@ -791,7 +791,7 @@ function JobDetailpageAdmim(props) {
                                   {jobData.contact_no_other && (
                                     <Link
                                       className="text-dark font-size-5 w-100"
-                                      to={`tel:${jobData.contact_no_other}`}
+                                      to={`tel:+${jobData.contact_no_other}`}
                                     >
                                       <BiPhoneCall className="text-primary font-size-5" />
                                       {jobData.contact_no_other}

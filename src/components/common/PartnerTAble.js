@@ -279,7 +279,7 @@ export default function PartnerTAble(props) {
                                                             <div className="font-size-3 font-weight-normal mb-0">
                                                             <Link
                                                                     className="text-dark"
-                                                                    to={`tel:${data.contact_no}`}
+                                                                    to={`tel:+${data.contact_no}`}
                                                                     title={data.contact_no}
                                                                 >
                                                                     {(data.contact_no && data.contact_no !== "0")

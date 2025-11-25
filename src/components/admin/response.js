@@ -1029,7 +1029,7 @@ function JobResponse(props) {
                                         >
                                           <Link
                                             className="text-dark"
-                                            to={`tel:${res.contact_no}`}
+                                            to={`tel:+${res.contact_no}`}
                                           >
                                             {res.contact_no &&
                                               `+${res.contact_no}`}

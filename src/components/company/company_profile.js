@@ -176,7 +176,7 @@ function CompanyProfileDetail(props) {
             <span className="text-uppercase font-size-3 font-weight-bold text-white">
               <h3 className="font-size-6 mb-0 text-capitalize text-white">
                 {employerData?.company_name
-                  ? employerData?.company_name + " (Company)"
+                  ? employerData?.company_name + " (Employer)"
                   : ""}
               </h3>
             </span>
@@ -297,8 +297,8 @@ function CompanyProfileDetail(props) {
                       ) : null}
                     </div>
                     <Link
-                      className="text-dark font-size-5 w-100"
-                      to={`tel:${employerData?.contact_no}`}
+                      className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
+                      to={`tel:+${employerData?.contact_no}`}
                     >
                       <BiPhoneCall className="text-primary font-size-5" />
                       {employerData?.contact_no}
@@ -881,16 +881,16 @@ function CompanyProfileDetail(props) {
                                     </div>
                                     <Link
                                       className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
-                                      to={`tel:${employerData?.contact_no}`}
+                                      to={`tel:+${employerData?.contact_no}`}
                                     >
-                                      <BiPhoneCall className="text-secondary font-size-5 mr-2" />
+                                      <BiPhoneCall className=" font-size-5 mr-2" />
                                       {employerData?.contact_no}
                                     </Link>
                                     {employerData.secondary_contact_no && <Link
                                       className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
-                                      to={`tel:${employerData?.secondary_contact_no}`}
+                                      to={`tel:+${employerData?.secondary_contact_no}`}
                                     >
-                                      <BiPhoneCall className="text-secondary font-size-5 mr-2" />
+                                      <BiPhoneCall className=" font-size-5 mr-2" />
                                       {employerData?.secondary_contact_no}
                                     </Link>}
                                   </div>

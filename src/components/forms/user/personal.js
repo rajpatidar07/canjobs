@@ -114,9 +114,7 @@ function PersonalDetails(props) {
           ? "Mobile number is required"
           : value.length < 10
             ? "Mobile number should be more than 10 digits"
-            : value.length > 13
-              ? "Mobile no should be of 13 digits"
-              : "",
+            :  "",
     ],
     interested_in_id: user_type === "user"
       ? null
@@ -543,7 +541,7 @@ function PersonalDetails(props) {
                       htmlFor="contact_no"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Mobile Number: <span className="text-danger">*</span>
+                      Mobile Number: <span className="text-danger">*</span> <small>Add mobile no. with country code without +</small>
                     </label>
                     <div className="input-group">
                       {/* <span
@@ -614,7 +612,7 @@ function PersonalDetails(props) {
                       htmlFor="other_contact_no"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Alternate  Mobile Number:{/* <span className="text-danger">*</span>*/}
+                      Alternate  Mobile Number:{/* <span className="text-danger">*</span>*/} <small>Add mobile no. with country code without +</small>
                     </label>
                     <input
                       type="number"
@@ -725,13 +723,13 @@ function PersonalDetails(props) {
                       setState={setState}
                       page={"description"}
                     /> */}
-                     <SignatureTextEditor
-                                          name="description"
-                                          state={state.description || ""}
-                                          setState={setState}
-                                          placeholder="Enter description here"
-                                          id="description"
-                                        />
+                    <SignatureTextEditor
+                      name="description"
+                      state={state.description || ""}
+                      setState={setState}
+                      placeholder="Enter description here"
+                      id="description"
+                    />
                     {/*----ERROR MESSAGE FOR GENDER----*/}
                     {errors.description && (
                       <span

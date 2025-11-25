@@ -309,7 +309,7 @@ function Addadmin(props) {
                 htmlFor="contact_no"
                 className="font-size-4 text-black-2  line-height-reset"
               >
-                Contact No <span className="text-danger">*</span>
+                Contact No <span className="text-danger">*</span> <small>Add mobile no. with country code without +</small>
               </label>
               <input
                 type="number"

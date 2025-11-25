@@ -71,7 +71,7 @@ export default function ContactPage(props) {
                         <b>Address</b>: { }
                       </p>
                       <p className="card-text">
-                        <b>Phone</b>: <Link className="text-decoration-none text-dark" to={`tel:${adminData?.contact_no}`}>{adminData?.contact_no || "N/A"}</Link>
+                        <b>Phone</b>: <Link className="text-decoration-none text-dark" to={`tel:+${adminData?.contact_no}`}>{adminData?.contact_no || "N/A"}</Link>
                       </p>
                       <p className="card-text">
                         <b>Email</b>:<Link className="text-decoration-none text-dark" to={`mailto:${adminData?.email}`}> {adminData?.email || "N/A"}</Link>
@@ -97,7 +97,7 @@ export default function ContactPage(props) {
                     <div className="card-body">
                       <h5 className="card-title mb-2">Canada Office</h5>
                       <p className="card-text">
-                        <b>Phone</b>: <Link className="text-decoration-none text-dark" to={`tel:+1-403-888-530`}> +1-403-888-530</Link>
+                        <b>Phone</b>: <Link className="text-decoration-none text-dark" to={`tel:++1-403-888-530`}> +1-403-888-530</Link>
                       </p>
                       <p className="card-text">
                         <b>Email</b>:<Link className="text-decoration-none text-dark" to={`mailto:info@canpathways.ca`}> info@canpathways.ca  </Link>

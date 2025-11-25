@@ -1003,7 +1003,7 @@ const StudentProfile = (props) => {
                                                                     <div>
                                                                         <Link
                                                                             className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
-                                                                            to={`tel:${PersonalDetail.contact_no}`}
+                                                                            to={`tel:+${PersonalDetail.contact_no}`}
                                                                         >
                                                                             <BiPhoneCall className="font-size-3 mr-4" />
                                                                             {PersonalDetail.contact_no}

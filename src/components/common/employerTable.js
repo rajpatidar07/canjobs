@@ -475,7 +475,7 @@ export default function EmployerTable(props) {
 
                               <Link
                                 className="text-dark"
-                                to={`tel:${empdata.contact_no}`}
+                                to={`tel:+${empdata.contact_no}`}
                               >
                                 +{empdata.contact_no}
                               </Link>
@@ -490,7 +490,7 @@ export default function EmployerTable(props) {
                                   <Link
                                     className="text-dark"
                                     title={empdata.contact_no_other}
-                                    to={`tel:${empdata.contact_no_other}`}
+                                    to={`tel:+${empdata.contact_no_other}`}
                                   >
                                     +{empdata.contact_no_other}
                                   </Link>

@@ -288,7 +288,7 @@ export default function AdminTable({
                         {admin.contact_no === null ? null : (
                           <Link
                             className="font-weight-normal  font-size-3 text-gray"
-                            to={`tel:${admin.contact_no}`}
+                            to={`tel:+${admin.contact_no}`}
                             title={admin.contact_no}>
                             +{admin.contact_no}
                           </Link>

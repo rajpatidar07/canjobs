@@ -86,7 +86,7 @@ export default function ExecutiveBox({
                       </p>
                       <p className="text-break font-size-3 m-0 text-capitalize">
                         <Link
-                          to={`tel:${data.contact_no}`}
+                          to={`tel:+${data.contact_no}`}
                           className="text-info"
                         >
                           {data.contact_no && `+${data.contact_no}`}

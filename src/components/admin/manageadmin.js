@@ -360,7 +360,7 @@ function ManageAdmin() {
                           <div>
                             <Link
                               className="mx-2 font-size-3 text-break btn btn-outline-secondary btn-rounded "
-                              to={`tel:${managerData.contact_no}`}
+                              to={`tel:+${managerData.contact_no}`}
                             >
                               <BiPhoneCall className="font-size-3 mr-4" />
                               {managerData.contact_no}

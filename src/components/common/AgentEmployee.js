@@ -764,7 +764,7 @@ function AgentsEmployee(props) {
                                     +
                                     <Link
                                       className="text-dark font-size-3"
-                                      to={`tel:${empdata.contact_no}`}
+                                      to={`tel:+${empdata.contact_no}`}
                                     >
                                       {empdata.contact_no}
                                     </Link>

@@ -648,7 +648,7 @@ export default function LimiaStatusTable(props) {
                                     <p className="font-size-3 font-weight-normal m-0">
                                       <Link
                                         className="text-dark"
-                                        to={`tel:${res.contact_no}`}
+                                        to={`tel:+${res.contact_no}`}
                                       >
                                         {res.contact_no &&
                                           res.contact_no !== "0"

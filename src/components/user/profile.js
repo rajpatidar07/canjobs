@@ -291,7 +291,7 @@ const UserProfile = (props) => {
                                 />
                                 <Link
                                   className="text-dark"
-                                  to={`tel:${PersonalDetail.contact_no}`}
+                                  to={`tel:+${PersonalDetail.contact_no}`}
                                 >
                                   {PersonalDetail.contact_no}
                                 </Link>

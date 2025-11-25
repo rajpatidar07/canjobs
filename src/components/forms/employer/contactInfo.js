@@ -58,9 +58,7 @@ function ContactInfo(props) {
       (v) =>
         !v || v.trim() === ""
           ? "Phone no is required"
-          : v.length !== 13
-            ? "Mobile no should be of 13 digits"
-            : "",
+          : "",
     ],
     designation: [
       (v) =>
@@ -104,9 +102,7 @@ function ContactInfo(props) {
       (v) =>
         !v || v.trim() === ""
           ? "Phone no is required"
-          : v.length !== 13
-            ? "Mobile no should be of 13 digits"
-            : "",
+          : "",
     ],
     secondary_designation: [
       (v) =>
@@ -370,6 +366,7 @@ function renderPrimaryFields(state, errors, onInputChange) {
             className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
           >
             Other Contact No:
+             <small>Add mobile no. with country code without +</small>
           </label>
           <input
             maxLength={13}

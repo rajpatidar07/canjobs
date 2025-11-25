@@ -523,7 +523,7 @@ export default function VisaTable(props) {
                               +
                               <Link
                                 className="text-dark"
-                                to={`tel:${empdata.contact_no}`}
+                                to={`tel:+${empdata.contact_no}`}
                               >
                                 {empdata.contact_no}
                               </Link>
