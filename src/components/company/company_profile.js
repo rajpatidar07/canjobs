@@ -867,23 +867,22 @@ function CompanyProfileDetail(props) {
                                         <BsEnvelope className="text-secondary font-size-5 mr-2" />
                                         {employerData?.secondary_email}
                                       </Link>}
-                                      {user_type === "admin" ||
-                                        props.self === "no" ? (
-                                        <CustomButton
-                                          title={"Send Custom Email"}
-                                          className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                                        /*Functionalities have to be done. */
-                                        >
-                                          {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
-                                          <RiMailSendLine />
-                                        </CustomButton>
-                                      ) : null}
+                                      {user_type === "admin" || props.self === "no"
+                                        ? (
+                                          <CustomButton
+                                            title={"Send Custom Email"}
+                                            className="font-size-4 rounded-3 btn-primary py-0 d-none"
+                                          /*Functionalities have to be done. */
+                                          >
+                                            {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
+                                            <RiMailSendLine />
+                                          </CustomButton>
+                                        ) : null}
                                     </div>
                                     <Link
                                       className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
-                                      to={`tel:+${employerData?.contact_no}`}
-                                    >
-                                      <BiPhoneCall className=" font-size-5 mr-2" />
+                                      to={`tel:+${employerData?.contact_no}`}>
+                                      <BiPhoneCall className="font-size-5 mr-2" />
                                       {employerData?.contact_no}
                                     </Link>
                                     {employerData.secondary_contact_no && <Link

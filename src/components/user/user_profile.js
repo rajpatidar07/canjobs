@@ -114,6 +114,7 @@ const NewUserProfile = (props) => {
   // let id = localStorage.getItem("employee_id");
   const name = localStorage.getItem("name");
   const employeeId = eid;
+  
   /*Function to get user Data */
   const UserData = async () => {
     try {
@@ -159,6 +160,7 @@ const NewUserProfile = (props) => {
       console.log(err);
     }
   };
+
   /*Function to get Lmia */
   const getLimaOfUser = async () => {
     try {
@@ -207,7 +209,8 @@ const NewUserProfile = (props) => {
       setIsLoading(false);
     }
   };
-  /*Function to Geyt applied job data */
+
+  /*Function to Get applied job data */
   const AppliedJob = async () => {
     try {
       const applied = await EmployeeAppliedJob(employeeId);
@@ -222,6 +225,7 @@ const NewUserProfile = (props) => {
   };
   const params = new URLSearchParams(window.location.search);
   const transactionId = params.get("payment_intent");
+
   /*Render function to get user Data */
   useEffect(() => {
     if (appliedJob) {
@@ -263,6 +267,7 @@ const NewUserProfile = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiCall, eid, docParentId, docId, TimeLineId, notes, agreement, location.key]);
+
   /*Function to See uploaded resume */
   const handleViewResume = (pdfUrl) => {
     window.open(`/userpdf?pdfUrl=${encodeURIComponent(pdfUrl)}`, "_blank");
@@ -281,6 +286,7 @@ const NewUserProfile = (props) => {
       } ${months === 1 ? months + " month" : months > 1 ? months + " months" : ""
       }`;
   };
+
   /*function to change applicants status */
   const OnStatusChange = async (e) => {
     // e.preventDefault()
@@ -327,22 +333,22 @@ const NewUserProfile = (props) => {
     const id = employee_id;
     window.open(`/resume/${id}`, "_blank");
   };
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://ringcentral.github.io/ringcentral-embeddable-voice/adapter.js";
-    script.async = true;
-    script.onload = () => {
-      // Once adapter is loaded
-      window.RCAdapter = new window.RingCentralEmbeddableVoiceAdapter({
-        // optional settings
-        enableAnalytics: true,
-        appName: "Canpathwaysjobs",
-      });
-    };
-    document.body.appendChild(script);
 
-    return () => document.body.removeChild(script);
-  }, []);
+  // useEffect(() => {
+  //   const script = document.createElement("script");
+  //   script.src = "https://ringcentral.github.io/ringcentral-embeddable-voice/adapter.js";
+  //   script.async = true;
+  //   script.onload = () => {
+  //     // Once adapter is loaded
+  //     window.RCAdapter = new window.RingCentralEmbeddableVoiceAdapter({
+  //       // optional settings
+  //       enableAnalytics: true,
+  //       appName: "Canpathwaysjobs",
+  //     });
+  //   };
+  //   document.body.appendChild(script);
+  //   return () => document.body.removeChild(script);
+  // }, []);
 
   return (
     /*---- Employee Profile Details Page ----*/

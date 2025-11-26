@@ -863,8 +863,8 @@ function ConsultationTable(props) {
                               <span className="text-gray px-2">
                                 <FaEye />
                               </span>
-                            </button> :
-                              <>
+                            </button>
+                              : <>
                                 <input
                                   type="file"
                                   name="document"
@@ -879,27 +879,28 @@ function ConsultationTable(props) {
                                   className="mt-5"
                                   htmlFor={`document-${item.id}`}
                                   style={{ cursor: "pointer" }}
-                                  title="Upload document"
-                                >
+                                  title="Upload document">
                                   <span className="fas fa-upload text-gray"></span>
                                 </label>
                               </>}
                           </td>
-                          <td className={""} style={{ minWidth: "150px" }}>  <button
-                            className="btn btn-outline-info action_btn "
-                            style={{
-                              fontSize: "10px",
-                              color: "red"
-                            }}
-                            type="button"
-                            onClick={() => {
-                              setDeleteAlertData(item)
-                              setDeleteAlert(true)
-                            }
-                            }
-                            title="Delete Consultation">
-                            <FaTrash />
-                          </button></td>
+                          <td className={""} style={{ minWidth: "150px" }}>
+                            <button
+                              className="btn btn-outline-info action_btn "
+                              style={{
+                                fontSize: "10px",
+                                color: "red"
+                              }}
+                              type="button"
+                              onClick={() => {
+                                setDeleteAlertData(item)
+                                setDeleteAlert(true)
+                              }
+                              }
+                              title="Delete Consultation">
+                              <FaTrash />
+                            </button>
+                          </td>
                         </tr>
                       ))
                     )}
@@ -907,7 +908,6 @@ function ConsultationTable(props) {
                 </table>
               )}
             </form>
-
             <SAlert
               show={deleteAlert}
               title={deleteAlertData?.applicant_name}

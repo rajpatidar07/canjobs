@@ -3012,7 +3012,7 @@ export const SendEmail = async (data, FileList, url) => {
       if (file) formData.append(`attachments[${i}]`, file);
     });
   }
-  console.log(FileList, formData)
+  // console.log(FileList, formData)
   const response = await axios.post(`${API_URL}sendEmailTest`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",

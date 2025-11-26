@@ -402,7 +402,7 @@ const ManageConsultation = () => {
               // skill={props.skill}
               editEmployee={editEmployee}
               // job_id={props.job_id}
-              // self={"yes"}
+              self={"all"}
               // status={"0"}
               pageName={"consultation"}
               pageNo={pageNo}

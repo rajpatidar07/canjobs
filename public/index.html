@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <link rel="icon" href="image/favicon.png" />
@@ -52,12 +51,10 @@
   <!-- Vendor stylesheets  -->
   <link rel="stylesheet" href="css/main.css" />
 </head>
-
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
   <!-- <div id="pdf-div" style="width: 100%; height: 100vh;"></div> -->
-
   <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -84,8 +81,19 @@
 <!-- <script src="js/custom.js"></script> -->
 <script type="text/javascript" src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
 <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-<script src="https://ringcentral.github.io/ringcentral-embeddable-voice/adapter.js"></script>
-
+<script>
+  const userType = localStorage.getItem("userType"); // or get from your auth response
+  if (userType === "admin") {
+    const script = document.createElement("script");
+    script.src = "https://ringcentral.github.io/ringcentral-embeddable-voice/adapter.js";
+    script.async = true;
+    script.onload = () => {
+      console.log("RingCentral Adapter Loaded for admin");
+    };
+    document.body.appendChild(script);
+  } else {
+    console.log("RingCentral adapter not loaded for non-admin users");
+  }
+</script>
 <!-- Import WebViewer as a script tag -->
-
 </html>
