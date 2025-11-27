@@ -384,7 +384,7 @@ export default function JobTable(props) {
     { key: "job_title", label: "Job Title", sticky: true },
 
     // Add Job Type & Address if not on Dashboard
-    ...(props.heading !== "Dashboard"
+    ...(props.heading !== "Dashboard" && user_type !== "user" && user_type !== "company"
       ? [
         { key: "Note", label: "Note", sticky: true },
         { key: "job_type", label: "Job Type" },
@@ -739,7 +739,7 @@ export default function JobTable(props) {
                               </div>
                             </div>
                           </td>
-                          {props.heading === "Dashboard" ? (
+                          {props.heading === "Dashboard" || user_type === "user" || user_type === "company" ? (
                             ""
                           ) : <td className="  sticky_col1 py-5  text-capitalize"
                             style={{
@@ -759,7 +759,7 @@ export default function JobTable(props) {
                               </span>
                             </Link>
                           </td>}
-                          {props.heading === "Dashboard" ? null : (
+                          {props.heading === "Dashboard" || user_type === "user" || user_type === "company" ? null : (
                             <td className=" text-capitalize  py-5"
                               title={job.job_type}>
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">

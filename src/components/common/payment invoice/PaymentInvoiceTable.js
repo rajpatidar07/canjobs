@@ -246,7 +246,7 @@ export default function PaymentInvoiceTable(props) {
                                         </button>
                                         <button
                                             type="button"
-                                            className="btn btn-outline-info action_btn"
+                                            className={item.added_type === "uploaded_invoice" ? "d-none" : "btn btn-outline-info action_btn"}
                                             onClick={() => {
                                                 props.setShowReminderScheduleModal(true);
                                                 props.setSingleInvoiceData(item)

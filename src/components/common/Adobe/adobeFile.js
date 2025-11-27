@@ -89,7 +89,8 @@ const AdobePDFViewer = ({ url, data, userId, commentsList, selectedMentionAdmin,
           },
           url,
           data,
-          userType
+          userType,
+          page
         );
         const eventOptions = {
           listenOn: [

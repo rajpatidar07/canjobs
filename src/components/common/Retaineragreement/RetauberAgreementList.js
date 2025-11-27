@@ -465,7 +465,7 @@ export default function RetauberAgreementList({
                           </button>
                           <button
                             type="button"
-                            className="btn btn-outline-info action_btn"
+                            className={data.added_type === "uploaded_agreement"?"d-none":"btn btn-outline-info action_btn"}
                             onClick={() => {
                               setShowReminderScheduleModal(true);
                               setAgreementData(data)

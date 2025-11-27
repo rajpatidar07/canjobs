@@ -45,9 +45,9 @@ export default function CommonApplicatTypePage() {
   const [folderApiCall, setFolderApiCall] = useState(false);
   const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
   const [applicantTypeList, setApplicantTypeList] = useState([]);
-  const [main, setMain] = useState(sId || state.applicantType || localApplicantTypeId);
+  const [main, setMain] = useState(sId || state.applicantType || localApplicantTypeId || "1");
   const [sub, setSub] = useState(sCId || state.applicantTypeChild || localApplicantTypeChildId);
-  const [applicantTypeId, setApplicantTypeId] = useState(sId || state.applicantType || localApplicantTypeId);
+  const [applicantTypeId, setApplicantTypeId] = useState(sId || state.applicantType || localApplicantTypeId ||"1");
   const [applicantTypeChildId, setApplicantTypeChildId] = useState(sCId || state.applicantTypeChild || localApplicantTypeChildId);
   const [applicantTypeFolderId, setApplicantTypeFolderId] = useState(state.folderId || localApplicantTypeFolderId);
   const [applicantTypeIdForApi, setApplicantTypeIdForApi] = useState("");
@@ -76,7 +76,7 @@ export default function CommonApplicatTypePage() {
       setSearchError("");
     }
   };
-  
+
   // Handle tab switch and task assignment
   useEffect(() => {
     if (taskIdParam) {

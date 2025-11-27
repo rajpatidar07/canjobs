@@ -1,21 +1,13 @@
 import React from "react";
+import ConvertTime from "../Common function/ConvertTime";
 
 export default function ChatMessage({ message, isSender, isHighlighted }) {
-  const formattedTime = new Date(message.created_at).toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
 
   return (
     <div
-      className={`d-flex mb-3 ${
-        isSender ? "justify-content-end" : "justify-content-start"
-      }`}
-    >
+      className={`d-flex mb-3 ${isSender ? "justify-content-end" : "justify-content-start"}`}>
       <div
-        className={`p-3 shadow-sm ${
-          isSender ? "text-white" : "text-dark bg-light"
-        }`}
+        className={`p-3 shadow-sm ${isSender ? "text-white" : "text-dark bg-light"}`}
         style={{
           backgroundColor: isSender ? "#FA474A" : "#f1f1f1",
           maxWidth: "75%",
@@ -38,7 +30,7 @@ export default function ChatMessage({ message, isSender, isHighlighted }) {
             marginTop: "4px",
           }}
         >
-          {formattedTime}
+          {ConvertTime({ _date: message.created_at, format: "h:mm A" })}
         </div>
       </div>
     </div>

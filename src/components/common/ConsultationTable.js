@@ -858,8 +858,7 @@ function ConsultationTable(props) {
                                 setDocumentData(item);
                                 GetDocumentPdf(item);
                               }}
-                              title="View Document"
-                            >
+                              title="View Document">
                               <span className="text-gray px-2">
                                 <FaEye />
                               </span>

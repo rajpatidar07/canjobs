@@ -12,7 +12,6 @@ function ActivityLog(props) {
         <AdminHeader heading="Activity Log" />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading="Activity Log" />
-        {/* <!--Add Adgent Details Modal --> */}
         <div className={"dashboard-main-container mt-14"} id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">

@@ -373,7 +373,12 @@ function CompanyProfileDetail(props) {
                       Jobs
                     </Link>
                   </li>
-                  <li className="tab-menu-items nav-item">
+                  <li className={
+                    user_type === "company" ||
+                      user_type === "agent" ||
+                      user_type === "user"
+                      ? "d-none"
+                      : "tab-menu-items nav-item"}>
                     <Link
                       className={
                         TabActive === "lmia"
@@ -1133,7 +1138,7 @@ function CompanyProfileDetail(props) {
                           role="group"
                           aria-label="Basic example"
                         >
-                          <button
+                          {user_type === "admin" && <button
                             type="button"
                             className={
                               `${selectedPaymentTab === "payment_records"
@@ -1146,8 +1151,8 @@ function CompanyProfileDetail(props) {
                             title="payment_records"
                           >
                             Payment records
-                          </button>
-                          <button
+                          </button>}
+                          {user_type === "admin" && <button
                             type="button"
                             className={
                               `${selectedPaymentTab === "invoice"
@@ -1161,7 +1166,7 @@ function CompanyProfileDetail(props) {
                             title="invoice"
                           >
                             Invoice
-                          </button>
+                          </button>}
                         </div>
                       </div>
                       {user_type === "admin" && selectedPaymentTab === "invoice" ? (

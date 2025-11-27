@@ -49,7 +49,7 @@ class ViewSDKClient {
     });
   }
 
-  previewFile(divId, viewerConfig, url, data, userType) {
+  previewFile(divId, viewerConfig, url, data, userType, page) {
     const fileExtension = data?.name?.split(".").pop().toLowerCase();
     const config = {
       clientId: client_id,
@@ -65,10 +65,9 @@ class ViewSDKClient {
       ...viewerConfig,
       embedMode: window.AdobeDC.View.Enum.EmbedMode.INLINE, // Display inline
       showAnnotationTools:
-        userType === "admin" ||
-          userType === "agent"
-          ? true
-          : false, // Show annotation tools
+        page === "consultation" || page === "agreement" || page === "invoice" || userType === "company" || userType === "user"
+          ? false
+          : true, // Show annotation tools
       showDownloadPDF: true, // Show download PDF option
       showPrintPDF: true, // Show print PDF option
       enableFormFilling: true, // Enable form filling
@@ -102,7 +101,7 @@ class ViewSDKClient {
           id: data.id,
           parentReference: data.parentReference,
         },
-    },
+      },
       viewerConfig
     );
     return previewFilePromise;
