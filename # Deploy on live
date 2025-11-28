@@ -1,21 +1,9 @@
 Today's Update
 Date:28/11/25.
-1. Added a condition to hide the note box in the job list on the employer details page for both employers and candidates.
-2. Removed the payment invoice option from the Payment tab on the Employer Details page for the Employers module.
+1. Added a condition to hide the note box in the job list on the employer details page for both employers and candidates .
+2. Removed the payment invoice option from the Payment tab on the Employer Details page for the Employers module .
 
 # Deploy on live
-The latest deployment has been completed for these points. Please also add the country code to every contact number you have added, as well as any numbers you add in the future, to enable easy international calling. Without the country code, RingCentral is not able to call the actual candidate, employer, admin, or agent.
-Also, before making calls, you need to log in with the specific credentials 
-email - healthcare@canpathways.com 
-password Qwerty@2024
-and complete the OTP verification from @Bir Karan Singh Canpathways , which is mandatory the first time.
-1. Added a chatbot for the user, admin, and partner modules.
-2. Added a global search feature for all task chat replies.
-3. Added RingCentral integration to call directly from the portal to the contact numbers of the admin, agent, candidate, or employer.
-4. Fixed the issue where the portal was showing an incorrect email when navigating from a notification to a specific candidate or employer.
-5. Set the schedule for the retainer agreement signing and the payment invoice reminders.
-Please review
-
 Date:27/11/25
 1. Added a chatbot for the user, admin, and partner modules.
 2. Added a global search feature for all task chat replies.

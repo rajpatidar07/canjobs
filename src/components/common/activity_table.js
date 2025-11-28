@@ -9,18 +9,18 @@ export default function ActivityTable(props) {
   /*Show modal states */
   // let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
-  const [hide /*, sethide*/] = useState(props.hide || false);
-  const [user_id /*, setuser_id*/] = useState(props.user_id);
-  const [user_type /*, setuser_type*/] = useState(props.user_type);
-  const [action_id /*, setaction_id*/] = useState(props.action_id);
-  const [action_type /*, setaction_type*/] = useState(props.action_type);
-  const [activityData, setactivityData] = useState([]);
+  const [hide /*, setHide*/] = useState(props.hide || false);
+  const [user_id /*, setUserId*/] = useState(props.user_id);
+  const [user_type /*, setUserType*/] = useState(props.user_type);
+  const [action_id /*, setActionId*/] = useState(props.action_id);
+  const [action_type /*, setActionType*/] = useState(props.action_type);
+  const [activityData, setActivityData] = useState([]);
   const [columnName, setColumnName] = useState("created_at");
   const [sortOrder, setSortOrder] = useState("DESC");
   /*Pagination states */
   // const [status, setStatus] = useState(props.self === "yes" ? -1 : 4);
-  const [callapi, setCallApi] = useState(false);
-  const [page, setpage] = useState(props.pageNo || 1);
+  const [callApi, setCallApi] = useState(false);
+  const [page, setPage] = useState(props.pageNo || 1);
   const [totalData, setTotalData] = useState("");
   const [recordsPerPage] = useState(10);
   /*Pagination Calculation */
@@ -112,7 +112,7 @@ export default function ActivityTable(props) {
         props.filter_by_time,
         props.applicantType
       );
-      setactivityData(adata.data.data);
+      setActivityData(adata.data.data);
       setTotalData(adata.data.total_rows);
       setIsLoading(false);
     } catch (err) {
@@ -127,11 +127,11 @@ export default function ActivityTable(props) {
   /*Render function to get the Employer*/
   useEffect(() => {
     ActivityLog();
-    if (callapi === true) {
+    if (callApi === true) {
       setCallApi(false)
     }
     // eslint-disable-next-line
-  }, [page, callapi, props.filter_by_time, sortOrder,
+  }, [page, callApi, props.filter_by_time, sortOrder,
     columnName,]);
 
   /*Sorting Function */
@@ -197,7 +197,7 @@ export default function ActivityTable(props) {
         <Pagination
           nPages={nPages}
           currentPage={page}
-          setCurrentPage={setpage}
+          setCurrentPage={setPage}
           total={totalData}
           count={activityData?.length}
         />
