@@ -62,7 +62,19 @@ const AdminDashboard = ({ setLoginCondition }) => {
   // const [lmiaChartData, setLmiaChartData] = useState([]);
   // const [visaChartData, setVisaChartData] = useState([]);
   // State to manage sidebar visibility
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 768);
+
+  // State to manage mobile view
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  // Effect to handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // State to manage table visibility
   const [tables, setTables] = useState({
@@ -289,7 +301,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
 
       <div className="container-fluid">
         <div
-          className={"dashboard-main-container mt-12 mt-lg-12 row"}
+          className={"dashboard-main-container mt-5 mt-md-12 row"}
           id="dashboard-body"
         >
           <Link
@@ -308,10 +320,12 @@ const AdminDashboard = ({ setLoginCondition }) => {
           </Link>
           <div
             className={`container-fluid mt-5 ${
-              isSidebarOpen
-                ? "col-md-9 col-lg-9 col-sm-11"
+              isSidebarOpen && !isMobile
+                ? "col-md-9 col-lg-9 col-sm-12"
+                : isSidebarOpen
+                ? "col-md-12 col-lg-12 col-sm-11"
                 : "col-md-12 col-lg-12 col-sm-12"
-            }`}
+            } ${isMobile ? "bg-white" : ""}`}
           >
             {/* <!-- Summary count --> */}
             <div className="row mb-7 d-none">
@@ -527,10 +541,10 @@ const AdminDashboard = ({ setLoginCondition }) => {
 
             <div className="row">
               {/* Applicant's status */}
-              <div id="table0" className={"col-md-6"}>
+              <div id="table0" className={"col-12 col-md-6"}>
                 <div className="bg-white dashboard_card mb-7">
-                  <div className="d-flex justify-content-between p-5 align-items-center">
-                    <h3 className="font-size-5 px-3 m-0 ">
+                  <div className="d-flex flex-column flex-md-row justify-content-between p-2 p-md-5 align-items-start align-items-md-center">
+                    <h3 className="font-size-6 font-size-md-5 px-3 m-0 mb-3 mb-md-0">
                       Applicant's status
                     </h3>
                   </div>
@@ -547,10 +561,10 @@ const AdminDashboard = ({ setLoginCondition }) => {
                 </div>
               </div>
               {/* Applicant's type */}
-              <div id="table_0" className={"col-md-6"}>
+              <div id="table_0" className={"col-12 col-md-6"}>
                 <div className="bg-white dashboard_card mb-7">
-                  <div className="d-flex justify-content-between p-5 align-items-center">
-                    <h3 className="font-size-5 px-3 m-0 ">Applicant Type's</h3>
+                  <div className="d-flex flex-column flex-md-row justify-content-between p-2 p-md-5 align-items-start align-items-md-center">
+                    <h3 className="font-size-6 font-size-md-5 px-3 m-0 mb-3 mb-md-0">Applicant Type's</h3>
                   </div>
                   <div className="bg-white dashboard_card ">
                     {loadingType ? (
@@ -602,15 +616,15 @@ const AdminDashboard = ({ setLoginCondition }) => {
               {tables.jobTable ? (
                 <div
                   id="table1"
-                  className={openTable === 1 ? "col-md-12" : "col-md-6"}
+                  className={openTable === 1 ? "col-12" : "col-12 col-md-6"}
                 >
                   <div className="bg-white dashboard_card mb-7">
-                    <div className="d-flex justify-content-between p-5 align-items-center">
-                      <h3 className="font-size-5 px-3 m-0 ">
+                    <div className="d-flex flex-column flex-md-row justify-content-between p-2 p-md-5 align-items-start align-items-md-center">
+                      <h3 className="font-size-6 font-size-md-5 px-3 m-0 mb-3 mb-md-0">
                         Recently Added Jobs
                       </h3>
-                      <div className="d-flex justify-content-between p-0">
-                        <div className="select_div mr-5">
+                      <div className="d-flex flex-column flex-md-row justify-content-between p-0 w-100 w-md-auto">
+                        <div className="select_div mr-5 mb-2 mb-md-0">
                           <select
                             name="job"
                             value={job}
@@ -631,7 +645,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
                             </option>
                           </select>
                         </div>
-                        <div className="">
+                        <div className="mb-2 mb-md-0">
                           <Link
                             className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
                             to={"/job"}
@@ -670,15 +684,15 @@ const AdminDashboard = ({ setLoginCondition }) => {
               {tables.employeeTable ? (
                 <div
                   id="table4"
-                  className={openTable === 4 ? "col-md-12" : "col-md-6"}
+                  className={openTable === 4 ? "col-12" : "col-12 col-md-6"}
                 >
                   <div className="bg-white dashboard_card mb-7">
-                    <div className="d-flex justify-content-between p-5 align-items-center">
-                      <h3 className="font-size-5 px-3 m-0  ">
+                    <div className="d-flex flex-column flex-md-row justify-content-between p-2 p-md-5 align-items-start align-items-md-center">
+                      <h3 className="font-size-6 font-size-md-5 px-3 m-0 mb-3 mb-md-0">
                         Recently Added Candidates
                       </h3>
-                      <div className="d-flex justify-content-between p-0">
-                        <div className="select_div mr-5">
+                      <div className="d-flex flex-column flex-md-row justify-content-between p-0 w-100 w-md-auto">
+                        <div className="select_div mr-5 mb-2 mb-md-0">
                           <select
                             name="employee"
                             value={employee}
@@ -699,7 +713,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
                             </option>
                           </select>
                         </div>
-                        <div className="">
+                        <div className="mb-2 mb-md-0">
                           <Link
                             className="text-center btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
                             to={"/employee"}
@@ -737,15 +751,15 @@ const AdminDashboard = ({ setLoginCondition }) => {
               {tables.employerTable ? (
                 <div
                   id="table2"
-                  className={openTable === 2 ? "col-md-12" : "col-md-6"}
+                  className={openTable === 2 ? "col-12" : "col-12 col-md-6"}
                 >
                   <div className="bg-white dashboard_card mb-7">
-                    <div className="d-flex justify-content-between p-5 align-items-center">
-                      <h3 className="font-size-5 px-3 m-0  ">
+                    <div className="d-flex flex-column flex-md-row justify-content-between p-2 p-md-5 align-items-start align-items-md-center">
+                      <h3 className="font-size-6 font-size-md-5 px-3 m-0 mb-3 mb-md-0">
                         Recently Added Employer
                       </h3>
-                      <div className="d-flex justify-content-between p-0">
-                        <div className="select_div mr-5">
+                      <div className="d-flex flex-column flex-md-row justify-content-between p-0 w-100 w-md-auto">
+                        <div className="select_div mr-5 mb-2 mb-md-0">
                           <select
                             name="employer"
                             value={employer}
@@ -766,7 +780,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
                             </option>
                           </select>
                         </div>
-                        <div className="">
+                        <div className="mb-2 mb-md-0">
                           <Link
                             className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
                             to={"/employer"}
@@ -1155,22 +1169,27 @@ const AdminDashboard = ({ setLoginCondition }) => {
           </div>
           {/* <!--Mange Table sidebar  --> */}
           <div
-            className={` col-md-3 col-lg-3 col-sm-2 py-2 h-75vh  bg-white  ${
-              isSidebarOpen ? "" : " d-none"
+            className={` col-12 col-md-3 col-lg-3 col-sm-2 py-2 h-75vh zindex-999 bg-white  ${
+              !isMobile || isSidebarOpen ? "" : " d-none"
             }`}
           >
             <div
-              className={`position-fixed  ${isSidebarOpen ? " show" : ""}`}
-              style={{
-                transition: "width .5s",
-                width: "100%",
-                // zIndex: "9999",
+              className={isMobile ? `position-fixed bg-white ${isSidebarOpen ? " show" : ""}` : ""}
+              style={isMobile ? {
+                transition: "transform 0.5s",
+                width: "300px",
+                height: "100vh",
+                right: 0,
+                top: 0,
+                zIndex: "9999",
                 overflowY: "auto",
                 overflowX: "hidden",
-              }}
+                transform: isSidebarOpen ? "translateX(0)" : "translateX(100%)",
+                backgroundColor: "white",
+              } : {}}
             >
-              <div className="right_side">
-                <div className=" d-flex align-items-center p-3 px-5 justify-content-between">
+              <div className="right_side bg-white">
+                <div className="bg-white d-flex align-items-center p-3 px-5 justify-content-between">
                   <h4 className="font-size-5 font-weight-bold m-0 border-bottom text-uppercase px-5">
                     Manage Tables
                   </h4>
@@ -1180,7 +1199,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
                     onClick={() => setIsSidebarOpen(false)}
                   ></i>
                 </div>
-                <div className="row   px-5 ">
+                <div className="bg-white row   px-5 ">
                   {/* Sidebar */}
                   {isSidebarOpen && (
                     <div

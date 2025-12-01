@@ -38,7 +38,7 @@ import {
 import { FaRegUser } from "react-icons/fa";
 import { SiStudyverse } from "react-icons/si";
 // import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
-import { FaGear, FaPersonShelter } from "react-icons/fa6";
+import { FaGear, FaPersonShelter, FaXmark } from "react-icons/fa6";
 // import {
 //   AddApplicanTypeApi,
 //   DeleteApplicanTypeApi,
@@ -47,7 +47,7 @@ import { FaGear, FaPersonShelter } from "react-icons/fa6";
 // import TableInput from "../common/TableInput";
 // import SAlert from "../common/sweetAlert";
 // import { CiUser } from "react-icons/ci";
-const AdminSidebar = (props) => {
+const AdminSidebar = ({ heading, setPageHeading, toggleSidebar }) => {
   // const [isMenuOpen, setIsMenuOpen] = useState(
   //   localStorage.getItem("isMenuOpen")
   // );
@@ -71,7 +71,7 @@ const AdminSidebar = (props) => {
   useEffect(() => {
     // Keep parent open if a child is active
     // const activeChild = applicanttypedata.find(
-    //   (child) => child.title === props.heading
+    //   (child) => child.title === heading
     // );
     // if (activeChild) {
     //   setOpenParent(activeChild.parent_id);
@@ -79,7 +79,7 @@ const AdminSidebar = (props) => {
     if (apiCall === true) {
       setApiCall(false);
     }
-  }, [apiCall, props.heading]);
+  }, [apiCall, heading]);
 
   // const toggleChildren = (parentId, hasChildren) => {
   //   if (hasChildren) {
@@ -103,7 +103,7 @@ const AdminSidebar = (props) => {
     localStorage.setItem("admin_heading", title);
     localStorage.setItem("applicantType", "");
     localStorage.setItem("applicantTypeFolderId", "");
-    props.setPageHeading(title);
+    setPageHeading(title);
   };
   const liRefs = useRef([]);
 
@@ -119,13 +119,13 @@ const AdminSidebar = (props) => {
   //   }
   // };
   useEffect(() => {
-    if (props.heading) {
-      const activityLi = liRefs.current[props.heading];
+    if (heading) {
+      const activityLi = liRefs.current[heading];
       if (activityLi) {
         activityLi.scrollIntoView({ behavior: "smooth" });
       }
     }
-  }, [props.heading]);
+  }, [heading]);
   useEffect(() => {
     // getAllSlotsData();
     if (apiCall === true) {
@@ -253,11 +253,11 @@ const AdminSidebar = (props) => {
 
     const currentPath = location.pathname;
     const matchedHeading = pathToHeadingMap[currentPath];
-    if (matchedHeading && props.heading !== matchedHeading) {
-      // If your parent component controls `props.heading`, call a function to update it
+    if (matchedHeading && heading !== matchedHeading) {
+      // If your parent component controls `heading`, call a function to update it
       localStorage.removeItem("PageNo");
       localStorage.setItem("admin_heading", matchedHeading);
-      props.setPageHeading(matchedHeading);
+      setPageHeading(matchedHeading);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.key]);
@@ -297,6 +297,9 @@ const AdminSidebar = (props) => {
           <img src="image/logo-main-black.png" alt="" />
         </Link>
       </div>
+      <Link onClick={toggleSidebar} className="close-button text-dark d-lg-none d-flex justify-content-end">
+        <FaXmark />
+      </Link>
       <ul
         className="list-unstyled dashboard-layout-sidebar"
       // style={{
@@ -312,7 +315,7 @@ const AdminSidebar = (props) => {
               ref={(el) => (liRefs.current["Partner Dashboard"] = el)}
               className={
                 user_type === "agent" ?
-                  props.heading === "Partner Dashboard"
+                  heading === "Partner Dashboard"
                     ? "active"
                     : ""
                   : "d-none"
@@ -334,7 +337,7 @@ const AdminSidebar = (props) => {
               ref={(el) => (liRefs.current["Students"] = el)}
               className={
                 portal === "study"
-                  ? `${props.heading === "Students" ? "active" : ""}`
+                  ? `${heading === "Students" ? "active" : ""}`
                   : "d-none"
               }
             >
@@ -355,7 +358,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" || portal === "study"
               ? "d-none"
-              : props.heading === "Dashboard"
+              : heading === "Dashboard"
                 ? "active"
                 : ""
           }
@@ -375,7 +378,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" || portal === "study"
               ? "d-none"
-              : props.heading === "Task Dashboard"
+              : heading === "Task Dashboard"
                 ? "active"
                 : ""
           }
@@ -396,7 +399,7 @@ const AdminSidebar = (props) => {
             localStorage.getItem("portal") === "study"
               ? "d-none"
               : `
-          ${props.heading === "New Applicants" ? "active" : ""}`
+          ${heading === "New Applicants" ? "active" : ""}`
           }
         >
           <Link
@@ -417,7 +420,7 @@ const AdminSidebar = (props) => {
           className={
             localStorage.getItem("portal") === "study"
               ? "d-none"
-              : `${props.heading === "Manage Applicants" ? "active" : ""}`
+              : `${heading === "Manage Applicants" ? "active" : ""}`
           }
         >
           <Link
@@ -438,7 +441,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" || portal === "study"
               ? "d-none"
-              : `${props.heading === "Manage Employers" ? "active" : ""}`
+              : `${heading === "Manage Employers" ? "active" : ""}`
           }
         >
           <Link
@@ -456,7 +459,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" || portal === "study"
               ? "d-none"
-              : props.heading === "Manage Jobs"
+              : heading === "Manage Jobs"
                 ? "active"
                 : ""
           }
@@ -473,10 +476,10 @@ const AdminSidebar = (props) => {
         </li>
         <li
           ref={(el) => (liRefs.current["Manage Self Jobs"] = el)}
-          className={`d-none 
+          className={`d-none
              ${user_type === "agent" || portal === "study"
               ? "d-none"
-              : props.heading === "Manage Self Jobs"
+              : heading === "Manage Self Jobs"
                 ? "active"
                 : ""
             }`}
@@ -496,7 +499,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" || portal === "study"
               ? "d-none"
-              : props.heading === "Visa"
+              : heading === "Visa"
                 ? "active"
                 : ""
           }
@@ -516,7 +519,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" || portal === "study"
               ? "d-none"
-              : props.heading === "LMIA status"
+              : heading === "LMIA status"
                 ? "active"
                 : ""
           }
@@ -536,7 +539,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" || portal === "study"
               ? "d-none"
-              : props.heading === "Local Candidate"
+              : heading === "Local Candidate"
                 ? "active"
                 : ""
           }
@@ -556,7 +559,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" ||portal === "study"
               ? "d-none"
-              : props.heading === "PNP"
+              : heading === "PNP"
                 ? "active"
                 : ""
           }
@@ -583,7 +586,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" ||portal === "study"
               ? "d-none"
-              : props.heading === "PGWP"
+              : heading === "PGWP"
                 ? "active"
                 : ""
           }
@@ -610,7 +613,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" ||portal === "study"
               ? "d-none"
-              : props.heading === "WES"
+              : heading === "WES"
                 ? "active"
                 : ""
           }
@@ -637,7 +640,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" ||portal === "study"
               ? "d-none"
-              : props.heading === "ATIP"
+              : heading === "ATIP"
                 ? "active"
                 : ""
           }
@@ -664,7 +667,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" ||portal === "study"
               ? "d-none"
-              : props.heading === "Visitors Visa"
+              : heading === "Visitors Visa"
                 ? "active"
                 : ""
           }
@@ -691,7 +694,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" ||portal === "study"
               ? "d-none"
-              : props.heading === "Study Permit"
+              : heading === "Study Permit"
                 ? "active"
                 : ""
           }
@@ -718,7 +721,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" ||portal === "study"
               ? "d-none"
-              : props.heading === "Temporary Resident (Visiting , Studying , Working)"
+              : heading === "Temporary Resident (Visiting , Studying , Working)"
                 ? "active"
                 : ""
           }
@@ -745,7 +748,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" ||portal === "study"
               ? "d-none"
-              : props.heading === "Economic Immigration"
+              : heading === "Economic Immigration"
                 ? "active"
                 : ""
           }
@@ -772,7 +775,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" ||portal === "study"
               ? "d-none"
-              : props.heading === "Family Sponsorship"
+              : heading === "Family Sponsorship"
                 ? "active"
                 : ""
           }
@@ -800,7 +803,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" ||portal === "study"
               ? "d-none"
-              : props.heading === "Express Entry"
+              : heading === "Express Entry"
                 ? "active"
                 : ""
           }
@@ -827,7 +830,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" ||portal === "study"
               ? "d-none"
-              : props.heading === "Business VIsa"
+              : heading === "Business VIsa"
                 ? "active"
                 : ""
           }
@@ -855,7 +858,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" ||portal === "study"
               ? "d-none"
-              : props.heading === "Federal PR"
+              : heading === "Federal PR"
                 ? "active"
                 : ""
           }
@@ -883,7 +886,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" ||portal === "study"
               ? "d-none"
-              : props.heading === "Humanitarian and Compassionate Cases"
+              : heading === "Humanitarian and Compassionate Cases"
                 ? "active"
                 : ""
           }
@@ -913,7 +916,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" ||portal === "study"
               ? "d-none"
-              : props.heading === "Passport"
+              : heading === "Passport"
                 ? "active"
                 : ""
           }
@@ -943,7 +946,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" ||portal === "study"
               ? "d-none"
-              : props.heading === "Citizenship"
+              : heading === "Citizenship"
                 ? "active"
                 : ""
           }
@@ -973,7 +976,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" ||portal === "study"
               ? "d-none"
-              : props.heading === "Permanent Resident Cards"
+              : heading === "Permanent Resident Cards"
                 ? "active"
                 : ""
           }
@@ -1005,7 +1008,7 @@ const AdminSidebar = (props) => {
               key={item.id}
               className={`position-relative ${user_type === "agent" ||portal === "study"
                   ? "d-none"
-                  : props.heading === item.title
+                  : heading === item.title
                     ? "active"
                     : ""
                 }`}
@@ -1041,7 +1044,7 @@ const AdminSidebar = (props) => {
               className={`position-relative ${
                 user_type === "agent" ||portal === "study"
                   ? "d-none"
-                  : props.heading === item.title
+                  : heading === item.title
                   ? "active"
                   : ""
               }`}
@@ -1049,7 +1052,7 @@ const AdminSidebar = (props) => {
             >
               <div
                 className={`d-flex position-relative ${
-                  props.heading === item.title ? "active" : ""
+                  heading === item.title ? "active" : ""
                 }`}
               >
                 <Link
@@ -1198,7 +1201,7 @@ const AdminSidebar = (props) => {
           className={
             admin_type === "agent" || portal === "study"
               ? "d-none"
-              : props.heading === "Application types"
+              : heading === "Application types"
                 ? "active"
                 : ""
           }
@@ -1222,7 +1225,7 @@ const AdminSidebar = (props) => {
             // admin_type === "agent" || portal === "study"
             //   ? 
             "d-none"
-            // : props.heading === "Manage Payment"
+            // : heading === "Manage Payment"
             //   ? "active"
             //   : ""
           }
@@ -1245,7 +1248,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" || portal === "study"
               ? "d-none"
-              : props.heading === "Interview"
+              : heading === "Interview"
                 ? "active"
                 : ""
           }
@@ -1265,7 +1268,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" || portal === "study"
               ? "d-none"
-              : props.heading === "Manage Notes"
+              : heading === "Manage Notes"
                 ? "active"
                 : ""
           }
@@ -1286,7 +1289,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" || portal === "study"
               ? "d-none"
-              : props.heading === "Manager's Dashboard"
+              : heading === "Manager's Dashboard"
                 ? "active"
                 : ""
           }
@@ -1309,7 +1312,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" || portal === "study"
               ? "d-none"
-              : props.heading === "Manage Admin"
+              : heading === "Manage Admin"
                 ? "active"
                 : ""
           }
@@ -1331,7 +1334,7 @@ const AdminSidebar = (props) => {
           className={
             admin_type === "agent" || portal === "study"
               ? "d-none"
-              : props.heading === "Manage Partner"
+              : heading === "Manage Partner"
                 ? "active"
                 : ""
           }
@@ -1354,7 +1357,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" ||portal === "study"
               ? "d-none"
-              : props.heading === "Job Category"
+              : heading === "Job Category"
                 ? "active"
                 : ""
           }
@@ -1381,7 +1384,7 @@ const AdminSidebar = (props) => {
           className={
             user_type === "agent" ||portal === "study"
               ? "d-none"
-              : props.heading === "Filter List"
+              : heading === "Filter List"
                 ? "active"
                 : ""
           }
@@ -1407,7 +1410,7 @@ const AdminSidebar = (props) => {
           ref={(el) => (liRefs.current["Credentials"] = el)}
           className={
             admin_type === "super-admin"
-              ? props.heading === "Credentials"
+              ? heading === "Credentials"
                 ? "active"
                 : ""
               : "d-none"
@@ -1435,7 +1438,7 @@ const AdminSidebar = (props) => {
           className={
             admin_type === "agent" || portal === "study"
               ? "d-none"
-              : props.heading === "Manage Daily Pages"
+              : heading === "Manage Daily Pages"
                 ? "active"
                 : ""
           }
@@ -1457,7 +1460,7 @@ const AdminSidebar = (props) => {
           ref={(el) => (liRefs.current["Manage Daily Hourly Log"] = el)}
           className={`d-none ${admin_type === "agent" || portal === "study"
             ? "d-none"
-            : props.heading === "Manage Daily Hourly Log"
+            : heading === "Manage Daily Hourly Log"
               ? "active"
               : ""}`
           }
@@ -1480,7 +1483,7 @@ const AdminSidebar = (props) => {
           className={
             `d-none ${admin_type === "agent" || portal === "study"
               ? "d-none"
-              : props.heading === "Manage Consultation"
+              : heading === "Manage Consultation"
                 ? "active"
                 : ""}`
           }
@@ -1503,7 +1506,7 @@ const AdminSidebar = (props) => {
           className={
             admin_type === "agent" || portal === "study"
               ? "d-none"
-              : props.heading === "Setting"
+              : heading === "Setting"
                 ? "active"
                 : ""
           }

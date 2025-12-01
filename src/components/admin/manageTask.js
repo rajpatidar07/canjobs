@@ -151,10 +151,10 @@ export default function ManageTask() {
 
         <div className="dashboard-main-container mt-14" id="dashboard-body">
           <div className="container-fluid ">
-            <div className="row m-0">
+            <div className="row m-0 mt-8">
               {/* Search */}
               <div
-                className={"col px-1 form_group mb-3"}>
+                className={"col-12 col-md-4 col-lg-2 col-xl-2 px-1 form_group mb-3"}>
                 <p className="input_label">Search:</p>
                 <div className="input-group ">
                   <input
@@ -190,7 +190,7 @@ export default function ManageTask() {
                 </div>
                 <small className="text-danger">{searchError}</small>
               </div>
-              <div className="col px-1 form_group mb-3">
+              <div className="col-12 col-md-4 col-lg-2 col-xl-2 px-1 form_group mb-3">
                 <p className="input_label">Filter by Assign to admin:</p>
                 <SelectBox
                   Width={"yes"} options={adminList ? adminList.map((option) => ({
@@ -209,7 +209,7 @@ export default function ManageTask() {
                   type={"adminId"}
                 />
               </div>
-              <div className="col px-1 form_group mb-3">
+              <div className="col-12 col-md-4 col-lg-2 col-xl-2 px-1 form_group mb-3">
                 <p className="input_label">Filter by Assign by admin:</p>
                 <SelectBox
                   Width={"yes"} options={adminList ? adminList.map((option) => ({
@@ -228,7 +228,7 @@ export default function ManageTask() {
                   type={"by_admin_id"}
                 />
               </div>
-              <div className="col px-1 form_group mb-3">
+              <div className="col-12 col-md-4 col-lg-2 col-xl-2 px-1 form_group mb-3">
                 <p className="input_label">Filter by Applicant/Employer:</p>
                 <SelectBox
                   Width={"yes"} options={employeeList ? employeeList.map((option) => ({
@@ -256,7 +256,7 @@ export default function ManageTask() {
                   type={"user"}
                 />
               </div>
-              <div className="col px-1 form_group mb-3">
+              <div className="col-12 col-md-4 col-lg-2 col-xl-2 px-1 form_group mb-3">
                 <p className="input_label">Filter by Applicant Type:</p>
                 <SelectBox
                   Width={"yes"} options={applicantTypeList ? applicantTypeList.map((option) => ({
@@ -274,7 +274,7 @@ export default function ManageTask() {
                   }}
                   type={"applicantType"}
                 />  </div>
-              <div className="col px-1 form_group mb-3">
+              <div className="col-12 col-md-4 col-lg-2 col-xl-2 px-1 form_group mb-3">
                 <p className="input_label">Filter by Status:</p>
                 <SelectBox
                   Width={"yes"} options={statusList ? statusList.map((option) => ({
@@ -292,10 +292,10 @@ export default function ManageTask() {
                   type={"status"}
                 />
               </div>
-              <div className="col px-1 form_group mt-7 ">
+              <div className="col-12 col-md-4 col-lg-2 col-xl-2 px-1 form_group mb-3 d-flex justify-content-center">
                 <CustomButton
-                  style={{ height: "29px" }}
-                  className="col font-size-3 rounded-3 btn btn-primary border-0"
+                  style={{ height: "29px", width: "100%", maxWidth: "200px" }}
+                  className="font-size-3 rounded-3 btn btn-primary border-0"
                   onClick={() => {
                     setStatus("-1");
                     setUserId();
@@ -319,12 +319,12 @@ export default function ManageTask() {
             <div>
               <TaskCount count={count} />
               <div className="row">
-                <div className="col-12 mb-18">
-                  <div className="d-flex">
-                    <h3 className="d-flex font-size-5 px-3">
+                <div className="col-sm-12 col-xs-12 mb-18">
+                  <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center">
+                    <h3 className="d-flex flex-column flex-sm-row align-items-start align-items-sm-center font-size-5 px-3 mb-3 mb-sm-0">
                       Tasks
                       <Link
-                        className="page-link font-size-3 ml-3 font-weight-semibold px-3 rounded"
+                        className="page-link font-size-3 ml-0 ml-sm-3 mt-2 mt-sm-0 font-weight-semibold px-3 rounded"
                         onClick={() => {
                           setShowTaskForm(true)
                           setTaskId("")
@@ -334,7 +334,7 @@ export default function ManageTask() {
                         + Add New Task
                       </Link>
                     </h3>
-                    <div className="mt-4">
+                    <div className="mt-2 mt-sm-0">
                       <CommonThreeDots
                         tableName={"task"}
                         tableData={allTaskList} />

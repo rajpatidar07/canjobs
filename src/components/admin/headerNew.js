@@ -8,8 +8,8 @@ import ChangePassword from "../common/changepassword";
 import Notifications from "./notifications";
 import GlobalSearch from "./globalSearch";
 import useSessionCheck from "../common/admin_session";
-
-const AdminHeader = (props) => {
+import { GoSidebarCollapse } from "react-icons/go";
+const AdminHeader = ({ heading, toggleSidebar, isSidebarOpen }) => {
   useSessionCheck();
   /*States */
   const [showChangePass, setShowChangePass] = useState(false);
@@ -59,13 +59,27 @@ const AdminHeader = (props) => {
           {/* <!-- Page logo--> */}
           {/* /*Added logo To set sidebar menu to show and hide on all screens*/}
 
+          {/* Hamburger menu button for mobile */}
+          <Link
+            className=" d-lg-none"
+            onClick={toggleSidebar}
+          >
+            <GoSidebarCollapse   style={{
+              background: "none",
+              border: "none",
+              color: "white",
+              fontSize: "1.5rem",
+              marginRight: "10px",
+            }}/>
+          </Link>
+
           {/* <!-- Page Heading--> */}
 
           <h3
             className="font-size-6 mb-0 mr-5 text-capitalize"
             style={{ marginLeft: 10 }}
           >
-            {props.heading}
+            {heading}
           </h3>
           <div className="collapse navbar-collapse" id="mobile-menu"></div>
 
@@ -74,7 +88,7 @@ const AdminHeader = (props) => {
           <Notifications type={"mention_document"} />
           {/* // )} */}
           <Notifications type={""} />
-           {/* <Notifications type={"activity"} /> */}
+          {/* <Notifications type={"activity"} /> */}
           <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-xs-flex align-items-center">
             <div>
               <div className="dropdown show-gr-dropdown py-5">
@@ -136,10 +150,10 @@ const AdminHeader = (props) => {
                         userType === "admin"
                           ? "/adminlogin"
                           : userType === "agent"
-                          ? localStorage.getItem("portal") === "study"
-                            ? "/study_partner_login"
-                            : "/partnerlogin"
-                          : "/";
+                            ? localStorage.getItem("portal") === "study"
+                              ? "/study_partner_login"
+                              : "/partnerlogin"
+                            : "/";
 
                       // Clear all session and local storage
                       localStorage.clear();

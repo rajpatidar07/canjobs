@@ -142,7 +142,7 @@ export default function ApplicantsFilter({
         className={
           // (skill === null || skill === undefined)
           // ?
-          "col form_group p-0"
+          "col-sm-12 col-sx-12 col-md-6 col-lg-2 col-md-4 col-xl-2 form_group p-0"
           // : "d-none"
         }
       >
@@ -284,7 +284,7 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) && user_type === "admin"
-            ? "col form_group p-0"
+            ? "col-sm-12 col-sx-12 col-md-6 col-lg-2 col-md-4 col-xl-2 form_group p-0"
             : "d-none"
         }
       >
@@ -309,7 +309,7 @@ export default function ApplicantsFilter({
           (skill === null || skill === undefined) &&
             user_type === "admin" &&
             portal === "study"
-            ? "col form_group p-0"
+            ? "col-sm-12 col-sx-12 col-md-6 col-lg-2 col-md-4 col-xl-2 form_group p-0"
             : "d-none"
         }
       >
@@ -332,7 +332,7 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) && user_type === "admin"
-            ? "col form_group p-0 "
+            ? "col-sm-12 col-sx-12 col-md-6 col-lg-2 col-md-4 col-xl-2 form_group p-0 "
             : "d-none"
         }
       >
@@ -355,7 +355,7 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) && pageName === "employee"
-            ? "col form_group p-0 "
+            ? "col-sm-12 col-sx-12 col-md-6 col-lg-2 col-md-4 col-xl-2 form_group p-0 "
             : "d-none"
         }
       >
@@ -385,7 +385,7 @@ export default function ApplicantsFilter({
               pageName === "12" ||
               pageName === 12 ||
               pageName === "employee")
-            ? "col form_group p-0"
+            ? "col-sm-12 col-sx-12 col-md-6 col-lg-2 col-md-4 col-xl-2 form_group p-0"
             : "d-none"
         }
       >
@@ -411,7 +411,7 @@ export default function ApplicantsFilter({
             ([14, "14", 15, "15", 16, "16", 4, "4"].includes(pageName) ||
               pageName === "employee") &&
             !applicantTypeChildId
-            ? "col form_group p-0"
+            ? "col-sm-12 col-sx-12 col-md-6 col-lg-2 col-md-4 col-xl-2 form_group p-0"
             : "d-none"
         }
       >
@@ -438,7 +438,7 @@ export default function ApplicantsFilter({
       </div>
       {(header === "New Applicants" || header === "Manage Applicants") &&
         <>
-          <div className="col form_group p-0">
+          <div className="col-sm-12 col-sx-12 col-md-6 col-lg-2 col-md-4 col-xl-2 form_group p-0">
             <p className="input_label">
               Filter by Consultation Opted  :
             </p>
@@ -454,7 +454,7 @@ export default function ApplicantsFilter({
               <option value={"0"}>No</option>
             </select>
           </div>
-          <div className="col form_group p-0">
+          <div className="col-sm-12 col-sx-12 col-md-6 col-lg-2 col-md-4 col-xl-2 form_group p-0">
             <p className="input_label">
               Filter by Consultation Date  :
             </p>
@@ -511,7 +511,7 @@ export default function ApplicantsFilter({
         </label>
       </div>
 
-      <div className={"col form_group p-0"}>
+      <div className={"col-sm-12 col-sx-12 col-md-6 col-lg-2 col-md-4 col-xl-2 form_group p-0"}>
         <button
           className="btn btn-primary w-100"
           onClick={() => {

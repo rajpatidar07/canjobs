@@ -311,287 +311,287 @@ function MainLayout() {
       <RouterHandler token={token} userType={userType} employeeId={employeeId} />
       <Suspense fallback={<LoadingFallback />}>
         <Routes>
-        {/* Employee */}
-        <Route path="/" element={<EmployeeHomePage />} />
-        <Route path="/main_home" element={<MainHomePage />} />
-        <Route path="/study" element={<StudyHome />} />
-        <Route path="/signup" element={<SinUpPage />} />
-        <Route
-          path="/candidate_login"
-          element={<CandidateLoginForm setLoginCondition={setLoginCondition} />}
-        />
-        <Route path="/candidate_signup" element={<CandidateSignup />} />
-        <Route
-          path="/client_login"
-          element={<CompanyLoginForm setLoginCondition={setLoginCondition} />}
-        />
-        <Route path="/client_singup" element={<CompanySingupForm />} />
-        <Route path="/rozarepay" element={<RazorPay />} />
-        <Route path="/jobs" element={<JobSearch />} />
-        <Route path="/jobdetail" element={<JobDetail />} />
-        <Route path="/outside_booking" element={<WebhookComponent />} />
-        <Route path="/resetpassword/:id" element={<ResetPassword />} />
-        <Route path="/linkedin" element={<LinkedInCallback />} />
-        <Route path="/signagreement" element={<UserSigningPage />} />
-        <Route path="/agreeone" element={<ExpressEntryPdf />} />
-        <Route path="/dynamic_ra" element={<DynamicRA />} />
-        <Route path="/work_permit_application_2_stage" element={<WorkPermitApplicantTwoStagePdf />} />
-        <Route
-          path="/initial_consultation"
-          element={<InitialConsultationAgreement />}
-        />
-        <Route path="/recruitment_service" element={<RecruitmentAgrement />} />
-        <Route path="/aboutus" element={<AboutUs />} />
-        <Route path="/demojob" element={<DemoJob />} />
+          {/* Employee */}
+          <Route path="/" element={<EmployeeHomePage />} />
+          <Route path="/main_home" element={<MainHomePage />} />
+          <Route path="/study" element={<StudyHome />} />
+          <Route path="/signup" element={<SinUpPage />} />
+          <Route
+            path="/candidate_login"
+            element={<CandidateLoginForm setLoginCondition={setLoginCondition} />}
+          />
+          <Route path="/candidate_signup" element={<CandidateSignup />} />
+          <Route
+            path="/client_login"
+            element={<CompanyLoginForm setLoginCondition={setLoginCondition} />}
+          />
+          <Route path="/client_singup" element={<CompanySingupForm />} />
+          <Route path="/rozarepay" element={<RazorPay />} />
+          <Route path="/jobs" element={<JobSearch />} />
+          <Route path="/jobdetail" element={<JobDetail />} />
+          <Route path="/outside_booking" element={<WebhookComponent />} />
+          <Route path="/resetpassword/:id" element={<ResetPassword />} />
+          <Route path="/linkedin" element={<LinkedInCallback />} />
+          <Route path="/signagreement" element={<UserSigningPage />} />
+          <Route path="/agreeone" element={<ExpressEntryPdf />} />
+          <Route path="/dynamic_ra" element={<DynamicRA />} />
+          <Route path="/work_permit_application_2_stage" element={<WorkPermitApplicantTwoStagePdf />} />
+          <Route
+            path="/initial_consultation"
+            element={<InitialConsultationAgreement />}
+          />
+          <Route path="/recruitment_service" element={<RecruitmentAgrement />} />
+          <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/demojob" element={<DemoJob />} />
 
-        {/* <Route path="*" element={<NotFound userType={userType}/>} /> */}
-        {userType === "user" &&
-          (token !== "" ||
-            token !== null ||
-            token !== undefined ||
-            token !== "null" ||
-            token !== "undefined") ? (
-          <>
-            <Route
-              path="/student_profile"
-              element={<StudentProfile setLoginCondition={setLoginCondition} />}
-            />
-            <Route path="/student_document" element={<StudentDocument />} />
-            <Route path="/programs" element={<Programs />} />
-            <Route path="/education_loan" element={<EducationLoan />} />
-            <Route path="/personal_loan" element={<PersonalLoan />} />
-            <Route path="/accommodation" element={<Accommodation />} />
-            <Route
-              path="/"
-              element={
-                <EmployeeHomePage setLoginCondition={setLoginCondition} />
-              }
-            />
-            <Route path="/jobs" element={<JobSearch />} />
-            <Route path="/jobdetail" element={<JobDetail />} />
-            <Route path="/profile" element={<UserProfile />} />
-            <Route path="/:eid" element={<ValidateRoute />} />
-            <Route path="*" element={<NotFound userType={userType} />} />
-            <Route path="/job_detail" element={<JobDetailpageAdmim />} />
-            <Route path="/client_detail" element={<CompanyProfileDetail />} />
-            <Route path="/userpdf" element={<PDFViewer />} />
-            <Route path="/view_pdf_Agreement" element={<ViewPdf />} />
-            <Route path="/resume/:id" element={<ResumeGrerator />} />
-          </>
-        ) : (
-          <>
-            <Route path="/" element={<EmployeeHomePage />} />
-            <Route path="/jobs" element={<JobSearch />} />
-            <Route path="/jobdetail" element={<JobDetail />} />
-            {/* <Route path="*" element={<NotFound userType={userType}/>} /> */}
-          </>
-        )}
-        {/* Employer */}
-        {userType === "company" &&
-          (token !== "" ||
-            token !== null ||
-            token !== undefined ||
-            token !== "null" ||
-            token !== "undefined") ? (
-          <>
-            <Route
-              path="/client"
-              element={<EmployerHome setLoginCondition={setLoginCondition} />}
-            />
-            <Route path="/clientprofile" element={<CompanyProfile />} />
-            <Route path="/managejobs" element={<ManageJobs />} />
-            <Route path="/response" element={<Response />} />
-            <Route path="/empsearch" element={<EmployeeSearch />} />
-            <Route path="/profile" element={<UserProfile />} />
-            <Route path="/:eid" element={<ValidateRoute />} />
-            {/* <Route path="/lmia_dashboard" element={<EmployerLMIA />} /> */}
-            <Route path="/lmia" element={<LimaContainer />} />
-            <Route path="/resume/:id" element={<ResumeGrerator />} />
-            <Route path="*" element={<NotFound userType={userType} />} />
-            <Route path="/job_detail" element={<JobDetailpageAdmim />} />
-            <Route path="/userpdf" element={<PDFViewer />} />
-            <Route path="/client_detail" element={<CompanyProfileDetail />} />
-            <Route path="/view_pdf_Agreement" element={<ViewPdf />} />
-          </>
-        ) : (
-          <>
-            <Route path="/" element={<EmployeeHomePage />} />
-            {/* <Route path="*" element={<NotFound userType={userType}/>} /> */}
-          </>
-        )}
-        {/* Agent */}
-        <Route
-          path="/partnerlogin"
-          element={<AgentLogin setLoginCondition={setLoginCondition} />}
-        />
-        {/* Study partner login page */}
-        <Route
-          path="/study_partner_login"
-          element={<StudyPartnerLogin setLoginCondition={setLoginCondition} />}
-        />
-        {/* Admin */}
-        <Route
-          path="/adminlogin"
-          element={<AdminLoginFrom setLoginCondition={setLoginCondition} />}
-        />
-        <Route
-          path="/study_admin_login"
-          element={
-            <StudyAdminLoginFrom setLoginCondition={setLoginCondition} />
-          }
-        />
-        <Route path="/agreepreivew" element={<ExpressEntryHtml />} />
-        <Route
-          path="/more_than_one_applicant"
-          element={<MoreThanOneApplicantAgreementPdf />}
-        />
-        <Route
-          path="/renewal_application"
-          element={<RenewalApplicantionsPdf />}
-        />
-        <Route
-          path="/employers_agreement"
-          element={<EmployerRetainerAgreementPdf />}
-        />
-        <Route
-          path="/three_column"
-          element={<ThreeColumnRerainerAgreement />}
-        />
-        <Route path="/work_permit" element={<WorkPermitPdf />} />
-        <Route path="/alberta_pnp" element={<AlbertaPnpPdf />} />
-
-        <Route path="/addsign" element={<SignaturePadComponent />} />
-        {(userType === "company" ||
-          userType === "user" ||
-          userType === "" ||
-          userType === null ||
-          userType === "null") &&
-          (token === "" ||
-            token === null ||
-            token === undefined ||
-            token === "null") ? (
-          <>
-            <Route path="/" element={<EmployeeHomePage />} />
-            {/* <Route path="*" element={<NotFound userType={userType}/>} /> */}
-          </>
-        ) : (
-          <>
-            {userType !== "admin" || userType === ""}
-            {/* Layout Route */}
-            <Route path="/resume/:id" element={<ResumeGrerator />} />
-            <Route element={<AdminMain />}>
+          {/* <Route path="*" element={<NotFound userType={userType}/>} /> */}
+          {userType === "user" &&
+            (token !== "" ||
+              token !== null ||
+              token !== undefined ||
+              token !== "null" ||
+              token !== "undefined") ? (
+            <>
               <Route
-                path="/dashboard"
+                path="/student_profile"
+                element={<StudentProfile setLoginCondition={setLoginCondition} />}
+              />
+              <Route path="/student_document" element={<StudentDocument />} />
+              <Route path="/programs" element={<Programs />} />
+              <Route path="/education_loan" element={<EducationLoan />} />
+              <Route path="/personal_loan" element={<PersonalLoan />} />
+              <Route path="/accommodation" element={<Accommodation />} />
+              <Route
+                path="/"
                 element={
-                  <AdminDashboard setLoginCondition={setLoginCondition} />
+                  <EmployeeHomePage setLoginCondition={setLoginCondition} />
                 }
               />
-              <Route path="/job" element={<Job />} />
-              <Route path="/selfjob" element={<SelfJob />} />
-              <Route path="/category" element={<Category />} />
-              <Route path="/lmia" element={<LimaContainer />} />
-              <Route path="/visa" element={<Visa />} />
-              <Route path="/document" element={<Document />} />
-              <Route path="/employee" element={<Employee />} />
-              <Route path="/selfemployee" element={<SelfApplicat />} />
-              <Route path="/employer" element={<Employer />} />
-              <Route path="/adminprofile" element={<ManageAdmin />} />
-              <Route path="/assignedjobs" element={<JobAssignedDashboard />} />
+              <Route path="/jobs" element={<JobSearch />} />
+              <Route path="/jobdetail" element={<JobDetail />} />
+              <Route path="/profile" element={<UserProfile />} />
               <Route path="/:eid" element={<ValidateRoute />} />
-              <Route path="/userpdf" element={<PDFViewer />} />
-              <Route path="/managetasks" element={<ManageTask />} />
-              <Route
-                path="/sharepoint_document"
-                element={<SharePointDocument />}
-              />
+              <Route path="*" element={<NotFound userType={userType} />} />
               <Route path="/job_detail" element={<JobDetailpageAdmim />} />
               <Route path="/client_detail" element={<CompanyProfileDetail />} />
-              <Route
-                path="/partner_profile"
-                element={
-                  <PartnerDetails setLoginCondition={setLoginCondition} />
-                }
-              />
-              <Route path="/followup" element={<Followup />} />
-              <Route path="/partner" element={<Agent />} />
-              <Route path="/partner_dashboard" element={<PartnerDashboard />} />
-              <Route path="/daily_call_log" element={<ManageDailyCallLog />} />
-              <Route path="/daily_hours_log" element={<ManageHourlyLog />} />
-              <Route path="/consultation" element={<ManageConsultation />} />
-              <Route path="/assigned_admin" element={<AsiignedAdmin />} />
-              <Route path="/activity_log" element={<ActivityLog />} />
-              <Route path="/filter" element={<FilterList />} />
-              <Route path="/interview" element={<ManageInterview />} />
-              <Route path="/responses" element={<JobResponse />} />
-              <Route path="/lmia_dashboard" element={<EmployerLMIA />} />
-              <Route path="/emailtemplate" element={<EmailTemplate />} />
-              <Route path="/notes" element={<Notes />} />
-              <Route path="/credentials" element={<Credentional />} />
-              <Route path="/testpdfurl" element={<ConvertAnyFileToPdf />} />
-              <Route path="/daily_pages" element={<CommonDailyPage />} />
-              <Route path="/email" element={<MainEmailPage />} />
-              <Route path="*" element={<NotFound userType={userType} />} />
-              <Route path="/googledrive" element={<GoogleDrive />} />
-              <Route path="/anotation" element={<Anotation />} />
-              <Route path="/slots" element={<CommonApplicatTypePage />} />
-              <Route path="/setting" element={<CommonAdminExtraLinkSetting />} />
-              <Route
-                path="/manage_applicant_type"
-                element={<MangeApplicantType />}
-              />
-              <Route path="/businessvisa" element={<BusinessVIsa />} />
-              <Route path="/expressentry" element={<ExpressEntry />} />
-              <Route path="/visitorsvisa" element={<VisitorVisa />} />
-              <Route path="/studypermit" element={<StudyPermit />} />
-              <Route
-                path="/temporaryresident"
-                element={<TemporaryResident />}
-              />
-              <Route
-                path="/economicimmigration"
-                element={<EconomicImmigration />}
-              />
-              <Route
-                path="/familysponsorship"
-                element={<FamilySponsorship />}
-              />
-              <Route path="/pnp" element={<Pnp />} />
-              <Route path="/passport" element={<TypePassport />} />
-              <Route path="/citizenship" element={<TypeCitizenship />} />
-              <Route
-                path="/humanitarian_and_Compassionate"
-                element={<Humanitarian />}
-              />
-              <Route
-                path="/permanent_resident_cards"
-                element={<ParmanentResidentCard />}
-              />
-              <Route path="/pgwp" element={<PGWP />} />
-              <Route path="/wes" element={<Wes />} />
-              <Route path="/atip" element={<Atip />} />
-              <Route path="/localcandidates" element={<LocalCandidate />} />
-              <Route path="/federal_pr" element={<Federalpr />} />
+              <Route path="/userpdf" element={<PDFViewer />} />
               <Route path="/view_pdf_Agreement" element={<ViewPdf />} />
-              {/* Study pages as for admin */}
-              <Route path="/study_dashboard" element={<StudyDashboard />} />
-              <Route path="/programs" element={<Programs />} />
-              <Route path="/students" element={<StudentList />} />
-              <Route path="/student_profile" element={<StudentProfile />} />
-              <Route path="/applied_programs" element={<AppliedPrograms />} />
-              <Route path="*" element={<Loader load={"yes"} />} />
-              <Route path="/payment_records" element={<ManagePayment />} />
-              {/* <Route path="/:eid" element={<NewUserProfile />} /> */}
-            </Route>
+              <Route path="/resume/:id" element={<ResumeGrerator />} />
+            </>
+          ) : (
+            <>
+              <Route path="/" element={<EmployeeHomePage />} />
+              <Route path="/jobs" element={<JobSearch />} />
+              <Route path="/jobdetail" element={<JobDetail />} />
+              {/* <Route path="*" element={<NotFound userType={userType}/>} /> */}
+            </>
+          )}
+          {/* Employer */}
+          {userType === "company" &&
+            (token !== "" ||
+              token !== null ||
+              token !== undefined ||
+              token !== "null" ||
+              token !== "undefined") ? (
+            <>
+              <Route
+                path="/client"
+                element={<EmployerHome setLoginCondition={setLoginCondition} />}
+              />
+              <Route path="/clientprofile" element={<CompanyProfile />} />
+              <Route path="/managejobs" element={<ManageJobs />} />
+              <Route path="/response" element={<Response />} />
+              <Route path="/empsearch" element={<EmployeeSearch />} />
+              <Route path="/profile" element={<UserProfile />} />
+              <Route path="/:eid" element={<ValidateRoute />} />
+              {/* <Route path="/lmia_dashboard" element={<EmployerLMIA />} /> */}
+              <Route path="/lmia" element={<LimaContainer />} />
+              <Route path="/resume/:id" element={<ResumeGrerator />} />
+              <Route path="*" element={<NotFound userType={userType} />} />
+              <Route path="/job_detail" element={<JobDetailpageAdmim />} />
+              <Route path="/userpdf" element={<PDFViewer />} />
+              <Route path="/client_detail" element={<CompanyProfileDetail />} />
+              <Route path="/view_pdf_Agreement" element={<ViewPdf />} />
+            </>
+          ) : (
+            <>
+              <Route path="/" element={<EmployeeHomePage />} />
+              {/* <Route path="*" element={<NotFound userType={userType}/>} /> */}
+            </>
+          )}
+          {/* Agent */}
+          <Route
+            path="/partnerlogin"
+            element={<AgentLogin setLoginCondition={setLoginCondition} />}
+          />
+          {/* Study partner login page */}
+          <Route
+            path="/study_partner_login"
+            element={<StudyPartnerLogin setLoginCondition={setLoginCondition} />}
+          />
+          {/* Admin */}
+          <Route
+            path="/adminlogin"
+            element={<AdminLoginFrom setLoginCondition={setLoginCondition} />}
+          />
+          <Route
+            path="/study_admin_login"
+            element={
+              <StudyAdminLoginFrom setLoginCondition={setLoginCondition} />
+            }
+          />
+          <Route path="/agreepreivew" element={<ExpressEntryHtml />} />
+          <Route
+            path="/more_than_one_applicant"
+            element={<MoreThanOneApplicantAgreementPdf />}
+          />
+          <Route
+            path="/renewal_application"
+            element={<RenewalApplicantionsPdf />}
+          />
+          <Route
+            path="/employers_agreement"
+            element={<EmployerRetainerAgreementPdf />}
+          />
+          <Route
+            path="/three_column"
+            element={<ThreeColumnRerainerAgreement />}
+          />
+          <Route path="/work_permit" element={<WorkPermitPdf />} />
+          <Route path="/alberta_pnp" element={<AlbertaPnpPdf />} />
 
-            {/* <Route path="/*" element={<AdminMain />} /> */}
-          </>
-        )}
-        <Route path="/Newpdf" element={<Newpdf />} />
+          <Route path="/addsign" element={<SignaturePadComponent />} />
+          {(userType === "company" ||
+            userType === "user" ||
+            userType === "" ||
+            userType === null ||
+            userType === "null")
+            && (token === "" ||
+              token === null ||
+              token === undefined ||
+              token === "null") ? (
+            <>
+              <Route path="/" element={<EmployeeHomePage />} />
+              {/* <Route path="*" element={<NotFound userType={userType}/>} /> */}
+            </>
+          ) : (
+            <>
+              {userType !== "admin" || userType === ""}
+              {/* Layout Route */}
+              <Route path="/resume/:id" element={<ResumeGrerator />} />
+              <Route element={<AdminMain />}>
+                <Route
+                  path="/dashboard"
+                  element={
+                    <AdminDashboard setLoginCondition={setLoginCondition} />
+                  }
+                />
+                <Route path="/job" element={<Job />} />
+                <Route path="/selfjob" element={<SelfJob />} />
+                <Route path="/category" element={<Category />} />
+                <Route path="/lmia" element={<LimaContainer />} />
+                <Route path="/visa" element={<Visa />} />
+                <Route path="/document" element={<Document />} />
+                <Route path="/employee" element={<Employee />} />
+                <Route path="/selfemployee" element={<SelfApplicat />} />
+                <Route path="/employer" element={<Employer />} />
+                <Route path="/adminprofile" element={<ManageAdmin />} />
+                <Route path="/assignedjobs" element={<JobAssignedDashboard />} />
+                <Route path="/:eid" element={<ValidateRoute />} />
+                <Route path="/userpdf" element={<PDFViewer />} />
+                <Route path="/managetasks" element={<ManageTask />} />
+                <Route
+                  path="/sharepoint_document"
+                  element={<SharePointDocument />}
+                />
+                <Route path="/job_detail" element={<JobDetailpageAdmim />} />
+                <Route path="/client_detail" element={<CompanyProfileDetail />} />
+                <Route
+                  path="/partner_profile"
+                  element={
+                    <PartnerDetails setLoginCondition={setLoginCondition} />
+                  }
+                />
+                <Route path="/followup" element={<Followup />} />
+                <Route path="/partner" element={<Agent />} />
+                <Route path="/partner_dashboard" element={<PartnerDashboard />} />
+                <Route path="/daily_call_log" element={<ManageDailyCallLog />} />
+                <Route path="/daily_hours_log" element={<ManageHourlyLog />} />
+                <Route path="/consultation" element={<ManageConsultation />} />
+                <Route path="/assigned_admin" element={<AsiignedAdmin />} />
+                <Route path="/activity_log" element={<ActivityLog />} />
+                <Route path="/filter" element={<FilterList />} />
+                <Route path="/interview" element={<ManageInterview />} />
+                <Route path="/responses" element={<JobResponse />} />
+                <Route path="/lmia_dashboard" element={<EmployerLMIA />} />
+                <Route path="/emailtemplate" element={<EmailTemplate />} />
+                <Route path="/notes" element={<Notes />} />
+                <Route path="/credentials" element={<Credentional />} />
+                <Route path="/testpdfurl" element={<ConvertAnyFileToPdf />} />
+                <Route path="/daily_pages" element={<CommonDailyPage />} />
+                <Route path="/email" element={<MainEmailPage />} />
+                <Route path="*" element={<NotFound userType={userType} />} />
+                <Route path="/googledrive" element={<GoogleDrive />} />
+                <Route path="/anotation" element={<Anotation />} />
+                <Route path="/slots" element={<CommonApplicatTypePage />} />
+                <Route path="/setting" element={<CommonAdminExtraLinkSetting />} />
+                <Route
+                  path="/manage_applicant_type"
+                  element={<MangeApplicantType />}
+                />
+                <Route path="/businessvisa" element={<BusinessVIsa />} />
+                <Route path="/expressentry" element={<ExpressEntry />} />
+                <Route path="/visitorsvisa" element={<VisitorVisa />} />
+                <Route path="/studypermit" element={<StudyPermit />} />
+                <Route
+                  path="/temporaryresident"
+                  element={<TemporaryResident />}
+                />
+                <Route
+                  path="/economicimmigration"
+                  element={<EconomicImmigration />}
+                />
+                <Route
+                  path="/familysponsorship"
+                  element={<FamilySponsorship />}
+                />
+                <Route path="/pnp" element={<Pnp />} />
+                <Route path="/passport" element={<TypePassport />} />
+                <Route path="/citizenship" element={<TypeCitizenship />} />
+                <Route
+                  path="/humanitarian_and_Compassionate"
+                  element={<Humanitarian />}
+                />
+                <Route
+                  path="/permanent_resident_cards"
+                  element={<ParmanentResidentCard />}
+                />
+                <Route path="/pgwp" element={<PGWP />} />
+                <Route path="/wes" element={<Wes />} />
+                <Route path="/atip" element={<Atip />} />
+                <Route path="/localcandidates" element={<LocalCandidate />} />
+                <Route path="/federal_pr" element={<Federalpr />} />
+                <Route path="/view_pdf_Agreement" element={<ViewPdf />} />
+                {/* Study pages as for admin */}
+                <Route path="/study_dashboard" element={<StudyDashboard />} />
+                <Route path="/programs" element={<Programs />} />
+                <Route path="/students" element={<StudentList />} />
+                <Route path="/student_profile" element={<StudentProfile />} />
+                <Route path="/applied_programs" element={<AppliedPrograms />} />
+                <Route path="*" element={<Loader load={"yes"} />} />
+                <Route path="/payment_records" element={<ManagePayment />} />
+                {/* <Route path="/:eid" element={<NewUserProfile />} /> */}
+              </Route>
 
-        {loginCondition === true ? null : (
-          <Route path="*" element={<NotFound userType={userType} />} />
-        )}
-      </Routes>
+              {/* <Route path="/*" element={<AdminMain />} /> */}
+            </>
+          )}
+          <Route path="/Newpdf" element={<Newpdf />} />
+
+          {loginCondition === true ? null : (
+            <Route path="*" element={<NotFound userType={userType} />} />
+          )}
+        </Routes>
       </Suspense>
     </BrowserRouter>
   );

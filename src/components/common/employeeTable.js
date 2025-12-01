@@ -19,7 +19,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Pagination from "../common/pagination";
 import EmployementDetails from "../forms/user/employement";
-// import DocumentModal from "../forms/admin/DocumentModal";
+
 import Loader from "../common/loader";
 import JobModal from "../admin/Modal/jobModal";
 import VisaStatus from "../forms/user/visaStatus";
@@ -47,8 +47,13 @@ import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
 import filterjson from "../json/filterjson";
 import AddConsultationInCandidate from "../forms/admin/AddConsultationInCandidate";
 import { FaHandshake } from "react-icons/fa";
-// import ApplicantTypeTimeLine from "./ApplicantTypeTimeLine";
+
 export default function EmployeeTable(props) {
+  // Sticky column left positions
+  const stickyLeftEID = 0;
+  const stickyLeftName = stickyLeftEID + 50;
+  const stickyLeftNote = stickyLeftName + 150;
+
   let agentId = localStorage.getItem("agent_id");
   let user_type = localStorage.getItem("userType");
   let StatusTab = localStorage.getItem("StatusTab");
@@ -59,7 +64,7 @@ export default function EmployeeTable(props) {
   let taskID = searchParams.get("taskId");
   let notifiType = searchParams.get("notifiType");
   let [CandidateId, setCandidateId] = useState(canID || "");
-  let [TaskId, setTaskId] = useState(taskID | "");
+  let [TaskId, setTaskId] = useState(taskID || "");
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
@@ -113,7 +118,7 @@ export default function EmployeeTable(props) {
   const [sortOrder, setSortOrder] = useState(
     props.heading === "Dashboard" ? "DESC" : ""
   );
-  // const [showApplicantTypeForm, setShowApplicantTypeForm] = useState(false);
+
 
   let getApplicantType = (id) =>
     applicantTypeList?.find((x) => x.id === id)?.title;
@@ -426,24 +431,14 @@ export default function EmployeeTable(props) {
   };
 
   /*Function to get the new user */
-  // const currentDate = new Date(); // Get current date
-  // const oneMonthAgo = new Date(); // Create a new date object for one month ago
-  // oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1); // Subtract one month from the current date
-  /*Funcion to get the user time from updated time */
-  // function isTimeWithin24Hours(createdTime) {
-  //   return Date.now() - new Date(createdTime).getTime() <= 86400000;
-  // }
+
   /*Function to clear the page no of the pagination */
   const clearPageNo = () => {
     localStorage.removeItem("PageNo");
     props.setpageNo(1);
   };
 
-  // const OnStatusChange = (e, empData, eventKey) => {
-  //   // Assuming you want to update the employee status here
-  //   setStatus(eventKey);
-  //   // You may need to call an API to update the status in the backend
-  // };
+
 
   /*Onchange function to change the status */
   const OnStatusChange = async (e, empData, eventKey) => {
@@ -521,7 +516,7 @@ export default function EmployeeTable(props) {
     }
   };
 
-  // setStatusList(filterjson.employee_status);
+
 
   /*Function to get the parent interested in of the employee that is applicant type */
   let ApplicantType = (id) => {
@@ -548,9 +543,7 @@ export default function EmployeeTable(props) {
     return selectedItem.title;
   };
 
-  // let sub_type = applicantTypeList.filter(s
-  //   (item) => item.parent_id === empData?.interested_in_id
-  // );
+
 
   return (
     <>
@@ -652,17 +645,6 @@ export default function EmployeeTable(props) {
           />
         }
       >
-        {showChatModal ? (
-          <CommentTaskBox
-            userId={employeeId?.employee_id}
-            taskType={props.ApplicantType ? "applicant_type_candidate_chat" : "note"}
-            taskUserType={"employee"}
-            setOpenReplyBox={setShowChatModal}
-            openReplyBox={showChatModal}
-            taskName={"Note for Candidate"}
-            TaskId={taskID}
-          />
-        ) : null}
       </ModalSidebar>
       {/* {showApplicantTypeForm ?
         <AddApplicantType
@@ -689,7 +671,7 @@ export default function EmployeeTable(props) {
         {props.heading === "Dashboard" ? null : (
           <div className="d-flex justify-content-between align-items-center w-100">
             <div
-              className={`btn-group mb-3 ${props.skill || location.pathname === "/slots" || props.pageName === "consultation" ? "d-none" : ""}`}
+              className={`btn-group d-flex flex-wrap mb-3 ${props.skill || location.pathname === "/slots" || props.pageName === "consultation" ? "d-none" : ""}`}
               role="group" aria-label="Basic example">
               <button
                 type="button"
@@ -948,7 +930,7 @@ export default function EmployeeTable(props) {
                   <th
                     scope="col"
                     className="border-0 font-size-3 font-weight-normal table_sticky_col sticky_col1   table_sticky_col"
-                    style={{ background: "rgb(252, 182, 182)", transition: "background 0.3s", minWidth: "150px", left: "50px" }}
+                    style={{ background: "rgb(252, 182, 182)", transition: "background 0.3s", minWidth: "150px", left: `${stickyLeftName}px` }}
                   >
                     <Link
                       to={""}
@@ -970,7 +952,7 @@ export default function EmployeeTable(props) {
                     style={{
                       background: "rgb(252, 182, 182)", position: "sticky",
                       transition: "background 0.3s ease",
-                      minWidth: "50px", left: "230px",
+                      minWidth: "50px", left: `${stickyLeftNote}px`,
                     }}
                   >
                     Note
@@ -1334,7 +1316,7 @@ export default function EmployeeTable(props) {
                           </p>
                         </td>
                         <td className=" table_sticky_col sticky_col1 py-5  text-capitalize py-5"
-                          style={{ left: "50px", backgroundColor: "rgb(244, 244, 244)", }}>
+                          style={{ left: `${stickyLeftName}px`, backgroundColor: "rgb(244, 244, 244)", }}>
                           <div>
                             <div className="d-flex profile_box gx-2">
                               <div className="media  align-items-center">
@@ -1527,7 +1509,7 @@ export default function EmployeeTable(props) {
                           ""
                         ) : <td className="  sticky_col1 py-5  text-capitalize"
                           style={{
-                            left: "230px", position: "sticky",
+                            left: `${stickyLeftNote}px`, position: "sticky",
                             transition: "background 0.3s ease",
                             minWidth: "50px", backgroundColor: "rgb(244, 244, 244)",
                           }}>
