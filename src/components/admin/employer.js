@@ -19,7 +19,7 @@ function Employer() {
   const [industryFilterValue, setIndutryFilterValue] = useState("");
   const [corporationFilterValue, setcorporationFilterValue] = useState("");
   const [search, setSearch] = useState("");
-  const [searcherror, setSearchError] = useState("");
+  const [searchError, setSearchError] = useState("");
   let [Json, setJson] = useState([]);
 
   /*Function to get the jSon */
@@ -124,7 +124,7 @@ function Employer() {
                 </div>
                 {/* <!-- Employer Search and Filter --> */}
                 <div className="row m-0 align-items-center">
-                  <div className="col p-1 form_group mb-3">
+                  <div className="col-lg-2 col-xl-2 col-md-2 col-sm-12 col-xs-12 form_group mb-3">
                     <p className="input_label">Search:</p>
                     <input
                       required
@@ -137,7 +137,7 @@ function Employer() {
                       maxLength={30}
                     />
                   </div>
-                  <div className="col p-1 form_group mb-3">
+                  <div className="col-lg-2 col-xl-2 col-md-2 col-sm-12 col-xs-12 form_group mb-3">
                     <p className="input_label">Filter by Corporation:</p>
                     <div className="select_div">
                       <SelectBox
@@ -151,7 +151,7 @@ function Employer() {
                       />
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-3">
+                  <div className="col-lg-2 col-xl-2 col-md-2 col-sm-12 col-xs-12 form_group mb-3">
                     <p className="input_label">Filter by Industry:</p>
                     <div className="select_div">
                       <SelectBox
@@ -165,7 +165,7 @@ function Employer() {
                       />
                     </div>
                   </div>
-                  <div className="col p-1 d-flex justify-content-evenly ">
+                  <div className="col-lg-2 col-xl-2 col-md-2 col-sm-12 col-xs-12 d-flex justify-content-evenly ">
                     <div className=" w-100 form_group mt-3 text-right">
                       <CustomButton
                         style={{ height: "32px" }}
@@ -181,8 +181,8 @@ function Employer() {
                       </CustomButton>
                     </div>
                   </div>
-                  <div className="col p-1 d-flex justify-content-evenly ">
-                    <div className=" w-100 form_group mt-3 text-right">
+                  <div className="col-lg-4 col-xl-4 col-md-4 col-sm-12 col-xs-12 d-flex justify-content-start">
+                    <div className=" w-100 form_group mt-3 text-left">
                       <CustomButton
                         style={{ height: "32px" }}
                         className="font-size-3 btn-block rounded-3 btn btn-primary border-0"
@@ -191,12 +191,12 @@ function Employer() {
                         Add Employer
                       </CustomButton>
                     </div>
-                    <div className=" mt-6 text-right">
+                    <div className=" mt-6 text-left">
                       <CommonThreeDots tableName={"employer"} />
                     </div>
                   </div>
                 </div>
-                <small className="text-danger">{searcherror}</small>
+                <small className="text-danger">{searchError}</small>
               </div>
               {/* <!-- Employer List Table --> */}
               <EmployerTable
@@ -219,7 +219,7 @@ function Employer() {
           <div className="dashboard-main-container mt-14">
             <div className="container-fluid">
               <div className="row justify-content-center">
-                <div className="col-12 dark-mode-texts">
+                <div className="col-lg-3 col-xl-3 col-sm-12 col-xs-12dark-mode-texts">
                   <div className="mb-9">
                     <Link
                       to={""}

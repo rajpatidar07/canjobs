@@ -101,7 +101,7 @@ const AdminHeader = (props) => {
 
                 <div
                   className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
-                  aria-labelledby="dropdownMenuLink"
+                  aria-labelledby="adminDropdownMenuLink"
                 >
                   {userType !== "agent" && (
                     <Link

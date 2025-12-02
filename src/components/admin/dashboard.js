@@ -62,7 +62,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
   // const [lmiaChartData, setLmiaChartData] = useState([]);
   // const [visaChartData, setVisaChartData] = useState([]);
   // State to manage sidebar visibility
-  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 768);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // State to manage mobile view
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -319,13 +319,12 @@ const AdminDashboard = ({ setLoginCondition }) => {
             <BiLeftArrow />
           </Link>
           <div
-            className={`container-fluid mt-5 ${
-              isSidebarOpen && !isMobile
-                ? "col-md-9 col-lg-9 col-sm-12"
-                : isSidebarOpen
+            className={`container-fluid mt-5 ${isSidebarOpen && !isMobile
+              ? "col-md-9 col-lg-9 col-sm-12"
+              : isSidebarOpen
                 ? "col-md-12 col-lg-12 col-sm-11"
                 : "col-md-12 col-lg-12 col-sm-12"
-            } ${isMobile ? "bg-white" : ""}`}
+              } ${isMobile ? "bg-white" : ""}`}
           >
             {/* <!-- Summary count --> */}
             <div className="row mb-7 d-none">
@@ -655,9 +654,8 @@ const AdminDashboard = ({ setLoginCondition }) => {
                           </Link>
                         </div>
                         <Link
-                          className={`text-dark mx-5 ${
-                            openTable === 1 ? "open" : ""
-                          }`}
+                          className={`text-dark mx-5 ${openTable === 1 ? "open" : ""
+                            }`}
                           to=""
                           onClick={() => toggleTable(1)}
                           title={openTable === 1 ? "Minimize" : "Maximize"}
@@ -723,9 +721,8 @@ const AdminDashboard = ({ setLoginCondition }) => {
                           </Link>
                         </div>
                         <Link
-                          className={`text-dark mx-5 ${
-                            openTable === 4 ? "open" : ""
-                          }`}
+                          className={`text-dark mx-5 ${openTable === 4 ? "open" : ""
+                            }`}
                           to=""
                           onClick={() => toggleTable(4)}
                           title={openTable === 4 ? "Minimize" : "Maximize"}
@@ -790,9 +787,8 @@ const AdminDashboard = ({ setLoginCondition }) => {
                           </Link>
                         </div>
                         <Link
-                          className={`text-dark mx-5 ${
-                            openTable === 2 ? "open" : ""
-                          }`}
+                          className={`text-dark mx-5 ${openTable === 2 ? "open" : ""
+                            }`}
                           to=""
                           onClick={() => toggleTable(2)}
                           title={openTable === 2 ? "Minimize" : "Maximize"}
@@ -855,9 +851,8 @@ const AdminDashboard = ({ setLoginCondition }) => {
                       </Link>
                     </div> */}
                         <Link
-                          className={`text-dark mx-5 ${
-                            openTable === 7 ? "open" : ""
-                          }`}
+                          className={`text-dark mx-5 ${openTable === 7 ? "open" : ""
+                            }`}
                           to=""
                           onClick={() => toggleTable(7)}
                           title={openTable === 7 ? "Minimize" : "Maximize"}
@@ -956,9 +951,8 @@ const AdminDashboard = ({ setLoginCondition }) => {
                           </Link>
                         </div>
                         <Link
-                          className={`text-dark mx-5 ${
-                            openTable === 5 ? "open" : ""
-                          }`}
+                          className={`text-dark mx-5 ${openTable === 5 ? "open" : ""
+                            }`}
                           to=""
                           onClick={() => toggleTable(5)}
                           title={openTable === 5 ? "Minimize" : "Maximize"}
@@ -991,9 +985,8 @@ const AdminDashboard = ({ setLoginCondition }) => {
                     <div className="d-flex justify-content-between p-5 align-items-center">
                       <h3 className="font-size-5 px-3 m-0">Latest notes</h3>
                       <Link
-                        className={`text-dark mx-5 ${
-                          openTable === 6 ? "open" : ""
-                        }`}
+                        className={`text-dark mx-5 ${openTable === 6 ? "open" : ""
+                          }`}
                         to=""
                         onClick={() => toggleTable(6)}
                         title={openTable === 6 ? "Minimize" : "Maximize"}
@@ -1077,9 +1070,8 @@ const AdminDashboard = ({ setLoginCondition }) => {
                           </select>
                         </div>
                         <Link
-                          className={`text-dark mx-5 ${
-                            openTable === 8 ? "open" : ""
-                          }`}
+                          className={`text-dark mx-5 ${openTable === 8 ? "open" : ""
+                            }`}
                           to=""
                           onClick={() => toggleTable(8)}
                           title={openTable === 8 ? "Minimize" : "Maximize"}
@@ -1142,9 +1134,8 @@ const AdminDashboard = ({ setLoginCondition }) => {
                           </Link>
                         </div>
                         <Link
-                          className={`text-dark mx-5 ${
-                            openTable === 3 ? "open" : ""
-                          }`}
+                          className={`text-dark mx-5 ${openTable === 3 ? "open" : ""
+                            }`}
                           to=""
                           onClick={() => toggleTable(3)}
                           title={openTable === 3 ? "Minimize" : "Maximize"}
@@ -1169,9 +1160,8 @@ const AdminDashboard = ({ setLoginCondition }) => {
           </div>
           {/* <!--Mange Table sidebar  --> */}
           <div
-            className={` col-12 col-md-3 col-lg-3 col-sm-2 py-2 h-75vh zindex-999 bg-white  ${
-              !isMobile || isSidebarOpen ? "" : " d-none"
-            }`}
+            className={` col-12 col-md-3 col-lg-3 col-sm-2 py-2 h-75vh  bg-white  ${!isMobile || isSidebarOpen ? "" : " d-none"
+              }`}
           >
             <div
               className={isMobile ? `position-fixed bg-white ${isSidebarOpen ? " show" : ""}` : ""}
@@ -1227,18 +1217,18 @@ const AdminDashboard = ({ setLoginCondition }) => {
                                 {tableName === "jobTable"
                                   ? "Recent Added Job"
                                   : tableName === "employeeTable"
-                                  ? "Recent Added Candidate"
-                                  : tableName === "employerTable"
-                                  ? "Recent Added Employer"
-                                  : tableName === "taskTable"
-                                  ? "Recent Added Task"
-                                  : tableName === "lmiaTable"
-                                  ? "Recent Added LMIA"
-                                  : tableName === "followupTable"
-                                  ? "Recent Added Notes"
-                                  : tableName === "activityTable"
-                                  ? "Recent Added Activity"
-                                  : "Recent Added Interview"}
+                                    ? "Recent Added Candidate"
+                                    : tableName === "employerTable"
+                                      ? "Recent Added Employer"
+                                      : tableName === "taskTable"
+                                        ? "Recent Added Task"
+                                        : tableName === "lmiaTable"
+                                          ? "Recent Added LMIA"
+                                          : tableName === "followupTable"
+                                            ? "Recent Added Notes"
+                                            : tableName === "activityTable"
+                                              ? "Recent Added Activity"
+                                              : "Recent Added Interview"}
                               </span>
                             </label>
                           </div>

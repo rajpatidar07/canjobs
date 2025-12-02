@@ -158,126 +158,88 @@ function Job(props) {
                   <h3 className="font-size-6 mb-0">Posted Jobs </h3>
                 </div>
                 {/*<-- Job Search and Filter -->*/}
-                <div className="row m-0 align-items-center">
-                  <div
-                    className={
-                      props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-3"
-                        : "col p-1 form_group"
-                    }
-                  >
+                <div className="row g-3 align-items-end m-0">
+
+                  {/* Search Box */}
+                  <div className="col-12 col-md-6 col-lg p-1 form_group">
                     <p className="input_label">Search:</p>
                     <input
                       required
                       type="text"
                       className="form-control w-100 input-height"
-                      placeholder={"Search Job / Employer"}
+                      placeholder="Search Job / Employer"
                       value={search}
-                      name={"name"}
+                      name="name"
                       onChange={(e) => onSearch(e)}
                     />
                   </div>
-                  {/* <div
-                    className={
-                      props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-3"
-                        : "col p-1 form_group"
-                    }
-                  >
-                    <p className="input_label">Company Name:</p>
-                    <input
-                      required
-                      type="text"
-                      className="form-control w-100"
-                      placeholder={"Employer name"}
-                      value={company}
-                      name={"compnay_name"}
-                      onChange={(e) => {
-                        setCompany(e.target.value);
-                        setPageNo(1);
-                        }}
-                        />
-                        </div> */}
-                  <div
-                    className={
-                      props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-3"
-                        : "col p-1 form_group"
-                    }
-                  >
+
+                  {/* Filter by Category */}
+                  <div className="col-12 col-md-6 col-lg p-1 form_group">
                     <p className="input_label">Filter by Job Category:</p>
                     <div className="select_div">
                       <SelectBox
-                        Width={"yes"} options={Json && Json?.Category ? Json?.Category.map((option) => ({
+                        Width="yes"
+                        options={Json?.Category?.map((option) => ({
                           value: option.id,
                           label: option.value,
-                        })) : []}
+                        })) || []}
                         selectedValue={categoryFilterValue}
                         onChange={(e) => {
                           setCategoryFilterValue(e ? e.value : null);
                           setPageNo(1);
                         }}
-                        type={"category"}
+                        type="category"
                       />
                     </div>
                   </div>
-                  <div
-                    className={
-                      props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-3"
-                        : "col p-1 form_group"
-                    }
-                  >
+
+                  {/* Filter by Job Type */}
+                  <div className="col-12 col-md-6 col-lg p-1 form_group">
                     <p className="input_label">Filter by Job Type:</p>
                     <div className="select_div">
                       <SelectBox
-                        Width={"yes"} options={(FilterJson.job_type.map((option) => ({
+                        Width="yes"
+                        options={(FilterJson?.job_type || []).map((option) => ({
                           value: option,
                           label: option,
-                        })) || [])}
+                        }))}
                         selectedValue={jobSwapFilterValue}
                         onChange={(e) => {
                           setJobSwapFilterValue(e ? e.value : null);
                           setPageNo(1);
                         }}
-                        type={"job_type"}
+                        type="job_type"
                       />
                     </div>
                   </div>
-                  <div
-                    className={
-                      props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-3"
-                        : "col p-1 form_group"
-                    }
-                  >
+
+                  {/* Filter by Skill */}
+                  <div className="col-12 col-md-6 col-lg p-1 form_group">
                     <p className="input_label">Filter by Job Skill:</p>
                     <div className="select_div">
                       <SelectBox
-                        Width={"yes"} options={(Skill.map((option) => ({
+                        Width="yes"
+                        options={(Skill || []).map((option) => ({
                           value: option.value,
                           label: option.value,
-                        })) || [])}
+                        }))}
                         selectedValue={SkillFilterValue}
                         onChange={(e) => {
                           setSkillFilterValue(e ? e.value : null);
                           setPageNo(1);
                         }}
-                        type={"skill"}
+                        type="skill"
                       />
                     </div>
                   </div>
-                  <div
-                    className={
-                      props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-3"
-                        : "col p-1 form_group"
-                    }
-                  >
+
+                  {/* Filter by Location */}
+                  <div className="col-12 col-md-6 col-lg p-1 form_group">
                     <p className="input_label">Filter by Job Location:</p>
                     <div className="select_div">
                       <SelectBox
-                        Width={"yes"}
+                        Width="yes"
                         options={(states || []).map((state) => ({
                           value: state.name,
                           id: state.id,
@@ -285,36 +247,45 @@ function Job(props) {
                         }))}
                         type="location"
                         selectedValue={locationFilterValue || ""}
-                        onChange={async (e) => {
+                        onChange={(e) => {
                           setLocationFilterValue(e ? e.value : null);
                           setPageNo(1);
-
                         }}
-
                       />
                     </div>
                   </div>
-                  <div className={props.employee_id ? "d-none" : "text-end col-xl-12"}>
-                    <div className="float-md-right d-flex">
-                      <CustomButton
-                        className="font-size-3 rounded-3 btn btn-primary border-0"
-                        onClick={() => editJob("0")}
-                        title="Add Jobs"
-                      >
-                        Add Job
-                      </CustomButton>
-                      <div className="mt-4">
-                        <CommonThreeDots tableName={"job"} tableData={allJob} />
+
+                  {/* Add Job + More Options */}
+                  {!props.employee_id && (
+                    <div className="col-12 text-end mt-2">
+                      <div className="d-flex flex-wrap justify-content-end gap-2">
+                        <CustomButton
+                          className="btn btn-primary rounded-3 border-0"
+                          onClick={() => editJob("0")}
+                          title="Add Jobs"
+                        >
+                          Add Job
+                        </CustomButton>
+
+                        <div className="mt-1">
+                          <CommonThreeDots tableName="job" tableData={allJob} />
+                        </div>
+
+                        <button
+                          className="btn btn-primary btn-sm mx-2 border-0"
+                          onClick={() => setOpenPermission("0")}
+                          title="Hide Columns"
+                        >
+                          <FaEyeSlash />
+                        </button>
                       </div>
-                      <button className=" btn-sm btn-primary border-0 mx-2"
-                        onClick={() => setOpenPermission("0")}
-                        title="Hide Columns "
-                      >
-                        <FaEyeSlash /></button>
+
+                      <small className="text-danger">{searcherror}</small>
                     </div>
-                    <small className="text-danger">{searcherror}</small>
-                  </div>
+                  )}
+
                 </div>
+
               </div>
               {/*<-- Job List Table -->*/}
               <JobTable

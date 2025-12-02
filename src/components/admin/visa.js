@@ -164,10 +164,10 @@ export default function Visa() {
                   className={
                     userType === "company"
                       ? "d-none"
-                      : "row m-0 align-items-center"
+                      : "row m-0 align-items-start"
                   }
                 >
-                  <div className="col p-1 form_group mb-3">
+                  <div className="col-sm-12 col-sx-12 col-md-6 col-lg-2 col-xl-2 p-1 form_group mb-3">
                     <p className="input_label">Search Candidate:</p>
                     <input
                       required
@@ -179,7 +179,7 @@ export default function Visa() {
                       onChange={(e) => onSearch(e)}
                     />
                   </div>
-                  <div className="col p-1 form_group mb-3">
+                  <div className="col-sm-12 col-sx-12 col-md-6 col-lg-2 col-xl-2 p-1 form_group mb-3">
                     <p className="input_label">Filter by Visa Country:</p>
                     <div className="select_div">
                       <SelectBox
@@ -197,7 +197,7 @@ export default function Visa() {
                       />
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-3">
+                  <div className="col-sm-12 col-sx-12 col-md-6 col-lg-2 col-xl-2 p-1 form_group mb-3">
                     <p className="input_label">Filter by Visa Status:</p>
                     <div className="select_div">
                       <SelectBox
@@ -215,7 +215,7 @@ export default function Visa() {
                       />
                     </div>
                   </div>
-                  {VisStatusFilterValue && <div className={"col p-1 form_group mb-3"}>
+                  {VisStatusFilterValue && <div className={"col-sm-12 col-sx-12 col-md-6 col-lg-2 col-xl-2 p-1 form_group mb-3"}>
                     <p className="input_label">Filter by Visa Sub Status:</p>
                     <div className="select_div">
                       <SelectBox
@@ -233,7 +233,7 @@ export default function Visa() {
                       />
                     </div>
                   </div>}
-                  <div className="col p-1 form_group mb-3">
+                  <div className="col-sm-12 col-sx-12 col-md-6 col-lg-2 col-xl-2 p-1 form_group mb-3">
                     <p className="input_label">Filter by Application type:</p>
                     <div className="select_div">
                       <SelectBox
@@ -251,10 +251,9 @@ export default function Visa() {
                       />
                     </div>
                   </div>
-                  <div className={"col form_group p-0"}>
-                    <button
-                      className="btn btn-primary w-100"
-                      onClick={() => {
+                  <div class="col-sm-12 col-md-6 col-lg-2 col-xl-2 mt-7">
+                    <div class="d-flex align-items-center gap-2">
+                      <button class="btn btn-primary" onClick={() => {
                         const clearFiltersByPageName = () => {
                           setInterestedFilterValue("")
                           setVisaSubStatusFilterValue("")
@@ -265,13 +264,10 @@ export default function Visa() {
                           setEmpId("");
                         };
                         clearFiltersByPageName();
-                      }}
-                    >
-                      Reset
-                    </button>
-                  </div>
-                  <div className="mt-4">
-                    <CommonThreeDots tableName={"visa"} tableData={allVisa} />
+                      }}>Reset</button>
+                      <span className="mt-3">
+                        <CommonThreeDots tableName={"visa"} tableData={allVisa} /></span>
+                    </div>
                   </div>
                 </div>
                 {/*<-- Job Search and Filter -->*/}
