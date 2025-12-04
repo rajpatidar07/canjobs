@@ -11,6 +11,7 @@ import useSessionCheck from "../common/admin_session";
 import { GoSidebarCollapse } from "react-icons/go";
 const AdminHeader = ({ heading, toggleSidebar, isSidebarOpen }) => {
   useSessionCheck();
+  
   /*States */
   const [showChangePass, setShowChangePass] = useState(false);
   const [showSettings, setSettings] = useState(false);

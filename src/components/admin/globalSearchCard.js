@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function GlobalSearchCard(props) {
+   
+  /* Click function to search */
   const handleSearchClick = () => {
     if (props.title === "Client Details") {
       localStorage.setItem("company_id", props.id);
@@ -10,6 +12,7 @@ function GlobalSearchCard(props) {
     }
     props.close();
   };
+
   return (
     <Link
       className="py-1 border-bottom w-100"
