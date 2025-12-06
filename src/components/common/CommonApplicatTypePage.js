@@ -198,7 +198,7 @@ export default function CommonApplicatTypePage() {
           <div className="container-fluid">
             <div className="d-flex justify-content-between align-items-center mt-3 w-50">
               {/* MAIN TYPE */}
-              <div className="form-group col-md-6">
+              <div className="form-group col-md-6 col-sm-12 col-xs-12">
                 <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
                   Applicant's Type:
                 </label>

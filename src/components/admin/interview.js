@@ -62,8 +62,8 @@ export default function ManageInterview() {
                   <h3 className="font-size-6 mb-0">Interview</h3>
                 </div>
                 {/*<-- Search interview -->*/}
-                <div className="row m-0 align-items-center">
-                  <div className="col p-1 form_group mb-3">
+                <div className="row m-0 align-items-end">
+                  <div className="col-12 col-md-4 col-lg-5 col-xl-5 p-1 form_group mb-3">
                     <p className="input_label">Search by Candidate's Name:</p>
                     <input
                       required
@@ -76,7 +76,7 @@ export default function ManageInterview() {
                       maxLength={30}
                     />
                   </div>
-                  <div className="col p-1 form_group mb-3">
+                  <div className="col-12 col-md-4 col-lg-5 col-xl-5  p-1 form_group mb-3">
                     <p className="input_label">Filter by Status:</p>
                     <div className="select_div">
                       <select
@@ -95,7 +95,7 @@ export default function ManageInterview() {
                       </select>
                     </div>
                   </div>
-                  <div className="mt-2">
+                  <div className="col-12 col-md-4 col-lg-1 col-xl-1 p-1 mb-6">
                     <CommonThreeDots
                       tableName={"interview"}
                       tableData={allInterviews}

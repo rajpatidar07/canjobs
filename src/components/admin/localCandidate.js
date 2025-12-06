@@ -40,15 +40,15 @@ export default function LocalCandidate() {
         {/* <AdminHeader heading={"Local Candidate"} /> */}
         {/* <!-- navbar- --> */}
         {/* <AdminSidebar heading={"Local Candidate"} /> */}
-        <div className="dashboard-main-container mt-14" id="dashboard-body">
+        <div className="dashboard-main-container mt-14 px-2 px-md-3" id="dashboard-body">
           <div className="container-fluid">
-            <div className="mb-18">
-              <div className="mb-4 align-items-center">
-                <div className="page___heading">
+            <div className="mb-18 mb-md-24">
+              <div className="mb-4 d-flex flex-column flex-md-row align-items-start align-items-md-center">
+                <div className="page___heading mb-3 mb-md-0">
                   <h3 className="font-size-6 mb-0">Local Candidate</h3>
                 </div>
                 {/*<-- Search Local Candidate -->*/}
-                <div className="row m-0 align-items-center">
+                <div className="row m-0 align-items-center flex-wrap">
                   {/* Employees filter's */}
                   <ApplicantsFilter
                     setSearch={setSearch}

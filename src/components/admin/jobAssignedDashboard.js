@@ -16,7 +16,7 @@ export default function JobAssignedDashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
   /*Shorting states */
-  const [columnName, setcolumnName] = useState("admin_id");
+  const [columnName, setColumnName] = useState("admin_id");
   const [sortOrder, setSortOrder] = useState("DESC");
   /* Function to get the Amin data*/
   const AdminData = async () => {
@@ -68,7 +68,7 @@ export default function JobAssignedDashboard() {
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
-    setcolumnName(columnName);
+    setColumnName(columnName);
     setCurrentPage(1);
   };
   return (
@@ -79,12 +79,12 @@ export default function JobAssignedDashboard() {
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manager's Dashboard"} />
 
-        <div className={"dashboard-main-container mt-14"} id="dashboard-body">
+        <div className={"dashboard-main-container mt-2 mt-lg-14"} id="dashboard-body">
           <div className="container-fluid">
-            <div className="mb-18">
+            <div className="mb-4 mb-lg-18">
               <div className="mb-4 align-items-center">
                 <div className="page___heading">
-                  <h3 className="font-size-6 mb-0">Job Assigned Dashboard</h3>
+                  <h3 className="font-size-4 font-size-lg-6 mb-0">Job Assigned Dashboard</h3>
                 </div>
                 {/* <!-- Manager Search and Filter --> */}
                 <div className="row m-0 align-items-center">
@@ -109,7 +109,7 @@ export default function JobAssignedDashboard() {
                   <Loader />
                 </div>
               ) : (
-                <div className="row p-3 w-100 m-0">
+                <div className="row p-1 p-lg-3 w-100 m-0">
                   {/* <Accordion
                     className="w-100 p-0 m-0 border-0"
                     defaultActiveKey="1"
