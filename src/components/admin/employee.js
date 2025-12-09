@@ -111,7 +111,7 @@ function Employee(props) {
                   <h3 className="font-size-6 mb-0">Applicants</h3>
                 </div>
                 {/* <!-- Employee Search and Filter- --> */}
-                <div className="row m-0 align-items-center">
+                <div className=" m-0 ">
                   {/* Employees filter's */}
                   <ApplicantsFilter
                     setSearch={setSearch}

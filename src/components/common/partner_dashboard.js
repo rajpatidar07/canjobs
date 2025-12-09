@@ -27,10 +27,10 @@ function PartnerDashboard() {
   //   const [skillFilterValue, setSkillFilterValue] = useState(
   //     /*props ? props.skill : */ ""
   //   );
-  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
+  const [pageNo, setPageNo] = useState(localStorage.getItem("PageNo") || 1);
   //   const [educationFilterValue, setEducationFilterValue] = useState("");
   const [search, setSearch] = useState("");
-  const [searcherror, setSearchError] = useState("");
+  const [searchError, setSearchError] = useState("");
   //   let [SkillList, setSkillList] = useState([]);
   //   let [EducationList, setEducationList] = useState([]);
   let user_type = localStorage.getItem("userType");
@@ -45,7 +45,7 @@ function PartnerDashboard() {
   const onSearch = (e) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
-    // setpageNo(1);
+    // setPageNo(1);
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Partner Name cannot start with a number.");
@@ -106,7 +106,7 @@ function PartnerDashboard() {
                 </div>
                 {/* <!-- Agent Search and Filter- --> */}
                 <div className="row m-0 align-items-center">
-                  <div className={"col p-1 form_group"}>
+                  <div className={"col-md-8 col-12 p-1 form_group"}>
                     <p className="input_label">Search Partner:</p>
                     <input
                       required
@@ -118,7 +118,7 @@ function PartnerDashboard() {
                       onChange={(e) => onSearch(e)}
                     />
                   </div>
-                  <div className="col px-1 form_group mt-4 text-right">
+                  <div className="col-md-4 col-12 px-1 form_group mt-4 text-right">
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
                       onClick={() => EditAgent("0")}
@@ -129,7 +129,7 @@ function PartnerDashboard() {
                   </div>
                   <CommonThreeDots tableName={"agent"} />
                 </div>
-                <small className="text-danger">{searcherror}</small>
+                <small className="text-danger">{searchError}</small>
               </div>
               <div className="row">
                 {/* <!-- Agent List Table- --> */}
@@ -140,7 +140,7 @@ function PartnerDashboard() {
                       apiCall={apiCall}
                       setApiCall={setApiCall}
                       pageNo={pageNo}
-                      setpageNo={setpageNo}
+                      setpageNo={setPageNo}
                       EditAgent={EditAgent}
                       user={user_type}
                       ShowDeleteAlert={ShowDeleteAlert}
@@ -156,7 +156,7 @@ function PartnerDashboard() {
                       apiCall={apiCall}
                       setApiCall={setApiCall}
                       pageNo={pageNo}
-                      setpageNo={setpageNo}
+                      setpageNo={setPageNo}
                       EditAgent={EditAgent}
                       user={user_type}
                       ShowDeleteAlert={ShowDeleteAlert}

@@ -79,7 +79,7 @@ export default function JobAssignedDashboard() {
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manager's Dashboard"} />
 
-        <div className={"dashboard-main-container mt-2 mt-lg-14"} id="dashboard-body">
+        <div className={"dashboard-main-container mt-12 mt-lg-14"} id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-4 mb-lg-18">
               <div className="mb-4 align-items-center">
@@ -88,7 +88,7 @@ export default function JobAssignedDashboard() {
                 </div>
                 {/* <!-- Manager Search and Filter --> */}
                 <div className="row m-0 align-items-center">
-                  <div className="col p-1 form_group mb-3">
+                  <div className="col-md-6 col-sm-12 col-xs-12 p-1 form_group mb-3">
                     <p className="input_label">Search:</p>
                     <input
                       required

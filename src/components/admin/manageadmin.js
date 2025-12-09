@@ -72,9 +72,7 @@ function ManageAdmin() {
           userData.data.filter((item) => item.admin_type === "manager")
             .length !== 0
         ) {
-          OnManagerDetailClick(
-            userData.data.filter((item) => item.admin_type === "manager")[0]
-          );
+          OnManagerDetailClick(userData.data.filter((item) => item.admin_type === "manager")[0]);
         }
         if (apiCall === true) {
           let Admin_name = userData.data.filter(
@@ -228,13 +226,13 @@ function ManageAdmin() {
         >
           <div className="container-fluid">
             <div className="row">
-              <div className="col-6 mb-18">
+              <div className="col-lg-6 col-12 mb-18">
                 <div className="mb-4 align-items-center">
                   <div className="page___heading">
                     <h3 className="font-size-6 mb-0">Admin</h3>
                   </div>
                   <div className="row m-0 align-items-center">
-                    <div className="col p-1 form_group mb-3">
+                    <div className="col-md-4 col-12 p-1 form_group mb-3">
                       <p className="input_label">Search:</p>
                       <input
                         required
@@ -249,7 +247,7 @@ function ManageAdmin() {
                         }}
                       />
                     </div>
-                    <div className="col p-1 form_group mb-3">
+                    <div className="col-md-4 col-12 p-1 form_group mb-3">
                       <p className="input_label">Filter by Admin:</p>
                       <div className="select_div">
                         <SelectBox
@@ -266,7 +264,7 @@ function ManageAdmin() {
                         />
                       </div>
                     </div>
-                    <div className="col px-1 form_group mt-4 text-right">
+                    <div className="col-md-4 col-12 px-1 form_group mt-4 text-right">
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"
                         onClick={() => editAdmin("0")}
@@ -301,7 +299,7 @@ function ManageAdmin() {
                 }
               </div>
               {showManagerDetailBox && (
-                <div className="card p-3 mt-2 col-6 mb-18">
+                <div className="card p-3 mt-2 col-lg-6 col-12 mb-18">
                   <div className="mb-4 align-items-center">
                     <div className="page___heading">
                       <h3 className="font-size-6 mb-0">Admin</h3>

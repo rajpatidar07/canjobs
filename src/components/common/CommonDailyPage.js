@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import ManageDailyCallLog from '../admin/ManageDailyCallLog';
 import ManageHourlyLog from '../admin/ManageHourlyLog';
-import ManageConsultation from '../admin/ManageConsultation'; 
+import ManageConsultation from '../admin/ManageConsultation';
 import { useLocation } from 'react-router-dom';
 import ManagePayment from '../admin/ManagePaymentInvoices';
 
 const CommonDailyPage = () => {
-  const location = useLocation();
+    const location = useLocation();
     const [selectedCard, setSelectedCard] = useState(1);
 
     // Utility to parse query params
@@ -29,22 +29,22 @@ const CommonDailyPage = () => {
         {
             id: 1,
             title: 'Manage Daily Call Log',
-            content: <ManageDailyCallLog/>
+            content: <ManageDailyCallLog />
         },
         {
             id: 2,
             title: 'Manage Daily Hour Log',
-            content: <ManageHourlyLog/>
+            content: <ManageHourlyLog />
         },
         {
             id: 3,
             title: 'Manage Consultation',
-            content: <ManageConsultation/>
+            content: <ManageConsultation />
         },
-         {
+        {
             id: 4,
             title: 'Manage Payments',
-            content: <ManagePayment/>
+            content: <ManagePayment />
         }
     ];
 
@@ -56,11 +56,11 @@ const CommonDailyPage = () => {
         <div className="site-wrapper overflow-hidden bg-default-2">
             <div className="dashboard-main-container mt-14" id="dashboard-body">
                 <div className="container-fluid h-auto">
-                                <div className="mb-4 align-items-center">
-                                  <div className="page___heading">
-                                    <h3 className="font-size-6 mb-0">Manage Daily Pages</h3>
-                                  </div>
-                                </div>
+                    <div className="mb-4 align-items-center">
+                        <div className="page___heading">
+                            <h3 className="font-size-6 mb-0">Manage Daily Pages</h3>
+                        </div>
+                    </div>
                     <div className="row justify-content-center mb-4 mt-5">
                         {cardData.map((card) => (
                             <div
@@ -81,7 +81,7 @@ const CommonDailyPage = () => {
                         ))}
                     </div>
 
-                    <div className="content-area daily-page-animated daily-page-fadeIn p-4 border rounded bg-light shadow-sm">
+                    <div className="content-area daily-page-animated daily-page-fadeIn p-2 p-md-4 border rounded bg-light shadow-sm">
                         <h4>{cardData[selectedCard - 1].title}</h4>
                         <p>{cardData[selectedCard - 1].content}</p>
                     </div>

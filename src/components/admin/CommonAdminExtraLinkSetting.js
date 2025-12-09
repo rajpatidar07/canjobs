@@ -43,12 +43,12 @@ const CommonAdminExtraLinkSetting = () => {
   return (
     <div className="overflow-hidden bg-default-2 ">
       {/* Tab Buttons */}
-      <div className="btn-group mt-15 mx-5" role="group" aria-label="Tab Options">
+      <div className="d-flex flex-column flex-md-row mt-3 mt-md-15 mx-2 mx-md-5" role="group" aria-label="Tab Options">
         {visibleTabs.map((item, idx) => (
           <button
             key={idx}
             type="button"
-            className={`btn ${
+            className={`btn mb-2 mb-md-0 mr-md-2 ${
               activeTab === item.name ? 'btn-primary' : 'btn-outline-primary'
             }`}
             onClick={() => setActiveTab(item.name)}
