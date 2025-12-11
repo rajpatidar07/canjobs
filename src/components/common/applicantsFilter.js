@@ -86,6 +86,7 @@ export default function ApplicantsFilter({
       //     setSkillList(Json.data.data.Skill);
       //     setEducationList(Json.data.data.Education);
       // }
+      
       if (agentjson.length === 0) {
         setAgentList([]);
       } else {
