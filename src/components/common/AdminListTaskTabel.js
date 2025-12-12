@@ -7,7 +7,7 @@ export default function AdminListTaskTable(props) {
     const [AdminTaskData, setAdminTaskData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [taskStatus/*, setTaskStatus*/] = useState("");
-    const [columnName, setcolumnName] = useState("updated_on");
+    const [columnName, setColumnName] = useState("updated_on");
     const [sortOrder, setSortOrder] = useState("DESC");
     // let adminEmail = localStorage.getItem("admin_id");
 
@@ -66,10 +66,11 @@ export default function AdminListTaskTable(props) {
         getAdminList();
         // eslint-disable-next-line
     }, [taskStatus, props.pageNo, props.status, props.TaskUserType, props.adminId, props.employeeId, props.filter_by_time,  sortOrder, columnName]);
+   
     /*Sorting Function */
     const handleSort = (columnName) => {
         setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
-        setcolumnName(columnName);
+        setColumnName(columnName);
     };
     return (
         <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
@@ -236,19 +237,20 @@ export default function AdminListTaskTable(props) {
                                                         </p>
                                                     </td>
                                                     {/* <td className=" py-5">
-                                    <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                        {data.assigned_to_name === null ||
-                                                        data.assigned_to_name === undefined ||
-                                                        data.assigned_to_name === "undefined" ||
-                                                        data.assigned_to_name === "" ||
-                                                        data.assigned_to_name === "0" ? (
-                                                        <span className="font-size-3  mb-0">N/A</span>
-                                                    ) : (
-                                                        data.assigned_to_name
-                                                    )} 
-                                        raj.we2code@gmail.com
-                                    </p>
-                                </td> */}
+                                                            <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                                                {data.assigned_to_name === null ||
+                                                                                            data.assigned_to_name === undefined ||
+                                                                                            data.assigned_to_name === "undefined" ||
+                                                                                            data.assigned_to_name === "" ||
+                                                                                            data.assigned_to_name === "0" ? (
+                                                                                            <span className="font-size-3  mb-0">N/A</span>
+                                                                                        ) : (
+                                                                                            data.assigned_to_name
+                                                                                        )} 
+                                                                            raj.we2code@gmail.com
+                                                                        </p>
+                                                                    </td> 
+                                                        */}
                                                     <td className="py-5 ">
                                                         {data.assigned_user_type === null ||
                                                             data.assigned_user_type === undefined ||
@@ -268,14 +270,11 @@ export default function AdminListTaskTable(props) {
                                                             <div className="text-gray font-size-2 m-0 text-center">{data.total_tasks || 0}</div>
                                                         </div>
                                                     </td>
-
                                                     <td className=" py-5">
                                                         <div className="m-0">
                                                             <div className="text-gray font-size-2 m-0 text-center">{data.total_completed_task || 0}</div>
                                                         </div>
                                                     </td>
-
-
                                                     <td className=" py-5">
                                                         <div className="m-0">
                                                             <div className="text-gray font-size-2 m-0 text-center">{data.total_uncompleted_task || 0}</div>

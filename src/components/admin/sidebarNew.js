@@ -41,7 +41,7 @@ import { SiStudyverse } from "react-icons/si";
 import { FaGear, FaPersonShelter, FaXmark } from "react-icons/fa6";
 // import {
 //   AddApplicanTypeApi,
-//   DeleteApplicanTypeApi,
+//   DeleteApplicantTypeApi,
 //   getApplicanTypeApi,
 // } from "../../api/api";
 // import TableInput from "../common/TableInput";
@@ -185,7 +185,7 @@ const AdminSidebar = ({ heading, setPageHeading, toggleSidebar }) => {
   //     id: id,
   //   };
   //   try {
-  //     const response = await DeleteApplicanTypeApi(data);
+  //     const response = await DeleteApplicantTypeApi(data);
   //     if (response.status === 1 || response.status === "1") {
   //       toast.error("Applicant Type deleted Successfully", {
   //         position: toast.POSITION.TOP_RIGHT,

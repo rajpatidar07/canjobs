@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { DeleteApplicanTypeApi } from "../../api/api";
+import { DeleteApplicantTypeApi } from "../../api/api";
 import Pagination from "./pagination";
 import Loader from "../common/loader";
 import SAlert from "./sweetAlert";
@@ -51,7 +51,7 @@ function ApplicantTypeTable(props) {
     async function deleteApplicantType(id) {
         const data = { id };
         try {
-            const response = await DeleteApplicanTypeApi(data);
+            const response = await DeleteApplicantTypeApi(data);
             if (response.status === 1 || response.status === "1") {
                 toast.success("Applicant Type deleted successfully", {
                     position: toast.POSITION.TOP_RIGHT,

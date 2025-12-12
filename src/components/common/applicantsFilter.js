@@ -75,6 +75,7 @@ export default function ApplicantsFilter({
   //     setsearchcall(false);
   //   }
   // }, [searchcall]);
+  
   const JsonData = async () => {
     try {
       // let Json = await GetFilter();

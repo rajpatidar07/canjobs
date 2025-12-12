@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import SAlert from "../common/sweetAlert";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Pagination from "../common/pagination";
 import Loader from "../common/loader";
 import { LiaUserEditSolid } from "react-icons/lia";
@@ -25,7 +24,7 @@ export default function AgentTable(props) {
   //   // let [documentModal, setDocumentModal] = useState(false);
   //   let [showStatusChangeModal, setShowStatusChange] = useState(false);
   /*data and id states */
-  const [agenteData, setAgentData] = useState([]);
+  const [agentData, setAgentData] = useState([]);
   //   const [alredyApplied, setAlredyApplied] = useState(false);
   //   let [employeeId, setemployeeId] = useState();
   /*delete state */
@@ -307,14 +306,14 @@ export default function AgentTable(props) {
               </thead>
               <tbody>
                 {/* Map function to show the data in the list*/}
-                {totalData === 0 || agenteData.length === 0 ? (
+                {totalData === 0 || agentData.length === 0 ? (
                   <tr>
                     <th colSpan={6} className="bg-white text-center">
                       No Data Found
                     </th>
                   </tr>
                 ) : (
-                  (agenteData || []).map((data) => (
+                  (agentData || []).map((data) => (
                     <React.Fragment key={data.id}>
                       <tr className="text-capitalize applicant_row">
                         <td className=" py-5">
@@ -559,7 +558,7 @@ export default function AgentTable(props) {
             currentPage={props.pageNo}
             setCurrentPage={props.setpageNo}
             total={totalData}
-            count={agenteData.length}
+            count={agentData.length}
           />
         </div>
       </div>

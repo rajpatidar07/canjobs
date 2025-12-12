@@ -361,7 +361,7 @@ export const AddApplicanTypeApi = async (props) => {
 };
 
 /*Delete Applicant Type and sub types  api */
-export const DeleteApplicanTypeApi = async (props) => {
+export const DeleteApplicantTypeApi = async (props) => {
   const response = await axios.post(
     `${API_URL}admin/deleteApplicantType`,
     props,

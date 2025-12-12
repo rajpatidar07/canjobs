@@ -21,7 +21,6 @@ import Loader from "./loader";
 import FolderList from "./Document folder/FolderList";
 import EditDocNameForm from "./Document folder/EditDocNameFOrm";
 import SAlert from "./sweetAlert";
-// import ExcelToPdfConverter from "./Common function/ExcelToPdfConverter";
 // import AddFolderModal from "./Document folder/AddFolderModal";
 import ConvertPPT from "./Common function/ConvertPPT";
 import { Dropdown, Form } from "react-bootstrap";
@@ -33,7 +32,6 @@ import CreateWordFile from "../forms/user/CreateWordFile";
 export default function ApplicantTypeDocuments(props) {
   const [docFileBase, setDocFileBase] = useState([]);
   // let [openFolderModal, setOPenFolderModal] = useState(false);
-
   let location = useLocation();
   const [state, setState] = useState({
     docTypeName: "",
