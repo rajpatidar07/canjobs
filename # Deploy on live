@@ -2,6 +2,7 @@ Today's Update
 Date:28/11/25.
 1. Added a condition to hide the note box in the job list on the employer details page for both employers and candidates .
 2. Removed the payment invoice option from the Payment tab on the Employer Details page for the Employers module .
+3. Comment out the ring central code from the portal.
 
 # Deploy on live
 Date:27/11/25

@@ -144,7 +144,7 @@ export default function ApplicantsFilter({
         className={
           // (skill === null || skill === undefined)
           // ?
-          "col-sm-12 col-sx-12 col-md-6 col-lg-1 col-xl-1 col-md-4 col-xl-2 form_group p-2"
+          "col-sm-12 col-sx-12 col-md-6 col-lg col-xl col-md-4 form_group p-2"
           // : "d-none"
         }
       >
@@ -286,7 +286,7 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) && user_type === "admin"
-            ? "col-sm-12 col-sx-12 col-md-6 col-lg-1 col-xl-1 col-md-4 col-xl-2 form_group p-2"
+            ? "col-sm-12 col-sx-12 col-md-6 col-lg col-xl col-md-4 form_group p-2"
             : "d-none"
         }
       >
@@ -311,7 +311,7 @@ export default function ApplicantsFilter({
           (skill === null || skill === undefined) &&
             user_type === "admin" &&
             portal === "study"
-            ? "col-sm-12 col-sx-12 col-md-6 col-lg-1 col-xl-1 col-md-4 col-xl-2 form_group p-2"
+            ? "col-sm-12 col-sx-12 col-md-6 col-lg col-xl col-md-4 form_group p-2"
             : "d-none"
         }
       >
@@ -334,7 +334,7 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) && user_type === "admin"
-            ? "col-sm-12 col-sx-12 col-md-6 col-lg-1 col-xl-1 col-md-4 col-xl-2 form_group p-2 "
+            ? "col-sm-12 col-sx-12 col-md-6 col-lg col-xl col-md-4 form_group p-2 "
             : "d-none"
         }
       >
@@ -357,7 +357,7 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) && pageName === "employee"
-            ? "col-sm-12 col-sx-12 col-md-6 col-lg-1 col-xl-1 col-md-4 col-xl-2 form_group p-2 "
+            ? "col-sm-12 col-sx-12 col-md-6 col-lg col-xl col-md-4 form_group p-2 "
             : "d-none"
         }
       >
@@ -387,7 +387,7 @@ export default function ApplicantsFilter({
               pageName === "12" ||
               pageName === 12 ||
               pageName === "employee")
-            ? "col-sm-12 col-sx-12 col-md-6 col-lg-1 col-xl-1 col-md-4 col-xl-2 form_group p-2"
+            ? "col-sm-12 col-sx-12 col-md-6 col-lg col-xl col-md-4 form_group p-2"
             : "d-none"
         }
       >
@@ -413,7 +413,7 @@ export default function ApplicantsFilter({
             ([14, "14", 15, "15", 16, "16", 4, "4"].includes(pageName) ||
               pageName === "employee") &&
             !applicantTypeChildId
-            ? "col-sm-12 col-sx-12 col-md-6 col-lg-1 col-xl-1 col-md-4 col-xl-2 form_group p-2"
+            ? "col-sm-12 col-sx-12 col-md-6 col-lg col-xl col-md-4 form_group p-2"
             : "d-none"
         }
       >
@@ -440,9 +440,9 @@ export default function ApplicantsFilter({
       </div>
       {(header === "New Applicants" || header === "Manage Applicants") &&
         <>
-          <div className="col-sm-12 col-sx-12 col-md-6 col-lg-1 col-xl-1 col-md-4 col-xl-2 form_group p-2">
+          <div className="col-sm-12 col-sx-12 col-md-6 col-lg col-xl col-md-4 form_group p-2">
             <p className="input_label">
-              Filter by Consultation Opted  :
+             Consult Opted:
             </p>
             <select
               className={"form-control input-height"}
@@ -456,9 +456,9 @@ export default function ApplicantsFilter({
               <option value={"0"}>No</option>
             </select>
           </div>
-          <div className="col-sm-12 col-sx-12 col-md-6 col-lg-1 col-xl-1 col-md-4 col-xl-2 form_group p-2">
+          <div className="col-sm-12 col-sx-12 col-md-6 col-lg col-xl col-md-4 form_group p-2">
             <p className="input_label">
-              Filter by Consultation Date  :
+              Consultation Date:
             </p>
             <DatePicker
               selected={consultationStartDateFilterValue}
@@ -513,7 +513,7 @@ export default function ApplicantsFilter({
         </label>
       </div>
 
-      <div className={"col-sm-12 col-sx-12 col-md-6 col-lg-1 col-xl-1 col-md-4 col-xl-2 form_group p-2"}>
+      <div className={"col-sm-12 col-sx-12 col-md-6 col-lg col-xl col-md-4 form_group p-2"}>
         <button
           className="btn btn-primary w-100"
           onClick={() => {
