@@ -475,7 +475,7 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) && pageName === "employee"
-            ? "col form_group p-2"
+            ? "col form_group p-2 mt-7"
             : "d-none"
         }
       >
@@ -513,7 +513,7 @@ export default function ApplicantsFilter({
         </label>
       </div>
 
-      <div className={"col-sm-12 col-sx-12 col-md-6 col-lg col-xl col-md-4 form_group p-2"}>
+      <div className={"col-sm-12 col-sx-12 col-md-6 col-lg col-xl col-md-4 form_group p-2 mt-7"}>
         <button
           className="btn btn-primary w-100"
           onClick={() => {
