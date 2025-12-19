@@ -37,7 +37,6 @@ export default function CandidateSignup(props) {
   }
   const type = localStorage.getItem("linkedin");
   // USER SIGNUP VALIDATION
-
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     name: "",

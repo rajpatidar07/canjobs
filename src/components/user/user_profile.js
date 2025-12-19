@@ -4,7 +4,6 @@ import EmployementDetails from "../forms/user/employement";
 import PersonalDetails from "../forms/user/personal";
 import EducationDetails from "../forms/user/education";
 import ItSkills from "../forms/user/skills";
-import FilterJson from "../json/filterjson";
 import CustomButton from "../common/button";
 import LimaArrowProfile from "../common/LimaArrowProfile";
 import ContactPage from "../common/contactPage";
@@ -46,6 +45,7 @@ import PayentForm from "../forms/admin/payentForm";
 import ConvertTime from "../common/Common function/ConvertTime";
 import AddConsultationInCandidate from "../forms/admin/AddConsultationInCandidate";
 import ChatbotIcon from "../common/ChatBot.js/ChatbotIcon";
+import filterjson from "../json/filterjson";
 // import { CallFunctionRIngCentral } from "../common/Common function/CallFunctionRIngCentral";
 // import CommonMakeCallFunction from "../common/Common function/CommonMakeCallFunction";
 // import ApplicantTypeTimeLine from "../common/ApplicantTypeTimeLine";
@@ -114,7 +114,7 @@ const NewUserProfile = (props) => {
   // let id = localStorage.getItem("employee_id");
   const name = localStorage.getItem("name");
   const employeeId = eid;
-  
+
   /*Function to get user Data */
   const UserData = async () => {
     try {
@@ -984,24 +984,27 @@ const NewUserProfile = (props) => {
                                         className="user_status_btn btn-primary rounded-pill font-size-3 px-3 py-1 text-white mr-2"
                                         onSelect={OnStatusChange}
                                       >
-                                        {(FilterJson.employee_status || []).sort(
-                                          (a, b) =>
-                                            ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"]
-                                              .indexOf(a.label.toLowerCase()) -
-                                            ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"]
-                                              .indexOf(b.label.toLowerCase())
-                                        ).map(
-                                          (item, index) => (
+                                        {(filterjson.employee_status || [])
+                                          .filter(item => ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"].includes(item.label.toLowerCase())
+                                          )
+                                          .sort(
+                                            (a, b) =>
+                                              ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"]
+                                                .indexOf(a.label.toLowerCase()) -
+                                              ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"]
+                                                .indexOf(b.label.toLowerCase())
+                                          )
+                                          .map((item, index) => (
                                             <Dropdown.Item
                                               key={index}
                                               value={item.value}
-                                              eventKey={index + 1}
+                                              eventKey={item.value}   // keep eventKey same as value if you want real mapping
                                               className="text-capitalize"
+                                              active={item.value === PersonalDetail.status}
                                             >
                                               {item.label}
                                             </Dropdown.Item>
-                                          )
-                                        )}
+                                          ))}
                                       </DropdownButton>
                                     )}
                                 </React.Fragment>
@@ -1259,9 +1262,9 @@ const NewUserProfile = (props) => {
                                     <Link
                                       className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
                                       to={`tel:+${PersonalDetail.contact_no}`}
-                                      // onClick={() => CommonMakeCallFunction(`+${PersonalDetail.contact_no}`, PersonalDetail.name, PersonalDetail.profile_photo
-                                      //   ? PersonalDetail.profile_photo
-                                      //   : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`)}
+                                    // onClick={() => CommonMakeCallFunction(`+${PersonalDetail.contact_no}`, PersonalDetail.name, PersonalDetail.profile_photo
+                                    //   ? PersonalDetail.profile_photo
+                                    //   : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`)}
                                     >
                                       <BiPhoneCall className="font-size-3 mr-4" />
                                       +{PersonalDetail.contact_no}
@@ -1276,9 +1279,9 @@ const NewUserProfile = (props) => {
                                     <Link
                                       className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
                                       to={`tel:+${PersonalDetail.other_contact_no}`}
-                                      // onClick={() => CallFunctionRIngCentral(PersonalDetail.other_contact_no, PersonalDetail.name, PersonalDetail.profile_photo
-                                      //   ? PersonalDetail.profile_photo
-                                      //   : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`)}
+                                    // onClick={() => CallFunctionRIngCentral(PersonalDetail.other_contact_no, PersonalDetail.name, PersonalDetail.profile_photo
+                                    //   ? PersonalDetail.profile_photo
+                                    //   : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`)}
                                     >
                                       <BiPhoneCall className="font-size-3 mr-4" />
                                       +{PersonalDetail.other_contact_no}

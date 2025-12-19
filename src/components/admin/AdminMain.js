@@ -69,7 +69,7 @@ export default function AdminMain() {
           top: 0,
           left: 0,
           height: "100vh",
-          zIndex: 1000,
+          // zIndex: 1000,
           transition: "width 0.3s ease",
           overflow: "hidden",
         }}
