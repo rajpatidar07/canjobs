@@ -37489,6 +37489,12 @@ button.bg-conch:focus {
   -webkit-box-orient: vertical;  
   overflow: hidden
   ;}
+.text-truncate-2{   
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden
+  ;}
 .text-left {
   text-align: left !important;
 }
@@ -38214,11 +38220,5 @@ a.text-conch:focus {
   }
 }
 
-.password-icon {
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  transform: translateY(-50%);
-  cursor: pointer;
-}
+
 /*# sourceMappingURL=maps/bootstrap.css.map */

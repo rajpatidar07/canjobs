@@ -1,58 +1,80 @@
 import React, { useEffect, useState } from "react";
-import FilterJson from "../json/filterjson";
-import Select from "react-select";
+// import FilterJson from "../json/filterjson";
+// import Select from "react-select";
 import { useNavigate, useLocation } from "react-router-dom";
 import Filterbox from "./filterbox";
-import filterjson from "../json/filterjson";
+import states from "../json/states";
 import { getJson } from "../../api/api";
-// eslint-disable-next-line no-use-before-define
-function SearchForm() {
+import SelectBox from "./Common function/SelectBox";
+function SearchForm({ setSearch, setJobLocation, setCategoryFilterValue }) {
   const location = useLocation();
   const path = location.pathname;
   const searchParams = new URLSearchParams(location.search);
   const search = searchParams.get("search");
   const country = searchParams.get("country");
   const user_type = localStorage.getItem("userType");
+  let [Json, setJson] = useState([]);
   let [state, setState] = useState({
     search: search ? search : "",
-    country: "",
+    country: [],
     country_value: country ? country : "",
   });
- let [Json , setJson] = useState([])
-  /*Function to get thejSon */
- const JsonData = async () =>{
-   let Json = await getJson()
-   setJson(Json)
- }
+  /*Function to get the jSon */
+  const JsonData = async () => {
+    try {
+      let Json = await getJson();
+      setJson(Json);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   let navigate = useNavigate();
   /*Function to set data to the search job by country */
   const onSelectChange = (option) => {
-    setState({ ...state, country_value: option.value });
+    setState({
+      ...state,
+      country_value: option.value,
+    });
   };
 
   /*Function to redender the data in the option of the select box*/
   useEffect(() => {
-    JsonData()
-    const options = (FilterJson.location || []).map((option) => ({
+    JsonData();
+    const options = (Object.keys(states) || []).map((option) => ({
       value: option,
       label: option,
     }));
-    setState({ ...state, country: options });
-  }, [FilterJson.location]);
+    setState({
+      ...state,
+      country: options,
+    });
+    // eslint-disable-next-line
+  }, [states]);
 
   /*Onclick Function to search */
   const Onsearch = () => {
     if (user_type === "company") {
-      navigate(
-        `/managejobs?search=${state.search}&country=${state.country_value}`
-      );
+      navigate(`/empsearch?search=${state.search}`);
+      setState({
+        ...state,
+        search: "",
+      });
     } else {
-      navigate(`/jobs?search=${state.search}&country=${state.country_value}`);
+      if (window.location.pathname === "/") {
+        setJobLocation(state.country_value)
+        setSearch(state.search)
+      } else {
+        navigate(`/jobs?search=${state.search}&country=${state.country_value}`);
+        setState({
+          ...state,
+          search: "",
+          country: "",
+        });
+      }
     }
   };
   return (
-    <form
-      action={user_type === "company" ? "/managejobs" : "/jobs"}
+    <form // action={user_type === "company" ? "/managejobs" : "/jobs"}
       className="search-form"
       data-aos="fade-up"
       data-aos-duration="800"
@@ -68,50 +90,84 @@ function SearchForm() {
                 id="keyword"
                 name="search"
                 value={state.search}
-                onChange={(e) => setState({ ...state, search: e.target.value })}
+                onChange={(e) =>
+                  setState({
+                    ...state,
+                    search: e.target.value,
+                  })
+                }
                 placeholder="Type Job title, keywords"
               />
-              <span className="h-100 w-px-50 pos-abs-tl d-flex ali gn-items-center justify-content-center font-size-6">
+              <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6 pt-4">
                 <i className="icon icon-zoom-2 text-primary font-weight-bold"></i>
               </span>
             </div>
-            {/* <!-- .select-city starts --> */}
-            <div className="form-group position-relative">
-              <Select
-                options={"" || state.country}
-                name="country"
-                id="country"
-                onChange={onSelectChange}
-                className="bg-white pl-13"
-              />
-             
-              <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
-                <i className="icon icon-pin-3 text-primary font-weight-bold"></i>
-              </span>
-            </div>
-            {/* <!-- ./select-city ends --> */}
+            {/* <!-- select-city starts --> */}
+            {user_type === "company" ? null : (
+              <div className="form-group position-relative">
+                {/* <Select
+                  options={"" || state.country}
+                  name="country"
+                  id="country"
+                  onChange={onSelectChange}
+                  className="bg-white pl-13"
+                />
+
+                <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
+                  <i className="icon icon-pin-3 text-primary font-weight-bold"></i>
+                </span> */}
+                {/* <select className="form-control" onChange={onSelectChange}>
+                  <option value="">Select location</option>
+                  {(state.country || []).map((item, index) => {
+                    return (
+                      <option value={item.value} key={index}>
+                        {item.label}
+                      </option>
+                    );
+                  })}
+                </select> */}
+                <SelectBox
+                  Width={"yes"}
+                  options={state ? state?.country : []}
+                  type={"country"}
+                  selectedValue={state.country_value}
+                  onChange={onSelectChange}
+                />
+              </div>
+            )}
           </div>
           {/* <!-- ./select-city ends --> */}
           <button
-            onClick={path === "/jobs" ? null : Onsearch}
-            className="btn btn-primary line-height-reset text-uppercase"
+            onClick={
+              /*path === "/jobs" ? null :*/
+              Onsearch
+            }
+            className="btn btn-primary line-height-reset text-uppercase main_search_button_home"
+            type="button"
           >
             Search
           </button>
         </div>
-
-        <div className="row m-0 job_filter_block mt-5">
-          <Filterbox
+        {path === "/jobs" ||
+          path === "/managejobs" ||
+          path === "/response" ||
+          user_type === "company" ? null : (
+          <div className="row m-0 job_filter_block mt-5">
+            {/* <Filterbox
             name="country"
             filterheading=" Jobs by Location"
             filterjson={filterjson.location}
-          />
-          <Filterbox
-            name="category"
-            filterheading=" Jobs by Category"
-            filterjson={Json.Category}
-          />
-        </div>
+            type={"location"}
+          /> */}
+            <Filterbox
+              name="category"
+              filterheading=" Jobs by Category"
+              filterjson={Json.Category}
+              type={"category"}
+              setCategoryFilterValue={setCategoryFilterValue}
+            />
+          </div>
+        )}
       </div>
     </form>
   );

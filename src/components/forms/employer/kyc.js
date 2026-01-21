@@ -9,7 +9,6 @@ import "react-toastify/dist/ReactToastify.css";
 function KycComplianceDetails(props) {
   const [loading, setLoading] = useState(false);
 
-  //// console.log(props.employerId);
   /* Functionality to close the modal */
 
   const close = () => {
@@ -41,11 +40,11 @@ function KycComplianceDetails(props) {
     name: [
       (value) =>
         value === "" || value === null || value.trim() === ""
-          ? "Pan card name is required"
+          ? "PAN card name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : value.length < 2
-          ? "Pan name  be of 2  or more letters"
+          ? "PAN name  be of 2  or more letters"
           : "",
     ],
 
@@ -53,34 +52,32 @@ function KycComplianceDetails(props) {
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Pincode is required"
-          : value.length < 6
+          : value.length < 6 || value.length > 6
           ? "Pincode should be of 6 digits"
           : "",
     ],
     pan_no: [
       (value) =>
         value === "" || value === null
-          ? "Pan no is required"
+          ? "PAN no is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : value.length < 10 || value.length > 10
-          ? "Pan no should be of 10 digits"
+          ? "PAN no should be of 10 digits"
           : !/^([A-Z]){5}([0-9]){4}([A-Z]){1}$/.test(value)
-          ? "Pan no should be of 6 alphabte and 4 digits"
+          ? "PAN no should be of 6 alphabte and 4 digits"
           : "",
     ],
     pan_date: [
       (value) =>
         value === "" || value === null || value.trim() === ""
-          ? "Pan card date is required"
+          ? "PAN card date is required"
           : "",
     ],
     address: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Address is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
           : value.length < 5
           ? "Address should be of 5  or more letters"
           : "",
@@ -131,31 +128,39 @@ function KycComplianceDetails(props) {
           ? "Invalid Fax"
           : "",
     ],
+    document: [
+      (value) =>
+        value === "" || value === null || value.trim() === ""
+          ? "Document is required"
+          : null,
+    ],
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setErrors, setState, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
   // API CALL
   const EmployerData = async () => {
-    let userData = await EmployerDetails(props.employerId);
-    if (
-      userData.data.kyc_detail.length === 0 ||
-      userData.data.kyc_detail === undefined ||
-      userData.data.kyc_detail === "0" ||
-      userData.data.kyc_detail === [] ||
-      userData.data.kyc_detail === null
-    ) {
-      setState(initialFormState);
-    } else {
-      setState(userData.data.kyc_detail[0]);
+    try {
+      let userData = await EmployerDetails(props.employerId);
+      if (
+        userData.data.kyc_detail.length === 0 ||
+        userData.data.kyc_detail === undefined ||
+        userData.data.kyc_detail === "0" ||
+        userData.data.kyc_detail === null
+      ) {
+        setState(initialFormState);
+      } else {
+        setState(userData.data.kyc_detail[0]);
+      }
+    } catch (err) {
+      console.log(err);
     }
-    //// console.log(userData.data.kyc_detail[0]);
   };
   useEffect(() => {
     props.employerId === undefined
       ? setState(initialFormState)
       : EmployerData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+   // eslint-disable-next-line
   }, [props]);
 
   // COMPANY KYC DETAIL SUBMIT BUTTON
@@ -163,22 +168,26 @@ function KycComplianceDetails(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(false);
-      let responseData = await AddKyc(state, props.employerId);
-      if (responseData.message === "Employee data inserted successfully") {
-        toast.success("Kyc Added successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true)
-        return close();
-      }
-      if (responseData.message === "Employee data updated successfully") {
-        toast.success("Kyc Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true)
-        return close();
+      try {
+        let responseData = await AddKyc(state, props.employerId);
+        if (responseData.message === "Employee data inserted successfully") {
+          toast.success("Kyc Added successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+        if (responseData.message === "Employee data updated successfully") {
+          toast.success("Kyc Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+      } catch (err) {
+        console.log(err);
       }
     } else {
       setLoading(false);
@@ -221,12 +230,10 @@ function KycComplianceDetails(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
-          <form onSubmit={onKycInfoClick}>
+          <form>
             <h5 className="text-center pt-2 mb-7">KYC Compliance Details</h5>
             <div className="row">
-              {" "}
               <div className="form-group col-md-6">
                 <label
                   htmlFor="pan_no"
@@ -239,7 +246,7 @@ function KycComplianceDetails(props) {
                   placeholder="PAN Number"
                   id="pan_no"
                   name="pan_no"
-                  value={state.pan_no  || ""}
+                  value={state.pan_no || ""}
                   onChange={onInputChange}
                   className={
                     errors.pan_no
@@ -259,7 +266,7 @@ function KycComplianceDetails(props) {
                   htmlFor="name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Name on PAN Card<span className="text-danger"> *</span> :
+                  Name On PAN Card<span className="text-danger"> *</span> :
                 </label>
                 <input
                   type="text"
@@ -273,7 +280,7 @@ function KycComplianceDetails(props) {
                       ? "form-control border border-danger "
                       : "form-control "
                   }
-                  max={25}
+                  maxLength={60}
                 />
                 {/*----ERROR MESSAGE FOR name----*/}
                 {errors.name && (
@@ -289,7 +296,7 @@ function KycComplianceDetails(props) {
                   htmlFor="pan_date"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Date on PAN Card<span className="text-danger"> *</span> :
+                  Date On PAN Card<span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
                   <input
@@ -297,13 +304,14 @@ function KycComplianceDetails(props) {
                     placeholder="Date_on_PAN_Card"
                     id="pan_date"
                     name="pan_date"
-                    max={moment().format("YYYY-MM-DD")}
+                    max={moment().format("DD-MM-YYYY")}
                     value={state.pan_date || ""}
                     onChange={onInputChange}
+                    onKeyDownCapture={(e) => e.preventDefault()}
                     className={
                       errors.pan_date
-                        ? "form-control border border-danger"
-                        : "form-control"
+                        ? "form-control coustam_datepicker border border-danger"
+                        : "form-control coustam_datepicker"
                     }
                   />
                   {/*----ERROR MESSAGE FOR pan_date----*/}
@@ -322,14 +330,14 @@ function KycComplianceDetails(props) {
                   htmlFor="address"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Address<span className="text-danger"> *</span> :
+                  Address<span className="text-danger">*</span> :
                 </label>
                 <input
                   type="text"
                   placeholder="Address"
                   id="address"
                   name="address"
-                  value={state.address  || ""}
+                  value={state.address || ""}
                   onChange={onInputChange}
                   className={
                     errors.address
@@ -348,9 +356,7 @@ function KycComplianceDetails(props) {
                 )}
               </div>
             </div>
-
             <div className="row">
-              {" "}
               <div className="form-group col-md-6">
                 <label
                   htmlFor="pincode"
@@ -360,10 +366,11 @@ function KycComplianceDetails(props) {
                 </label>
                 <input
                   type="number"
+                  min={0}
                   placeholder="Pincode"
                   id="pincode"
                   name="pincode"
-                  value={state.pincode  || ""}
+                  value={state.pincode || ""}
                   onChange={onInputChange}
                   className={
                     errors.pincode
@@ -394,12 +401,13 @@ function KycComplianceDetails(props) {
                   id="city"
                   name="city"
                   value={state.city || ""}
-                 onChange={onInputChange}
+                  onChange={onInputChange}
                   className={
                     errors.city
                       ? "form-control border border-danger"
                       : "form-control"
                   }
+                  maxLength={60}
                 />
                 {/*----ERROR MESSAGE FOR city----*/}
                 {errors.city && (
@@ -422,13 +430,14 @@ function KycComplianceDetails(props) {
                   placeholder="State"
                   id="state"
                   name="state"
-                  value={state.state || ""} 
+                  value={state.state || ""}
                   onChange={onInputChange}
                   className={
                     errors.state
                       ? "form-control border border-danger"
                       : "form-control"
                   }
+                  maxLength={60}
                 />
                 {/*----ERROR MESSAGE FOR state----*/}
                 {errors.state && (
@@ -442,20 +451,21 @@ function KycComplianceDetails(props) {
                   htmlFor="country"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Country<span className="text-danger"> *</span> :
+                  Country:<span className="text-danger"> *</span>
                 </label>
                 <input
                   type="text"
-                  placeholder="State"
+                  placeholder="Country"
                   id="country"
                   name="country"
-                  value={state.country  || ""}
+                  value={state.country || ""}
                   onChange={onInputChange}
                   className={
                     errors.country
                       ? "form-control border border-danger"
                       : "form-control"
                   }
+                  maxLength={60}
                 />
                 {/*----ERROR MESSAGE FOR country----*/}
                 {errors.country && (
@@ -469,7 +479,6 @@ function KycComplianceDetails(props) {
               </div>
             </div>
             <div className="row">
-              {" "}
               <div className="form-group col-md-6">
                 <label
                   htmlFor="gstin"
@@ -482,7 +491,7 @@ function KycComplianceDetails(props) {
                   placeholder="GSTIN"
                   id="gstin"
                   name="gstin"
-                  value={state.gstin || ""} 
+                  value={state.gstin || ""}
                   onChange={onInputChange}
                   className={
                     errors.gstin
@@ -502,7 +511,7 @@ function KycComplianceDetails(props) {
                   htmlFor="fax_number"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Fax Number :
+                  Fax Number:
                 </label>
                 <input
                   type="text"
@@ -534,7 +543,7 @@ function KycComplianceDetails(props) {
                   htmlFor="tan_number"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  TAN Number :
+                  TAN Number:
                 </label>
                 <input
                   type="text"
@@ -564,7 +573,7 @@ function KycComplianceDetails(props) {
                   htmlFor="document"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Document Upload :
+                  Document Upload: <span className="text-danger"> *</span>
                 </label>
                 <input
                   type="file"
@@ -596,13 +605,16 @@ function KycComplianceDetails(props) {
                   <span className="sr-only">Loading...</span>
                 </button>
               ) : (
-                <button className="btn btn-primary btn-medium w-25 rounded-5 text-uppercase">
+                <button
+                  type="button"
+                  onClick={(e) => onKycInfoClick(e)}
+                  className="btn btn-primary btn-medium w-25 rounded-5 text-uppercase"
+                >
                   Submit
                 </button>
               )}
             </div>
           </form>
-          {/* </div> */}
         </div>
       </Modal>
     </>

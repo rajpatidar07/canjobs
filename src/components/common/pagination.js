@@ -1,80 +1,139 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-function Pagination({ nPages, currentPage, setCurrentPage }) {
-  // // console.log(nPages, currentPage);
-  //Function to get dynamic page no of the pagination :-
-  const pageNumbers = [];
-  for (let i = 1; i <= nPages; i++) {
-    pageNumbers.push(i);
-  }
-  // console.log("pageNumbers---" + pageNumbers);
-  //Function to go to next page with pagination :-
-  const nextPage = () => {
-    if (currentPage !== nPages) setCurrentPage(currentPage + 1);
-  };
+function Pagination(props) {
+  // Create state to manage visible page numbers
+  const [visiblePageNumbers, setVisiblePageNumbers] = React.useState([]);
+  // console.log(props);
+  
+  useEffect(() => {
+    // Calculate the start and end index for visible page numbers
+    const pageSize = 10;
+    const start = Math.max(1, props.currentPage - Math.floor(pageSize / 2));
+    const end = Math.min(props.nPages, start + pageSize - 1);
 
-  //Function to go to previous page with pagination :-
-  const prevPage = () => {
-    if (currentPage !== 1) setCurrentPage(currentPage - 1);
-  };
+    // Update visible page numbers
+    const newVisiblePageNumbers = Array.from(
+      { length: end - start + 1 },
+      (_, i) => start + i
+    );
+    setVisiblePageNumbers(newVisiblePageNumbers);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.currentPage, props.nPages]);
 
+  // Function to update records per page
+  const handleRecordsPerPageChange = (e) => {
+    const newRecordsPerPage = parseInt(e.target.value);
+    props.setCurrentPage(1);
+    props.setRecordsPerPage(newRecordsPerPage);
+  };
+  // console.log(props.total, "pppp", props.count,)
   return (
-    <div>
-      {pageNumbers.length > 1 ? (
-        <nav aria-label="Page navigation example">
-          <ul className="pagination pagination-hover-primary rounded-0 ml-n2  ">
-            {/* To change page perivous page :- */}{" "}
-            <li className="page-item px-1">
-              <Link
-                onClick={prevPage}
-                className={
-                  currentPage === 1
-                    ? "disabled-link page-link  font-size-3 py-2 font-weight-semibold px-3"
-                    : "page-link  font-size-3 py-2 font-weight-semibold px-3"
-                }
-                aria-label="Previous"
-              >
-                <i className="fas fa-chevron-left"></i>
-              </Link>
-            </li>
-            {/* No of pagination:- */}
-            {pageNumbers.map((pgNumber) => {
-              return (
-                <li className="page-item px-1" key={pgNumber}>
-                  {pgNumber === 0 ? (
-                    <Link className="d-none"></Link>
-                  ) : (
-                    <Link
-                      onClick={() => setCurrentPage(pgNumber)}
-                      className={`page-link  font-size-3 py-2 font-weight-semibold px-3 ${
-                        currentPage === pgNumber ? "active " : ""
-                      } `}
-                    >
-                      {pgNumber}
-                    </Link>
-                  )}
-                </li>
-              );
-            })}
-            {/* To change page next page :- */}
-            <li className="page-item px-1">
-              <Link
-                onClick={nextPage}
-                className={
-                  currentPage === pageNumbers.length
-                    ? "disabled-link page-link  font-size-3 py-2 font-weight-semibold px-3"
-                    : "page-link  font-size-3 py-2 font-weight-semibold px-3"
-                }
-                aria-label="Next"
-              >
-                <i className="fas fa-chevron-right"></i>
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      ) : null}
+    <div className={props.count ===( "0" || 0) ? "d-none":"d-flex justify-content-between align-items-center"
+}>
+      <small
+        className={
+          props.nPages > 1 ? " d-flex justify-content-center" : "d-none"
+        }
+      >
+        Showing
+        {props.count === "1" || props.count === 1 ? props.count : props.count}
+        of {props.total} records
+      </small>
+      <nav aria-label="Page navigation example ">
+        <ul
+          className={
+            props.nPages > 1
+              ? "pagination pagination-hover-primary rounded-0 m-0"
+              : "d-none"
+          }
+        >
+          <li className="page-item">
+            <Link
+              onClick={() => {
+                props.setCurrentPage(parseInt(props.currentPage) - 1);
+                localStorage.setItem("PageNo", "");
+              }}
+              className={
+                parseInt(props.currentPage) === 1
+                  ? "disabled-link page-link  font-size-3 py-2 font-weight-semibold px-3"
+                  : "page-link  font-size-3 py-2 font-weight-semibold px-3"
+              }
+              title="Previous"
+            >
+              <i className="fas fa-chevron-left"></i>
+            </Link>
+          </li>
+          {visiblePageNumbers.map((pgNumber, index) => (
+            <Link
+              key={index}
+              onClick={() => {
+                props.setCurrentPage(pgNumber);
+                localStorage.setItem("PageNo", pgNumber); // Store the current page number
+              }}
+              className={`page-link  font-size-3 py-2 font-weight-semibold px-3 ${parseInt(props.currentPage) === pgNumber ? "active " : ""
+                }`}
+            >
+              {pgNumber}
+            </Link>
+          ))}
+          <li className="page-item">
+            <Link
+              onClick={() => {
+                props.setCurrentPage(parseInt(props.currentPage) + 1);
+                localStorage.setItem("PageNo", "");
+              }}
+              className={
+                props.currentPage === props.nPages
+                  ? "disabled-link page-link  font-size-3 py-2 font-weight-semibold px-3"
+                  : "page-link  font-size-3 py-2 font-weight-semibold px-3"
+              }
+              title="Next"
+            >
+              <i className="fas fa-chevron-right"></i>
+            </Link>
+          </li>
+        </ul>
+      </nav>
+{
+  props.page === "document" ? (
+    <div className="form-group">
+      <select
+        className="form-control ml-3"
+        style={{
+          width: "120px",
+          height: "40px",
+          fontSize: "14px",
+          fontWeight: "bold",
+        }}
+        value={props.recordsPerPage}
+        onChange={handleRecordsPerPageChange}
+      >
+        <option value={10}>Show 10</option>
+        <option value={50}>Show 50</option>
+        <option value={100}>Show 100</option>
+        <option value={200}>Show 200</option>
+      </select>
     </div>
+  ) : (
+  (props.nPages > 1 || props.total > 10) &&
+  (props.page === "task" || props.page === "document") && (
+    <button
+      className="page-link font-size-3 py-2 font-weight-semibold px-3 rounded"
+      style={{ height: "max-content" }}
+      onClick={() => {
+        props.setCurrentPage(1);
+        props.setRecordsPerPage(
+          props.recordsPerPage === props.total ? 10 : props.total
+        );
+      }}
+    >
+      {props.recordsPerPage === props.total ? "View Less" : "View All"}
+    </button>
+  )
+)
+}
+    </div >
   );
 }
 

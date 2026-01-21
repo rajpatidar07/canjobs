@@ -1,47 +1,207 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
-import JobBox from "../common/jobbox";
+// import JobBox from "../common/jobbox";
 import SearchForm from "../common/search_form";
-import { ToastContainer } from "react-toastify";
-// import { GetAllJobs } from "../../api/api";
-
-// eslint-disable-next-line no-use-before-define
+import { GetAllDataCount, getJson } from "../../api/api";
+// import Loader from "../common/loader";
+// import { Link } from "react-router-dom";
+import CustomButton from "../common/button";
+import filterjson from "../json/filterjson";
+import states from "../json/states";
+import DetailedMainJobComponent from "../common/New job box/detailedMainJobComponent";
+import SelectBox from "../common/Common function/SelectBox";
 function EmployeeHomePage() {
-  //   const [JobDetail, setJobDetail] = useState([]);
-
-  //   const UserData = async () => {
-  //     const jobData = await GetAllJobs();
-  //     setJobDetail(jobData);
-  //   };
+  const [Count, setCount] = useState([]);
+  const [jobsNo, setJobsNo] = useState(6);
+  // const [featuredJobsNo, setFeaturedJobsNo] = useState(6);
+  const [jobCount, setJobCount] = useState();
+  // const [featherJobCount, setFeaturedJobCount] = useState();
+  const [totaljob, setTotalJob] = useState();
+  // const [totalFeaturedJob, setTotalFeaturedJob] = useState();
+  const [search, setSearch] = useState()
+  // let token = localStorage.getItem("token");
+  /*Filter states */
+  const [categoryFilterValue, setCategoryFilterValue] = useState("");
+  const [SkillFilterValue, setSkillFilterValue] = useState("");
+  const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
+  const [jobLocation, setJobLocation] = useState("");
+  let [Json, setJson] = useState([]);
+  /*Function to get thejSon */
+  const JsonData = async () => {
+    try {
+      let Json = await getJson();
+      setJson(Json);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  /*Render Method */
   useEffect(() => {
-    // UserData();
+    JsonData();
+  }, [categoryFilterValue, SkillFilterValue, jobSwapFilterValue, jobLocation]);
+  // eslint-disable-next-line no-use-before-define
+  /*Function to Rest the feilds */
+  let onReset = () => {
+    setCategoryFilterValue("");
+    setSkillFilterValue("");
+    setJobSwapFilterValue("");
+    setJobLocation("");
+    setSearch("")
+  };
+  const CountData = async () => {
+    const res = await GetAllDataCount();
+    setCount(res.data);
+  };
+  useEffect(() => {
+    CountData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage.getItem("employee_id")]);
 
-  //// console.log(("JobDetail===" + JSON.stringify(JobDetail))
   return (
     <div className="site-wrapper overflow-hidden ">
       <EmployeeHeader />
-      <ToastContainer />
       {/* <!-- Hero Area --> */}
       <div className="position-relative z-index-1 bg-home-banner pt-26 pb-26 dark-mode-texts">
         <div className="container position-static hero_container">
           <div className="row position-relative align-items-center justify-content-center position-static w-80">
             {/* <!-- Hero Form --> */}
             <div className="col-lg-12 col-12 translateY-25 pt-lg-12 pb-lg-33 pb-md-28 pb-xs-26 pb-29 pt-md-20">
-              <SearchForm />
+              <SearchForm setJobLocation={setJobLocation} setCategoryFilterValue={setCategoryFilterValue}
+                setSearch={setSearch}
+              />
             </div>
             {/* <!-- End Hero Form --> */}
           </div>
+
         </div>
       </div>
       {/* <!-- Hero Area --> */}
       {/* <!-- featuredJobOne Area --> */}
-      <section className="bg-athens pt-12 pt-lg-32 pb-7 pb-lg-25">
-        <div className="container">
+      <section className="bg-athens pt-12 pt-lg-10 pb-7 pb-lg-25 ">
+        <div className="container ">
+          <div className="">
+            <div >
+              {/* //className="col-12 col-lg-12 col-xl-12 text-center"> */}
+              <form className="mb-8" action="/">
+                <div className="search-filter from-group d-flex align-items-center justify-content-center job_search_filter">
+                  <div className="pr-0 pl-0 col-md-3 col-lg-3 mb-5 position-relative">
+                    <div className="">
+                      <SelectBox
+                        Width={"yes"}
+                        options={(Json.Skill || []).map((data) => ({
+                          value: data.value,
+                          label: data.value,
+                        }))}
+                        selectedValue={SkillFilterValue}
+                        onChange={(e) => setSkillFilterValue(e ? e.value : "")}
+                        placeholder="Select Skill"
+                        className="text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                      />
+
+                    </div>
+                  </div>
+                  <div className="pr-0 pl-0 col-md-3 col-lg-3 mb-5">
+                    <div className="">
+                      <SelectBox
+                        Width={"yes"}
+                        options={(filterjson.job_type || []).map((job_type) => ({
+                          value: job_type,
+                          label: job_type,
+                        }))}
+                        selectedValue={jobSwapFilterValue}
+                        onChange={(e) => setJobSwapFilterValue(e ? e.value : "")}
+                        placeholder="Select Job type"
+                        className="text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                      />
+
+                    </div>
+                  </div>
+                  <div className="pr-0 pl-0 col-md-3 col-lg-3 mb-5">
+                    <div className="">
+                      <SelectBox
+                        Width={"yes"}
+                        options={(Object.keys(states) || []).map((job) => ({
+                          value: job,
+                          label: job,
+                        }))}
+                        selectedValue={jobLocation}
+                        onChange={(e) => setJobLocation(e ? e.value : "")}
+                        placeholder="Select Job Location"
+                        className="text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                      />
+
+                    </div>
+                  </div>
+                  <div className="pr-0 pl-0 col-md-3 col-lg-3 mb-5">
+                    <CustomButton
+                      className="w-100 p-7 pb-8 font-size-3 rounded-3 btn btn-primary border-0"
+                      onClick={() => onReset()}
+                      title="Reset"
+                      type="button"
+                    >
+                      Reset
+                    </CustomButton>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div className="row px-6">
+            <DetailedMainJobComponent
+              setJobCount={setJobCount}
+              jobsNo={jobsNo}
+              setTotalJob={setTotalJob}
+              SkillFilterValue={SkillFilterValue}
+              column="job_id"
+              // sort_order="ASC"
+              categoryFilterValue={categoryFilterValue}
+              jobSwapFilterValue={jobSwapFilterValue}
+              jobLocation={jobLocation}
+              setJobLocation={setJobLocation}
+              setJobsNo={setJobsNo}
+              totaljob={totaljob}
+              jobCount={jobCount}
+              Search={search} />
+
+          </div>
+          {/* <!-- Section Title End --> */}
+          {/* {<JobBox /> ? (
+            <div className="w-100 mb-lg-16 mb-11">
+
+              <JobBox
+                setJobCount={setJobCount}
+                jobsNo={jobsNo}
+                setTotalJob={setTotalJob}
+                SkillFilterValue={SkillFilterValue}
+                column="job_id"
+                // sort_order="ASC"
+                categoryFilterValue={categoryFilterValue}
+                jobSwapFilterValue={jobSwapFilterValue}
+                jobLocation={jobLocation}
+                setJobLocation={setJobLocation}
+                Search={search}
+              />
+            </div>
+          ) : (
+            <div className="table-responsive main_table_div">
+              <Loader />
+            </div>
+          )} */}
+          {/* {jobsNo <= totaljob ? (
+            <div className="text-center pt-5 pt-lg-13">
+              <Link
+                className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
+                onClick={() => setJobsNo(jobCount + 6)}
+              >
+                Load More
+                <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
+              </Link>
+            </div>
+          ) : null} */}
+          {/* <!-- featuredJobOne Area --> */}
           {/* <!-- Section Title --> */}
-          <div className="row justify-content-center mb-lg-16 mb-11">
+          {/* <div className="row justify-content-center mb-lg-16 mb-11">
             <div className="col-xxl-5 col-xl-6 col-lg-7 col-md-10 text-center">
               <h2 className="mb-6 mb-lg-7 text-black-2 font-size-10">
                 Featured Jobs
@@ -51,15 +211,81 @@ function EmployeeHomePage() {
                 level overviews to start.
               </p>
             </div>
-          </div>
+          </div> */}
           {/* <!-- Section Title End --> */}
-          <div className="row justify-content-center">
-            <JobBox />
-          </div>
-        </div>
-      </section>
-      {/* <!-- featuredJobOne Area --> */}
+          {/* Featured Jobs Section */}
+          {/* {<JobBox /> ? (
+            <div className="w-100 mb-lg-16 mb-11">
+              <JobBox
+                setJobCount={setFeaturedJobCount}
+                jobsNo={featuredJobsNo}
+                setTotalJob={setTotalFeaturedJob}
+                SkillFilterValue={""}
+                featured={"1"}
+                column="job_id"
+              />
+            </div>
+          ) : (
+            <div className="table-responsive main_table_div">
+              <Loader />
+            </div>
+          )} */}
 
+          {/* {featuredJobsNo <= totalFeaturedJob ? (
+            <div className="text-center pt-5 pt-lg-13">
+              <Link
+                className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
+                onClick={() => setFeaturedJobsNo(featherJobCount + 6)}
+              >
+                Load More
+                <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
+              </Link>
+            </div>
+          ) : null} */}
+        </div>
+        {/* {token && <div className="container ">
+          <!-- Section Title -->
+          <div className="row justify-content-center mb-lg-16 mb-11">
+            <div className="col-xxl-5 col-xl-6 col-lg-7 col-md-10 text-center">
+              <h2 className="mb-6 mb-lg-7 text-black-2 font-size-10">
+                Recommended Jobs
+              </h2>
+              <p className="px-xs-3 px-md-12 px-lg-8 px-xl-8 px-xxl-6 font-size-5 mb-0">
+                Leverage agile frameworks to provide a robust synopsis for high
+                level overviews to start.
+              </p>
+            </div>
+          </div>
+          <!-- Section Title End -->
+          {
+            <JobBox /> ? (
+              <div className="row justify-content-center">
+                <JobBox
+                  setJobCount={setJobCount}
+                  jobsNo={jobsNo}
+                  setTotalJob={setTotalJob}
+                  SkillFilterValue={localStorage.getItem("skill")}
+                />
+              </div>
+            ) : (
+              <div className="table-responsive main_table_div">
+                <Loader />
+              </div>
+            )}
+          {jobsNo <= totaljob ? (
+            <div className="text-center pt-5 pt-lg-13">
+              <Link
+                className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
+                onClick={() => setJobsNo(jobCount + 10)}
+              >
+                Load More
+                <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
+              </Link>
+            </div>
+          ) : null}
+        </div>} */}
+      </section >
+      {/* <!-- featuredJobOne Area --> */}
       {/* <!-- Category Area --> */}
       <div
         className="pt-11 pt-lg-26 pb-lg-16"
@@ -72,13 +298,13 @@ function EmployeeHomePage() {
           {/* <!-- Section Top --> */}
           <div className="row m-0 align-items-center pb-14">
             {/* <!-- Section Title --> */}
-            <div className="col-12 col-lg-6">
+            {/* <div className="col-12 col-lg-6">
               <div className="text-center text-lg-left mb-13 mb-lg-0">
                 <h2 className="font-size-9 font-weight-bold">
                   Explore by category
                 </h2>
               </div>
-            </div>
+            </div> */}
             {/* <!-- Section Button --> */}
             {/* <div className="col-12 col-lg-6">
                             <div className="text-center text-lg-right">
@@ -90,178 +316,329 @@ function EmployeeHomePage() {
           {/* <!-- End Section Top --> */}
           <div className="row justify-content-center">
             {/* <!-- Single Category --> */}
-            <div className="category_box col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
+            <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
-                href="http://localhost:3000/"
+                href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
               >
                 <div className="text-blue bg-blue-opacity-1 square-70 rounded-4 mb-7 font-size-7">
                   <i className="fa fa-briefcase"></i>
                 </div>
-                {/* <!-- Category Content --> */}
+
                 <div className="text-left category_text_box">
                   <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
-                    Business Development
+                    Total Job Posted
                   </h5>
                   <p className="font-size-4 font-weight-bold text-secondary">
-                    <span>415</span> Vacancy
+                    <span>{Count.posted_jobs}</span>
+                    Vacancy
                   </p>
                 </div>
               </a>
             </div>
             {/* <!-- End Single Category --> */}
             {/* <!-- Single Category --> */}
-            <div className="category_box col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
+            <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
-                href="http://localhost:3000/"
+                href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
               >
                 <div className="text-spray bg-spray-opacity-1 square-70 rounded-4 mb-7 font-size-7">
-                  <i className="fa fa-headset"></i>
+                  <i className="fa fa-users"></i>
                 </div>
-                {/* <!-- Category Content --> */}
+
                 <div className="text-left category_text_box">
                   <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
-                    Customer Service
+                    Total Registered Applicants
                   </h5>
                   <p className="font-size-4 font-weight-bold text-secondary">
-                    <span>235</span> Vacancy
+                    <span>{Count.total_applicants}</span>
                   </p>
                 </div>
               </a>
             </div>
             {/* <!-- End Single Category --> */}
             {/* <!-- Single Category --> */}
-            <div className="category_box col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
+            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
-                href="http://localhost:3000/"
+                href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
               >
                 <div className="text-coral bg-coral-opacity-1 square-70 rounded-4 mb-7 font-size-7">
                   <i className="fa fa-layer-group"></i>
                 </div>
-                {/* <!-- Category Content --> */}
+                //   
                 <div className="text-left category_text_box">
                   <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
-                    Development
+                    Applied Applicants
                   </h5>
                   <p className="font-size-4 font-weight-bold text-secondary">
-                    <span>624</span> Vacancy
+                    <span>{Count.applied_applicant}</span>
                   </p>
                 </div>
               </a>
-            </div>
+            </div> */}
             {/* <!-- End Single Category --> */}
             {/* <!-- Single Category --> */}
-            <div className="category_box col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
+            <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
-                href="http://localhost:3000/"
+                href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
               >
                 <div className="text-red bg-red-opacity-1 square-70 rounded-4 mb-7 font-size-7">
-                  <i className="fa fa-pen-nib"></i>
+                  <i className="fa fa-building"></i>
                 </div>
-                {/* <!-- Category Content --> */}
+
                 <div className="text-left category_text_box">
                   <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
-                    Design
+                    Total Registered Client's
                   </h5>
                   <p className="font-size-4 font-weight-bold text-secondary">
-                    <span>174</span> Vacancy
+                    <span>{Count.total_company}</span>
                   </p>
                 </div>
               </a>
             </div>
             {/* <!-- End Single Category --> */}
             {/* <!-- Single Category --> */}
-            <div className="category_box col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
+            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
-                href="http://localhost:3000/"
+                href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
               >
                 <div className="text-orange bg-orange-opacity-1 square-70 rounded-4 mb-7 font-size-7">
-                  <i className="fa fa-rocket"></i>
+                  <i className="fa fa-network-wired"></i>
                 </div>
-                {/* <!-- Category Content --> */}
+                
                 <div className="text-left category_text_box">
                   <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
-                    Marketing &amp; Management
+                    Active Companies
                   </h5>
                   <p className="font-size-4 font-weight-bold text-secondary">
-                    <span>268</span> Vacancy
+                    <span>{Count.active_company}</span>
                   </p>
                 </div>
               </a>
-            </div>
+            </div> */}
             {/* <!-- End Single Category --> */}
             {/* <!-- Single Category --> */}
-            <div className="category_box col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
+            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
-                href="http://localhost:3000/"
+                href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
               >
                 <div className="text-yellow bg-yellow-opacity-1 square-70 rounded-4 mb-7 font-size-7">
                   <i className="fa fa-location-arrow"></i>
                 </div>
-                {/* <!-- Category Content --> */}
+                
                 <div className="text-left category_text_box">
                   <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
-                    Sales &amp; Communication
+                    Total Interview's
                   </h5>
                   <p className="font-size-4 font-weight-bold text-secondary">
-                    <span>156</span> Vacancy
+                    <span>{Count.total_interviews}</span>
                   </p>
                 </div>
               </a>
-            </div>
+            </div> */}
             {/* <!-- End Single Category --> */}
             {/* <!-- Single Category --> */}
-            <div className="category_box col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
+            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
-                href="http://localhost:3000/"
+                href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
               >
                 <div className="text-turquoise bg-turquoise-opacity-1 square-70 rounded-4 mb-7 font-size-7">
                   <i className="icon icon-sidebar-2"></i>
                 </div>
-                {/* <!-- Category Content --> */}
+                
                 <div className="text-left category_text_box">
                   <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
-                    Project Management
+                    Completed Interview's
                   </h5>
                   <p className="font-size-4 font-weight-bold text-secondary">
-                    <span>162</span> Vacancy
+                    <span>{Count.interview_complete}</span>
                   </p>
                 </div>
               </a>
-            </div>
+            </div> */}
             {/* <!-- End Single Category --> */}
             {/* <!-- Single Category --> */}
-            <div className="category_box col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
+            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
-                href="http://localhost:3000/"
+                href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
               >
-                <div className="text-green bg-green-opacity-1 square-70 rounded-4 mb-7 font-size-7">
-                  <i className="fa fa-user"></i>
+                <div className="text-blue bg-blue-opacity-1 square-70 rounded-4 mb-7 font-size-7">
+                  <i className="fa fa-notes-medical"></i>
                 </div>
-                {/* <!-- Category Content --> */}
+                
                 <div className="text-left category_text_box">
                   <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
-                    Human Resource{" "}
+                    Total Notes
                   </h5>
                   <p className="font-size-4 font-weight-bold text-secondary">
-                    <span>84</span> Vacancy
+                    <span>{Count.total_follow_up}</span>
                   </p>
                 </div>
               </a>
-            </div>
+            </div> */}
+            {/* <!-- End Single Category --> */}
+            {/* <!-- Single Category --> */}
+            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
+              <a
+                href="/"
+                className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
+              >
+                <div className="text-spray bg-spray-opacity-1 square-70 rounded-4 mb-7 font-size-7">
+                  <i className="fa fa-filter"></i>
+                </div>
+                
+                <div className="text-left category_text_box">
+                  <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
+                    Total LMIA
+                  </h5>
+                  <p className="font-size-4 font-weight-bold text-secondary">
+                    <span>{Count.total_lmia}</span>
+                  </p>
+                </div>
+              </a>
+            </div> */}
+            {/* <!-- End Single Category --> */}
+            {/* <!-- Single Category --> */}
+            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
+              <a
+                href="/"
+                className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
+              >
+                <div className="text-coral bg-coral-opacity-1 square-70 rounded-4 mb-7 font-size-7">
+                  <i className="fa fa-exclamation"></i>
+                </div>
+                
+                <div className="text-left category_text_box">
+                  <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
+                    LMIA Rejected
+                  </h5>
+                  <p className="font-size-4 font-weight-bold text-secondary">
+                    <span>{Count.lmia_reject}</span>
+                  </p>
+                </div>
+              </a>
+            </div> */}
+            {/* <!-- End Single Category --> */}
+            {/* <!-- Single Category --> */}
+            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
+              <a
+                href="/"
+                className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
+              >
+                <div className="text-red bg-red-opacity-1 square-70 rounded-4 mb-7 font-size-7">
+                  <i className="fa fa-times-circle"></i>
+                </div>
+                
+                <div className="text-left category_text_box">
+                  <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
+                    LMIA Pending
+                  </h5>
+                  <p className="font-size-4 font-weight-bold text-secondary">
+                    <span>{Count.lmia_pending}</span>
+                  </p>
+                </div>
+              </a>
+            </div> */}
+            {/* <!-- End Single Category --> */}
+            {/* <!-- Single Category --> */}
+            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
+              <a
+                href="/"
+                className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
+              >
+                <div className="text-turquoise bg-turquoise-opacity-1 square-70 rounded-4 mb-7 font-size-7">
+                  <i className="fa fa-check-circle"></i>
+                </div>
+                
+                <div className="text-left category_text_box">
+                  <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
+                    LMIA Approved
+                  </h5>
+                  <p className="font-size-4 font-weight-bold text-secondary">
+                    <span>{Count.lmia_approved}</span>
+                  </p>
+                </div>
+              </a>
+            </div> */}
+            {/* <!-- End Single Category --> */}
+            {/* <!-- Single Category --> */}
+            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
+              <a
+                href="/"
+                className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
+              >
+                <div className="text-blue bg-blue-opacity-1 square-70 rounded-4 mb-7 font-size-7">
+                  <i className="fa fa-users"></i>
+                </div>
+                
+                <div className="text-left category_text_box">
+                  <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
+                    Total Response
+                  </h5>
+                  <p className="font-size-4 font-weight-bold text-secondary">
+                    <span>{Count.total_response}</span>
+                  </p>
+                </div>
+              </a>
+            </div> */}
+            {/* <!-- End Single Category --> */}
+            {/* <!-- Single Category --> */}
+            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
+              <a
+                href="/"
+                className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
+              >
+                <div className="text-coral bg-coral-opacity-1 square-70 rounded-4 mb-7 font-size-7">
+                  <i className="fa fa-eye"></i>
+                </div>
+                
+                <div className="text-left category_text_box">
+                  <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
+                    Total Job Views
+                  </h5>
+                  <p className="font-size-4 font-weight-bold text-secondary">
+                    <span>{Count.jobs_viewed}</span>
+                  </p>
+                </div>
+              </a>
+            </div> */}
+            {/* <!-- End Single Category --> */}
+            {/* <!-- Single Category --> */}
+            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
+              <a
+                href="/"
+                className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
+              >
+                <div className="text-yellow bg-yellow-opacity-1 square-70 rounded-4 mb-7 font-size-7">
+                  <i className="fa fa-percentage"></i>
+                </div>
+                
+                <div className="text-left category_text_box">
+                  <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
+                    Total Applied Rate
+                  </h5>
+                  <p className="font-size-4 font-weight-bold text-secondary">
+                    <span>
+                      {Count.applied_rate !== undefined
+                        ? Count.applied_rate.toFixed(2)
+                        : "N/A"}
+                    </span>
+                  </p>
+                </div>
+              </a>
+            </div> */}
             {/* <!-- End Single Category --> */}
           </div>
         </div>
       </div>
       {/* <!-- End Category Area --> */}
-
       {/* <!-- Blog area function start --> */}
       <div className="pt-11 pt-lg-24 pb-11 pb-lg-24">
         <div className="container">
@@ -277,13 +654,13 @@ function EmployeeHomePage() {
                 <h2 className="mb-9 font-size-10">Quick career tips</h2>
                 <p className="text-default-color font-size-5">
                   Collaboratively administrate empowered markets via
-                  plug-and-play networks. Dynamically procrastinate{" "}
+                  plug-and-play networks. Dynamically procrastinate
                 </p>
               </div>
               {/* <!-- section-title end --> */}
             </div>
           </div>
-          <div className="row justify-content-center">
+          <div className="row justify-content-center d-none">
             {/* <!-- single blog start --> */}
             <div
               className="col-xl-4 col-md-6 mb-xl-0 mb-13"
@@ -313,7 +690,7 @@ function EmployeeHomePage() {
                       className="card-title font-size-7 mt-8 mb-6 heading-default-color"
                       href="http://localhost:3000/"
                     >
-                      How to make a perfect CV that attracts the attention{" "}
+                      How to make a perfect CV that attracts the attention
                     </a>
                   </h4>
                   <p className="card-text mb-9 font-size-4">
@@ -518,9 +895,8 @@ function EmployeeHomePage() {
         </div>
       </div>
       {/* <!-- Blog area function end --> */}
-
       <EmployeeFooter />
-    </div>
+    </div >
   );
 }
 export default EmployeeHomePage;

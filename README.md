@@ -1,104 +1,242 @@
-# Getting Started with Create React App
+# CanJobs
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A comprehensive job portal application built with React, providing features for job seekers, employers, and administrators to manage job postings, applications, and related functionalities.
+
+## Project Overview
+
+CanJobs is a full-featured job portal that includes:
+- Job posting and management
+- Applicant tracking and management
+- Admin dashboard with various management tools
+- Partner management system
+- Payment integrations (PayPal, Stripe, Braintree)
+- Document generation and viewing capabilities
+- Real-time notifications and messaging
+
+## Latest Branch
+
+**june2024** - This is the latest stable branch containing all recent updates and features.
+
+## Prerequisites
+
+Before running this project, ensure you have the following installed:
+
+- **Node.js** (version 16.x or higher)
+- **npm** (comes with Node.js) or **yarn**
+- **Git** for version control
+
+### System Requirements
+
+- **Operating System**: Windows 10+, macOS 10.15+, or Linux
+- **RAM**: Minimum 4GB (8GB recommended for development)
+- **Storage**: At least 2GB free space
+
+## Quick Setup Steps
+
+| Step No.| Category             | Description                  | Command/Link                            | Working Branch |
+|---------|----------------------|------------------------------|-----------------------------------------|----------------|
+| 1       | Prerequisite         | Install Node.js              | https://nodejs.org/en                   |                |
+| 2       | Prerequisite         | Install Git                  | https://git-scm.com                     |                |
+| 3       | Prerequisite         | Install VS Code              | https://code.visualstudio.com/          |                |
+| 4       | Clone Repository     | Clone a starter React.js repo| https://github.com/rajpatidar07/canjobs | June2025       |
+| 5       | Install Dependencies | Install npm packages         | npm install                             |                |
+| 6       | Start Project        | Run local dev server         | npm start                               |                |
+
+## Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/rajpatidar07/canjobs.git
+   cd canjobs
+   ```
+
+2. **Switch to the latest branch:**
+   ```bash
+   git checkout june2024
+   ```
+
+3. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+4. **API Configuration:**
+   - Ensure the API URL is correctly configured in your environment (see API Configuration section below)
+
+## Running the Application
+
+### Development Mode
+
+To start the development server:
+
+```bash
+npm start
+```
+
+The application will be available at `http://localhost:3000`
+
+### Production Build
+
+To create a production build:
+
+```bash
+npm run build
+```
+
+This will create an optimized build in the `build` folder.
+
+### Serving the Production Build
+
+To serve the production build locally:
+
+```bash
+npm run serve
+```
+
+The production build will be served at `http://localhost:5000` (or the port specified by serve)
 
 ## Available Scripts
 
-In the project directory, you can run:
+- `npm start` - Starts the development server
+- `npm run build` - Creates a production build
+- `npm test` - Runs the test suite
+- `npm run eject` - Ejects from Create React App (irreversible)
+- `npm run serve` - Serves the production build locally
+- `npm run webviewer-server` - Runs the PDF viewer server
 
-### `npm start`
+## Project Structure
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```
+canjobs/
+├── public/                 # Static assets
+├── src/                    # Source code
+│   ├── api/               # API configuration and calls
+│   ├── components/        # React components
+│   │   ├── admin/        # Admin-specific components
+│   │   ├── common/       # Shared components
+│   │   └── forms/        # Form components
+│   ├── json/             # Static JSON data
+│   └── utils/            # Utility functions
+├── build/                 # Production build output
+├── node_modules/          # Dependencies
+├── package.json           # Project configuration
+├── server.js             # Server configuration
+└── README.md             # This file
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Key Features
 
-### `npm test`
+### For Job Seekers
+- Browse and search job listings
+- Apply to jobs with resume upload
+- Track application status
+- Profile management
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### For Employers
+- Post and manage job listings
+- Review and manage applications
+- Communication with candidates
+- Analytics and reporting
 
-### `npm run build`
+### For Administrators
+- User management (admins, managers, executives)
+- Content management (categories, filters)
+- System configuration
+- Payment management
+- Reporting and analytics
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technology Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Frontend
+- **React** 18.2.0 - UI framework
+- **React Router** - Client-side routing
+- **Bootstrap** 4.5.2 - CSS framework
+- **React Bootstrap** - Bootstrap components for React
+- **Axios** - HTTP client
+- **React Toastify** - Notifications
+- **React Select** - Select components
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Integrations
+- **PayPal** - Payment processing
+- **Stripe** - Payment processing
+- **Braintree** - Payment processing
+- **PDFTron** - PDF viewing and manipulation
+- **Google OAuth** - Social login
+- **LinkedIn OAuth** - Social login
 
-### `npm run eject`
+### Document Processing
+- **PDF-lib** - PDF generation
+- **JSZip** - File compression
+- **html2pdf.js** - HTML to PDF conversion
+- **Docx** - Word document processing
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## API Configuration
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The application uses different API endpoints based on the environment:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Local Development
+```
+const API_URL = "https://api-dev.canpathwaysjobs.com/"
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Production (New AWS Backend)
+```
+const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
+```
 
-## Learn More
+All API calls are configured in the `src/api/` directory. Ensure the proxy URL is correctly set in your environment.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Deployment
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Build for Production
 
-### Code Splitting
+1. Create production build:
+   ```bash
+   npm run build
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+2. The build artifacts will be stored in the `build/` directory.
 
-### Analyzing the Bundle Size
+3. Deploy the contents of the `build/` directory to your web server.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Server Configuration
 
-### Making a Progressive Web App
+The application includes a `server.js` file for server-side configuration. Make sure to configure your production server accordingly.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Testing
 
-### Advanced Configuration
+Run the test suite:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+npm test
+```
 
-### Deployment
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature-name`
+3. Commit your changes: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin feature/your-feature-name`
+5. Open a pull request
 
-### `npm run build` fails to minify
+## Support
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+For support and questions:
+- Check the documentation in this README
+- Review the code comments in the source files
+- Contact the development team
 
-<!-- All Page lists -->
-Employee	
-    Home Page	
-    Menu	
-        Login
-            login
-            signup
-            forgot password
-        Signup
-            login
-            signup
-        Employer
-        Employee Menu
-        Profile
-        Notification
-        Logo
-    Search
-    Job List
-        Company Name with Logo
-        Job title
-        Experience
-        Location
-        Description
-        Skills required
-        Salary
-        full/part time
-        Apply Button	
-    Job Filter
-        filter by location
-        filter by Category
-    Job by top employer
-    Blog
-    Stastics
+## License
+
+This project is proprietary software. All rights reserved.
+
+## Version History
+
+- **v0.1.3** - Current version
+  - Latest updates and bug fixes
+  - Responsive design improvements
+  - New admin features
+
+---
+
+**Note:** Always ensure you're working on the latest branch (`june2024`) for the most recent features and bug fixes.

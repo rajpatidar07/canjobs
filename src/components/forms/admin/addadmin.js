@@ -1,25 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
-import { AdminDetails, AddAdmin } from "../../../api//api";
+import {
+  AdminDetails,
+  AddAdmin, /* AddChildPermission*/
+  encryptPassword,
+} from "../../../api//api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import filterjson from "../../json/filterjson";
+import PasswordInput from "../../common/Common function/PasswordInput";
+import SelectBox from "../../common/Common function/SelectBox";
+import { LiaFileSignatureSolid } from "react-icons/lia";
+import { FaEdit } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import SignatureTextEditor from "../../SignatureTextEditor";
+// import Permissions from "../../json/emailPermisionJson";
 
 function Addadmin(props) {
+  let encoded;
+  const [imgError, setImgError] = useState("");
   let [already, setAlready] = useState("");
   let [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-
-  /*Function to show hide password */
-  const toggleShowPassword = () => setShowPassword(prev => !prev);
-
-  const renderIcon = () => {
-    if (state.password.length > 0) {
-      return showPassword ? <i className="fa fa-eye-slash"></i>
-                          : <i className="fa fa-eye"></i>;
-    }
-    return null;
-  };
+  let admin_type = localStorage.getItem("admin_type")
+  let admin_id = localStorage.getItem("admin_id")
+  let adminSignature = props.adminId === admin_id ? localStorage.getItem("admin_signature") : "";
+  let adminSignatureText = props.adminId === admin_id ? localStorage.getItem("admin_signature") : "";
+  const [signatureImage, setSignatureImage] = useState(adminSignature || null);
 
   /* Functionality to close the modal */
   const close = () => {
@@ -37,6 +44,10 @@ function Addadmin(props) {
     email: "",
     password: "",
     admin_type: "",
+    contact_no: "",
+    profile_image: "",
+    signature: adminSignatureText || "",
+    signature_image: signatureImage || ""
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -45,53 +56,102 @@ function Addadmin(props) {
         value === "" || value.trim() === ""
           ? "Admin name is required"
           : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Admin name can not have a number."
-          : value.length < 2
-          ? "Admin name should have 2 or more letters"
-          :/[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : "",
+            ? "Admin name can not have a number."
+            : value.length < 2
+              ? "Admin name should have 2 or more letters"
+              : // : /[^A-Za-z 0-9]/g.test(value)
+              // ? "Cannot use special character "
+              "",
     ],
     email: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     password: [
       (value) =>
         state.admin_id
           ? value === ""
           : value === ""
-          ? "Password is required"
-          : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
+            ? "Password is required"
+            : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
               value
             )
-          ? null
-          : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+              ? null
+              : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
     admin_type: [
       (value) =>
         value === "" || value.trim() === "" ? "Admin type is required" : null,
     ],
+    contact_no: [
+      (value) =>
+        value === "" || value === null || value.trim() === ""
+          ? "Contact no is required"
+          : value.length < 10
+            ? "Contact no can not be less than 10 digit"
+            : value.length > 13
+              ? "Contact no can not be more than 13 digit"
+              : "",
+    ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setState,
-    setErrors,
-    onInputChange,
-    errors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setState, setErrors, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
+
+  /*Function to convert file to base64 */
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.addEventListener("load", () => {
+        resolve({ base64: fileReader.result });
+      });
+      fileReader.readAsDataURL(file);
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
+  /*Onchange function of profile */
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        if (/*file.size > 1024 * 100*/ (file.size > 100) * 1024 === true) {
+          setImgError("Image size can't be more then 100 kb");
+        } else {
+          setImgError("");
+          setState({ ...state, profile_image: event.target.result });
+        }
+      };
+      img.src = event.target.result;
+    };
+
+    // Read the file as a data URL
+    reader.readAsDataURL(file);
+    encoded = await convertToBase64(file);
+    let base64Name = encoded.base64;
+    setState({ ...state, profile_image: base64Name });
+  };
+  /*Function to get admin detail */
   const AdminData = async () => {
-    const userData = await AdminDetails(props.adminId);
-    if (userData === undefined || userData.data.length === 0) {
-      setState(initialFormState); // setAdmindetails(userData.data[0]);
-    } else {
-      setState(userData.data[0]);
+    try {
+
+      const userData = await AdminDetails(props.adminId);
+      if (userData === undefined || userData.data.length === 0) {
+        setState(initialFormState);
+      } else {
+        setState(userData.data[0]);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
   useEffect(() => {
@@ -100,8 +160,7 @@ function Addadmin(props) {
     } else {
       AdminData();
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [props]);
 
   // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
@@ -109,33 +168,62 @@ function Addadmin(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      const responseData = await AddAdmin(state);
-      if (responseData.message === "admin added successfully") {
-        toast.success("Admin added successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true)
-        return close();
-      }
-      if (responseData.message === "admin updated successfully") {
-        toast.success("Admin Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true)
-        return close();
-      }
-      if (responseData.message === "Admin already exists") {
-        setAlready("Admin already exists");
+      try {
+        let data = { ...state, password: encryptPassword(state.password) }
+        const responseData = await AddAdmin(data);
+        if (responseData.message === "admin added successfully") {
+          // await AddChildPermission(Permissions);
+          toast.success("Admin added successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          if (props.adminId === admin_id) {
+            localStorage.setItem("admin_signature", signatureImage)
+            localStorage.setItem("admin_signature_text", state.signature)
+          }
+          return close();
+        }
+        if (responseData.message === "admin updated successfully") {
+          toast.success("Admin Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          if (props.adminId === admin_id) {
+            localStorage.setItem("admin_signature", signatureImage)
+            localStorage.setItem("admin_signature_text", state.signature)
+          }
+          return close();
+        }
+        if (responseData.message === "Admin already exists") {
+          setAlready("Admin already exists");
+          setLoading(false);
+        }
+      } catch (err) {
+        console.log(err);
         setLoading(false);
       }
     } else {
       setLoading(false);
     }
   };
-  // END USER ADMIN PROFILE UPDATE VALIDATION
-  return (
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSignatureImage(reader.result);
+        setState({ ...state, signatur_image: reader.result })
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const triggerFileInput = () => {
+    document.getElementById("signatureImageInput").click();
+  }; return (
     <>
       <Modal
         show={props.show}
@@ -153,12 +241,42 @@ function Addadmin(props) {
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           {props.adminId === "0" ? (
-            <h5 className="text-center pt-2">Add Admin</h5>
+            <h5 className="text-center pt-2 mb-7">Add Admin</h5>
           ) : (
-            <h5 className="text-center pt-2">Update Admin</h5>
+            <h5 className="text-center pt-2 mb-7">Update Admin</h5>
           )}
           <form onSubmit={onAminProfileUpdateClick}>
-            <div className="form-group mt-5">
+            <div className="form-group mx-auto text-center">
+              <div className="mb-4 position-relative">
+                <input
+                  type={"file"}
+                  id="profile_image"
+                  accept="image/png,image/jpeg,image/jpg,image/gif"
+                  onChange={handleFileChange}
+                  className="d-none"
+                />
+                <img
+                  className="rounded-circle"
+                  src={
+                    state.profile_image
+                      ? state.profile_image
+                      : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                  }
+                  alt=""
+                  width={"100px"}
+                  height={"100px"}
+                />
+                <label
+                  className="mt-lg-20 mx-lg-31
+                   bg-transparent edit_profile_icon"
+                  htmlFor="profile_image"
+                >
+                  <span className="fas fa-pen text-white bg-gray p-1 rounded mx-lg-1 mt-lg-3 "></span>
+                </label>
+              </div>
+              <small className="text-danger">{imgError}</small>
+            </div>
+            <div className="form-group">
               <label
                 htmlFor="name"
                 className="font-size-4 text-black-2  line-height-reset"
@@ -177,6 +295,7 @@ function Addadmin(props) {
                 id="name"
                 name="name"
                 placeholder="eg. Apple"
+                maxLength={60}
               />
               {/*----ERROR MESSAGE FOR Admin Name----*/}
               {errors.name && (
@@ -185,18 +304,50 @@ function Addadmin(props) {
                 </span>
               )}
             </div>
+            <div className="form-group">
+              <label
+                htmlFor="contact_no"
+                className="font-size-4 text-black-2  line-height-reset"
+              >
+                Contact No <span className="text-danger">*</span> <small>Add mobile no. with country code without +</small>
+              </label>
+              <input
+                type="number"
+                className={
+                  errors.contact_no
+                    ? "form-control border border-danger"
+                    : "form-control"
+                }
+                value={state.contact_no}
+                onChange={onInputChange}
+                id="contact_no"
+                name="contact_no"
+                min={0}
+                placeholder="Enter contact no"
+                maxLength={13}
+              />
+              {/*----ERROR MESSAGE FOR Admin Name----*/}
+              {errors.contact_no && (
+                <span
+                  key={errors.contact_no}
+                  className="text-danger font-size-3"
+                >
+                  {errors.contact_no}
+                </span>
+              )}
+            </div>
             <div className="form-group ">
               <label
                 htmlFor="email"
                 className="font-size-4 text-black-2  line-height-reset"
               >
-                E-mail <span className="text-danger">*</span> :
+                E-mail Id<span className="text-danger">*</span> :
               </label>
               <input
                 className={
                   errors.email
-                    ? "form-control border border-danger"
-                    : "form-control"
+                    ? "form-control border border-danger text-lowercase"
+                    : "form-control text-lowercase"
                 }
                 value={state.email}
                 onChange={onInputChange}
@@ -204,6 +355,7 @@ function Addadmin(props) {
                 name="email"
                 type={"email"}
                 disabled={props.adminId === "0" ? false : true}
+                maxLength={60}
               />
               {/*----ERROR MESSAGE FOR EMAIL----*/}
               {errors.email && (
@@ -212,68 +364,56 @@ function Addadmin(props) {
                 </span>
               )}
             </div>
-            {state.admin_id ? null : (
-              <div className="form-group ">
-                <label
-                  htmlFor="password"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  Password <span className="text-danger">*</span> :
-                </label>
-                <div className="position-relative">
-                <input
-                   type={showPassword ? 'text' : 'password'}
+            <div className={state.admin_id ? "form-group d-none" : "form-group "}>
+              <label
+                htmlFor="password"
+                className="font-size-4 text-black-2  line-height-reset"
+              >
+                Password <span className="text-danger">*</span> :
+              </label>
+              <div className="position-relative">
+                <PasswordInput
+                  name="password"
+                  value={state.password}
+                  onChange={onInputChange}
                   className={
                     errors.password
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  value={state.password}
-                  onChange={onInputChange}
+                  placeholder="Enter password"
                   id="password"
-                  name="password"
                 />
-                <span className="password-icon" onClick={toggleShowPassword}>
-                {renderIcon()}
-                </span>
-                </div>
-                {/*----ERROR MESSAGE FOR ADMIN PASSWORD----*/}
-                {errors.password && (
-                  <span
-                    key={errors.password}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.password}
-                  </span>
-                )}
               </div>
-            )}
-            <div className="form-group ">
+              {/*----ERROR MESSAGE FOR ADMIN PASSWORD----*/}
+              {errors.password && (
+                <span
+                  key={errors.password}
+                  className="text-danger font-size-3"
+                >
+                  {errors.password}
+                </span>
+              )}
+            </div>
+            <div className={state.admin_id && (admin_type !== "admin" && admin_type !== "super-admin") ? "d-none" : "form-group "}>
               <label
                 htmlFor="admin_type"
                 className="font-size-4 text-black-2  line-height-reset"
               >
                 Admin Type <span className="text-danger">*</span> :
               </label>
-              <select
-                type={"text"}
-                className={
-                  errors.admin_type
-                    ? "form-control border border-danger"
-                    : "form-control"
-                }
-                value={state.admin_type}
-                onChange={onInputChange}
-                id="admin_type"
-                name="admin_type"
-                multiple={false}
-              >
-                <option value={""}>Admin type</option>
-                <option value={"manager"}>Manager</option>
-                <option value={"sub-admin"}>Sub admin</option>
-                <option value={"admin"}>Admin</option>
-                <option value={"super-admin"}>Super admin</option>
-              </select>
+              <SelectBox
+                Width={"yes"}
+                options={filterjson ?
+                  filterjson.admintype.map((option) => ({
+                    value: option,
+                    label: option,
+                  }))
+                  : []}
+                type={"admin_type"}
+                selectedValue={state.admin_type}
+                onChange={(e) => { setState({ ...state, admin_type: e ? e.value : "" }) }}
+              />
               {/*----ERROR MESSAGE FOR ADMIN TYPE----*/}
               {errors.admin_type && (
                 <span
@@ -283,6 +423,60 @@ function Addadmin(props) {
                   {errors.admin_type}
                 </span>
               )}
+            </div>
+            <div className="mb-2 col-12">
+              <label
+                htmlFor="signature"
+                className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+              >
+                Signature Text:
+              </label>
+              <SignatureTextEditor
+                name="signature"
+                state={state.signature || ""}
+                setState={setState}
+                placeholder="Enter Signature text here"
+                id="signature"
+              />
+            </div>
+            <div className="mb-2 col-12">
+              <label className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-2 d-block">
+                Signature Image:
+              </label>
+
+              {state?.signature_image ? (
+                <div className="mb-2 position-relative d-inline-block">
+                  <img
+                    src={state?.signature_image}
+                    alt="Signature"
+                    style={{ maxWidth: "200px", maxHeight: "100px" }}
+                  />
+                  <Link
+                    className="position-absolute top-0 end-0 p-1 text-primary"
+                    onClick={triggerFileInput}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <FaEdit size={20} />
+                  </Link>
+                </div>
+              ) : (
+                <div>
+                  <Link
+                    type="button"
+                    className="text-dark display-2"
+                    onClick={triggerFileInput}
+                  >
+                    <LiaFileSignatureSolid />
+                  </Link>
+                </div>
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                id="signatureImageInput"
+                onChange={handleImageChange}
+                className="form-control d-none"
+              />
             </div>
             <span className="text-danger font-size-3">{already}</span>
             <div className="form-group text-center">

@@ -1,0 +1,197 @@
+import React, { useState, useEffect, useRef } from "react";
+import { GetPaymentList } from "../../../api/api";
+import PayForm from "./PayForm";
+// import Loader from "../../common/loader";
+import AddTransactionForm from "./addTransactionForm";
+import ConvertTime from "../../common/Common function/ConvertTime";
+
+export default function PayentForm({ data, user_id, user_type, Payment_id }) {
+  const [apiCall, setApicall] = useState(true);
+  // const [loading, setLoading] = useState(true);
+  const [paymentList, setPaytemList] = useState([]);
+  const [paymentMode, setPaymentMode] = useState("card"); // default to card
+
+  let user = localStorage.getItem("userType");
+  const PaymentRef = useRef({})
+
+  /*Function to get Payment list data */
+  const PaymentData = async () => {
+    try {
+      let Response = await GetPaymentList(
+        user_id,
+        user_type,
+        user === "admin" ? 1 : 0
+      );
+
+      if (Response.data.data.length === 0) {
+        setPaytemList([]);
+        // setLoading(false);
+      } else {
+        // setLoading(false);
+        setPaytemList(Response.data.data);
+        const newUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, newUrl);
+        localStorage.setItem("navigation_url", "");
+      }
+    } catch (err) {
+      console.log(err);
+      setPaytemList([]);
+      // setLoading(false);
+    }
+  };
+
+  /*Render method */
+  useEffect(() => {
+    PaymentData();
+    if (apiCall === true) {
+      setApicall(false);
+    }
+    // eslint-disable-next-line
+  }, [apiCall]);
+
+  useEffect(() => {
+    if (Payment_id && PaymentRef.current && PaymentRef.current[Payment_id]) {
+      PaymentRef.current[Payment_id].scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [paymentList, Payment_id]);
+
+  /*Function to to change payment mode */
+  const handlePaymentModeChange = (e) => {
+    setPaymentMode(e.target.value);
+  };
+
+  return (
+    <>
+      <div className="bg-white rounded h-100 px-10 overflow-y-hidden">
+        <div className="row">
+          {
+            <div className="activity_container col-md-8 border-right ">
+              <div className="single_note mb-5">
+                {paymentList.length === 0 ? (
+                  <div className="">
+                    <div className="d-flex justify-content-center">
+                      <p className="text-italic font-size-3 m-0">No Data Found</p>
+                    </div>
+                  </div>
+                ) : (
+                  (paymentList || []).map((res, index) => (
+                    <div
+                      ref={(el) => (PaymentRef.current[res.id] = el)}
+                      className={""} key={index}>
+                      <div className="d-flex justify-content-between">
+                        <p className="text-italic font-size-3 m-0">
+                          Payment on:
+                          <ConvertTime _date={res.created_at} format={"Do MM YYYY, h:mm:ss a"} />
+                        </p>
+                      </div>
+                      <div className={`card rounded-3 py-2 px-5 comment_box_card
+                         ${Payment_id === res.id ? "highlighted-comment" : ""}`}>
+                        <p className="fw-bold m-0 row">
+                          <span className="col-md-10 col-sm-12 ">
+                            {res.payment_mode ? (
+                              <>
+                                <span className="text-break text-capitalize">
+                                  <b>Payment mode</b>: {res.payment_mode}
+                                </span>
+                                <br />
+                              </>
+                            ) : null}
+                            {res.payment_id ? (
+                              <>
+                                <span className="text-break">
+                                  <b>Payment Id</b>: {res.payment_id}
+                                </span>
+                                <br />
+                              </>
+                            ) : null}
+                            {res.order_id ? (
+                              <>
+                                <span className="text-break">
+                                  <b>order Id</b>: {res.order_id}
+                                </span>
+                                <br />
+                              </>
+                            ) : null}
+                            {res.amount ? (
+                              <span>
+                                <b>Total Amount</b>: {res.amount}/-
+                              </span>
+                            ) : null}
+                          </span>
+                          <span className="col-md-2 col-sm-12">
+                            <span
+                              className={`${res.status === "success"
+                                ? " bg-primary-opacity-8 text-white text-center w-100  rounded-pill"
+                                : " bg-warning text-white text-center w-100  rounded-pill"
+                                }`}
+                            >
+                              {res.status}
+                            </span>
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          }
+          {user === "admin" ? (
+            <div className="col-md-4">
+              <div className="d-flex justify-content-around mb-3">
+                <label className="form-label">Select Payment Mode: </label>
+                <select
+                  className="form-select form-control col-4"
+                  value={paymentMode}
+                  onChange={handlePaymentModeChange}
+                >
+                  <option value="card">Card</option>
+                  <option value="cash">Cash</option>
+                </select>
+              </div>
+              {paymentMode === "cash" ? (
+                <AddTransactionForm
+                  data={data}
+                  setApicall={setApicall}
+                  user_id={user_id}
+                  user={user}
+                  user_type={user_type}
+                />
+              ) : (
+                <PayForm
+                  data={data}
+                  setApicall={setApicall}
+                  user_id={user_id}
+                  user={user_type}
+                />
+              )}
+            </div>
+          ) : (user_type === "employee" && user === "agent") ? null :
+            user === "user" || user === "company" || user === "agent" ? (
+              <div className="col-md-4">
+                <PayForm
+                  data={data}
+                  setApicall={setApicall}
+                  user_id={user_id}
+                  user={user_type}
+                />
+              </div>
+            ) : user === "agent" ? null : (
+              <div className="col-md-4">
+                <AddTransactionForm
+                  data={data}
+                  setApicall={setApicall}
+                  user_id={user_id}
+                  user={user}
+                  user_type={user_type}
+                />
+              </div>
+            )}
+        </div>
+      </div>
+    </>
+  );
+}

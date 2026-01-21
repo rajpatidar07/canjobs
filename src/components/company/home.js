@@ -1,17 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import EmployeeFooter from "../common/footer";
 import EmployeeHeader from "../common/header";
 import EmployeeBox from "./employeeBox";
-// import SearchForm from "../common/search_form";
+import SearchForm from "../common/search_form";
 // import Filterbox from "../common/filterbox";
 // import filterjson from "../json/filterjson";
-import { ToastContainer } from "react-toastify";
 import { Link } from "react-router-dom";
-function EmployerHome() {
+import Loader from '../common/loader';
+function EmployerHome({ setLoginCondition }) {
+  useEffect(() => {
+    if (localStorage.getItem("userType") === "company") {
+      setLoginCondition(false)
+    }
+     // eslint-disable-next-line
+  }, [])
+
   return (
     <div>
       <EmployeeHeader />
-      <ToastContainer />
+      
       <div className="position-relative z-index-1 bg-home-banner pt-26 pb-26 dark-mode-texts">
         {/* <div className="pos-abs-tr h-100">
                     <img src="image/patterns/globe-pattern.png" alt="" className="h-100" />
@@ -20,7 +27,7 @@ function EmployerHome() {
           <div className="row position-relative align-items-center justify-content-center position-static w-80">
             {/* <!-- Hero Form --> */}
             <div className="col-lg-12 col-12 translateY-25 pt-lg-12 pb-lg-33 pb-md-28 pb-xs-26 pb-29 pt-md-20">
-              {/* <SearchForm /> */}
+              <SearchForm />
             </div>
             {/* <!-- End Hero Form --> */}
           </div>
@@ -53,9 +60,12 @@ function EmployerHome() {
             </div>
           </div>
           {/* <!-- Section Title End --> */}
-          <div className="row justify-content-center">
-            <EmployeeBox />
-          </div>
+          {
+            <EmployeeBox /> ?
+              <div className="row justify-content-center">
+                <EmployeeBox featured="yes" />
+              </div> :
+              <div className="table-responsive main_table_div"> <Loader /> </div>}
         </div>
       </section>
       {/* <!-- featuredJobOne Area --> */}
@@ -69,7 +79,8 @@ function EmployerHome() {
               <div className="col-12">
                 <div className="section-title mb-9 text-center">
                   <h5 className="font-size-5 font-weight-normal text-gray">
-                    Get hired in top companies
+                    {/* Get hired in top companies */}
+                    Hired the Best candidates
                   </h5>
                 </div>
               </div>
@@ -362,7 +373,7 @@ function EmployerHome() {
                   {/* <!-- Category Content --> */}
                   <div className="">
                     <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
-                      Human Resource{" "}
+                      Human Resource
                     </h5>
                     <p className="font-size-4 font-weight-normal text-gray">
                       <span>415</span> Vacancy
@@ -401,7 +412,7 @@ function EmployerHome() {
                 <h2 className="mb-9 font-size-10">Quick career tips</h2>
                 <p className="text-default-color font-size-5">
                   Collaboratively administrate empowered markets via
-                  plug-and-play networks. Dynamically procrastinate{" "}
+                  plug-and-play networks. Dynamically procrastinate
                 </p>
               </div>
               {/* <!-- section-title end --> */}
@@ -431,7 +442,7 @@ function EmployerHome() {
                   </Link>
                   <h4>
                     <Link className="card-title font-size-7 mt-8 mb-6 heading-default-color">
-                      How to make a perfect CV that attracts the attention{" "}
+                      How to make a perfect CV that attracts the attention
                     </Link>
                   </h4>
                   <p className="card-text mb-9 font-size-4">
@@ -607,7 +618,7 @@ function EmployerHome() {
       </div>
       {/* <!-- Blog area function end --> */}
       {/* <!-- ContentTwo Area --> */}
-      <section className="bg-green position-relative">
+      <section className="bg-green position-relative d-none">
         <div className="w-lg-50 ml-lg-auto">
           {/* <!-- gallery start --> */}
           <div

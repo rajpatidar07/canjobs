@@ -1,167 +1,244 @@
 import React, { useState } from "react";
-import { AdminLogin } from "../../api/api";
+import { AdminForgotPasswordApi, AdminLogin } from "../../api/api";
 import useValidation from "../common/useValidation";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
-export default function AdminLoginFrom({ setAdminLoggedIn }) {
+import Loader from "../common/loader";
+import ForgotPasswordForm from "../forms/admin/ForgotPasswordForm";
+import PasswordInput from "../common/Common function/PasswordInput";
+export default function AdminLoginFrom({
+  setAdminLoggedIn,
+  setLoginCondition,
+}) {
   let navigate = useNavigate();
   let [loading, setLoading] = useState(false);
+  let [isLoading, setIsLoading] = useState(false);
+  let [showForgotPassword, setShowForgotPassword] = useState(false);
   /*----USER LOGIN VALIDATION----*/
   const initialFormState = {
     email: "",
     password: "",
     Credentials: "",
+    forget_email: "",
   };
   /*----VALIDATION CONTENT----*/
   const validators = {
     email: [
       (value) =>
-        value === null || value.trim() === ""
-          ? "Email is required"
-          : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+        showForgotPassword
+          ? ""
+          : value === null || value.trim() === ""
+            ? "Email is required"
+            : /\S+@\S+\.\S+/.test(value)
+              ? null
+              : "Email is invalid",
     ],
-    password: [(value) => (value === "" ? "Password is required" : null)],
+    password: [
+      (value) =>
+        showForgotPassword ? "" : value === "" ? "Password is required" : null,
+    ],
+    forget_email: [
+      (value) =>
+        state.email
+          ? ""
+          : value === null || value.trim() === ""
+            ? "Email is required"
+            : /\S+@\S+\.\S+/.test(value)
+              ? null
+              : "Email is invalid",
+    ],
   };
-  /*----LOGIN ONCHANGE FUNCTION----*/
+  /*----LOGIN ONCHANGE FuNCTION----*/
   const { state, onInputChange, errors, setErrors, validate } = useValidation(
     initialFormState,
     validators
   );
 
-  /*----LOGIN SUBMIT FUNCTION----*/
+  /*----LOGIN SUBMIT FuNCTION----*/
   const onUserLoginClick = async (event) => {
     event.preventDefault();
 
     if (validate()) {
       setLoading(true);
+      setIsLoading(true);
       // handle form submission
-      const updatedTodo = await AdminLogin(state);
-      console.log(updatedTodo)
-      
-      if (
-        updatedTodo.status === true ||
-        updatedTodo.message === "Successfully Logged "
-      ) {
-        localStorage.setItem("token", updatedTodo.token);
-        localStorage.setItem("userType", "admin");
-        localStorage.setItem("admin", updatedTodo.name);
-        localStorage.setItem("admin_id", updatedTodo.admin_id);
-        toast.success("Logged In Successfully", {
+      try {
+        const updatedTodo = await AdminLogin(state);
+        if (
+          updatedTodo.status === true ||
+          updatedTodo.message === "Successfully Logged "
+        ) {
+          setLoginCondition(true);
+          localStorage.setItem("token", updatedTodo.token);
+          localStorage.setItem("userType", "admin");
+          localStorage.setItem("admin", updatedTodo.name);
+          localStorage.setItem("admin_id", updatedTodo.admin_id);
+          localStorage.setItem("admin_type", updatedTodo.user_type);
+          localStorage.setItem("admin_email", updatedTodo.email);
+          localStorage.setItem("portal", "job");
+          localStorage.setItem("admin_signature", updatedTodo.signature_image)
+          localStorage.setItem("admin_signature_text", updatedTodo.signature)
+          toast.success("Logged In Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setLoading(false);
+          setIsLoading(false);
+          navigate("/dashboard");
+          window.location.reload();
+        }
+        if (updatedTodo.message === "Invalid Credentials") {
+          setLoading(false);
+          setIsLoading(false);
+          setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
+        }
+      } catch (err) {
+        console.log(err);
+        setErrors({ ...errors, Credentials: ["Please try again later."] });
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
         setLoading(false);
-        navigate("/dashboard");
-        window.location.reload();
-      } else if (updatedTodo.message === "Invalid Credentials") {
-        setLoading(false);
-        setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
       }
     }
   };
-
   // END USER LOGIN VALIDATION
-
+  //Function to forgot password
+  const onForgoteClick = async (event) => {
+    event.preventDefault();
+    // console.log(errors);
+    if (validate()) {
+      setLoading(true);
+      try {
+        const Response = await AdminForgotPasswordApi(state);
+        if (Response.status === 1 || Response.message === "Sent you a mail") {
+          toast.success("Email sent Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setLoading(false);
+          setShowForgotPassword(false);
+        } else if (Response.message === "No user found") {
+          setLoading(false);
+          setErrors({ ...errors, Credentials: ["No user found"] });
+          //   handle form submission
+        }
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+        setErrors({ ...errors, Credentials: ["Please try again later."] });
+        toast.error("Something went wrong", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+      }
+    }
+  };
   return (
     <>
       {/* <!-- Login --> */}
 
-      <div className="d-flex justify-content-center pt-21">
-        <div className="bg-white rounded-8 overflow-hidden pt-21">
-          <div className="bg-white-2 h-100 px-11 pt-11 pb-7 border">
-            <div className="pb-5 mb-5 text-center">
-              <img
-                src="image/logo-main-black.png"
-                className="img-fluid "
-                height={200}
-                width={200}
-                alt="logo"
-              />
-            </div>
-            {/* user login form */}
-            <form onSubmit={onUserLoginClick}>
-              <div className="form-group">
-                <label
-                  htmlFor="email"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  E-mail
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={state.email}
-                  onChange={onInputChange}
-                  className={
-                    errors.email
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  placeholder="example@gmail.com"
-                  id="email"
+      <div className="d-flex justify-content-center admin_login_page hv-100 overflow-auto align-items-center">
+        <div
+          className="bg-white rounded"
+          style={{ maxWidth: "500px", width: "100%" }}
+        >
+          {isLoading === true ? (
+            <Loader />
+          ) : (
+            <div className="bg-white-2 h-100 p-9 login_Modal_box border shadow">
+              <Link className="pb-5  text-center w-100" to={"/"}>
+                <img
+                  src="image/00logo-main-black.png"
+                  className="img-fluid "
+                  // height={200}
+                  width={200}
+                  alt="logo"
                 />
-                {/*----ERROR MESSAGE FOR EMAIL----*/}
-                {errors.email && (
-                  <span>
-                    {errors.email.map((error) => (
-                      <span key={error} className="text-danger font-size-3">
-                        {error}
-                      </span>
-                    ))}
-                  </span>
-                )}
-              </div>
-              <div className="form-group">
-                <label
-                  htmlFor="password"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Password
-                </label>
-                <div className="position-relative">
+              </Link>
+              {/* user login form */}
+              <h5 className="text-center mb-7 font-size-4">
+                {showForgotPassword === true ? "Fogot Password" : "Admin Login"}
+              </h5>
+              <form
+                onSubmit={onUserLoginClick}
+                className={showForgotPassword === true ? "d-none" : ""}
+              >
+                <div className="form-group">
+                  <label
+                    htmlFor="email"
+                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  >
+                    E-mail
+                  </label>
                   <input
-                    name="password"
-                    type="password"
-                    value={state.password}
+                    type="email"
+                    name="email"
+                    value={state.email}
                     onChange={onInputChange}
                     className={
-                      errors.password
+                      errors.email
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Enter password"
-                    id="password"
-                  />{" "}
-                  {/*----ERROR MESSAGE FOR PASSWORD----*/}
-                  {errors.password && (
+                    placeholder="example@gmail.com"
+                    id="email"
+                  />
+                  {/*----ERROR MESSAGE FOR EMAIL----*/}
+                  {errors.email && (
                     <span>
-                      {errors.password.map((error) => (
-                        <span key={error} className="text-danger font-size-3">
+                      {errors.email.map((error, i) => (
+                        <span key={i} className="text-danger font-size-3">
                           {error}
                         </span>
                       ))}
                     </span>
                   )}
-                  {/* <a
-                          href="http://localhost:3000/"
-                          className="show-password pos-abs-cr fas mr-6 text-black-2"
-                          data-show-pass="password"
-                        ></a> */}
                 </div>
-                {errors.Credentials && (
-                  <span>
-                    {errors.Credentials.map((error) => (
-                      <span key={error} className="text-danger font-size-3">
-                        {error}
+                <div className="form-group">
+                  <label
+                    htmlFor="password"
+                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  >
+                    Password
+                  </label>
+                  <div className="position-relative">
+                    <PasswordInput
+                      name="password"
+                      value={state.password}
+                      onChange={onInputChange}
+                      className={
+                        errors.password
+                          ? "form-control border border-danger"
+                          : "form-control"
+                      }
+                      placeholder="Enter password"
+                      id="password"
+                    />
+                    {/*----ERROR MESSAGE FOR PASSWORD----*/}
+                    {errors.password && (
+                      <span>
+                        {errors.password.map((error, i) => (
+                          <span key={i} className="text-danger font-size-3">
+                            {error}
+                          </span>
+                        ))}
                       </span>
-                    ))}
-                  </span>
-                )}
-              </div>
+                    )}
+                  </div>
+                  {errors.Credentials && (
+                    <span>
+                      {errors.Credentials.map((error, i) => (
+                        <span key={i} className="text-danger font-size-3">
+                          {error}
+                        </span>
+                      ))}
+                    </span>
+                  )}
+                </div>
 
-              {/* <div className="d-flex flex-wrap justify-content-between">
+                {/* <div className="d-flex flex-wrap justify-content-between">
                 <label
                   htmlFor="terms-check"
                   className="gr-check-input d-flex  mr-3"
@@ -178,42 +255,62 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
                   </span>
                 </label> */}
 
-              {/* <Link
-                  to={""}
-                  className="font-size-3 text-dodger line-height-reset mb-3"
-                  onClick={() => setShowForgotPassword(true)}
-                >
-                  Forget Password
-                </Link> */}
-              {/*----ERROR MESSAGE FOR terms----*/}
-              {/* {errors.tandr && (
+                {/*----ERROR MESSAGE FOR terms----*/}
+                {/* {errors.tandr && (
                   <span key={errors.tandr} className="text-danger font-size-3">
                     {errors.tandr}
                   </span>
                 )} */}
-              {/* </div> */}
+                {/* </div> */}
 
-              <div className="form-group mb-8">
-                {loading === true ? (
-                  <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
-                    <span
-                      className="spinner-border spinner-border-sm "
-                      role="status"
-                      aria-hidden="true"
-                    ></span>
-                    <span className="sr-only">Loading...</span>
-                  </button>
-                ) : (
-                  <button
-                    className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
-                    type="submit"
+                <div className="form-group mb-1">
+                  {loading === true ? (
+                    <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+                      <span
+                        className="spinner-border spinner-border-sm "
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      <span className="sr-only">Loading...</span>
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
+                      type="submit"
+                    >
+                      Log in
+                    </button>
+                  )}
+                  <Link
+                    to={""}
+                    className="font-size-3 text-dodger line-height-reset mb-3 mx-1 mt-5"
+                    onClick={() => setShowForgotPassword(true)}
                   >
-                    Log in{" "}
-                  </button>
-                )}
-              </div>
-            </form>
-          </div>
+                    Forgot Password
+                  </Link>
+                  {/* <p className="text-center mt-7 font-size-4 mb-1">
+                    Are you a partner?
+                  </p>
+                  <Link
+                    to={"/partnerlogin"}
+                    className="font-size-4 text-anger line-height-reset mb-3 text-center w-100"
+                  >
+                    Partner Login
+                  </Link> */}
+                </div>
+              </form>
+              <ForgotPasswordForm
+                setShowForgotPassword={setShowForgotPassword}
+                showForgotPassword={showForgotPassword}
+                onForgoteClick={onForgoteClick}
+                state={state}
+                onInputChange={onInputChange}
+                errors={errors}
+                loading={loading}
+                setErrors={setErrors}
+              />
+            </div>
+          )}
         </div>
       </div>
     </>

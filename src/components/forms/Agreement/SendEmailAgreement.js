@@ -1,0 +1,647 @@
+// import React, { useEffect, useState } from 'react'
+// import { Modal } from 'react-bootstrap'
+// import { Link } from 'react-router-dom';
+// import useValidation from '../../common/useValidation';
+// import { toast } from 'react-toastify';
+// import { SendEmail } from '../../../api/api';
+
+// export default function SendEmailAgreement({ show, close,
+//     user_id,
+//     emp_user_type,
+//     folderId,
+//     felidData,
+//     pdf }) {
+//     const [emails, setEmails] = useState([]);
+//     const [input, setInput] = useState('');
+//     const [fileBase, setFileBase] = useState('');
+//     const [loading, setLoading] = useState('');
+// //     const initialFormState = {
+// //         subject: felidData.type,
+// //         email: felidData.client_email,
+// //         adminemail: emails,
+// //         description:`<form style="font-family: Arial, sans-serif; background-color: #f7f7f7; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh;">
+// //     <div style="background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); max-width: 400px; width: 100%;">
+// //         <div style="font-size: 24px; font-weight: bold; margin-bottom: 20px; text-align: center;">Sign Agreement</div>
+// //         <div style="font-size: 16px; color: #666; margin-bottom: 15px; text-align: center;">
+// //             Please fill in your details to sign the agreement.
+// //         </div>
+// //         <div style="margin-bottom: 15px;">
+// //             <a href=${`http://localhost:3000/signagreement?id=${user_id}&user=${emp_user_type}&folderId=${folderId}&documentId=${felidData.document_id}&type=${felidData.type.replaceAll(" ","%20")}} style="width: 100%; padding: 10px; background-color: #28a745; border: none; border-radius: 5px; color: #fff; font-size: 18px; font-weight: bold; cursor: pointer;" onclick="window.location.href='http://localhost:3000/signagreement?id=${user_id}&user=${emp_user_type}&folderId=${folderId}&documentId=${felidData.document_id}&type=${felidData.type.replaceAll(' ', '%20')}'">
+// //                 Sign Agreement
+// //             </a>
+// //         </div>
+// //     </div>
+// // </form>`,{/* `Retainer Agreement Document: http://localhost:3000/signagreement?id=${user_id}&user=${emp_user_type}&folderId=${folderId}&documentId=${felidData.document_id}&type=${felidData.type.replaceAll(" ","%20")}`,// ${pdf["@microsoft.graph.downloadUrl"]}`,*/}
+// const initialFormState = {
+//     subject: felidData.type,
+//     email: felidData.client_email,
+//     adminemail: emails,
+//     description: `<form style="font-family: Arial, sans-serif; background-color: #f7f7f7; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh;">
+//         <div style="background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); max-width: 400px; width: 100%;">
+//             <div style="font-size: 24px; font-weight: bold; margin-bottom: 20px; text-align: center;">Sign Agreement</div>
+//             <div style="font-size: 16px; color: #666; margin-bottom: 15px; text-align: center;">
+//                 Please fill in your details to sign the agreement.
+//             </div>
+//             <div style="margin-bottom: 15px;">
+//                 <a href=${`http://localhost:3000/signagreement?id=${user_id}&user=${emp_user_type}&folderId=${folderId}&documentId=${felidData.document_id}&type=${felidData.type.replaceAll(" ","%20")}`} style="width: 100%; padding: 10px; background-color: #28a745; border: none; border-radius: 5px; color: #fff; font-size: 18px; font-weight: bold; cursor: pointer;">
+//                     Sign Agreement
+//                 </a>
+//             </div>
+//         </div>
+//     </form>`
+// };
+//         };
+//     const { state, setState/*, onInputChange, errors, setErrors, validate*/ } =
+//         useValidation(initialFormState,/* validators*/);
+
+//     useEffect(() => {
+//         convertPdfToBase64()
+//         // eslint-disable-next-line react-hooks/exhaustive-deps
+//     }, [])
+
+//     /*On change function to add email */
+//     const handleInputChange = (e) => {
+//         setInput(e.target.value);
+//     };
+
+//     /*Function to add email */
+//     const handleAddEmail = (e) => {
+//         e.preventDefault();
+//         if (input && !emails.includes(input)) {
+//             const updatedEmails = [...emails, input];
+//             setEmails(updatedEmails);
+//             setState({ ...state, adminemail: updatedEmails });
+//             setInput('');
+//         }
+//     };
+
+//     const handleRemoveEmail = (emailToRemove) => {
+//         const updatedEmails = emails.filter(email => email !== emailToRemove);
+//         setEmails(updatedEmails);
+//         setState({ ...state, adminemail: updatedEmails });
+//     };
+//     // function fileToBase64(file) {
+//     //     return new Promise((resolve, reject) => {
+//     //         const reader = new FileReader();
+//     //         reader.readAsDataURL(file);
+//     //         reader.onloadend = () => {
+//     //             let base64data = reader.result;
+//     //             // Remove metadata from base64 string if needed
+//     //             base64data = base64data.replace(/^data:(.*;base64,)?/, '');
+//     //             resolve(base64data);
+//     //         };
+//     //         reader.onerror = reject;
+//     //     });
+//     // }
+//     const fileToBase64 = (file) => {
+//         return new Promise((resolve, reject) => {
+//             const fileReader = new FileReader();
+//             fileReader.addEventListener("load", () => {
+//                 resolve({ base64: fileReader.result });
+//             });
+//             fileReader.readAsDataURL(file);
+//             fileReader.onerror = (error) => {
+//                 reject(error);
+//             };
+//         });
+//     };
+//     /*Function to convert url to base64 */
+//     const convertPdfToBase64 = async () => {
+//         try {
+//             const fileNameList = [];
+//             // const response = await fetch(pdf["@microsoft.graph.downloadUrl"]);
+//             // const blob = await response.blob();
+//             // const reader = new FileReader();
+//             const response = await fetch(pdf["@microsoft.graph.downloadUrl"]);
+//             const blob = await response.blob();
+
+//             // Create a File object
+//             const file = new File([blob], felidData.type.replaceAll(" ", "_"), { type: blob.type });
+//             let encoded = await fileToBase64(file)
+//             const base64Name = encoded.base64;
+
+//             // Construct file object with base64 data
+//             const DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]
+//                 }`;
+//                 console.log(DocFile)
+//             // Use DocRealName as the key for DocFile
+
+//             // reader.onloadend = () => {
+//             //     console.log(reader.result.replace("application",""))
+//             const fileList = {};
+//             const DocRealName = `${file.name}.pdf`;
+//             fileList[DocRealName] = DocFile;
+//             fileNameList.push(DocRealName);
+//             setFileBase(fileList);
+//             // };
+
+//             // reader.readAsDataURL(blob);
+//         } catch (error) {
+//             console.error('Error converting PDF to Base64:', error);
+//         }
+//     };
+//     const onFormSubmit = async () => {
+//         console.log(fileBase)
+//         try {
+//             setLoading(true);
+//             let Response = await SendEmail(state, fileBase);
+//             setLoading(false);
+//             if (Response.message === "email sent successfully") {
+//                 toast.success("Email sent successfully", {
+//                     position: toast.POSITION.TOP_RIGHT,
+//                     autoClose: 1000,
+//                 });
+//                 setLoading(false);
+//                 close()
+//                 //   setState(initialFormState);
+//                 // setFileBase("");
+//                 //   setFileNames([]);
+//                 //   setErrors("");
+//                 //   setApiCall(true);
+//             }
+//             if (Response.message === "Failed !") {
+//                 toast.error("Something went wrong", {
+//                     position: toast.POSITION.TOP_RIGHT,
+//                     autoClose: 1000,
+//                 });
+//                 setLoading(false);
+//                 //   setState(initialFormState);
+//                 //   setErrors("");
+//                 // setFileBase("");
+//                 //   setFileNames([]);
+//             }
+//             if (Response.message === "Fields must not be empty!") {
+//                 toast.error("Something went wrong", {
+//                     position: toast.POSITION.TOP_RIGHT,
+//                     autoClose: 1000,
+//                 });
+//                 setLoading(false);
+//                 //   setState(initialFormState);
+//                 //   setErrors("");
+//                 // setFileBase("");
+//                 //   setFileNames([]);
+//             }
+//         } catch (err) {
+//             console.log(err);
+//             setLoading(false);
+//             // setFileBase("");
+//             // setFileNames([]);
+//             // setErrors("");
+//             // setState(initialFormState);
+//         }
+//     }
+//     return (
+//         <Modal
+//             show={show}
+//             size="md"
+//             aria-labelledby="contained-modal-title-vcenter"
+//             centered
+//         >
+//             <button
+//                 type="button"
+//                 className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+//                 data-dismiss="modal"
+//                 onClick={() => { close() }}
+//             >
+//                 <i className="fas fa-times"></i>
+//             </button>
+//             <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
+//                 <form onSubmit={onFormSubmit}>
+//                     <h5 className="text-center mb-7 pt-2">Send Mail</h5>
+//                     <div className="form-group d-flex mb-3 p-0">
+//                         <label
+//                             htmlFor="addmail"
+//                             className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+//                         >
+//                             Add mail<span className="text-danger">*</span> :
+//                         </label>
+//                         <input
+//                             type="email"
+//                             value={input}
+//                             onChange={handleInputChange}
+//                             placeholder="Enter email"
+//                             required
+//                             id="addmail"
+//                             className='text-capitalize w-100'
+//                         />
+//                         <button type="button" className=' btn-primary px-5  mx-2  rounded-5 text-uppercase' onClick={handleAddEmail}>+</button>
+//                     </div>
+//                     <div className="form-group">
+//                         <ul className="list-unstyled d-flex align-items-center flex-wrap">
+//                             <li
+//                                 className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+//                             >{felidData.client_email}</li>
+//                             {emails.map(email => (
+
+//                                 <li
+//                                     className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+//                                     key={email}
+//                                 >
+//                                     {email}
+//                                     <Link
+//                                         className="p-0 ms-1"
+//                                         onClick={() => handleRemoveEmail(email)}
+//                                     >
+//                                         <i
+//                                             className="px-3 fa fa-times-circle"
+//                                             aria-hidden="true"
+//                                         ></i>
+//                                     </Link>
+//                                 </li>
+//                             ))}</ul>
+//                     </div>
+//                     <div className="mb-2 col-12 text-center">
+//                         {loading === true ? (
+//                             <button
+//                                 className="btn btn-primary btn-small w-100 rounded-5 text-uppercase "
+//                                 type="button"
+//                                 disabled
+//                             >
+//                                 <span
+//                                     className="spinner-border spinner-border-sm "
+//                                     role="status"
+//                                     aria-hidden="true"
+//                                 ></span>
+//                                 <span className="sr-only">Loading...</span>
+//                             </button>
+//                         ) : (
+//                             <button
+//                                 onClick={(e) => onFormSubmit(e)}
+//                                 className="btn btn-primary btn-small rounded-5 text-uppercase w-100"
+//                                 type="button"
+//                             >
+//                                 Submit
+//                             </button>
+//                         )}
+//                     </div>
+//                 </form>
+//             </div>
+//         </Modal>
+//     )
+// }
+import React, { useEffect, useState } from "react";
+import { Modal } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import useValidation from "../../common/useValidation";
+import { toast } from "react-toastify";
+import { AddUpdateAgreement, SendEmail } from "../../../api/api";
+
+export default function SendEmailAgreement({
+  show,
+  close,
+  user_id,
+  emp_user_type,
+  folderId,
+  felidData,
+  pdf,
+  setApicall,
+  userData
+}) {
+  const [emails, setEmails] = useState([]);
+  const [input, setInput] = useState("");
+  const [fileBase, setFileBase] = useState("");
+  const [loading, setLoading] = useState(false);
+  const prioritizedEmail = userData.email;
+  const [selectedEmail, setSelectedEmail] = useState(prioritizedEmail);
+  const initialFormState = {
+    subject: `${(felidData.agreement_subject ? felidData.agreement_subject : felidData.type).replace(/\b\w/g, char => char.toUpperCase())}`,
+    email: prioritizedEmail,
+    adminemail: emails,
+    agreement_id: felidData?.id,
+    description: `<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agreement Email</title>
+</head>
+
+<body>
+    <div style="margin:0;width:100%;background-color:#f3f2f0;padding:0;padding-top:8px;font-family:-apple-system,system-ui,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue','Fira Sans',Ubuntu,Oxygen,'Oxygen Sans',Cantarell,'Droid Sans','Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Lucida Grande',Helvetica,Arial,sans-serif">
+        <div style="height:0;max-height:0;width:0;overflow:hidden;opacity:0;padding: 20px;text-transform: capitalize;">
+             Sign Your Agreement
+        </div>
+        <table role="presentation" valign="top" border="0" cellspacing="0" cellpadding="0" width="512" align="center" style="margin:auto;width:512px;max-width:512px;padding:0;">
+            <tbody>
+                <tr>
+                    <td>
+                        <table role="presentation" valign="top" border="0" cellspacing="0" cellpadding="0" width="100%" style="min-width:100%;background:transparent;">
+                            <tbody>
+                                <tr>
+                                    <td align="left" valign="middle" style="padding: 5px 0;">
+                                        <a href="" style="display:inline-block;text-decoration:none;" target="_blank">
+                                            <img alt="Canpathways" src="https://canpathwaysjobs.com/image/00logo-main-black.png" style="outline:none;text-decoration:none;display:block" width="200" height="auto">
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:24px;background-color:white;border-radius:5px;">
+                        <div style="color:black;font-size:medium;">
+                            <p>Dear <b>${felidData.client_first_name || "user"}</b>,</p>
+                            <p>
+                                We are pleased to inform you that your agreement is now ready for signing. To complete the process, please review and fill in the required details by following the link below:
+                            </p>
+                            <p style="text-align:center;">
+                                <a href=${`${window.location.origin
+      }/signagreement?id=${felidData?.id}&user_id=${user_id}&user=${emp_user_type}&folderId=${folderId}&documentId=${felidData.document_id
+      }&type=${felidData.type.replaceAll(
+        " ",
+        "%20"
+      )}`} style="background-color:#0a66c2;color:white;padding:10px 20px;border-radius:5px;text-decoration:none;font-weight:bold;">Sign the Agreement</a>
+                            </p>
+                            <p>
+                                Please ensure all necessary information is provided before submitting your signature. Should you have any questions or require assistance, feel free to reach out to our support team.
+                            </p>
+                            <p>
+                                Thank you for your prompt attention to this matter.
+                            </p>
+                            <p>Best regards,<br><b>Can Pathways Team</b></p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="background-color:#f3f2f0;padding:24px;">
+                        <table role="presentation" valign="top" border="0" cellspacing="0" cellpadding="0" width="100%" style="font-size:16px;text-align:center;">
+                            <tbody>
+                                <tr>
+                                    <td style="padding-bottom:8px;font-size:x-small;">
+                                        <i>If you did not initiate this request, please disregard this email. For any concerns, contact us at <b>jobportal@canpathways.com</b>.</i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size:x-small;">&copy; 2025 Canpathways</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
+`,
+  };
+  //Aws: https://canpathwaysjobs.com
+  //Vercel: https://canjobs.vercel.app
+  //local:http://localhost:3000
+  const { state, setState } = useValidation(initialFormState);
+
+  useEffect(() => {
+    convertPdfToBase64();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+  };
+
+  const handleAddEmail = (e) => {
+    e.preventDefault();
+    if (input && !emails.includes(input)) {
+      const updatedEmails = [...emails, input];
+      setEmails(updatedEmails);
+      setState({ ...state, adminemail: updatedEmails });
+      setInput("");
+    }
+  };
+
+  const handleRemoveEmail = (emailToRemove) => {
+    const updatedEmails = emails.filter((email) => email !== emailToRemove);
+    setEmails(updatedEmails);
+    setState({ ...state, adminemail: updatedEmails });
+  };
+
+  const handleEmailSelect = (e) => {
+    const email = e.target.value;
+    setSelectedEmail(email);
+    setState({ ...state, email });
+  };
+
+  const fileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+      reader.onerror = reject;
+    });
+  };
+
+  const convertPdfToBase64 = async () => {
+    try {
+      const response = await fetch(pdf["@microsoft.graph.downloadUrl"]);
+      const blob = await response.blob();
+      const file = new File(
+        [blob],
+        `${felidData.type.replaceAll(" ", "_")}.pdf`,
+        { type: blob.type }
+      );
+      const base64 = await fileToBase64(file);
+      const fileList = {};
+      fileList[file.name] = base64;
+      setFileBase(fileList);
+    } catch (error) {
+      console.error("Error converting PDF to Base64:", error);
+    }
+  };
+
+  const onFormSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await SendEmail(state, fileBase);
+      setLoading(false);
+      if (response.message === "email sent successfully") {
+        toast.success("Email sent successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        let data = {
+          send_date: new Date(),
+          id: felidData.id,
+          agreement_subject: state.subject
+        }
+        let res = await AddUpdateAgreement(data);
+        if (res) {
+          setApicall(true)
+        }
+        close();
+      } else {
+        toast.error("Something went wrong", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("An error occurred while sending the email", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Modal
+      show={show}
+      size="md"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <button
+        type="button"
+        className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+        data-dismiss="modal"
+        onClick={close}
+      >
+        <i className="fas fa-times"></i>
+      </button>
+      <div className="bg-white rounded h-100 p-7 overflow-y-hidden">
+        <form onSubmit={onFormSubmit}>
+          <h5 className="text-center mb-7">Send Mail</h5>
+          <div className="form-group d-flex mb-3 p-0">
+            <label
+              htmlFor="subject"
+              className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+            >
+              Subject :
+            </label>
+            <input
+              type="text"
+              value={state.subject}
+              onChange={(e) => setState({ ...state, subject: e.target.value })}
+              placeholder="Enter Subject"
+              id="subject"
+              className="form-control w-100"
+            />
+          </div>
+          {/* Email Selection - To (Recipient) */}
+          <div className="row mb-4 mx-3">
+            <label
+              className="col-sm-3 col-form-label text-md-end text-start fw-semibold"
+            >
+              Recipient Email:
+            </label>
+            <div className="col-sm-9">
+              <div id="selectemail" className="d-flex flex-column gap-2 p-3 border rounded bg-light">
+                {/* Primary Email Option */}
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="emailChoice"
+                    id="primaryEmail"
+                    value={userData.email}
+                    checked={selectedEmail === userData.email}
+                    onChange={handleEmailSelect}
+                  />
+                  <label className="form-check-label ms-2" htmlFor="primaryEmail">
+                    <strong>Primary:</strong> {userData.email}
+                  </label>
+                </div>
+
+                {/* Secondary Email Option (if available) */}
+                {userData.secondary_email && (
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="emailChoice"
+                      id="secondaryEmail"
+                      value={userData.secondary_email}
+                      checked={selectedEmail === userData.secondary_email}
+                      onChange={handleEmailSelect}
+                    />
+                    <label className="form-check-label ms-2" htmlFor="secondaryEmail">
+                      <strong>Secondary:</strong> {userData.secondary_email}
+                    </label>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="form-group d-flex mb-3 p-0">
+            <label
+              htmlFor="addmail"
+              className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+            >
+              Add mail<span className="text-danger">*</span> :
+            </label>
+            <input
+              type="email"
+              value={input}
+              onChange={handleInputChange}
+              placeholder="Enter email"
+              id="addmail"
+              className="form-control w-100"
+            />
+            <button
+              type="button"
+              className="btn-primary px-5 mx-2 rounded-5 text-uppercase"
+              onClick={handleAddEmail}
+            >
+              +
+            </button>
+          </div>
+          <div className="form-group">
+            <ul className="list-unstyled d-flex align-items-center flex-wrap">
+              <li className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
+                {selectedEmail}
+              </li>
+              {emails.map((email) => (
+                <li
+                  className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                  key={email}
+                >
+                  {email}
+                  <Link
+                    className="p-0 ms-1"
+                    onClick={() => handleRemoveEmail(email)}
+                  >
+                    <i
+                      className="px-3 fa fa-times-circle"
+                      aria-hidden="true"
+                    ></i>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="mb-2 col-12 text-center">
+            {loading ? (
+              <button
+                className="btn btn-primary btn-small w-100 rounded-5 text-uppercase"
+                type="button"
+                disabled
+              >
+                <span
+                  className="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                <span className="sr-only">Loading...</span>
+              </button>
+            ) : (
+              <button
+                className="btn btn-primary btn-small rounded-5 text-uppercase w-100"
+                type="submit"
+                disabled={input === "" ? false : true}
+              >
+                Submit
+              </button>
+            )}
+          </div>
+        </form>
+      </div>
+    </Modal>
+  );
+}

@@ -1,21 +1,143 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
-import { AddLimia } from "../../../api//api";
+import {
+  AddLimia,
+  AddJob,
+  AddUpdateEmployeeLmiaSubStage,
+  GetLimaSubStages,
+  AddUpdateJobLmiaSubStage,
+  GetJobLimaSubStages,
+  deleteLmiaSubstageJob,
+  deleteLmiaSubstageEmployee,
+} from "../../../api//api";
 import { toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
-import moment from "moment";
-
+import LmiaTime from "../../common/lmiaTime";
+import LmiaSubStageSelector from "../../common/lmiaSubStage";
+import SelectBox from "../../common/Common function/SelectBox";
 function LmiaStatus(props) {
   let [loading, setLoading] = useState(false);
-  // // console.log(props.resData);
+  let [apiCall, setApiCall] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState([]);
+  const [expandedStatus, setExpandedStatus] = useState(props.resData.lmia_status);
   let employeeId =
     props.resData === undefined ? null : props.resData.employee_id;
-  let lmia_status = props.resData.lmia_status 
-  let completion_time = props.resData.expected_time_of_completion
+  let lmia_status = props.resData.lmia_status;
+  // let completion_time = props.resData.expected_time_of_completion
+  let location = useLocation();
   let jobId = props.resData.job_id;
-  const [company] = useState([]);
+  // const [company] = useState([]);
+  // eslint-disable-next-line
+  let isExpanded = false;
+  /*Function to get lima sub stage */
+  const GetSubSTage = async () => {
+    try {
+      let Response;
+      if (props.job === "yes") {
+        Response = await GetJobLimaSubStages(jobId, lmia_status);
+      } else {
+        Response = await GetLimaSubStages(props.resData.id);
+      }
+      if (Response.data.data) {
+        setSelectedStatus(Response.data.data);
+      } else setSelectedStatus([]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Function to handle checkbox selection
+  const handleSubStageSelection = async (status, subStage) => {
+    const isSelected = selectedStatus.some(
+      (item) => item.lmia_status === status && item.lmia_substage === subStage
+    );
+    let data;
+    /*Condition to check the selected substages */
+    if (isSelected) {
+      setSelectedStatus(
+        selectedStatus.filter(
+          (item) =>
+            !(item.lmia_status === status && item.lmia_substage === subStage)
+        )
+      );
+      let id = selectedStatus.filter(
+        (item) => item.lmia_status === status && item.lmia_substage === subStage
+      )[0].id;
+      if (props.job === "yes") {
+        /*Job lima sub stages */
+        let DeleteRes = await deleteLmiaSubstageJob(id);
+        if (DeleteRes.message === "successfully deleted") {
+          toast.success("Lmia Sub Stage Removed successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setApiCall(true);
+          props.setApiCall(true);
+        }
+      } else {
+        /*employee lima sub stages */
+        let DeleteRes = await deleteLmiaSubstageEmployee(id);
+        if (DeleteRes.message === "successfully deleted") {
+          toast.success("Lmia Sub Stage Removed successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setApiCall(true);
+          props.setApiCall(true);
+        }
+      }
+    } else {
+      setSelectedStatus([
+        ...selectedStatus,
+        { status: status, subStage: subStage },
+      ]);
+      if (props.job === "yes") {
+        /*Job lima sub stages */
+        data = {
+          job_id: jobId,
+          lmia_substage: subStage,
+          lmia_status: status,
+        };
+      } else {
+        /*Employee lima sub stages */
+        data = {
+          lmia_id: props.resData.id,
+          lmia_substage: subStage,
+          lmia_status: status,
+        };
+      }
+    }
+    try {
+      let Response;
+      /*APi called */
+      if (props.job === "yes") {
+        Response = await AddUpdateJobLmiaSubStage(data);
+      } else {
+        Response = await AddUpdateEmployeeLmiaSubStage(data);
+      }
+      /*Added sub stage response */
+      if (
+        Response.message === "insert successfully"
+        || Response.message === "updated successfully"
+      ) {
+        toast.success("LMIA Sub Stage Added successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+        props.setApiCall(true);
+        if (props.page === "userprofile") {
+          props.statusCall(true);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   /* Functionality to close the modal */
   const close = () => {
     setState({ ...state, lmia_status: "" });
@@ -23,89 +145,119 @@ function LmiaStatus(props) {
     setLoading(false);
     props.close();
   };
+
   // USER LIMIA UPDATE VALIDATION
-  // // console.log(lmia_status);
   useEffect(() => {
-    setState({ ...state, lmia_status: lmia_status , completion_time : completion_time});
-  }, [lmia_status]);
+    GetSubSTage();
+    setState({
+      ...state,
+      lmia_status: lmia_status /*, completion_time: completion_time*/,
+    });
+    if (apiCall === true) {
+      setApiCall(false);
+    }
+    // eslint-disable-next-line
+  }, [apiCall, lmia_status]);
+
+  useEffect(() => { }, []);
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     lmia_status: "",
-    completion_time: "",
+    apply_id: props.resData.apply_id,
+    // completion_time: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
     lmia_status: [
       (value) =>
-        value === "" || value === null || value.trim() === ""
-          ? "Lmia status is required"
-          : "",
+        value === "" || value === null ? "Lmia status is required" : "",
     ],
-    completion_time: [
-      (value) =>
-        value === "" || value === null || value.trim() === ""
-          ? "Expected time of completion is required"
-          : "",
-    ],
-    // posted: [
+    // completion_time: [
     //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "posted is required"
+    //     value === "" || value === null
+    //       ? "Expected time of completion is required"
     //       : "",
-    // ],
-    // posted_company_id: [
-    //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "Company is required"
-    //       : null,
-    // ],
-    // date_of_posting: [
-    //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "Date of posting is required"
-    //       : null,
-    // ],
-    // designation: [
-    //   (value) =>
-    //     value < 2 ? "designation should have 2 or more letters." : "null",
     // ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, setErrors, onInputChange, errors, validate } =
+  const { state, setState, setErrors, /*onInputChange,*/ errors, validate } =
     useValidation(initialFormState, validators);
-    
-  // USER LIMIA UPDATE FILTER SUBMIT BUTTON
-  const onAminProfileUpdateClick = async (event) => {
+
+  // USER LIMA UPDATE FILTER SUBMIT BUTTON
+  const onLmiaUpdateClick = async (event) => {
     event.preventDefault();
+    if (validate() && props.job === "yes") {
+      let data = {
+        // completion_time: state.completion_time,
+        lmia_status: state.lmia_status,
+        job_id: jobId,
+      };
+      try {
+        let responseData = await AddJob(data);
+        if (responseData.message === "job data updated successfully") {
+          toast.success("Lmia Status Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          close();
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
     if (validate()) {
       setLoading(true);
-      const responseData = await AddLimia(state, employeeId, jobId);
-      if (responseData.message === "Data added successfully") {
-        toast.success("Lmia Status Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true)
-        return close();
-      }
-      if (responseData.message === "Data updated successfully") {
-        toast.success("Lmia Status Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true)
-        return close();
+      try {
+        const responseData = await AddLimia(state, employeeId, jobId);
+        if (responseData.message === "Data added successfully") {
+          toast.success("Lmia Status Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          close();
+        }
+        if (responseData.message === "Data updated successfully") {
+          toast.success("Lmia Status Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          if (props.page === "userprofile") {
+            props.statusCall(true);
+          }
+          close();
+        }
+        if (
+          responseData.message ===
+          "Please provide different status, already exist"
+        ) {
+          toast.error("Lmia already exist", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          close();
+          props.setApiCall(true);
+          if (props.page === "userprofile") {
+            props.statusCall(true);
+          }
+        }
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
       }
     } else {
       setLoading(false);
     }
   };
-  // END LIMIA VALIDATION
+  // END LIMA VALIDATION
+
   return (
     <>
       <Modal
         show={props.show}
-        size="md"
+        size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
@@ -118,35 +270,80 @@ function LmiaStatus(props) {
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-          <h5 className="text-center pt-2">LMIA staus</h5>
-          <form onSubmit={onAminProfileUpdateClick}>
+          <h5 className="text-center pt-2 mb-7">LMIA status</h5>
+          <LmiaTime
+            lmia={state.lmia_status}
+            job={props.job}
+            location={location.pathname}
+            selectedStatus={selectedStatus}
+          />
+          <form onSubmit={onLmiaUpdateClick}>
+            {expandedStatus && (
+              // <div className='bg-white text-dark p-2 sub-stages-container row'>
+              //   {(FilterJson.lima_sub_stages[expandedStatus] || []).map((subStage, j) => (
+              //     <div
+              //       key={j}
+              //       className={`sub-stage col-6 text-capitalize ${(selectedStatus || []).some(
+              //         (item) =>
+              //           item.lmia_substage === subStage
+              //       )
+              //         ? 'selected'
+              //         : ''
+              //         }`}
+              //       onClick={() =>
+              //         handleSubStageSelection(expandedStatus, subStage)
+              //       }
+              //     >
+
+              //       <input
+              //         type="checkbox"
+              //         className='mx-2'
+              //         checked={(selectedStatus || []).some(
+              //           (item) =>
+              //             // item.lmia_status === expandedStatus &&
+              //             item.lmia_substage === subStage
+              //         )}
+              //         readOnly
+              //       />{subStage}
+              //     </div>
+              //   ))}
+              // </div>
+              <LmiaSubStageSelector
+                expandedStatus={expandedStatus}
+                selectedStatus={selectedStatus}
+                FilterJson={FilterJson}
+                handleSubStageSelection={handleSubStageSelection}
+              />
+            )}
             <div className="form-group mt-5">
               <label
                 htmlFor="lmia_status"
                 className="font-size-4 text-black-2  line-height-reset"
               >
-                Lmia status :
+                Lmia Status <span className="text-danger">*</span>:
               </label>
-              <select
-                type={"text"}
-                className={
-                  errors.lmia_status
-                    ? "form-control border border-danger"
-                    : "form-control"
-                }
-                value={state.lmia_status || ""}
-                onChange={onInputChange}
-                id="lmia_status"
-                name="lmia_status"
-                multiple={false}
-              >
-                <option value={""}>Select lmia status</option>
-                {(FilterJson.lmia_status || []).map((status, i) => (
-                  <option value={status} key={i}>
-                    {status}
-                  </option>
-                ))}
-              </select>
+              <SelectBox
+                Width={"yes"}
+                options={(FilterJson.lmia_status || [])
+                  .map((status, i) => {
+                    const shouldInclude = props.job === "yes" || i > 2;
+                    return shouldInclude
+                      ? {
+                        value: status,
+                        label: status,
+                      }
+                      : null;
+                  })
+                  .filter(Boolean)} // Remove null entries
+                type="lmia_status"
+                selectedValue={state.lmia_status || ""}
+                onChange={(e) => {
+                  const selected = e ? e.value : "";
+                  setState({ ...state, lmia_status: selected });
+                  setExpandedStatus(selected);
+                }}
+              />
+
               {/*----ERROR MESSAGE FOR LIMA STATUS----*/}
               {errors.lmia_status && (
                 <span
@@ -157,27 +354,29 @@ function LmiaStatus(props) {
                 </span>
               )}
             </div>
-            <div className="form-group mt-5">
+
+            {/* <div className="form-group mt-5">
               <label
                 htmlFor="completion_time"
                 className="font-size-4 text-black-2  line-height-reset"
               >
-                Expected time of completion
+                Expected time of completion<span className="text-danger">*</span>:
               </label>
               <input
                 type="date"
                 className={
                   errors.completion_time
-                    ? "form-control border border-danger"
-                    : "form-control"
+                    ? "form-control coustam_datepicker border border-danger"
+                    : "form-control coustam_datepicker"
                 }
-                value={state.completion_time || ""}
+                value={moment(state.completion_time).format("DD-MM-YYYY") || ""}
                 onChange={onInputChange}
                 id="completion_time"
                 name="completion_time"
-                max={moment().format("YYY-MM-DD")}
+                onKeyDownCapture={(e) => e.preventDefault()}
+                min={moment().format("DD-MM-YYYY")}
               />
-              {/*----ERROR MESSAGE FOR Admin Name----*/}
+              ----ERROR MESSAGE FOR Admin Name----
               {errors.completion_time && (
                 <span
                   key={errors.completion_time}
@@ -186,8 +385,8 @@ function LmiaStatus(props) {
                   {errors.completion_time}
                 </span>
               )}
-            </div>
-            {state.lmia_status === "complete" ? (
+            </div> */}
+            {/* {state.lmia_status === "complete" ? (
               <>
                 <div className="form-group">
                   <label
@@ -213,7 +412,7 @@ function LmiaStatus(props) {
                     <option value={"Yes"}>Yes</option>
                     <option value={"No"}>No</option>
                   </select>
-                  {/*----ERROR MESSAGE FOR LIMA STATUS----*/}
+                  ----ERROR MESSAGE FOR LIMA STATUS----
                   {errors.posted && (
                     <span
                       key={errors.posted}
@@ -251,7 +450,7 @@ function LmiaStatus(props) {
                       ))}
                     </select>
                   </div>
-                  {/*----ERROR MESSAGE FOR COMPANY----*/}
+                  ----ERROR MESSAGE FOR COMPANY----
                   {errors.posted_company_id && (
                     <span
                       key={errors.posted_company_id}
@@ -280,7 +479,7 @@ function LmiaStatus(props) {
                     id="date_of_posting"
                     name="date_of_posting"
                   />
-                  {/*----ERROR MESSAGE FOR COMPANY NAME----*/}
+                  ----ERROR MESSAGE FOR COMPANY NAME----
                   {errors.date_of_posting && (
                     <span
                       key={errors.date_of_posting}
@@ -309,7 +508,7 @@ function LmiaStatus(props) {
                     id="designation"
                     name="designation"
                   />
-                  {/*----ERROR MESSAGE FOR COMPANY NAME----*/}
+                  ----ERROR MESSAGE FOR COMPANY NAME----
                   {errors.designation && (
                     <span
                       key={errors.designation}
@@ -320,8 +519,7 @@ function LmiaStatus(props) {
                   )}
                 </div>
               </>
-            ) : null}
-
+            ) : null} */}
             <div className="form-group text-center">
               {loading === true ? (
                 <button
@@ -338,7 +536,7 @@ function LmiaStatus(props) {
                 </button>
               ) : (
                 <button
-                  onClick={onAminProfileUpdateClick}
+                  onClick={onLmiaUpdateClick}
                   className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="submit"
                 >

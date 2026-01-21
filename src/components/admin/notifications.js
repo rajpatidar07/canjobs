@@ -1,0 +1,491 @@
+import React, { useEffect, useState } from "react";
+// import { Button, Form, InputGroup } from "react-bootstrap";
+// import NotificationsCard from "./notificationsCard";
+import {
+  ReadNotification,
+  getAllMentionNotification /* getAllAdminNotification,*/,
+} from "../../api/api";
+import { Link } from "react-router-dom";
+import { CgFileDocument } from "react-icons/cg";
+import { FaRegBell } from "react-icons/fa";
+import ConvertTime from "../common/Common function/ConvertTime";
+import determineBackgroundColor from "../common/Common function/DetermineBackgroundColour";
+function Notifications({
+  type,
+  // userId,
+  // setDocId,
+  // setNotificationDoc,
+  // setSelecttDocTypeName,
+  // notificationApiCall,
+  // setNotificationApiCall,
+  // user_type,
+}) {
+  const [show, setshow] = useState(false);
+  let [totalNotif, setTotalNotif] = useState();
+  let [totalNotificRow, setTotalNotificRow] = useState();
+  let [notification, setNotiication] = useState([]);
+  const [apicall, setApicall] = useState(false);
+  const [recordsPerPage, setRecordsPerPage] = useState(20);
+  let user_type = localStorage.getItem("userType");
+  let admin_type = localStorage.getItem("admin_type");
+  let loginuserId =
+    user_type === "admin"
+      ? localStorage.getItem("admin_id")
+      : user_type === "user"
+        ? localStorage.getItem("employee_id")
+        : user_type === "agent"
+          ? localStorage.getItem("agent_id")
+          : "";
+  /*notification API Call*/
+  const Notiication = async () => {
+    try {
+      let Response = await getAllMentionNotification(
+        type,
+        loginuserId,
+        user_type === "admin" ? admin_type : user_type,
+        "",
+        1,
+        recordsPerPage
+      ); //getAllAdminNotification(); //(new) getAllMentionNotification(loginuserId); //getAllAdminNotification();
+      if (Response.Data.data.length === 0) {
+        setNotiication([]);
+        setTotalNotif();
+      } else {
+        setTotalNotificRow(Response.Data.total_rows);
+        setNotiication(
+          user_type === "agent"
+            ? Response.Data.data.filter(
+              (item) => item.document_user_type !== "employer"
+            )
+            : Response.Data.data
+        );
+        setTotalNotif(
+          user_type === "agent"
+            ? Response.Data.data.filter(
+              (item) =>
+                item.document_user_type !== "employer" &&
+                (item.is_read === 0 || item.is_read === "0")
+            ).length
+            : Response.Data.data.filter(
+              (item) => item.is_read === 0 || item.is_read === "0"
+            ).length
+        );
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    setApicall(false);
+  };
+  useEffect(() => {
+    Notiication();
+    // if (notificationApiCall === true) {
+    //   setNotificationApiCall(false);
+    // }
+    if (localStorage.getItem("callNotification") === true) {
+      localStorage.setItem("callNotification", false);
+    }
+    // eslint-disable-next-line
+  }, [
+    apicall,
+    // eslint-disable-next-line
+    localStorage.getItem("callNotification"),
+    recordsPerPage /*notificationApiCall*/,
+  ]);
+
+  /*Function to load more data while scrolling */
+  let handelScroll = (e) => {
+    // console.log(totalNotificRow, recordsPerPage, recordsPerPage <= totalNotificRow)
+    if (recordsPerPage <= totalNotificRow) {
+      setRecordsPerPage(recordsPerPage + 10);
+    } else {
+      // setRecordsPerPage(emailData.length);
+    }
+  };
+  /*Parse the data of the notify_json */
+  const parseJsonSafely = (jsonString) => {
+    try {
+      return jsonString ? JSON.parse(jsonString) : {};
+    } catch (error) {
+      console.error("Invalid JSON in notif_json:", jsonString, error);
+      return {};
+    }
+  };
+  return (
+    <div className="global_search_box  position-relative">
+      {/* <i
+        style={{ cursor: "pointer" }}
+        className="fas fa-regular fa-bell text-dark mx-5"
+        onClick={() => setshow(true)}
+      ></i> */}
+      {type === "" ? (
+        <span title="Chat Notifications">
+          <FaRegBell
+            style={{ cursor: "pointer" }}
+            className="text-white bold mx-5"
+            onClick={() => {
+              setshow(true);
+              setApicall(true);
+            }}
+          />
+        </span>
+      ) : (
+        <span title="Document Notifications">
+          <CgFileDocument
+            style={{ cursor: "pointer" }}
+            className="text-white  mx-5"
+            onClick={() => {
+              setshow(true);
+              setApicall(true);
+            }}
+          />
+        </span>
+      )}
+      {totalNotif > 0 ? (
+        <div className="bg-primary text-white notification_count">
+          {totalNotif}
+        </div>
+      ) : (
+        ""
+      )}
+      <div
+        className={
+          show
+            ? " d-flex global_search_content notification_box position-fixed show"
+            : " d-flex global_search_content notification_box position-fixed"
+        }
+      >
+        <div className="left_side" onClick={() => setshow(false)}></div>
+        <div className="right_side bg-white">
+          <div className="global_search d-flex align-items-center p-3 px-5 justify-content-between">
+            <h4 className="font-size-5 font-weight-bold m-0 border-bottom text-uppercase px-5">
+              Notifications
+            </h4>
+            <i
+              style={{ fontSize: "22px" }}
+              className="fas fa-times text-dark ml-4"
+              onClick={() => setshow(false)}
+            ></i>
+          </div>
+          <div
+            className="global_search_result notofications_list"
+            onScroll={handelScroll}
+            style={{ overflowY: "scroll", height: "calc(100vh - 47px)" }}
+          >
+            {notification.length > 0 && (
+              <ul className="w-100 col p-0 ">
+                {notification.map((data, index) => (
+                  // <li
+                  //   key={data.id}
+                  //   title={data.message}
+                  //   className={
+                  //     data.is_read === "1"
+                  //       ? " dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap "
+                  //       : " font-weight-bold bg-light dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap "
+                  //   }
+                  // >
+                  //   <Link
+                  //     to={
+                  //       data.subject === "added_new_job"
+                  //         ? "/job"
+                  //         : data.subject === "applied_on_job"
+                  //           ? "/responses"
+                  //           : data.subject === "interview_scheduled"
+                  //             ? "/interview"
+                  //             : data.subject === "mention_document" ? `/${data.employee_id}?docId=${data.mention_id}` : type === "mention_partner"
+                  //               ? `/${data.from_id}?partner=${data.from_id}`
+                  //               : ""
+                  //     }
+                  //     onClick={() => {
+                  //       try {
+                  //         // setDocId(data.mention_id);
+                  //         setshow(false);
+                  //         ReadNotification(data.id);
+                  //         // localStorage.setItem(
+                  //         //   type === "mention_document" ? "notificationUser" : type === "mention_partner" ? "notificationPartnerUser" : "",
+                  //         //   data.employee_id
+                  //         // );
+                  //         // setNotificationDoc(1);
+                  //         // setSelecttDocTypeName("");
+                  //       } catch (err) {
+                  //         console.log(err);
+                  //       }
+                  //       setApicall(true);
+                  //       // Notiication();
+                  //     }}
+                  //     className="text-truncate-2 text-dark"
+                  //   >
+                  //     <div>
+                  //       <div className="d-flex profile_box gx-2 mb-1 ">
+                  //         <div className="col-8 flex-start text-start">
+                  //           <div className="media  align-items-center">
+                  //             <div
+                  //               className={`col circle-24 mx-auto overflow-hidden text-capitalize text-white ${determineBackgroundColor(
+                  //                 data
+                  //               )}`}
+                  //               style={{ fontSize: "20px" }}
+                  //             >
+                  //               {data.receiver_name
+                  //                 ? data.receiver_name.charAt(0)
+                  //                 : ""}
+                  //             </div>
+                  //             <div className="font-size-3 font-weight-bold text-capitalize col">
+                  //               {data.receiver_name ? data.receiver_name : ""}
+                  //             </div>
+                  //           </div>
+                  //         </div>
+                  //         <div className="date flex-end text-end col-4">
+                  //           {moment(data.created_at).format("HH:mm D MMM")}
+                  //         </div>
+                  //       </div>
+                  //       <div className="message mt-3 mx-3">
+                  //         {data.message.replace("a", "Hi")}
+                  //       </div>
+                  //     </div>
+                  //     {/* {data.message.replace("a", "Hi")} */}
+                  //   </Link>
+                  // </li>
+                  <li
+                    key={data.id}
+                    className={`dropdown-item border-bottom border-hit-gray font-size-3 text-wrap`}
+                    style={{
+                      padding: "6px 0",
+                      borderBottom: "1px solid #ddd",
+                      backgroundColor: data.is_read === "1" ? "#eaeaea" : "",
+                    }}
+                  >
+                    <Link
+                      to={
+                        data.subject === "new_user_registered"
+                          ? "/selfemployee"
+                          : data.subject === "new_employer_registered"
+                            ? "/employer"
+                            : data.subject === "added_new_job"
+                              ? "/job"
+                              : data.subject === "applied_on_job"
+                                ? "/responses"
+                                : data.subject === "interview_scheduled"
+                                  ? "/interview"
+                                  : data.subject === "mention_document"
+                                    ? data.document_user_type === "employer"
+                                      ? `/client_detail?docId=${data.mention_id
+                                      }&docParentId=${parseJsonSafely(data?.notif_json)
+                                        .doc_parent_id || ""
+                                      }&annotationId=${parseJsonSafely(data?.notif_json)
+                                        .annotation_id || ""
+                                      }&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                                      }`
+                                      : data.document_user_type === "applicant_type"
+                                        ? `/slots?sId=${data.interested_in}&docId=${data.mention_id}&docParentId=${parseJsonSafely(data?.notif_json)
+                                          .doc_parent_id || ""
+                                        }&annotationId=${parseJsonSafely(data?.notif_json)
+                                          .annotation_id || ""
+                                        }&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                                        }`
+                                        : data.document_user_type === "job"
+                                          ? `/job_detail?docId=${data.mention_id
+                                          }&docParentId=${parseJsonSafely(data?.notif_json)
+                                            .doc_parent_id || ""
+                                          }&annotationId=${parseJsonSafely(data?.notif_json)
+                                            .annotation_id || ""
+                                          }&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                                          }`
+                                          : `/${data.employee_id}?docId=${data.mention_id
+                                          }&docParentId=${parseJsonSafely(data?.notif_json)
+                                            .doc_parent_id || ""
+                                          }&annotationId=${parseJsonSafely(data?.notif_json)
+                                            .annotation_id || ""
+                                          }&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                                          }`
+                                    : data.subject === "mention_partner"
+                                      ? `/${data.employee_id}?partner=${data.from_id}`
+                                      : data.subject === "mention_partnerChat"
+                                        ? `/partner_profile?partner=${data.employee_id}`
+                                        : data.subject === "assigned_admin_to_partner"
+                                          ? "/partner_profile"
+                                          : data.subject === "mention_notes" ||
+                                            data.subject === "mention_note"
+                                            ? data.document_user_type === "employer"
+                                              ? `/client_detail?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""
+                                              }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
+                                              : data.document_user_type === "agent" &&
+                                                window.location.pathname === "/partner_profile"
+                                                ? `?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""
+                                                }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
+                                                : data.document_user_type === "agent"
+                                                  ? `/partner_profile?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""
+                                                  }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
+                                                  : data.document_user_type === "job"
+                                                    ? `/job_detail?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""
+                                                    }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
+                                                    : `/${data.employee_id}?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""
+                                                    }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
+                                            : data.subject === "signed_agreement"
+                                              ? data.document_user_type === "employer"
+                                                ? `/client_detail?agreement=true`
+                                                : `/${data.employee_id}?agreement=true`
+                                              : data.subject === "mention_task"
+                                                ? `/managetasks?taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                                                }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""
+                                                }`
+                                                : data.subject ===
+                                                  "mention_applicant_type_candidate_chat"
+                                                  ? `/slots?sId=${data.interested_in}&notifiType=candidate&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                                                  }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}&canId=${data.employee_id}`
+                                                  : data.subject === "mention_applicant_type_group_chat"
+                                                    ? `/slots?sId=${data.interested_in}&notifiType=group&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                                                    }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
+                                                    : data.subject === "mention_call_log_chat"
+                                                      ? `/daily_pages?call_logId=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                                      : data.subject === "mention_hour_log_chat"
+                                                        ? `/daily_pages?hour_logId=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                                        : data.subject === "mention_consultation_chat"
+                                                          ? `/daily_pages?consultation_id=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                                          : data.subject === "mention_job_chat"
+                                                            ? `/job_detail?chat=${data.employee_id}`
+                                                            : data.subject === "payment_success"
+                                                              ? data.document_user_type === "employer"
+                                                                ? `/client_detail?user_payment=true&Pid=${data.mention_id}`
+                                                                : `/${data.employee_id}?user_payment=true&Pid=${data.mention_id}`
+                                                              : data.subject === "mention_payment_rec_chat"
+                                                                ? `/payment_records?Payment_rec_id=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                                                : data.subject === 'new_mail'
+                                                                  ? data.action_user_type === "employee"
+                                                                    ? `/${data.action_id}?user_email=true&emailId=${data.mention_id}`
+                                                                    : `/client_detail?cId=${data.action_id}&user_email=true&emailId=${data.mention_id}`
+                                                                  : data.subject === "employee_update"
+                                                                    ? `/${data.employee_id}?user_timeline=true&timeLineId=${data.mention_id}`
+                                                                    : data.subject === "new_message"
+                                                                      ? data.action_user_type === 'employee'
+                                                                        ? `/${data.employee_id}?chat_bot=true&charBotId=${data.mention_id}`
+                                                                        : `/client_detail?cId=${data.action_id}&chat_bot=true&charBotId=${data.mention_id}`
+                                                                      : ""
+
+                      }
+                      onClick={() => {
+                        try {
+                          setshow(false);
+                          ReadNotification(data.id);
+                          setApicall(true);
+                          // window.history.replaceState({}, document.title, "/"); //pta nhi q lgaya tha mene
+                          if (data.subject === "mention_partnerChat") {
+                            localStorage.setItem("agent_id", data.employee_id);
+                          } else if (
+                            data.subject === "assigned_admin_to_partner" ||
+                            (data.document_user_type === "agent" &&
+                              data.subject === "mention_notes")
+                          ) {
+                            localStorage.setItem(
+                              "agent_id",
+                              data.document_user_type === "agent"
+                                ? data.employee_id
+                                : data.action_id
+                            );
+                          } else if (
+                            data.subject === "mention_document" ||
+                            data.subject === "mention_notes" ||
+                            data.subject === "signed_agreement" ||
+                            data.subject === "payment_success"
+                          ) {
+                            if (data.document_user_type === "applicant_type") {
+                              localStorage.setItem(
+                                "applicantType",
+                                data.interested_in
+                              );
+                              localStorage.setItem(
+                                "applicantTypeFolderId",
+                                parseJsonSafely(data?.notif_json).doc_parent_id
+                              );
+                            } else if (data.document_user_type === "employer" || data.action_user_type === "employer") {
+                              localStorage.setItem(
+                                "company_id",
+                                data.subject === 'new_mail' ? data.action_id : data.employee_id
+                              );
+                            }
+                          } else if (
+                            data.subject ===
+                            "mention_applicant_type_candidate_chat" ||
+                            data.subject === "mention_applicant_type_group_chat"
+                          ) {
+                            localStorage.setItem(
+                              "applicantType",
+                              data.interested_in
+                            );
+                          } else if (data.subject === "mention_job_chat") {
+                            localStorage.setItem("job_id", data.employee_id)
+                          }
+                        } catch (err) {
+                          console.error("Error handling click event:", err);
+                        }
+                        setApicall(true);
+                      }}
+                      className="text-dark text-decoration-none d-flex justify-content-between"
+                    >
+                      <div className="d-flex align-items-center">
+                        <div
+                          style={{ fontSize: 18 }}
+                          className={`circle-40 mx-2 text-center text-capitalize text-white font-weight-bold ${determineBackgroundColor(
+                            data
+                          )}`}
+                        >
+                          {data.sender_name
+                            ? data.sender_name.charAt(0)
+                            : data.receiver_name.charAt(0)}
+                        </div>
+                        <div className="flex-grow-1">
+                          {/* <div className="d-flex align-items-center justify-content-between">
+                            <div className="font-weight-bold text-truncate w-60 intervire-msg">
+                              {data.receiver_name ? data.receiver_name : ""}
+                            </div>
+                          </div> */}
+                          <div
+                            className={`${data.is_read !== "1" ? "font-weight-bold" : ""
+                              }  mw-80 notification_text_msg`}
+                            style={{ fontSize: "14px" }}
+                          >
+                            <div
+                              className="intervire-msg"
+                              dangerouslySetInnerHTML={{
+                                __html: data.message
+                                  ?.replace(
+                                    /applicant_type_candidate_chat/g,
+                                    "Candidate discussion"
+                                  )
+                                  .replace(
+                                    /applicant_type_group_chat/g,
+                                    "Group discussion"
+                                  ).replace(
+                                    /call_log_chat/g,
+                                    "Daily Call log"),
+                              }}
+                            />
+                          </div>
+                          <span style={{ fontSize: 12, fontStyle: "italic" }}>
+                            {data.comment_msg ? `"${data.comment_msg}"` : ""}
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        className="font-size-2 ml-2"
+                        style={{
+                          minWidth: 70,
+                          maxWidth: 70,
+                          lineHeight: 1.5,
+                          fontStyle: "italic",
+                        }}
+                      >
+                        <ConvertTime _date={data.created_at} format={"lll"} />
+                        {/* {moment(data.created_at).format("HH:mm")} */}
+                      </div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Notifications;

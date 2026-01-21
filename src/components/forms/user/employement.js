@@ -6,27 +6,37 @@ import {
   EmployeeDetails,
   AddEmployeement,
   DeleteEmployeeCareer,
-  getJson
+  GetFilter,
 } from "../../../api/api";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import SAlert from "../../common/sweetAlert";
+import ConvertTime from "../../common/Common function/ConvertTime";
+import SelectBox from "../../common/Common function/SelectBox";
 
 function EmployementDetails(props) {
   /*Data state */
-  let [apiCall , setApiCall] = useState(false)
-  let [employementData, setEmployementData] = useState("");
+  let [apiCall, setApiCall] = useState(false);
+  let [employmentData, setEmploymentData] = useState("");
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
   const [loading, setLoading] = useState(false);
-  let [IndustryList , setIndustryList] = useState([])
+  let [IndustryList, setIndustryList] = useState([]);
 
   /*Function to get the jSon */
- const JsonData=async()=>{
-  let Json = await getJson()
-  setIndustryList(Json.Industry)
-}
+  const JsonData = async () => {
+    try {
+      let Json = await GetFilter();
+      if (Json.data.message === "No data found") {
+        setIndustryList([]);
+      } else {
+        setIndustryList(Json.data.data.Industry);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   /* Functionality to close the modal */
   const close = () => {
@@ -55,98 +65,113 @@ function EmployementDetails(props) {
     company: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Company name is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Company name can not have a number."
-          : value.length < 2
-          ? "Company name should have 2 or more letters"
-          : "",
+          ? "Employer's name is required"
+          : // : /[^A-Za-z 0-9]/g.test(value)
+          // ? "Cannot use special character "
+          // : /[-]?\d+(\.\d+)?/.test(value)
+          // ? "Employer's name can not have a number."
+          value.length < 2
+            ? "Employer's name should have 2 or more letters"
+            : "",
     ],
     designation: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Designation is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Designation can not have a number."
-          : value.length < 2
-          ? "Designation should have 2 or more letters"
-          : "",
+            ? "Cannot use special character "
+            : /[-]?\d+(\.\d+)?/.test(value)
+              ? "Designation can not have a number."
+              : value.length < 2
+                ? "Designation should have 2 or more letters"
+                : "",
     ],
-    company_location: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "location is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "location can not have a number."
-          : value.length < 2
-          ? "location should have 2 or more letters"
-          : "",
-    ],
-    industry: [(value) => (value ? null : "Industry is required")],
-    functional_area: [(value) => (value ? null : "Area is required")],
     start_date: [
       (value) =>
         value === "" || value.trim() === "" ? "Start Date is required" : null,
     ],
-    end_date: [(value) => (value === "" ? "End Date is required" : null)],
-    work_level: [
+    end_date: [
       (value) =>
-        value === "" || value.trim() === "" ? "Work Level is required" : null,
+        state.currently_work_here === 1 || state.currently_work_here === "1"
+          ? null
+          : (state.currently_work_here === 0 &&
+            (value === "" || value === null)) ||
+            (state.currently_work_here === "0" &&
+              (value === "" || value === null)) ||
+            value === "" ||
+            value === null ||
+            value === undefined
+            ? "End Date is required"
+            : null,
     ],
   };
+
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, setErrors, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
   // API CALL
-  const EmployeementData = async (data) => {
-    let Employment = await EmployeeDetails(props.employeeId);
-    // setEmployementData(Employment.data.career);
-    if (Employment.data.career.length === 0) {
-      setEmployementData([]);
-    } else {
-      setEmployementData(Employment.data.career);
-    }
-    if (data !== undefined || data) {
-      setState(data);
+  const EmploymentData = async (data) => {
+    try {
+      let Employment = await EmployeeDetails(props.employeeId);
+      // setEmploymentData(Employment.data.career);
+      if (Employment.data.career.length === 0) {
+        setEmploymentData([]);
+      } else {
+        setEmploymentData(Employment.data.career);
+      }
+      if (data !== undefined || data) {
+        setState(data);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
+  
   useEffect(() => {
     if (props.employeeId === undefined || deleteAlert === true) {
       setState(initialFormState);
     } else {
-      EmployeementData();
+      EmploymentData();
     }
-    JsonData()
+    JsonData();
+    if (apiCall === true) {
+      setApiCall(false);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, apiCall]);
 
   // USER CARRER PROFILE SUBMIT BUTTON
-  const onCarrerProfileClick = async (event) => {
+  const onCareerProfileClick = async (event) => {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      let responseData = await AddEmployeement(state, props.employeeId);
-      if (responseData.message === "Employee data inserted successfully") {
-        toast.success("Career Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true)
-        return close();
-      }
-      if (responseData.message === "Employee data updated successfully") {
-        toast.success("Career Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true)
-        return close();
+      try {
+        let responseData = await AddEmployeement(state, props.employeeId);
+        if (responseData.message === "Employee data inserted successfully") {
+          toast.success("Career Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          setApiCall(true);
+          setState(initialFormState);
+          setErrors("");
+          setLoading(false);
+        }
+        if (responseData.message === "Employee data updated successfully") {
+          toast.success("Career Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          setApiCall(true);
+          setState(initialFormState);
+          setErrors("");
+          setLoading(false);
+        }
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
       }
     } else {
       setLoading(false);
@@ -165,15 +190,20 @@ function EmployementDetails(props) {
   };
   /*To call Api to delete Skill */
   async function deleteEducation(e) {
-    const responseData = await DeleteEmployeeCareer(e);
-    if (responseData.message === "career details has been deleted") {
-      toast.error("Career deleted Successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      props.setApiCall(true)
-      setApiCall(true)
-      setDeleteAlert(false);
+    try {
+      const responseData = await DeleteEmployeeCareer(e, props.employeeId);
+      if (responseData.message === "career details has been deleted") {
+        toast.error("Career deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        props.setApiCall(true);
+        setApiCall(true);
+        setDeleteAlert(false);
+      }
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
     }
   }
   return (
@@ -182,79 +212,100 @@ function EmployementDetails(props) {
         show={props.show}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
+        centered>
         <button
           type="button"
           className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
           data-dismiss="modal"
-          onClick={close}
-        >
+          onClick={close}>
           <i className="fas fa-times"></i>
         </button>
-        {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
-          <form onSubmit={onCarrerProfileClick}>
+          <form onSubmit={onCareerProfileClick}>
             <h5 className="text-center pt-2 mb-7">Add Employment</h5>
-            {(employementData || []).map((CareerDetails) => (
-              <div
-                className="w-100 border mb-3 rounded-5"
-                key={CareerDetails.career_id}
-              >
-                <div className="d-flex align-items-center pr-11 mb-1 flex-wrap flex-sm-nowrap justify-content-md-between p-2">
-                  <div className="media align-items-center company_box col-md-6 p-0">
-                    <div className="text_box text-left w-100 mt-n2">
-                      <h3 className="mb-0">
-                        <div className="font-size-6 text-black-2 font-weight-semibold">
-                          {CareerDetails.designation} -{" "}
-                          <span className="font-size-4">
-                            {CareerDetails.functional_area}
+            <div className="row mb-5 bg-light py-5 pr-10 pl-4 rounded">
+              {(employmentData || []).map((CareerDetails, index) => (
+                <div className="col-12 text-capitalize p-0" key={index}>
+                  <div
+                    className="w-100 card px-6 py-3 shadow-8 border-0 mb-2" //"w-100 border mb-3 rounded-5 text-capitalize"
+                    key={CareerDetails.career_id}>
+                    <div className="d-flex align-items-center text-break  mb-1 flex-wrap flex-sm-nowrap justify-content-md-between ">
+                      <div className="media align-items-center company_box  p-0">
+                        <div className="text_box text-left w-100 mt-n2">
+                          <span className="font-size-4 font-weight-semibold w-100">
+                            {CareerDetails.designation}
+                            <span className="font-size-4 text-break">
+                              {CareerDetails.functional_area &&
+                                ` - ${CareerDetails.functional_area}`}
+                            </span>
+                          </span>
+                          <span className="font-size-3 text-default-color text-break">
+                            {CareerDetails.company}
+                            {CareerDetails.industry
+                              ? `(${CareerDetails.industry})`
+                              : null}
                           </span>
                         </div>
-                      </h3>
-                      <span className="font-size-4 text-default-color line-height-2">
-                        {CareerDetails.company} ({CareerDetails.industry})
-                      </span>
+                      </div>
+                      <div className="d-flex ">
+                        <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
+                          <span className="font-size-4 text-gray w-100">
+                            <ConvertTime _date={CareerDetails.start_date} format={"DD MMMM, YYYY"} />
+                            -
+                            {CareerDetails.currently_work_here === ("1" || 1)
+                              ? "Currently working"
+                              : <ConvertTime _date={CareerDetails.end_date} format={"DD MMMM, YYYY"} />
+                            }
+                          </span>
+                          <span className="d-none font-size-3 text-gray w-100">
+                            <span
+                              className={`${CareerDetails.company_location === null
+                                ? "d-none"
+                                : "mr-2"
+                                } `}
+                            >
+                              <img
+                                src="image/svg/icon-loaction-pin-black.svg"
+                                alt=""/>
+                            </span>
+                            {CareerDetails.company_location}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="w-auto education_btn_grp">
+                        <Link
+                          to=""
+                          onClick={() => EmploymentData(CareerDetails)}
+                        >
+                          <i className="fa fa-edit text-gray px-5" aria-hidden="true"></i>
+                        </Link>
+                        <Link
+                          to=""
+                          onClick={() => ShowDeleteAlert(CareerDetails)}
+                        >
+                          <i className="fa fa-trash px-5" aria-hidden="true" ></i>
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                  <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                    <span className="font-size-4 text-gray w-100">
-                      {moment(CareerDetails.start_date).format("YYYY-MM-DD")} -{" "}
-                      {moment(CareerDetails.end_date).format("YYYY-MM-DD")}
-                    </span>
-                    <span className="font-size-3 text-gray w-100">
-                      <span className="mr-4" style={{ marginTop: "-2px" }}>
-                        <img
-                          src="image/svg/icon-loaction-pin-black.svg"
-                          alt=""
-                        />
-                      </span>
-                      {CareerDetails.company_location}
-                    </span>
-                  </div>
-                  <Link to="" onClick={() => ShowDeleteAlert(CareerDetails)}>
-                    <i className="fa fa-times-circle" aria-hidden="true"></i>
-                  </Link>
-                  <Link to="" onClick={() => EmployeementData(CareerDetails)}>
-                    <i className="fa fa-edit text-gray" aria-hidden="true"></i>
-                  </Link>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+
             <div className="row pt-5">
               <div className="form-group col-md-6">
                 <label
                   htmlFor="Company"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company<span className="text-danger">*</span>:
+                  Employer: <span className="text-danger">*</span>
                 </label>
                 <input
-                  maxLength={30}
+                  maxLength={60}
                   type="text"
-                  placeholder="Tell us your company name"
+                  placeholder="Tell us your Employer's name"
                   name="company"
-                  value={state.company ||""}
+                  value={state.company || ""}
                   onChange={onInputChange}
                   className={
                     errors.company
@@ -272,20 +323,20 @@ function EmployementDetails(props) {
                     {errors.company}
                   </span>
                 )}
-              </div>{" "}
+              </div>
               <div className="form-group col-md-6">
                 <label
                   htmlFor="designation"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Designation<span className="text-danger">*</span>:
+                  Designation: <span className="text-danger">*</span>
                 </label>
                 <input
-                  maxLength={30}
+                  maxLength={60}
                   type="text"
                   placeholder="Tell us your designation / job role"
                   name="designation"
-                  value={state.designation ||""}
+                  value={state.designation || ""}
                   onChange={onInputChange}
                   className={
                     errors.designation
@@ -311,14 +362,14 @@ function EmployementDetails(props) {
                   htmlFor="company_location"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company location <span className="text-danger">*</span>:
+                  Employer Location:
                 </label>
                 <input
                   type="text"
-                  maxLength={30}
-                  placeholder="Tell us your employer location"
+                  maxLength={60}
+                  placeholder="Tell us your Employer's location"
                   name="company_location"
-                  value={state.company_location ||""}
+                  value={state.company_location || ""}
                   onChange={onInputChange}
                   className={
                     errors.company_location
@@ -340,31 +391,30 @@ function EmployementDetails(props) {
               <div className="form-group col-md-6">
                 <label
                   htmlFor="industry"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Industry <span className="text-danger">*</span> :
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
+                  Industry:
                 </label>
                 <div className="position-relative">
-                  <select
-                    name="industry"
-                    value={state.industry||""}
-                    onChange={onInputChange}
-                    className={
-                      errors.industry
-                        ? "form-control border border-danger"
-                        : "form-control"
-                    }
-                    id="industry"
-                  >
-                    <option value={""}>
-                     Industry user company belongs to
-                    </option>
-                    {(IndustryList || []).map((course) => (
-                    <option value={course.value} key={course.id}>
-                      {course.value}
-                    </option>
-                  ))}
-                  </select>
+                  <div className={errors.industry ? "border border-danger rounded" : ""}>
+                    <SelectBox
+                      Width={"yes"} options={(IndustryList || []).map((course) => ({
+                        value: course.value,
+                        label: course.value,
+                      }))}
+                      type="industry"
+                      selectedValue={state.industry || ""}
+                      onChange={(e) => {
+                        onInputChange({
+                          target: {
+                            name: "industry",
+                            value: e ? e.value : "",
+                          },
+                        });
+                      }}
+                      placeholder="Industry user Employer belongs to"
+                    />
+                  </div>
+
                   {/*----ERROR MESSAGE FOR INDUSTRY----*/}
                   {errors.industry && (
                     <span
@@ -381,14 +431,13 @@ function EmployementDetails(props) {
               <div className="form-group col-md-6">
                 <label
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                  htmlFor="functional_area"
-                >
-                  Functional Area <span className="text-danger">*</span>:
+                  htmlFor="functional_area">
+                  Functional Area:
                 </label>
                 <div className="position-relative">
                   <input
                     name="functional_area"
-                    value={state.functional_area||""}
+                    value={state.functional_area || ""}
                     onChange={onInputChange}
                     className={
                       errors.functional_area
@@ -408,26 +457,27 @@ function EmployementDetails(props) {
                     </span>
                   )}
                 </div>
-              </div>{" "}
+              </div>
               <div className="form-group col-md-6">
                 <label
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                   htmlFor="work_level"
                 >
-                  Work level<span className="text-danger">*</span> :
+                  Work level:
                 </label>
                 <input
                   name="work_level"
-                  value={state.work_level ||""}
+                  value={state.work_level || ""}
                   onChange={onInputChange}
                   className={
                     errors.work_level
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  id="work_level" placeholder="Work Level"
-               />
-                 
+                  id="work_level"
+                  placeholder="Work Level"
+                />
+
                 {/*----ERROR MESSAGE FOR LEVEL----*/}
                 {errors.work_level && (
                   <span
@@ -439,7 +489,6 @@ function EmployementDetails(props) {
                 )}
               </div>
             </div>
-
             <div className="row">
               <div className="form-group col-md-6">
                 <label
@@ -449,16 +498,17 @@ function EmployementDetails(props) {
                   Start Date: <span className="text-danger">*</span>
                 </label>
                 <input
-                  max={moment().format("YYYY-MM-DD")}
+                  max={moment().format("DD-MM-YYYY")}
                   type="date"
                   placeholder="Date Of Joining "
                   name="start_date"
-                  value={state.start_date ||""}
+                  value={state.start_date || ""}
                   onChange={onInputChange}
+                  onKeyDownCapture={(e) => e.preventDefault()}
                   className={
                     errors.start_date
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "form-control coustam_datepicker border border-danger"
+                      : "form-control coustam_datepicker"
                   }
                   id="start_date"
                 />
@@ -477,19 +527,29 @@ function EmployementDetails(props) {
                   htmlFor="end_date"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  End Date: <span className="text-danger">*</span>
+                  End Date:
+                  {state.currently_work_here ? null : (
+                    <span className="text-danger">*</span>
+                  )}
                 </label>
                 <input
                   min={state.start_date}
                   type="date"
                   placeholder="Date Of Leaving "
                   name="end_date"
-                  value={state.end_date ||""}
+                  max={moment().date(new Date())}
+                  disabled={
+                    state.currently_work_here === 1 ||
+                    state.currently_work_here === "1"
+                  }
+                  value={state.end_date || ""}
                   onChange={onInputChange}
+                  onKeyDownCapture={(e) => e.preventDefault()}
+                  // nKeyDownCapture={(e) => e.preventDefault()}
                   className={
                     errors.end_date
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "form-control coustam_datepicker border border-danger"
+                      : "form-control coustam_datepicker"
                   }
                   id="end_date"
                 />
@@ -507,11 +567,15 @@ function EmployementDetails(props) {
                 <input
                   type="checkbox"
                   name="currently_work_here"
-                  checked={state.currently_work_here}
-                  onChange={(event) =>
+                  checked={state.currently_work_here === "1"}
+                  onChange={(e) =>
                     setState({
                       ...state,
-                      currently_work_here: event.target.checked,
+                      currently_work_here:
+                        state.currently_work_here === "" ||
+                          state.currently_work_here === "0"
+                          ? "1"
+                          : "0",
                     })
                   }
                   id="currently_work_here"
@@ -520,15 +584,8 @@ function EmployementDetails(props) {
                   htmlFor="currently_work_here"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset mx-4"
                 >
-                  I Currently work here
+                  I Currently Work Here
                 </label>
-                {/*----ERROR MESSAGE FOR ENDDATE----*/}
-                {/* {errors.currently_work_here && (
-                  <span
-                    key={errors.currently_work_here}
-                    className="text-danger font-size-3"
-                  ></span>
-                )} */}
               </div>
             </div>
             <SAlert
@@ -539,7 +596,7 @@ function EmployementDetails(props) {
               showCancelButton={true}
               onCancel={CancelDelete}
             />
-            <div className="form-group text-center">
+            <div className="form-group text-center d-flex justify-content-center">
               {loading === true ? (
                 <button
                   className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
@@ -561,9 +618,16 @@ function EmployementDetails(props) {
                   Submit
                 </button>
               )}
+              <button
+                type="button"
+                className="btn btn-light mx-5"
+                data-dismiss="modal"
+                onClick={close}
+              >
+                Close
+              </button>
             </div>
           </form>
-          {/* </div> */}
         </div>
       </Modal>
     </>

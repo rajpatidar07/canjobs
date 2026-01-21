@@ -4,12 +4,13 @@ import useValidation from "../../common/useValidation";
 import { AddJobCategory, getAllJobsCategory } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SelectBox from "../../common/Common function/SelectBox";
 
 function AddCategory(props) {
   const [catType, setCatType] = useState([]);
   let [loading, setLoading] = useState(false);
-  /* Functionality to close the modal */
 
+  /* Functionality to close the modal */
   const close = () => {
     setState(initialFormState);
     setErrors("");
@@ -17,34 +18,33 @@ function AddCategory(props) {
     props.close();
   };
   // USER CATEGORY VALIDATION
-
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     category_name: "",
-    category_type: "",
-    parent_id: "",
+    category_type: "Other",
+    parent_id: "1",
+    job_category_id: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
     category_name: [
       (value) =>
         value === "" || value.trim() === ""
-          ? // || errors.category_type === "Category Type is required"
-            "Category Name  is required"
+          ? "Category Name  is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Category Name can not have a number."
-          : value.length < 2
-          ? "Category Name should have 2 or more letters"
-          : "",
+            ? "Cannot use special character "
+            : /[-]?\d+(\.\d+)?/.test(value)
+              ? "Category Name can not have a number."
+              : value.length < 2
+                ? "Category Name should have 2 or more letters"
+                : "",
     ],
-    category_type: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Category Type is required"
-          : null,
-    ],
+    // category_type: [
+    //   (value) =>
+    //     value === "" || value.trim() === ""
+    //       ? "Category Type is required"
+    //       : null,
+    // ],
   };
 
   // CUSTOM VALIDATIONS IMPORT
@@ -57,7 +57,7 @@ function AddCategory(props) {
       (data) => data.job_category_id === value
     )
       ? CategoryType.find((data) => data.job_category_id === value)
-          .category_type
+        .category_type
       : "";
     setState({
       category_type: category_type,
@@ -66,20 +66,24 @@ function AddCategory(props) {
       job_category_id: state.job_category_id,
     });
   };
+
   // API CALL
   const CatData = async () => {
-    let categoryType = await getAllJobsCategory();
-    setCatType(categoryType.data);
-    // // console.log(catType);
-    if (props.jobCategoryData === "0" || props.jobCategoryData.length === 0) {
-      setState(initialFormState);
-    } else {
-      setState(props.jobCategoryData);
+    try {
+      let categoryType = await getAllJobsCategory();
+      setCatType(categoryType.data);
+      if (props.jobCategoryData === "0" || props.jobCategoryData.length === 0) {
+        setState(initialFormState);
+      } else {
+        setState(props.jobCategoryData);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
   useEffect(() => {
     CatData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [props]);
 
   // USER CATEGORY SUBMIT BUTTON
@@ -87,23 +91,31 @@ function AddCategory(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      // //// console.log((state);
-      const responseData = await AddJobCategory(state);
-      if (responseData.message === "Category added successfully") {
-        toast.success("Category added successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true)
-        return close();
-      }
-      if (responseData.message === "Category updated successfully") {
-        toast.success("Category Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true)
-        return close();
+      try {
+        const responseData = await AddJobCategory(state);
+        if (responseData.message === "Category added successfully") {
+          toast.success("Category added successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+        if (responseData.message === "Category updated successfully") {
+          toast.success("Category Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+        if (responseData.message === "already exist !") {
+          setErrors({ ...errors, category_name: "Category Alredy Exists." });
+          setLoading(false);
+        }
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
       }
     } else {
       setLoading(false);
@@ -116,6 +128,7 @@ function AddCategory(props) {
     (thing, index, self) =>
       index === self.findIndex((t) => t.category_type === thing.category_type)
   );
+
   return (
     <>
       <Modal
@@ -132,44 +145,40 @@ function AddCategory(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           <form onSubmit={onAdminCategoryClick}>
             {props.jobCategoryData === "0" ? (
-              <h5 className="text-center pt-2">Add Category</h5>
+              <h5 className="text-center pt-2 mb-7">Add Category</h5>
             ) : (
-              <h5 className="text-center pt-2">Update Category</h5>
+              <h5 className="text-center pt-2 mb-7">Update Category</h5>
             )}
-            <div className="form-group row mb-0 mt-5">
+            <div className="form-group row mb-0 d-none">
               <label
                 htmlFor="category_type"
-                className="font-size-4 text-black-2  line-height-reset"
+                className="font-size-4 text-black-2 mx-6 line-height-reset"
               >
-                Add Category Type <span className="text-danger">*</span> :
+                Category Type <span className="text-danger">*</span> :
               </label>
-              <select
-                name="category_type"
-                className={
-                  errors.category_type
-                    ? "form-control mx-5 border border-danger"
-                    : "form-control mx-5"
-                }
-                value={state.job_category_id}
-                onChange={onSelectChange}
-                id="category_type"
-              >
-                <option value={""}>Select category</option>
-                {(CategoryType || []).map((data) => {
-                  return data.parent_id === "0" ? (
-                    <option
-                      value={data.job_category_id}
-                      key={data.job_category_id}
-                    >
-                      {data.category_type}
-                    </option>
-                  ) : null;
-                })}
-              </select>
+              <SelectBox
+                Width={"yes"}
+                options={(catType || [])
+                  .filter((data) => data.parent_id === "0")
+                  .map((data) => ({
+                    value: data.job_category_id,
+                    label: data.category_type,
+                  }))}
+                type="category_type"
+                selectedValue={state.parent_id}
+                onChange={(e) => {
+                  onSelectChange({
+                    target: {
+                      name: "category_type",
+                      value: e ? e.value : "",
+                    },
+                  });
+                }}
+              />
+
             </div>
             {/*----ERROR MESSAGE FOR CATEGORY TYPE----*/}
             {errors.category_type && (
@@ -199,6 +208,7 @@ function AddCategory(props) {
                 placeholder="Category Name"
                 id="category_name"
                 name="category_name"
+                maxLength={60}
               />
               {/*----ERROR MESSAGE FOR CATEGORY----*/}
               {errors.category_name && (
@@ -235,7 +245,6 @@ function AddCategory(props) {
               )}
             </div>
           </form>
-          {/* </div> */}
         </div>
       </Modal>
     </>

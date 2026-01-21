@@ -4,27 +4,41 @@ import Header from "../common/header";
 import SearchForm from "../common/search_form";
 import AddJobModal from "../forms/employer/job";
 import JobBox from "../common/jobbox";
-import { ToastContainer } from "react-toastify";
-import { getJson } from "../../api/api";
+import { GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import { Link } from "react-router-dom";
+import Loader from "../common/loader";
+import States from "../json/states";
+import SelectBox from "../common/Common function/SelectBox";
+
 function ManageJobs() {
   /*Data and modal states */
   let [showAddJobModal, setShowAddJobModal] = useState(false);
+  let [apiCall, setApiCall] = useState(false);
   let [jobId, setJobId] = useState();
   let [filter, SetFilter] = useState([]);
+
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
+  const [jobLocation, setJobLocation] = useState("");
+  const [jobsNo, setJobsNo] = useState(10);
+  const [jobCount, setJobCount] = useState();
+  const [totaljob, setTotalJob] = useState();
 
+  let Company_name = localStorage.getItem("name");
   /* Function to get the JSON data*/
   const FilterData = async () => {
-    const Json = await getJson();
-    if (Json.length === 0) {
-      SetFilter([]);
-    } else {
-      SetFilter(Json);
+    try {
+      const Json = await GetFilter();
+      if (Json.data.message === "No data found" || Json.length === 0) {
+        SetFilter([]);
+      } else {
+        SetFilter(Json.data.data);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -34,21 +48,18 @@ function ManageJobs() {
     setShowAddJobModal(true);
     setJobId(e);
   };
-
+  const CompleteProfileAlert = () => [
+    alert("Complete your profile before adding jobs."),
+  ];
   /*Render function to get filter list */
   useEffect(() => {
     FilterData();
   }, [showAddJobModal, jobId]);
 
-  // const Skill = Object.keys(filter.Skill).map((key) => {
-  //   return { id: key, name: filter.Skill[key] };
-  // });
-  console.log(filter);
-
   return (
     <>
       <div>
-        <ToastContainer />
+
         <Header />
         {/* <!-- Main Content Start --> */}
         <div className="bg-black-2 mt-15 mt-lg-18 pt-18 pt-lg-13 pb-13">
@@ -71,94 +82,94 @@ function ManageJobs() {
                 {/*<-- Job filter -->*/}
                 <form className="mb-8">
                   <div className="d-flex align-items-center justify-content-space-between">
-                    <div className="search-filter from-group d-flex align-items-center flex-wrap">
-                      <div className="mr-5 mb-5 filter_input_div">
-                        <select
-                          name="category"
-                          id="category"
-                          value={categoryFilterValue}
-                          /*Category Onchange function to filter the data */
-                          onChange={(e) =>
-                            setCategoryFilterValue(e.target.value)
+                    <div className=" search-filter from-group row">
+                      <div className="col-md-3 col-6 mb-5 filter_input_div">
+                        <SelectBox
+                          Width={"yes"}
+                          options={filter ?
+                            filter.Category.map((option) => ({
+                              value: option.id,
+                              label: option.value,
+                            }))
+                            : []}
+                          type={"category"}
+                          selectedValue={categoryFilterValue}
+                          onChange={(e) => { setCategoryFilterValue(e ? e.value : "") }}
+                        />
+                      </div>
+                      <div className="col-md-3 col-6 mb-5 filter_input_div">
+                        <SelectBox
+                          Width={"yes"}
+                          options={FilterJson ?
+                            FilterJson.keyskill.map((option) => ({
+                              value: option,
+                              label: option,
+                            }))
+                            : []}
+                          type={"skill"}
+                          selectedValue={SkillFilterValue}
+                          onChange={(e) => { setSkillFilterValue(e ? e.value : "") }}
+                        />
+                      </div>
+                      <div className="col-md-3 col-6 mb-5 filter_input_div">
+                        <SelectBox
+                          Width={"yes"}
+                          options={FilterJson ?
+                            FilterJson.job_type.map((option) => ({
+                              value: option,
+                              label: option,
+                            }))
+                            : []}
+                          type={"job_type"}
+                          selectedValue={jobSwapFilterValue}
+                          onChange={(e) => { setJobSwapFilterValue(e ? e.value : "") }}
+                        />
+                      </div>
+                      <div className="col-md-3 col-6 mb-5 filter_input_div">
+                        <SelectBox
+                          Width={"yes"}
+                          options={States ?
+                            Object.keys(States).map((option) => ({
+                              value: option,
+                              label: option,
+                            }))
+                            : []}
+                          type={"location"}
+                          selectedValue={jobLocation}
+                          onChange={(e) => { setJobLocation(e ? e.value : "") }}
+                        />
+                      </div>
+                      <div className="col-12 mb-5 filter_input_div text-right">
+                        <button
+                          onClick={() =>
+                            Company_name === null ||
+                              Company_name === "null" ||
+                              Company_name === "undefined" ||
+                              Company_name === undefined ||
+                              Company_name === ""
+                              ? CompleteProfileAlert()
+                              : editJob("0")
                           }
-                          className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                          className="btn btn-secondary text-uppercase btn-medium w-10 h-px-48 rounded-3"
+                          type="button"
                         >
-                          {(FilterJson.category || []).map((cat, i) => (
-                            <option key={i} value={cat}>
-                              {cat}
-                            </option>
-                          ))}
-                        </select>
+                          Add jobs
+                        </button>
                       </div>
-                      <div className="mr-5 mb-5 filter_input_div">
-                        <select
-                          name="skill"
-                          id="skill"
-                          value={SkillFilterValue}
-                          /*Skill Onchange function to filter the data */
-                          onChange={(e) => setSkillFilterValue(e.target.value)}
-                          className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                        >
-                          <option data-display="Salary Range">
-                            Job Skills
-                          </option>
-                          <option value="">Select Skill</option>
-                          {(FilterJson.keyskill || []).map((data, i) => {
-                            return (
-                              <option value={data} key={i}>
-                                {data}
-                              </option>
-                            );
-                          })}
-                        </select>
-                      </div>
-                      <div className="mr-5 mb-5 filter_input_div">
-                        <select
-                          name="job_type"
-                          id="job_type"
-                          value={jobSwapFilterValue}
-                          /*Job Onchange function to filter the data */
-                          onChange={(e) =>
-                            setJobSwapFilterValue(e.target.value)
-                          }
-                          className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                        >
-                          <option data-display="Experience Level ">
-                            Job type
-                          </option>
-                          {(FilterJson.job_type || []).map((job_type) => (
-                            <option key={job_type} value={job_type}>
-                              {job_type}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                    <div className=" mx-2 float-left pb-5">
-                      <button
-                        onClick={() => editJob("0")}
-                        className="btn btn-secondary text-uppercase btn-medium w-10 h-px-48 rounded-3 mr-4  "
-                        type="button"
-                      >
-                        Add jobs
-                      </button>
                     </div>
                   </div>
                 </form>
-                <div>
-                  {/* <div className="d-flex align-items-center justify-content-between mx-2">
-                    <h5 className="font-size-4 font-weight-normal text-gray">
-                    Showing
-                      <span className="text-black-2">120</span> matched jobs
-                    </h5>
-                  </div> */}
-                </div>
-                 {/*<-- Add job Modal -->*/}
-               {showAddJobModal ? <AddJobModal
-                  show={showAddJobModal}
-                  jobData={jobId}
-                  close={() => setShowAddJobModal(false)}
-                /> : null}
+                <div></div>
+                {/*<-- Add job Modal -->*/}
+                {showAddJobModal ? (
+                  <AddJobModal
+                    show={showAddJobModal}
+                    jobData={jobId}
+                    close={() => setShowAddJobModal(false)}
+                    apiCall={apiCall}
+                    setApiCall={setApiCall}
+                  />
+                ) : null}
               </div>
             </div>
             <div className="row justify-content-center position-static">
@@ -170,28 +181,41 @@ function ManageJobs() {
                     id="search-nav-tab"
                     role="tablist"
                   >
-                    <div className="mb-8 p-0 w-100 active nav-link">
-                      {/* <!-- Single Featured Job --> */}
-                      <JobBox
-                        categoryFilterValue={categoryFilterValue}
-                        SkillFilterValue={SkillFilterValue}
-                        jobSwapFilterValue={jobSwapFilterValue}
-                        showAddJobModal={showAddJobModal}
-                      />
-                      {/* <!-- End Single Featured Job --> */}
+                    {<JobBox /> ? (
+                      <div className="mb-8 p-0 w-100 active nav-link">
+                        {/* <!-- Single Featured Job --> */}
+                        <JobBox
+                          categoryFilterValue={categoryFilterValue}
+                          SkillFilterValue={SkillFilterValue}
+                          jobSwapFilterValue={jobSwapFilterValue}
+                          showAddJobModal={showAddJobModal}
+                          jobLocation={jobLocation}
+                          apiCall={apiCall}
+                          setJobCount={setJobCount}
+                          jobsNo={jobsNo}
+                          setTotalJob={setTotalJob}
+                        />
+                        {/* <!-- End Single Featured Job --> */}
+                      </div>
+                    ) : (
+                      <div className="table-responsive main_table_div">
+                        <Loader />
+                      </div>
+                    )}
+                  </div>
+                  {jobsNo <= totaljob
+                    ? <div className="text-center pt-5 pt-lg-13">
+                      <Link className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
+                        onClick={() => setJobsNo(jobCount + 10)}>
+                        Load More
+                        <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
+                      </Link>
                     </div>
-                  </div>
-                  <div className="text-center pt-5 pt-lg-13">
-                    <Link className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center">
-                      Load More{" "}
-                      <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
-                    </Link>
-                  </div>
+                    : null}
                 </div>
                 {/* <!-- form end --> */}
               </div>
               {/* <!-- Right Section --> */}
-              {/* {ids === "" ? null : <JobDetail ids={ids} />} */}
             </div>
           </div>
         </div>

@@ -4,13 +4,13 @@ import useValidation from "../../common/useValidation";
 import {
   EmployeeSkillDetails,
   AddEmployeeSkill,
-  DeleteEmployeeSkill, getJson
+  DeleteEmployeeSkill,
+  GetFilter,
 } from "../../../api/api";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import SAlert from "../../common/sweetAlert";
-import Select from "react-select";
+import SelectBox from "../../common/Common function/SelectBox";
 
 function Skills(props) {
   let [skillData, SetSkillData] = useState([]);
@@ -19,8 +19,8 @@ function Skills(props) {
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
-  let [SkillList , setSkillList] = useState([])
-  let [SkillOption , setSkillOption] = useState([])
+  let [SkillList, setSkillList] = useState([]);
+  let [SkillOption, setSkillOption] = useState([]);
   /* Functionality to close the modal */
 
   const close = () => {
@@ -42,77 +42,103 @@ function Skills(props) {
       (value) =>
         value === "" || value.trim() === ""
           ? "Skills / Software Name is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
           : value.length < 3
-          ? "Skills / Software Name should have 3 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Skills / Software Name can not have a number."
-          : "",
+            ? "Skills / Software Name should have 3 or more letter"
+            : /[-]?\d+(\.\d+)?/.test(value)
+              ? "Skills / Software Name can not have a number."
+              : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setState,
-    errors,
-    setErrors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setState, errors, setErrors, validate } = useValidation(
+    initialFormState,
+    validators
+  );
   // API CALL
   const SkillData = async () => {
-    let SkillDetails = await EmployeeSkillDetails(props.employeeId);
-    let SkillList = await getJson()
-    setSkillList(SkillList.Skill)
-    
-    if (SkillDetails.data.skill.length === 0) {
-      SetSkillData([]);
-    } else {
-      SetSkillData(SkillDetails.data.skill);
-    }    
+    try {
+      let SkillDetails = await EmployeeSkillDetails(props.employeeId);
+      try {
+        let SkillList = await GetFilter();
+        if (SkillList.data.message === "Successful") {
+          setSkillList(SkillList.data.data.Skill);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+      if (SkillDetails.data.skill.length === 0) {
+        SetSkillData([]);
+      } else {
+        SetSkillData(SkillDetails.data.skill);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
+  /*Render method to get the skill data */
   useEffect(() => {
     if (props.employeeId !== undefined) {
       SkillData();
     }
+    if (apiCall === true) {
+      setApiCall(false);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, apiCall]);
 
-    /*Function to set data to the search job by country */
-    const onSelectChange = (option) => {      
-      setState({ ...state, skill: option.value });
-    };
+  /*Function to set data to the search job by country */
+  const onSelectChange = (option) => {
+    setState({ ...state, skill: option.value });
+  };
 
-     /*Function to redender the data in the option of the select box*/
-    useEffect(() => {
-      const options = (SkillList || []).map((option) => ({
-        value: option.value,
-        label: option.value,
-      }));
-      
-      setSkillOption({ ...state, skill: options });
-    }, [SkillList]);
+  /*Function to redender the data in the option of the select box*/
+  useEffect(() => {
+    const options = (SkillList || []).map((option) => ({
+      value: option.value,
+      label: option.value,
+    }));
+
+    setSkillOption({ ...state, skill: options });
+    // eslint-disable-next-line
+  }, [SkillList]);
 
   // USER SKILLS SUBMIT BUTTON
-  const onUserSkillsClick = async (event) => {    
+  const onUserSkillsClick = async (event) => {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      let responseData = await AddEmployeeSkill(state, props.employeeId);
-      if (responseData.message === "Employee data updated successfully") {
-        toast.success("Skill Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setState(initialFormState);
-        setErrors("");
+      try {
+        let responseData = await AddEmployeeSkill(state, props.employeeId);
+        if (responseData.message === "Employee data updated successfully") {
+          toast.success("Skill Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setState({ ...state, skill: "" });
+          setSkillOption({ ...state, skill: "" });
+          setErrors("");
+          setLoading(false);
+          props.setApiCall(true);
+          setApiCall(true);
+        } else if (responseData.message === "already exist !") {
+          toast.error("Skill Already added", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setState({ ...state, skill: "" });
+          setSkillOption({ ...state, skill: "" });
+          setErrors("");
+          setLoading(false);
+          props.setApiCall(true);
+          setApiCall(true);
+        }
+      } catch (err) {
+        console.log(err);
         setLoading(false);
-        props.setApiCall(true)
       }
-    } else {
-      setLoading(false);
     }
   };
+
   // END USER PERSONAL DETAIL VALIDATION
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
@@ -120,21 +146,27 @@ function Skills(props) {
     setDeleteName(e.skill);
     setDeleteAlert(true);
   };
+
   /*To cancel the delete alert box */
   const CancelDelete = () => {
     setDeleteAlert(false);
   };
+
   /*To call Api to delete Skill */
   async function deleteSkill(e) {
-    const responseData = await DeleteEmployeeSkill(e);
-    if (responseData.message === "skill has been deleted") {
-      toast.error("Skill deleted Successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      props.setApiCall(true);
-      setApiCall(true)
-      setDeleteAlert(false);
+    try {
+      const responseData = await DeleteEmployeeSkill(e, props.employeeId);
+      if (responseData.message === "skill has been deleted") {
+        toast.error("Skill deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        props.setApiCall(true);
+        setApiCall(true);
+        setDeleteAlert(false);
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
   return (
@@ -156,13 +188,13 @@ function Skills(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 p-7">
           <form onSubmit={onUserSkillsClick}>
-            <h5 className="text-center mb-7">Add It Skills </h5>{" "}
+            <h5 className="text-center mb-7">Add Skills </h5>
             <div className="form-group d-flex mb-3 p-0">
               <label
                 htmlFor="skill"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
-                Skill / Software Name <span className="text-danger">*</span> :
+                Skill<span className="text-danger">*</span> :
               </label>
               {/* <input
                 maxLength={30}
@@ -177,15 +209,18 @@ function Skills(props) {
                 name="skill"
                 value={state.skill}
                 onChange={onInputChange}
-              />{" "} */}
-              <Select
-                options={"" || SkillOption}
-                name="skill"
-                id="skill"
-                onChange={onSelectChange}
-                className={
-                  errors.skill ? "border border-danger w-100" : "w-100"}
-              />
+              /> */}
+              <div className={`w-100 text-capitalize ${errors.skill ? "border border-danger" : ""}`}
+              >
+                <SelectBox
+                  Width={"yes"}
+                  options={(SkillOption && SkillOption.skill) || []}
+                  type="skill"
+                  id="skill"
+                  selectedValue={state.skill}
+                  onChange={onSelectChange}
+                /></div>
+
               {loading === true ? (
                 <button
                   className=" btn-primary btn-small mx-2 rounded-5 text-uppercase"
@@ -207,7 +242,7 @@ function Skills(props) {
                   +
                 </button>
               )}
-            </div>{" "}
+            </div>
             {/*----ERROR MESSAGE FOR SKILLS----*/}
             {errors.skill && (
               <span key={errors.skill} className="text-danger font-size-3 mx-5">
@@ -238,7 +273,7 @@ function Skills(props) {
             <div className="form-group text-center mb-0">
               <button
                 type="button"
-                className="btn btn-primary ml-auto mr-auto"
+                className="btn btn-light ml-auto mr-auto"
                 data-dismiss="modal"
                 onClick={close}
               >

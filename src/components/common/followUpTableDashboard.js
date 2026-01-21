@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getFollowupLastData } from "../../api/api";
+import { /*getFollowupLastData,*/ getSingleFollowup } from "../../api/api";
 import Pagination from "./pagination";
+import Loader from "./loader";
+import ConvertTime from "./Common function/ConvertTime";
+// import { toast } from "react-toastify";
 function FollowUpDashBoard(props) {
   const [followUpData, setFollowUpData] = useState([]);
   /*Pagination states */
@@ -9,30 +12,37 @@ function FollowUpDashBoard(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
   /*Shorting states */
-  const [columnName, setcolumnName] = useState("id");
+  const [columnName, setColumnName] = useState("id");
   const [sortOrder, setSortOrder] = useState("DESC");
+  const [isLoading, setIsLoading] = useState(true);
 
   /* Function to get the FollowUp data*/
   const FollowUpData = async () => {
-    const userData = await getFollowupLastData(
-      currentPage,
-      columnName,
-      recordsPerPage,
-      sortOrder,
-      props.filter_by_time
-    );
-    if (userData.data.length === 0) {
-      setFollowUpData([]);
-    } else {
-      setFollowUpData(userData.data);
-      setTotalData(userData.total_rows);
+    try {
+      const userData = await getSingleFollowup(
+        props.filter_by_time ? 1 : currentPage,
+        columnName,
+        recordsPerPage,
+        sortOrder,
+        props.filter_by_time
+      );
+      if (userData.data.length === 0) {
+        setFollowUpData([]);
+        setIsLoading(false);
+      } else {
+        setFollowUpData(userData.data);
+        setTotalData(userData.total_rows);
+        setIsLoading(false);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
   /*Render function to get the interview*/
   useEffect(() => {
     FollowUpData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [
     props,
     currentPage,
@@ -44,16 +54,10 @@ function FollowUpDashBoard(props) {
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
-  /*Category type array to filter*/
-  // const CategoryType = InterviewData.filter(
-  //   (thing, index, self) =>
-  //     index === self.findIndex((t) => t.category_type === thing.category_type)
-  // );
-  /*Sorting Function */
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
-    setcolumnName(columnName);
+    setColumnName(columnName);
   };
 
   return (
@@ -74,110 +78,145 @@ function FollowUpDashBoard(props) {
                     : "bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5"
                 }
               >
-                <div className="table-responsive ">
-                  <table className="table table-striped main_data_table">
-                    <thead>
-                      <tr>
-                        <th
-                          scope="col"
-                          className="border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to={""}
-                            onClick={() => handleSort("name")}
-                            className="text-gray"
-                            title="Sort by Name"
-                          >
-                            Name
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className="border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to={""}
-                            onClick={() => handleSort("job_title")}
-                            className="text-gray"
-                            title="Sort by Job"
-                          >
-                            Applied Job
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className="border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to={""}
-                            onClick={() => handleSort("company_name")}
-                            className="text-gray"
-                            title="Sort by Company"
-                          >
-                            Company Name
-                          </Link>
-                        </th>
-
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to={""}
-                            onClick={() => handleSort("next_followup_date")}
-                            className="text-gray"
-                            title="Sort by Date"
-                          >
-                            Next_Followup date{" "}
-                          </Link>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/* Map function to show the data in the list*/}
-                      {totalData === 0 || followUpData.length === 0 ? (
+                <div className="table-responsive main_table_div">
+                  {isLoading ? (
+                    <Loader />
+                  ) : (
+                    <table className="table table-striped main_data_table">
+                      <thead>
                         <tr>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white">No Data Found</th>
-                          <th className="bg-white"></th>
+                          <th
+                            scope="col"
+                            className="border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to={""}
+                              onClick={() => {
+                                handleSort("name");
+                                setCurrentPage(1);
+                              }}
+                              className="text-gray"
+                              title="Sort by Name"
+                            >
+                              Name
+                            </Link>
+                          </th>
+                          <th
+                            scope="col"
+                            className="border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to={""}
+                              onClick={() => {
+                                handleSort("job_title");
+                                setCurrentPage(1);
+                              }}
+                              className="text-gray"
+                              title="Sort by Job"
+                            >
+                              Applied Job
+                            </Link>
+                          </th>
+                          <th
+                            scope="col"
+                            className="border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to={""}
+                              onClick={() => {
+                                handleSort("company_name");
+                                setCurrentPage(1);
+                              }}
+                              className="text-gray"
+                              title="Sort by Employer"
+                            >
+                              Employer Name
+                            </Link>
+                          </th>
+
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to={""}
+                              onClick={() => {
+                                handleSort("next_followup_date");
+                                setCurrentPage(1);
+                              }}
+                              className="text-gray"
+                              title="Sort by Date"
+                            >
+                              Next Followup date
+                            </Link>
+                          </th>
                         </tr>
-                      ) : (
-                        (followUpData || []).map((data) => (
-                          <tr className="" key={data.id}>
-                            <th scope="row" className="py-5 ">
-                              <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                                {data.name}
-                              </div>
-                            </th>
-                            <th scope="row" className="py-5 ">
-                              <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                                {data.job_title}
-                              </div>
-                            </th>
-                            <th scope="row" className="py-5 ">
-                              <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                                {data.company_name}
-                              </div>
-                            </th>
-                            <th className=" py-5">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {data.next_followup_date === "0000-00-00"
-                                  ? "N/A"
-                                  : data.next_followup_date}
-                              </h3>
+                      </thead>
+                      <tbody>
+                        {/* Map function to show the data in the list*/}
+                        {totalData === 0 || followUpData.length === 0 ? (
+                          <tr>
+                            <th colSpan={4} className="bg-white text-center">
+                              No Data Found
                             </th>
                           </tr>
-                        ))
-                      )}
-                    </tbody>
-                  </table>
+                        ) : (
+                          (followUpData || []).map((data) => (
+                            <tr className="text-capitalize" key={data.id}>
+                              <th scope="row" className="py-5 ">
+                                <Link to={`/${data.employee_id}`}>
+                                  <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                                    {data.name}
+                                  </div>
+                                </Link>
+                              </th>
+                              <th scope="row" className="py-5 ">
+                                <Link
+                                  to={`/job_detail`}
+                                  onClick={() =>
+                                    localStorage.setItem("job_id", data.job_id)
+                                  }
+                                >
+                                  <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                                    {data.job_title}
+                                  </div>
+                                </Link>
+                              </th>
+                              <th scope="row" className="py-5 ">
+                                {/* <Link to={`/client_detail`}
+                              title="Company Details"
+                              onClick={() => localStorage.setItem("company_id",empdata.company_id)}>
+                                <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                                  {data.company_name}
+                                </div>
+                                </Link> */}
+                              </th>
+                              <th className=" py-5">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  {data.next_followup_date === "0000-00-00"
+                                    ? "N/A"
+                                    :
+                                    <ConvertTime _date={data.next_followup_date} format={"DD MMMM, YYYY"} />
+                                    //  moment(data.next_followup_date).format(
+                                    //     "DD MMMM, YYYY"
+                                    //   )
+                                  }
+                                </h3>
+                              </th>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
+                  )}
                 </div>
                 <div className="pt-2">
                   <Pagination
                     nPages={nPages}
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
+                    total={totalData}
+                    count={followUpData.length}
                   />
                 </div>
               </div>

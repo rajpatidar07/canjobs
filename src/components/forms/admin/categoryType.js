@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import { AddJobCategory } from "../../../api/api";
@@ -7,14 +7,15 @@ import "react-toastify/dist/ReactToastify.css";
 
 function AddCategoryType(props) {
   let [loading, setLoading] = useState(false);
-  
+
   /* Functionality to close the modal */
   const close = () => {
-    setState( {...state,
+    setState({
+      ...state,
       category_type: "",
       parent_id: "",
-      job_category_id :""
-  });
+      job_category_id: "",
+    });
     setErrors("");
     setLoading(false);
     props.close();
@@ -25,11 +26,16 @@ function AddCategoryType(props) {
   const initialFormState = {
     category_type: "",
     parent_id: "",
-    job_category_id :""
+    job_category_id: "",
   };
   /*Function to get the selected Catgeory type which you want to edit*/
   useEffect(() => {
-    setState({ ...state, category_type: (props.jobCategoryData.category_type) , job_category_id : (props.jobCategoryData.job_category_id) });
+    setState({
+      ...state,
+      category_type: props.jobCategoryData.category_type,
+      job_category_id: props.jobCategoryData.job_category_id,
+    });
+    // eslint-disable-next-line
   }, [props]);
   // VALIDATION CONDITIONS
   const validators = {
@@ -54,31 +60,37 @@ function AddCategoryType(props) {
 
   // USER CATEGORY TYPE SUBMIT BUTTON
   async function onAdminCategoryClick(event) {
-    // // console.log(state);
-    // if (state.parent_id === "") {
-    //   setState({ ...state, category_name: "" });
-    //   setErrors({ ...errors, category_name: "" });
-    // }
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      // //// console.log((state);
-      const responseData = await AddJobCategory(state);
-      if (responseData.message === "Category added successfully") {
-        toast.success("Category Type successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true)
-        return close();
-      }
-      if (responseData.message === "Category updated successfully") {
-        toast.success("Category Type updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true)
-        return close();
+      try {
+        const responseData = await AddJobCategory(state);
+        if (responseData.message === "Category added successfully") {
+          toast.success("Category Type successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+        if (responseData.message === "Category updated successfully") {
+          toast.success("Category Type updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+        if (responseData.message === "already exist !") {
+          setErrors({
+            ...errors,
+            category_type: "Category Type Alredy Exists.",
+          });
+          setLoading(false);
+        }
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
       }
     } else {
       setLoading(false);
@@ -106,11 +118,11 @@ function AddCategoryType(props) {
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           <form onSubmit={onAdminCategoryClick}>
             {props.jobCategoryData === "0" ? (
-              <h5 className="text-center pt-2">Add Category Type</h5>
+              <h5 className="text-center mb-7 pt-2">Add Category Type</h5>
             ) : (
-              <h5 className="text-center pt-2">Update Category Type</h5>
+              <h5 className="text-center mb-7 pt-2">Update Category Type</h5>
             )}
-            <div className="form-group row mb-0 pt-5 mt-5">
+            <div className="form-group row mb-0 ">
               <label
                 htmlFor="category_type"
                 className="font-size-4 text-black-2  line-height-reset"
@@ -129,6 +141,7 @@ function AddCategoryType(props) {
                 placeholder="Category Type"
                 id="category_type"
                 name="category_type"
+                maxLength={60}
               />
             </div>
             {/*----ERROR MESSAGE FOR CATEGORY TYPE----*/}
@@ -144,7 +157,7 @@ function AddCategoryType(props) {
             <div className="form-group text-center">
               {loading === true ? (
                 <button
-                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase"
                   type="button"
                   disabled
                 >

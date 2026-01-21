@@ -1,43 +1,75 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import CustomButton from "../common/button";
-import JobDetailsBox from "../common/jobdetail";
-import AdminHeader from "./header";
-import AdminSidebar from "./sidebar";
+// import JobDetailsBox from "../common/jobdetail";
+// import AdminHeader from "./header";
+// import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
-import { getJson } from "../../api/api";
-import { ToastContainer } from "react-toastify";
+import { GetAllJobs, GetFilter, GetLocationByType } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import JobTable from "../common/jobTable";
+import CommonThreeDots from "../common/Common function/commonThreeDots";
+import SelectBox from "../common/Common function/SelectBox";
+import LmiafieldsPermission from "../forms/admin/LmiafieldsPermission";
+import { FaEyeSlash } from "react-icons/fa";
 
-function Job() {
+function Job(props) {
   /*show Modal and props state */
   let [apiCall, setApiCall] = useState(false);
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [showJobDetails, setShowJobDetails] = useState(false);
   const [JobId, setJobId] = useState([]);
+  const [states, seStates] = useState([]);
   /*Filter and search state */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
-  const [SkillFilterValue, setSkillFilterValue] = useState("");
+  const [SkillFilterValue, setSkillFilterValue] = useState(
+    /*props ? props.skill : */ ""
+  );
+  const [openPermission, setOpenPermission] = useState(false);
   const [locationFilterValue, setLocationFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
-  const [search, setSearch] = useState(""); 
- const [searcherror, setSearchError] = useState("");
-  const [company, setCompany] = useState("");
+  const [search, setSearch] = useState("");
+  const [searcherror, setSearchError] = useState("");
+  // const [company, setCompany] = useState("");
+  const [pageNo, setPageNo] = useState(localStorage.getItem("PageNo") || 1);
   let [Json, setJson] = useState([]);
+  let [allJob, setAllJob] = useState([]);
+  // let location = useLocation();
   /*Function to get the jSon */
   const JsonData = async () => {
-    let Json = await getJson();
-    setJson(Json);
+    try {
+      let Json = await GetFilter();
+      if (Json.data.message === "No data found") {
+        setJson([]);
+      } else {
+        setJson(Json.data.data);
+      }
+      setJson(Json.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      let StateRes = await GetLocationByType("state");
+      seStates(StateRes.data)
+    } catch (err) {
+      console.log(err)
+    };
+    try {
+      let allJobData = await GetAllJobs();
+      setAllJob(allJobData.data.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   /*Render function to get the job */
   useEffect(() => {
     JsonData();
-    if((search === "") === true){
-      setSearchError("")
+    if ((search === "") === true) {
+      setSearchError("");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // if (location.state) {
+    //   setCompany(location.state.company_name);
+    // }
   }, [
     categoryFilterValue,
     SkillFilterValue,
@@ -45,12 +77,11 @@ function Job() {
     jobSwapFilterValue,
     apiCall,
     search,
-    company,
+    // company,
   ]);
 
   /* Function to show the Job detail data */
   const JobDetail = (e) => {
-    // e.preventDefault();
     setShowJobDetails(true);
     setJobId(e);
   };
@@ -61,166 +92,200 @@ function Job() {
     setShowAddJobsModal(true);
     setJobId(e);
   };
-    /*Function to search the Job */
-    const onSearch = (e) => { setSearch(e.target.value);
-      if(/[-]?\d+(\.\d+)?/.test(search) ){
-        setSearchError("Job can not have a number.")
-      }else if(/[^a-zA-Z0-9]/g.test(search)){
-        setSearchError("Cannot use special character")
-      }else if((search === "") === true){
-        setSearchError("")
-      }}
-    /*Skill Json for not having same data */
-    const Skill = Json.Skill ? Json.Skill.filter((thing, index, self) =>
-    index === self.findIndex((t) => t.value === thing.value)
-    ) : [];
-      
+  /*Function to search the Job */
+  const onSearch = (e) => {
+    const inputValue = e.target.value;
+    setSearch(inputValue);
+    setPageNo(1);
+    if (inputValue.length > 0) {
+      if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+        setSearchError("Job cannot start with a number.");
+      }
+      // else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+      //   setSearchError("Cannot use special characters.");
+      // }
+      else {
+        setSearchError("");
+      }
+    } else {
+      setSearchError("");
+    }
+  };
+  /*Skill Json for not having same data */
+  const Skill =
+    Json && Json.Skill
+      ? Json.Skill.filter(
+        (thing, index, self) =>
+          index === self.findIndex((t) => t.value === thing.value)
+      )
+      : [];
   return (
     <>
-      <div className="site-wrapper overflow-hidden bg-default-2">
-        {/* <!-- Header Area --> */}
-        <AdminHeader heading={"Manage Jobs"} />
-        {/* <!-- navbar- --> */}
-        <AdminSidebar heading={"Manage Jobs"} />
-        <ToastContainer />
+      <div
+        className={
+          props.skill === null || props.skill === undefined
+            ? "site-wrapper overflow-hidden bg-default-2"
+            : "site-wrapper overflow-hidden "
+        }
+      >
+        {props.skill === null ||
+          props.skill === undefined ||
+          Object.keys(props.skill).length === 0 ? (
+          <>
+            {/* <!-- Header Area --> */}
+            {/* <AdminHeader heading={"Manage Jobs"} /> */}
+            {/* <!-- navbar- --> */}
+            {/* <AdminSidebar heading={"Manage Jobs"} /> */}
+          </>
+        ) : null}
+
         <div
           className={
             showJobDetails === false
-              ? "dashboard-main-container mt-16"
+              ? props.skill === null ||
+                props.skill === undefined ||
+                Object.keys(props.skill).length === 0
+                ? "dashboard-main-container mt-14"
+                : ""
               : "d-none"
           }
           id="dashboard-body"
         >
-          <div className="container">
+          <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Posted Jobs </h3>
                 </div>
                 {/*<-- Job Search and Filter -->*/}
-                <div className="row m-0 align-items-center">
-                  <div className="col p-1 form_group mb-5 mt-4">
+                <div className="row g-3 align-items-end m-0">
+
+                  {/* Search Box */}
+                  <div className="col-12 col-md-6 col-lg p-1 form_group">
                     <p className="input_label">Search:</p>
                     <input
                       required
                       type="text"
-                      className="form-control w-100"
-                      placeholder={"Search Job"}
+                      className="form-control w-100 input-height"
+                      placeholder="Search Job / Employer"
                       value={search}
-                      name={"name"}
+                      name="name"
                       onChange={(e) => onSearch(e)}
                     />
-                  </div>{" "}
-                  <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Company Name:</p>
-                    <input
-                      required
-                      type="text"
-                      className="form-control w-100"
-                      placeholder={"Company name"}
-                      value={company}
-                      name={"compnay_name"}
-                      onChange={(e) => setCompany(e.target.value)}
-                    />
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+
+                  {/* Filter by Category */}
+                  <div className="col-12 col-md-6 col-lg p-1 form_group">
                     <p className="input_label">Filter by Job Category:</p>
                     <div className="select_div">
-                      <select
-                        name="country"
-                        id="country"
-                        value={categoryFilterValue}
-                        onChange={(e) => setCategoryFilterValue(e.target.value)}
-                        className=" form-control"
-                      >
-                        <option value="">Job Category</option>
-                        {(Json.Category || []).map((data) => {
-                          return (
-                            <option value={data.value} key={data.id}>
-                              {data.value}
-                            </option>
-                          );
-                        })}
-                      </select>
+                      <SelectBox
+                        Width="yes"
+                        options={Json?.Category?.map((option) => ({
+                          value: option.id,
+                          label: option.value,
+                        })) || []}
+                        selectedValue={categoryFilterValue}
+                        onChange={(e) => {
+                          setCategoryFilterValue(e ? e.value : null);
+                          setPageNo(1);
+                        }}
+                        type="category"
+                      />
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+
+                  {/* Filter by Job Type */}
+                  <div className="col-12 col-md-6 col-lg p-1 form_group">
                     <p className="input_label">Filter by Job Type:</p>
                     <div className="select_div">
-                      <select
-                        name="country"
-                        id="country"
-                        value={jobSwapFilterValue}
+                      <SelectBox
+                        Width="yes"
+                        options={(FilterJson?.job_type || []).map((option) => ({
+                          value: option,
+                          label: option,
+                        }))}
+                        selectedValue={jobSwapFilterValue}
                         onChange={(e) => {
-                          setJobSwapFilterValue(e.target.value);
+                          setJobSwapFilterValue(e ? e.value : null);
+                          setPageNo(1);
                         }}
-                        className=" form-control"
-                      >
-                        <option value="">Job Type</option>
-                        {(FilterJson.job_type || []).map((job, i) => (
-                          <option key={i} value={job}>
-                            {job}
-                          </option>
-                        ))}
-                      </select>
+                        type="job_type"
+                      />
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+
+                  {/* Filter by Skill */}
+                  <div className="col-12 col-md-6 col-lg p-1 form_group">
                     <p className="input_label">Filter by Job Skill:</p>
                     <div className="select_div">
-                      <select
-                        name="country"
-                        id="country"
-                        value={SkillFilterValue}
-                        onChange={(e) => setSkillFilterValue(e.target.value)}
-                        className=" form-control"
-                      >
-                        <option value="">Job Skill</option>
-                        {(Skill || []).map((data) => {
-                          return (
-                            <option value={data.value} key={data.id}>
-                              {data.value}
-                            </option>
-                          );
-                        })}
-                      </select>
+                      <SelectBox
+                        Width="yes"
+                        options={(Skill || []).map((option) => ({
+                          value: option.value,
+                          label: option.value,
+                        }))}
+                        selectedValue={SkillFilterValue}
+                        onChange={(e) => {
+                          setSkillFilterValue(e ? e.value : null);
+                          setPageNo(1);
+                        }}
+                        type="skill"
+                      />
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+
+                  {/* Filter by Location */}
+                  <div className="col-12 col-md-6 col-lg p-1 form_group">
                     <p className="input_label">Filter by Job Location:</p>
                     <div className="select_div">
-                      <select
-                        name="country"
-                        id="country"
-                        value={locationFilterValue}
-                        onChange={(e) => setLocationFilterValue(e.target.value)}
-                        className=" form-control"
-                      >
-                        <option value="">Job Location</option>
-                        {(FilterJson.location || []).map((data) => {
-                          return (
-                            <option value={data.value} key={data.id}>
-                              {data.value}
-                            </option>
-                          );
-                        })}
-                      </select>
+                      <SelectBox
+                        Width="yes"
+                        options={(states || []).map((state) => ({
+                          value: state.name,
+                          id: state.id,
+                          label: state.name,
+                        }))}
+                        type="location"
+                        selectedValue={locationFilterValue || ""}
+                        onChange={(e) => {
+                          setLocationFilterValue(e ? e.value : null);
+                          setPageNo(1);
+                        }}
+                      />
                     </div>
                   </div>
-                  <div className="text-end col-xl-12">
-                    <div className="float-md-right">
-                      <CustomButton
-                        className="font-size-3 rounded-3 btn btn-primary border-0"
-                        onClick={() => editJob("0")}
-                        title="Add Jobs"
-                      >
-                        Add Job
-                      </CustomButton>
-                      {/*<-- Add Job Modal -->*/}
+
+                  {/* Add Job + More Options */}
+                  {!props.employee_id && (
+                    <div className="col-12 text-end mt-2">
+                      <div className="d-flex flex-wrap justify-content-end gap-2">
+                        <CustomButton
+                          className="btn btn-primary rounded-3 border-0"
+                          onClick={() => editJob("0")}
+                          title="Add Jobs"
+                        >
+                          Add Job
+                        </CustomButton>
+
+                        <div className="mt-1">
+                          <CommonThreeDots tableName="job" tableData={allJob} />
+                        </div>
+
+                        <button
+                          className="btn btn-primary btn-sm mx-2 border-0"
+                          onClick={() => setOpenPermission("0")}
+                          title="Hide Columns"
+                        >
+                          <FaEyeSlash />
+                        </button>
+                      </div>
+
+                      <small className="text-danger">{searcherror}</small>
                     </div>
-                <small className="text-danger">{searcherror}</small>
-                  </div>
+                  )}
+
                 </div>
+
               </div>
               {/*<-- Job List Table -->*/}
               <JobTable
@@ -229,40 +294,22 @@ function Job() {
                 locationFilterValue={locationFilterValue}
                 SkillFilterValue={SkillFilterValue}
                 categoryFilterValue={categoryFilterValue}
-                company={company}
+                // company={company}
                 JobDetail={JobDetail}
                 apiCall={apiCall}
                 setApiCall={setApiCall}
+                skill={props.skill}
+                employee_id={props.employee_id}
+                selfJob={"no"}
+                response={"response"}
+                pageNo={pageNo}
+                setpageNo={setPageNo}
+                jobCall={props.jobCall}
+                page="job"
               />
             </div>
           </div>
         </div>
-        {/*<-- Job Detail -->*/}
-        {showJobDetails === true ? (
-          <div className="dashboard-main-container mt-16 ">
-            <div className="container">
-              <div className="row justify-content-center">
-                <div className="col-12 dark-mode-texts">
-                  <div className="mb-9">
-                    <Link
-                      to={""}
-                      onClick={() => setShowJobDetails(false)}
-                      className="d-flex align-items-center ml-4"
-                    >
-                      <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
-                      <span className="text-uppercase font-size-3 font-weight-bold text-gray">
-                        Back
-                      </span>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div className="mb-18">
-                <JobDetailsBox jobdata={JobId} />
-              </div>
-            </div>
-          </div>
-        ) : null}
       </div>
       {showAddJobsModal ? (
         <AddJobModal
@@ -274,6 +321,15 @@ function Job() {
           close={() => setShowAddJobsModal(false)}
         />
       ) : null}
+      {openPermission ?
+        <LmiafieldsPermission
+          show={openPermission}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => setOpenPermission(false)}
+          page="job"
+        />
+        : null}
     </>
   );
 }

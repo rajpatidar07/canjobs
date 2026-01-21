@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-import CustomButton from "../common/button";
-import { Link } from "react-router-dom";
 import PersonalDetails from "../forms/user/personal";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import UserProfile from "../user/profile";
-import {getJson} from "../../api/api"
 import EmployeeTable from "../common/employeeTable";
-import FilterJson from "../json/filterjson";
-function Employee() {
+import ApplicantsFilter from "../common/applicantsFilter";
+function Employee(props) {
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
@@ -19,54 +14,74 @@ function Employee() {
   let [employeeId, setemployeeId] = useState();
   /*Filter and search state */
   const [experienceFilterValue, setExperienceFilterValue] = useState("");
-  const [skillFilterValue, setSkillFilterValue] = useState("");
+  const [skillFilterValue, setSkillFilterValue] = useState(
+    /*props ? props.skill : */ ""
+  );
+  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   const [educationFilterValue, setEducationFilterValue] = useState("");
-  const [search , setSearch] = useState("");
+  const [agentFilterValue, setAgentFilterValue] = useState("");
+  const [adminFilterValue, setAdminFilterValue] = useState("");
+  const [interestFilterValue, setinterestFilterValue] = useState("");
+  const [consultationOptedFilterValue, setConsultationOptedFilterValue] = useState("");
+  const [consultationStartDateFilterValue, setConsultationStartDateFilterValue] = useState("");
+  const [consultationEndDateFilterValue, setConsultationEndDateFilterValue] = useState("");
+  const [webFilterValue, setWebFilterValue] = useState("");
+  const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
+  const [localFilterValue, setLocalFilterValue] = useState("");
+  const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
-  let [SkillList , setSkillList] = useState([])
-  let [EducationList , setEducationList] = useState([])
-  /*Function to get thejSon */
- const JsonData=async()=>{
-   let Json = await getJson()
-   setSkillList(Json.Skill)
-   setEducationList(Json.Education)
- }
-  /*Render method to get the json*/
-  useEffect(()=>{
-    JsonData()
-    if((search === "") === true){
-      setSearchError("")
-    }
-  },[skillFilterValue , educationFilterValue])
+  let user_type = localStorage.getItem("userType");
+
   /* Function to show the single data to update Employee*/
   const employeeDetails = (e) => {
-    // e.preventDefault();
     setShowEmployeeProfile(true);
     setemployeeId(e);
   };
   /* Function to show the single data to update Employee*/
   const editEmployee = (e) => {
-    // e.preventDefault();
     setShowEmployeeMOdal(true);
     setemployeeId(e);
   };
   /*Function to search the employee */
- const onSearch = (e) => { setSearch(e.target.value);
-    if(/[-]?\d+(\.\d+)?/.test(search) ){
-      setSearchError("Admin Name can not have a number.")
-    }else if(/[^a-zA-Z0-9]/g.test(search)){
-      setSearchError("Cannot use special character")
-    }else if(search === ""){
-      setSearchError("")
-    }}
+  const onSearch = (e) => {
+    const inputValue = e//.target.value;
+    setSearch(inputValue);
+    setpageNo(1);
+    if (inputValue.length > 0) {
+      if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+        setSearchError("Candidate Name cannot start with a number.");
+      } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+        setSearchError("Cannot use special characters.");
+      } else {
+        setSearchError("");
+      }
+    } else {
+      setSearchError("");
+    }
+  };
+  /*Render method to get Partner data */
+  // eslint-disable-next-line no-undef
+
   return (
     <>
-      <div className="site-wrapper overflow-hidden bg-default-2">
-        {/* <!-- Header Area --> */}
-        <AdminHeader heading={"Manage Applicants"} />
-        {/* <!-- navbar- --> */}
-        <AdminSidebar heading={"Manage Applicants"} />
-        <ToastContainer />
+      <div
+        className={
+          props.skill === null || props.skill === undefined
+            ? "site-wrapper overflow-hidden bg-default-2"
+            : "site-wrapper overflow-hidden "
+        }
+      >
+        {props.skill === null ||
+          props.skill === undefined ||
+          Object.keys(props.skill).length === 0 ? (
+          <>
+            {/* <!-- Header Area --> */}
+            <AdminHeader heading={"Manage Applicants"} />
+            {/* <!-- navbar- --> */}
+            <AdminSidebar heading={"Manage Applicants"} />
+          </>
+        ) : null}
+
         {/* <!--Add Employee Details Modal --> */}
         {showAddEmployeeModal ? (
           <PersonalDetails
@@ -80,109 +95,61 @@ function Employee() {
         <div
           className={
             showEmployeeProfile === false
-              ? "dashboard-main-container mt-16"
+              ? props.skill === null ||
+                props.skill === undefined ||
+                Object.keys(props.skill).length === 0
+                ? "dashboard-main-container mt-14"
+                : ""
               : "d-none"
           }
           id="dashboard-body"
         >
-          <div className="container">
-            <div className="mb-18">
-              <div className="mb-4 align-items-center">
+          <div className="container-fluid">
+            <div className="mb-0">
+              <div className="mb-0 align-items-center">
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Applicants</h3>
                 </div>
                 {/* <!-- Employee Search and Filter- --> */}
-                <div className="row m-0 align-items-center">
-                  <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Search Employee:</p>
-                    <input
-                      required
-                      type="text"
-                      className="form-control"
-                      placeholder={"Search Employee"}
-                      value={search}
-                      name={"Employee_name"}
-                      onChange={(e) =>onSearch(e)}
-                    />
-        
-                  </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Filter by Experience:</p>
-                    <div className="select_div">
-                      <select
-                        name="experience"
-                        value={experienceFilterValue}
-                        id="experience"
-                        onChange={(e) =>
-                          setExperienceFilterValue(e.target.value)
-                        }
-                        className=" form-control"
-                      >
-                        <option value={""}>Select Experience</option>
-                        {(FilterJson.experience || []).map((ex, i) => (
-                          <option value={ex} key={i}>
-                            {ex}
-                            {ex === "Fresher" || ex === "Other" ? "" : "Years"}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Filter by Skill:</p>
-                    <div className="select_div">
-                      <select
-                        name="skill"
-                        value={skillFilterValue}
-                        id="Skill"
-                        onChange={(e) => setSkillFilterValue(e.target.value)}
-                        className=" form-control"
-                      >
-                        <option value={""}>Select Skill</option>
-                        {(SkillList || []).map((data) => {
-                          return (
-                            <option value={data.value} key={data.id}>
-                              {data.value}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                  </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Filter by Education:</p>
-                    <div className="select_div">
-                      <select
-                        name="education"
-                        value={educationFilterValue}
-                        id="education"
-                        onChange={(e) =>
-                          setEducationFilterValue(e.target.value)
-                        }
-                        className=" form-control"
-                      >
-                        <option value="" data-display="Product Designer">
-                          Select Education
-                        </option>
-                        {(EducationList|| []).map((data) => {
-                          return (
-                            <option value={data.value} key={data.id}>
-                              {data.value}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                  </div>
-                  <div className="col px-1 form_group mt-4 text-right">
-                    <CustomButton
-                      className="font-size-3 rounded-3 btn btn-primary border-0"
-                      onClick={() => editEmployee("0")}
-                      title="Add Employee"
-                    >
-                      Add Employee
-                    </CustomButton>
-                  </div>
+                <div className=" m-0 ">
+                  {/* Employees filter's */}
+                  <ApplicantsFilter
+                    setSearch={setSearch}
+                    applicantTypeId={""}
+                    user_type={user_type}
+                    search={search}
+                    onSearch={onSearch}
+                    experienceFilterValue={experienceFilterValue}
+                    setExperienceFilterValue={setExperienceFilterValue}
+                    skillFilterValue={skillFilterValue}
+                    setSkillFilterValue={setSkillFilterValue}
+                    educationFilterValue={educationFilterValue}
+                    setEducationFilterValue={setEducationFilterValue}
+                    setpageNo={setpageNo}
+                    agentFilterValue={agentFilterValue}
+                    setAgentFilterValue={setAgentFilterValue}
+                    adminFilterValue={adminFilterValue}
+                    setAdminFilterValue={setAdminFilterValue}
+                    interestFilterValue={interestFilterValue}
+                    setinterestFilterValue={setinterestFilterValue}
+                    setCategoryFilterValue={setinterestFilterValue}
+                    categoryFilterValue={interestFilterValue}
+                    setSearchError={setSearchError}
+                    skill={props.skill}
+                    pageName={"employee"}
+                    localFilterValue={localFilterValue}
+                    setLocalFilterValue={setLocalFilterValue}
+                    filterByEmployeeId={filterByEmployeeId}
+                    setFilterByEmployeeId={setFilterByEmployeeId}
+                    webFilterValue={webFilterValue}
+                    setWebFilterValue={setWebFilterValue}
+                    consultationOptedFilterValue={consultationOptedFilterValue}
+                    consultationStartDateFilterValue={consultationStartDateFilterValue}
+                    consultationEndDateFilterValue={consultationEndDateFilterValue}
+                    setConsultationOptedFilterValue={setConsultationOptedFilterValue}
+                    setConsultationStartDateFilterValue={setConsultationStartDateFilterValue}
+                    setConsultationEndDateFilterValue={setConsultationEndDateFilterValue}
+                  />
                 </div>
                 <small className="text-danger">{searcherror}</small>
               </div>
@@ -191,37 +158,51 @@ function Employee() {
                 showEmployeeProfile={showEmployeeProfile}
                 employeeDetails={employeeDetails}
                 search={search}
+                pageName={props.job_id ? "" : "employee"}
                 experienceFilterValue={experienceFilterValue}
                 educationFilterValue={educationFilterValue}
                 skillFilterValue={skillFilterValue}
                 apiCall={apiCall}
-                setApiCall={setApiCall} 
+                setApiCall={setApiCall}
+                skill={props.skill}
+                job_id={props.job_id}
+                self={"no"}
+                status={"-1"}
+                pageNo={pageNo}
+                setpageNo={setpageNo}
+                editEmployee={editEmployee}
+                EmployeeCall={props.EmployeeCall}
+                agentFilterValue={agentFilterValue}
+                adminFilterValue={adminFilterValue}
+                interestFilterValue={interestFilterValue}
+                // categoryFilterValue={categoryFilterValue}
+                localFilterValue={localFilterValue}
+                filterByEmployeeId={filterByEmployeeId}
+                webFilterValue={webFilterValue}
+                consultationOptedFilterValue={consultationOptedFilterValue}
+                consultationStartDateFilterValue={consultationStartDateFilterValue}
+                consultationEndDateFilterValue={consultationEndDateFilterValue}
               />
             </div>
           </div>
         </div>
         {/* <!-- Employee Details- --> */}
         {showEmployeeProfile === true ? (
-          <div className="dashboard-main-container mt-16">
-            <div className="container">
-              <div className="row justify-content-center">
-                <div className="col-12 dark-mode-texts">
-                  <div className="mb-9">
-                    <Link
-                      to={""}
-                      onClick={() => setShowEmployeeProfile(false)}
-                      className="d-flex align-items-center ml-4"
-                    >
-                      <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
-                      <span className="text-uppercase font-size-3 font-weight-bold text-gray">
-                        Back
-                      </span>
-                    </Link>
-                  </div>
-                </div>
-              </div>
+          <div
+            className={
+              props.skill === null ||
+                props.skill === undefined ||
+                Object.keys(props.skill).length === 0
+                ? "dashboard-main-container mt-14"
+                : ""
+            }
+          >
+            <div className="container-fluid">
               <div className="mb-18">
-                <UserProfile employeeId={employeeId} />
+                <UserProfile
+                  employeeId={employeeId}
+                  setShowEmployeeProfile={setShowEmployeeProfile}
+                />
               </div>
             </div>
           </div>

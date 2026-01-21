@@ -1,0 +1,141 @@
+import React, { useState } from "react";
+import { Modal } from "react-bootstrap";
+import FilterJson from "../../json/filterjson";
+import { AddEmployeeDetails, AddUpdateVisa } from "../../../api/api";
+import { toast } from "react-toastify";
+import SelectBox from "../../common/Common function/SelectBox";
+export default function ApplicantsStatusModal(props) {
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
+  // console.log(props.data)
+  /*function to change applicants status */
+  const OnStatusChangesClick = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    let data = {
+      employee_id: props.data.employee_id,
+      status: status,
+      name: props.data.name,
+      documents_folder_id: props.data.documents_folder_id
+    };
+    try {
+      let response = await AddEmployeeDetails(data);
+      if (response.message === "Employee data updated successfully") {
+        toast.success("Candidate status changes successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        if (data.status === "4" && !props.data.visa_status) {
+          let state = { status: "onboard" };
+          try {
+            let VisaResponse = await AddUpdateVisa(
+              props.data.employee_id,
+              state, "",
+              "visa"
+            );
+            if (VisaResponse.data.message === "visa inserted successfully") {
+              props.setApiCall(true);
+              setLoading(false);
+              props.close();
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        } else {
+          props.setApiCall(true);
+          setLoading(false);
+          props.close();
+        }
+      }
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  };
+  /*Function to start visa */
+  //  const visaStatus =async()=>{
+  //   let state = { status: "onboard", country: props.data.location }
+  //  try{
+  //    let VisaResponse = await AddUpdateVisa(props.data.employee_id, state);
+  //   if (VisaResponse.data.message === "visa inserted successfully") {}
+  //   }catch(err){
+  //     console.log(err)
+  //   }
+  // }
+  // useEffect(() => {
+  // if(status === "retained" &&  !props.data.visa_status ){
+  //   visaStatus()
+  // }
+  // }, [status])
+  return (
+    <Modal
+      show={props.show}
+      size="md"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <button
+        type="button"
+        className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper "
+        data-dismiss="modal"
+        onClick={props.close}
+      >
+        <i className="fas fa-times"></i>
+      </button>
+      {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
+      <div className="bg-white rounded h-100 p-7">
+        <form onSubmit={OnStatusChangesClick}>
+          <h5 className="text-center mb-7">Change Applicants Status</h5>
+          <div className="form-group d-flex mb-3 p-0">
+            <label
+              htmlFor="skill"
+              className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+            >
+              Status <span className="text-danger">*</span> :
+            </label>
+            <SelectBox
+              Width={"yes"}
+              options={(FilterJson.employee_status || []).sort(
+                (a, b) =>
+                  ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"]
+                    .indexOf(a.label.toLowerCase()) -
+                  ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"]
+                    .indexOf(b.label.toLowerCase())
+              ).map((item, index) => ({
+                value: item.value,
+                label: item.label,
+              }))}
+              type="status"
+              selectedValue={status || props.data.status}
+              onChange={(e) => setStatus(e ? e.value : "")}
+            />
+
+          </div>
+          <div className="form-group text-center d-flex justify-content-center">
+            {loading === true ? (
+              <button
+                className="btn btn-primary px-5  mx-2  rounded-5 text-uppercase"
+                type="button"
+                disabled
+              >
+                <span
+                  className="spinner-border spinner-border-sm "
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                <span className="sr-only">Loading...</span>
+              </button>
+            ) : (
+              <button
+                className="btn btn-primary px-5  mx-2  rounded-5 text-uppercase"
+                type="submit"
+              >
+                submit
+              </button>
+            )}
+          </div>
+        </form>
+      </div>
+    </Modal>
+  );
+}

@@ -2,9 +2,10 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import useValidation from "../../common/useValidation";
+import PasswordInput from "../../common/Common function/PasswordInput";
 
 function Registration(props) {
-  // USER CARRER PROFILE VALIDATION
+  // USER CAREER PROFILE VALIDATION
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
@@ -17,12 +18,13 @@ function Registration(props) {
     userdol: "",
     worklevel: "",
   };
+
   // VALIDATION CONDITIONS
   const validators = {
     companyname: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Company name is required"
+          ? "Employer's name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : null,
@@ -55,19 +57,20 @@ function Registration(props) {
         value === "" || value.trim() === "" ? "Work Level is required" : null,
     ],
   };
+
   // CUSTOM VALIDATIONS IMPORT
   const { state, onInputChange, errors, validate } = useValidation(
     initialFormState,
     validators
   );
-  // USER CARRER PROFILE SUBMIT BUTTON
+
+  // USER CAREER PROFILE SUBMIT BUTTON
   const onCarrerProfileClick = (event) => {
     event.preventDefault();
     if (validate()) {
     }
   };
-  // END USER CARRER PROFILE VALIDATION
-  return (
+    return (
     <>
       <Modal
         show={props.show}
@@ -87,8 +90,7 @@ function Registration(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onCarrerProfileClick}>
             <h5 className="text-center pt-2 mb-7">Registration</h5>
-            <div className="row pt-5">
-              {" "}
+            <div className="row">
               <div className="form-group col-md-6">
                 <label
                   htmlFor="Full_Name"
@@ -160,19 +162,18 @@ function Registration(props) {
                 >
                   Password <span className="text-danger">*</span>:
                 </label>
-                <input
-                  name="userpassword"
-                  value={state.userpassword}
-                  onChange={onInputChange}
-                  type="password"
-                  className={
-                    errors.userpassword
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  id="userpassword"
-                  placeholder="Enter password"
-                />
+                 <PasswordInput
+                      name="userpassword"
+                      value={state.userpassword}
+                      onChange={onInputChange}
+                      className={
+                        errors.userpassword
+                          ? "form-control border border-danger"
+                          : "form-control"
+                      }
+                      placeholder="Enter password"
+                      id="userpassword"
+                    />
                 {/*----ERROR MESSAGE FOR PASSWORD----*/}
                 {errors.userpassword && (
                   <span
@@ -192,6 +193,7 @@ function Registration(props) {
                 </label>
                 <input
                   type="number"
+                  min={0}
                   placeholder="Mobile Number"
                   name="usermobileno"
                   value={state.usermobileno}
@@ -247,7 +249,6 @@ function Registration(props) {
               )}
             </div>
             <div className="row">
-              {" "}
               <div className="form-group col-md-6">
                 <label
                   htmlFor="resume"
@@ -298,7 +299,7 @@ function Registration(props) {
                 line-height-reset text-black-2 mx-5 pt-3"
               >
                 I agree to Terms And Conditions & Privacy Policy governing the
-                use of Naukrigulf.com
+                use of CANJOBS
               </label>
               {/*----ERROR MESSAGE FOR RESUME----*/}
               {errors.tandr && (

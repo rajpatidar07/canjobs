@@ -1,14 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import { EmployeeLogin , EmployeeForgotPassword } from "../../api/api";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  EmployeeLogin,
+  EmployeeForgotPassword,
+  LinkedInLogin,
+  SocialLogin,
+} from "../../api/api";
 import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
-
+import PasswordInput from "../common/Common function/PasswordInput";
+// import { useGoogleLogin } from "@react-oauth/google";
+// import axios from "axios";
+// import { useLinkedIn , LinkedIn} from "react-linkedin-login-oauth2";
+// import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
+// import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 export default function EmployeeLoginModal(props) {
   let [showForgotPassword, setShowForgotPassword] = useState(false);
   let [loading, setLoading] = useState(false);
+
   let navigate = useNavigate();
+  // let [facebook, setFacebook] = useState(false);
+  let i = 0;
+  const [searchParams] = useSearchParams();
+  let code = searchParams.get("code");
+  if (props.show === true) {
+    localStorage.setItem("linkedin", "employeeLogin");
+  }
+  /*Function to close the modal */
+  const Close = () => {
+    setShowForgotPassword(false);
+    setLoading(false);
+    setErrors("");
+    props.close();
+  };
+  const type = localStorage.getItem("linkedin");
+  // let code = dataa[1].split("&")[0]
   /*----USER LOGIN VALIDATION----*/
   const initialFormState = {
     email: "",
@@ -37,58 +64,230 @@ export default function EmployeeLoginModal(props) {
           : "Email is invalid",
     ],
   };
-  /*----LOGIN ONCHANGE FUNCTION----*/
+  /*----LOGIN ONCHANGE FuNCTION----*/
   const { state, onInputChange, setErrors, errors, validate } = useValidation(
     initialFormState,
     validators
   );
 
-  /*----LOGIN SUBMIT FUNCTION----*/
+  /*----LOGIN SUBMIT FuNCTION----*/
   const onUserLoginClick = async (event) => {
     event.preventDefault();
     if (validate()) {
       // handle form submission
-      setLoading(true)
-      const updatedTodo = await EmployeeLogin(state);
-      if (updatedTodo.status) {
-        localStorage.setItem("token", updatedTodo.token);
-        localStorage.setItem("userType", "user");
-        localStorage.setItem("employee_id", updatedTodo.employee_id);
-        toast.success("Logged In Successfully", {
+      setLoading(true);
+      try {
+        const updatedTodo = await EmployeeLogin(state);
+        if (updatedTodo.status) {
+          localStorage.setItem("token", updatedTodo.token);
+          localStorage.setItem("email", updatedTodo.email);
+          localStorage.setItem("userType", "user");
+          localStorage.setItem("employee_id", updatedTodo.employee_id);
+          localStorage.setItem("name", updatedTodo.name);
+          localStorage.setItem("skill", updatedTodo.skill);
+          localStorage.setItem("profile_photo", updatedTodo.profile_photo);
+          toast.success("Logged In Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setLoading(false);
+          Close();
+          navigate("/");
+          window.location.reload();
+        }
+        if (updatedTodo.message === "Invalid credentials !") {
+          setLoading(false);
+          setErrors({ ...errors, email: "Invalid credentials !" });
+        }
+      } catch (err) {
+        setLoading(false);
+        setErrors({ ...errors, email: ["Please try again later."] });
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setLoading(false)
-        props.close();
-        navigate("/");
-        window.location.reload();
       }
-      if (updatedTodo.message === "Invalid credentials !") {
-        setLoading(false)
-        setErrors({ ...errors, email: "Invalid credentials !" });
-      }}
+    }
   };
   // END USER LOGIN VALIDATION
   const onForgoteClick = async (event) => {
     event.preventDefault();
     if (validate()) {
       // setLoading(true)
-      setLoading(true) 
-      const Response = await EmployeeForgotPassword(state)
+      setLoading(true);
+      try {
+        const Response = await EmployeeForgotPassword(state);
         if (Response.status === 1 || Response.message === "Sent you a mail") {
           toast.success("Email sent Successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
-          setLoading(false)
-          props.close();
+          setLoading(false);
+          Close();
         } else if (Response.message === "No user found") {
-          setLoading(false)
+          setLoading(false);
           setErrors({ ...errors, Credentials: ["No user found"] });
           //   handle form submission
         }
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+        setErrors({ ...errors, Credentials: ["Please try again later."] });
+        toast.error("Something went wrong", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
       }
     }
+  };
+  /*Function to login with google */
+  // const GoogleLogin = useGoogleLogin({
+  //   onSuccess: async (tokenResponse) => {
+  //     try {
+  //       let data = await axios(
+  //         "https://www.googleapis.com/oauth2/v3/userinfo",
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${tokenResponse.access_token}`,
+  //           },
+  //         }
+  //       );
+  //       try {
+  //         if (data.data.email_verified === true) {
+  //           let res = await SocialLogin(
+  //             data.data.sub,
+  //             data.data.email,
+  //             data.data.name,
+  //             data.data.picture,
+  //             "Google"
+  //           );
+  //           localStorage.setItem("token", res.token);
+  //           localStorage.setItem("email", res.email);
+  //           localStorage.setItem("userType", "user");
+  //           localStorage.setItem("employee_id", res.employee_id);
+  //           localStorage.setItem("profile_photo", res.profile_photo);
+  //           localStorage.setItem("skill", res.skill);
+  //           toast.success("Logged In Successfully", {
+  //             position: toast.POSITION.TOP_RIGHT,
+  //             autoClose: 1000,
+  //           });
+  //           Close();
+  //           navigate("/");
+  //           window.location.reload();
+  //         }
+  //       } catch (err) {
+  //         setLoading(false);
+  //       }
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   },
+  // });
+
+  /*Function to login in with Linked in */
+  /*Code to get access token */
+  // axios.post(`https://www.linkedin.com/oauth/v2/accessToken?code=${code}&grant_type=authorization_code&client_id=78mhwjaumkvtbm&client_secret=ZoZKbJgORl0vYJFr&redirect_uri=${window.location.origin}`)
+  // .then(response => {
+  // })
+  // .catch(error => {
+  //   console.error('Error:', error.message);
+  // });
+  const handleLinkedInLogin = () => {
+    const clientId = "78mhwjaumkvtbm";
+    const redirectUri = "http://3.6.36.125:3000/";
+    const scope =
+      "r_liteprofile r_emailaddress w_member_social profile email openid";
+
+    window.location.href = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(
+      redirectUri
+    )}&scope=${encodeURIComponent(scope)}`;
+  };
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    i = i + 1;
+    if (
+      (code !== "" ||
+        code !== undefined ||
+        code !== "undefined" ||
+        code !== null) &&
+      i === 1 &&
+      type === "employeeLogin"
+    ) {
+      const response = LinkedInLogin(code, type);
+      response
+        .then((res) => {
+          let decode = JSON.parse(res.data);
+          if (res.data.email_verified === true) {
+            let data = SocialLogin(
+              res.data.sub,
+              res.data.email,
+              res.data.name,
+              res.data.picture,
+              "Linkedin"
+            );
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("email", data.email);
+            localStorage.setItem("userType", "user");
+            localStorage.setItem("employee_id", data.employee_id);
+            localStorage.setItem("profile_photo", data.profile_photo);
+            localStorage.setItem("skill", data.skill);
+            toast.success("Logged In Successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            Close();
+            navigate("/");
+            window.location.reload();
+          }
+          if (
+            res.data.message ===
+              "The token used in the request has been revoked by the user" ||
+            decode.error_description ===
+              "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"
+          ) {
+            toast.error("Token Expired", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            navigate("/");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
+    }
+  }, []);
+
+  /*Functiom to login with facebook */
+  // const responseFacebook = async (response) => {
+  //   if (response.graphDomain === "facebook") {
+  //     try {
+  //       let data = await SocialLogin(
+  //         response.userID,
+  //         response.email,
+  //         response.name,
+  //         response.picture.data.url,
+  //         "Facebook"
+  //       );
+  //       localStorage.setItem("token", data.token);
+  //       localStorage.setItem("email", data.email);
+  //       localStorage.setItem("userType", "user");
+  //       localStorage.setItem("employee_id", data.employee_id);
+  //       localStorage.setItem("profile_photo", data.profile_photo);
+  //       localStorage.setItem("skill", data.skill);
+  //       toast.success("Logged In Successfully", {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 1000,
+  //       });
+  //       Close();
+  //       navigate("/");
+  //       window.location.reload();
+  //     } catch (err) {
+  //       setLoading(false);
+  //     }
+  //   }
+  // };
   return (
     <>
       {/* <!-- Login Modal --> */}
@@ -103,7 +302,7 @@ export default function EmployeeLoginModal(props) {
             type="button"
             className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
             data-dismiss="modal"
-            onClick={props.close}
+            onClick={Close}
           >
             <i className="fas fa-times"></i>
           </button>
@@ -136,7 +335,7 @@ export default function EmployeeLoginModal(props) {
                       <div className="pt-5 px-9">
                         <h3 className="font-size-7 text-white">14</h3>
                         <p className="font-size-3 text-white gr-opacity-5 line-height-1p4">
-                          New companies registered
+                          New Clients registered
                         </p>
                       </div>
                     </div>
@@ -144,27 +343,28 @@ export default function EmployeeLoginModal(props) {
                 </div>
               </div>
               <div className="col-lg-7 col-md-6">
-                <div className="bg-white-2 h-100 px-11 pt-11 pb-7">
+                <div className="bg-white-2 h-100 px-11 pt-11  pb-7 login_Modal_box">
                   <div
                     className={showForgotPassword === false ? "row" : "d-none"}
                   >
                     <div className="col-4 col-xs-12">
-                      <Link
-                        to="/"
-                        className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
+                      <button
+                        onClick={handleLinkedInLogin}
+                        className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4 border-0"
                       >
-                        <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                        <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>
                         <span className="d-none d-xs-block mx-5 px-3">
                           Import from LinkedIn
                         </span>
-                      </Link>
+                      </button>
                     </div>
-                    <div className="col-4 col-xs-12">
+                    {/* <div className="col-4 col-xs-12">
                       <Link
-                        to="/"
+                        to=""
+                        onClick={GoogleLogin}
                         className="font-size-4 font-weight-semibold position-relative text-white bg-poppy h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                       >
-                        <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                        <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>
                         <span className="d-none d-xs-block mx-5 px-3">
                           Import from Google
                         </span>
@@ -172,15 +372,32 @@ export default function EmployeeLoginModal(props) {
                     </div>
                     <div className="col-4 col-xs-12">
                       <Link
-                        to="/"
+                        to=""
+                        onClick={() => setFacebook(true)}
                         className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                       >
-                        <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                        <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>
                         <span className="d-none d-xs-block mx-5 px-3">
                           Import from Facebook
                         </span>
                       </Link>
-                    </div>
+                      {facebook ? (
+                        <FacebookLogin
+                          appId="2170088543184291"
+                          autoLoad
+                          callback={responseFacebook}
+                          fields="name,email,picture"
+                          scope="public_profile,user_friends,email,user_actions.books"
+                          className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
+                          render={(renderProps) => (
+                            <button
+                              onClick={renderProps.onClick}
+                              className="d-none"
+                            ></button>
+                          )}
+                        />
+                      ) : null}
+                    </div> */}
                   </div>
                   <div
                     className={
@@ -194,7 +411,7 @@ export default function EmployeeLoginModal(props) {
                     onSubmit={onUserLoginClick}
                     className={showForgotPassword === false ? "" : "d-none"}
                   >
-                    <div className="form-group">
+                    <div className="form-group p-0">
                       <label
                         htmlFor="useremail"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -236,9 +453,8 @@ export default function EmployeeLoginModal(props) {
                         Password
                       </label>
                       <div className="position-relative">
-                        <input
+                        <PasswordInput
                           name="password"
-                          type="password"
                           value={state.userpassword}
                           onChange={onInputChange}
                           className={
@@ -248,7 +464,7 @@ export default function EmployeeLoginModal(props) {
                           }
                           placeholder="Enter password"
                           id="userpassword"
-                        />{" "}
+                        />
                         {/*----ERROR MESSAGE FOR PASSWORD----*/}
                         {errors.userpassword && (
                           <span>
@@ -290,9 +506,12 @@ export default function EmployeeLoginModal(props) {
                       <Link
                         to={""}
                         className="font-size-3 text-dodger line-height-reset mb-3"
-                        onClick={() => setShowForgotPassword(true)}
+                        onClick={() => {
+                          setShowForgotPassword(true);
+                          setErrors("");
+                        }}
                       >
-                        Forget Password
+                        Forgot Password
                       </Link>
                       {/*----ERROR MESSAGE FOR terms----*/}
                       {errors.tandr && (
@@ -306,7 +525,6 @@ export default function EmployeeLoginModal(props) {
                     </div>
 
                     <div className="form-group mb-8">
-             
                       {loading === true ? (
                         <button
                           className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
@@ -320,28 +538,31 @@ export default function EmployeeLoginModal(props) {
                           ></span>
                           <span className="sr-only">Loading...</span>
                         </button>
-                         ) : (
-                          <button
+                      ) : (
+                        <button
                           className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
                           type="submit"
                         >
-                          Log in{" "}
+                          Log in
                         </button>
-                      )}      
+                      )}
                     </div>
                     <p className="font-size-4 text-center heading-default-color">
-                      Don’t have an account?{" "}
+                      Don’t have an account?
                       <Link
                         className="text-primary"
                         to={""}
                         onClick={props.signUpClick}
                       >
-                        Create a free account
+                        Create an account
                       </Link>
                     </p>
                   </form>
 
-                  <form className={showForgotPassword === true ? "" : "d-none"} onSubmit={onForgoteClick}>
+                  <form
+                    className={showForgotPassword === true ? "" : "d-none"}
+                    onSubmit={onForgoteClick}
+                  >
                     <div className="form-group">
                       <label
                         htmlFor="forget_email"
@@ -358,7 +579,7 @@ export default function EmployeeLoginModal(props) {
                         id="forget_email"
                         name="forget_email"
                       />
-                          {errors.forget_email && (
+                      {errors.forget_email && (
                         <span>
                           {errors.forget_email.map((error) => (
                             <span
@@ -370,9 +591,20 @@ export default function EmployeeLoginModal(props) {
                           ))}
                         </span>
                       )}
+                      {errors.Credentials && (
+                        <span>
+                          {errors.Credentials.map((error) => (
+                            <span
+                              key={error}
+                              className="text-danger font-size-3"
+                            >
+                              {error}
+                            </span>
+                          ))}
+                        </span>
+                      )}
                     </div>
                     <div className="form-group text-center">
-                      
                       {loading === true ? (
                         <button
                           className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
@@ -386,8 +618,8 @@ export default function EmployeeLoginModal(props) {
                           ></span>
                           <span className="sr-only">Loading...</span>
                         </button>
-                         ) : (
-                          <button
+                      ) : (
+                        <button
                           className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                           type="submit"
                         >
@@ -396,11 +628,14 @@ export default function EmployeeLoginModal(props) {
                       )}
                     </div>
                     <p className="font-size-4 text-center heading-default-color">
-                      Already have an account?{" "}
+                      Already have an account?
                       <Link
                         to=""
                         className="text-primary"
-                        onClick={() => setShowForgotPassword(false)}
+                        onClick={() => {
+                          setShowForgotPassword(false);
+                          setErrors("");
+                        }}
                       >
                         Login
                       </Link>

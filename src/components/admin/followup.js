@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-// import CustomButton from "../common/button";
 import JobDetailsBox from "../common/jobdetail";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-// import AddJobModal from "../forms/employer/job";
-import { GetAllJobs, getJson } from "../../api/api";
-import { ToastContainer } from "react-toastify";
+import { GetAllJobs, GetFilter } from "../../api/api";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import JobResponse from "./response";
-
+import Loader from "../common/loader";
+import { HiArrowSmallLeft } from "react-icons/hi2";
 function Followup() {
   /*show Modal and props state */
+  let [isLoading, setIsLoading] = useState(true);
   let [apiCall, setApiCall] = useState(false);
   let [catapiCall, setCatApiCall] = useState(false);
   let [showJobDetails, setShowJobDetails] = useState(false);
@@ -25,7 +24,7 @@ function Followup() {
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
-  let [Json , setJson] = useState([])
+  let [Json, setJson] = useState([]);
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -34,49 +33,67 @@ function Followup() {
   const [columnName, setcolumnName] = useState("job_id");
   const [sortOrder, setSortOrder] = useState("DESC");
   const [responseId, setresponseId] = useState();
+  const [responseDropDown, setresponseDropDown] = useState(false);
+  
   /*Function to get the jSon */
- const JsonData=async()=>{
-   let Json = await getJson()
-   setJson(Json)
- }
+  const JsonData = async () => {
+    try {
+      let Json = await GetFilter();
+      if (Json.data.message === "No data found") {
+        setJson([]);
+      } else {
+        setJson(Json.data.data);
+      }
+      setJson(Json.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   /* Function to get Job data*/
   const JobData = async () => {
-    const userData = await GetAllJobs(
-      search,
-      locationFilterValue,
-      categoryFilterValue,
-      SkillFilterValue,
-      jobSwapFilterValue,
-      currentPage,
-      recordsPerPage,
-      columnName,
-      sortOrder
-    );
-    if (userData.data.data.length === 0) {
-      setJobId([]);
-      setresponseId();
-    } else {
-      setjobData(userData.data.data);
-      setTotalData(userData.data.total_rows);
-      setresponseId(userData.data.data[0].job_id);
+    setIsLoading(true);
+    try {
+      const userData = await GetAllJobs(
+        search,
+        locationFilterValue,
+        categoryFilterValue,
+        SkillFilterValue,
+        jobSwapFilterValue,
+        currentPage,
+        recordsPerPage,
+        columnName,
+        sortOrder
+      );
+      if (userData.data.data.length === 0) {
+        setJobId([]);
+        setresponseId();
+        setIsLoading(false);
+        setjobData([]);
+      } else {
+        setjobData(userData.data.data);
+        setTotalData(userData.data.total_rows);
+        setresponseId(userData.data.data[0].job_id);
+        setIsLoading(false);
+      }
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
     }
-    // if (userData.message === "No data found") {
-    // //// console.log((userData.status);
-    // }
   };
 
   /*Render function to get the job */
   useEffect(() => {
     JobData();
-    JsonData()
+    JsonData();
     if (apiCall === true || catapiCall === true) {
       setCatApiCall(false);
       setApiCall(false);
-    }if((search === "") === true){
-      setSearchError("")
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if ((search === "") === true) {
+      setSearchError("");
+    }
+    // eslint-disable-next-line
   }, [
     categoryFilterValue,
     SkillFilterValue,
@@ -92,11 +109,11 @@ function Followup() {
   ]);
 
   /* Function to show the Job detail data */
-  const JobDetail = (e) => {
-    // e.preventDefault();
-    setShowJobDetails(true);
-    setJobId(e);
-  };
+  // const JobDetail = (e) => {
+  //   // e.preventDefault();
+  //   setShowJobDetails(true);
+  //   setJobId(e);
+  // };
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
   /*Sorting Function */
@@ -105,14 +122,21 @@ function Followup() {
     setcolumnName(columnName);
   };
   /*Function to Search Follow up */
- const onSearch = (e) => { setSearch(e.target.value);
-  if(/[-]?\d+(\.\d+)?/.test(search) ){
-    setSearchError("Admin Name can not have a number.")
-  }else if(/[^a-zA-Z0-9]/g.test(search)){
-    setSearchError("Cannot use special character")
-  }else if(search === ""){
-    setSearchError("")
-  }}
+  const onSearch = (e) => {
+    const inputValue = e.target.value;
+    setSearch(inputValue);
+    if (inputValue.length > 0) {
+      if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+        setSearchError("Job cannot start with a number.");
+      } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+        setSearchError("Cannot use special characters.");
+      } else {
+        setSearchError("");
+      }
+    } else {
+      setSearchError("");
+    }
+  };
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -120,16 +144,15 @@ function Followup() {
         <AdminHeader heading={"Manage Follow-ups"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Follow-ups"} />
-        <ToastContainer />
         <div
           className={
             showJobDetails === false
-              ? "dashboard-main-container mt-16"
+              ? "dashboard-main-container mt-14"
               : "d-none"
           }
           id="dashboard-body"
         >
-          <div className="container">
+          <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
                 <div className="page___heading">
@@ -137,8 +160,8 @@ function Followup() {
                 </div>
                 {/* <!-- Follow up search and filter --> */}
                 <div className="row m-0 align-items-center">
-                  <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Search by Name:</p>
+                  <div className="col p-1 form_group mb-3">
+                    <p className="input_label">Search by Job:</p>
                     <input
                       required
                       type="text"
@@ -146,10 +169,14 @@ function Followup() {
                       placeholder={"Search Job"}
                       value={search}
                       name={"category_name"}
-                      onChange={(e) => onSearch(e)}
+                      onChange={(e) => {
+                        onSearch(e);
+                        setCurrentPage(1);
+                      }}
+                      maxLength={30}
                     />
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Category:</p>
                     <div className="select_div">
                       <select
@@ -159,16 +186,14 @@ function Followup() {
                         onChange={(e) => {
                           setCategoryFilterValue(e.target.value);
                           setCatApiCall(true);
+                          setCurrentPage(1);
                         }}
-                        className=" form-control"
+                        className="text-capitalize form-control"
                       >
                         <option value="">Select Category</option>
-                        {(Json.Category || []).map((data) => {
+                        {(Json.Category || []).map((data, i) => {
                           return (
-                            <option
-                              value={data.id}
-                              key={data.value}
-                            >
+                            <option value={i} key={i}>
                               {data.value}
                             </option>
                           );
@@ -176,15 +201,18 @@ function Followup() {
                       </select>
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Filter by Job Swap:</p>
+                  <div className="col p-1 form_group mb-3">
+                    <p className="input_label">Filter by Job SWEP:</p>
                     <div className="select_div">
                       <select
                         name="country"
                         id="country"
                         value={jobSwapFilterValue}
-                        onChange={(e) => setJobSwapFilterValue(e.target.value)}
-                        className=" form-control"
+                        onChange={(e) => {
+                          setJobSwapFilterValue(e.target.value);
+                          setCurrentPage(1);
+                        }}
+                        className="text-capitalize form-control"
                       >
                         <option value="">Select Job Type</option>
                         {(FilterJson.job_type || []).map((job, i) => (
@@ -195,20 +223,23 @@ function Followup() {
                       </select>
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Key Skill:</p>
                     <div className="select_div">
                       <select
                         name="country"
                         id="country"
                         value={SkillFilterValue}
-                        onChange={(e) => setSkillFilterValue(e.target.value)}
+                        onChange={(e) => {
+                          setSkillFilterValue(e.target.value);
+                          setCurrentPage(1);
+                        }}
                         className=" form-control"
                       >
                         <option value="">Select Skill</option>
-                        {(Json.Skill || []).map((data) => {
+                        {(Json.Skill || []).map((data, i) => {
                           return (
-                            <option value={data.value} key={data.id}>
+                            <option value={i} key={i}>
                               {data.value}
                             </option>
                           );
@@ -216,21 +247,24 @@ function Followup() {
                       </select>
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Location:</p>
                     <div className="select_div">
                       <select
                         name="country"
                         id="country"
                         value={locationFilterValue}
-                        onChange={(e) => setLocationFilterValue(e.target.value)}
-                        className=" form-control"
+                        onChange={(e) => {
+                          setLocationFilterValue(e.target.value);
+                          setCurrentPage(1);
+                        }}
+                        className="text-capitalize form-control"
                       >
                         <option value="">Select Location</option>
-                        {(FilterJson.location || []).map((data) => {
+                        {(FilterJson.location || []).map((data, i) => {
                           return (
-                            <option value={data.value} key={data.id}>
-                              {data.value}
+                            <option value={data.country} key={i}>
+                              {data.country}
                             </option>
                           );
                         })}
@@ -242,246 +276,282 @@ function Followup() {
               </div>
               <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
                 <div className="table-responsive main_table_div">
-                  <table className="table table-striped main_data_table">
-                    <thead>
-                      <tr>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            onClick={() => handleSort("job_title")}
-                            className="text-gray"
-                            title="Sort by Industry"
-                          >
-                            Job title / Industry
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to=""
-                            onClick={() => handleSort("job_type")}
-                            className="text-gray"
-                            title="Sort by Job"
-                          >
-                            Job Type
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to=""
-                            onClick={() => handleSort("location")}
-                            className="text-gray"
-                            title="Sort by Address"
-                          >
-                            Address
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to=""
-                            onClick={() => handleSort("education")}
-                            className="text-gray"
-                            title="Sort by Education"
-                          >
-                            Education
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to=""
-                            onClick={() => handleSort("keyskill")}
-                            className="text-gray"
-                            title="Sort by Skills"
-                          >
-                            Skills
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to=""
-                            onClick={() => handleSort("language")}
-                            className="text-gray"
-                            title="Sort by Language"
-                          >
-                            Language
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to=""
-                            onClick={() => handleSort("salary")}
-                            className="text-gray"
-                            title="Sort by Salary"
-                          >
-                            Salary
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to=""
-                            onClick={() => handleSort("experience_required")}
-                            className="text-gray"
-                            title="Sort by Experience"
-                          >
-                            Experience
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link to="" className="text-gray">
-                            Total Response
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          Action
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/* Map function to show the data in the list*/}
-                      {totalData === 0 ? (
+                  {isLoading ? (
+                    <Loader />
+                  ) : (
+                    <table className="table table-striped main_data_table">
+                      <thead>
                         <tr>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white">No Data Found</th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                        </tr>
-                      ) : (
-                        (jobData || []).map((job) => (
-                          <React.Fragment key={job.job_id}>
-                            <tr
-                              className="aos-init aos-animate"
-                              data-aos="fade-right"
-                              data-aos-duration="800"
-                              data-aos-once="true"
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              onClick={() => {
+                                handleSort("job_title");
+                                setCurrentPage(1);
+                              }}
+                              className="text-gray"
+                              title="Sort by Industry"
                             >
-                              <td className="py-5 ">
-                                <div className="">
-                                  <Link
-                                    to={""}
-                                    onClick={() => JobDetail(job.job_id)}
-                                    className="font-size-3 mb-0 font-weight-semibold text-black-2"
-                                  >
-                                    <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                                      {job.job_title}
-                                    </p>
-                                    <p className="text-gray font-size-2 m-0 text-capitalize">
-                                      {job.company_name} - {job.industry_type}
-                                    </p>
-                                  </Link>
-                                </div>
-                              </td>
-                              <td className=" py-5">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {job.employement} - {job.job_type}
-                                </h3>
-                              </td>
-                              <td className=" py-5">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {job.location}
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {job.education}
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {job.keyskill}
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {job.language}
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {job.salary}
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {job.experience_required}
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
-                                  {job.total_applicants}
-                                </h3>
-                              </td>
-                              <td className="py-5 min-width-px-100">
-                                {job.total_applicants > 0 ? (
-                                  <div
-                                    className="btn-group button_group"
-                                    role="group"
-                                  >
-                                    <button
-                                      className="btn btn-outline-info action_btn"
-                                      onClick={() => {
-                                        setresponseId(job.job_id);
-                                      }}
-                                      title="Job Response"
+                              Job title / Industry
+                            </Link>
+                          </th>
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to=""
+                              onClick={() => {
+                                handleSort("job_type");
+                                setCurrentPage(1);
+                              }}
+                              className="text-gray"
+                              title="Sort by Job"
+                            >
+                              Job Type
+                            </Link>
+                          </th>
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to=""
+                              onClick={() => {
+                                handleSort("location");
+                                setCurrentPage(1);
+                              }}
+                              className="text-gray"
+                              title="Sort by Address"
+                            >
+                              Address
+                            </Link>
+                          </th>
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to=""
+                              onClick={() => {
+                                handleSort("education");
+                                setCurrentPage(1);
+                              }}
+                              className="text-gray"
+                              title="Sort by Education"
+                            >
+                              Education
+                            </Link>
+                          </th>
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to=""
+                              onClick={() => {
+                                handleSort("keyskill");
+                                setCurrentPage(1);
+                              }}
+                              className="text-gray"
+                              title="Sort by Skills"
+                            >
+                              Skills
+                            </Link>
+                          </th>
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to=""
+                              onClick={() => {
+                                handleSort("language");
+                                setCurrentPage(1);
+                              }}
+                              className="text-gray"
+                              title="Sort by Language"
+                            >
+                              Language
+                            </Link>
+                          </th>
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to=""
+                              onClick={() => {
+                                handleSort("salary");
+                                setCurrentPage(1);
+                              }}
+                              className="text-gray"
+                              title="Sort by Salary"
+                            >
+                              Salary
+                            </Link>
+                          </th>
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to=""
+                              onClick={() => {
+                                handleSort("experience_required");
+                                setCurrentPage(1);
+                              }}
+                              className="text-gray"
+                              title="Sort by Experience"
+                            >
+                              Experience
+                            </Link>
+                          </th>
+                          <th
+                            scope="col"
+                            className="text-gray border-0 font-size-4 font-weight-normal"
+                          >
+                            Total Responses
+                          </th>
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            Action
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {/* Map function to show the data in the list*/}
+                        {totalData === 0 || jobData.length === 0 ? (
+                          <tr>
+                            <th colSpan={8} className="bg-white text-center">
+                              No Data Found
+                            </th>
+                          </tr>
+                        ) : (
+                          (jobData || []).map((job, i) => (
+                            <React.Fragment key={i}>
+                              <tr
+                                className="text-capitalize aos-init aos-animate"
+                                data-aos="fade-right"
+                                data-aos-duration="800"
+                                data-aos-once="true"
+                              >
+                                <td className="py-5 ">
+                                  <div className="">
+                                    <Link
+                                      to={`/jobdetailpage`}
+                                      onClick={() =>
+                                        localStorage.setItem(
+                                          "job_id",
+                                          job.job_id
+                                        )
+                                      }
+                                      className="font-size-3 mb-0 font-weight-semibold text-black-2"
                                     >
-                                      Responses
-                                    </button>
+                                      <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                        {job.job_title}
+                                      </p>
+                                      <p className="text-gray font-size-2 m-0 text-capitalize">
+                                        {job.company_name} - {job.industry_type}
+                                      </p>
+                                    </Link>
                                   </div>
-                                ) : null}
-                              </td>
-                            </tr>
-                            {job.job_id === responseId &&
-                            job.total_applicants > 0 ? (
-                              <tr>
-                                <td colSpan={10}>
-                                  {/* <!-- Job Responses --> */}
-                                  <JobResponse
-                                    responseId={responseId}
-                                    apiCall={apiCall}
-                                    setApiCall={setApiCall}
-                                    heading={"Manage Follow-ups"}
-                                  />
+                                </td>
+                                <td className=" py-5">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    {job.employement}
+                                  </h3>
+                                </td>
+                                <td className=" py-5">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    {job.location}
+                                  </h3>
+                                </td>
+                                <td className="py-5 ">
+                                  <h3
+                                    className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
+                                    title={job.education}
+                                  >
+                                    {job.education}
+                                  </h3>
+                                </td>
+                                <td className="py-5 ">
+                                  <h3
+                                    className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
+                                    title={job.keyskill}
+                                  >
+                                    {job.keyskill}
+                                  </h3>
+                                </td>
+                                <td className="py-5 ">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    {job.language}
+                                  </h3>
+                                </td>
+                                <td className="py-5 ">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    $ {job.salary}
+                                  </h3>
+                                </td>
+                                <td className="py-5 ">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    {job.experience_required}
+                                  </h3>
+                                </td>
+                                <td className="py-5 ">
+                                  <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
+                                    {job.total_applicants}
+                                  </h3>
+                                </td>
+                                <td className="py-5 min-width-px-100">
+                                  {job.total_applicants > 0 ? (
+                                    <div
+                                      className="btn-group button_group"
+                                      // role="group"
+                                    >
+                                      <button
+                                        className="btn btn-outline-info action_btn"
+                                        onClick={() => {
+                                          setresponseId(job.job_id);
+                                          setresponseDropDown(
+                                            responseDropDown === false
+                                              ? true
+                                              : false
+                                          );
+                                        }}
+                                        title="Job Response"
+                                      >
+                                        Responses
+                                      </button>
+                                    </div>
+                                  ) : null}
                                 </td>
                               </tr>
-                            ) : null}
-                          </React.Fragment>
-                        ))
-                      )}
-                    </tbody>
-                  </table>
+                              {job.job_id === responseId &&
+                              job.total_applicants > 0 &&
+                              responseDropDown === true ? (
+                                <tr>
+                                  <td colSpan={10}>
+                                    {/* <!-- Job Responses --> */}
+                                    <JobResponse
+                                      responseId={responseId}
+                                      apiCall={apiCall}
+                                      setApiCall={setApiCall}
+                                      heading={"Manage Follow-ups"}
+                                    />
+                                  </td>
+                                </tr>
+                              ) : null}
+                            </React.Fragment>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
+                  )}
                 </div>
                 {/* <!-- Follow up Pagination --> */}
                 <div className="pt-2">
@@ -489,6 +559,8 @@ function Followup() {
                     nPages={nPages}
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
+                    total={totalData}
+                    count={jobData.length}
                   />
                 </div>
               </div>
@@ -497,8 +569,8 @@ function Followup() {
         </div>
         {/* <!-- Job Details --> */}
         {showJobDetails === true ? (
-          <div className="dashboard-main-container mt-16 ">
-            <div className="container">
+          <div className="dashboard-main-container mt-14 ">
+            <div className="container-fluid">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">
                   <div className="mb-9">
@@ -507,7 +579,7 @@ function Followup() {
                       onClick={() => setShowJobDetails(false)}
                       className="d-flex align-items-center ml-4"
                     >
-                      <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+                      <span className="bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"><HiArrowSmallLeft /></span>
                       <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                         Back
                       </span>

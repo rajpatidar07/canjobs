@@ -3,26 +3,48 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 // import { CKEditor } from "ckeditor4-react";
-import { AddCompany, EmployerDetails , getJson} from "../../../api/api";
+// import FroalaEditor from "react-froala-wysiwyg";
+// import "froala-editor/css/froala_editor.pkgd.min.css";
+// import "froala-editor/css/froala_style.min.css";
+// import "froala-editor/js/plugins.pkgd.min.js";
+import {
+  AddCompany,
+  EmployerDetails,
+  GetFilter,
+  // AddEmployerPermission,
+} from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import Permissions from "../../json/emailPermisionJson";
+// import TextEditor from "../../common/TextEditor";
+import SelectBox from "../../common/Common function/SelectBox";
+import SignatureTextEditor from "../../SignatureTextEditor";
 function CompanyDetails(props) {
   const [loading, setLoading] = useState(false);
-  const [imgError, setImgError] = useState(false);
-  let [Json , setJson] = useState([])
+  const [imgError, setImgError] = useState("");
+  let [Json, setJson] = useState([]);
   let encoded;
+  // const user_type = localStorage.getItem("userType");
+
   /*Function to get thejSon */
- const JsonData=async()=>{
-   let Json = await getJson()
-   setJson(Json)
- 
- }
+  const JsonData = async () => {
+    try {
+      let Json = await GetFilter();
+      if (Json.data.message === "No data found") {
+        setJson([]);
+      } else {
+        setJson(Json.data.data);
+      }
+      setJson(Json.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   /* Functionality to close the modal */
   const close = () => {
     setState(initialFormState);
     setErrors("");
-    setImgError("")
+    setImgError("");
     setLoading(false);
     props.close();
   };
@@ -41,20 +63,23 @@ function CompanyDetails(props) {
     vacancy_for_post: "",
     franchise: "",
     logo: "",
+    permission: props.employerId === "0" ? JSON.stringify(Permissions) : null,
+    company_size_partTime: ""
   };
   // VALIDATION CONDITIONS
   const validators = {
     company_name: [
       (value) =>
         value === "" ||
-        value === null ||
-        value === undefined ||
-        value.trim() === ""
-          ? "Company name is required"
+          value === null ||
+          value === undefined ||
+          value.trim() === ""
+          ? "Employer's name is required"
           : value.length < 2
-          ? "Company Name should have 2 or more letters"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character " : "",
+            ? "Employer's Name should have 2 or more letters"
+            : // : /[^A-Za-z 0-9]/g.test(value)
+            // ? "Cannot use special character "
+            "",
     ],
     industry: [
       (value) =>
@@ -62,119 +87,71 @@ function CompanyDetails(props) {
           ? "Industry is required"
           : "",
     ],
-    corporation: [
-      (value) =>
-        value === "" ||
-        value === null ||
-        value === undefined ||
-        value.trim() === ""
-          ? "Corporation type is required"
-          : null,
-    ],
-    company_start_date: [
-      (value) =>
-        value === "" ||
-        value === null ||
-        value === undefined ||
-        value.trim() === ""
-          ? "Start Date is required"
-          : null,
-    ],
     company_size: [
       (value) =>
         value === "" ||
-        value === null ||
-        value === undefined ||
-        value.trim() === ""
-          ? "Company Size is required"
+          value === null ||
+          value === undefined ||
+          value.trim() === ""
+          ? "Employer'steam Size is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value === "0" || value === 0
-          ? "Company Size can not be zero"
-          : "",
+            ? "Cannot use special character "
+            : value === "0" || value === 0
+              ? "Employer'steam Size can not be zero"
+              : "",
     ],
     vacancy_for_post: [
       (value) =>
         value === "" ||
-        value === null ||
-        value === undefined ||
-        value.trim() === ""
+          value === null ||
+          value === undefined ||
+          value.trim() === ""
           ? "Vacancy is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Vacancy can not have a number."
-          : value.length < 2
-          ? "Vacancy should have 2 or more letters."
-          : "",
-    ],
-    about: [
-      (value) =>
-        value === ""
-          ? "Company Description is required"
-          : value.length < 2
-          ? "Company Description should have 2 or more letters."
-          : "",
+            ? "Cannot use special character "
+            : "",
     ],
 
-    website_url: [
-      (value) =>
-        value === "" || value === null
-          ? ""
-          : !/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(
-              value
-            )
-          ? "Write the correct URL"
-          : "",
-    ],
-    franchise: [
-      (value) =>
-        value === ""
-          ? ""
-          : value.length < 2
-          ? "Franchise have 2 or more letters"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Franchise can not have a number."
-          : "",
-    ],
-    // companylogo: [
+    // franchise: [
     //   (value) =>
-    //     value === "" || value === null||value===undefined|| value.trim() === "" ? "Company logo is required" : null,
+    //     value === "" || value === null || value === undefined
+    //       ? ""
+    //       : /[^A-Za-z 0-9]/g.test(value)
+    //       ? "Cannot use special character "
+    //       : /[-]?\d+(\.\d+)?/.test(value)
+    //       ? "franchise can not have a number."
+    //       : "",
     // ],
   };
   // API CALL
   const EmployerData = async () => {
-    let userData = await EmployerDetails(props.employerId);
-    if (
-      userData === undefined ||
-      props.employerId === "0" ||
-      props.employerId === undefined ||
-      props.employerId.length === 0 ||
-      userData.data.company_detail.length === 0
-    ) {
-      setState(initialFormState);
-    } else {
-      setState(userData.data.company_detail[0]);
+    try {
+      let userData = await EmployerDetails(props.employerId);
+      if (
+        userData === undefined ||
+        props.employerId === "0" ||
+        props.employerId === undefined ||
+        props.employerId.length === 0 ||
+        userData.data.company_detail.length === 0
+      ) {
+        setState(initialFormState);
+      } else {
+        setState(userData.data.company_detail[0]);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
   useEffect(() => {
-    JsonData()
-    if( props.employerId !== "0"){
+    JsonData();
+    if (props.employerId !== "0") {
       EmployerData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [props]);
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setErrors,
-    setState,
-    onInputChange,
-    errors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setErrors, setState, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
 
   /*Function to convert file to base64 */
   const convertToBase64 = (file) => {
@@ -190,23 +167,24 @@ function CompanyDetails(props) {
     });
   };
   /*Onchange function of Logo */
-   const handleFileChange = async (event) => {
+  const handleFileChange = async (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
-    
+
     reader.onload = (event) => {
       const img = new Image();
       img.onload = () => {
-        if (file.size > 1024 * 100) {
-          setImgError("Image size can't be more then 100 kb");
+        // eslint-disable-next-line
+        if (file.size > 1024 * 1024 * 5 === true) {
+          setImgError("Image size can't be more then 5 mb");
         } else {
-          setImgError("")
-          setState({ ...state, logo: (event.target.result) });
+          setImgError("");
+          setState({ ...state, logo: event.target.result });
         }
       };
       img.src = event.target.result;
     };
-  
+
     // Read the file as a data URL
     reader.readAsDataURL(file);
     encoded = await convertToBase64(file);
@@ -215,41 +193,55 @@ function CompanyDetails(props) {
   };
   // COMPANY DETAIL SUBMIT BUTTON
   const onCompanyDetailClick = async (event) => {
-    // console.log(state);
     event.preventDefault();
-    if (validate()) {
+    if (validate() && imgError === "") {
       setLoading(true);
-      let responseData = await AddCompany(state);
-      if (responseData.message === "Employer data inserted successfully") {
-        toast.success("Company Added successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true)
-        return close();
-      }
-
-      if (responseData.message === "Employer data updated successfully") {
-        toast.success("Company Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true)
-        return close();
+      try {
+        let responseData = await AddCompany(state);
+        if (responseData.message === "Employer data inserted successfully") {
+          try {
+            // await AddEmployerPermission(Permissions);
+            toast.success("Employer Added successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            props.setApiCall(true);
+            return close();
+          } catch (err) {
+            console.log(err);
+          }
+        }
+        if (responseData.message === "Employer data updated successfully") {
+          toast.success("Employer Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
       }
     } else {
       setLoading(false);
     }
   };
   // END COMPANY DETAIL VALIDATION
-   /*Industry Json for not having same data */
-   const Industry = Json.Industry ? Json.Industry.filter((thing, index, self) =>
-   index === self.findIndex((t) => t.value === thing.value)
-   ) : [];
-     /*Corporation Json for not having same data */
-     const Corporation = Json.Corporation ? Json.Corporation.filter((thing, index, self) =>
-     index === self.findIndex((t) => t.value === thing.value)
-     ) : [];
+  /*Industry Json for not having same data */
+  const Industry = Json.Industry
+    ? Json.Industry.filter(
+      (thing, index, self) =>
+        index === self.findIndex((t) => t.value === thing.value)
+    )
+    : [];
+  /*Corporation Json for not having same data */
+  // const Corporation = Json.Corporation
+  //   ? Json.Corporation.filter(
+  //       (thing, index, self) =>
+  //         index === self.findIndex((t) => t.value === thing.value)
+  //     )
+  //   : [];
   return (
     <>
       <Modal
@@ -266,24 +258,25 @@ function CompanyDetails(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onCompanyDetailClick}>
-            <h5 className="text-center pt-2 mb-9"> Company Details</h5>
+            <h5 className="text-center pt-2 mb-7">
+              {/* {user_type === "company" ? "Company Details" : "Employer Details"} */}
+              Business Details
+            </h5>
             <input type="hidden" value={state.company_id || ""} />
             <div className="row">
-              {" "}
               <div className="form-group col-md-6">
                 <label
                   htmlFor="company_name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company Name (as per Kyc)
-                  <span className="text-danger"> *</span>:
+                  Business Legal Name
+                  <span className="text-danger">*</span>:
                 </label>
                 <input
                   type="text"
-                  maxLength={30}
+                  maxLength={60}
                   name="company_name"
                   value={state.company_name || ""}
                   onChange={onInputChange}
@@ -292,10 +285,10 @@ function CompanyDetails(props) {
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  placeholder="Company Name"
+                  placeholder="Employer Legal Name"
                   id="company_name"
                 />
-                {/*----ERROR MESSAGE FOR company_name----*/}
+                {/*----ERROR MESSAGE FOR COMPANY NAME----*/}
                 {errors.company_name && (
                   <span
                     key={errors.company_name}
@@ -310,11 +303,11 @@ function CompanyDetails(props) {
                   htmlFor="franchise"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Franchise :
+                  Operating Name:
                 </label>
                 <div className="position-relative">
                   <input
-                    maxLength={30}
+                    maxLength={60}
                     name="franchise"
                     value={state.franchise || ""}
                     onChange={onInputChange}
@@ -324,10 +317,10 @@ function CompanyDetails(props) {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Franchise"
+                    placeholder="Operating Name"
                     id="franchise"
                   />
-                  {/*----ERROR MESSAGE FOR franchise----*/}
+                  {/*----ERROR MESSAGE FOR FRANCHISE----*/}
                   {errors.franchise && (
                     <span
                       key={errors.franchise}
@@ -343,27 +336,29 @@ function CompanyDetails(props) {
                   htmlFor="industry"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Industry<span className="text-danger"> *</span> :
+                  Industry<span className="text-danger">*</span>:
                 </label>
-                <select
-                  name="industry"
-                  value={state.industry || ""}
-                  onChange={onInputChange}
-                  className={
-                    errors.industry
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  id="industry"
-                >
-                  <option value={""}>Industry company belongs to</option>
-                  {(Industry || []).map((industry) => (
-                    <option key={industry.id} value={industry.value}>
-                      {industry.value}
-                    </option>
-                  ))}
-                </select>
-                {/*----ERROR MESSAGE FOR industry----*/}
+                <div className={errors.industry ? "border border-danger rounded" : ""}>
+                  <SelectBox
+                    Width={"yes"}
+                    options={(Industry || []).map((industry) => ({
+                      value: industry.value,
+                      label: industry.value,
+                    }))}
+                    type="industry"
+                    selectedValue={state.industry || ""}
+                    onChange={(e) => {
+                      onInputChange({
+                        target: {
+                          name: "industry",
+                          value: e ? e.value : "",
+                        },
+                      });
+                    }}
+                  />
+                </div>
+
+                {/*----ERROR MESSAGE FOR INDUSTRY ----*/}
                 {errors.industry && (
                   <span
                     key={errors.industry}
@@ -378,19 +373,33 @@ function CompanyDetails(props) {
                   htmlFor="contactperson"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Corporation<span className="text-danger"> *</span> :
+                  Type of bussiness:
                 </label>
-                <select
+                <input
                   type="text"
-                  placeholder="Contact Person "
-                  maxLength={20}
+                  placeholder="Type of bussiness"
+                  maxLength={60}
                   name="corporation"
                   value={state.corporation || ""}
                   onChange={onInputChange}
                   className={
                     errors.corporation
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "text-capitalize form-control border border-danger"
+                      : "text-capitalize form-control"
+                  }
+                  id="corporation"
+                />
+                {/* <select
+                  type="text"
+                  placeholder="Contact Person "
+                  maxLength={60}
+                  name="corporation"
+                  value={state.corporation || ""}
+                  onChange={onInputChange}
+                  className={
+                    errors.corporation
+                      ? "text-capitalize form-control border border-danger"
+                      : "text-capitalize form-control"
                   }
                   id="corporation"
                 >
@@ -400,8 +409,8 @@ function CompanyDetails(props) {
                       {data.value}
                     </option>
                   ))}
-                </select>
-                {/*----ERROR MESSAGE FOR corporation----*/}
+                </select> */}
+                {/*----ERROR MESSAGE FOR CORPORATION----*/}
                 {errors.corporation && (
                   <span
                     key={errors.corporation}
@@ -416,13 +425,13 @@ function CompanyDetails(props) {
                   htmlFor="alias"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Alias :
+                  Referral Partner:
                 </label>
                 <div className="position-relative">
                   <input
                     type="text"
-                    placeholder="Alias"
-                    maxLength={20}
+                    placeholder="Referral Partner"
+                    maxLength={60}
                     name="alias"
                     value={state.alias || ""}
                     onChange={onInputChange}
@@ -433,7 +442,7 @@ function CompanyDetails(props) {
                     }
                     id="alias"
                   />
-                  {/*----ERROR MESSAGE FOR company_start_date----*/}
+                  {/*----ERROR MESSAGE FOR ALIAS----*/}
                   {errors.alias && (
                     <span
                       key={errors.alias}
@@ -449,24 +458,25 @@ function CompanyDetails(props) {
                   htmlFor="company_start_date"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company Start Date <span className="text-danger"> *</span> :
+                  Employer's company Start Date:
                 </label>
 
                 <input
-                  max={moment().format("YYYY-MM-DD")}
+                  max={moment().format("DD-MM-YYYY")}
                   type="date"
                   name="company_start_date"
-                  value={moment(state.company_start_date).format("YYYY-MM-DD") || ""}
+                  onKeyDownCapture={(e) => e.preventDefault()}
+                  value={state.company_start_date || ""}
                   onChange={onInputChange}
                   className={
                     errors.company_start_date
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "form-control  border border-danger coustam_datepicker"
+                      : "form-control coustam_datepicker"
                   }
                   placeholder="company_start_date"
                   id="company_start_date"
                 />
-                {/*----ERROR MESSAGE FOR company_start_date----*/}
+                {/*----ERROR MESSAGE FOR COMPANY SART DATE----*/}
                 {errors.company_start_date && (
                   <span
                     key={errors.company_start_date}
@@ -481,24 +491,26 @@ function CompanyDetails(props) {
                   htmlFor="company_size"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company Size <span className="text-danger"> *</span> :
+                  No. of working official's(Full time)
+                  <span className="text-danger">*</span>:
                 </label>
                 <div className="position-relative">
                   <input
-                    maxLength={30}
+                    maxLength={60}
                     name="company_size"
                     value={state.company_size || ""}
                     onChange={onInputChange}
-                    type="text"
+                    type="number"
                     className={
                       errors.company_size
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Company size"
+                    placeholder="No. of working official's(full time)"
                     id="company_size"
+                    min={0}
                   />
-                  {/*----ERROR MESSAGE FOR company_size----*/}
+                  {/*----ERROR MESSAGE FOR COMPANY SIZE----*/}
                   {errors.company_size && (
                     <span
                       key={errors.company_size}
@@ -511,15 +523,49 @@ function CompanyDetails(props) {
               </div>
               <div className="form-group col-md-6">
                 <label
+                  htmlFor="company_size_partTime"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  No. of working official's(Part time):
+                </label>
+                <div className="position-relative">
+                  <input
+                    maxLength={60}
+                    name="company_size_partTime"
+                    value={state.company_size_partTime || ""}
+                    onChange={onInputChange}
+                    type="number"
+                    className={
+                      errors.company_size_partTime
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    placeholder="No. of working official's(Part time)"
+                    id="company_size_partTime"
+                    min={0}
+                  />
+                  {/*----ERROR MESSAGE FOR COMPANY SIZE----*/}
+                  {errors.company_size_partTime && (
+                    <span
+                      key={errors.company_size_partTime}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.company_size_partTime}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="form-group col-md-6">
+                <label
                   htmlFor="website_url"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Website URL :
+                  Website URL (https://www.domain.com/):
                 </label>
                 <input
                   type="text"
                   placeholder="Website Url"
-                  maxLength={40}
+                  maxLength={60}
                   name="website_url"
                   value={state.website_url || ""}
                   onChange={onInputChange}
@@ -530,7 +576,7 @@ function CompanyDetails(props) {
                   }
                   id="website_url"
                 />
-                {/*----ERROR MESSAGE FOR website_url----*/}
+                {/*----ERROR MESSAGE FOR WEBSITE URL----*/}
                 {errors.website_url && (
                   <span
                     key={errors.website_url}
@@ -545,11 +591,12 @@ function CompanyDetails(props) {
                   htmlFor="vacancy_for_post"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Vacancy For Post <span className="text-danger"> *</span> :
+                  Number of Advertisements Posted
+                  <span className="text-danger">*</span>:
                 </label>
                 <div className="position-relative">
                   <input
-                    maxLength={30}
+                    maxLength={60}
                     name="vacancy_for_post"
                     value={state.vacancy_for_post || ""}
                     onChange={onInputChange}
@@ -559,10 +606,10 @@ function CompanyDetails(props) {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Vacancy For Post"
+                    placeholder="Number of Advertisements Posted"
                     id="vacancy_for_post"
                   />
-                  {/*----ERROR MESSAGE FOR vacancy_for_post----*/}
+                  {/*----ERROR MESSAGE FOR VACANCY FOR POST----*/}
                   {errors.vacancy_for_post && (
                     <span
                       key={errors.vacancy_for_post}
@@ -578,7 +625,7 @@ function CompanyDetails(props) {
                   htmlFor="about"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
-                  Company Logo:
+                  Employer's company Logo:
                 </label>
                 <div className="position-relative">
                   <input
@@ -588,54 +635,50 @@ function CompanyDetails(props) {
                     onChange={handleFileChange}
                   />
                 </div>
-                {/*----ERROR MESSAGE FOR DESRIPTION----*/}
-                {/* {errors.about && (
-                  <span key={errors.about} className="text-danger font-size-3">
-                    {errors.about}
-                  </span>
-                )} */}
                 <small className="text-danger">{imgError}</small>
               </div>
             </div>
             <div className="row">
-              {" "}
               <div className="form-group col-md-12">
                 <label
                   htmlFor="about"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+                  style={{ top: "-12px" }}
                 >
-                  About <span className="text-danger">*</span>:
+                  About:
                 </label>
-                <div className="position-relative">
+                <div>
                   <div
                     sm="12"
-                    className={
-                      errors.about
-                        ? "border border-danger rounded overflow-hidden"
-                        : "border rounded overflow-hidden"
-                    }
+                  // className={
+                  //   errors.about
+                  //     ? "border border-danger rounded overflow-hidden"
+                  //     : "border rounded overflow-hidden"
+                  // }
                   >
-                    {/* <CKEditor
-                      type={"classic"}
-                      name={"about"}
-                      id={"about"}
-                      data={state.about}
-                      value={state.about}
-                      onChange={onInputChange}
-                      initData="About Company"
+                    {/* <TextEditor
+                      setState={setState}
+                      state={state}
+                      page={"companyDetails"}
                     /> */}
-                    <textarea
+                    <SignatureTextEditor
                       name="about"
-                      value={state.about || ""}
-                      onChange={onInputChange}
+                      state={state.about || ""}
+                      setState={setState}
+                      placeholder="Enter description here"
+                      id="about"
+                    />
+                    {/* <FroalaEditor
+                      model={state.about}
+                      onModelChange={(newContent) =>
+                        setState({ ...state, about: newContent })
+                      }
                       className={
                         errors.about
                           ? "form-control border border-danger"
                           : "form-control"
                       }
-                      id="about"
-                      placeholder="Company Description"
-                    ></textarea>
+                    /> */}
                   </div>
                   {/*----ERROR MESSAGE FOR DESRIPTION----*/}
                   {errors.about && (
@@ -673,7 +716,6 @@ function CompanyDetails(props) {
               )}
             </div>
           </form>
-          {/* </div> */}
         </div>
       </Modal>
     </>

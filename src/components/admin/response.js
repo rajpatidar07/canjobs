@@ -2,31 +2,60 @@ import React, { useState, useEffect } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
-import Addfollowup from "../forms/admin/addfollowup";
-import { GetAllResponse , getJson } from "../../api/api";
+import { RiDeleteBin5Line } from "react-icons/ri";
+// import Addfollowup from "../forms/admin/addfollowup";
+import {
+  AddLimia,
+  ReservedEmployeeForJob,
+  GetAllResponse,
+  GetFilter,
+  // AddUpdateVisa,
+  RemoveReservedEmployeeForJob,
+  DeletRespone,
+  GetLimaSubStages,
+} from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import AddInterview from "../forms/admin/addInterview.js";
 import LmiaStatus from "../forms/admin/lmiastatus";
-import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import ChangeJob from "../forms/admin/changeJobs";
-
+import Loader from "../common/loader";
+import VisaStatus from "../forms/user/visaStatus";
+import DocumentModal from "../forms/admin/EmployeeDocumentModal";
+import { BsArrow90DegRight } from "react-icons/bs";
+// import { RiChatFollowUpLine } from "react-icons/ri";
+import { LiaCcVisa } from "react-icons/lia";
+import { PiBriefcaseLight } from "react-icons/pi";
+import { ImCalendar } from "react-icons/im";
+import { GrDocumentUser } from "react-icons/gr";
+import LmiaInfo from "../forms/admin/lmiaInfo.js";
+import determineBackgroundColor from "../common/Common function/DetermineBackgroundColour.js";
+import filterjson from "../json/filterjson";
 function JobResponse(props) {
   /*show modal and data states */
+  let [documentModal, setDocumentModal] = useState(false);
+  let [showVisaModal, setVisaModal] = useState(false);
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
-  let [apiCall, setApiCall] = useState(props.apiCall);
-  let [followup, setFollowUp] = useState(false);
+  let [apiCall, setApiCall] = useState(false);
+  // let [followup, setFollowUp] = useState(false);
   let [interview, setInterview] = useState(false);
-  let [limia, setLimia] = useState(false);
+  let [lmia, setLimia] = useState(false);
   let [response, setResponseData] = useState([]);
   let [resData, setResData] = useState("");
+  let [searchError, setSearchError] = useState("");
+  let [isLoading, setIsLoading] = useState(true);
+  let [employeeId, setemployeeId] = useState();
+  let [lmiaStatus, setLmiaStatus] = useState();
+  let [showLmiaAdditionalInfobModal, setShowLmiaAdditionalInfobModal] =
+    useState(false);
   /*Filter and search state */
   const [skillFilterValue, setSkillFilter] = useState("");
-  const [experienceTypeFilterValue, setExperienceTypeFilterValue] = useState(
-    ""
-    );
-    let [Json , setJson] = useState([])
+  const [limiaFilterValue, setLmiaFilter] = useState("");
+  const [experienceTypeFilterValue, setExperienceTypeFilterValue] =
+    useState("");
+  let [Json, setJson] = useState([]);
   const [search, setSearch] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
@@ -37,44 +66,92 @@ function JobResponse(props) {
   const [sortOrder, setSortOrder] = useState("DESC");
   const [jobId, setJobId] = useState(props.responseId);
   const user_type = localStorage.getItem("userType");
+  let [changeJob, setChangeJob] = useState(false);
+  const [lmiaSubStages, setLmiaSubStages] = useState(); // State to store LMIA substage data
+
   /*Function to get the jSon */
- const JsonData=async()=>{
-   let Json = await getJson()
-   setJson(Json)
- }
+  const JsonData = async () => {
+    try {
+      let Json = await GetFilter();
+      if (Json.data.message === "No data found") {
+        setJson([]);
+      } else {
+        setJson(Json.data.data);
+      }
+      setJson(Json.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  if (
+    apiCall === true &&
+    showChangeJobModal === false &&
+    changeJob === true &&
+    props.setApiCall
+  ) {
+    props.setApiCall(true);
+  }
 
   /* Function to get the Response data*/
   const ResponseData = async () => {
-    const userData = await GetAllResponse(
-      props.heading === "Manage Follow-ups" || user_type === "company"
-        ? jobId
-        : null,
-      skillFilterValue,
-      experienceTypeFilterValue,
-      search,
-      currentPage,
-      recordsPerPage,
-      columnName,
-      sortOrder,
-      props.filter_by_time
-    );
-    if (userData.data.data.length === 0) {
-      setResData([]);
-      setResponseData([]);
-    } else {
-      setResponseData(userData.data.data);
-      setTotalData(userData.data.total_rows);
+    setIsLoading(true);
+    try {
+      const userData = await GetAllResponse(
+        props.heading === "Manage Jobs" || user_type === "company"
+          ? jobId
+          : null,
+        skillFilterValue,
+        experienceTypeFilterValue,
+        search,
+        currentPage,
+        recordsPerPage,
+        columnName,
+        sortOrder,
+        props.filter_by_time,
+        limiaFilterValue,
+        props.status,
+        props.employee_id,
+        props.response === "lmia" ? "1" : ""
+      );
+      if (userData.data.data.length === 0) {
+        setResData([]);
+        setResponseData([]);
+        setIsLoading(false);
+        if (props.response === "lmia") {
+          props.setResponsId("")
+          toast.error("No profile has been reserved yet!", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+        }
+      } else {
+        // if (props.self === "yes") {
+        //   setResponseData(userData.data.data.filter((item) => item.employee_status === "0"));
+        // } else {
+        //   if (props.employee_id) {
+        //     setResponseData(userData.data.data.filter((item) => item.employee_status !== "0" && item.employee_id === props.employee_id));
+        //   } else {
+        //     setResponseData(userData.data.data.filter((item) => item.employee_status !== "0"));
+        //   }
+        // }
+        setResponseData(userData.data.data);
+        setTotalData(userData.data.total_rows);
+        setIsLoading(false);
+      }
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
     }
   };
+
   /*Render function to get the Response*/
   useEffect(() => {
     ResponseData();
-    JsonData()
-    if (apiCall === true) {
-      let CallApi = false;
-      props.setApiCall(CallApi);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    JsonData();
+    setApiCall(false);
+    setChangeJob(false);
+
+    // eslint-disable-next-line
   }, [
     skillFilterValue,
     experienceTypeFilterValue,
@@ -84,34 +161,183 @@ function JobResponse(props) {
     columnName,
     sortOrder,
     props.filter_by_time,
+    props.apiCall,
     apiCall,
   ]);
-  /*Function to open add follow up modal */
-  const addFollow = (e) => {
-    setFollowUp(true);
-    setResData(e);
-    setJobId(e.job_id);
+  useEffect(() => {
+    const fetchLmiaSubStages = async () => {
+      if (response) {
+        try {
+          const subStagePromises = response.map(async (res) => {
+            const limiaSubRes = await GetLimaSubStages(res.id); // Fetch substage data from API
+            if (limiaSubRes.message === 'Successfully') {
+              return limiaSubRes.data.data;
+            }
+          });
+
+          // Resolve all promises and set the result to lmiaSubStages
+          const allLmiaSubStages = await Promise.all(subStagePromises);
+          setLmiaSubStages(allLmiaSubStages.flat()); // Flatten and set the state
+        } catch (err) {
+          console.error("Error fetching LMIA substage:", err);
+        }
+      }
+    };
+
+    fetchLmiaSubStages(); // Call the function to fetch data only once when the response changes
+  }, [response]);
+
+  /*Search Onchange function to Search REsponse data */
+  const onSearch = (e) => {
+    const inputValue = e.target.value;
+    setSearch(inputValue);
+    if (inputValue.length > 0) {
+      if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+        setSearchError("Category Name cannot start with a number.");
+      } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+        setSearchError("Cannot use special characters.");
+      } else {
+        setSearchError("");
+      }
+    } else {
+      setSearchError("");
+    }
   };
+
+  /*Function to Reserved Employee */
+  const ReservedEmployee = async (e) => {
+    // Api call to set employee reserved
+    try {
+      let response = await ReservedEmployeeForJob(
+        e.apply_id,
+        e.employee_id,
+        "1"
+      );
+      if (response.message === "Successfully") {
+        // Api call to set employee Visa
+        // let state = { status: "onboard", country: e.location };
+        try {
+          const lmia = {
+            lmia_status: "candidate placement",
+            apply_id: e.apply_id,
+          };
+          let LimiaResponse = await AddLimia(lmia);
+          if (LimiaResponse.message === "Data added successfully") {
+            toast.success("Candidate Reserved successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            setApiCall(true);
+
+            // props.setApiCall(true);
+          }
+          // let VisaResponse = await AddUpdateVisa(e.employee_id, state);
+          // if (VisaResponse.data.message === "visa inserted successfully") {
+          //   // Api call to set employee Limia
+
+          //   try {
+
+          //   } catch (err) {
+          //     console.log(err);
+          //   }
+
+          // }
+        } catch (err) {
+          console.log(err);
+        }
+        ResponseData();
+      }
+      if (response.message === "already reserved") {
+        toast.error("Candidate already reserved for another job", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        ResponseData();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  /*Function to removed reserved employee */
+  const OnRemoveReservedClick = async (e) => {
+    try {
+      let Response = await RemoveReservedEmployeeForJob(
+        e.apply_id,
+        e.employee_id
+      );
+      if (Response.message === "successfully") {
+        toast.success("Candidate Removed successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+        // props.setApiCall(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  /*Function to remove Response */
+  const onResponseDelte = async (e) => {
+    try {
+      let response = await DeletRespone(e.apply_id, e.employee_id);
+      if (response.message === "successfully deleted") {
+        toast.success("Response Deleted successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+        props.setApiCall(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  /*Function to open add follow up modal */
+  // const addFollow = (e) => {
+  //   setFollowUp(true);
+  //   setResData(e);
+  //   setJobId(e.job_id);
+  // };
+
   /*Function to open add Interview up modal */
   const addnterview = (e) => {
     setInterview(true);
     setResData(e);
     setJobId(e.job_id);
   };
+
   /*Function to open add Limia up modal */
   const addLimia = (e) => {
     setLimia(true);
     setResData(e);
     setJobId(e.job_id);
   };
+  /*Function to open additionlima info modal */
+  const AdditionalLmiaInfo = (e) => {
+    setShowLmiaAdditionalInfobModal(true);
+    setResData(e);
+  };
   /* Function to show the single data to update job */
-  const editJob = (e) => {
+  const OpenChangeJob = (e) => {
     // e.preventDefault();
     setShowChangeJobModal(true);
     setResData(e);
     setJobId(e.job_id);
   };
-
+  /* Function to show the single data to update visa*/
+  const editVisa = (e) => {
+    setVisaModal(true);
+    setemployeeId(e);
+  };
+  /*Function to open add Document up modal */
+  const AddDoucument = (e) => {
+    setDocumentModal(true);
+    setemployeeId(e.employee_id);
+    setLmiaStatus(e.lmia_status);
+  };
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
@@ -120,34 +346,1116 @@ function JobResponse(props) {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
   };
-  /*Job array to filter*/
-  // const Job = (response.filter || [])(
-  //   (thing, index, self) =>
-  //     index === self.findIndex((t) => t.job_title === thing.job_title)
-  // );
 
   return (
     <div
       className={
-        props.heading === "Response" ||
-        (props.heading === undefined && user_type === "admin")
-          ? "site-wrapper overflow-hidden bg-default-2  "
-          : props.heading === "Dashboard"
-          ? "site-wrapper overflow-hidden bg-default-2 bg-white"
-          : "response_main_div"
-      }
-    >
+        props.response === "lmia" && (totalData === 0 || response.length === 0)
+          ? isLoading ? "" : "d-none"
+          : props.heading === "Response" ||
+            (props.heading === undefined && user_type === "admin")
+            ? "site-wrapper overflow-hidden bg-default-2  "
+            : props.heading === "Dashboard"
+              ? "site-wrapper overflow-hidden bg-default-2 bg-white"
+              : "response_main_div"}>
       {props.heading === "Response" ||
-      (props.heading === undefined && user_type === "admin") ? (
+        (props.heading === undefined && user_type === "admin") ? (
         <>
           {/* <!-- Header Area --> */}
           <AdminHeader heading={"Response"} />
           {/* <!-- navbar- --> */}
           <AdminSidebar heading={"Response"} />
-          <ToastContainer />
         </>
       ) : null}
-      {followup ? (
+      <div
+        className={
+          props.heading === "Response" ||
+            (props.heading === undefined && user_type === "admin")
+            ? "dashboard-main-container mt-14"
+            : props.heading === "Dashboard"
+              ? ""
+              : "response__container"
+        }
+      >
+        <div
+          className={
+            props.heading === "Response" ||
+              (props.heading === undefined && user_type === "admin")
+              ? "container-fluid"
+              : props.heading === "Dashboard"
+                ? ""
+                : "container"
+          }
+        >
+          {props.heading === "Dashboard" ? (
+            ""
+          ) : (
+            <div
+              className={
+                props.heading === "Manage Jobs"
+                  ? "response_filters mb-2 align-items-center"
+                  : "align-items-center"
+              }
+            >
+              <div className="page___heading">
+                <h3 className="font-size-6 mb-0">Follow Up</h3>
+              </div>
+              <div
+                className={
+                  props.heading === "Response" ||
+                    (props.heading === undefined && user_type === "admin")
+                    ? "row m-0 align-items-center"
+                    : "d-none"
+                }
+              >
+                {props.heading === "" ? null : (
+                  <div className="col p-1 form_group mb-3">
+                    <p className="input_label">Search :</p>
+                    <input
+                      required
+                      type="text"
+                      className="form-control"
+                      placeholder={"Search Employer / Name"}
+                      value={search}
+                      name={"category_name"}
+                      onChange={(e) => {
+                        onSearch(e);
+                        setCurrentPage(1);
+                      }}
+                    />
+                  </div>
+                )}
+                <div className="col p-1 form_group mb-3">
+                  <p className="input_label">Filter by Skill:</p>
+                  <div className="select_div">
+                    <select
+                      name="job"
+                      id="job"
+                      value={skillFilterValue}
+                      onChange={(e) => {
+                        setSkillFilter(e.target.value);
+                        setCurrentPage(1);
+                      }}
+                      className="text-capitalize form-control"
+                    >
+                      <option value="">Select Skil</option>
+                      {(Json.Skill || []).map((skill) => (
+                        <option value={skill.value} key={skill.id}>
+                          {skill.value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="col p-1 form_group mb-3">
+                  <p className="input_label">Filter by Skill:</p>
+                  <div className="select_div">
+                    <select
+                      name="job"
+                      id="job"
+                      value={limiaFilterValue}
+                      onChange={(e) => {
+                        setLmiaFilter(e.target.value);
+                        setCurrentPage(1);
+                      }}
+                      className="text-capitalize form-control"
+                    >
+                      <option value="">Select LMIA</option>
+                      {(Json.lmia || []).map((lmia) => (
+                        <option value={lmia.value} key={lmia.id}>
+                          {lmia.value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="col p-1 form_group mb-3">
+                  <p className="input_label">Filter by Experience:</p>
+                  <div className="select_div">
+                    <select
+                      name="experience"
+                      id="experience"
+                      value={experienceTypeFilterValue}
+                      onChange={(e) => {
+                        setExperienceTypeFilterValue(e.target.value);
+                        setCurrentPage(1);
+                      }}
+                      className="text-capitalize form-control"
+                    >
+                      <option value="">Select Experience</option>
+                      {(FilterJson.experience || []).map((ex, i) => (
+                        <option value={ex} key={i}>
+                          {ex}
+                          {ex === "fresher" || ex === "Other" ? "" : "Year"}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="float-md-right mt-6"></div>
+              </div>
+              <small className="text-danger">{searchError}</small>
+            </div>
+          )}
+          <div className="mb-8">
+            <div
+              className={
+                props.heading === "Response" ||
+                  (props.heading === undefined && user_type === "admin")
+                  ? ""
+                  : props.heading === "Dashboard"
+                    ? "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
+                    : ""
+              }
+            >
+              <div className="table-responsive main_table_div">
+                {isLoading ? (
+                  <Loader />
+                ) : (
+                  <table
+                    className={
+                      props.heading === "Manage Jobs"
+                        ? "table table-striped main_data_table_inn"
+                        : "table table-striped main_data_table"
+                    }
+                  >
+                    <thead>
+                      <tr>
+                        <th
+                          scope="col"
+                          className="pl-0 border-0 font-size-4 font-weight-normal"
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("employee_id");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by Id"
+                          >
+                            EID
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-0 border-0 font-size-4 font-weight-normal"
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("name");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by Name"
+                          >
+                            Name
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("lmia_number");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by LMIA Number"
+                          >
+                            LMIA Number
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("lmia_creation_date");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by LMIA Creation Date"
+                          >
+                            LMIA Creation Date
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("lmia_submission_date");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by LMIA Submission Date"
+                          >
+                            LMIA Submission Date
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("lmia_expiry_date");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by LMIA Expiry Date"
+                          >
+                            LMIA Expiry Date
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("date_approved");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by Date Approved"
+                          >
+                            LMIA Approved Date
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("lmia_payment_status");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by LMIA Payment"
+                          >
+                            LMIA Payment
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("lmia_payment_by");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by LMIA Payment By"
+                          >
+                            LMIA Payment By
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("monday_status");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by Monday Status"
+                          >
+                            Monday Status
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("lmia_notes");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by LMIA Notes"
+                          >
+                            LMIA Notes
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className={props.response === "lmia" ? "pl-4 border-0 font-size-4 font-weight-normal" : "d-none"}
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("type_of_lmia");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by Type of LMIA"
+                          >
+                            Type of LMIA
+                          </Link>
+                        </th>
+
+                        {/* <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("job_title");
+                              setCurrentPage(1)
+                            }}
+                            className="text-gray"
+                            title="Sort by Job"
+                          >
+                            Job / Company
+                          </Link>
+                        </th> */}
+
+                        {props.heading === "Dashboard" ||
+                          user_type === "company" ? (
+                          ""
+                        ) : (
+                          <th
+                            scope="col"
+                            className="pl-4 border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to={""}
+                              onClick={() => {
+                                handleSort("contact_no");
+                                setCurrentPage(1);
+                              }}
+                              className="text-gray"
+                              title="Sort by Contact"
+                            >
+                              Contact
+                            </Link>
+                          </th>
+                        )}
+                        {props.heading === "Dashboard" ? (
+                          ""
+                        ) : (
+                          <th
+                            scope="col"
+                            className="pl-4 border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to={""}
+                              onClick={() => {
+                                handleSort("current_location");
+                                setCurrentPage(1);
+                              }}
+                              className="text-gray"
+                              title="Sort by Address"
+                            >
+                              Country of Residence
+                            </Link>
+                          </th>
+                        )}
+                        {props.heading === "Dashboard" ? (
+                          ""
+                        ) : (
+                          <th
+                            scope="col"
+                            className="pl-0 border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to={""}
+                              onClick={() => {
+                                handleSort("experience");
+                                setCurrentPage(1);
+                              }}
+                              className="text-gray"
+                              title="Sort by Experience"
+                            >
+                              Experience
+                            </Link>
+                          </th>
+                        )}
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("lmia_status");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by LIMIA Status"
+                          >
+                            LMIA
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className={
+                            user_type === "company"
+                              ? "d-none"
+                              : "pl-4 border-0 font-size-4 font-weight-normal"
+                          }
+                          title="Visa"
+                        >
+                          Visa
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                          title="Interview"
+                        >
+                          Interview
+                        </th>
+                        {props.heading === "Dashboard" ||
+                          user_type === "company" ||
+                          props.self === "yes" ? (
+                          ""
+                        ) : (
+                          <th
+                            scope="col"
+                            className="pl-4 border-0 font-size-4 font-weight-normal"
+                            title="Actions"
+                          >
+                            Action
+                          </th>
+                        )}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {totalData === 0 || response.length === 0 ? (
+                        <tr>
+                          <td colSpan={16} className="bg-white text-center">
+                            No Data Found
+                          </td>
+                        </tr>
+                      ) : (
+                        (response || []).map((res, i) => (
+                          // ((props.response === "response") || (props.response === "self") ||
+                          //   ((props.response === "visa" || props.response === "lmia") && res.job_status === "1")) ?
+                          <tr className="position-relative" key={i}>
+                            <td className="py-5" title={res.employee_id}>
+                              {res.employee_id}
+                            </td>
+                            <td className=" py-5">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {res.name || res.gender || res.date_of_birth ? (
+                                  <div className="d-flex profile_box gx-2">
+                                    <div className="media  align-items-center">
+                                      <div className="circle-30 mx-auto overflow-hidden">
+                                        {res.profile_photo === null ? (
+                                          <img
+                                            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                            alt=""
+                                            className="w-100"
+                                          />
+                                        ) : (
+                                          <img
+                                            src={res.profile_photo}
+                                            alt=""
+                                            className="w-100"
+                                          />
+                                        )}
+                                      </div>
+                                    </div>
+                                    <div className=" mb-0" title={res.name}>
+                                      <p
+                                        className="m-0 text-black-2 font-weight-bold text-capitalize"
+                                        title={res.name}
+                                      >
+                                        <Link
+                                          className="text-dark"
+                                          to={`/${res.employee_id}`}
+                                        >
+                                          {res.name}
+                                        </Link>
+                                      </p>
+                                      <p
+                                        className="text-gray font-size-2 m-0 text-capitalize"
+                                        title={
+                                          (res.gender === "female"
+                                            ? "F"
+                                            : res.gender === "male"
+                                              ? "M"
+                                              : "O") +
+                                          (res.marital_status ||
+                                            res.date_of_birth
+                                            ? `(${res.marital_status}${moment().diff(
+                                              res.date_of_birth,
+                                              "years"
+                                            ) === 0
+                                              ? ""
+                                              : `,${moment().diff(
+                                                res.date_of_birth,
+                                                "years"
+                                              )}Y`
+                                            })`
+                                            : null)
+                                        }
+                                      >
+                                        {res.is_featured === ("1" || 1) ? (
+                                          <span className="bg-orange text-white featured_tag">
+                                            Featured
+                                          </span>
+                                        ) : null}
+                                        {res.gender === "female"
+                                          ? "F"
+                                          : res.gender === "male"
+                                            ? "M"
+                                            : "O"}
+                                        ({res.marital_status}
+                                        {/*Calculation of age from date of birth*/}
+                                        {moment().diff(
+                                          res.date_of_birth,
+                                          "years"
+                                        ) === 0
+                                          ? ""
+                                          : `,${moment().diff(
+                                            res.date_of_birth,
+                                            "years"
+                                          )}Y`}
+                                        )
+                                      </p>
+                                      {res.created_by_admin === ("0" || 0) ? (
+                                        <span className="bg-info text-white web_tag">
+                                          Web
+                                        </span>
+                                      ) : null}
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div className="d-flex profile_box gx-2">
+                                    <div className="media  align-items-center">
+                                      <div className="circle-30 mx-auto overflow-hidden">
+                                        <img
+                                          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                          alt=""
+                                          className="w-100"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div className=" mb-0" title=" N/A">
+                                      <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                        N/A
+                                      </p>
+                                    </div>
+                                  </div>
+                                )}
+                              </h3>
+                            </td>
+                            <td className={props.response === "lmia" ? "py-5" : "d-none"} title={res.lmia_number || "N/A"}>
+                              {res.lmia_number || "N/A"}
+                            </td>
+                            <td className={props.response === "lmia" ? "py-5" : "d-none"} title={res.creation_date || "N/A"}>
+                              {res.creation_date ? moment(res.creation_date).format("YYYY-MM-DD") : "N/A"}
+                            </td>
+                            <td className={props.response === "lmia" ? "py-5" : "d-none"} title={res.lmia_submission_date || "N/A"}>
+                              {res.lmia_submission_date ? moment(res.lmia_submission_date).format("YYYY-MM-DD") : "N/A"}
+                            </td>
+                            <td className={props.response === "lmia" ? "py-5" : "d-none"} title={res.lmia_expiry_date || "N/A"}>
+                              {res.lmia_expiry_date ? moment(res.lmia_expiry_date).format("YYYY-MM-DD") : "N/A"}
+                            </td>
+                            <td className={props.response === "lmia" ? "py-5" : "d-none"} title={res.date_approved || "N/A"}>
+                              {res.date_approved ? moment(res.date_approved).format("YYYY-MM-DD") : "N/A"}
+                            </td>
+                            <td className={props.response === "lmia" ? "py-5" : "d-none"} title={res.payment_status || "N/A"}>
+                              {res.payment_status || "N/A"}
+                            </td>
+                            <td className={props.response === "lmia" ? "py-5" : "d-none"} title={res.payment_by || "N/A"}>
+                              {res.payment_by || "N/A"}
+                            </td>
+                            <td className={props.response === "lmia" ? "py-5" : "d-none"} title={res.monday_status || "N/A"}>
+                              <span
+                                className={`font-size-3 font-weight-normal text-center text-capitalize rounded-pill font-size-1 px-1  ${res.monday_status ? `${determineBackgroundColor(res)} text-white` : " text-dark"}`}
+                              >
+                                <span
+                                  className="font-size-3 font-weight-normal m-0"> {FilterJson.monday_status.find(
+                                    (item) => item.value === res.monday_status
+                                  )?.label || "N/A"}
+                                </span>
+                              </span>
+                            </td>
+                            <td className={props.response === "lmia" ? "py-5" : "d-none"} title={res.notes || "N/A"}>
+                              {res.notes || "N/A"}
+                            </td>
+                            <td className={props.response === "lmia" ? "py-5" : "d-none"} title={res.type_of_lmia || "N/A"}>
+                              <span className={`font-size-3 font-weight-normal text-center text-capitalize rounded-pill font-size-1 p-1  ${res.type_of_lmia ? `${determineBackgroundColor(res)} text-white` : " text-dark"}`}
+                                title={res.type_of_lmia || "N/A"}>
+                                <span
+                                  className="font-size-3 font-weight-normal m-0"> {filterjson.type_of_lmia.find((item) => item.value === res.type_of_lmia)?.label
+                                    || "N/A"}
+                                </span>
+                              </span>
+                            </td>
+                            {/* <td className="py-5">
+                              <p className="m-0 text-black-2 font-weight-semibold text-capitalize">
+                                {res.job_title}
+                              </p>
+                              <p className="font-size-3 font-weight-normal m-0 text-capitalize">
+                                {res.company_name}
+                              </p>
+                            </td> */}
+                            {
+                              props.heading === "Dashboard" ||
+                                user_type === "company" ? (
+                                ""
+                              ) : (
+                                <td className=" py-5">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    {res.contact_no || res.email ? (
+                                      <>
+                                        <p
+                                          className="font-size-3 font-weight-normal m-0"
+                                          title={res.contact_no}
+                                        >
+                                          <Link
+                                            className="text-dark"
+                                            to={`tel:+${res.contact_no}`}
+                                          >
+                                            {res.contact_no &&
+                                              `+${res.contact_no}`}
+                                          </Link>
+                                        </p>
+                                        <p
+                                          className="font-size-3 font-weight-normal m-0"
+                                          title={res.email}
+                                        >
+                                          <Link
+                                            className="text-dark"
+                                            to={`mailto:${res.email}`}
+                                          >
+                                            {res.email}
+                                          </Link>
+                                        </p>
+                                      </>
+                                    ) : (
+                                      <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                        N/A
+                                      </span>
+                                    )}
+                                  </h3>
+                                </td>
+                              )
+                            }
+                            {
+                              props.heading === "Dashboard" ? (
+                                ""
+                              ) : (
+                                <td className="py-5">
+                                  <h3
+                                    className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                    title={
+                                      res.current_location +
+                                      " " +
+                                      res.currently_located_country
+                                    }
+                                  >
+                                    {res.current_location ||
+                                      res.currently_located_country ? (
+                                      <>
+                                        <span>{res.current_location}</span>
+                                        <span className="px-1">
+                                          {res.currently_located_country}
+                                        </span>
+                                      </>
+                                    ) : (
+                                      <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                        N/A
+                                      </span>
+                                    )}
+                                  </h3>
+                                </td>
+                              )
+                            }
+                            {
+                              props.heading === "Dashboard" ? (
+                                ""
+                              ) : (
+                                <td className=" py-5">
+                                  <h3
+                                    className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                    title={
+                                      res.experience +
+                                      (res.experience === "1-3 " ||
+                                        res.experience === "1-2 " ||
+                                        res.experience === "3-5 " ||
+                                        res.experience === "5-7 " ||
+                                        res.experience === "7+ "
+                                        ? "Years"
+                                        : res.experience === "0-1 "
+                                          ? "Year"
+                                          : "")
+                                    }
+                                  >
+                                    {res.experience ? (
+                                      res.experience +
+                                      (res.experience === "1-3 " ||
+                                        res.experience === "1-2 " ||
+                                        res.experience === "3-5 " ||
+                                        res.experience === "5-7 " ||
+                                        res.experience === "7+ "
+                                        ? "Years"
+                                        : res.experience === "0-1 "
+                                          ? "Year"
+                                          : "")
+                                    ) : (
+                                      <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                        N/A
+                                      </span>
+                                    )}
+                                  </h3>
+                                </td>
+                              )
+                            }
+                            < td className="text-center py-5 " >
+                              <div
+                                className="font-size-3 font-weight-normal text-black-2 mb-0 "
+                                title={res.lmia_status || "N/A"}
+                              >
+                                <Link to="/lmia" state={{ id: res.job_id }}>
+                                  {res.lmia_status === "candidate placement" ? (
+                                    <span className="px-3 py-2 badge badge-pill badge-warning">
+                                      Candidate Placement
+                                    </span>
+                                  ) : res.lmia_status === "submission" ? (
+                                    <span className="px-3 py-2 badge badge-pill bg-info text-white">
+                                      Submission
+                                    </span>
+                                  ) : res.lmia_status === "decision" ? (
+                                    <span
+                                      className={`px-3 py-2 badge badge-pill text-capitalize ${lmiaSubStages.find(
+                                        (stage) =>
+                                          stage.lmia_status === "decision"
+                                      )?.lmia_substage === "approved"
+                                        ? "badge-shamrock"
+                                        : lmiaSubStages.find(
+                                          (stage) =>
+                                            stage.lmia_status === "decision"
+                                        )?.lmia_substage === "refused"
+                                          ? "badge-danger"
+                                          : "badge-warning"
+                                        }`}
+                                    >
+                                      {lmiaSubStages.find(
+                                        (stage) =>
+                                          stage.lmia_status === "decision"
+                                      )?.lmia_substage || "Awaiting decision"}
+                                    </span>
+                                  ) : (
+                                    <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                      N/A
+                                    </span>
+                                  )}
+                                </Link>
+                              </div>
+                            </td>
+                            <td
+                              className={
+                                user_type === "company"
+                                  ? "d-none"
+                                  : " text-center py-5 "
+                              }
+                            >
+                              <p
+                                className="font-size-2 font-weight-normal text-black-2 mb-0"
+                                title={res.visa_status || "N/A"}
+                              >
+                                {res.visa_status === "onboard" ? (
+                                  <span className="p-1 bg-coral-opacity-visible text-white text-center border rounded-pill">
+                                    On Board
+                                  </span>
+                                ) : res.visa_status === "documentation" ? (
+                                  <span className="p-1 bg-warning text-white text-center border rounded-pill">
+                                    Documentation
+                                  </span>
+                                ) : res.visa_status === "file preparation" ? (
+                                  <span className="p-1 bg-info text-white text-center border rounded-pill">
+                                    File Preparation
+                                  </span>
+                                ) : res.visa_status === "file review" ? (
+                                  <span className="p-1 bg-primary-opacity-8 text-white text-center border rounded-pill">
+                                    File Review
+                                  </span>
+                                ) : res.visa_status === "file submission" ? (
+                                  <span className="p-1 bg-dark text-white text-center border rounded-pill">
+                                    File Submission
+                                  </span>
+                                ) : res.visa_status === "file decision" ? (
+                                  <span className="p-1 bg-gray text-white text-center border rounded-pill">
+                                    File Decision
+                                  </span>
+                                ) : (
+                                  <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    N/A
+                                  </span>
+                                )}
+                              </p>
+                            </td>
+                            <td className="  py-5 ">
+                              <p
+                                className="font-size-3 font-weight-normal mb-0"
+                                title={
+                                  res.status === "complete"
+                                    ? "Complete"
+                                    : res.status === "pending"
+                                      ? "Scheduled"
+                                      : "Pending"
+                                }
+                              >
+                                {res.status === "complete" ? (
+                                  <span className="p-1 badge badge-pill bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                                    Complete
+                                  </span>
+                                ) : res.status === "pending" ? (
+                                  <span className="px-3 py-2 badge badge-pill bg-info text-white">
+                                    Scheduled
+                                  </span>
+                                ) : (
+                                  <span className="px-3 py-2 badge badge-pill bg-warning text-white">
+                                    Pending
+                                  </span>
+                                )}
+                              </p>
+                            </td>
+                            {props.heading === "Dashboard" ||
+                              user_type === "company" ||
+                              props.self === "yes" ? (
+                              ""
+                            ) : (
+                              <td className="py-5  min-width-px-100">
+                                <div
+                                  className="btn-group button_group"
+                                  role="group"
+                                  aria-label="Basic example"
+                                >
+                                  <button
+                                    className={
+                                      res.is_reserve === "0"
+                                        ? "btn btn-outline-info action_btn"
+                                        : " d-none"
+                                    }
+                                    onClick={() => ReservedEmployee(res)}
+                                    title="Reserved Employee"
+                                  >
+                                    Reserve
+                                  </button>
+
+                                  <button
+                                    className={
+                                      props.response === "visa" ||
+                                        res.is_reserve === "0"
+                                        ? "d-none"
+                                        : "btn btn-outline-info action_btn text-gray"
+                                    }
+                                    onClick={() => addLimia(res)}
+                                    title="Update LMIA status"
+                                  >
+                                    LMIA
+                                  </button>
+                                  <button
+                                    className={
+                                      props.response === "visa" ||
+                                        res.is_reserve === "0"
+                                        ? "d-none"
+                                        : "btn btn-outline-info action_btn text-gray"
+                                    }
+                                    onClick={() => AdditionalLmiaInfo(res)}
+                                    title="Additional LMIA Info"
+                                  >
+                                    LMIA additional Info
+                                  </button>
+                                  <button
+                                    className={
+                                      props.response === "lmia" ||
+                                        res.is_reserve === "0"
+                                        ? "d-none"
+                                        : "btn btn-outline-info action_btn"
+                                    }
+                                    onClick={() => editVisa(res)}
+                                    title="Update Visa status"
+                                  >
+                                    <span className="text-gray px-2">
+                                      <LiaCcVisa />
+                                    </span>
+                                    {/* <span className="fab fa-cc-visa text-gray px-2"></span> */}
+                                  </button>
+                                  <button
+                                    className={
+                                      res.is_reserve === "0" ||
+                                        props.response === "lmia"
+                                        ? "d-none"
+                                        : "btn btn-outline-info action_btn"
+                                    }
+                                    title="Candidate LMIA"
+                                  >
+                                    <Link
+                                      to="/lmia"
+                                      state={{
+                                        id: res.job_id,
+                                        employee_id: res.employee_id,
+                                      }}
+                                    >
+                                      <span className="text-gray px-2">
+                                        <BsArrow90DegRight />
+                                      </span>
+                                    </Link>
+                                  </button>
+                                  <button
+                                    className={
+                                      res.is_reserve === "0"
+                                        ? "d-none"
+                                        : "btn btn-outline-info action_btn"
+                                    }
+                                    title="Candidate Visa"
+                                  >
+                                    <Link
+                                      to="/visa"
+                                      state={{ id: res.employee_id }}
+                                      className="text-gray"
+                                    >
+                                      VISA
+                                    </Link>
+                                  </button>
+                                  <button
+                                    className={
+                                      (props.response === "visa" ||
+                                        props.response === "lmia") &&
+                                        res.is_reserve === "1"
+                                        ? "btn btn-outline-info action_btn d-none"
+                                        : "d-none"
+                                    }
+                                    onClick={() => AddDoucument(res)}
+                                    title="Applicant's documents"
+                                  >
+                                    <span className="text-gray px-2">
+                                      <GrDocumentUser />
+                                    </span>
+                                    {/* <span className="fas fa-file text-gray"></span> */}
+                                  </button>
+                                  {/* <button
+                                    className={
+                                      props.response === "visa" ||
+                                      props.response === "lmia"
+                                        ? "d-none"
+                                        : "btn btn-outline-info action_btn"
+                                    }
+                                    onClick={() => addFollow(res)}
+                                    title=" Add Follow Up"
+                                  >
+                                    <span className="text-gray px-2">
+                                      <RiChatFollowUpLine />
+                                    </span>
+                                  </button> */}
+                                  <button
+                                    className={
+                                      props.response === "visa" ||
+                                        props.response === "lmia"
+                                        ? "d-none"
+                                        : "btn btn-outline-info action_btn"
+                                    }
+                                    onClick={() => addnterview(res)}
+                                    title=" Add Interview"
+                                    disabled={
+                                      res.status === "complete" ? true : false
+                                    }
+                                  >
+                                    <span className="text-gray px-2">
+                                      <ImCalendar />
+                                    </span>
+                                  </button>
+                                  <button
+                                    className={
+                                      props.response === "visa" ||
+                                        props.response === "lmia"
+                                        ? "d-none"
+                                        : "btn btn-outline-info action_btn text-gray"
+                                    }
+                                    onClick={() => OpenChangeJob(res)}
+                                    title="Change Job"
+                                    disabled={res.interested_in === "pgwp"}
+                                  // disabled={
+                                  //   props.total_applicants >=
+                                  //   props.role_category
+                                  //     ? true
+                                  //     : false
+                                  // }
+                                  >
+                                    <PiBriefcaseLight />
+                                  </button>
+
+                                  <button
+                                    className={
+                                      res.is_reserve === "1"
+                                        ? "btn btn-outline-danger action_btn"
+                                        : " d-none"
+                                    }
+                                    onClick={() => OnRemoveReservedClick(res)}
+                                    title="Reserved Employee"
+                                  >
+                                    Remove Applicant
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-danger action_btn"
+                                    onClick={() => onResponseDelte(res)}
+                                    title="Delete Response"
+                                  >
+                                    <RiDeleteBin5Line />
+                                  </button>
+                                </div>
+                              </td>
+                            )}
+                          </tr>
+                          // : null
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+              <div className="pt-2">
+                <Pagination
+                  nPages={nPages}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                  total={totalData}
+                  count={response.length}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div >
+      {
+        documentModal ? (
+          <DocumentModal
+            show={documentModal}
+            close={() => setDocumentModal(false)
+            }
+            employee_id={employeeId}
+            job={"no"}
+            lmia={lmiaStatus}
+          />
+        ) : null}
+      {/* {followup ? (
         <Addfollowup
           show={followup}
           job_id={jobId}
@@ -159,513 +1467,83 @@ function JobResponse(props) {
             setResData("");
           }}
         />
-      ) : null}
-      {interview ? (
-        <AddInterview
-          show={interview}
-          job_id={jobId}
-          resData={resData}
-          apiCall={apiCall}
-          setApiCall={setApiCall}
-          close={() => {
-            setInterview(false);
-            setResData("");
-          }}
-        />
-      ) : null}
-      {limia ? (
-        <LmiaStatus
-          show={limia}
-          resData={resData}
-          apiCall={apiCall}
-          setApiCall={setApiCall}
-          close={() => {
-            setLimia(false);
-            setResData("");
-          }}
-        />
-      ) : null}
-      {showChangeJobModal ? (
-        <ChangeJob
-          resData={resData}
-          close={() => {
-            setShowChangeJobModal(false);
-            setResData("");
-          }}
-          apiCall={apiCall}
-          setApiCall={setApiCall}
-          job_id={jobId}
-          show={showChangeJobModal}
-        />
-      ) : null}
-      <div
-        className={
-          props.heading === "Response" ||
-          (props.heading === undefined && user_type === "admin")
-            ? "dashboard-main-container mt-16"
-            : props.heading === "Dashboard"
-            ? ""
-            : "response__container"
-        }
-      >
-        <div
-          className={
-            props.heading === "Response" ||
-            (props.heading === undefined && user_type === "admin")
-              ? "container"
-              : props.heading === "Dashboard"
-              ? ""
-              : "container"
-          }
-        >
-          {props.heading === "Dashboard" ? (
-            ""
-          ) : (
-            <div
-              className={
-                props.heading === "Manage Follow-ups"
-                  ? "response_filters mb-2 align-items-center"
-                  : "align-items-center"
-              }
-            >
-              <div className="page___heading">
-                <h3 className="font-size-6 mb-0">Follow Up</h3>
-              </div>
-              <div className="row m-0 align-items-center">
-                {props.heading === "" ? null : (
-                  <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Filter by Company:</p>
-                    <input
-                      required
-                      type="text"
-                      className="form-control"
-                      placeholder={"Search Company"}
-                      value={search}
-                      name={"category_name"}
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                  </div>
-                )}
-                <div className="col p-1 form_group mb-5 mt-4">
-                  <p className="input_label">Filter by Skill:</p>
-                  <div className="select_div">
-                    <select
-                      name="job"
-                      id="job"
-                      value={skillFilterValue}
-                      onChange={(e) => setSkillFilter(e.target.value)}
-                      className=" form-control"
-                    >
-                      <option value="">Select Skil</option>
-                      {(Json.Skill || []).map((skill) => (
-                        <option value={skill.value} key={skill.id}>
-                          {skill.value}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                <div className="col p-1 form_group mb-5 mt-4">
-                  <p className="input_label">Filter by Experience:</p>
-                  <div className="select_div">
-                    <select
-                      name="experience"
-                      id="experience"
-                      value={experienceTypeFilterValue}
-                      onChange={(e) =>
-                        setExperienceTypeFilterValue(e.target.value)
-                      }
-                      className=" form-control"
-                    >
-                      <option value="">Select Experience</option>
-                      {(FilterJson.experience || []).map((ex, i) => (
-                        <option value={ex} key={i}>
-                          {ex}
-                          {ex === "Fresher" || ex === "Other" ? "" : "Year"}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                <div className="float-md-right mt-6"></div>
-              </div>
-            </div>
-          )}
-          <div className="mb-8">
-            <div
-              className={
-                props.heading === "Response" ||
-                (props.heading === undefined && user_type === "admin")
-                  ? ""
-                  : props.heading === "Dashboard"
-                  ? "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
-                  : ""
-              }
-            >
-              <div className="table-responsive ">
-                <table
-                  className={
-                    props.heading === "Manage Follow-ups"
-                      ? "table table-striped main_data_table_inn"
-                      : "table table-striped main_data_table"
-                  }
-                >
-                  <thead>
-                    <tr>
-                      <th
-                        scope="col"
-                        className="pl-0 border-0 font-size-4 font-weight-normal"
-                      >
-                        <Link
-                          to={""}
-                          onClick={() => handleSort("name")}
-                          className="text-gray"
-                          title="Sort by Name"
-                        >
-                          Name
-                        </Link>
-                      </th>
-                      {props.heading === "Dashboard" ? (
-                        ""
-                      ) : (
-                        <th
-                          scope="col"
-                          className="pl-0 border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to={""}
-                            onClick={() => handleSort("experience")}
-                            className="text-gray"
-                            title="Sort by Experience"
-                          >
-                            Experience
-                          </Link>
-                        </th>
-                      )}
-                      <th
-                        scope="col"
-                        className="pl-4 border-0 font-size-4 font-weight-normal"
-                      >
-                        <Link
-                          to={""}
-                          onClick={() => handleSort("job_title")}
-                          className="text-gray"
-                          title="Sort by Job"
-                        >
-                          Job / Company
-                        </Link>
-                      </th>
+      ) : null} */}
+      {
+        showVisaModal ? (
+          <VisaStatus
+            show={showVisaModal}
+            employeeData={employeeId}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
+            close={() => setVisaModal(false)}
+            type={"visa"}
+          />
+        ) : null
+      }
 
-                      {props.heading === "Dashboard" ? (
-                        ""
-                      ) : (
-                        <th
-                          scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to={""}
-                            onClick={() => handleSort("contact_no")}
-                            className="text-gray"
-                            title="Sort by Contact"
-                          >
-                            Contact
-                          </Link>
-                        </th>
-                      )}
-                      {props.heading === "Dashboard" ? (
-                        ""
-                      ) : (
-                        <th
-                          scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to={""}
-                            onClick={() => handleSort("current_location")}
-                            className="text-gray"
-                            title="Sort by Address"
-                          >
-                            Address
-                          </Link>
-                        </th>
-                      )}
-                      <th
-                        scope="col"
-                        className="pl-4 border-0 font-size-4 font-weight-normal"
-                      >
-                        <Link
-                          to={""}
-                          onClick={() => handleSort("lmia_status")}
-                          className="text-gray"
-                          title="Sort by LIMIA Status"
-                        >
-                          LMIA
-                        </Link>
-                      </th>
-                      <th
-                        scope="col"
-                        className="pl-4 border-0 font-size-4 font-weight-normal"
-                      >
-                        Interview
-                      </th>
-                      {props.heading === "Dashboard" ||
-                      user_type === "company" ? (
-                        ""
-                      ) : (
-                        <th
-                          scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
-                        >
-                          Action
-                        </th>
-                      )}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {totalData === 0 || response.length === 0 ? (
-                      <tr>
-                        <th className="bg-white"></th>
-                        <th className="bg-white"></th>
-                        {props.heading === "Dashboard" ? (
-                          <th className="bg-white">No Data Found</th>
-                        ) : (
-                          <th className="bg-white"></th>
-                        )}
-                        <th className="bg-white"></th>
-                        {props.heading === "Dashboard" ? (
-                          <th className="bg-white"></th>
-                        ) : (
-                          <th className="bg-white">NA Found</th>
-                        )}
-                        {props.heading === "Dashboard" ? (
-                          ""
-                        ) : (
-                          <>
-                            <th className="bg-white"></th>
-                            <th className="bg-white"></th>
-                            <th className="bg-white"></th>
-                            <th className="bg-white"></th>
-                            <th className="bg-white"></th>
-                          </>
-                        )}
-                      </tr>
-                    ) : (
-                      (response || []).map((res, i) => (
-                        <tr className="" key={i}>
-                          <th className=" py-5">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {res.name || res.gender || res.date_of_birth ? (
-                                <div className="d-flex profile_box gx-2">
-                                  <div className="media  align-items-center">
-                                    <div className="circle-36 mx-auto overflow-hidden">
-                                      {res.profile_photo === null ? (
-                                        <img
-                                          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                          alt=""
-                                          className="w-100"
-                                        />
-                                      ) : (
-                                        <img
-                                          src={res.profile_photo}
-                                          alt=""
-                                          className="w-100"
-                                        />
-                                      )}
-                                    </div>
-                                  </div>
-
-                                  <div className=" mb-0">
-                                    <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                                      {res.name}
-                                    </p>
-                                    <p className="text-gray font-size-2 m-0 text-capitalize">
-                                      {res.gender} ({res.marital_status + ", "}
-                                      {/*Calculation of age from date of birth*/}
-                                      {moment().diff(
-                                        res.date_of_birth,
-                                        "years"
-                                      )}
-                                      Y)
-                                    </p>
-                                  </div>
-                                </div>
-                              ) : (
-                                <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  NA
-                                </span>
-                              )}
-                            </h3>
-                          </th>
-                          {props.heading === "Dashboard" ? (
-                            ""
-                          ) : (
-                            <th className=" py-5">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {res.experience ? (
-                                  res.experience
-                                ) : (
-                                  <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                    NA
-                                  </span>
-                                )}
-                              </h3>
-                            </th>
-                          )}
-                          <th className="py-5 ">
-                            <p className="m-0 text-black-2 font-weight-semibold text-capitalize">
-                              {res.job_title}
-                            </p>
-                            <p className="font-size-3 font-weight-normal m-0 text-capitalize">
-                              {res.company_name}
-                            </p>
-                          </th>
-
-                          {props.heading === "Dashboard" ? (
-                            ""
-                          ) : (
-                            <th className=" py-5">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {res.contact_no || res.email ? (
-                                  <>
-                                    <p className="font-size-3 font-weight-normal m-0">
-                                      {`+${res.contact_no}`}
-                                    </p>
-                                    <p className="font-size-3 font-weight-normal m-0">
-                                      {res.email}
-                                    </p>
-                                  </>
-                                ) : (
-                                  <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                    NA
-                                  </span>
-                                )}
-                              </h3>
-                            </th>
-                          )}
-                          {props.heading === "Dashboard" ? (
-                            ""
-                          ) : (
-                            <th className="py-5 ">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {res.current_location ||
-                                res.currently_located_country ? (
-                                  <>
-                                    <span>{res.current_location}</span>
-                                    <span className="px-1">
-                                      {res.currently_located_country}
-                                    </span>
-                                  </>
-                                ) : (
-                                  <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                    {" "}
-                                    NA
-                                  </span>
-                                )}
-                              </h3>
-                            </th>
-                          )}
-                          <th className=" py-5">
-                            <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {res.lmia_status === "Reject" ? (
-                                <span className="px-3 py-2 badge badge-pill badge-danger">
-                                  Reject
-                                </span>
-                              ) : res.lmia_status === "Approved" ? (
-                                <span className="px-3 py-2 badge badge-pill bg-info-opacity-5 text-white">
-                                  Approved
-                                </span>
-                              ) : res.lmia_status === "Draft" ? (
-                                <span className="px-3 py-2 badge badge-pill badge-gray">
-                                  Draft
-                                </span>
-                              ) : res.lmia_status === "Complete" ? (
-                                <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
-                                  Complete
-                                </span>
-                              ) : res.lmia_status === "Pending" ? (
-                                <span className="px-3 py-2 badge badge-pill badge-warning">
-                                  Pending
-                                </span>
-                              ) : res.lmia_status === "Other" ? (
-                                <span className="px-3 py-2 badge badge-pill badge-dark">
-                                  Other
-                                </span>
-                              ) : (
-                                <span>NA</span>
-                              )}
-                            </div>
-                          </th>
-                          <th className="  py-5 ">
-                            <p className="font-size-3 font-weight-normal mb-0">
-                              {res.interview_date === null ? (
-                                <span>NA</span>
-                              ) : (
-                                <span className="px-3 py-2 badge badge-pill bg-info text-white">
-                                  Scheduled
-                                </span>
-                              )}
-                            </p>
-                          </th>
-                          {props.heading === "Dashboard" ||
-                          user_type === "company" ? (
-                            ""
-                          ) : (
-                            <th className="py-5  min-width-px-100">
-                              <div
-                                className="btn-group button_group"
-                                role="group"
-                                aria-label="Basic example"
-                              >
-                                <button
-                                  className="btn btn-outline-info action_btn"
-                                  onClick={() => addFollow(res)}
-                                  title=" Add Follow Up"
-                                >
-                                  <i className=" fas fa-plus text-gray px-2"></i>
-                                </button>
-                                <button
-                                  className="btn btn-outline-info action_btn"
-                                  onClick={() => addnterview(res)}
-                                  title=" Add Interview"
-                                >
-                                  <i className="fa fa-podcast text-gray px-2"></i>
-                                </button>
-                                <button
-                                  className="btn btn-outline-info action_btn text-gray"
-                                  onClick={() => addLimia(res)}
-                                  title="Add LMIA"
-                                >
-                                  LMIA
-                                </button>
-                                <button
-                                  className="btn btn-outline-info action_btn text-gray"
-                                  onClick={() => editJob(res)}
-                                  title="Change Job"
-                                >
-                                  <i className="fas fa-briefcase"></i>
-                                </button>
-                              </div>
-                            </th>
-                          )}
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
-              </div>
-              <div className="pt-2">
-                <Pagination
-                  nPages={nPages}
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      {
+        interview ? (
+          <AddInterview
+            show={interview}
+            job_id={jobId}
+            resData={resData}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
+            close={() => {
+              setInterview(false);
+              setResData("");
+            }}
+          />
+        ) : null
+      }
+      {
+        lmia ? (
+          <LmiaStatus
+            show={lmia}
+            resData={resData}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
+            job={"no"}
+            close={() => {
+              setLimia(false);
+              setResData("");
+            }}
+          />
+        ) : null
+      }
+      {
+        showLmiaAdditionalInfobModal ? (
+          <LmiaInfo
+            show={showLmiaAdditionalInfobModal}
+            resData={resData}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
+            job={"no"}
+            close={() => {
+              setShowLmiaAdditionalInfobModal(false);
+              setResData("");
+            }}
+          />
+        ) : null
+      }
+      {
+        showChangeJobModal ? (
+          <ChangeJob
+            resData={resData}
+            close={() => {
+              setShowChangeJobModal(false);
+              setResData("");
+            }}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
+            job_id={jobId}
+            show={showChangeJobModal}
+            status={0}
+            setChangeJob={setChangeJob}
+          />
+        ) : null
+      }
+    </div >
   );
 }
 

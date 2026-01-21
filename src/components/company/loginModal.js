@@ -1,20 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import useValidation from "../common/useValidation";
-import { EmployerLogin, EmployerForgotPassword } from "../../api/api";
+import {
+  EmployerLogin,
+  EmployerForgotPassword,
+  LinkedInLoginEmployer,
+  SocialCompanyLogin,
+} from "../../api/api";
 import { toast } from "react-toastify";
+import PasswordInput from "../common/Common function/PasswordInput";
+// import { useGoogleLogin } from '@react-oauth/google';
+// import axios from "axios";
+// import { useLinkedIn , LinkedIn} from "react-linkedin-login-oauth2";
+// import linkedin from 'react--login-oauth2/assets/linkedin.png';
+// import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 export default function CompanyLogin(props) {
   let [showCompanyForgotPassword, setShowCompanyForgotPassword] =
     useState(false);
-    let [loading, setLoading] = useState(false);
+  let [loading, setLoading] = useState(false);
   let Navigate = useNavigate();
+  // let [facebook, setFacebook] = useState(false);
+  let i = 0;
+  const [searchParams] = useSearchParams();
+  let code = searchParams.get("code");
+  if (props.show === true) {
+    localStorage.setItem("linkedin", "employerLogin");
+  }
+  const type = localStorage.getItem("linkedin");
   /* Functionality to close the modal */
-
   const close = () => {
     setErrors("");
     setState("");
-    setLoading(false)
+    setLoading(false);
+    setShowCompanyForgotPassword(false);
     props.close();
   };
   /*----USER LOGIN VALIDATION----*/
@@ -35,20 +54,7 @@ export default function CompanyLogin(props) {
           ? null
           : "Email is invalid",
     ],
-    password: [
-      (value) =>
-        value === ""
-          ? "Password is required"
-          : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
-              value
-            )
-          ? null
-          : "Password must contain one digit from 1 to 9, one lowercase letter, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
-    ],
-    // remember: [
-    //   (value) =>
-    //     value ? null : "Please accept terms and conditions to continue",
-    // ],
+    password: [(value) => (value === "" ? "Password is required" : null)],
     forget_email: [
       (value) =>
         state.email
@@ -60,64 +66,194 @@ export default function CompanyLogin(props) {
           : "Email is invalid",
     ],
   };
-  /*----LOGIN ONCHANGE FUNCTION----*/
+  /*----LOGIN ONCHANGE FuNCTION----*/
   const { state, setErrors, setState, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
 
-  /*----LOGIN SUBMIT FUNCTION----*/
+  /*----LOGIN SUBMIT FuNCTION----*/
   const onCompanyLoginClick = async (event) => {
     event.preventDefault();
-    // console.log(errors);
-
     if (validate()) {
-      setLoading(true)
-      // console.log("555");
-      let Response = await EmployerLogin(state);
-      if (
-        Response.status === true ||
-        Response.message === "Successfully Logged In"
-      ) {
-        localStorage.setItem("token", Response.token);
-        localStorage.setItem("userType", "company");
-        localStorage.setItem("company_id", Response.company_id);
-        // console.log("------------------------------", Response.company_id);
+      setLoading(true);
+      try {
+        let Response = await EmployerLogin(state);
+        if (
+          Response.status === true ||
+          Response.message === "Successfully Logged In"
+        ) {
+          localStorage.setItem("token", Response.token);
+          localStorage.setItem("userType", "company");
+          localStorage.setItem("company_id", Response.company_id);
+          localStorage.setItem("profile_photo", Response.company_logo);
+          localStorage.setItem("name", Response.company_name);
 
-        toast.success("Log in Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        close();
-        Navigate("/company");
-        window.location.reload();
-      } else if (Response.message === "Invalid Credentials !") {
-        setLoading(false)
-        setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
-        // handle form submission
+          toast.success("Log in Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          close();
+          Navigate("/client");
+          window.location.reload();
+        } else if (Response.message === "Invalid Credentials !") {
+          setLoading(false);
+          setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
+          // handle form submission
+        }
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
       }
     }
   };
 
   const onCompanyForgotPasswordClick = async (event) => {
     event.preventDefault();
-
     if (validate()) {
-      setLoading(true)
-      let Response = await EmployerForgotPassword(state);
-      if (Response.status === 1 || Response.message === "Sent you a mail") {
-        toast.success("Email sent Successfully", {
+      setLoading(true);
+      try {
+        let Response = await EmployerForgotPassword(state);
+        if (Response.status === 1 || Response.message === "Sent you a mail") {
+          toast.success("Email sent Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          close();
+        } else if (Response.message === "No user found") {
+          setLoading(false);
+          setErrors({ ...errors, Credentials: ["No user found"] });
+          //   handle form submission
+        }
+      } catch (err) {
+        console.log(err);
+        setErrors({ ...errors, Credentials: ["Please try again later."] });
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        close();
-      } else if (Response.message === "No user found") {
-        setLoading(false)
-        setErrors({ ...errors, Credentials: ["No user found"] });
-        //   handle form submission
+        setLoading(false);
       }
     }
   };
 
   // END USER LOGIN VALIDATION
+  /*Function to login with google */
+  // const GoogleLogin = useGoogleLogin({
+  //   onSuccess: async (tokenResponse) => {
+  //     try {
+  //       let data = await axios("https://www.googleapis.com/oauth2/v3/userinfo", {
+  //         headers: {
+  //           "Authorization": `Bearer ${tokenResponse.access_token}`
+  //         }
+  //       });
+  //       if (data.data.email_verified === true) {
+  //         let res = await SocialCompanyLogin(data.data.sub, data.data.email, data.data.name, data.data.picture, "Google");
+  //         localStorage.setItem("token", res.token);
+  //         localStorage.setItem("userType", "company");
+  //         localStorage.setItem("company_id", res.company_id);
+  //         localStorage.setItem("profile_photo", res.company_logo);
+  //         toast.success("Logged In Successfully", {
+  //           position: toast.POSITION.TOP_RIGHT,
+  //           autoClose: 1000,
+  //         });
+  //         props.close();
+  //         Navigate("/client");
+  //         window.location.reload();
+  //       }
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // });
+
+  /*Function to login in with Linked in */
+  /*Code to get access token */
+  // axios.post(`https://www.linkedin.com/oauth/v2/accessToken?code=${code}&grant_type=authorization_code&client_id=78mhwjaumkvtbm&client_secret=ZoZKbJgORl0vYJFr&redirect_uri=${window.location.origin}`)
+  // .then(response => {
+  // })
+  // .catch(error => {
+  //   console.error('Error:', error.message);
+  // });
+  const handleLinkedInLogin = () => {
+    const clientId = "78mhwjaumkvtbm";
+    const redirectUri = "http://3.6.36.125:3000/";
+    const scope =
+      "r_liteprofile r_emailaddress w_member_social profile email openid";
+
+    window.location.href = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(
+      redirectUri
+    )}&scope=${encodeURIComponent(scope)}`;
+  };
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    i = i + 4;
+    if (
+      (code !== "" ||
+        code !== undefined ||
+        code !== "undefined" ||
+        code !== null) &&
+      i === 4 &&
+      type === "employerLogin"
+    ) {
+      const response = LinkedInLoginEmployer(code, type);
+      response
+        .then((res) => {
+          let decode = JSON.parse(res.data);
+          if (res.data.email_verified === true) {
+            let data = SocialCompanyLogin(
+              res.data.sub,
+              res.data.email,
+              res.data.name,
+              res.data.picture,
+              "Linkedin"
+            );
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("userType", "company");
+            localStorage.setItem("company_id", data.company_id);
+            localStorage.setItem("profile_photo", data.company_logo);
+            toast.success("Logged In Successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            props.close();
+            Navigate("/client");
+            window.location.reload();
+          }
+          if (
+            res.data.message ===
+              "The token used in the request has been revoked by the user" ||
+            decode.error_description ===
+              "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"
+          ) {
+            toast.error("Token Expired", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            Navigate("/client");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
+
+  /*Functiom to login with facebook */
+  // const responseFacebook = async (response) => {
+  //   if (response.graphDomain === "facebook") {
+  //     let data = await SocialCompanyLogin(response.userID, response.email, response.name, response.picture.data.url, "Facebook");
+  //     localStorage.setItem("token", data.token);
+  //     localStorage.setItem("userType", "company");
+  //     localStorage.setItem("company_id", data.company_id);
+  //     localStorage.setItem("profile_photo", data.company_logo);
+  //     toast.success("Logged In Successfully", {
+  //       position: toast.POSITION.TOP_RIGHT,
+  //       autoClose: 1000,
+  //     });
+  //     props.close();
+  //     Navigate("/client");
+  //     window.location.reload();
+  //   }
+  // }
   return (
     <>
       {/* <!-- Login Modal --> */}
@@ -165,7 +301,7 @@ export default function CompanyLogin(props) {
                       <div className="pt-5 px-9">
                         <h3 className="font-size-7 text-white">14</h3>
                         <p className="font-size-3 text-white gr-opacity-5 line-height-1p4">
-                          New companies registered
+                          New Clients registered
                         </p>
                       </div>
                     </div>
@@ -173,29 +309,29 @@ export default function CompanyLogin(props) {
                 </div>
               </div>
               <div className="col-lg-7 col-md-6">
-                <div className="bg-white-2 h-100 px-11 pt-11 pb-7">
+                <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box">
                   <div
                     className={
                       showCompanyForgotPassword === false ? "row" : "d-none"
                     }
                   >
                     <div className="col-4 col-xs-12">
-                      <Link
-                        to="/"
-                        className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
+                      <button
+                        onClick={handleLinkedInLogin}
+                        className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4 border-0"
                       >
-                        <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                        <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>
                         <span className="d-none d-xs-block mx-5 px-3">
                           Import from LinkedIn
                         </span>
-                      </Link>
+                      </button>
                     </div>
-                    <div className="col-4 col-xs-12">
+                    {/* <div className="col-4 col-xs-12">
                       <Link
-                        to="/"
+                        to="" onClick={GoogleLogin}
                         className="font-size-4 font-weight-semibold position-relative text-white bg-poppy h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                       >
-                        <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                        <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>
                         <span className="d-none d-xs-block mx-5 px-3">
                           Import from Google
                         </span>
@@ -203,15 +339,29 @@ export default function CompanyLogin(props) {
                     </div>
                     <div className="col-4 col-xs-12">
                       <Link
-                        to="/"
+                        to="" onClick={() => setFacebook(true)}
                         className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                       >
-                        <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                        <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>
                         <span className="d-none d-xs-block mx-5 px-3">
                           Import from Facebook
                         </span>
                       </Link>
-                    </div>
+                      {facebook ?
+                        <FacebookLogin
+                          appId="2170088543184291"
+                          autoLoad
+                          callback={responseFacebook}
+                          fields="name,email,picture"
+                          scope="public_profile,user_friends,email,user_actions.books"
+                          className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
+                          render={renderProps => (
+                            <button onClick={renderProps.onClick} className="d-none">
+                            </button>
+                          )}
+                        />
+                        : null}
+                    </div> */}
                   </div>
                   {/* END SOCIAL MEDIA LINK BUTTONS */}
                   <div
@@ -240,7 +390,7 @@ export default function CompanyLogin(props) {
                       <input
                         type="email"
                         name="email"
-                        value={state.email}
+                        value={state.email || ""}
                         onChange={onInputChange}
                         className={
                           errors.email
@@ -272,9 +422,8 @@ export default function CompanyLogin(props) {
                         Password
                       </label>
                       <div className="position-relative">
-                        <input
+                        <PasswordInput
                           name="password"
-                          type="password"
                           value={state.password}
                           onChange={onInputChange}
                           className={
@@ -284,7 +433,7 @@ export default function CompanyLogin(props) {
                           }
                           placeholder="Enter password"
                           id="password"
-                        />{" "}
+                        />
                         {/*----ERROR MESSAGE FOR PASSWORD----*/}
                         {errors.password && (
                           <span>
@@ -330,9 +479,12 @@ export default function CompanyLogin(props) {
                       <Link
                         to="/"
                         className="font-size-3 text-dodger line-height-reset"
-                        onClick={() => setShowCompanyForgotPassword(true)}
+                        onClick={() => {
+                          setShowCompanyForgotPassword(true);
+                          setErrors("");
+                        }}
                       >
-                        Forget Password
+                        Forgot Password
                       </Link>
                       {/*----ERROR MESSAGE FOR terms----*/}
                       {errors.remember && (
@@ -346,7 +498,7 @@ export default function CompanyLogin(props) {
                     </div>
 
                     <div className="form-group mb-8">
-                    {loading === true ? (
+                      {loading === true ? (
                         <button
                           className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
                           type="button"
@@ -359,23 +511,26 @@ export default function CompanyLogin(props) {
                           ></span>
                           <span className="sr-only">Loading...</span>
                         </button>
-                         ) : (
-                          <button
+                      ) : (
+                        <button
                           className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
                           type="submit"
                         >
-                          Log in{" "}
+                          Log in
                         </button>
-                      )} 
+                      )}
                     </div>
                     <p className="font-size-4 text-center heading-default-color">
-                      Don’t have an account?{" "}
+                      Don’t have an account?
                       <Link
                         className="text-primary"
                         to={""}
-                        onClick={props.CompanySignUpClick}
+                        onClick={() => {
+                          props.CompanySignUpClick();
+                          setErrors("");
+                        }}
                       >
-                        Create a free account
+                        Create an account
                       </Link>
                     </p>
                   </form>
@@ -404,7 +559,7 @@ export default function CompanyLogin(props) {
                         }
                         placeholder="example@gmail.com"
                         id="forget_email"
-                        value={state.forget_email}
+                        value={state.forget_email || ""}
                         onChange={onInputChange}
                         name="forget_email"
                       />
@@ -445,7 +600,7 @@ export default function CompanyLogin(props) {
                         />
                         <span className="checkbox mr-5"></span>
                         <span className="font-size-3 mb-0 line-height-reset d-block">
-                          Agree to the{" "}
+                          Agree to the
                           <Link to={""} className="text-primary">
                             Terms & Conditions
                           </Link>
@@ -453,7 +608,7 @@ export default function CompanyLogin(props) {
                       </label>
                     </div>
                     <div className="form-group text-center">
-                    {loading === true ? (
+                      {loading === true ? (
                         <button
                           className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                           type="button"
@@ -466,21 +621,24 @@ export default function CompanyLogin(props) {
                           ></span>
                           <span className="sr-only">Loading...</span>
                         </button>
-                         ) : (
-                          <button
+                      ) : (
+                        <button
                           className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                           type="submit"
                         >
                           send email
                         </button>
-                        )}
+                      )}
                     </div>
                     <p className="font-size-4 text-center heading-default-color">
-                      Already have an account?{" "}
+                      Already have an account?
                       <Link
                         to=""
                         className="text-primary"
-                        onClick={() => setShowCompanyForgotPassword(false)}
+                        onClick={() => {
+                          setShowCompanyForgotPassword(false);
+                          setErrors("");
+                        }}
                       >
                         Login
                       </Link>

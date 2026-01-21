@@ -1,10 +1,42 @@
-import React from "react";
-import EmployeeBox from "./employeeBox";
+import React, { useEffect, useState } from "react";
+import EmployeeBox from "../company/employeeBox";
 import EmployeeFooter from "../common/footer";
 import EmployeeHeader from "../common/header";
 import SearchForm from "../common/search_form";
-
+import { getJson } from "../../api/api";
+import FilterJson from "../json/filterjson";
+import CustomButton from "../common/button";
+import { Link } from "react-router-dom";
+import SelectBox from "../common/Common function/SelectBox";
 function EmployeeSearch() {
+  /*Filter states */
+  const [SkillFilterValue, setSkillFilterValue] = useState("");
+  const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
+  const [candianFilterValue, setCandianFilterValue] = useState("");
+  const [jobExp, setJobExp] = useState("");
+  let [Json, setJson] = useState([]);
+  /*Function to get thejSon */
+  const JsonData = async () => {
+    try {
+      let Json = await getJson();
+      setJson(Json);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  /*Render Method */
+  useEffect(() => {
+    JsonData();
+  }, [SkillFilterValue, jobSwapFilterValue, jobExp, candianFilterValue]);
+  // eslint-disable-next-line no-use-before-define
+
+  /*Function to Rest the feilds */
+  let onReset = () => {
+    setSkillFilterValue("");
+    setJobSwapFilterValue("");
+    setJobExp("");
+    setCandianFilterValue("");
+  };
   return (
     <div>
       <EmployeeHeader />
@@ -21,7 +53,79 @@ function EmployeeSearch() {
       </div>
       <div className="bg-default-1 pt-9 pb-13 pb-xl-30 pb-13 position-relative overflow-hidden">
         <div className="container">
-          <div className="row justify-content-center">
+          <div className="col-12 col-lg-10 col-xl-12 text-center">
+            <form className="mb-8" action="/">
+              <div className="search-filter from-group row job_search_filter">
+                <div className="col-md-3 col-lg-3 mb-5">
+                  <SelectBox
+                    Width={"yes"}
+                    options={Json ?
+                      Json.Skill.map((option) => ({
+                        value: option.value,
+                        label: option.value,
+                      })) : []
+                    }
+                    type={"skill"}
+                    selectedValue={SkillFilterValue}
+                    onChange={(e) => { setSkillFilterValue(e ? e.value : "") }}
+                  />
+                </div>
+                <div className="col-md-3 col-lg-3 mb-5">
+                  <SelectBox
+                    Width={"yes"}
+                    options={
+                      FilterJson.experience.map((option) => ({
+                        value: option,
+                        label: option,
+                      }))
+                    }
+                    type={"experience"}
+                    selectedValue={jobExp}
+                    onChange={(e) => { setJobExp(e ? e.value : "") }}
+                  />
+                </div>
+                <div className="col-md-3 col-lg-3 mb-5">
+                  <SelectBox
+                    Width={"yes"}
+                    options={
+                      FilterJson.interested.map((option) => ({
+                        value: option,
+                        label: option,
+                      }))
+                    }
+                    type={"interested"}
+                    selectedValue={jobSwapFilterValue}
+                    onChange={(e) => { setJobSwapFilterValue(e ? e.value : "") }}
+                  />
+                </div>
+                <div className="col-md-3 col-lg-3 mb-5">
+                  <select
+                    name="job_type"
+                    id="job_type"
+                    value={candianFilterValue}
+                    /*Job Onchange function to filter the data */
+                    onChange={(e) => setCandianFilterValue(e.target.value)}
+                    className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                  >
+                    <option value="">Select Candian Option</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">NO</option>
+                  </select>
+                </div>
+                <div className="col-12 text-right">
+                  <CustomButton
+                    className="font-size-3 rounded-3 btn btn-primary border-0"
+                    onClick={() => onReset()}
+                    title="Reset"
+                    type="button"
+                  >
+                    Reset
+                  </CustomButton>
+                </div>
+              </div>
+            </form>
+          </div>
+          {/* <div className="row justify-content-center">
             <div className="col-12 col-lg-10 col-xl-12">
               <h2 className="font-size-8 mb-6">
                 You’re searching "UI Designer"
@@ -78,7 +182,7 @@ function EmployeeSearch() {
                 </h5>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="row justify-content-center position-static">
             <div className="col-12 col-xxl-8 col-xl-7 col-lg-10">
               {/* <!-- Left Section --> */}
@@ -90,44 +194,29 @@ function EmployeeSearch() {
                 >
                   <div className="mb-8 p-0 w-100 active nav-link active">
                     {/* <!-- Single Featured Job --> */}
-                    <EmployeeBox />
-                    {/* <!-- End Single Featured Job --> */}
-                  </div>
-                  <div className="mb-8 p-0 w-100 active nav-link active">
-                    {/* <!-- Single Featured Job --> */}
-                    <EmployeeBox />
-                    {/* <!-- End Single Featured Job --> */}
-                  </div>
-                  <div className="mb-8 p-0 w-100 active nav-link active">
-                    {/* <!-- Single Featured Job --> */}
-                    <EmployeeBox />
-                    {/* <!-- End Single Featured Job --> */}
-                  </div>
-                  <div className="mb-8 p-0 w-100 active nav-link active">
-                    {/* <!-- Single Featured Job --> */}
-                    <EmployeeBox />
-                    {/* <!-- End Single Featured Job --> */}
-                  </div>
-                  <div className="mb-8 p-0 w-100 active nav-link active">
-                    {/* <!-- Single Featured Job --> */}
-                    <EmployeeBox />
+                    <EmployeeBox
+                      Skill={SkillFilterValue}
+                      Swap={jobSwapFilterValue}
+                      Exp={jobExp}
+                      candian={candianFilterValue}
+                    />
                     {/* <!-- End Single Featured Job --> */}
                   </div>
                 </div>
                 <div className="text-center pt-5 pt-lg-13">
-                  <a
+                  <Link
+                    href="#"
                     className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
-                    href="http://localhost:3000/"
                   >
-                    Load More{" "}
+                    Load More
                     <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
-                  </a>
+                  </Link>
                 </div>
               </div>
               {/* <!-- form end --> */}
             </div>
             {/* <!-- Right Section --> */}
-            <div className="col-12 col-xxl-4 col-xl-5 col-lg-10 position-static">
+            <div className="d-none col-12 col-xxl-4 col-xl-5 col-lg-10 position-static">
               <div className="tab-content" id="serachlist-tab">
                 <div
                   className="tab-pane fade show active"
@@ -142,30 +231,21 @@ function EmployeeSearch() {
                         <div className="col-12">
                           {/* <!-- media start --> */}
                           <div className="media align-items-center company_box col-md-6 p-0">
-                            <a
-                              className="text_box text-left"
-                              href="http://localhost:3000/"
-                            >
+                            <Link href="#" className="text_box text-left">
                               <img
                                 className="company_logo"
                                 src="image/logo-main-black.png"
                                 alt=""
                               />
-                            </a>
-                            <a
-                              className="text_box text-left w-100"
-                              href="http://localhost:3000/"
-                            >
-                              <p
-                                href="http://localhost:3000/"
-                                className="font-size-3 text-default-color line-height-2 m-0"
-                              >
+                            </Link>
+                            <Link href="#" className="text_box text-left w-100">
+                              <p className="font-size-3 text-default-color line-height-2 m-0">
                                 Apple INC
                               </p>
                               <h3 className="mb-0 font-size-6 heading-dark-color">
                                 UI/UX Designer
                               </h3>
-                            </a>
+                            </Link>
                           </div>
                           {/* <!-- media end --> */}
                         </div>
@@ -250,44 +330,44 @@ function EmployeeSearch() {
                             </p>
                             <ul className="list-unstyled d-flex align-items-center flex-wrap">
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Editing
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Wire-framing
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   XD
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   User Persona
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Sketch
-                                </a>
+                                </Link>
                               </li>
                             </ul>
                           </div>
@@ -295,7 +375,7 @@ function EmployeeSearch() {
                         <div className="col-md-6">
                           <div className="">
                             <span className="font-size-4 d-block mb-4 text-gray">
-                              Company size
+                              Employer's team size
                             </span>
                             <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
                               11-50 employees
@@ -369,12 +449,12 @@ function EmployeeSearch() {
                                 Ship a TON of product improvements and features
                               </li>
                             </ul>
-                            <a
+                            <Link
+                              href="#"
                               className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                              href="http://localhost:3000/"
                             >
                               Connect
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -420,19 +500,19 @@ function EmployeeSearch() {
                         <div className="col-12">
                           {/* <!-- card-btn-group start --> */}
                           <div className="card-btn-group">
-                            <a
+                            <Link
+                              href="#"
                               className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                              href="http://localhost:3000/"
                             >
                               Connect
-                            </a>
-                            <a
+                            </Link>
+                            <Link
+                              href="#"
                               className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                              href="http://localhost:3000/"
                             >
-                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
+                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>
                               Save job
-                            </a>
+                            </Link>
                           </div>
                           {/* <!-- card-btn-group end --> */}
                         </div>
@@ -517,44 +597,44 @@ function EmployeeSearch() {
                             </p>
                             <ul className="list-unstyled d-flex align-items-center flex-wrap">
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Visual Design
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Wire-framing
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   XD
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   User Persona
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Sketch
-                                </a>
+                                </Link>
                               </li>
                             </ul>
                           </div>
@@ -562,7 +642,7 @@ function EmployeeSearch() {
                         <div className="col-md-6">
                           <div className="">
                             <span className="font-size-4 d-block mb-4 text-gray">
-                              Company size
+                              Employer's team size
                             </span>
                             <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
                               11-35 employees
@@ -636,12 +716,12 @@ function EmployeeSearch() {
                                 Ship a TON of product improvements and features
                               </li>
                             </ul>
-                            <a
+                            <Link
+                              href="#"
                               className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                              href="http://localhost:3000/"
                             >
                               Connect
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -687,19 +767,19 @@ function EmployeeSearch() {
                         <div className="col-12">
                           {/* <!-- card-btn-group start --> */}
                           <div className="card-btn-group">
-                            <a
+                            <Link
+                              href="#"
                               className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                              href="http://localhost:3000/"
                             >
                               Connect
-                            </a>
-                            <a
+                            </Link>
+                            <Link
+                              href="#"
                               className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                              href="http://localhost:3000/"
                             >
-                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
+                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>
                               Save job
-                            </a>
+                            </Link>
                           </div>
                           {/* <!-- card-btn-group end --> */}
                         </div>
@@ -784,44 +864,44 @@ function EmployeeSearch() {
                             </p>
                             <ul className="list-unstyled d-flex align-items-center flex-wrap">
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
-                                  Swift{" "}
-                                </a>
+                                  Swift
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Objective C
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   X Code
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   WooCommerce
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Coding
-                                </a>
+                                </Link>
                               </li>
                             </ul>
                           </div>
@@ -829,7 +909,7 @@ function EmployeeSearch() {
                         <div className="col-md-6">
                           <div className="">
                             <span className="font-size-4 d-block mb-4 text-gray">
-                              Company size
+                              Employer's team size
                             </span>
                             <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
                               20-50 employees
@@ -903,12 +983,12 @@ function EmployeeSearch() {
                                 Ship a TON of product improvements and features
                               </li>
                             </ul>
-                            <a
+                            <Link
+                              href="#"
                               className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                              href="http://localhost:3000/"
                             >
                               Connect
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -939,7 +1019,7 @@ function EmployeeSearch() {
                             {/* <!-- media texts start --> */}
                             <div>
                               <h3 className="font-size-6 mb-0">
-                                Creative Director{" "}
+                                Creative Director
                               </h3>
                               <span className="font-size-3 text-gray line-height-2">
                                 Facebook
@@ -954,19 +1034,19 @@ function EmployeeSearch() {
                         <div className="col-12">
                           {/* <!-- card-btn-group start --> */}
                           <div className="card-btn-group">
-                            <a
+                            <Link
+                              href="#"
                               className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                              href="http://localhost:3000/"
                             >
                               Connect
-                            </a>
-                            <a
+                            </Link>
+                            <Link
+                              href="#"
                               className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                              href="http://localhost:3000/"
                             >
-                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
+                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>
                               Save job
-                            </a>
+                            </Link>
                           </div>
                           {/* <!-- card-btn-group end --> */}
                         </div>
@@ -1051,44 +1131,44 @@ function EmployeeSearch() {
                             </p>
                             <ul className="list-unstyled d-flex align-items-center flex-wrap">
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Agile
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Wire-framing
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Prototyping
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Slack
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Director
-                                </a>
+                                </Link>
                               </li>
                             </ul>
                           </div>
@@ -1096,7 +1176,7 @@ function EmployeeSearch() {
                         <div className="col-md-6">
                           <div className="">
                             <span className="font-size-4 d-block mb-4 text-gray">
-                              Company size
+                              Employer's team size
                             </span>
                             <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
                               50-80 employees
@@ -1170,12 +1250,12 @@ function EmployeeSearch() {
                                 Ship a TON of product improvements and features
                               </li>
                             </ul>
-                            <a
+                            <Link
+                              href="#"
                               className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                              href="http://localhost:3000/"
                             >
                               Connect
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -1221,19 +1301,19 @@ function EmployeeSearch() {
                         <div className="col-12">
                           {/* <!-- card-btn-group start --> */}
                           <div className="card-btn-group">
-                            <a
+                            <Link
+                              href="#"
                               className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                              href="http://localhost:3000/"
                             >
                               Connect
-                            </a>
-                            <a
+                            </Link>
+                            <Link
+                              href="#"
                               className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                              href="http://localhost:3000/"
                             >
-                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
+                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>
                               Save job
-                            </a>
+                            </Link>
                           </div>
                           {/* <!-- card-btn-group end --> */}
                         </div>
@@ -1318,44 +1398,44 @@ function EmployeeSearch() {
                             </p>
                             <ul className="list-unstyled d-flex align-items-center flex-wrap">
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   C++
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Java Scprit
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   React JS
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Vue
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Angular
-                                </a>
+                                </Link>
                               </li>
                             </ul>
                           </div>
@@ -1363,7 +1443,7 @@ function EmployeeSearch() {
                         <div className="col-md-6">
                           <div className="">
                             <span className="font-size-4 d-block mb-4 text-gray">
-                              Company size
+                              Employer's team size
                             </span>
                             <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
                               11-50 employees
@@ -1437,12 +1517,12 @@ function EmployeeSearch() {
                                 Ship a TON of product improvements and features
                               </li>
                             </ul>
-                            <a
+                            <Link
+                              href="#"
                               className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                              href="http://localhost:3000/"
                             >
                               Connect
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -1488,19 +1568,19 @@ function EmployeeSearch() {
                         <div className="col-12">
                           {/* <!-- card-btn-group start --> */}
                           <div className="card-btn-group">
-                            <a
+                            <Link
+                              href="#"
                               className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                              href="http://localhost:3000/"
                             >
                               Connect
-                            </a>
-                            <a
+                            </Link>
+                            <Link
+                              href="#"
                               className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                              href="http://localhost:3000/"
                             >
-                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
+                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>
                               Save job
-                            </a>
+                            </Link>
                           </div>
                           {/* <!-- card-btn-group end --> */}
                         </div>
@@ -1585,44 +1665,44 @@ function EmployeeSearch() {
                             </p>
                             <ul className="list-unstyled d-flex align-items-center flex-wrap">
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Agile
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Wire-framing
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Prototyping
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   User Persona
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link
+                                  to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                  href="http://localhost:3000/"
                                 >
                                   Sketch
-                                </a>
+                                </Link>
                               </li>
                             </ul>
                           </div>
@@ -1630,7 +1710,7 @@ function EmployeeSearch() {
                         <div className="col-md-6">
                           <div className="">
                             <span className="font-size-4 d-block mb-4 text-gray">
-                              Company size
+                              Employer's team size
                             </span>
                             <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
                               11-50 employees
@@ -1704,12 +1784,12 @@ function EmployeeSearch() {
                                 Ship a TON of product improvements and features
                               </li>
                             </ul>
-                            <a
+                            <Link
+                              href="#"
                               className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                              href="http://localhost:3000/"
                             >
                               Connect
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>

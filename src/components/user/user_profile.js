@@ -1,0 +1,2126 @@
+import React, { useEffect, useState, Fragment } from "react";
+import EmployeeFooter from "../common/footer";
+import EmployementDetails from "../forms/user/employement";
+import PersonalDetails from "../forms/user/personal";
+import EducationDetails from "../forms/user/education";
+import ItSkills from "../forms/user/skills";
+import CustomButton from "../common/button";
+import LimaArrowProfile from "../common/LimaArrowProfile";
+import ContactPage from "../common/contactPage";
+import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
+import {
+  EmployeeDetails,
+  EmployeeAppliedJob,
+  AddEmployeeDetails,
+  GetEmployeeByLima,
+  GetLimaSubStages,
+  AddUpdateVisa,
+  getApplicanTypeApi,
+  // AddPaymentToDataBase,
+} from "../../api/api";
+import moment from "moment";
+import Addfollowup from "../forms/admin/addfollowup";
+import { toast } from "react-toastify";
+import Loader from "../common/loader";
+import { PiPencilDuotone } from "react-icons/pi";
+import { BiPhoneCall } from "react-icons/bi";
+import { BsEnvelope } from "react-icons/bs";
+import JobProfileResponse from "../admin/profile_response";
+import VisaTable from "../common/visaTable";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import EmployeeHeader from "../common/header";
+import VisaArrowProfile from "../common/visaArrowProfile";
+import MainEmailPage from "../email/mainemailPage";
+import AgentConversation from "../common/AgentConversation";
+import UserTimline from "../common/UserTimline";
+import InterviewHistoryTable from "../common/InterviewHistoryTable";
+import SharePointDocument from "../common/Document folder/SharePointDocument";
+import NotFound from "../common/notfound";
+import RetainerAgrementMainPage from "../common/Retaineragreement/RetainerAgrementMainPage";
+import VisaTimeLine from "../common/visaTimeLine";
+import PaymentPage from "../common/payment invoice/PaymentPage";
+import PayentForm from "../forms/admin/payentForm";
+import ConvertTime from "../common/Common function/ConvertTime";
+import AddConsultationInCandidate from "../forms/admin/AddConsultationInCandidate";
+import ChatbotIcon from "../common/ChatBot.js/ChatbotIcon";
+import filterjson from "../json/filterjson";
+// import { CallFunctionRIngCentral } from "../common/Common function/CallFunctionRIngCentral";
+// import CommonMakeCallFunction from "../common/Common function/CommonMakeCallFunction";
+// import ApplicantTypeTimeLine from "../common/ApplicantTypeTimeLine";
+// import useSessionCheck from "../common/user_session";
+// import AdobePDFViewer from "../common/Adobe/adobeFile";
+const NewUserProfile = (props) => {
+  // useSessionCheck();
+  const { eid } = useParams();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const docId = searchParams.get("docId");
+  const agreement = searchParams.get("agreement");
+  const user_email = searchParams.get("user_email");
+  const user_timeline = searchParams.get("user_timeline");
+  const emailId = searchParams.get("emailId");
+  const user_payment = searchParams.get("user_payment");
+  const invoiceId = searchParams.get("invoiceId");
+  const Payment_id = searchParams.get("Pid");
+  const notes = searchParams.get("note");
+  const docParentId = searchParams.get("docParentId");
+  const docHighAnnoId = searchParams.get("annotationId");
+  const docTaskId = searchParams.get("taskId");
+  const partnerChat = searchParams.get("partner");
+  const note_id = searchParams.get("noteid");
+  const TimeLineId = searchParams.get("timeLineId");
+  let navigate = useNavigate();
+  const [apiCall, setApiCall] = useState(false);
+  const [status, setStatus] = useState("");
+  const [statusCall, setStatusCall] = useState(false);
+  const [lima, setLmia] = useState(false);
+  const [visaStatusRejectComment, setVisaStatusRejectComment] = useState([]);
+  const [lmiaStatusRejectComment, setLmiaStatusRejectComment] = useState([]);
+  const [showEmploymentDetails, setShowEmploymentDetails] = useState(false);
+  const [showPersonalDetails, setShowPersonalDetails] = useState(false);
+  const [showConsultationForm, setShowConsultationForm] = useState(false);
+  const [showEducation, setShowEducation] = useState(false);
+  const [showItSkills, setShowItSkills] = useState(false);
+  const [addNote, setAddNote] = useState(false);
+  const [TabActive, setTabActive] = useState(
+    docParentId
+      ? "documents" /*"sharepoint" */
+      : partnerChat
+        ? "agent conversation"
+        : notes === "true"
+          ? "notes"
+          : agreement === "true"
+            ? "retainer agreement"
+            : user_payment === "true"
+              ? "payment"
+              : user_email === "yes"
+                ? "email"
+                : user_timeline === "true"
+                  ? "timeLine"
+                  : "profile"
+  );
+  const [selectedPaymentTab, setSelectedPaymentTab] = useState(invoiceId ? "invoice" : "payment_records");
+  const [userDetail, setuserDetail] = useState([]);
+  const [userFound, setuserFound] = useState();
+  const [PersonalDetail, setPersonalDetail] = useState([]);
+  const [appliedJob, setAppliedJob] = useState([]);
+  const [visaStatus, setVisaStatus] = useState([]);
+  const [pageNo, setPageNo] = useState(localStorage.getItem("PageNo") || 1);
+  let [isLoading, setIsLoading] = useState(true);
+  let [applicantTypeList, setApplicantTypeList] = useState([]);
+  const user_type = localStorage.getItem("userType");
+  // let id = localStorage.getItem("employee_id");
+  const name = localStorage.getItem("name");
+  const employeeId = eid;
+
+  /*Function to get user Data */
+  const UserData = async () => {
+    try {
+      const userData = await EmployeeDetails(employeeId);
+
+      if (
+        userData.data === undefined ||
+        userData.data.length === 0 ||
+        userData.data.employee.length === 0
+      ) {
+        setuserDetail([]);
+        setPersonalDetail([]);
+        setIsLoading(false);
+      } else {
+        if (user_type === "user") {
+          props.setLoginCondition(false);
+        }
+        setuserDetail(userData.data);
+        setuserFound(userData.data.employee[0].employee_id);
+        setStatus(userData.data.employee[0].status);
+        setPersonalDetail(userData.data.employee[0]);
+        if (user_type === "user") {
+          localStorage.setItem(
+            "profile_photo",
+            userData.data.employee[0].profile_photo
+          );
+          localStorage.setItem("name", userData.data.employee[0].name);
+          localStorage.setItem(
+            "skill",
+            userData.data.skill.map((obj) => obj.skill).join(", ")
+          );
+        }
+        setIsLoading(false);
+      }
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+    }
+    try {
+      let response = await getApplicanTypeApi("");
+      setApplicantTypeList(response.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  /*Function to get Lmia */
+  const getLimaOfUser = async () => {
+    try {
+      let response = await GetEmployeeByLima(
+        "",
+        "",
+        "",
+        "1",
+        "10",
+        null,
+        null,
+        "",
+        eid
+      );
+      if (response.message === "successful") {
+        /*Logic for finding reject substage of decision lima status */
+        if (response.data.length >= 0) {
+          let LmiaData = response.data;
+          let LmiaCommentArray = [];
+          for (let i = 0; i < response.data.length; i++) {
+            if (response.data[i].lmia_status === "decision") {
+              const data = response.data[i];
+              const subStageRes = await GetLimaSubStages(
+                data.id,
+                data.lmia_status
+              );
+              let index = subStageRes.data.data.length - 1;
+              LmiaCommentArray.push(subStageRes.data.data[index]);
+              if (
+                subStageRes.data.data.filter(
+                  (item) => item.lmia_substage === "refused"
+                ).length > 0
+              ) {
+                LmiaData = LmiaData.filter(
+                  (item) => item.job_id !== data.job_id
+                );
+              }
+            }
+          }
+          setLmiaStatusRejectComment(LmiaCommentArray);
+          setLmia(LmiaData);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+    }
+  };
+
+  /*Function to Get applied job data */
+  const AppliedJob = async () => {
+    try {
+      const applied = await EmployeeAppliedJob(employeeId);
+      if (applied.data === undefined || applied.data.length === 0) {
+        setAppliedJob([]);
+      } else {
+        setAppliedJob(applied.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const params = new URLSearchParams(window.location.search);
+  const transactionId = params.get("payment_intent");
+
+  /*Render function to get user Data */
+  useEffect(() => {
+    if (appliedJob) {
+      AppliedJob();
+    }
+    UserData();
+    if (user_type === "admin") {
+      getLimaOfUser();
+    }
+    if (apiCall === true) {
+      setApiCall(false);
+      // if (PersonalDetail.name !== (undefined || "undefined" || null || "")
+      //   || PersonalDetail.profile_photo !== (undefined || "undefined" || null || "")) {
+      //   localStorage.setItem("profile_photo", PersonalDetail.profile_photo)
+      //   localStorage.setItem("name", PersonalDetail.name)
+      // }
+    }
+    if (transactionId || user_payment === "true") {
+      //   setPayment();
+      setTabActive("payment");
+    }
+    if (docParentId) {
+      setTabActive("documents");
+    }
+    if (partnerChat) {
+      setTabActive("agent conversation");
+    }
+    if (notes) {
+      setTabActive("notes");
+    }
+    if (agreement) {
+      setTabActive("retainer agreement");
+    }
+    if (user_email) {
+      setTabActive("email")
+    }
+    if (user_timeline === "true") {
+      setTabActive("timeLine")
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apiCall, eid, docParentId, docId, TimeLineId, notes, agreement, location.key]);
+
+  /*Function to See uploaded resume */
+  const handleViewResume = (pdfUrl) => {
+    window.open(`/userpdf?pdfUrl=${encodeURIComponent(pdfUrl)}`, "_blank");
+  };
+
+  /*Function to calculate the time duration of two dates */
+  const calculateDuration = (startDate, endDate) => {
+    const start = moment(startDate);
+    const end = moment(endDate);
+    const duration = moment.duration(end.diff(start));
+    const years = duration.years();
+    const months = duration.months();
+    // const days = duration.days();
+
+    return `${years === 1 ? years + " year," : years > 1 ? years + " years," : ""
+      } ${months === 1 ? months + " month" : months > 1 ? months + " months" : ""
+      }`;
+  };
+
+  /*function to change applicants status */
+  const OnStatusChange = async (e) => {
+    // e.preventDefault()
+    setStatus(e);
+    let data = {
+      employee_id: eid,
+      status: e,
+      documents_folder_id: PersonalDetail.documents_folder_id,
+      name: PersonalDetail.name,
+    };
+    try {
+      let response = await AddEmployeeDetails(data);
+      if (response.message === "Employee data updated successfully") {
+        toast.success("Candidate status changes successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        if (data.status === "4" && visaStatus.length === 0) {
+          let state = { status: "onboard" };
+          try {
+            let VisaResponse = await AddUpdateVisa(
+              data.employee_id,
+              state,
+              "",
+              "visa"
+            );
+            if (VisaResponse.data.message === "visa inserted successfully") {
+              setApiCall(true);
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        } else {
+          setApiCall(true);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  /*Function to generate resume */
+  const ResumeClick = (employee_id) => {
+    const id = employee_id;
+    window.open(`/resume/${id}`, "_blank");
+  };
+
+  // useEffect(() => {
+  //   const script = document.createElement("script");
+  //   script.src = "https://ringcentral.github.io/ringcentral-embeddable-voice/adapter.js";
+  //   script.async = true;
+  //   script.onload = () => {
+  //     // Once adapter is loaded
+  //     window.RCAdapter = new window.RingCentralEmbeddableVoiceAdapter({
+  //       // optional settings
+  //       enableAnalytics: true,
+  //       appName: "Canpathwaysjobs",
+  //     });
+  //   };
+  //   document.body.appendChild(script);
+  //   return () => document.body.removeChild(script);
+  // }, []);
+
+  return (
+    /*---- Employee Profile Details Page ----*/
+    <div className="site-wrapper overflow-hidden bg-default-2">
+      {/* <!-- Header Area --> */}
+      {user_type === "admin" || user_type === "agent" ? (
+        (docParentId || notes ? (docParentId || notes) && userFound : userFound) && (
+          <>
+            <Link
+              className="d-flex align-items-center"
+              style={{
+                position: "absolute",
+                top: 5,
+                left: 15,
+                zIndex: 1000,
+                backgroundColor: "#992b32",
+                minWidth: 300,
+              }}
+              onClick={() => {
+                if (TabActive === "notes") {
+                  navigate(-1);
+                } else {
+                  setAddNote(true);
+                }
+              }}
+            >
+              <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+              <span className="text-uppercase font-size-3 font-weight-bold text-white">
+                <h3 className="font-size-6 mb-0 text-capitalize text-white">
+                  {PersonalDetail.name
+                    ? PersonalDetail.name + " (Candidate)"
+                    : ""}
+                </h3>
+              </span>
+            </Link>
+            {/* <AdminHeader
+              heading={
+                <Link
+                  className="d-flex align-items-center "
+                  onClick={() => {
+                    if (TabActive === "notes") {
+                      navigate(-1);
+                    } else {
+                      setAddNote(true);
+                    }
+                  }}
+                >
+                  <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+                  <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+                    <h3 className="font-size-6 mb-0 text-capitalize">
+                      {PersonalDetail.name
+                        ? PersonalDetail.name + " (Candidate)"
+                        : ""}
+                    </h3>
+                  </span>
+                </Link>
+              }
+            /> */}
+            {/* <!-- navbar- --> */}
+            {/* <AdminSidebar heading={"User Profile"} /> */}
+          </>
+        )
+      ) : (
+        <EmployeeHeader />
+      )}
+
+      <div
+        className={
+          user_type === "admin" || user_type === "agent"
+            ? "dashboard-main-container mt-12 mt-lg-12"
+            : " employee-detail-top-padding"
+        }
+        id="dashboard-body"
+      >
+        <div
+          className={`container${user_type === "admin" || user_type === "agent" ? "-fluid" : ""
+            }`}
+        >
+          {(name === null || name === "") && user_type === "user" ? (
+            <h4>Complete profile</h4>
+          ) : (
+            ""
+          )}
+
+          {isLoading ? (
+            <div className="table-responsive main_table_div">
+              <Loader />
+            </div>
+          ) : userFound === eid ? (
+            <div className="row text-left mt-5 pt-0 flex-wrap">
+              <div className="d-flex flex-wrap">
+                {lima.length !== 0 &&
+                  (user_type === "admin" || user_type === "agent") ? (
+                  <div
+                    className={
+                      // noLima==="1"?"d-none":
+                      "visa_lmia_status_div pl-6 pr-2"
+                    }
+                  >
+                    <LimaArrowProfile
+                      lmia={lima}
+                      lmiaStatusRejectComment={lmiaStatusRejectComment}
+                    />
+                  </div>
+                ) : null}
+                {visaStatus.length !== 0 &&
+                  (user_type === "admin" || user_type === "agent") ? (
+                  <div
+                    className={
+                      // noLima==="1"?"d-none":
+                      "visa_lmia_status_div pl-6 pr-2"
+                    }
+                  >
+                    <VisaArrowProfile
+                      visaStatus={visaStatus}
+                      visaStatusRejectComment={visaStatusRejectComment}
+                      apiCall={apiCall}
+                    />
+                  </div>
+                ) : null}
+                {PersonalDetail.applicant_process_type &&
+                  (user_type === "admin" || user_type === "agent") ? (
+                  <div
+                    className={
+                      // noLima==="1"?"d-none":
+                      "visa_lmia_status_div pl-6 pr-2"
+                    }
+                  >
+                    <VisaTimeLine
+                      visa={PersonalDetail.applicant_process_status}
+                      substage={PersonalDetail.applicant_process_substages}
+                      type={applicantTypeList ? applicantTypeList.find((item) => item.id === PersonalDetail.applicant_process_type)?.title : PersonalDetail.applicant_process_type}
+                    />
+                  </div>
+                ) : null}
+              </div>
+              {/* {PersonalDetail.all_interested_in_id && user_type === "admin" && <div
+                className={
+                  "visa_lmia_status_div pl-6 pr-2"
+                }>
+                <ApplicantTypeTimeLine
+
+                  All_types={PersonalDetail.all_interested_in_id}
+                  ApplicantTypeList={applicantTypeList}
+                />
+              </div>} */}
+              <div className=" col-12 order-2 order-xl-1">
+                <div className="bg-white">
+                  {/* LMIA */}
+                  {/* <ul
+                    className="nav border-bottom border-bottom border-mercury user_profile_tab"
+                    id="myTab"
+                    role="tablist"
+                  >
+                    
+                  </ul> */}
+                  {/*----Profile Header----*/}
+                  <ul
+                    className={`nav border-top border-bottom border-mercury user_profile_tab ${user_type === "admin" || user_type === "agent"
+                      ? ""
+                      : "mt-md-13"
+                      }`}
+                    id="myTab"
+                    role="tablist"
+                  >
+                    <li className="tab-menu-items nav-item">
+                      <Link
+                        className={
+                          TabActive === "profile"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                        }
+                        id="home-tab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="home"
+                        aria-selected="true"
+                        onClick={() => setTabActive("profile")}
+                      >
+                        Profile
+                      </Link>
+                    </li>
+                    <li
+                      className={`${user_type === "company"
+                        ? "d-none"
+                        : "tab-menu-items nav-item"
+                        }`}
+                    >
+                      <Link
+                        className={
+                          TabActive === "jobs"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                        }
+                        id="appliedJobs"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="appliedJobs"
+                        aria-selected="true"
+                        onClick={() => {
+                          setTabActive("jobs")
+                          setPageNo(1)
+                        }}
+                      >
+                        Applied Jobs
+                      </Link>
+                    </li>
+                    <li
+                      className={`${user_type === "company"
+                        ? "d-none"
+                        : "tab-menu-items nav-item"
+                        } `}
+                    >
+                      <Link
+                        className={
+                          TabActive === "documents"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                        }
+                        id="docTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="docTab"
+                        aria-selected="true"
+                        onClick={async () => {
+                          if (
+                            !PersonalDetail.documents_folder_id &&
+                            PersonalDetail.name &&
+                            PersonalDetail.email
+                          ) {
+                            // const responseData =
+                            // Exclude 'email' field from PersonalDetail
+                            const { email, ...personalDetailsWithoutEmail } =
+                              PersonalDetail;
+                            // Call the API with the modified object
+                            await AddEmployeeDetails(
+                              personalDetailsWithoutEmail
+                            );
+
+                            setApiCall(true);
+                            // if (responseData.status === 1) {
+                            //   setTabActive("documents");
+                            // }else{
+                            setTabActive("documents");
+                            // }
+                          } else {
+                            setTabActive("documents");
+                          }
+                        }}
+                      >
+                        Documents
+                      </Link>
+                    </li>
+                    <li
+                      className={`${user_type === "company"
+                        ? "d-none"
+                        : "tab-menu-items nav-item"
+                        } d-none`}
+                    >
+                      <Link
+                        className={
+                          TabActive === "sharepoint"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                        }
+                        id="docTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="docTab"
+                        aria-selected="true"
+                        onClick={() => setTabActive("sharepoint")}
+                      >
+                        Documents
+                      </Link>
+                    </li>
+                    <li
+                      className={
+                        user_type === "user" || user_type === "company"
+                          ? "d-none"
+                          : "tab-menu-items nav-item"
+                      }
+                    >
+                      <Link
+                        className={
+                          TabActive === "visa"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                        }
+                        id="visaTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="visaTab"
+                        aria-selected="true"
+                        onClick={() => setTabActive("visa")}
+                      >
+                        Visa
+                      </Link>
+                    </li>
+                    <li
+                      className={
+                        user_type === "company" || user_type === "user"
+                          ? "d-none"
+                          : "tab-menu-items nav-item"
+                      }
+                    >
+                      <Link
+                        className={
+                          TabActive === "notes"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                        }
+                        id="notesTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="notesTab"
+                        aria-selected="true"
+                        onClick={() => setTabActive("notes")}
+                      >
+                        Notes
+                      </Link>
+                    </li>
+                    <li
+                      className={
+                        user_type === "company" ||
+                          user_type === "agent" ||
+                          user_type === "user"
+                          ? "d-none"
+                          : "tab-menu-items nav-item "
+                      }
+                    >
+                      <Link
+                        className={
+                          TabActive === "retainer agreement"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                        }
+                        id="retaineragreementTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="retaineragreementTab"
+                        aria-selected="true"
+                        onClick={() => setTabActive("retainer agreement")}
+                      >
+                        Retainer Agreement
+                      </Link>
+                    </li>
+                    <li
+                      className={`tab-menu-items nav-item ${user_type === "company" || user_type === "agent" ? "d-none" : ""
+                        }`}
+                    >
+                      <Link
+                        className={
+                          TabActive === "payment"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                        }
+                        id="activityTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="activityTab"
+                        aria-selected="true"
+                        onClick={() => setTabActive("payment")}
+                      >
+                        Payments
+                      </Link>
+                    </li>
+                    {/* <li className="tab-menu-items nav-item pr-12">
+                      <CustomButton
+                        className=" font-size-4 rounded-3 btn-primary border-0 mt-2"
+                        onClick={() => setShowDoc(true)}
+                      >
+                        {user_type === "user" ? "Add Document" : "Documents"}
+                      </CustomButton>
+                    </li> */}
+                    <li
+                      className={
+                        // user_type === "user" ||
+                        user_type === "company"
+                          ? "d-none"
+                          : "tab-menu-items nav-item "
+                      }
+                    >
+                      <Link
+                        className={
+                          TabActive === "contact"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                        }
+                        id="docTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="docTab"
+                        aria-selected="true"
+                        onClick={() => setTabActive("contact")}
+                      >
+                        Contact Us
+                      </Link>
+                    </li>
+                    <li
+                      className={
+                        user_type === "user" || user_type === "company"
+                          ? "d-none"
+                          : "tab-menu-items nav-item "
+                      }
+                    >
+                      <Link
+                        className={
+                          TabActive === "timeLine"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                        }
+                        id="docTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="docTab"
+                        aria-selected="true"
+                        onClick={() => setTabActive("timeLine")}
+                      >
+                        TimeLine
+                      </Link>
+                    </li>
+                    <li
+                      className={
+                        user_type === "company" ||
+                          user_type === "user" ||
+                          user_type === "agent"
+                          ? "d-none"
+                          : "tab-menu-items nav-item"
+                      }
+                    >
+                      <Link
+                        className={
+                          TabActive === "email"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                        }
+                        id="docTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="docTab"
+                        aria-selected="true"
+                        onClick={() => setTabActive("email")}
+                      >
+                        Email
+                      </Link>
+                    </li>
+                    <li
+                      className={
+                        user_type === "company" || user_type === "user"
+                          ? "d-none"
+                          : "tab-menu-items nav-item"
+                      }
+                    >
+                      <Link
+                        className={
+                          TabActive === "agent conversation"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                        }
+                        id="docTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="docTab"
+                        aria-selected="true"
+                        onClick={() => setTabActive("agent conversation")}
+                      >
+                        Partner
+                      </Link>
+                    </li>
+                    <li
+                      className={
+                        user_type === "company" //|| user_type === "user"
+                          ? "d-none"
+                          : "tab-menu-items nav-item "
+                      }
+                    >
+                      <Link
+                        className={
+                          TabActive === "InterviewHistory"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                        }
+                        id="docTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="docTab"
+                        aria-selected="true"
+                        onClick={() => setTabActive("InterviewHistory")}
+                      >
+                        Interview
+                      </Link>
+                    </li>
+                  </ul>
+                  {/*---Profile Details----*/}
+                  <div
+                    className={
+                      TabActive === "profile" ? "tab-content" : "d-none"
+                    }
+                    id="myTabContent"
+                  >
+                    <div
+                      className="tab-pane fade show active"
+                      id="home"
+                      role="tabpanel"
+                      aria-labelledby="home-tab"
+                    >
+
+                      <div>
+
+                        {/*----Chatbot Icon----*/}
+                        <div className="row m-0 ">
+                          <div className="col-12 px-15 pt-5 pb-4 d-flex flex-row-reverse"
+                            style={{ top: "200px" }}>
+                            <div className="">
+                              <ChatbotIcon
+                                userDetails={{
+                                  user_id: eid,
+                                  user_type: "employee",
+                                }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/*----About Employee----*/}
+                        <div className="row m-0 ">
+                          <div className="d-flex align-items-center rounded bg-light p-8 position-relative w-100">
+                            <Link
+                              className="position-relative text-white"
+                              onClick={
+                                user_type === "company" || props.self === "yes"
+                                  ? null
+                                  : () => setShowPersonalDetails(true)}
+                              title="Update profile"
+                            >
+                              {user_type === "admin" ? (
+                                <>
+                                  <input
+                                    type="file"
+                                    id="ImgUploadInput"
+                                    className="d-none"
+                                  />
+                                  <label
+                                    className="image_upload_btn image_upload_btn_2 bg-warning"
+                                    htmlFor="ImgUploadInput"
+                                  >
+                                    <span className="text-">
+                                      <PiPencilDuotone />
+                                    </span>
+                                    {/* <span className="fas fa-pen text-gray"> </span> */}
+                                  </label>
+                                </>
+                              ) : (
+                                ""
+                              )}
+                              <img
+                                className="rounded"
+                                src={
+                                  PersonalDetail.profile_photo
+                                    ? PersonalDetail.profile_photo
+                                    : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`
+                                }
+                                alt=""
+                                width={"180px"}
+                                height={"180px"}
+                              />
+                            </Link>
+                            <div className="ml-5 w-100">
+                              <h2 className="mb-0 text-capitalize line-height-1 text-break">
+                                {PersonalDetail.name
+                                  ? PersonalDetail.name + " "
+                                  : "Unknown Candidate "}
+                                <span>({PersonalDetail.employee_id})</span>
+                              </h2>
+                              <hr className="my-3" />
+                              <div className="m-0 age_gender d-flex align-items-center">
+                                <React.Fragment>
+                                  {PersonalDetail.gender ? (
+                                    <span className="bg-secondary rounded-pill font-size-3 px-3 py-2 text-white mr-2">
+                                      {PersonalDetail.gender === "female"
+                                        ? "Female"
+                                        : PersonalDetail.gender === "male"
+                                          ? "Male"
+                                          : "Other"}
+                                    </span>
+                                  ) : null}
+                                  {PersonalDetail.marital_status ? (
+                                    <span className="bg-info rounded-pill font-size-3 px-3 py-2 text-white mr-2 text-capitalize">
+                                      {PersonalDetail.marital_status}
+                                    </span>
+                                  ) : null}
+                                  {PersonalDetail.date_of_birth &&
+                                    PersonalDetail.date_of_birth !==
+                                    "0000-00-00" ? (
+                                    <span className="bg-warning rounded-pill font-size-3 px-3 py-2 text-white mr-2">
+                                      {moment().diff(
+                                        PersonalDetail.date_of_birth,
+                                        "years"
+                                      )}
+                                      Y
+                                    </span>
+                                  ) : null}
+                                  {(user_type === "admin" ||
+                                    user_type === "agent") && (
+                                      <DropdownButton
+                                        as={ButtonGroup}
+                                        title={
+                                          status === "1"
+                                            ? "New"
+                                            : status === "2"
+                                              ? "Prospect"
+                                              : status === "3"
+                                                ? "Lead"
+                                                : status === "4"
+                                                  ? "Retained"
+                                                  : status === "5"
+                                                    ? "Lost"
+                                                    : status === "6"
+                                                      ? "Dead"
+                                                      : status === "7"
+                                                        ? "Working on"
+                                                        : status === "8"
+                                                          ? "Submitted"
+                                                          : status === "0"
+                                                            ? "New"
+                                                            : status === "9"
+                                                              ? "Complete"
+                                                              : status === "10"
+                                                                ? "Consultation"
+                                                                : "status"
+                                        }
+                                        size="sm"
+                                        className="user_status_btn btn-primary rounded-pill font-size-3 px-3 py-1 text-white mr-2"
+                                        onSelect={OnStatusChange}
+                                      >
+                                        {(filterjson.employee_status || [])
+                                          .filter(item => ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"].includes(item.label.toLowerCase())
+                                          )
+                                          .sort(
+                                            (a, b) =>
+                                              ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"]
+                                                .indexOf(a.label.toLowerCase()) -
+                                              ["new", "prospect", "lead", "consultation", "lost", "dead", "retained", "working on", "submitted", "completed"]
+                                                .indexOf(b.label.toLowerCase())
+                                          )
+                                          .map((item, index) => (
+                                            <Dropdown.Item
+                                              key={index}
+                                              value={item.value}
+                                              eventKey={item.value}   // keep eventKey same as value if you want real mapping
+                                              className="text-capitalize"
+                                              active={item.value === PersonalDetail.status}
+                                            >
+                                              {item.label}
+                                            </Dropdown.Item>
+                                          ))}
+                                      </DropdownButton>
+                                    )}
+                                </React.Fragment>
+                              </div>
+                              <hr className={PersonalDetail.marital_status &&
+                                PersonalDetail.marital_status.toLowerCase() === "married" ? "my-3" : "d-none"} />
+                              <div className={PersonalDetail.marital_status &&
+                                PersonalDetail.marital_status.toLowerCase() === "married" ? "d-flex align-items-center" : "d-none"}>
+                                <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
+
+                                  {PersonalDetail.marital_status &&
+                                    PersonalDetail.marital_status.toLowerCase() === "married" &&
+                                    (PersonalDetail.partner_name ||
+                                      PersonalDetail.child_name ||
+                                      PersonalDetail.country_of_residence) ? (
+                                    <>
+                                      {PersonalDetail.partner_name && (
+                                        <div className="info_box text-left text-capitalize" title="Partner Name">
+                                          <span className="font-size-3 text-smoke mr-7 text-capitalize">
+                                            Partner Name: <b>{PersonalDetail.partner_name}</b>
+                                          </span>
+                                        </div>
+                                      )}
+
+                                      {PersonalDetail.child_name && (
+                                        <div className="info_box text-left text-capitalize" title="Child Name">
+                                          <span className="font-size-3 text-smoke mr-7 text-capitalize">
+                                            Child Name: <b>{PersonalDetail.child_name}</b>
+                                          </span>
+                                        </div>
+                                      )}
+
+                                      {PersonalDetail.country_of_residence && (
+                                        <div
+                                          className="info_box text-left text-capitalize"
+                                          title="Country of Residence"
+                                        >
+                                          <span className="font-size-3 text-smoke mr-7 text-capitalize">
+                                            Country of Residence: <b>{PersonalDetail.country_of_residence}</b>
+                                          </span>
+                                        </div>
+                                      )}
+                                    </>
+                                  ) : <div>
+                                    <p className="text-center">No Spouse and Children Data Found</p>
+                                  </div>}
+                                </div>
+                              </div>
+                              <hr className="my-3" />
+                              <div className="d-flex align-items-center">
+                                <Fragment>
+                                  {PersonalDetail.email === "" ||
+                                    PersonalDetail.length === 0 ||
+                                    (!PersonalDetail.current_location &&
+                                      !PersonalDetail.language &&
+                                      !PersonalDetail.currently_located_country &&
+                                      !PersonalDetail.experience &&
+                                      // !PersonalDetail.nationality &&
+                                      !PersonalDetail.experience &&
+                                      !PersonalDetail.work_permit_canada &&
+                                      !PersonalDetail.work_permit_other_country) ? (
+                                    <div>
+                                      <p className="text-center">No Data Found</p>
+                                    </div>
+                                  ) : (
+                                    <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
+                                      <div className="info_box text-left text-capitalize">
+
+                                        {PersonalDetail.current_location ? (
+                                          <span
+                                            className="font-size-3 text-smoke  mr-7"
+                                            title="Current Location"
+                                          >
+                                            <img
+                                              className="mr-1"
+                                              height={"16px"}
+                                              src="image/icons/marker.svg"
+                                              alt="Location"
+                                            />
+                                            {PersonalDetail.current_location}
+                                          </span>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                      <div className="info_box text-left text-capitalize">
+                                        {PersonalDetail.language ? (
+                                          <span
+                                            className="font-size-3 text-smoke  mr-7"
+                                            title="User Language"
+                                          >
+                                            <img
+                                              className="mr-1"
+                                              height={"16px"}
+                                              src="image/icons/language.svg"
+                                              alt="language"
+                                            />
+                                            {PersonalDetail.language}
+                                          </span>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                      <div className="info_box text-left text-capitalize">
+                                        {PersonalDetail.currently_located_country ? (
+                                          <span
+                                            className="font-size-3 text-smoke  mr-7"
+                                            title="Currently Located Country"
+                                          >
+                                            <img
+                                              className="mr-1"
+                                              height={"16px"}
+                                              src="image/icons/address-book.svg"
+                                              alt="Address"
+                                            />
+                                            {
+                                              PersonalDetail.currently_located_country
+                                            }
+                                          </span>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                      <div className="info_box text-left text-capitalize">
+                                        {PersonalDetail.experience ? (
+                                          <span
+                                            className="font-size-3 text-smoke  mr-7"
+                                            title="Total Experience"
+                                          >
+                                            <img
+                                              className="mr-1"
+                                              height={"16px"}
+                                              src="image/icons/envelope.svg"
+                                              alt="Email"
+                                            />
+                                            {PersonalDetail.experisence ===
+                                              "fresher" ||
+                                              PersonalDetail.experience ===
+                                              "Other" ||
+                                              PersonalDetail.experience === "other"
+                                              ? PersonalDetail.experience
+                                              : PersonalDetail.experience +
+                                              " Years"}
+                                          </span>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                      {PersonalDetail.work_permit_canada ? (
+                                        <div className="info_box text-left">
+                                          <span
+                                            className="font-size-3 text-smoke  mr-7 text-capitalize"
+                                            title="Canada Work Permit"
+                                          >
+                                            Canada Work Permit:
+                                            <b>
+                                              {` ${PersonalDetail.work_permit_canada}`}
+                                            </b>
+                                          </span>
+                                        </div>
+                                      ) : null}
+                                      {PersonalDetail.work_permit_other_country ? (
+                                        <div className="info_box text-left">
+                                          <span className="font-size-3 text-smoke  mr-7 text-capitalize">
+                                            Work Status:
+                                            <b>
+                                              {` ${PersonalDetail.work_permit_other_country}`}
+                                            </b>
+                                          </span>
+                                        </div>
+                                      ) : null}
+
+
+                                    </div>
+                                  )}
+                                  {user_type === "company" ||
+                                    props.self === "yes" ? null : (
+                                    <CustomButton
+                                      className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                                      title="Update profile"
+                                      onClick={() => setShowPersonalDetails(true)}
+                                    >
+                                      <PiPencilDuotone />
+                                    </CustomButton>
+                                  )}
+                                </Fragment>
+                              </div>
+                              <hr className="my-3" />
+                              <div className="personal_info_box d-flex align-items-center  flex-wrap w-100">
+                                {PersonalDetail.consultation_opted ? (
+                                  <div className="info_box text-left">
+                                    <span className="font-size-3 text-smoke  mr-7 text-capitalize">
+                                      Consultation Opted:
+                                      <b>
+                                        {` ${PersonalDetail.consultation_opted === 0 || PersonalDetail.consultation_opted === "0" ? "No" : "Yes"}`}
+                                      </b>
+                                    </span>
+                                  </div>
+                                ) : null}
+                                {PersonalDetail.consultation_date ? (
+                                  <div className="info_box text-left">
+                                    <span className="font-size-3 text-smoke  mr-7 text-capitalize">
+                                      Consultation Date:
+                                      <b>
+                                        <ConvertTime _date={PersonalDetail.consultation_date} format={"DD MMMM, YYYY"} />
+                                      </b>
+                                    </span>
+                                  </div>
+                                ) : null}
+                                {user_type === "company" ||
+                                  props.self === "yes" ? null : (
+                                  <CustomButton
+                                    className="ms-auto p-2 font-size-3 rounded-3 btn-primary border-0 ml-2 flex-end justify-content-right"
+                                    title={"Update consultation"}
+                                    onClick={() => setShowConsultationForm(true)}
+                                  >
+                                    <PiPencilDuotone />
+                                  </CustomButton>
+                                )}
+                              </div>
+                              <hr className="my-3" />
+                              <div
+                                className="d-flex flex-wrap"
+                                style={{ gap: "10px" }}
+                              >
+                                {!PersonalDetail.email ||
+                                  user_type === "company" ? null : (
+                                  <div>
+                                    <Link
+                                      className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
+                                      to={`mailto:${PersonalDetail.email}`}
+                                    >
+                                      <BsEnvelope className="font-size-3 mr-4" />
+                                      {PersonalDetail.email}
+                                    </Link>
+                                  </div>
+                                )}
+                                {!PersonalDetail.secondary_email ||
+                                  user_type === "company" ? null : (
+                                  <div>
+                                    <Link
+                                      className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
+                                      to={`mailto:${PersonalDetail.secondary_email}`}
+                                    >
+                                      <BsEnvelope className="font-size-3 mr-4" />
+                                      {PersonalDetail.secondary_email}
+                                    </Link>
+                                  </div>
+                                )}
+                                {!PersonalDetail.contact_no ||
+                                  PersonalDetail.contact_no === 0 ||
+                                  PersonalDetail.contact_no === "0" ||
+                                  user_type === "company" ? null : (
+                                  <div>
+                                    <Link
+                                      className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
+                                      to={`tel:+${PersonalDetail.contact_no}`}
+                                    // onClick={() => CommonMakeCallFunction(`+${PersonalDetail.contact_no}`, PersonalDetail.name, PersonalDetail.profile_photo
+                                    //   ? PersonalDetail.profile_photo
+                                    //   : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`)}
+                                    >
+                                      <BiPhoneCall className="font-size-3 mr-4" />
+                                      +{PersonalDetail.contact_no}
+                                    </Link>
+                                  </div>
+                                )}
+                                {!PersonalDetail.other_contact_no ||
+                                  PersonalDetail.other_contact_no === 0 ||
+                                  PersonalDetail.other_contact_no === "0" ||
+                                  user_type === "company" ? null : (
+                                  <div>
+                                    <Link
+                                      className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
+                                      to={`tel:+${PersonalDetail.other_contact_no}`}
+                                    // onClick={() => CallFunctionRIngCentral(PersonalDetail.other_contact_no, PersonalDetail.name, PersonalDetail.profile_photo
+                                    //   ? PersonalDetail.profile_photo
+                                    //   : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`)}
+                                    >
+                                      <BiPhoneCall className="font-size-3 mr-4" />
+                                      +{PersonalDetail.other_contact_no}
+                                    </Link>
+                                  </div>
+                                )}
+                                {PersonalDetail.resume ? (
+                                  <Link
+                                    className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
+                                    to={""}
+                                    onClick={() =>
+                                      handleViewResume(PersonalDetail.resume)
+                                    }
+                                  >
+                                    Resume
+                                  </Link>
+                                ) : null}
+                                <button
+                                  className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
+                                  to={""} // You should specify a valid URL here
+                                  onClick={() =>
+                                    ResumeClick(PersonalDetail.employee_id)
+                                  }
+                                  disabled={
+                                    PersonalDetail.name === null ||
+                                    PersonalDetail.name === undefined ||
+                                    PersonalDetail.name === "" ||
+                                    userDetail.skill === undefined ||
+                                    userDetail.skill.length === 0 ||
+                                    userDetail.education === undefined ||
+                                    userDetail.education.length === 0
+                                  }
+                                >
+                                  {PersonalDetail.name === null ||
+                                    PersonalDetail.name === undefined ||
+                                    PersonalDetail.name === "" ||
+                                    userDetail.skill === undefined ||
+                                    userDetail.skill.length === 0 ||
+                                    userDetail.education === undefined ||
+                                    userDetail.education.length === 0
+                                    ? user_type === "user"
+                                      ? "Complete your Profile"
+                                      : "incomplete Profile"
+                                    : "Generated Resume"}
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="row m-0 px-8 pb-8 rounded position-relative">
+                        <div className="col-12 p-0 d-flex rounded bg-light">
+                          <div className="col-lg-5 col-md-6 p-8 border-right">
+                            <div
+                              id="about_Profile"
+                              className="position-relative"
+                            >
+                              <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                                <span>About</span>
+                              </h4>
+
+                              {/* <p className="w-100 card p-5 shadow-8 border-0 m-0">
+                                {PersonalDetail.description
+                                  ? PersonalDetail.description
+                                  : "No Data Found"}
+                              </p> */}
+                              <div className="w-100 card p-5 shadow-8 border-0 m-0 text-break">
+                                {PersonalDetail.description ? (
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html: PersonalDetail.description,
+                                    }}
+                                  />
+                                ) : (
+                                  "No Data Found"
+                                )}
+                              </div>
+                            </div>
+                            <div className="position-relative mt-8">
+                              <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                                <span>Skill</span>
+                                {user_type === "company" ||
+                                  props.self === "yes" ? null : (
+                                  <CustomButton
+                                    className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                                    title="Add / Update skills"
+                                    onClick={() => setShowItSkills(true)}
+                                  >
+                                    <PiPencilDuotone />
+                                  </CustomButton>
+                                )}
+                              </h4>
+                              <div className="w-100 card p-5 shadow-8 border-0">
+                                {showItSkills ? (
+                                  <ItSkills
+                                    show={showItSkills}
+                                    employeeId={employeeId}
+                                    apiCall={apiCall}
+                                    setApiCall={setApiCall}
+                                    close={() => setShowItSkills(false)}
+                                  />
+                                ) : null}
+
+                                <ul className="list-unstyled d-flex align-items-start flex-wrap m-0">
+                                  {userDetail.skill === undefined ||
+                                    userDetail.skill.length === 0 ? (
+                                    <li>No Data Found</li>
+                                  ) : (
+                                    (userDetail.skill || []).map(
+                                      (employeeSkills, i) => (
+                                        <li key={i}>
+                                          <span className="bg-polar text-black-2 mr-3 mb-2 p-2 font-size-3 rounded-3 d-flex align-items-center">
+                                            {employeeSkills.skill}
+                                          </span>
+                                        </li>
+                                      )
+                                    )
+                                  )}
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-lg-7 col-md-6 p-8">
+                            {/*----Employee's Education Profile----*/}
+                            <div
+                              id="Education_Profile"
+                              className="position-relative"
+                            >
+                              <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                                <span>Education</span>
+                                {user_type === "company" ||
+                                  props.self === "yes" ? null : (
+                                  <CustomButton
+                                    className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                                    title="Update Education details"
+                                    onClick={() => setShowEducation(true)}
+                                  >
+                                    <PiPencilDuotone />
+                                  </CustomButton>
+                                )}
+                              </h4>
+                              {userDetail.education === undefined ||
+                                userDetail.education.length === 0 ? (
+                                <div className="w-100 card p-5 shadow-8 border-0 mb-2">
+                                  Add Education Details
+                                </div>
+                              ) : (
+                                (userDetail.education || []).map(
+                                  (EducationDetails, index) => (
+                                    <div
+                                      className="w-100 card px-5 py-2 shadow-8 border-0 mb-2"
+                                      key={index}
+                                    >
+                                      <div className="d-flex align-items-center flex-wrap media_profile_box flex-sm-nowrap justify-content-between">
+                                        <div className="media align-items-center company_box p-0">
+                                          <div className="text_box text-left w-100 mt-n2 text-capitalize ">
+                                            <h4 className="mb-0">
+                                              <span className="font-size-4 font-weight-semibold">
+                                                {EducationDetails.qualification +
+                                                  " "}
+                                                <span className="font-size-4 text-break">
+                                                  (
+                                                  {
+                                                    EducationDetails.university_institute
+                                                  }
+                                                  )
+                                                </span>
+                                              </span>
+                                            </h4>
+                                            <span className="font-size-3 text-default-color text-break">
+                                              {EducationDetails.course +
+                                                (EducationDetails.specialization
+                                                  ? ` - ${EducationDetails.specialization}`
+                                                  : "")}
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <div className="d-flex align-items-center justify-content-right flex-wrap text-right text-capitalize">
+                                          <span className="font-size-4 text-gray w-100">
+                                            {EducationDetails.passing_year}
+                                          </span>
+                                          {EducationDetails.institute_location && (
+                                            <span className="font-size-3 text-gray w-100">
+                                              <span
+                                                className="mr-4"
+                                                style={{ marginTop: "-2px" }}
+                                              >
+                                                <img
+                                                  src="image/svg/icon-loaction-pin-black.svg"
+                                                  alt=""
+                                                />
+                                              </span>
+                                              {
+                                                EducationDetails.institute_location
+                                              }
+                                            </span>
+                                          )}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )
+                                )
+                              )}
+                            </div>
+                            <div
+                              id="Career_Profile"
+                              className="position-relative mt-8"
+                            >
+                              <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                                <span>Career</span>
+                                {user_type === "company" ||
+                                  props.self === "yes" ? null : (
+                                  <CustomButton
+                                    className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                                    title="Update career details"
+                                    onClick={() =>
+                                      setShowEmploymentDetails(true)
+                                    }
+                                  >
+                                    <PiPencilDuotone />
+                                  </CustomButton>
+                                )}
+                              </h4>
+                              {/* {moment(PersonalDetail.start_date)}
+                              {moment([PersonalDetail.start_date]).diff(moment([PersonalDetail.end_date]), 'years', true)} */}
+
+                              {userDetail.career === undefined ||
+                                userDetail.career.length === 0 ? (
+                                <div className="w-100 card p-5 shadow-8 border-0 mb-2">
+                                  Add Career Details
+                                </div>
+                              ) : (
+                                (userDetail.career || []).map(
+                                  (CareerDetails, i) => (
+                                    <div
+                                      className="w-100 card px-5 py-2 shadow-8 border-0 mb-2"
+                                      key={i}
+                                    >
+                                      <div className="d-flex align-items-center flex-wrap media_profile_box flex-sm-nowrap justify-content-between">
+                                        <div className="media align-items-center company_box col-md-6 p-0">
+                                          <div className="text_box text-left w-100 mt-n2 text-capitalize p-4">
+                                            <span className="font-size-5 text-black-2 font-weight-semibold w-100">
+                                              {CareerDetails.designation}
+                                              <span className="font-size-4">
+                                                {CareerDetails.functional_area &&
+                                                  ` - ${CareerDetails.functional_area}`}
+                                              </span>
+                                            </span>
+                                            <span className="font-size-3 text-default-color">
+                                              {CareerDetails.company}
+                                              {CareerDetails.industry &&
+                                                ` (${CareerDetails.industry})`}
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <div className="d-flex align-items-center justify-content-right flex-wrap text-right text-capitalize">
+                                          <span className="font-size-3 text-gray w-100">
+                                            {/* {moment(CareerDetails.start_date).format(
+                                    "DD-MM-YYYY"
+                                  )}
+                                  -
+                                  {moment(CareerDetails.end_date).format(
+                                    "DD-MM-YYYY"
+                                  )} */}
+                                            {CareerDetails.currently_work_here ===
+                                              ("1" || 1)
+                                              ? "Currently working"
+                                              : calculateDuration(
+                                                CareerDetails.start_date,
+                                                CareerDetails.end_date
+                                              )}
+                                          </span>
+                                          {CareerDetails.company_location && (
+                                            <span className="font-size-3 text-gray w-100">
+                                              <span
+                                                className="mr-4"
+                                              // style={{ marginTop: "-2px" }}
+                                              >
+                                                <img
+                                                  src="image/svg/icon-loaction-pin-black.svg"
+                                                  alt=""
+                                                />
+                                              </span>
+                                              {CareerDetails.company_location}
+                                            </span>
+                                          )}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )
+                                )
+                              )}
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="tab-pane fade"
+                      id="profile"
+                      role="tabpanel"
+                      aria-labelledby="profile-tab"
+                    >
+                      {/* <div className="pr-xl-11 p-5 pl-xs-12 pt-9 pb-11">
+                        <form>
+                          <div className="row">
+                            <div className="col-12 mb-7">
+                              <label
+                                htmlFor="name3"
+                                className="font-size-4 font-weight-semibold text-black-2 mb-5 line-height-reset"
+                              >
+                                Your Name
+                              </label>
+                              <input
+                                id="name3"
+                                type="text"
+                                className="form-control"
+                                placeholder="Jhon Doe"
+                              />
+                            </div>
+                            <div className="col-lg-6 mb-7">
+                              <label
+                                htmlFor="email3"
+                                className="font-size-4 font-weight-semibold text-black-2 mb-5 line-height-reset"
+                              >
+                                E-mail
+                              </label>
+                              <input
+                                id="email3"
+                                type="email"
+                                className="form-control"
+                                placeholder="example@gmail.com"
+                              />
+                            </div>
+                            <div className="col-lg-6 mb-7">
+                              <label
+                                htmlFor="subject3"
+                                className="font-size-4 font-weight-semibold text-black-2 mb-5 line-height-reset"
+                              >
+                                Subject
+                              </label>
+                              <input
+                                id="subject3"
+                                type="text"
+                                className="form-control"
+                                placeholder="Special contract"
+                              />
+                            </div>
+                            <div className="col-lg-12 mb-7">
+                              <label
+                                htmlFor="message3"
+                                className="font-size-4 font-weight-semibold text-black-2 mb-5 line-height-reset"
+                              >
+                                Message
+                              </label>
+                              <textarea
+                                name="message"
+                                id="message3"
+                                placeholder="Type your message"
+                                className="form-control h-px-144"
+                              ></textarea>
+                            </div>
+                            <div className="col-lg-12 pt-4">
+                              <button className="btn btn-primary text-uppercase w-100 h-px-48">
+                                Send Now
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div> */}
+                    </div>
+                  </div>
+                  {/* <!-- Sidebar End --> */}
+                  <div
+                    className={
+                      TabActive === "jobs"
+                        ? "row m-0  justify-content-center"
+                        : "d-none"
+                    }
+                    id="appliedJobs"
+                    role="tabpanel"
+                    aria-labelledby="appliedJobs"
+                  >
+                    {/* <EmployeeTable /> */}
+                    {TabActive === "jobs" ? (
+                      <JobProfileResponse
+                        employee_id={eid}
+                        heading={"userprofile"}
+                        setApiCall={setApiCall}
+                        apiCall={apiCall}
+                        statusCall={statusCall}
+                        setStatusCall={setStatusCall}
+                        pageNo={pageNo}
+                        setpageNo={setPageNo}
+                      />
+                    ) : null}
+                    {/* <!-- Top Start --> */}
+                    {/* <div className="mb-5">
+                      <h4 className="font-size-7 mb-9 mt-5">Applied Jobs</h4>
+                      <div className="row justify-content-center">
+                        {appliedJob === undefined || appliedJob.length === 0 ? (
+                          <div className="text-center text-dark">
+                            No Data Found
+                          </div>
+                        ) : (
+                          (appliedJob || []).map((data, i) => {
+                            return (
+                              <Link
+                                to={
+                                  user_type === "admin"||user_type === "agent"
+                                    ? "/job"
+                                    : user_type === "user"
+                                    ? "/jobs"
+                                    : "/managejobs"
+                                }
+                                className="col-lg-6 col-sm-11 mb-9"
+                                key={i}
+                              >
+                                <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
+                                  <div className="media align-items-center">
+                                    <div className="square-52 mr-8 rounded">
+                                      <img
+                                        src={
+                                          data.logo
+                                            ? data.logo
+                                            : "image/l3/png/fimize.png"
+                                        }
+                                        alt=""
+                                        width={100}
+                                      />
+                                    </div>
+                                    <div className=" mx-5 text-capitalize">
+                                      <span
+                                        to=""
+                                        className="font-size-3 text-default-color line-height-2"
+                                      >
+                                        {data.company_name}
+                                      </span>
+                                      <h3 className="font-size-5 mb-0">
+                                        <span
+                                          className="heading-default-color font-weight-semibold"
+                                          to=""
+                                        >
+                                          {data.job_title}
+                                        </span>
+                                      </h3>
+                                    </div>
+                                  </div>
+                                  <div className="pt-5">
+                                    <span className="font-size-3 text-gray  mr-7">
+                                      Resume:<b>{data.employee_lmia_status}</b>
+                                    </span>
+                                  </div>
+
+                                  <div className="d-flex pt-10">
+                                    <ul className="list-unstyled mb-1 d-flex flex-wrap text-capitalize">
+                                      <li>
+                                        <span
+                                          to=""
+                                          className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                                        >
+                                          <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>
+                                          {data.location}
+                                        </span>
+                                      </li>
+                                      <li>
+                                        <span
+                                          to=""
+                                          className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                                        >
+                                          <i className="fa fa-briefcase mr-2 font-weight-bold"></i>
+                                          {data.job_type}
+                                        </span>
+                                      </li>
+                                      <li>
+                                        <span
+                                          to=""
+                                          className="bg-regent-opacity-15 text-eastern font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                                        >
+                                          <i className="text-eastern fa fa-briefcase mr-2 font-weight-bold"></i>
+                                          {data.experience_required}
+                                        </span>
+                                      </li>
+                                      <li>
+                                        <span
+                                          to=""
+                                          className="bg-regent-opacity-15 text-gray font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                                        >
+                                          <i className="text-gray fa fa-clock mr-2 font-weight-bold"></i>
+                                          {moment(data.created_at).format(
+                                            "DD-MM-YYYY"
+                                          )}
+                                        </span>
+                                      </li>
+
+                                      <li>
+                                        <span
+                                          to=""
+                                          className="bg-regent-opacity-15 text-red font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                                        >
+                                          <i className="fas fa-rupee-sign mr-2 font-weight-bold"></i>
+                                         $ {data.salary} 
+                                        </span>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </Link>
+                            );
+                          })
+                        )}
+                      </div>
+                    </div> */}
+                  </div>
+                  <div
+                    className={
+                      TabActive === "documents"
+                        ? "justify-content-center"
+                        : "d-none"
+                    }
+                    id="applieddocuments"
+                    role="tabpanel"
+                    aria-labelledby="applieddocuments"
+                  >
+                    {TabActive === "documents" ? (
+                      // <  DocumrentContainer
+                      //   employee_id={eid}
+                      //   emp_user_type={"employee"}
+                      //   docId={docId ? docId : ""}
+                      //   folderId={PersonalDetail.documents_folder_id}
+                      // />
+                      <SharePointDocument
+                        user_id={eid}
+                        emp_user_type={"employee"}
+                        folderId={
+                          docParentId
+                            ? docParentId
+                            : PersonalDetail.documents_folder_id
+                        }
+                        AnnoteId={docHighAnnoId}
+                        docTaskId={docTaskId}
+                        notification={docId ? "yes" : "no"}
+                        docId={docId ? docId : ""}
+                        docTypePage={"adobe"}
+                        user_name={PersonalDetail.name}
+                        partnerId={PersonalDetail.reffer_by}
+                      />
+                    ) : null}
+                  </div>
+                  <div
+                    className={
+                      TabActive === "sharepoint"
+                        ? "justify-content-center"
+                        : "d-none"
+                    }
+                    id="applieddocuments"
+                    role="tabpanel"
+                    aria-labelledby="applieddocuments"
+                  >
+                    {TabActive === "sharepoint" ? (
+                      <SharePointDocument
+                        user_id={eid}
+                        emp_user_type={"employee"}
+                        folderId={
+                          docParentId
+                            ? docParentId
+                            : PersonalDetail.documents_folder_id
+                        }
+                        notification={docId ? "yes" : "no"}
+                        docId={docId ? docId : ""}
+                      />
+                    ) : null}
+                  </div>
+                  <div
+                    className={
+                      TabActive === "visa"
+                        ? "justify-content-center "
+                        : "d-none"
+                    }
+                  >
+                    <VisaTable
+                      employee_id={eid}
+                      setApiCall={setApiCall}
+                      apiCall={apiCall}
+                      page={"user_profile"}
+                      setVisaStatus={setVisaStatus}
+                      setVisaStatusRejectComment={setVisaStatusRejectComment}
+                    />
+                  </div>
+                  <div
+                    className={
+                      TabActive === "notes"
+                        ? "justify-content-center "
+                        : "d-none"
+                    }
+                  >
+                    {/* {TabActive === "notes" ? (
+                      <Addfollowup
+                        userId={eid}
+                        userType={"employee"}
+                        assigned_by_id={PersonalDetail.assigned_by}
+                        setApiCall={setApiCall}
+                        noteNotification={notes}
+                      />
+                    ) : null} */}
+                    <Addfollowup
+                      userId={eid}
+                      userType={"employee"}
+                      setApiCall={setApiCall}
+                      assigned_by_id={PersonalDetail.assigned_by}
+                      noteNotification={notes}
+                      show={TabActive === "notes" || addNote}
+                      page={TabActive === "notes" ? "no" : "yes"}
+                      close={() => {
+                        setAddNote(false);
+                      }}
+                      note_id={notes ? note_id : ""}
+                      skip={() => navigate(-1)}
+                    />
+                  </div>
+                  <div
+                    className={
+                      TabActive === "retainer agreement"
+                        ? "justify-content-center "
+                        : "d-none"
+                    }
+                  >
+                    {TabActive === "retainer agreement" ? (
+                      <RetainerAgrementMainPage
+                        user_id={eid}
+                        emp_user_type={"employee"}
+                        folderId={
+                          // docId
+                          //   ? docParentId
+                          //   :
+                          PersonalDetail.documents_folder_id
+                        }
+                        userData={PersonalDetail}
+                      />
+                    ) : null}
+                  </div>
+                  <div
+                    className={
+                      TabActive === "payment"
+                        ? "justify-content-center "
+                        : "d-none"
+                    }
+                  >
+                    {TabActive === "payment" ? (
+                      <div className="p-1 activity_container">
+                        <div className="p-3">
+                          <h3 className="">Payments</h3>
+                        </div>
+                        <div
+                          className={user_type === "user" ? "d-none" : "d-flex justify-content-between align-items-center mb-3"}
+                          style={{ gap: "5px" }}
+                        >
+                          <div
+                            className={`btn-group`}
+                            role="group"
+                            aria-label="Basic example"
+                          >
+                            <button
+                              type="button"
+                              className={
+                                `${selectedPaymentTab === "payment_records"
+                                  ? "btn btn-primary"
+                                  : "btn btn-outline-primary"}`
+                              }
+                              onClick={() => {
+                                setSelectedPaymentTab("payment_records");
+                              }}
+                              title="payment_records"
+                            >
+                              Payment records
+                            </button>
+                            <button
+                              type="button"
+                              className={
+                                `${selectedPaymentTab === "invoice"
+                                  ? "btn btn-primary"
+                                  : "btn btn-outline-primary"} `
+                              }
+                              onClick={() => {
+                                setSelectedPaymentTab("invoice");
+                                // setApplicanttypeFolderId(location?.state?.folderId || localApplicantTypeFolderId)
+                              }}
+                              title="invoice"
+                            >
+                              Invoice
+                            </button>
+                          </div>
+                        </div>
+                        {user_type === "admin" && selectedPaymentTab === "invoice" ? (
+                          <PaymentPage
+                            user_id={eid}
+                            user_type={"employee"}
+                            user_email={PersonalDetail.email}
+                            user_secondary_email={PersonalDetail.secondary_email}
+                            user_name={PersonalDetail.name}
+                            folderId={PersonalDetail.documents_folder_id}
+                            userData={PersonalDetail}
+                            invoiceId={invoiceId || ""}
+                          />
+                        ) : (
+                          <PayentForm
+                            Payment_id={Payment_id || ""}
+                            data={PersonalDetail}
+                            user_id={eid}
+                            user_type={"employee"}
+                          />
+                        )}
+                      </div>
+                    ) : null}
+                  </div>
+                  <div
+                    className={
+                      TabActive === "contact"
+                        ? "justify-content-center "
+                        : "d-none"}
+                  >
+                    {TabActive === "contact" ? (
+                      <ContactPage email={PersonalDetail.email} admin_id={PersonalDetail.assigned_by || "10001" || "1"}
+                      /*agent_id={PersonalDetail.reffer_by}*/
+                      />
+                    ) : null}
+                  </div>
+                  <div
+                    className={
+                      TabActive === "email"
+                        ? "justify-content-center "
+                        : "d-none"
+                    }
+                  >
+                    {TabActive === "email" ? (
+                      <MainEmailPage email={PersonalDetail.email} emailId={emailId} />
+                    ) : null}
+                  </div>
+                  <div
+                    className={
+                      TabActive === "agent conversation"
+                        ? "justify-content-center "
+                        : "d-none"
+                    }
+                  >
+                    {TabActive === "agent conversation" ? (
+                      <AgentConversation
+                        userId={eid}
+                        userEmail={PersonalDetail.email}
+                        userName={PersonalDetail.name}
+                        assignusertype={"admin"}
+                        assigned_by_id={PersonalDetail.assigned_by}
+                        partnerChatNav={partnerChat}
+                        reffer_by={PersonalDetail.reffer_by}
+                        type={"partner"}
+                        emp_user_type={"employee"}
+                        page={"employeeProfile"}
+                      />
+                    ) : null}
+                  </div>
+                  {TabActive === "timeLine" ? (
+                    <UserTimline
+                      userId={eid}
+                      userEmail={PersonalDetail.email}
+                      userName={PersonalDetail.name}
+                      userType={"employee"}
+                      TimeLineId={TimeLineId}
+                    />
+                  ) : null}
+                  <div
+                    className={
+                      TabActive === "InterviewHistory"
+                        ? "justify-content-center "
+                        : "d-none"
+                    }
+                  >
+                    {TabActive === "InterviewHistory" ? (
+                      <InterviewHistoryTable
+                        employee_id={eid}
+                      // setApiCall={setApiCall}
+                      // apiCall={apiCall}
+                      // page={"user_profile"}
+                      />
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : userFound ? (
+            <div className="table-responsive main_table_div">
+              <Loader />
+            </div>
+          ) : (
+            <div className="col-12 order-2 order-xl-1  mt-15 text-center">
+              <NotFound userType={user_type} />
+            </div>
+          )}
+        </div>
+      </div>
+
+      {user_type === "admin" || user_type === "agent" ? "" : <EmployeeFooter />}
+      {showEducation ? (
+        <EducationDetails
+          show={showEducation}
+          employeeId={employeeId}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => setShowEducation(false)}
+        />
+      ) : null}
+      {showEmploymentDetails ? (
+        <EmployementDetails
+          show={showEmploymentDetails}
+          employeeId={employeeId}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => setShowEmploymentDetails(false)}
+        />
+      ) : null}
+
+      {showPersonalDetails ? (
+        <PersonalDetails
+          show={showPersonalDetails}
+          employeeId={employeeId}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => setShowPersonalDetails(false)}
+        />
+      ) : null}
+      {showConsultationForm ? (<AddConsultationInCandidate
+        show={showConsultationForm}
+        employeeId={PersonalDetail}
+        apiCall={apiCall}
+        setApiCall={setApiCall}
+        close={() => setShowConsultationForm(false)}
+      />) : null}
+    </div>
+  );
+};
+
+export default NewUserProfile;

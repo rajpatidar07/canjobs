@@ -1,0 +1,321 @@
+import React, { useEffect, useRef } from "react";
+import PSPDFKit from "pspdfkit";
+import { ADocAnnotation } from "../api/api";
+// import { toolbarCustomBreakpoint } from "../../_server/components/example/utils";
+import { toast } from "react-toastify";
+export default function PdfViewerComponent(props) {
+  const containerRef = useRef(null);
+  const isLoadingNotes = useRef(false);
+  // const documentID = "YOUR_DOCUMENT_ID"; // Replace YOUR_DOCUMENT_ID with the actual document ID
+  // Function to create a note object
+  const createPdfNote = (noteJson) => {
+    return new Promise((resolve, reject) => {
+      // Simulate API call or async operation
+      if (noteJson) {
+        setTimeout(() => {
+          // console.log("Note created:", noteJson);
+          resolve({
+            bbox: noteJson.createdNote.boundingBox,
+            blendMode: noteJson.createdNote.blendMode,
+            createdAt: noteJson.createdNote.createdAt,
+            name: noteJson.createdNote.name,
+            opacity: noteJson.createdNote.opacity,
+            pageIndex: noteJson.createdNote.pageIndex,
+            // "strokeColor": "#2293FB",
+            // "strokeWidth": 5,
+            type: "pspdfkit/comment",
+            rects: noteJson.createdNote.rects,
+            color: noteJson.createdNote.color,
+            updatedAt: noteJson.createdNote.updatedAt,
+            v: 1,
+            canReply: true,
+            // "note": "<p>gggggggg</p>",
+            creatorName: noteJson.createdNote.creatorName,
+            rootId: noteJson.createdComments
+              ? noteJson.createdComments.rootId
+              : "",
+            pdfObjectId: noteJson.createdNote.pdfObjectId,
+            // "text": {
+            //   "format": noteJson.createdComments.text.format,
+            //   "value": noteJson.createdComments.text.value
+            // },
+            text: noteJson.createdComments
+              ? noteJson.createdComments.text.value
+              : "",
+            // "customData": null,
+            mentionId: noteJson.mentionId ? noteJson.mentionId : "",
+          }); // Simulated response with an ID
+        }, 1000);
+      }
+    });
+  };
+
+  useEffect(() => {
+    const loadPSPDFKit = async () => {
+      let instance = null;
+      try {
+        const container = containerRef.current;
+        let adminName = localStorage.getItem("admin");
+
+        PSPDFKit.unload(container);
+        if (!container) {
+          throw new Error("Container element not found.");
+        }
+        instance = await PSPDFKit.load({
+          container,
+          license:
+            "zFV8P9YHvxGpBc0Tp-W4cg6Fl-zD9VyTWQGiJTi1A0pM18iMZUQDrARKsunUn4oFAuan32RJzCDR--1nglDFAeacyOumrQOdc7aLnh0zkUHLoL9ZIyYS885cFaZySBalYNU4cbnmdUaZUlte0UEfoF8wM-_lJnbFYTYyWvpuPQ7BICRjm9_SGVz9V8bQGEU3OjpqY_YsvjfyRw", // Replace with your actual license key
+          document: props.document,
+          baseUrl: `${window.location.protocol}//${window.location.host}/${process.env.PUBLIC_URL}`,
+          CommentMarkerAnnotation: true,
+          setOnCommentCreationStart: true,
+          toolbarItems: PSPDFKit.defaultToolbarItems.concat({
+            type: "annotate",
+          }),
+          mentionableUsers: props.adminDetailsFOrMention,
+          autoSaveMode: PSPDFKit.AutoSaveMode.IMMEDIATE,
+          enableRichText: () => true,
+          instant: true,
+        });
+
+        instance.setAnnotationCreatorName(
+          adminName.charAt(0).toUpperCase() + adminName.slice(1)
+        );
+        let eventData = {};
+        /* Function to create Annotation comment */
+        instance.addEventListener(
+          "comments.create",
+          async (createdComments) => {
+            eventData.createdComments = createdComments.get(0);
+            // console.log(createdComments.get(0));
+            eventData.mentionId = createdComments.get(0).getMentionedUserIds()
+              ._map._root
+              ? createdComments.get(0).getMentionedUserIds()._map._root
+                  .entries[0][0]
+              : "";
+            // console.log("Data from comments.create:", createdComments.get(0).getMentionedUserIds()._map._root.entries[0][0]);
+          }
+        );
+
+        /* Function to create Annotation note */
+        instance.addEventListener("annotations.create", async (createdNote) => {
+          const note = createdNote.get(0);
+          // console.log(note);
+          // const serializedObjectNote = toSerializableObject(note);
+          // const noteJson = serializedObjectNote;
+          if (!isLoadingNotes.current) {
+            // Store data from annotations.create in eventData
+            eventData.createdNote = note;
+            // console.log("Combined eventData:", (eventData));
+            createPdfNote(eventData).then(async (response) => {
+              // console.log("Final data:", JSON.stringify(response));
+              try {
+                let res = await ADocAnnotation(
+                  localStorage.getItem("admin_id"),
+                  props.data.id,
+                  "", //ASSIGNED ADMIN ID
+                  "", //ASSIGNED ADMIN EMAIL
+                  "", //SUBJECT
+                  "N/A", //COMMENT
+                  "0", //X AXIS
+                  "0", //Y AXIS
+                  "document",
+                  localStorage.getItem("admin_type"), //sender ADMIN type
+                  localStorage.getItem("admin"), //sender name,
+                  "", //assigned Admin or user Name,
+                  "", //follow up status(for notes only)
+                  "", //Next follow up date(for notes only)
+                  "", //Assign user type,
+                  "", //Document url(for notes only)
+                  localStorage.getItem("admin_email"), //Sender email
+                  props.userId, //employee id,
+                  "", //assigned_by_id
+                  props.data.parentReference.id, // document parent code,
+                  response //Annotation data,
+                  //metaData.annotationId //annotationId
+                );
+                if (res.data.message === "task inserted successfully!") {
+                  toast.success("Commented Successfully", {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                  });
+                  //   setSelectedAnnotation(null);
+                  //   setComments("");
+                  //   setCommentApiCall(true);
+                  //   setSelectedAdmin("");
+                  //   setAnnotationMode(!isAnnotationMode);
+                  //   setFilteredEmails([]);
+                  // setNotificationApiCall(true);
+                  localStorage.setItem("callNotification", true);
+                  instance.save();
+                }
+              } catch (err) {
+                console.log(err);
+                if (
+                  err.response.data.message ===
+                  "required fields cannot be blank"
+                ) {
+                  toast.error(" Please try again later.", {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                  });
+                  //   setSelectedAnnotation(null);
+                  //   setComments("");
+                  //   setSelectedAdmin("");
+                  //   setCommentApiCall(true);
+                  //   setAnnotationMode(!isAnnotationMode);
+                  //   setAddCommentFlag();
+                  //   setFilteredEmails([]);
+                }
+              }
+            });
+          }
+        });
+        /* Function to Update Annotation comment */
+        instance.addEventListener("comments.update", (updatedComments) => {
+          // console.log(updatedComments.get(0).id);
+        });
+
+        /* Function to Delete Annotation comment */
+        instance.addEventListener("comments.delete", (deletedComments) => {
+          // console.log(deletedComments.get(0).id);
+        });
+
+        instance.setMentionableUsers(props.adminDetailsFOrMention);
+
+        // Your existing code for PSPDFKit configuration and event listeners
+        instance.addEventListener("annotations.load", (loadedAnnotations) => {
+          // console.log("Annotations were loaded", loadedAnnotations.toJS());
+        });
+        instance.addEventListener("annotations.change", function () {
+          // console.log("Something in the annotations has changed.");
+        });
+  
+        // Create annotations using your functions
+        // const annotationsOnFirstPage = await instance.getAnnotations(0);
+        // if (annotationsOnFirstPage.size <= 1) {
+        //   await instance
+        //     .create([
+        //       newInkAnnotation(),
+        //       newTextAnnotation(),
+        //       newEllipseAnnotationAnnotation(),
+        //       newHighlightAnnotation(),
+        //       newNoteAnnotation(),
+        //     ])
+        //     .then(instance.ensureChangesSaved)
+        //     .then(savedAnnotations => {
+        //       console.log("Saved annotations with IDs", savedAnnotations.map(it => it.id).join(", "));
+        //     });
+        // }
+        instance.addEventListener("annotations.didSave", (annotations) => {
+          console.log("Annotations saved!", annotations.toJS());
+        });
+        return instance;
+      } catch (error) {
+        console.error("Error loading PSPDFKit:", error);
+      }
+    };
+
+    loadPSPDFKit();
+
+    return () => {
+      // eslint-disable-next-line
+      const container = containerRef.current;
+      if (container && window.PSPDFKit) {
+        window.PSPDFKit.unload(container);
+      }
+    };
+    // eslint-disable-next-line
+  }, [props.document, props.commentsList]);
+
+  return (
+    <div
+      ref={containerRef}
+      style={{ width: "100%", height: "calc(100vh - 100px)" }}
+    />
+  );
+}
+
+// import React, { useEffect, useRef } from "react";
+// export default function PdfViewerComponent(props) {
+//   const containerRef = useRef(null);
+//   // const ownerId = "owner123"; // Set your desired owner ID
+//   // const ownerName = "John Doe"; // Set your desired owner name
+
+//   useEffect(() => {
+//     const loadPSPDFKit = async () => {
+//       try {
+//         const PSPDFKit = await import("pspdfkit");
+//         const container = containerRef.current;
+//         let adminName=localStorage.getItem("admin")
+//         const toolbarItems = PSPDFKit.defaultToolbarItems
+//           .concat({ type: 'comment' }) // Add comment tool.
+//           .filter((item) => item.type !== 'note'); // Remove note tool.
+
+//         if (!container) {
+//           throw new Error("Container element not found.");
+//         }
+
+//         const instance = await PSPDFKit.load({
+//           container,
+//           license: "YOUR_PSPDFKIT_LICENSE_KEY",
+//           document: props.document,
+//           baseUrl: `${window.location.protocol}//${window.location.host}/${process.env.PUBLIC_URL}`,
+//           CommentMarkerAnnotation: true,
+//           setOnCommentCreationStart: true,
+//           toolbarItems,
+//           enableRichText: () => true
+//         });
+//         console.log(instance)
+//       try{  instance.contentDocument.addEventListener(
+//           "pointerdown",
+//           event => {
+//             if (event.target && event.target.getAttribute("01HW2Y4NXRVR440HXAGB926H6G")) {
+//               event.preventDefault();
+//               event.stopImmediatePropagation();
+//               instance.setSelectedAnnotation(
+//                 event.target.getAttribute("01HW2Y4NXRVR440HXAGB926H6G")
+//               );
+//             }
+//           },
+//           { capture: true }
+//         );}catch(err){
+//           console.log(err)
+//         }
+//         instance.setAnnotationCreatorName(adminName.charAt(0).toUpperCase() + adminName.slice(1));
+//         /*Function to create Annotation comment */
+//          instance.addEventListener("comments.create", async createdComments => {
+//          console.log(createdComments.get(0).id)
+//         })
+//         /*Function to Update Annotation comment */
+//         instance.addEventListener("comments.update", updatedComments => {
+//           console.log(updatedComments.get(0).id)
+//         });
+//          /*Function to Delete Annotation comment */
+//          instance.addEventListener("comments.delete", deletedComments => {
+//          console.log(deletedComments.get(0).id)
+//         });
+
+//       } catch (error) {
+//         console.error("Error loading PSPDFKit:", error);
+//       }
+//     };
+
+//     loadPSPDFKit();
+
+//     return () => {
+//       // eslint-disable-next-line
+//       const container = containerRef.current;
+//       if (container && window.PSPDFKit) {
+//         window.PSPDFKit.unload(container);
+//       }
+//     };
+//   }, [props.document]);
+
+//   return (
+//     <div
+//       ref={containerRef}
+//       style={{ width: "100%", height: "calc(100vh - 100px)" }}
+//     />
+//   );
+// }

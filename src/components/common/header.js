@@ -1,16 +1,19 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import CompanyLogin from "../company/loginModal";
-import CompanySignUp from "../company/signupModal";
-import ChangePassword from "./changepassword";
-import EmployeeLoginModal from "../user/login";
-import EmployeeSignupModal from "../user/signup";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+// import CompanyLogin from "../company/loginModal";
+// import CompanySignUp from "../company/signupModal";
+// import EmployeeLoginModal from "../user/login";
+// import EmployeeSignupModal from "../user/signup";
 import { toast } from "react-toastify";
+import Setting from "./setting";
+import { getInitials } from "./GetInitials";
 
 function EmployeeHeader() {
-  // const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
-  let navigate =useNavigate()
+  const employee_id = localStorage.getItem("employee_id");
+  const company_id = localStorage.getItem("company_id");
+  let profile_photo = localStorage.getItem("profile_photo");
+  let name = localStorage.getItem("name");
   // ADD CLASS FOR MOBILE SCREEN IN SIDEBAR
   // state:-
   // const [addClass, setAddClass] = useState(false);
@@ -20,9 +23,9 @@ function EmployeeHeader() {
   // };
   // EMPLOYEEE LOGIN AND SIGNUP
   // Employee signup and login modal
-  const [showLogin, setShowLogin] = useState(false);
-  const [showSingUp, setShowSingUp] = useState(false);
-  const [showChangePass, setShowChangePass] = useState(false);
+  // const [showLogin, setShowLogin] = useState(false);
+  // const [showSingUp, setShowSingUsp] = useState(false);
+  const [showSetting, setShowSetting] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   /*-- Function to show menu on toggle button --*/
@@ -31,44 +34,60 @@ function EmployeeHeader() {
   }
 
   /*-- Function to switch login to singup --*/
-  const SignUpClick = () => {
-    setShowSingUp(true);
-    setShowLogin(false);
-  };
+  // const SignUpClick = () => {
+  //   setShowSingUp(true);
+  //   setShowLogin(false);
+  // };
   /*-- Function to switch singup to login--*/
-  const LoginClick = () => {
-    setShowLogin(true);
-    setShowSingUp(false);
-  };
+  // const LoginClick = () => {
+  //   setShowLogin(true);
+  //   setShowSingUp(false);
+  // };
   // END EMPLOYEE LOGIN AND SIGNUP
 
   // COMPANY LOGIN AND SIGNUP
   // Company signup and login state
-  const [showCompanyLogin, setShowCompanyLogin] = useState(false);
-  const [showCompanySignUp, setShowCompanySignUp] = useState(false);
+  // const [showCompanyLogin, setShowCompanyLogin] = useState(false);
+  // const [showCompanySignUp, setShowCompanySignUp] = useState(false);
   /*-- Function to switch login to signup --*/
-  const CompanySignUpClick = () => {
-    setShowCompanySignUp(true);
-    setShowCompanyLogin(false);
-  };
+  // const CompanySignUpClick = () => {
+  //   setShowCompanySignUp(true);
+  //   setShowCompanyLogin(false);
+  // };
   /*-- Function to switch signup to login--*/
-  const CompanyLoginClick = () => {
-    setShowCompanyLogin(true);
-    setShowCompanySignUp(false);
-  };
-  //  END COMPANY LOGIN AND SIGNUP
+  // const CompanyLoginClick = () => {
+  //   setShowCompanyLogin(true);
+  //   setShowCompanySignUp(false);
+  // };
+
+  useEffect(() => {
+    // eslint-disable-next-line
+    profile_photo = localStorage.getItem("profile_photo");
+    // name = localStorage.getItem("name");
+    // condition to remove the className from the body when we are not at the admin modual
+    // eslint-disable-next-line
+    if (
+      window.location.pathname === "/" ||
+      (window.location.pathname === "/jobs" &&
+        localStorage.getItem("userType") === "admin")
+    ) {
+      document.body.classList.remove("admin_body");
+    }
+  }, [localStorage.getItem("profile_photo")]);
+
   return (
     <header className="site-header site-header--menu-right bg-default py-7 py-lg-0 site-header--absolute site-header--sticky">
       <div className="container">
         <nav className="navbar site-navbar offcanvas-active navbar-expand-lg  px-0 py-0">
           {/* <!-- Brand Logo--> */}
           <div className="brand-logo">
-            <Link to="/">
+            <Link to={userType === "company" ? "/client" : userType === "user" ? "/" : "/main_home"}>
               {/* <!-- light version logo (logo must be black // eslint-disable-next-line)--> */}
               <img
-                src="image/logo-main-black.png"
+                src="image/00logo-main-black.png"
                 alt=""
                 className="light-version-logo default-logo"
+                style={{ maxWidth: "160px" }}
               />
               {/* <!-- Dark version logo (logo must be White)--> */}
               <img
@@ -87,37 +106,55 @@ function EmployeeHeader() {
                 <ul className="navbar-nav main-menu">
                   {/* EMPLOYER MENU ITEMS */}
 
-                  <li className="nav-item nav-item">
-                    <Link className="nav-link" to="/company">
+                  <li className="nav-item nav-item d-none" >
+                    <Link className="nav-link" to={window.location.pathname === "/client" ? "" : "/client"}
+                      onClick={() =>
+                        window.location.pathname === "/client" ? window.reload() : null}
+                    >
+
                       Home
                     </Link>
                   </li>
-                  <li className="nav-item">
+                  <li className="nav-item d-none">
                     <Link className="nav-link" to="/managejobs">
                       Manage Jobs
                     </Link>
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/response">
-                      Responses
+                      Jobs
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/lmia">
+                      LMIA
                     </Link>
                   </li>
                   {/* <li className="nav-item">
-                    <Link className="nav-link" to="/companyprofile">
-                      Profile
+                    <Link className="nav-link" to="/visa">
+                      Visa
                     </Link>
                   </li> */}
                 </ul>
               ) : null}
 
               {/* EMPLOYEE MENU ITEMS */}
-              {userType === "company" ? null : (
+              {userType === "company" || userType === "user" ? null : (
                 <ul className="navbar-nav main-menu">
                   <li className="nav-item">
-                    <Link className="nav-link" to="/">
+                    <Link className="nav-link" to={window.location.pathname === "/" ? "" : "/"}
+                      onClick={() =>
+                        window.location.pathname === "/" ? window.reload() : null}>
                       Home
                     </Link>
                   </li>
+                  {/* <li className="nav-item nav-item" >
+                    <Link className="nav-link" to={'/demojob'}
+                    >
+
+                      Demo job
+                    </Link>
+                  </li> */}
                   <li>
                     <Link className="nav-link" to="/jobs">
                       Jobs
@@ -126,31 +163,155 @@ function EmployeeHeader() {
                   <li className="drop-menu-item">
                     <Link
                       className="nav-link"
-                      to={""}
-                      onClick={() => setShowCompanyLogin(true)}
+                      to={"/client_login"}
+                    // onClick={() => setShowCompanyLogin(true)}
                     >
-                      Employer Login
+                      Employer
                     </Link>
                   </li>
-
-                  <li className="nav-item">
+                  <li className="drop-menu-item">
+                    <Link to={"/partnerlogin"} className="nav-link">
+                      Partner
+                    </Link>
+                  </li>
+                  <li className="drop-menu-item">
+                    <Link to={"/aboutus"} className="nav-link">
+                      About us
+                    </Link>
+                  </li>
+                  {/* <li className="drop-menu-item">
+                    <Link to={`/outside_booking?data=${ encodeURIComponent(JSON.stringify( {
+    id: "39",
+    booking_code: "4439JY7",
+    start_datetime: "2024-07-30T14:00:00-06:00",
+    end_datetime: "2024-07-30T14:30:00-06:00",
+    service_name: "Immigration Consultation",
+    duration: "30",
+    price: "CAD$200(5% tax included)",
+    subtotal_amount: 200,
+    total_amount: 200,
+    balance_due_amount: 200,
+    total_payments: 0,
+    payment_method: null,
+    payment_portion: "full",
+    customer_comment: "hello there",
+    status: "approved",
+    payment_status: "not_paid",
+    start_date: "07/30/2024",
+    start_time: "02:00pm",
+    timezone: "-06:00",
+    agent: {
+      id: "2",
+      full_name: "Harpreet Kaur",
+      email: "info@canpathways.ca",
+      phone: "+14038885308"
+    },
+    customer: {
+      id: "374",
+      full_name: "manu",
+      email: "manu@gmail.com",
+      phone: "+911235649875",
+      custom_fields: {
+        cf_wGKaYXI8: "Select"
+      }
+    },
+    transactions: [],
+    source_id: "",
+    source_url: `https://canpathways.ca/book-appointment/`,
+    created_datetime: "2024-07-25T04:10:17+00:00",
+    price_breakdown: {
+      line_items: {
+        "Immigration Consultation": 200
+      }
+    },
+    google_meet: {
+      google_meet_url: ""
+    },
+    location: {
+      id: "1",
+      name: "Calgary",
+      full_address: "2618 Hopewell Pl NE Suite 310, Calgary, AB T1Y 7J7, Canada",
+      category: []
+    }
+  }))}`} className="nav-link">
+                     Web Hook
+                    </Link>
+                  </li> */}
+                  {/* <li className="nav-item">
                     <Link className="nav-link" to="/adminlogin">
                       Admin
                     </Link>
-                  </li>
+                  </li> */}
+                  {/* {userType === "company" || userType === "user" ? (
+                    <>
+                      <li className="nav-item">
+                        <Link
+                          onClick={() => setShowSetting(true)}
+                          className="nav-link py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                          to=""
+                        >
+                          Settings
+                        </Link>
+                        {showSetting && (
+                          <Setting
+                            show={showSetting}
+                            close={() => setShowSetting(false)}
+                          />
+                        )}
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          className="nav-link py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                          to={
+                            userType === "user"
+                              ? `/${employee_id}`
+                              : userType === "company"
+                              ? "client_detail"
+                              : null
+                          }
+                          onClick={
+                            userType === "company"
+                              ? () =>
+                                  localStorage.setItem("company_id", company_id)
+                              : null
+                          }
+                        >
+                          Profile
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          className="nav-linkht-1p2 text-uppercase"
+                          to=""
+                          onClick={() => {
+                            localStorage.clear(); // clear the local storage
+                            toast.error("Log Out Successfully", {
+                              position: toast.POSITION.TOP_RIGHT,
+                              autoClose: 1000,
+                            });
+                            navigate("/");
+                            window.reload();
+                          }}
+                        >
+                          
+                          Log out
+                        </Link>
+                      </li>
+                    </>
+                  ) : null} */}
                 </ul>
               )}
             </div>
-            <CompanyLogin
+            {/* <CompanyLogin
               show={showCompanyLogin}
               CompanySignUpClick={CompanySignUpClick}
               close={() => setShowCompanyLogin(false)}
-            />
-            <CompanySignUp
+            /> */}
+            {/* <CompanySignUp
               show={showCompanySignUp}
               CompanyLoginClick={CompanyLoginClick}
               close={() => setShowCompanySignUp(false)}
-            />
+            /> */}
             <button
               className="d-block d-lg-none offcanvas-btn-close focus-reset"
               type="button"
@@ -169,30 +330,30 @@ function EmployeeHeader() {
               {/* <!-- Modal for Login--> */}
               <Link
                 className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
-                to={""}
-                onClick={() => setShowLogin(true)}
+                to={"/candidate_login"}
+              // onClick={() => setShowLogin(true)}
               >
                 Log in
               </Link>
-              <EmployeeLoginModal
+              {/* <EmployeeLoginModal
                 show={showLogin}
                 signUpClick={SignUpClick}
                 close={() => setShowLogin(false)}
-              />
+              /> */}
 
               {/* <!-- Modal for SingUp--> */}
-              <button
+              <Link
                 className="btn btn-primary"
-                to={""}
-                onClick={() => setShowSingUp(true)}
+                to={"/candidate_signup"}
+              // onClick={() => setShowSingUp(true)}
               >
                 Sign up
-              </button>
-              <EmployeeSignupModal
+              </Link>
+              {/* <EmployeeSignupModal
                 show={showSingUp}
                 loginClick={LoginClick}
                 close={() => setShowSingUp(false)}
-              />
+          />*/}
             </div>
           )}
           {userType === "company" || userType === "user" ? (
@@ -208,13 +369,31 @@ function EmployeeHeader() {
                   aria-expanded="false"
                 >
                   <div>
-                    <img
-                      className="rounded-circle"
-                      src="image/user1.jpg"
-                      width={50}
-                      height={50}
-                      alt={""}
-                    />
+                    {((profile_photo === null ||
+                      profile_photo === "" ||
+                      profile_photo === "null" ||
+                      profile_photo === undefined ||
+                      profile_photo === "undefined")
+                      && userType === "company") ?
+                      <p className="company_logo"
+                        style={{ fontSize: "20px" }}>{name ? getInitials(name) : ""}</p>
+                      : <img
+                        className="rounded-circle"
+                        src={
+                          profile_photo === null ||
+                            profile_photo === "" ||
+                            profile_photo === "null" ||
+                            profile_photo === undefined ||
+                            profile_photo === "undefined"
+                            ? userType === "company"
+                              ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
+                              : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                            : profile_photo
+                        }
+                        width={50}
+                        height={50}
+                        alt={""}
+                      />}
                   </div>
                   <i className="fas fa-chevron-down heading-default-color ml-6"></i>
                 </Link>
@@ -222,24 +401,33 @@ function EmployeeHeader() {
                   className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
                   aria-labelledby="dropdownMenuLink"
                 >
-                  <Link
-                    onClick={() => setShowChangePass(true)}
-                    className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                    to=""
-                  >
-                    Settings
-                  </Link>
-                  <ChangePassword
-                    show={showChangePass}
-                    close={() => setShowChangePass(false)}
-                  />
+                  {userType !== "user" || userType !== "company" ? null : (
+                    <Link
+                      onClick={() => setShowSetting(true)}
+                      className="nav-link"
+                      to=""
+                    >
+                      Settings
+                    </Link>
+                  )}
+                  {showSetting && (
+                    <Setting
+                      show={showSetting}
+                      close={() => setShowSetting(false)}
+                    />
+                  )}
                   <Link
                     className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
                     to={
                       userType === "user"
-                        ? "/profile"
+                        ? `/${employee_id}`
                         : userType === "company"
-                        ? "/companyprofile"
+                          ? "/client_detail"
+                          : null
+                    }
+                    onClick={
+                      userType === "company"
+                        ? () => localStorage.setItem("company_id", company_id)
                         : null
                     }
                   >
@@ -247,15 +435,17 @@ function EmployeeHeader() {
                   </Link>
                   <Link
                     className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                    to=""
+                    to={
+                      "/"
+                    }
                     onClick={() => {
                       localStorage.clear(); // clear the local storage
                       toast.error("Log Out Successfully", {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 1000,
                       });
-                      navigate("/")
-                      window.location.reload();
+                      // navigate("/");
+                      window.reload();
                     }}
                   >
                     Log Out
@@ -266,7 +456,7 @@ function EmployeeHeader() {
           ) : null}
           {/* <!-- Mobile Menu Hamburger--> */}
           <button
-            className="navbar-toggler btn-close-off-canvas  hamburger-icon border-0"
+            className={`navbar-toggler btn-close-off-canvas  hamburger-icon border-0 ${userType === "user" ? " d-none" : ""}`}
             type="button"
             data-toggle="collapse"
             data-target="#mobile-menu"

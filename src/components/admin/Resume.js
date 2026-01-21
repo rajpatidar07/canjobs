@@ -135,30 +135,75 @@ const styles = StyleSheet.create({
 // Create Document Component
 function ResumeGrerator(props) {
   const { id } = useParams();
-  // console.log(id);
   const [User, setUser] = useState([]);
   const [Skills, setSkills] = useState([]);
   const [Education, setEducation] = useState([]);
   const [userCareer, setuserCareer] = useState([]);
   const UserData = async () => {
-    const userData = await EmployeeDetails(id);
-    if (userData.data.length === 0) {
-      setUser([]);
-      setSkills([]);
-      setuserCareer([]);
-      setEducation([]);
-    } else {
-      setUser(userData.data.employee[0]);
-      setSkills(userData.data.skill);
-      setuserCareer(userData.data.career);
-      setEducation(userData.data.education);
+    try {
+      const userData = await EmployeeDetails(id);
+      if (userData.data.length === 0) {
+        setUser([]);
+        setSkills([]);
+        setuserCareer([]);
+        setEducation([]);
+      } else {
+        setUser(userData.data.employee[0]);
+        setSkills(userData.data.skill);
+        setuserCareer(userData.data.career);
+        setEducation(userData.data.education);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
   useEffect(() => {
     UserData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [props]);
-  // console.log("________________________" + Skills);
+
+  /*Function to calculate the time duration of two dates */
+  const calculateDuration = (startDate, endDate) => {
+    const start = moment(startDate);
+    const end = moment(endDate);
+    const duration = moment.duration(end.diff(start));
+    const years = duration.years();
+    const months = duration.months();
+    const days = duration.days();
+
+    return `${
+      years === 1 ? years + " year ," : years > 1 ? years + " years ," : ""
+    } ${
+      months === 1 ? months + " month " : months > 1 ? months + " months ," : ""
+    } ${days === 1 ? days + " day" : days !== 1 ? days + " days" : ""}`;
+  };
+  // function getText(html) {
+  //   var divContainer = document.createElement("div");
+  //   divContainer.innerHTML = html;
+  //   return divContainer.textContent || divContainer.innerText || "";
+  // }
+  function getText(html) {
+    var divContainer = document.createElement("div");
+    divContainer.innerHTML = html;
+  
+    // Convert list items to text with proper indentation
+    divContainer.querySelectorAll('ul, ol').forEach(list => {
+      Array.from(list.children).forEach((li, index) => {
+        li.textContent = `${list.tagName === 'OL' ? `${index + 1}.` : '•'} ${li.textContent}`;
+      });
+    });
+  
+    // Preserve bold and italic formatting
+    divContainer.querySelectorAll('b').forEach(element => {
+      element.textContent = `**${element.textContent}**`;
+    });
+  
+    divContainer.querySelectorAll('i').forEach(element => {
+      element.textContent = `*${element.textContent}*`;
+    });
+      return divContainer.textContent;
+  }
+  
   return (
     <PDFViewer style={styles.pagesetup}>
       <Document>
@@ -167,63 +212,141 @@ function ResumeGrerator(props) {
             <View style={styles.profile}>
               <Image
                 src={
-                  User.profile_photo !== null || ""
-                    ? User.profile_photo
-                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeOWS60zE0_pk40_4fF40IWkb7nyLRRml0mzMgeY2GcSNXT32ZMhqyLhWEkWpXfggrLcI&usqp=CAU"
+                  User.profile_photo === undefined ||
+                  User.profile_photo === "undefined" ||
+                  User.profile_photo === null ||
+                  User.profile_photo === "null" ||
+                  User.profile_photo === ""
+                    ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeOWS60zE0_pk40_4fF40IWkb7nyLRRml0mzMgeY2GcSNXT32ZMhqyLhWEkWpXfggrLcI&usqp=CAU"
+                    : User.profile_photo
                 }
               />
             </View>
             <View style={styles.contact}>
               <Text style={styles.subHeading}>Personal</Text>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Phone:</Text>
-                <Text style={styles.conValue}>{User.contact_no}</Text>
+                {User.contact_no ? (
+                  <>
+                    <Text style={styles.icon}>Phone:</Text>
+                    <Text style={styles.conValue}>{User.contact_no}</Text>
+                  </>
+                ) : (
+                  ""
+                )}
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Email:</Text>
-                <Text style={styles.conValue}>{User.email}</Text>
+                {User.email ? (
+                  <>
+                    <Text style={styles.icon}>Email:</Text>
+                    <Text style={styles.conValue}>{User.email}</Text>
+                  </>
+                ) : (
+                  ""
+                )}
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>DOB:</Text>
-                <Text style={styles.conValue}>{User.date_of_birth}</Text>
+                {User.date_of_birth ? (
+                  <>
+                    <Text style={styles.icon}>DOB:</Text>
+                    <Text style={styles.conValue}>{User.date_of_birth}</Text>
+                  </>
+                ) : (
+                  ""
+                )}
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Gender:</Text>
-                <Text style={styles.conValue}>{User.gender}</Text>
+                {User.gender ? (
+                  <>
+                    <Text style={styles.icon}>Gender:</Text>
+                    <Text style={styles.conValue}>{User.gender}</Text>
+                  </>
+                ) : (
+                  ""
+                )}
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Marital Status:</Text>
-                <Text style={styles.conValue}>{User.marital_status}</Text>
+                {User.marital_status ? (
+                  <>
+                    <Text style={styles.icon}>Marital Status:</Text>
+                    <Text style={styles.conValue}>{User.marital_status}</Text>
+                  </>
+                ) : (
+                  ""
+                )}
+              </View>
+              {/* <View style={styles.contactRow}>
+                {User.nationality ? (
+                  <>
+                    <Text style={styles.icon}>Nationality:</Text>
+                    <Text style={styles.conValue}>{User.nationality}</Text>
+                  </>
+                ) : (
+                  ""
+                )}
+              </View> */}
+              <View style={styles.contactRow}>
+                {User.current_location ? (
+                  <>
+                    <Text style={styles.icon}>Current Location:</Text>
+                    <Text style={styles.conValue}>{User.current_location}</Text>
+                  </>
+                ) : (
+                  ""
+                )}
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Nationality:</Text>
-                <Text style={styles.conValue}>{User.nationality}</Text>
+                {User.language ? (
+                  <>
+                    <Text style={styles.icon}>Language:</Text>
+                    <Text style={styles.conValue}>{User.language}</Text>
+                  </>
+                ) : (
+                  ""
+                )}
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Current Location:</Text>
-                <Text style={styles.conValue}>{User.current_location}</Text>
+                {User.religion ? (
+                  <>
+                    <Text style={styles.icon}>Religion:</Text>
+                    <Text style={styles.conValue}>{User.religion}</Text>
+                  </>
+                ) : (
+                  ""
+                )}
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Language:</Text>
-                <Text style={styles.conValue}>{User.language}</Text>
+                {User.experience ? (
+                  <>
+                    <Text style={styles.icon}>Expert:</Text>
+                    <Text style={styles.conValue}>{User.experience} Year</Text>
+                  </>
+                ) : (
+                  ""
+                )}
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Religion:</Text>
-                <Text style={styles.conValue}>{User.religion}</Text>
+                {User.work_permit_canada ? (
+                  <>
+                    <Text style={styles.icon}>Canada Work Permit:</Text>
+                    <Text style={styles.conValue}>
+                      {User.work_permit_canada}
+                    </Text>
+                  </>
+                ) : (
+                  ""
+                )}
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Expert:</Text>
-                <Text style={styles.conValue}>{User.experience} Year</Text>
-              </View>
-              <View style={styles.contactRow}>
-                <Text style={styles.icon}>Canada Work Permit:</Text>
-                <Text style={styles.conValue}>{User.work_permit_canada}</Text>
-              </View>
-              <View style={styles.contactRow}>
-                <Text style={styles.icon}>Other Country Work Permit:</Text>
-                <Text style={styles.conValue}>
-                  {User.work_permit_other_country}
-                </Text>
+                {User.work_permit_other_country ? (
+                  <>
+                    <Text style={styles.icon}>Other Country Work Permit:</Text>
+                    <Text style={styles.conValue}>
+                      {User.work_permit_other_country}
+                    </Text>
+                  </>
+                ) : (
+                  ""
+                )}
               </View>
             </View>
             {Skills.length === 0 ? null : (
@@ -243,12 +366,16 @@ function ResumeGrerator(props) {
             <View style={styles.userName}>
               <Text style={styles.userName.name}>{User.name}</Text>
             </View>
-            <View style={styles.divBox}>
-              <Text style={styles.subHeadingRight}>About</Text>
-              <View style={styles.AboutDiv}>
-                <Text style={styles.aboutText}>{User.description}</Text>
+            {User.description && (
+              <View style={styles.divBox}>
+                <Text style={styles.subHeadingRight}>About</Text>
+                <View style={styles.AboutDiv}>
+                  <Text style={styles.aboutText}>
+                    {getText(User.description)}
+                  </Text>
+                </View>
               </View>
-            </View>
+            )}
             {Education.length === 0 ? null : (
               <View style={styles.divBox}>
                 <Text style={styles.subHeadingRight}>Education</Text>
@@ -266,7 +393,8 @@ function ResumeGrerator(props) {
                         </View>
                         <View style={styles.couSpec}>
                           <Text style={styles.course}>
-                            {edu.course} - {edu.specialization}
+                            {edu.course}
+                            {edu.specialization && ` - (${edu.specialization})`}
                           </Text>
                         </View>
                       </View>
@@ -285,20 +413,21 @@ function ResumeGrerator(props) {
               <View style={styles.divBox}>
                 <Text style={styles.subHeadingRight}>Experience</Text>
                 <View style={styles.expDiv}>
-                  {(userCareer || []).map((edu) => (
-                    <View key={edu.career_id} style={styles.eduInner}>
+                  {(userCareer || []).map((car) => (
+                    <View key={car.career_id} style={styles.eduInner}>
                       <View style={styles.eduLeft}>
                         <View style={styles.quaUni}>
                           <Text style={styles.qualification}>
-                            {edu.designation}
+                            {car.designation}
                           </Text>
                           <Text style={styles.university}>
-                            ({edu.functional_area})
+                            {car.functional_area && `(${car.functional_area})`}
                           </Text>
                         </View>
                         <View style={styles.couSpec}>
                           <Text style={styles.course}>
-                            {edu.company} - ({edu.industry})
+                            {car.company}
+                            {car.industry && ` - (${car.industry})`}
                           </Text>
                         </View>
                       </View>
@@ -313,32 +442,35 @@ function ResumeGrerator(props) {
                         b.add(months, 'months');
                       } */}
                         <Text style={styles.year}>
-                          {edu.currently_work_here != null
-                            ? moment(edu.end_date).diff(
-                                moment(edu.start_date),
+                          {/* {car.currently_work_here != null
+                            ? moment(car.end_date).diff(
+                                moment(car.start_date),
                                 "year"
                               ) !== 0
-                              ? moment(edu.end_date).diff(
-                                  moment(edu.start_date),
+                              ? moment(car.end_date).diff(
+                                  moment(car.start_date),
                                   "year"
                                 ) + "Y, "
                               : null +
-                                  moment(edu.end_date).diff(
-                                    moment(edu.start_date),
+                                  moment(car.end_date).diff(
+                                    moment(car.start_date),
                                     "month"
                                   ) !==
                                 0
-                              ? moment(edu.end_date).diff(
-                                  moment(edu.start_date),
+                              ? moment(car.end_date).diff(
+                                  moment(car.start_date),
                                   "month"
                                 ) + "M"
                               : null
-                            : edu.start_date + "- Now"}
-                          {/* {edu.start_date}-{" "}
-                        {edu.end_date || edu.currently_work_here} */}
+                            : car.start_date + "- Now"} */}
+                          {/* {car.start_date}-
+                        {car.end_date || car.currently_work_here} */}
+                          {car.currently_work_here === ("1" || 1)
+                            ? "Currently working"
+                            : calculateDuration(car.start_date, car.end_date)}
                         </Text>
                         <Text style={styles.location}>
-                          {edu.company_location}
+                          {car.company_location}
                         </Text>
                       </View>
                     </View>

@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
-import { AddInterviewSheduale, getInterview } from "../../../api/api";
+import { AddInterviewSchedule, getInterview } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
 function AddInterview(props) {
-  // // console.log(props);
   let [loading, setLoading] = useState(false);
   let employeeId = props.resData.employee_id;
   let jobId = props.job_id;
 
   /* Functionality to close the modal */
   const close = () => {
-    setState({ ...state, interview_date: "" });
+    setState({ ...state, interview_date: "", interview_status: "" });
     setErrors("");
     setLoading(false);
     props.close();
@@ -22,9 +21,11 @@ function AddInterview(props) {
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     interview_date: "",
-    interview_status: ""
+    interview_status:
+      props.resData.status === "pending" || props.resData.status === "" || props.resData.status === 'PENDING'
+        ? "pending"
+        : "",
   };
-  // // console.log(props.resData.interview_date);
   // VALIDATION CONDITIONS
   const validators = {
     interview_date: [
@@ -33,7 +34,7 @@ function AddInterview(props) {
           ? "Interview date is required"
           : null,
     ],
-    interview_status : [
+    interview_status: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Interview status is required"
@@ -45,19 +46,31 @@ function AddInterview(props) {
     useValidation(initialFormState, validators);
 
   const InterviewData = async () => {
-    const userData = await getInterview(jobId, employeeId);
-    if (userData.data.length === 0) {
-      setState({ state, interview_date: "" });
-    } else {
-      setState({ state, interview_date: userData.data[0].interview_date });
+    try {
+      const userData = await getInterview(jobId, employeeId);
+      if (userData.data.length === 0) {
+        setState({ state, interview_date: "" });
+      } else {
+        if (props.Interview === "interview") {
+          setState({ state, interview_date: props.resData.interview_date });
+        } else {
+          setState({
+            state,
+            interview_date: userData.data[0].interview_date,
+            interview_status: userData.data[0].status,
+          });
+        }
+      }
+    } catch (err) {
+      console.log(err);
     }
+    // console.log("state =>", state , "date =>" , props.resData.interview_date ,userData)
   };
-  // // console.log(state.interview_date, "lol");
 
   /*Render function to get the interview*/
   useEffect(() => {
     InterviewData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+   // eslint-disable-next-line
   }, [props]);
 
   // USER INTERVIEW UPDATE SUBMIT BUTTON
@@ -65,14 +78,31 @@ function AddInterview(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      const responseData = await AddInterviewSheduale(state, employeeId, jobId );
-      if (responseData.message === "data inserted successfully") {
-        toast.success("Interview shedualed successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true)
-        return close();
+      try {
+        const responseData = await AddInterviewSchedule(
+          state,
+          employeeId,
+          jobId
+        );
+        if (responseData.message === "data inserted successfully" || responseData.status === (1 || "1")) {
+          toast.success("Interview Scheduled successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+        if (responseData.message === "Failed to insert data" || responseData.messsage === "Failed to insert data") {
+          toast.error("Failed ", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
       }
     } else {
       setLoading(false);
@@ -96,10 +126,10 @@ function AddInterview(props) {
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-          <h5 className="text-center pt-2">Schedule Interview</h5>
+          <h5 className="text-center pt-2 mb-7">Schedule Interview</h5>
 
           <form onSubmit={onAddInterviewClick}>
-          <div className="form-group row mb-0">
+            <div className="form-group row mb-0">
               <label
                 htmlFor="interview_status"
                 className="font-size-4 text-black-2  line-height-reset"
@@ -121,37 +151,37 @@ function AddInterview(props) {
                 <option value={"pending"}>Schedule / Reschedule</option>
                 <option value={"complete"}>Complete</option>
               </select>
-               {/*----ERROR MESSAGE FOR EMAIL----*/}
-               {errors.interview_status && (
-                <span
-                  key={errors.interview_status}
-                  className="text-danger font-size-3"
-                >
-                  {errors.interview_status}
-                </span>
-              )}
             </div>
+            {/*----ERROR MESSAGE FOR EMAIL----*/}
+            {errors.interview_status && (
+              <span
+                key={errors.interview_status}
+                className="text-danger font-size-3 px-5"
+              >
+                {errors.interview_status}
+              </span>
+            )}
             <div className="form-group mt-5">
               <label
                 htmlFor="interview_date"
                 className="font-size-4 text-black-2  line-height-reset"
               >
-                Interview date <span className="text-danger">*</span> :
+                Interview Date <span className="text-danger">*</span> :
               </label>
-              {/* {// console.log(props.resData.interview_date)} */}
               <input
                 className={
                   errors.interview_date
-                    ? "form-control border border-danger"
-                    : "form-control"
+                    ? "form-control coustam_datepicker border border-danger"
+                    : "form-control coustam_datepicker"
                 }
-                value={moment(state.interview_date).format("YYYY-MM-DD")}
+                value={state.interview_date}
                 onChange={onInputChange}
                 id="interview_date"
                 name="interview_date"
                 type={"date"}
                 placeholder="Interview date"
-                min={moment().format("YYYY-MM-DD")}
+                onKeyDownCapture={(e) => e.preventDefault()}
+                min={moment().format("DD-MM-YYYY")}
               />
               {/*----ERROR MESSAGE FOR EMAIL----*/}
               {errors.interview_date && (

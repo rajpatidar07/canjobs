@@ -1,30 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../common/footer";
 import Headers from "../common/header";
 import JobBoxResponse from "./jobBoxResponse";
 import SearchForm from "../common/search_form";
 import { Link } from "react-router-dom";
-// import JobDetail from "./jobDetail";
-// import { getJson } from "../../api/api";
+import { GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
-
+import Loader from '../common/loader';
 function Response() {
-  // let [filter,  SetFilter] = useState([]);
+  let [filter, SetFilter] = useState([]);
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState("");
   const [locationFilterValue, setLocationFilterValue] = useState("");
+  const [jobsNo, setJobsNo] = useState(10);
+  const [jobCount, setJobCount] = useState();
+  const [totaljob, setTotalJob] = useState();
   /* Function to get the JSON data*/
-  // const FilterData = async () => {
-  //   const Json = await getJson();
-  //   SetFilter(Json);
-  // };
-  // console.log(filter);
+  const FilterData = async () => {
+    try {
+      const Json = await GetFilter();
+      if(Json.data.message ==='No data found' ||Json.length === 0){
+        SetFilter([])
+      }else{
+        SetFilter(Json.data.data);
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  };
 
-  // useEffect(() => {
-  //   FilterData();
-  // }, [categoryFilterValue, SkillFilterValue, jobSwapFilterValue]);
+  useEffect(() => {
+    FilterData();
+  }, [categoryFilterValue, SkillFilterValue, jobSwapFilterValue, locationFilterValue]);
   return (
     <>
       <div>
@@ -44,40 +53,38 @@ function Response() {
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-12 col-lg-10 col-xl-12">
-                {/* <h2 className="font-size-8 mb-6">
-                  You’re searching "UI Designer"
-                </h2> */}
+
                 <form className="mb-8" action="/">
-                  <div className="search-filter from-group d-flex align-items-center flex-wrap">
-                    <div className="mr-5 mb-5">
+                  <div className="search-filter from-group d-flex align-items-center ">
+                    <div className="col-md-3 col-lg-3 mb-5">
                       <select
                         name="category"
                         id="category"
                         value={categoryFilterValue}
                         /*Category Onchange function to filter the data */
                         onChange={(e) => setCategoryFilterValue(e.target.value)}
-                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                        className="text-capitalize form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
-                        {(FilterJson.category || []).map((data, i) => {
+                        <option value="">Select Job Category</option>
+                        {(filter.Category || []).map((data, i) => {
                           return (
-                            <option value={data} key={i}>
-                              {data}
+                            <option value={data.value} key={data.id}>
+                              {data.value}
                             </option>
                           );
                         })}
                       </select>
                     </div>
-                    <div className="mr-5 mb-5">
+                    <div className="col-md-3 col-lg-3 mb-5">
                       <select
                         name="skill"
                         id="skill"
                         value={SkillFilterValue}
                         /*Skill Onchange function to filter the data */
                         onChange={(e) => setSkillFilterValue(e.target.value)}
-                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                        className="text-capitalize form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
-                        <option data-display="Salary Range">Job Skills</option>
-                        <option value="">Select Skill</option>
+                        <option value={''}>Select Job Skills</option>
                         {(FilterJson.keyskill || []).map((data, i) => {
                           return (
                             <option value={data} key={i}>
@@ -87,27 +94,26 @@ function Response() {
                         })}
                       </select>
                     </div>
-                    <div className="mr-5 mb-5">
+                    <div className="col-md-3 col-lg-3 mb-5">
                       <select
                         name="skill"
                         id="skill"
                         value={locationFilterValue}
                         /*Skill Onchange function to filter the data */
                         onChange={(e) => setLocationFilterValue(e.target.value)}
-                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                        className="text-capitalize form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
-                        <option data-display="Salary Range">Job Skills</option>
-                        <option value="">Select Skill</option>
+                        <option value="">Select Job Location</option>
                         {(FilterJson.location || []).map((data, i) => {
                           return (
-                            <option value={data} key={i}>
-                              {data}
+                            <option value={data.country} key={i}>
+                              {data.country}
                             </option>
                           );
                         })}
                       </select>
                     </div>
-                    <div className="mr-5 mb-5">
+                    <div className="col-md-3 col-lg-3 mb-5">
                       <select
                         name="job_type"
                         id="job_type"
@@ -116,6 +122,7 @@ function Response() {
                         onChange={(e) => setJobSwapFilterValue(e.target.value)}
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
+                        <option value="">Select Job Type</option>
                         {(FilterJson.job_type || []).map((data, i) => {
                           return (
                             <option value={data} key={i}>
@@ -132,12 +139,6 @@ function Response() {
                     </div>
                   </div>
                 </form>
-                {/* <div className="d-flex align-items-center justify-content-between mb-6 mx-2">
-                  <h5 className="font-size-4 font-weight-normal text-gray">
-                    Showing
-                    <span className="text-black-2">120</span> matched jobs
-                  </h5>
-                </div> */}
               </div>
             </div>
             <div className="row justify-content-center position-static">
@@ -149,31 +150,33 @@ function Response() {
                     id="search-nav-tab"
                     role="tablist"
                   >
-                    <div className="mb-8 p-0 w-100 active nav-link active">
+                    {<JobBoxResponse /> ? <div className="mb-8 p-0 w-100 active nav-link active">
                       {/* <!-- Single Featured Job --> */}
                       <JobBoxResponse
                         categoryFilterValue={categoryFilterValue}
                         jobSwapFilterValue={jobSwapFilterValue}
                         SkillFilterValue={SkillFilterValue}
                         locationFilterValue={locationFilterValue}
+                        setJobCount={setJobCount}
+                        jobsNo={jobsNo}
+                        setTotalJob={setTotalJob}
                       />
                       {/* <!-- End Single Featured Job --> */}
+                    </div> : <div className="table-responsive main_table_div"><Loader /> </div>}
+                  </div>
+                  {jobsNo <= totaljob
+                    ? <div className="text-center pt-5 pt-lg-13">
+                      <Link className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
+                        onClick={() => setJobsNo(jobCount + 10)}>
+                        Load More
+                        <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
+                      </Link>
                     </div>
-                  </div>
-                  <div className="text-center pt-5 pt-lg-13">
-                    <Link
-                      to={""}
-                      className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
-                    >
-                      Load More{" "}
-                      <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
-                    </Link>
-                  </div>
+                    : null}
                 </div>
                 {/* <!-- form end --> */}
               </div>
               {/* <!-- Right Section --> */}
-              {/* <JobDetail ids={ids} /> */}
             </div>
           </div>
         </div>

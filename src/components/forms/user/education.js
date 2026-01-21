@@ -6,18 +6,18 @@ import {
   EmployeeEducationDetails,
   AddEmployeeEducation,
   DeleteEmployeeEducation,
-  getJson
+  GetFilter,
 } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../../common/sweetAlert";
-import moment from "moment";
 import FilterJson from "../../json/filterjson";
+import SelectBox from "../../common/Common function/SelectBox";
 
 function Education(props) {
   /*Data states */
   let [educationData, setEducationData] = useState([]);
-  let [EducationList , setEducationList] = useState([])
+  let [EducationList, setEducationList] = useState([]);
   const [apiCall, setApiCall] = useState(false);
   /*Delete Api */
   const [loading, setLoading] = useState(false);
@@ -40,15 +40,23 @@ function Education(props) {
     setLoading(false);
     props.close();
   };
-   /*Function to get the jSon */
- const JsonData=async()=>{
-  let Json = await getJson()
-  setEducationList(Json.Education)
-}
- /*Render method to get the json*/
- useEffect(()=>{
-   JsonData()
- },[apiCall])
+  /*Function to get the jSon */
+  const JsonData = async () => {
+    try {
+      let Json = await GetFilter();
+      if (Json.data.message === "No data found") {
+        setEducationList([]);
+      } else {
+        setEducationList(Json.data.data.Education);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  /*Render method to get the json*/
+  useEffect(() => {
+    JsonData();
+  }, [apiCall]);
   /*----VALIDATION CONTENT----*/
   const validators = {
     qualification: [
@@ -62,53 +70,58 @@ function Education(props) {
         value === null || value.trim() === ""
           ? "University is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 2
-          ? "University should have 2 or more letters"
-          : null,
+            ? "Cannot use special character "
+            : value.length < 2
+              ? "University should have 2 or more letters"
+              : null,
     ],
     course: [
       (value) =>
         value === null || value.trim() === "" ? "Course is required" : null,
     ],
-    specialization: [
-      (value) =>
-        value === null || value.trim() === ""
-          ? "Specialization is required"
-          : null,
-    ],
-    institute_location: [
-      (value) =>
-        value === null || value.trim() === ""
-          ? "Institute location is required"
-          : null,
-    ],
     passing_year: [
       (value) =>
-        value === "" || value === null ? "Passing Year is required" : null,
+        value === "" || value === null
+          ? "Passing Year is required"
+          : !/^[0-9]+$/.test(value)
+            ? "Only numbers are allowed"
+            : !/^(?!0000)\d{4}$/.test(value)
+              ? "Please enter a valid year between 1000 and 9999."
+              : null,
     ],
   };
-  /*----LOGIN ONCHANGE FUNCTION----*/
+  /*----LOGIN ONCHANGE FuNCTION----*/
   const { state, setState, onInputChange, errors, setErrors, validate } =
     useValidation(initialFormState, validators);
   // API CALL
+
+  /*Function to get education data */
   const EducationData = async (data) => {
-    let EducationDetails = await EmployeeEducationDetails(
-      props.employeeId
-    ); /*"No Employee found"*/
-    if (EducationDetails.data.education.length === 0) {
-      setEducationData([]);
-    } else {
-      setEducationData(EducationDetails.data.education);
-    }
-    if (data !== undefined || data) {
-      setState(data);
+    try {
+      let EducationDetails = await EmployeeEducationDetails(
+        props.employeeId
+      ); 
+      /*"No Employee found"*/
+      if (EducationDetails.data.education.length === 0) {
+        setEducationData([]);
+      } else {
+        setEducationData(EducationDetails.data.education);
+      }
+      if (data !== undefined || data) {
+        setState(data);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
+
+  /*Render function to get education list */
   useEffect(() => {
+    if (apiCall === true) {
+      setApiCall(false);
+    }
     if (
-      props.employeeId === undefined ||
-      educationData === [] ||
+      (props.employeeId === undefined && educationData.length === 0) ||
       deleteAlert === true
     ) {
       setState(initialFormState);
@@ -116,32 +129,40 @@ function Education(props) {
       EducationData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ apiCall, props.employeeId]);
-  /*----LOGIN SUBMIT FUNCTION----*/
+  }, [apiCall, props.employeeId]);
+
+  /*----EDUCATION SUBMIT FuNCTION----*/
   const onEducationSubmitClick = async (event) => {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      let responseData = await AddEmployeeEducation(state, props.employeeId);
-      if (responseData.message === "Employee data updated successfully") {
-        toast.success("Education Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setState(initialFormState);
-        setErrors("");
+      try {
+        let responseData = await AddEmployeeEducation(state, props.employeeId);
+        if (responseData.message === "Employee data updated successfully") {
+          toast.success("Education Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setState(initialFormState);
+          setErrors("");
+          setLoading(false);
+          setApiCall(true);
+          props.setApiCall(true);
+        }
+        if (responseData.message === "Employee data inserted successfully") {
+          toast.success("Education Added successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setState(initialFormState);
+          setErrors("");
+          setLoading(false);
+          setApiCall(true);
+          props.setApiCall(true);
+        }
+      } catch (err) {
+        console.log(err);
         setLoading(false);
-        props.setApiCall(true)
-      }
-      if (responseData.message === "Employee data inserted successfully") {
-        toast.success("Education Added successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setState(initialFormState);
-        setErrors("");
-        setLoading(false);
-        props.setApiCall(true)
       } //"
       // handle form submission
     } else {
@@ -156,22 +177,27 @@ function Education(props) {
     setDeleteName(e.course);
     setDeleteAlert(true);
   };
+
   /*To cancel the delete alert box */
   const CancelDelete = () => {
     setDeleteAlert(false);
   };
+
   /*To call Api to delete Skill */
   async function deleteEducation(e) {
-    //console.log((e);
-    const responseData = await DeleteEmployeeEducation(e);
-    if (responseData.message === "Education details has been deleted") {
-      toast.error("Education deleted Successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      props.setApiCall(true)
-      setApiCall(true)
-      setDeleteAlert(false);
+    try {
+      const responseData = await DeleteEmployeeEducation(e, props.employeeId);
+      if (responseData.message === "Education details has been deleted") {
+        toast.error("Education deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+        props.setApiCall(true);
+        setDeleteAlert(false);
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
   /*Code to get current year */
@@ -193,66 +219,78 @@ function Education(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onEducationSubmitClick}>
-            <h5 className="text-center pt-2">Education Details</h5>
-            <div className="row mb-5">
+            <h5 className="text-center pt-2 mb-7">Education Details</h5>
+            <div className="row mb-5 bg-light py-5 pr-10 pl-4 rounded">
               {(educationData || []).map((education) => (
-                <div className="col-12" key={education.education_id}>
-                  <div className=" border m-1 rounded">
-                    <div className="py-2 px-4 d-flex align-items-center flex-wrap flex-sm-nowrap justify-content-md-between ">
+                <div
+                  className="col-12 text-capitalize p-0"
+                  key={education.education_id}
+                >
+                  <div className="w-100 card px-6 py-3 shadow-8 border-0 mb-2">
+                    <div className="d-flex align-items-center flex-wrap flex-sm-nowrap justify-content-md-between ">
                       <div className="media align-items-center company_box p-0">
                         <div className="text_box text-left w-100 mt-n2">
-                          <h3 className="mb-0">
-                            <span
-                              className="font-size-6 text-black-2 font-weight-semibold"
-                              onClick={() => EducationData(education)}
-                            >
-                              {education.qualification}{" "}
-                              <span className="font-size-4 text-break">
-                                ({education.university_institute})
-                              </span>
+                          <span
+                            className="font-size-4 font-weight-semibold w-100"
+                            onClick={() => EducationData(education)}
+                          >
+                            {education.qualification + " "}
+                            <span className="font-size-4 text-break">
+                              ({education.university_institute})
                             </span>
-                          </h3>
-                          <span className="font-size-4 text-default-color line-height-2">
-                            {education.course}, {education.specialization}
+                          </span>
+                          <span className="font-size-3 text-default-color text-break">
+                            {education.course}
+                            {education.specialization
+                              ? `,  ${education.specialization}`
+                              : " "}
                           </span>
                         </div>
                       </div>
-                      <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                        <span className="font-size-4 text-gray w-100">
-                          {education.passing_year}
-                        </span>
-                        <span className="font-size-3 text-gray w-100">
-                          <span className="mr-4">
-                            <img
-                              src="image/svg/icon-loaction-pin-black.svg"
-                              alt=""
-                            />
-                          </span>
-                          {education.institute_location}
-                        </span>
-                      </div>
                       <div className="d-flex">
-                        <Link
-                          to=""
-                          className="fa fa-edit text-gray px-5"
-                          onClick={() => EducationData(education)}
-                        ></Link>
-                        <Link
-                          to=""
-                          className="fa fa-times-circle px-5"
-                          onClick={() => ShowDeleteAlert(education)}
-                        ></Link>
+                        <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
+                          <span className="font-size-4 text-gray w-100">
+                            {education.passing_year}
+                          </span>
+                          <span
+                            className={`${education.institute_location === null
+                              ? "d-none"
+                              : ""
+                              } font-size-3 text-gray w-100`}
+                          >
+                            <span className="mr-2">
+                              <img
+                                src="image/svg/icon-loaction-pin-black.svg"
+                                alt=""
+                              />
+                            </span>
+                            {education.institute_location}
+                          </span>
+                        </div>
+                        <div className="w-auto education_btn_grp">
+                          <Link
+                            to=""
+                            className="fa fa-edit text-gray px-5"
+                            onClick={() => EducationData(education)}
+                          ></Link>
+                          <Link
+                            to=""
+                            className="fa fa-trash px-5"
+                            onClick={() => ShowDeleteAlert(education)}
+                          ></Link>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
+            <h4>
+              {state.education_id ? "Update Education" : "Add Education"}
+            </h4>
             <div className="row pt-5">
-              {" "}
               <div className="form-group col-md-6">
                 <label
                   htmlFor="qualification"
@@ -260,26 +298,31 @@ function Education(props) {
                 >
                   Qualification: <span className="text-danger">*</span>
                 </label>
-                <select
+                <div
                   className={
-                    errors.qualification
-                      ? "form-control border border-danger"
-                      : "form-control"
+                    errors.qualification ? "border border-danger rounded" : ""
                   }
-                  name="qualification"
-                  id="qualification"
-                  value={state.qualification||""}
-                  onChange={onInputChange}
                 >
-                  <option value={""}>User Qualification</option>
-                  {(FilterJson.qualification || []).map((data, i) => {
-                    return (
-                      <option value={data} key={i}>
-                        {data}
-                      </option>
-                    );
-                  })}
-                </select>
+                  <SelectBox
+                    Width={"yes"}
+                    options={(FilterJson.qualification || []).map((data) => ({
+                      value: data,
+                      label: data,
+                    }))}
+                    type="qualification"
+                    selectedValue={state.qualification || ""}
+                    onChange={(e) => {
+                      onInputChange({
+                        target: {
+                          name: "qualification",
+                          value: e ? e.value : null,
+                        },
+                      });
+                    }}
+                    placeholder="Select"
+                  />
+                </div>
+
                 {/*----ERROR MESSAGE FOR QUALIFICATION----*/}
                 {errors.qualification && (
                   <span
@@ -297,24 +340,31 @@ function Education(props) {
                 >
                   Course: <span className="text-danger">*</span>
                 </label>
-                <select
+                <div
                   className={
-                    errors.course
-                      ? "form-control border border-danger"
-                      : "form-control"
+                    errors.course ? "border border-danger rounded" : ""
                   }
-                  name="course"
-                  id="course"
-                  value={state.course||""}
-                  onChange={onInputChange}
                 >
-                  <option value={""}>Course</option>
-                  {(EducationList || []).map((course) => (
-                    <option value={course.value} key={course.id}>
-                      {course.value}
-                    </option>
-                  ))}
-                </select>
+                  <SelectBox
+                    Width={"yes"}
+                    options={(EducationList || []).map((course) => ({
+                      value: course.value,
+                      label: course.value,
+                    }))}
+                    type="course"
+                    selectedValue={state.course || ""}
+                    onChange={(e) => {
+                      onInputChange({
+                        target: {
+                          name: "course",
+                          value: e ? e.value : null,
+                        },
+                      });
+                    }}
+                    placeholder="Select"
+                  />
+                </div>
+
                 {/*----ERROR MESSAGE FOR course----*/}
                 {errors.course && (
                   <span key={errors.course} className="text-danger font-size-3">
@@ -327,10 +377,10 @@ function Education(props) {
                   htmlFor="university_institute"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  University/Institute: <span className="text-danger">*</span>
+                  University / Institute: <span className="text-danger">*</span>
                 </label>
                 <input
-                  maxLength={40}
+                  maxLength={60}
                   type="text"
                   placeholder="University/Institute "
                   className={
@@ -340,7 +390,7 @@ function Education(props) {
                   }
                   name="university_institute"
                   id="university_institute"
-                  value={state.university_institute||""}
+                  value={state.university_institute || ""}
                   onChange={onInputChange}
                 />
                 {/*----ERROR MESSAGE FOR UNIVERSITY----*/}
@@ -358,29 +408,34 @@ function Education(props) {
                   htmlFor="institute_location"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Institute Location: <span className="text-danger">*</span>
+                  Institute Location:
                 </label>
                 <div className="position-relative">
-                  <select
+                  <div
                     className={
-                      errors.institute_location
-                        ? "form-control border border-danger"
-                        : "form-control"
+                      errors.institute_location ? "border border-danger rounded" : ""
                     }
-                    name="institute_location"
-                    id="institute_location"
-                    value={state.institute_location||""}
-                    onChange={onInputChange}
                   >
-                    <option value={""}>Institute location</option>
-                    {(FilterJson.location || []).map((data) => {
-                      return (
-                        <option value={data.value} key={data.id}>
-                          {data.value}
-                        </option>
-                      );
-                    })}
-                  </select>
+                    <SelectBox
+                      Width={"yes"}
+                      options={(FilterJson.location || []).map((data) => ({
+                        value: data.country,
+                        label: data.country,
+                      }))}
+                      type="institute_location"
+                      selectedValue={state.institute_location || ""}
+                      onChange={(e) =>
+                        onInputChange({
+                          target: {
+                            name: "institute_location",
+                            value: e ? e.value : null,
+                          },
+                        })
+                      }
+                      placeholder="Institute location"
+                    />
+                  </div>
+
                   {/*----ERROR MESSAGE FOR institute_location----*/}
                   {errors.institute_location && (
                     <span
@@ -397,7 +452,7 @@ function Education(props) {
                   htmlFor="specialization"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Specialization: <span className="text-danger">*</span>
+                  Specialization:
                 </label>
                 <input
                   className={
@@ -407,28 +462,10 @@ function Education(props) {
                   }
                   name="specialization"
                   id="specialization"
-                  value={state.specialization||""}
+                  value={state.specialization || ""}
                   onChange={onInputChange}
                   placeholder="Specialization"
                 />
-                {/* <select
-                  className={
-                    errors.specialization
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  name="specialization"
-                  id="specialization"
-                  value={state.specialization||""}
-                  onChange={onInputChange}
-                >
-                  <option value={""}>Select Specialization</option>
-                  {(FilterJson.Specialization || []).map((Specialization) => (
-                    <option value={Specialization} key={Specialization}>
-                      {Specialization}
-                    </option>
-                  ))}
-                </select> */}
                 {/*----ERROR MESSAGE FOR SPECIALIZATION----*/}
                 {errors.specialization && (
                   <span
@@ -447,7 +484,7 @@ function Education(props) {
                   Passing Year: <span className="text-danger">*</span>
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   className={
                     errors.passing_year
                       ? "form-control border border-danger"
@@ -456,9 +493,11 @@ function Education(props) {
                   placeholder="Passing Year"
                   id="passing_year"
                   name="passing_year"
-                  value={moment(state.passing_year).format("YYYY")}
+                  value={state.passing_year}
                   onChange={onInputChange}
                   // max={currentYear}
+                  maxLength={4}
+                  minLength={4}
                 />
                 {/*----ERROR MESSAGE FOR PASSING YEAR----*/}
                 {errors.passing_year && (
@@ -472,7 +511,7 @@ function Education(props) {
               </div>
             </div>
 
-            <div className="form-group text-center">
+            <div className="form-group text-center d-flex justify-content-center">
               {loading === true ? (
                 <button
                   className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
@@ -494,13 +533,20 @@ function Education(props) {
                   Submit
                 </button>
               )}
+              <button
+                type="button"
+                className="btn btn-light mx-5"
+                data-dismiss="modal"
+                onClick={close}
+              >
+                Close
+              </button>
             </div>
           </form>
-          {/* </div> */}
           <SAlert
             show={deleteAlert}
             title={deleteName}
-            text="Are you Sure you want to delete !"
+            text="Are you Sure you want to delete"
             onConfirm={() => deleteEducation(deleteId)}
             showCancelButton={true}
             onCancel={CancelDelete}

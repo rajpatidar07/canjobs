@@ -19,10 +19,10 @@ function AddEmployer(props) {
     companyname: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Company name is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+          ? "Employer's name is required"
+          : // : /[^A-Za-z 0-9]/g.test(value)
+            // ? "Cannot use special character "
+            null,
     ],
     vacancies: [
       (value) =>
@@ -56,8 +56,8 @@ function AddEmployer(props) {
       (value) =>
         value === "" || value.trim() === ""
           ? "MobileNo. is required"
-          : value.length !== 10
-          ? "Mobile no should be of 10 digits"
+          : value.length !== 13
+          ? "Mobile no should be of 13 digits"
           : null,
     ],
   };
@@ -71,7 +71,6 @@ function AddEmployer(props) {
     event.preventDefault();
     if (validate()) {
     } else {
-      // setLoading(false);
     }
   };
   // END USER PERSONAL DETAIL VALIDATION
@@ -92,18 +91,16 @@ function AddEmployer(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onUserEmployerClick}>
-            <h5 className="text-center pt-2">Add Employer</h5>
-            <div className="row pt-5">
-              {" "}
+            <h5 className="text-center pt-2 mb-7">Add Employer</h5>
+            <div className="row ">
               <div className="form-group col-md-6">
                 <label
                   htmlFor="companyname"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Company Name <span className="text-danger">*</span>:
+                  Employer's Name<span className="text-danger">*</span>:
                 </label>
                 <input
                   type="text"
@@ -116,7 +113,8 @@ function AddEmployer(props) {
                   onChange={onInputChange}
                   name="companyname"
                   id="companyname"
-                  placeholder="Company Name"
+                  placeholder="Employer's Name"
+                  maxLength={60}
                 />
                 {/*----ERROR MESSAGE FOR COMPANY NAME----*/}
                 {errors.companyname && (
@@ -133,10 +131,11 @@ function AddEmployer(props) {
                   htmlFor="vacancies"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  No. of vacancies <span className="text-danger">*</span> :
+                  No. Of Vacancies <span className="text-danger">*</span> :
                 </label>
                 <input
                   type="number"
+                  min={0}
                   className={
                     errors.vacancies
                       ? "form-control border border-danger"
@@ -179,6 +178,7 @@ function AddEmployer(props) {
                   placeholder="Location"
                   id="location"
                   name="location"
+                  maxLength={60}
                 />
                 {errors.location && (
                   <span
@@ -194,13 +194,13 @@ function AddEmployer(props) {
                   htmlFor="infostatus"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Information status <span className="text-danger">*</span>:
+                  Information Status <span className="text-danger">*</span>:
                 </label>
                 <select
                   className={
                     errors.infostatus
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "text-capitalize form-control border border-danger"
+                      : "text-capitalize form-control"
                   }
                   value={state.infostatus}
                   onChange={onInputChange}
@@ -208,8 +208,8 @@ function AddEmployer(props) {
                   name="infostatus"
                 >
                   <option value={""}>Select status</option>
-                  <option value={"Complete"}>Complete</option>
-                  <option value={"Incomplete"}>Incomplete</option>
+                  <option value={"complete"}>Complete</option>
+                  <option value={"incomplete"}>Incomplete</option>
                 </select>
                 {errors.infostatus && (
                   <span
@@ -242,6 +242,7 @@ function AddEmployer(props) {
                   placeholder="Name"
                   id="contactpersonname"
                   name="contactpersonname"
+                  maxLength={60}
                 />
                 {errors.contactpersonname && (
                   <span
@@ -261,6 +262,8 @@ function AddEmployer(props) {
                 </label>
                 <input
                   type="number"
+                  min={0}
+                  maxLength={13}
                   className={
                     errors.contactpersonnumber
                       ? "form-control border border-danger"
@@ -271,7 +274,6 @@ function AddEmployer(props) {
                   placeholder="Contact number"
                   id="contactpersonnumber"
                   name="contactpersonnumber"
-                  maxLength={10}
                 />
                 {errors.contactpersonnumber && (
                   <span
@@ -292,7 +294,6 @@ function AddEmployer(props) {
               </button>
             </div>
           </form>
-          {/* </div> */}
         </div>
       </Modal>
     </>

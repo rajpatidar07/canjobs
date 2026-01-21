@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import EmployeeFooter from "../common/footer";
 import EmployeeHeader from "../common/header";
 import JobBox from "../common/jobbox";
@@ -8,22 +8,41 @@ import FilterJson from "../json/filterjson";
 import SearchForm from "../common/search_form";
 import { getJson } from "../../api/api";
 import { useEffect } from "react";
+import Loader from "../common/loader";
+import CustomButton from "../common/button";
+import states from "../json/states";
+import SelectBox from "../common/Common function/SelectBox";
 function JobSearch() {
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
-  let [Json , setJson] = useState([])
+  const [jobLocation, setJobLocation] = useState("");
+  let [Json, setJson] = useState([]);
+  const [jobsNo, setJobsNo] = useState(10);
+  const [jobCount, setJobCount] = useState();
+  const [totaljob, setTotalJob] = useState();
   /*Function to get thejSon */
- const JsonData = async () =>{
-   let Json = await getJson()
-   setJson(Json)
- }
- /*Render Method */
- useEffect(()=>{
-  JsonData()
- },[categoryFilterValue , SkillFilterValue])
+  const JsonData = async () => {
+    try {
+      let Json = await getJson();
+      setJson(Json);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  /*Render Method */
+  useEffect(() => {
+    JsonData();
+  }, [categoryFilterValue, SkillFilterValue, jobSwapFilterValue, jobLocation]);
   // eslint-disable-next-line no-use-before-define
+  /*Function to Rest the felids */ 
+  let onReset = () => {
+    setCategoryFilterValue("");
+    setSkillFilterValue("");
+    setJobSwapFilterValue("");
+    setJobLocation("");
+  };
   return (
     <>
       <div className="site-wrapper overflow-hidden ">
@@ -33,7 +52,7 @@ function JobSearch() {
           <div className="container">
             <div className="row ">
               {/* <!-- Hero Form --> */}
-              <div className="col-lg-12 col-12 translateY-25  pb-10">
+              <div className="col-lg-12 col-12 translateY-25  pb-10 job_search_box_page">
                 <SearchForm />
               </div>
             </div>
@@ -43,70 +62,80 @@ function JobSearch() {
           <div className="container">
             <div className="row ">
               <div className="col-12 col-lg-10 col-xl-12 text-center">
-                <form className="mb-8" action="/">
-                  <div className="search-filter from-group d-flex align-items-center flex-wrap justify-content-center">
-                    <div className="mr-5 mb-5">
-                      <select
-                        name="category"
-                        id="category"
-                        value={categoryFilterValue}
-                        /*Category Onchange function to filter the data */
-                        onChange={(e) => setCategoryFilterValue(e.target.value)}
-                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                      >
-                        <option value="">Select Category</option>
-                        {(Json.Category || []).map((cat) => (
-                          <option key={cat.id} value={cat.id}>
-                            {cat.value}
-                          </option>
-                        ))}
-                        
-                      </select>
+                <form className="mb-8" >
+                  <div className="search-filter from-group d-flex align-items-center justify-content-center job_search_filter">
+                    <div className="col-md-2 col-lg-2 mb-5">
+                      <SelectBox
+                        Width={"yes"}
+                        options={(Json.Category || []).map((cat) => ({
+                          value: cat.id,
+                          label: cat.value,
+                        }))}
+                        selectedValue={categoryFilterValue}
+                        onChange={(e) => setCategoryFilterValue(e ? e.value : "")}
+                        placeholder="Select Category"
+                        className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                      />
+
                     </div>
-                    <div className="mr-5 mb-5">
-                      <select
-                        name="skill"
-                        id="skill"
-                        value={SkillFilterValue}
-                        /*Skill Onchange function to filter the data */
-                        onChange={(e) => setSkillFilterValue(e.target.value)}
-                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                      >
-                        <option value="">Select Skill</option>
-                        {(Json.Skill || []).map((data) => {
-                          return (
-                            <option value={data.value} key={data.id}>
-                              {data.value}
-                            </option>
-                          );
-                        })}
-                      </select>
+                    <div className="col-md-2 col-lg-2 mb-5">
+                      <SelectBox
+                        Width={"yes"}
+                        options={(Json.Skill || []).map((data) => ({
+                          value: data.value,
+                          label: data.value,
+                        }))}
+                        selectedValue={SkillFilterValue}
+                        onChange={(e) => setSkillFilterValue(e ? e.value : "")}
+                        placeholder="Select Skill"
+                        className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                      />
+
                     </div>
-                    <div className="mr-5 mb-5">
-                      <select
-                        name="job_type"
-                        id="job_type"
-                        value={jobSwapFilterValue}
-                        /*Job Onchange function to filter the data */
-                        onChange={(e) => setJobSwapFilterValue(e.target.value)}
-                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                    <div className="col-md-2 col-lg-2 mb-5">
+                      <SelectBox
+                        Width={"yes"}
+                        options={(Object.keys(states) || []).map((job) => ({
+                          value: job,
+                          label: job,
+                        }))}
+                        selectedValue={jobLocation}
+                        onChange={(e) => setJobLocation(e ? e.value : "")}
+                        placeholder="Select Job Location"
+                        className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                      />
+
+                    </div>
+                    <div className="col-md-2 col-lg-2 mb-5">
+                      <SelectBox
+                        Width={"yes"}
+                        options={(FilterJson.job_type || []).map((job_type) => ({
+                          value: job_type,
+                          label: job_type,
+                        }))}
+                        selectedValue={jobSwapFilterValue}
+                        onChange={(e) => setJobSwapFilterValue(e ? e.value : "")}
+                        placeholder="Select Job type"
+                        className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                      />
+
+                    </div>
+                    <div className="col-md-2 col-lg-2 mb-5">
+                      <CustomButton
+                        className="font-size-3 rounded-3 btn btn-primary border-0"
+                        onClick={() => onReset()}
+                        title="Reset"
+                        type="button"
                       >
-                        <option data-display="Experience Level ">
-                       Select Job type
-                        </option>
-                        {(FilterJson.job_type || []).map((job_type) => (
-                          <option key={job_type} value={job_type}>
-                            {job_type}
-                          </option>
-                        ))}
-                      </select>
+                        Reset
+                      </CustomButton>
                     </div>
                   </div>
                 </form>
               </div>
             </div>
             <div className="row justify-content-center position-static">
-              <div className="col-12 col-xxl-10 col-xl-12 col-lg-12">
+              <div className="col-12 col-xxl-10 col-xl-12 col-lg-12 p-0">
                 {/* <!-- Left Section --> */}
                 <div className="Left">
                   <div
@@ -114,16 +143,38 @@ function JobSearch() {
                     id="search-nav-tab"
                     role="tablist"
                   >
-                    <div className="mb-8 p-0 w-100 active nav-link active">
-                      {/* <!-- Single Featured Job --> */}
-                      <JobBox
-                        categoryFilterValue={categoryFilterValue}
-                        SkillFilterValue={SkillFilterValue}
-                        jobSwapFilterValue={jobSwapFilterValue}
-                      />
-                      {/* <!-- End Single Featured Job --> */}
-                    </div>
+                    {<JobBox /> ? (
+                      <div className="mb-8 p-0 w-100 active active">
+                        {/* <!-- Single Featured Job --> */}
+                        <JobBox
+                          categoryFilterValue={categoryFilterValue}
+                          SkillFilterValue={SkillFilterValue}
+                          jobSwapFilterValue={jobSwapFilterValue}
+                          jobLocation={jobLocation}
+                          setJobLocation={setJobLocation}
+                          setJobCount={setJobCount}
+                          jobsNo={jobsNo}
+                          setTotalJob={setTotalJob}
+                        />
+                        {/* <!-- End Single Featured Job --> */}
+                      </div>
+                    ) : (
+                      <div className="table-responsive main_table_div">
+                        <Loader />
+                      </div>
+                    )}
                   </div>
+                  {jobsNo <= totaljob ? (
+                    <div className="text-center pt-5 pt-lg-13">
+                      <Link
+                        className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
+                        onClick={() => setJobsNo(jobCount + 10)}
+                      >
+                        Load More
+                        <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
+                      </Link>
+                    </div>
+                  ) : null}
                 </div>
                 {/* <!-- form end --> */}
               </div>

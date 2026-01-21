@@ -1,155 +1,162 @@
-import React, { useEffect, useState /*useEffect*/ } from "react";
-import { Link /*useNavigate*/ } from "react-router-dom";
-import ChangePassword from "../common/changepassword";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import GenerateToken from "./generateToken";
-import { getAllAdminNotification } from "../../api/api";
+// import { getAllAdminNotification, ReadNotification } from "../../api/api";
+import AdminSetting from "./Modal/adminSetting";
+import ChangePassword from "../common/changepassword";
+import Notifications from "./notifications";
+import GlobalSearch from "./globalSearch";
+import useSessionCheck from "../common/admin_session";
 
 const AdminHeader = (props) => {
+  useSessionCheck();
   /*States */
   const [showChangePass, setShowChangePass] = useState(false);
+  const [showSettings, setSettings] = useState(false);
   const [showGeneratToken, setShowGenerateToken] = useState(false);
-  const [dropDown, setDropDown] = useState(false);
-  const [notification, setNotiication] = useState("");
+  // const [notification, setNotiication] = useState("");
+  // const [apicall, setApicall] = useState(false);
   let Admin = localStorage.getItem("admin");
+  let AdminType = localStorage.getItem("admin_type");
+  let userType = localStorage.getItem("userType");
 
+  // let navigate = useNavigate();
   /*Function to Call Notification Api */
-  const Notiication = async () => {
-    let Response = await getAllAdminNotification();
-    setNotiication(Response.Data.data);
-  };
-  /*Render Mewthod to get Notification */
-  useEffect(() => {
-    Notiication();
-  }, []);
+  // const Notiication = async () => {
+  //   try {
+  //     let Response = await getAllAdminNotification();
+  //     setNotiication(Response.Data.data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  /*Render Method to get Notification */
+  // useEffect(() => {
+  //   Notiication();
+  //   if (apicall === true) {
+  //     setApicall(false);
+  //   }
+  //   if (
+  //     AdminType === undefined ||
+  //     AdminType === "" ||
+  //     AdminType === null ||
+  //     AdminType === "undefined" ||
+  //     AdminType === "company" ||
+  //     AdminType === "user"
+  //   ) {
+  //     navigate("/");
+  //   }
+  // }, [apicall]);
+  // useEffect(() => {
+  //   SessionCheck();
+  // }, []);
+  // // SessionCheck();
+  
   return (
-    <header className="site-header admin_header site-header--menu-right bg-default position-fixed py-2 site-header--absolute rounded-8">
-      <div className="container-fluid-fluid px-7">
+    <header className="d-none site-header admin_header site-header--menu-right bg-default position-fixed border-left site-header--absolute w-100">
+      <div className="container-fluid-fluid">
         <nav className="navbar site-navbar offcanvas-active navbar-expand-lg  px-0 py-0">
-          {/* <!-- Page Heading--> */}
-          <h3 className="font-size-6 mb-0">{props.heading}</h3>
-          <div className="collapse navbar-collapse" id="mobile-menu"></div>
-          {/* <div className="form-group w-50 d-flex">
-            <label
-              htmlFor="view_layout"
-              className="font-size-4 text-black-2  line-height-reset"
-            >
-              View as Layout :
-            </label>
-            <Select
-              options={state}
-              onChange={onSelectChange}
-              id="view_layout"
-              className="mx-1"
-            />{" "}
-            <button
-              className="btn btn-secondary rounded-5 text-uppercase mx-5"
-              type="submit"
-              onClick={onTokenGenerateClick}
-            >
-              Generate Token
-            </button>
-            <button
-              className="btn btn-primary rounded-5 text-uppercase mx-5"
-              onClick={onRest}
-            >
-              Reset
-            </button>
-          </div> */}
-          {/* {notification.length < 0 ? ( */}
-          <div className="dropdown show-gr-dropdown py-5">
-            <Link
-              to={""}
-              role="button"
-              id="dropdownMenuNotification"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-              className="px-3 ml-7 font-size-4 notification-block flex-y-center position-relative"
-            >
-              <i className="fas fa-bell heading-default-color"></i>
-              {notification.length > 0 ? (
-                <span className="font-size-1 count text-white bg-primary circle-18 border border-width-1 border border-white">
-                  {notification.length}
-                </span>
-              ) : null}
+          {/* <!-- Page logo--> */}
+          {/* /*Added logo To set sidebar menu to show and hide on all screens*/}
+          <div className="brand-logo ">
+            <Link to={userType === "agent" ? "/partner_profile" : "/dashboard"}>
+              <img src="image/logo-main-black.png" alt="" />
             </Link>
-            <ul
-              className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
-              aria-labelledby="dropdownMenuNotification"
-            >
-              {(notification || []).map((data, i) =>
-                i >= 10 ? null : (
-                  <li
-                    key={data.id}
-                    to={""}
-                    className="dropdown-item py-2 font-size-3 text-wrap font-weight-semibold line-height-1p2 text-capitalize"
-                  >
-                    {i + 1}. {data.message}
-                  </li>
-                )
-              )}
-            </ul>
           </div>
-          {/* ) : null} */}
-          <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-none d-xs-flex align-items-center">
+          {/* <!-- Page Heading--> */}
+          <h3
+            className="font-size-6 mb-0 mr-5 text-capitalize"
+            style={{ marginLeft: 20 }}
+          >
+            {props.heading}
+          </h3>
+          <div className="collapse navbar-collapse" id="mobile-menu"></div>
+
+          {userType === "agent" || userType === "" ? "" : <GlobalSearch />}
+          {/* {userType === "agent" ? null : ( */}
+          <Notifications type={"mention_document"} />
+          {/* // )} */}
+          <Notifications type={""} />
+          <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-xs-flex align-items-center">
             <div>
               <div className="dropdown show-gr-dropdown py-5">
                 <Link
-                  to={""}
-                  className="proile media ml-7 flex-y-center"
+                  to=""
+                  className="profile media flex-y-center"
                   role="button"
                   id="dropdownMenuLink"
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
-                  onMouseOut={() => setDropDown(false)}
                 >
-                  <div>
-                    {" "}
-                    <h6 className="m-0">Hii ! {Admin}</h6>
+                  <div className="text-white">
+                    <h6 className="m-0 text-capitalize text-white">
+                      Hi, {Admin || "User"}
+                    </h6>
                   </div>
-                  <i className="fas fa-chevron-down heading-default-color px-3"></i>
+                  {/* Uncomment if needed */}
+                  {/* <i className="fas fa-chevron-down heading-default-color px-3"></i> */}
                 </Link>
+
                 <div
                   className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
-                  aria-labelledby="dropdownMenuLink"
+                  aria-labelledby="adminDropdownMenuLink"
                 >
-                  <Link
-                    to={"/adminprofile"}
-                    className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
-                  >
-                    Edit Profile
-                  </Link>
+                  {userType !== "agent" && (
+                    <Link
+                      to="/adminprofile"
+                      className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
+                    >
+                      Edit Profile
+                    </Link>
+                  )}
 
+                  {(AdminType === "super-admin" || AdminType === "admin") && (
+                    <Link
+                      to=""
+                      onClick={() => setShowGenerateToken(true)}
+                      className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
+                    >
+                      View as
+                    </Link>
+                  )}
+
+                  {userType !== "agent" && (
+                    <Link
+                      to=""
+                      onClick={() => setSettings(true)}
+                      className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
+                    >
+                      Settings
+                    </Link>
+                  )}
+
+                  {/* Logout Functionality */}
                   <Link
-                    to={""}
-                    onClick={() => setShowGenerateToken(true)}
-                    className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
-                  >
-                    View as
-                  </Link>
-                  {dropDown ? (
-                    <ul className="list-unstyled">
-                      <li></li>
-                    </ul>
-                  ) : null}
-                  <Link
-                    to={""}
-                    onClick={() => setShowChangePass(true)}
-                    className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
-                  >
-                    Setting
-                  </Link>
-                  {/*<--Logout Functionality-->*/}
-                  <Link
-                    to={"/adminlogin"}
-                    onClick={() => {
-                      localStorage.clear(); // clear the local storage
+                    to="#"
+                    onClick={(e) => {
+                      e.preventDefault(); // Prevent default navigation
+
+                      const redirectPath =
+                        userType === "admin"
+                          ? "/adminlogin"
+                          : userType === "agent"
+                          ? localStorage.getItem("portal") === "study"
+                            ? "/study_partner_login"
+                            : "/partnerlogin"
+                          : "/";
+
+                      // Clear all session and local storage
+                      localStorage.clear();
+                      sessionStorage.clear();
+
                       toast.error("Log Out Successfully", {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 1000,
                       });
+
+                      window.location.replace(redirectPath);
                     }}
                     className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
                   >
@@ -159,8 +166,81 @@ const AdminHeader = (props) => {
               </div>
             </div>
           </div>
+
+          {/* <div className="dropdown show-gr-dropdown py-5">
+            <Link
+              to={""}
+              role="button"
+              id="dropdownMenuNotification"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              className="px-3 ml-7 font-size-4 notification-block flex-y-center position-relative text-white"
+            >
+              <i className="fas fa-bell "></i>
+              {notification.length > 0 ? (
+                <span className="font-size-1 count text-white bg-primary circle-18 border border-width-1 border border-white">
+                  {notification.length >= 10
+                    ? "9+"
+                    : notification.length >= 100
+                    ? "99+"
+                    : notification.length}
+                </span>
+              ) : null}
+            </Link>
+            <ul
+              className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
+              aria-labelledby="dropdownMenuNotification"
+            >
+              {(notification || []).map((data, i) =>
+                i >= 10 ? null : (
+                  <React.Fragment key={data.id}>
+                    <li
+                      title={data.message}
+                      className={
+                        data.is_read === "1"
+                          ? "dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap text-capitalize"
+                          : "font-weight-bold dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap text-capitalize"
+                      }
+                    >
+                      <Link
+                        to={
+                          data.subject === "added_new_job"
+                            ? "/job"
+                            : data.subject === "applied_on_job"
+                            ? "/responses"
+                            : data.subject === "interview_scheduled"
+                            ? "/interview"
+                            : ""
+                        }
+                        onClick={() => {
+                          try {
+                            ReadNotification(data.id);
+                          } catch (err) {
+                            console.log(err);
+                          }
+                          setApicall(true);
+                        }}
+                        className="text-truncate-2 text-dark"
+                      >
+                        {data.message}
+                      </Link>
+                    </li>
+                  </React.Fragment>
+                )
+              )}
+            </ul>
+          </div> */}
         </nav>
       </div>
+      {/* Setteings modal */}
+      {showSettings ? (
+        <AdminSetting
+          setShowChangePass={setShowChangePass}
+          close={() => setSettings(false)}
+          show={showSettings}
+        />
+      ) : null}
       {/*<-- Change password Modal -->*/}
       {showChangePass ? (
         <ChangePassword

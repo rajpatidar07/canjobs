@@ -1,0 +1,619 @@
+import React, { useEffect, useState } from 'react';
+import filterjson from '../../json/filterjson';
+import Pagination from '../../common/pagination';
+import { ApplyProgram } from "../../../api/api"
+import { toast } from 'react-toastify';
+import EmployeeModal from '../../admin/Modal/employeeModal';
+import SelectBox from '../../common/Common function/SelectBox';
+function ProgramListSection() {
+    // State variables
+    const [state, setState] = useState('');
+    const [city, setCity] = useState('');
+    const [college, setCollege] = useState('');
+    const [programFilter, setProgramFilter] = useState('');
+    const [discipline, setDiscipline] = useState('');
+    const [subCategory, setSubCategory] = useState('');
+    const [duration, setDuration] = useState('');
+    const [intakeMonth, setIntakeMonth] = useState('');
+    const [iletsCriteria, setIletsCriteria] = useState('');
+    const [gpaCriteria, setGpaCriteria] = useState('');
+    const [educationCriteria, setEducationCriteria] = useState('');
+    const [mathRequirement, setMathRequirement] = useState('');
+    const [englishRequirement, setEnglishRequirement] = useState('');
+    const [programs, setPrograms] = useState([]);
+    const [perPage] = useState(10);
+    const [pageNo, setPageNo] = useState(1);
+    const [totalData, setTotalData] = useState(0);
+    const [uniqueStates, setUniqueStates] = useState([]);
+    const [uniqueCities, setUniqueCities] = useState([]);
+    const [uniqueColleges, setUniqueColleges] = useState([]);
+    const [programData, setProgramData] = useState();
+    let [loading, setLoading] = useState(false);
+    let [showCandidateModal, setShowCandidateModal] = useState(false);
+    let employee_id = localStorage.getItem("employee_id")
+    let UserType = localStorage.getItem("userType");//login user type
+    let applyUserId = localStorage.getItem(UserType === "admin" ? "admin_id" : "agent_id");
+    // Effect to fetch programs and filters on component mount and when dependencies change
+    useEffect(() => {
+        getData();
+        document.body.classList.remove("admin_body");
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state, city, college, programFilter, discipline, subCategory, duration, intakeMonth, iletsCriteria, gpaCriteria, educationCriteria, mathRequirement, englishRequirement, pageNo]);
+
+    // Fetch JSON function
+    async function fetchJSON(url, method, formData) {
+        try {
+            const response = await fetch(url, {
+                method: method,
+                keepalive: true,
+                body: formData // Remove headers, let the browser handle them
+            });
+            return await response.json();
+        } catch (err) {
+            console.log(err);
+            return null; // Return null on error
+        }
+    }
+
+    // Function to fetch filter data from the API
+    const getData = async () => {
+        const formData = new FormData();
+        // Append each field to the FormData object
+        formData.append('state', state);
+        formData.append('city', city);
+        formData.append('college_name', college);
+        formData.append('programs', programFilter);
+        formData.append('program_discipline_category', discipline);
+        formData.append('program_sub_category', subCategory);
+        formData.append('course_duration', duration);
+        formData.append('intake_month', intakeMonth);
+        formData.append('ilets_entry_criteria', iletsCriteria);
+        formData.append('gpa_entry_criteria', gpaCriteria);
+        formData.append('education_entry_criteria', educationCriteria);
+        formData.append('math_requirement', mathRequirement);
+        formData.append('english_requirement', englishRequirement);
+        formData.append('perPage', perPage);
+        formData.append('pageNo', pageNo);
+
+        // Fetch unique states, cities, and colleges
+        const uniqueData = await fetchJSON('https://canpathways.ca/myapi/program/filter.php', "GET");
+        if (uniqueData) {
+            setUniqueStates([...new Set(uniqueData.map((item) => item.state))]);
+            setUniqueCities([...new Set(uniqueData.map((item) => item.city))]);
+            setUniqueColleges([...new Set(uniqueData.map((item) => item.college_name))]);
+        }
+
+        // Fetch programs based on filters and pagination
+        const programData = await fetchJSON('https://canpathways.ca/myapi/program/programs.php', "POST", formData);
+        if (programData && programData.data) {
+            setPrograms(programData.data);
+            setTotalData(programData.total_data); // Make sure total_data is returned from the API
+        } else {
+            setPrograms([]);
+            setTotalData(0); // Reset total pages if no data is found
+        }
+    };
+    /*Pagination Calculation */
+    const nPages = Math.ceil(totalData / perPage);
+
+    // Change handlers for filters
+    const changeCity = (event) => {
+        setCity(event.target.value);
+        setCollege(''); // Reset college selection when city changes
+    };
+
+    const changeCollege = (event) => {
+        setCollege(event.target.value);
+    };
+
+    /*Function to apply for the program */
+    const OnProgramApplyClick = async (data, empId) => {
+        setLoading(true)
+        try {
+            let newData = {
+                program_id: data ? data.id : programData.id,
+                state: data ? data.state : programData.state,
+                city: data ? data.city : programData.city,
+                college_name: data ? data.college_name : programData.college_name,
+                programs: data ? data.programs : programData.programs,
+                program_discipline_category: data ? data.program_discipline_category : programData.program_discipline_category,
+                program_sub_category: data ? data.program_sub_category : programData.program_sub_category,
+                course_duration: data ? data.course_duration : programData.course_duration,
+                course_intake_season: data ? data.course_intake_season : programData.course_intake_season,
+                ilets_entry_criteria: data ? data.ilets_entry_criteria : programData.ilets_entry_criteria,
+                gpa_entry_criteria: data ? data.gpa_entry_criteria : programData.gpa_entry_criteria,
+                education_entry_criteria: data ? data.education_entry_criteria : programData.education_entry_criteria,
+                math_requirement: data ? data.math_requirement : programData.math_requirement,
+                english_requirement: data ? data.english_requirement : programData.english_requirement,
+                application_fee_cad: data ? data.application_fee_cad : programData.application_fee_cad,
+                program_details_fee: data ? data.program_details_fee : programData.program_details_fee,
+                intake_avl: data ? data.intake_avl : programData.intake_avl,
+                program_created_at: data ? data.created_at : programData.created_at,
+                employee_id: (UserType === "admin" || UserType === "agent") ? empId : employee_id,
+                employee_type: "employee",
+                applied_user_id: (UserType === "admin" || UserType === "agent") ? applyUserId : "",
+                applied_user_type: (UserType === "admin" || UserType === "agent") ? UserType : ""
+
+            }
+            // console.log(newData)
+            let res = await ApplyProgram(newData)
+            if (res.message === "successfully") {
+                toast.success("Applied Successfully", {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                });
+                setLoading(false)
+                setShowCandidateModal(false)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    return (
+        <>
+            <style>
+                {`
+                    .program_list_div {
+                        max-height: 1000px;
+                        overflow: auto;
+                    }
+
+                    .criteria_label {
+                        font-size: 12px;
+                    }
+
+                    .criteria_value {
+                        font-size: 16px;
+                        font-weight: 600;
+                    }
+
+                    .criteria_box, .fee_box {
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                        padding: 10px;
+                        margin: 0px;
+                    }
+
+                    span.badge.btn-outline-info {
+                        border: 1px solid #0dcaf0;
+                        color: #333;
+                    }
+
+                    .college_name {
+                        text-transform: uppercase;
+                        color: #ff9a9a;
+                    }
+
+                    h4.card-title {
+                        color: blue;
+                    }
+
+                    .program_box {
+                        box-shadow: 0 0 4px #ccc;
+                    }
+
+                    .input_label {
+                        font-size: 12px;
+                    }
+
+                    .select2-container--default .select2-results > .select2-results__options,
+                    span.selection {
+                        font-size: 14px;
+                    }
+
+                    .select2-container--default .select2-selection--single .select2-selection__rendered {
+                        line-height: 26px;
+                    }
+
+                    span.location {
+                        font-size: 13px;
+                        font-style: italic;
+                    }
+
+                    span.location i {
+                        color: #ff9a9a;
+                    }
+
+                    .form-control {
+                        border: 1px solid #aaa;
+                    }
+
+                    .heading_col_9 {
+                        width: calc(100% - 130px);
+                    }
+
+                    .pagination {
+                        display: flex;
+                        justify-content: space-between;
+                        flex-wrap: wrap;
+                    }
+
+                    a.pagination-link {
+                        background: white;
+                        padding: 4px 8px;
+                        border: 1px solid #e73a46;
+                        text-decoration: none;
+                        cursor: pointer;
+                    }
+
+                    a.pagination-link.current {
+                        color: white;
+                        background: #e73a46;
+                        padding: 5px 9px;
+                        border: 1px solid white;
+                    }
+
+                    .pagination .per_page_select {
+                        padding: 3px;
+                        border: 1px solid #e73a46;
+                        color: #e73a46;
+                        background: white;
+                    }
+                        .text-bg-primary{
+                        color: #fff !important;
+                         background-color: RGBA(13, 110, 253, var(--bs-bg-opacity, 1)) !important;
+    }
+                `}
+            </style>
+            <div className="section p-2 program_list_section mt-10">
+                {showCandidateModal ? (
+                    <EmployeeModal
+                        show={showCandidateModal}
+                        close={() => setShowCandidateModal(false)}
+                        OnProgramApplyClick={OnProgramApplyClick}
+                        page={"program"}
+                    />
+                ) : null}
+                <div className="container-fluid content_row">
+                    <div className="card">
+                        <div className="row main_row m-0 overflow-hidden">
+                            <div className="col-md-3 filter_sidebar p-3">
+                                <h4 className="mb-3 text-dark">Program Filter</h4>
+                                {/* State Filter */}
+                                <div className="form-group mb-2 mt-5">
+                                    <label className="input_label">State/Province</label>
+                                    <SelectBox
+                                        Width={"yes"}
+                                        options={(uniqueStates || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        selectedValue={state}
+                                        onChange={(e) => setState(e ? e.value : "")}
+                                        placeholder="Select"
+                                        className="form-control-sm"
+                                    />
+
+                                </div>
+
+                                {/* City Filter */}
+                                <div className="form-group mb-2 mt-5">
+                                    <label className="input_label">City</label>
+                                    <SelectBox
+                                        Width={"yes"}
+                                        options={(uniqueCities || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        selectedValue={city}
+                                        onChange={(e) => changeCity({ target: { value: e ? e.value : "" } })}
+                                        placeholder="Select"
+                                        className="form-control-sm"
+                                    />
+
+                                </div>
+
+                                {/* College Filter */}
+                                <div className="form-group mb-2 mt-5">
+                                    <label className="input_label">College Name</label>
+                                    <SelectBox
+                                        Width={"yes"}
+                                        options={(uniqueColleges || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        selectedValue={college}
+                                        onChange={(e) => changeCollege({ target: { value: e ? e.value : "" } })}
+                                        placeholder="Select"
+                                        className="form-control-sm"
+                                    />
+
+                                </div>
+
+                                {/* Program Search */}
+                                <div className="form-group mb-2 mt-5">
+                                    <label className="input_label">Programs</label>
+                                    <input
+                                        placeholder="Search program"
+                                        className="form-control form-control-sm"
+                                        onKeyUp={(e) => setProgramFilter(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="form-group mb-2 mt-5">
+                                    <label className="input_label">Program Discipline Category</label>
+                                    <SelectBox
+                                        Width={"yes"}
+                                        options={(filterjson.program_discipline_category || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        onChange={(e) => setDiscipline(e ? e.value : "")}
+                                        selectedValue={discipline}
+                                        placeholder="Filter program discipline category"
+                                        isSearchable={true}
+                                        className="selectpicker"
+                                    />
+
+                                </div>
+
+                                <div className="form-group mb-2 mt-5">
+                                    <label className="input_label">Program Sub Category</label>
+                                    <SelectBox
+                                        Width={"yes"}
+                                        options={(filterjson.program_discipline_sub_category || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        selectedValue={subCategory}
+                                        onChange={(e) => setSubCategory(e ? e.value : "")}
+                                        placeholder="Filter program sub category"
+                                        isSearchable={true}
+                                        className="selectpicker"
+                                    />
+
+                                </div>
+                                <div className="form-group mb-2 mt-5">
+                                    <label className="input_label">Course Duration (Year)</label>
+                                    <select id="durationFilter" className="form-control selectpicker" data-live-search="true" onChange={e => setDuration(e.target.value)}>
+                                        <option value="">Filter course duration</option>
+                                        <option value={1}>1</option>
+                                        <option value={2}>2</option>
+                                        <option value={3}>3</option>
+                                        <option value={4}>4</option>
+                                    </select>
+                                </div>
+                                <div className="form-group mb-2 mt-5">
+                                    <label className="input_label">Intake Month Season</label>
+                                    <SelectBox
+                                        Width={"yes"}
+                                        options={(filterjson.programs_intake_month || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        onChange={(e) => setIntakeMonth(e ? e.value : "")}
+                                        selectedValue={intakeMonth}
+                                        placeholder="Filter intake month"
+                                        isSearchable={true}
+                                        className="selectpicker"
+                                    />
+
+                                </div>
+                                <div className="form-group mb-2 mt-5">
+                                    <label className="input_label">Ilets Entry Criteria</label>
+                                    <SelectBox
+                                        Width={"yes"}
+                                        options={(filterjson.programs_ilets_entry_criteria || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        onChange={(e) => setIletsCriteria(e ? e.value : "")}
+                                        selectedValue={iletsCriteria}
+                                        placeholder="Filter Ilets entry criteria"
+                                        isSearchable={true}
+                                        className="selectpicker"
+                                    />
+
+                                </div>
+                                <div className="form-group mb-2 mt-5">
+                                    <label className="input_label">GPA Entry criteria(%)</label>
+                                    <SelectBox
+                                        Width={"yes"}
+                                        options={(filterjson.programs_gpa_entry_criteria || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        onChange={(e) => setGpaCriteria(e ? e.value : "")}
+                                        selectedValue={gpaCriteria}
+                                        placeholder="Filter GPA entry criteria"
+                                        isSearchable={true}
+                                        className="selectpicker"
+                                    />
+
+                                </div>
+                                <div className="form-group mb-2 mt-5">
+                                    <label className="input_label">Education Entry Criteria</label>
+                                    <SelectBox
+                                        Width={"yes"}
+                                        options={(filterjson.programs_education_entry_criteria || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        selectedValue={educationCriteria}
+                                        onChange={(e) => setEducationCriteria(e ? e.value : "")}
+                                        placeholder="Filter education entry criteria"
+                                        isSearchable={true}
+                                        className="selectpicker"
+                                    />
+
+                                </div>
+                                <div className="form-group mb-2 mt-5">
+                                    <label className="input_label">Math Requirement</label>
+                                    <SelectBox
+                                        Width={"yes"}
+                                        id="mathFilter"
+                                        options={(filterjson.programs_math_requirement || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        selectedValue={mathRequirement}
+                                        onChange={(e) => setMathRequirement(e ? e.value : "")}
+                                        placeholder="Filter math requirement"
+                                        isSearchable={true}
+                                        className="selectpicker"
+                                    />
+
+                                </div>
+                                <div className="form-group mb-2 mt-5">
+                                    <label className="input_label">English Requirement</label>
+                                    <SelectBox
+                                        Width={"yes"}
+                                        id="englishFilter"
+                                        options={(filterjson.programs_english_requirement || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        selectedValue={englishRequirement}
+                                        onChange={(e) => setEnglishRequirement(e ? e.value : "")}
+                                        placeholder="Filter english requirement"
+                                        isSearchable={true}
+                                        className="selectpicker"
+                                    />
+
+                                </div>
+                            </div>
+                            {/* Program List Display */}
+                            <div className="col-md-9 program_list_div bg-light p-3">
+                                <h4 className="mb-3 text-dark">Program Finder</h4>
+                                <div id="programList">
+                                    <div className="pagination">
+                                        {programs.length > 0 ? programs.map((program, index) => (
+                                            <div className="program_box mb-3 bg-white rounded px-3 pt-3">
+                                                <div className="row">
+                                                    <div className="heading_col_9 px-5">
+                                                        <h6 className="fw-normal m-0">
+                                                            <span className="fw-bold college_name">{program.college_name || "N/A"}</span>
+                                                            <span className="location mx-lg-14  ms-4">
+                                                                <i className="fa fa-map-marker mr-4" ></i>
+                                                                <span className='text-dark '> {program.city || "N/A"}, {program.state || "N/A"}
+                                                                </span>
+                                                            </span>
+                                                        </h6>
+                                                        <h4 className="card-title">
+                                                            {program.programs || "N/A"}
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                                <p className="card-title">{program.program_discipline_category}</p>
+                                                <div>
+                                                    {program.program_sub_category.split(',').map((subCat, idx) => (
+                                                        <span key={idx} className="badge text-bg-primary fw-normal m-1">{subCat}</span>
+                                                    )) || "N/A"}
+                                                </div>
+                                                <div className="row mt-3">
+                                                    <div className="col-md-3 mb-2">
+                                                        <p className="criteria_label m-0">Course Duration (Year)</p>
+                                                        <p className="criteria_value m-0">{program.course_duration + " year" || "N/A"} </p>
+                                                    </div>
+                                                    <div className="col-md-9 mb-2">
+                                                        <p className="criteria_label m-0">Course Intake Season</p>
+                                                        <p className="criteria_value m-0">
+                                                            {program.course_intake_season.split(',').map((month, idx) => (
+                                                                <span key={idx} className="badge fw-normal me-1 mt-1 btn-outline-info">{month}</span>
+                                                            )) || "N/A"}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className="col-md-4 mb-3">
+                                                        <h6 className="card-title mb-0 mt-3">Fee:</h6>
+                                                        <div className="row flex-wrap mt-1 fee_box">
+                                                            <div className="col-12 mb-3">
+                                                                <p className="criteria_label m-0">Application Fee (CAD $)</p>
+                                                                <p className="criteria_value m-0">{"$" + program.application_fee_cad || "N/A"}</p>
+                                                            </div>
+                                                            <div className="col-12 mb-3">
+                                                                <p className="criteria_label m-0">Program Details Fee (CAD / Year) (approx.)</p>
+                                                                <p className="criteria_value m-0">{program.program_details_fee || "N/A"}</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="row flex-wrap mt-1 fee_box d-none">
+                                                            <div className="col-md-8 mb-3">
+                                                                <h6 className="card-title mb-0 mt-3">Scholarships:</h6>
+                                                                <div className="row flex-wrap mt-1 fee_box">
+                                                                    <div className="col-12 mb-3">
+                                                                        <p className="criteria_label m-0">Available Scholarships</p>
+                                                                        <p className="criteria_value m-0">{program.scholarship_name}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-8 mb-3">
+                                                        <h6 className="card-title mb-0 mt-3">Eligibility Criteria:</h6>
+                                                        <div className="row flex-wrap mt-1 criteria_box">
+                                                            <div className="col-3 mb-3">
+                                                                <p className="criteria_label m-0">ILETS Entry</p>
+                                                                <p className="criteria_value m-0">{program.ilets_entry_criteria || "N/A"}</p>
+                                                            </div>
+                                                            <div className="col-3 mb-3">
+                                                                <p className="criteria_label m-0">GPA Entry</p>
+                                                                <p className="criteria_value m-0">{program.gpa_entry_criteria || "N/A"}</p>
+                                                            </div>
+                                                            <div className="col-6 mb-3">
+                                                                <p className="criteria_label m-0">GPA Entry</p>
+                                                                <p className="criteria_value m-0">{program.education_entry_criteria || "N/A"}</p>
+                                                            </div>
+                                                            <div className="col-6 mb-3">
+                                                                <p className="criteria_label m-0">Math Requirement</p>
+                                                                <p className="criteria_value m-0">{program.math_requirement || "N/A"}</p>
+                                                            </div>
+                                                            <div className="col-6 mb-3">
+                                                                <p className="criteria_label m-0">English Requirement</p>
+                                                                <p className="criteria_value m-0">{program.english_requirement || "N/A"}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className={'mx-5 mb-2 mt-2'}>
+                                                        {loading === true && program === programData ? (
+                                                            <button
+                                                                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                                                                type="button"
+                                                                disabled
+                                                            >
+                                                                <span
+                                                                    className="spinner-border spinner-border-sm "
+                                                                    role="status"
+                                                                    aria-hidden="true"
+                                                                ></span>
+                                                                <span className="sr-only">Loading...</span>
+                                                            </button>
+                                                        ) : <button className='btn btn-primary'
+                                                            onClick={() => {
+                                                                if (UserType === "admin" || UserType === "agent") {
+                                                                    setShowCandidateModal(true);
+                                                                    setProgramData(program);
+                                                                } else {
+                                                                    OnProgramApplyClick(program);
+                                                                    setProgramData(program);
+                                                                }
+                                                            }}
+                                                        >Apply</button>}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )) : (
+                                            <h4 className='text-dark'>No Programs Found</h4>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="pt-2 mx-auto">
+                                <Pagination
+                                    nPages={nPages}
+                                    currentPage={pageNo}
+                                    setCurrentPage={setPageNo}
+                                    total={totalData}
+                                    count={programs.length}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div >
+        </>
+    );
+}
+
+export default ProgramListSection;

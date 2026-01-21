@@ -1,0 +1,485 @@
+import React, { useEffect, useState } from "react";
+// import AdminHeader from "./header";
+// import AdminSidebar from "./sidebar";
+// import CustomButton from "../common/button";
+// import PersonalDetails from "../forms/user/personal";
+import "react-toastify/dist/ReactToastify.css";
+// import UserProfile from "../user/profile";
+// import { GetFilter } from "../../api/api"
+// import EmployeeTable from "../common/employeeTable";
+import FilterJson from "../json/filterjson";
+// import JobTable from "../common/jobTable";
+// import JobDetailsBox from "../common/jobdetail"
+import EmployeeHeader from "../common/header";
+import EmployeeFooter from "../common/footer";
+import VisaTable from "../common/visaTable";
+import { useLocation } from "react-router-dom";
+import { getApplicanTypeApi, GetEmployeeVisaList } from "../../api/api";
+import CommonThreeDots from "../common/Common function/commonThreeDots";
+import SelectBox from "../common/Common function/SelectBox";
+export default function Visa() {
+  let location = useLocation();
+  /*Show modal states */
+  let [apiCall, setApiCall] = useState(false);
+  //   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
+  // let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
+  /*data and id states */
+  // let [employeeId, setemployeeId] = useState();
+  // let [showJobDetails, setShowJobDetails] = useState(false);
+  const [EmpId, setEmpId] = useState(location.state ? location.state.id : "");
+  /*Filter and search state */
+  // let [SkillList, setSkillList] = useState([])
+  let [applicantTypeList, setApplicantTypeList] = useState([]);
+  const [VisaCountryFilter, setVisaCountryFilter] = useState("");
+  const [VisStatusFilterValue, setVisStatusFilterValue] = useState("");
+  const [VisaSubStatusFilterValue, setVisaSubStatusFilterValue] = useState("");
+  const [InterestedFilterValue, setInterestedFilterValue] = useState("");
+  const [search, setSearch] = useState("");
+  const [searcherror, setSearchError] = useState("");
+  const [pageNo, setPageNo] = useState(localStorage.getItem("PageNo") || 1);
+  //  const [categoryFilterValue, setCategoryFilterValue] = useState("");
+  //  const [locationFilterValue, setLocationFilterValue] = useState("");
+  //  const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
+  //  const [company, setCompany] = useState("");
+  let [allVisa, setVisaData] = useState([]);
+  let userType = localStorage.getItem("userType");
+  /*Render function to get the job */
+  // useEffect(() => {
+  //   JsonData();
+  //   if ((search === "") === true) {
+  //     setSearchError("");
+  //   }
+  // }, [
+  // VisStatusFilterValue,
+  // VisaCountryFilter,
+  // InterestedFilterValue,
+  //   //  categoryFilterValue,
+  //   //  locationFilterValue,
+  //   //  jobSwapFilterValue,
+  //   apiCall,
+  //   search,
+  //   //  company,
+  // ]);
+
+  /* Function to show the Job detail data */
+  //  const JobDetail = (e) => {
+  //    setShowJobDetails(true);
+  //    setJobId(e);
+  //  };
+  /*Function to get thejSon */
+  const getAllVisaData = async () => {
+    try {
+      let res = await GetEmployeeVisaList(
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "visa"
+      );
+      setVisaData(res.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      let response = await getApplicanTypeApi("");
+      setApplicantTypeList(
+        response.data.data.filter((item) => item.level === (0 || "0"))
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  /*Render method to get the json*/
+  useEffect(() => {
+    getAllVisaData();
+    // if ((search === "") === true) {
+    //   setSearchError("")
+    // }
+  }, []);
+  /* Function to show the single data to update Employee*/
+  // const employeeDetails = (e) => {
+  //   setShowEmployeeProfile(true);
+  //   setemployeeId(e);
+  // };
+
+  /*Function to search the employee */
+  const onSearch = (e) => {
+    setEmpId("");
+    const inputValue = e.target.value;
+    setSearch(inputValue);
+    setPageNo(1);
+    if (inputValue.length > 0) {
+      if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+        setSearchError("Candidate Name cannot start with a number.");
+      } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+        setSearchError("Cannot use special characters.");
+      } else {
+        setSearchError("");
+      }
+    } else {
+      setSearchError("");
+    }
+  };
+  return (
+    <>
+      <div
+        className={
+          userType === "company"
+            ? "bg-default-1 pt-9 pb-10 pb-xl-30 pb-13 position-relative overflow-hidden"
+            : "site-wrapper overflow-hidden bg-default-2"
+        }
+      >
+        {userType === "company" ? (
+          <EmployeeHeader />
+        ) : (
+          <>
+            {/* <!-- Header Area --> */}
+            {/* <AdminHeader heading={"Visa"} /> */}
+            {/* <!-- navbar- --> */}
+            {/* <AdminSidebar heading={"Visa"} /> */}
+          </>
+        )}
+
+        <div
+          className={
+            // showJobDetails === false?
+            userType === "company" ? "mt-16" : "dashboard-main-container mt-14"
+            // : "d-none"
+          }
+          id="dashboard-body"
+        >
+          <div className="container-fluid">
+            <div className="mb-18">
+              <div className="mb-4 align-items-center">
+                <div className={userType === "company" ? "" : "page___heading"}>
+                  <h3 className="font-size-6 mb-0">Visa of job</h3>
+                </div>
+                {/* <!-- Employee Search and Filter- --> */}
+                <div
+                  className={
+                    userType === "company"
+                      ? "d-none"
+                      : "row m-0 align-items-start"
+                  }
+                >
+                  <div className="col-sm-12 col-sx-12 col-md-6 col-lg-2 col-xl-2 p-1 form_group mb-3">
+                    <p className="input_label">Search Candidate:</p>
+                    <input
+                      required
+                      type="text"
+                      className="form-control input-height"
+                      placeholder={"Search Candidate"}
+                      value={search}
+                      name={"Employee_name"}
+                      onChange={(e) => onSearch(e)}
+                    />
+                  </div>
+                  <div className="col-sm-12 col-sx-12 col-md-6 col-lg-2 col-xl-2 p-1 form_group mb-3">
+                    <p className="input_label">Filter by Visa Country:</p>
+                    <div className="select_div">
+                      <SelectBox
+                        Width={"yes"} options={(FilterJson.location.map((option) => ({
+                          value: option.country,
+                          label: option.country,
+                        })) || [])}
+                        selectedValue={VisaCountryFilter}
+                        onChange={(e) => {
+                          setVisaCountryFilter(e ? e.value : null);
+                          setPageNo(1);
+                          setEmpId("");
+                        }}
+                        type={"location"}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-sm-12 col-sx-12 col-md-6 col-lg-2 col-xl-2 p-1 form_group mb-3">
+                    <p className="input_label">Filter by Visa Status:</p>
+                    <div className="select_div">
+                      <SelectBox
+                        Width={"yes"} options={(FilterJson.visa_status.map((option) => ({
+                          value: option,
+                          label: option,
+                        })) || [])}
+                        selectedValue={VisStatusFilterValue}
+                        onChange={(e) => {
+                          setVisStatusFilterValue(e ? e.value : null);
+                          setPageNo(1);
+                          setEmpId("");
+                        }}
+                        type={"status"}
+                      />
+                    </div>
+                  </div>
+                  {VisStatusFilterValue && <div className={"col-sm-12 col-sx-12 col-md-6 col-lg-2 col-xl-2 p-1 form_group mb-3"}>
+                    <p className="input_label">Filter by Visa Sub Status:</p>
+                    <div className="select_div">
+                      <SelectBox
+                        Width={"yes"} options={(FilterJson?.visa_sub_stages[VisStatusFilterValue].map((option) => ({
+                          value: option,
+                          label: option,
+                        })) || [])}
+                        selectedValue={VisaSubStatusFilterValue}
+                        onChange={(e) => {
+                          setVisaSubStatusFilterValue(e ? e.value : null);
+                          setPageNo(1);
+                          setEmpId("");
+                        }}
+                        type={"status"}
+                      />
+                    </div>
+                  </div>}
+                  <div className="col-sm-12 col-sx-12 col-md-6 col-lg-2 col-xl-2 p-1 form_group mb-3">
+                    <p className="input_label">Filter by Application type:</p>
+                    <div className="select_div">
+                      <SelectBox
+                        Width={"yes"} options={(applicantTypeList.map((option) => ({
+                          value: option.id,
+                          label: option.title,
+                        })) || [])}
+                        selectedValue={InterestedFilterValue}
+                        onChange={(e) => {
+                          setInterestedFilterValue(e ? e.value : null);
+                          setPageNo(1);
+                          setEmpId("");
+                        }}
+                        type={"interested_in"}
+                      />
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-6 col-lg-2 col-xl-2 mt-7">
+                    <div class="d-flex align-items-center gap-2">
+                      <button class="btn btn-primary" onClick={() => {
+                        const clearFiltersByPageName = () => {
+                          setInterestedFilterValue("")
+                          setVisaSubStatusFilterValue("")
+                          setVisStatusFilterValue("")
+                          setVisaCountryFilter("")
+                          setSearch("")
+                          setPageNo(1);
+                          setEmpId("");
+                        };
+                        clearFiltersByPageName();
+                      }}>Reset</button>
+                      <span className="mt-3">
+                        <CommonThreeDots tableName={"visa"} tableData={allVisa} /></span>
+                    </div>
+                  </div>
+                </div>
+                {/*<-- Job Search and Filter -->*/}
+                {/* <div className={userType === "company" ? "d-none"
+                :"row m-0 align-items-center"}>
+                  <div className="col p-1 form_group mb-3">
+                    <p className="input_label">Search:</p>
+                    <input
+                      required
+                      type="text"
+                      className="form-control w-100"
+                      placeholder={"Search Job"}
+                      value={search}
+                      name={"name"}
+                      onChange={(e) => onSearch(e)}
+                    />
+                    <small className="text-danger">{searcherror}</small>
+                  </div>
+                  <div className="col p-1 form_group mb-3">
+                    <p className="input_label">Company Name:</p>
+                    <input
+                      required
+                      type="text"
+                      className="form-control w-100"
+                      placeholder={"Company name"}
+                      value={company}
+                      name={"compnay_name"}
+                      onChange={(e) => setCompany(e.target.value)}
+                    />
+                  </div>
+                  <div className="col p-1 form_group mb-3">
+                    <p className="input_label">Filter by Job Category:</p>
+                    <div className="select_div">
+                      <select
+                        name="country"
+                        id="country"
+                        value={categoryFilterValue}
+                        onChange={(e) => setCategoryFilterValue(e.target.value)}
+                        className=" form-control"
+                      >
+                        <option value="">Job Category</option>
+                        {(Json.Category || []).map((data) => {
+                          return (
+                            <option value={data.id} key={data.id}>
+                              {data.value}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col p-1 form_group mb-3">
+                    <p className="input_label">Filter by Job Type:</p>
+                    <div className="select_div">
+                      <select
+                        name="country"
+                        id="country"
+                        value={jobSwapFilterValue}
+                        onChange={(e) => {
+                          setJobSwapFilterValue(e.target.value);
+                        }}
+                        className=" form-control"
+                      >
+                        <option value="">Job Type</option>
+                        {(FilterJson.job_type || []).map((job, i) => (
+                          <option key={i} value={job}>
+                            {job}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col p-1 form_group mb-3">
+                    <p className="input_label">Filter by Job Skill:</p>
+                    <div className="select_div">
+                      <select
+                        name="country"
+                        id="country"
+                        value={skillFilterValue}
+                        onChange={(e) => setSkillFilterValue(e.target.value)}
+                        className=" form-control"
+                      >
+                        <option value="">Job Skill</option>
+                        {(json.skill || []).map((data) => {
+                          return (
+                            <option value={data.value} key={data.id}>
+                              {data.value}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col p-1 form_group mb-3">
+                    <p className="input_label">Filter by Job Location:</p>
+                    <div className="select_div">
+                      <select
+                        name="country"
+                        id="country"
+                        value={locationFilterValue}
+                        onChange={(e) => setLocationFilterValue(e.target.value)}
+                        className=" form-control"
+                      >
+                        <option value="">Job Location</option>
+                        {(FilterJson.location || []).map((data) => {
+                          return (
+                            <option value={data} key={data}>
+                              {data}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  </div>
+                </div> */}
+                <small className="text-danger">{searcherror}</small>
+              </div>
+              {/* <!-- Employee List Table- --> */}
+              {/* <EmployeeTable
+              showEmployeeProfile={showEmployeeProfile}
+              employeeDetails={employeeDetails}
+              search={search}
+              experienceFilterValue={experienceFilterValue}
+              educationFilterValue={educationFilterValue}
+              skillFilterValue={skillFilterValue}
+              apiCall={apiCall}
+              setApiCall={setApiCall}
+            //   skill={props.skill}
+            //   job_id={props.job_id}
+              visa={"yes"}
+            /> */}
+              {/* <JobTable
+            search={search}
+            jobSwapFilterValue={jobSwapFilterValue}
+            locationFilterValue={locationFilterValue}
+            SkillFilterValue={skillFilterValue}
+            categoryFilterValue={categoryFilterValue}
+            company={company}
+            JobDetail={JobDetail}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
+            selfJob={"no"}
+            response="visa"/> */}
+              <VisaTable
+                search={search}
+                VisaCountryFilterValue={VisaCountryFilter}
+                IntrestedFilterValue={InterestedFilterValue}
+                VisStatusFilterValue={VisStatusFilterValue}
+                apiCall={apiCall}
+                setApiCall={setApiCall}
+                employee_id={EmpId}
+                setpageNo={setPageNo}
+                pageNo={pageNo}
+                subStage={VisaSubStatusFilterValue}
+              />
+            </div>
+          </div>
+        </div>
+        {/* <!-- Employee Details- --> */}
+        {/* {showEmployeeProfile === true ? (
+        <div className="dashboard-main-container mt-14">
+          <div className="container-fluid">
+            <div className="row justify-content-center">
+              <div className="col-12 dark-mode-texts">
+                <div className="mb-9">
+                  <Link
+                    to={""}
+                    onClick={() => setShowEmployeeProfile(false)}
+                    className="d-flex align-items-center ml-4"
+                  >
+                    <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8 mt-10"></i>
+                    <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+                      Back
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div className="mb-18">
+              <UserProfile employeeId={employeeId} />
+            </div>
+          </div>
+        </div>
+      ) : null} */}
+      </div>
+      {/*<-- Job Detail -->*/}
+      {/* {showJobDetails === true ? (
+          <div className={userType === "company" ?"mt-16":"dashboard-main-container mt-14"}>
+            <div className="container-fluid">
+              <div className="row justify-content-center">
+                <div className="col-12 dark-mode-texts">
+                  <div className="mb-9">
+                    <Link
+                      to={""}
+                      onClick={() => setShowJobDetails(false)}
+                      className="d-flex align-items-center ml-4"
+                    >
+                      <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+                      <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+                        Back
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="mb-18">
+                <JobDetailsBox jobdata={JobId} />
+              </div>
+            </div>
+          </div>
+        ) : null} */}
+      {userType === "company" ? <EmployeeFooter /> : null}
+    </>
+  );
+}

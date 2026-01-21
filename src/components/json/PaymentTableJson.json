@@ -1,0 +1,54 @@
+{
+  "records": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "paymentStatus": "Paid",
+      "paymentMode": "Credit Card",
+      "referredBy": "Jane Smith",
+      "dueDate": "2023-08-15",
+      "Manager": "John Doe",
+      "dupPayment": "No",
+      "Method": "Credit Card"
+    },
+    {
+      "id": "2",
+      "name": "Alice Johnson",
+      "paymentStatus": "Pending",
+      "paymentMode": "PayPal",
+      "referredBy": "Dr. Brown",
+      "dueDate": "2024-03-20",
+      "Manager": "Robert Smith",
+      "dupPayment": "No",
+      "Method": "Online Transfer"
+    },
+    {
+      "id": "3",
+      "name": "Michael Lee",
+      "paymentStatus": "Failed",
+      "paymentMode": "Debit Card",
+      "referredBy": "Dr. Watson",
+      "dueDate": "2024-02-10",
+      "Manager": "Emily Clark",
+      "dupPayment": "Yes",
+      "Method": "Bank Transfer"
+    },
+    {
+      "id": "4",
+      "name": "Sophia Martinez",
+      "paymentStatus": "Completed",
+      "paymentMode": "UPI",
+      "referredBy": "Dr. Green",
+      "dueDate": "2023-12-05",
+      "Manager": "Daniel Wilson",
+      "dupPayment": "No",
+      "Method": "UPI Payment"
+    }
+  ],
+  "paymentStatusOptions": [
+    { "id": 0, "value": "Paid" },
+    { "id": 1, "value": "Pending" },
+    { "id": 2, "value": "Failed" },
+    { "id": 3, "value": "Completed" }
+  ]
+}

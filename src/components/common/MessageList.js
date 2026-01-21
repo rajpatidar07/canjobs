@@ -1,0 +1,177 @@
+import React, { useRef, useEffect } from "react";
+import { AiOutlineDownload } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import ConvertTime from "./Common function/ConvertTime";
+const MessageList = ({ data, loginuser, loginusertype, recordsPerPage, setRecordsPerPage }) => {
+
+  // /*Local Time */
+  // const LocalTime = (_date) => {
+  //   let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  //   console.log(timezone)
+  //   const result = moment.utc(_date).tz(timezone);
+  //   return result.format("LLL");
+  // };
+  const bottomRef = useRef(null);
+  // Scroll to bottom when component updates or new data arrives
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [data]);
+  /*Function to load more data while scrolling */
+  let handelScroll = (e) => {
+    if ((recordsPerPage === 30 || recordsPerPage + 30) <= data.length) {
+      setRecordsPerPage(recordsPerPage + 30);
+    } else {
+      // setRecordsPerPage(emailData.length);
+    }
+  };
+  // console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
+  return (
+    <div className="chat-messages bg-light"
+      onScroll={handelScroll}
+      style={{ overflowY: "scroll", height: "590px" }}>
+      {data.length === 0 ? (
+        <div className="message">
+          <p>No Data Found</p>
+        </div>
+      ) : (
+        data.map((message, index) => {
+          const fileExtension =
+            message.document_url &&
+            message.document_url.split(".").pop().toLowerCase();
+          const isImage =
+            message.document_url &&
+            (message.document_url.toLowerCase().endsWith(".png") ||
+              message.document_url.toLowerCase().endsWith(".jpg") ||
+              message.document_url.toLowerCase().endsWith(".jpeg"));
+          let iconSrc = isImage ? message.document_url : "";
+          let title = message.document_name || "";
+          if (!isImage) {
+            if (fileExtension === "pdf") {
+              iconSrc =
+                "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_3_pdf_x16.png";
+            } else if (fileExtension === "doc" || fileExtension === "docx") {
+              iconSrc =
+                "https://e7.pngegg.com/pngimages/18/655/png-clipart-computer-icons-microsoft-word-document-file-format-word-icon-blue-angle.png";
+            } else if (fileExtension === "html" || fileExtension === "txt") {
+              iconSrc =
+                "//ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_text_x16.png";
+            } else {
+              iconSrc =
+                "https://icons.iconarchive.com/icons/thehoth/seo/256/seo-web-code-icon.png";
+            }
+          }
+          return (
+            <div
+              key={message.id}
+              ref={index === data.length - 1 ? bottomRef : null} // Ref to the last message for scrolling
+              className={`message ${message.task_creator_user_id === loginuser &&
+                message.task_creator_user_type === loginusertype
+                ? "received"
+                : "sent"
+                }`}
+            >
+              <div className="message-content font-size-3">
+                {title === "" || iconSrc === "" ? (
+                  message.subject_description === "" ||
+                    message.subject_description === undefined ||
+                    message.subject_description === null ||
+                    message.subject_description === "undefined" ||
+                    message.subject_description === "null" ? (
+                    ""
+                  ) : (
+                    <div className=" mr-3 mb-3 ">
+                      <div className="message-text">
+                        {message.task_creator_user_name && (
+                          <span className="message-sender font-size-3 text-capitalize">
+                            {message.task_creator_user_name}
+                          </span>
+                        )}
+                        <br />
+                        <div className="text-break">
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: message.subject_description,
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )
+                ) : (
+                  <div
+                    className="align-items-center mr-3 mb-3 rounded border bg-white position-relative htmlFileCls p-2 message-text"
+                    title={title}
+                  >
+                    {message.task_creator_user_name && (
+                      <span className="message-sender font-size-3 text-capitalize">
+                        {message.task_creator_user_name}
+                      </span>
+                    )}
+                    <br />
+                    <div className="text-center">
+                      <Link>
+                        <img
+                          src={iconSrc}
+                          alt={title}
+                          title={title}
+                          width={45}
+                          height={45}
+                          style={{ zIndex: "1" }}
+                        />
+                        <div>
+                          <small
+                            className="d-inline-block text-truncate text-decoration-none text-dark"
+                            style={{ maxWidth: "80%" }}
+                          >
+                            {title}
+                          </small>
+                        </div>
+                      </Link>
+                      <div className="download-icon">
+                        <Link
+                          to={message.document_url}
+                          download={title}
+                          className="text-dark"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <AiOutlineDownload />
+                        </Link>
+                      </div>
+                    </div>
+                    {message.subject_description === "" ||
+                      message.subject_description === undefined ||
+                      message.subject_description === null ||
+                      message.subject_description === "undefined" ||
+                      message.subject_description === "null" ? (
+                      ""
+                    ) : (
+                      <div className="text-start text-break" >
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: message.subject_description,
+                          }}
+                        /> { }
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                <div className="message-info">
+                  <small className="text-muted">
+                    {/* {LocalTime(message.created_on)} */}
+                    <ConvertTime _date={message.created_on} format={"LLL"} />
+                  </small>
+                </div>
+              </div>
+            </div>
+          );
+        })
+      )}
+    </div>
+  );
+};
+
+export default MessageList;

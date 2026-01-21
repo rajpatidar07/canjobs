@@ -7,18 +7,25 @@ export default function GenerateToken(props) {
   /*States */
   let [allAdmin, setAllAdmin] = useState([]);
   let [AdminId, setAdminId] = useState("");
+  let [AdminType, setAdminType] = useState("");
   const [state, setState] = useState([]);
-  let[ Unauthorized,setUnauthorized ]= useState("")
+  let [Unauthorized, setUnauthorized] = useState("")
 
   /*Function to get admin list */
   const AdminData = async () => {
-    const userData = await getallAdminData();
-    if (userData.data.length === 0) {
-      setAllAdmin([]);
-    } else {
-      setAllAdmin(userData.data);
+    try {
+      const userData = await getallAdminData();
+      if (userData.data.length === 0) {
+        setAllAdmin([]);
+      } else {
+        const filteredData = userData.data.filter(item => item.admin_type === "manager");
+        setAllAdmin(filteredData);
+      }
+    } catch (err) {
+      console.log(err)
     }
   };
+
   /* Functionality to close the modal */
   const close = () => {
     setState([]);
@@ -26,6 +33,7 @@ export default function GenerateToken(props) {
     setUnauthorized("")
     props.close();
   };
+
   /*Render function to get admin list */
   useEffect(() => {
     AdminData();
@@ -33,12 +41,14 @@ export default function GenerateToken(props) {
 
   // GENERATE ADMIN TOKEN UPDATE SUBMIT BUTTON
   const onSelectChange = (option) => {
-    setAdminId(option.value);
+    setAdminId(option.value.admin_id);
+    setAdminType(option.value.admin_type)
   };
+  
   /*Render function to set data in search select box */
   useEffect(() => {
     const options = allAdmin.map((option) => ({
-      value: option.admin_id,
+      value: option,
       label: option.name + " - " + option.admin_type,
     }));
     setState(options);
@@ -47,24 +57,29 @@ export default function GenerateToken(props) {
   /*Function to generate Token of other admin to view as him */
   const onTokenGenerateClick = async (event) => {
     event.preventDefault();
-    // setLoading(true);
-    const responseData = await GetAdminToken(AdminId);
-    if (responseData.message === "successful") {
-      localStorage.setItem("view_as_token", responseData.token);
-      toast.success("Token Generated successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      close();
-      window.location.reload();
-    }
-    if (responseData.message === "Unauthorized admin"){
-      setUnauthorized("Unauthorized admin")
+    try {
+      const responseData = await GetAdminToken(AdminId);
+      if (responseData.message === "successful") {
+        localStorage.setItem("view_as_token_admin_type", AdminType);
+        localStorage.setItem("view_as_token", responseData.token);
+        toast.success("Token Generated successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        close();
+        window.location.reload();
+      }
+      if (responseData.message === "Unauthorized admin") {
+        setUnauthorized("Unauthorized admin")
+      }
+    } catch (err) {
+      console.log(err)
     }
   };
   /*Function to reset the token */
   const onRest = () => {
     localStorage.setItem("view_as_token", "");
+    localStorage.setItem("view_as_token_admin_type", "");
     toast.success("Token Reset successfully", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
@@ -88,9 +103,7 @@ export default function GenerateToken(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-15">
-          {/* CHANGE PASSWORD FORM */}
           <form onSubmit={onTokenGenerateClick}>
             {/* FORM FIELDS */}
             <div className="form-group w-100 ">
@@ -104,7 +117,13 @@ export default function GenerateToken(props) {
                 options={state}
                 onChange={onSelectChange}
                 id="view_layout"
-                className="mx-1"
+                className="text-capitalize mx-1"
+                styles={{
+                  control: (base) => ({
+                    ...base,
+                    boxShadow: "none",
+                  }),
+                }}
               />
               <small className="text-danger">{Unauthorized}</small>
             </div>
@@ -115,7 +134,7 @@ export default function GenerateToken(props) {
                 type="submit"
               >
                 View as
-              </button>{" "}
+              </button>
               <button
                 className="btn btn-primary rounded-5 text-uppercase mx-5"
                 onClick={onRest}
@@ -126,7 +145,6 @@ export default function GenerateToken(props) {
           </form>
         </div>
       </Modal>
-      {/* END CHANGE PASSWORD FORM */}
     </>
   );
 }

@@ -1,133 +1,174 @@
 import React, { useState } from "react";
-import { EmployeeResetPasswordApi , AdminResetPasswordApi ,EmployerResetPasswordApi } from "../../api/api";
+import {
+  EmployeeResetPasswordApi, AdminResetPasswordApi, EmployerResetPasswordApi, ResetAgentPasswordApi,
+  encryptPassword,
+} from "../../api/api";
 import useValidation from "../common/useValidation";
-import { useNavigate ,useLocation } from "react-router-dom";
-import { toast , ToastContainer } from "react-toastify";
-
+import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+import PasswordInput from "./Common function/PasswordInput";
+const API_URL = window.location.origin
+// https://canjobs.vercel.app/";
+// const API_URL = "https://canpathwaysjobs.com/";
+// const API_URL = "http://localhost:3000/";
 export default function ResetPassword() {
   const location = useLocation();
   const path = location.pathname;
-  let Token = path.split("/")[2].split(":")[1]
-  let userType = path.split("/")[2].split(":")[0]
+  let Token = path.split("/")[2].split(":")[1];
+  let userType = path.split("/")[2].split(":")[0];
+  // console.log(Token,userType)
   let navigate = useNavigate();
   let [loading, setLoading] = useState(false);
-  /*----USER LOGIN VALIDATION----*/
+  /*----USER RESET PASSWORD VALIDATION----*/
   const initialFormState = {
     password: "",
     conf_password: "",
-    token :Token  };
+    token: Token,
+  };
   /*----VALIDATION CONTENT----*/
   const validators = {
     password: [(value) => (value === "" ? "Password is required" : null)],
     conf_password: [
-        (value) => value === "" 
-            ? "Confirm Password is required"
-            : value !== state.password
+      (value) =>
+        value === ""
+          ? "Confirm Password is required"
+          : value !== state.password
             ? "Confirm Password must be Same as Password"
-            :"" ],
+            : "",
+    ],
   };
-  /*----LOGIN ONCHANGE FUNCTION----*/
+  /*----RESET PASSWORD ONCHANGE FuNCTION----*/
   const { state, onInputChange, setState, errors, validate } = useValidation(
-    initialFormState,
-    validators
-  );
-  /*----LOGIN SUBMIT FUNCTION----*/
-  const onUserLoginClick = async (event) => {
+    initialFormState, validators);
+  /*----RESET PASSWORD SUBMIT FuNCTION----*/
+  const onUserResetPasswordClick = async (event) => {
     event.preventDefault();
-
     if (validate()) {
       setLoading(true);
       // handle form submission
-      if(userType === "user"){
-       let updatedTodo = await EmployeeResetPasswordApi(state);
-        if (
-          updatedTodo.status === true ||
-          updatedTodo.message === "Password updated successfully"
+      if (userType === "user") {
+        // console.log(state)
+        try {
+          let updatedTodo = await EmployeeResetPasswordApi(state);
+          if (
+            updatedTodo.status === true ||
+            updatedTodo.message === "Password updated successfully"
           ) {
             toast.success("Password updated successfully", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
             setLoading(false);
-            setState(initialFormState)
+            setState(initialFormState);
             navigate("/");
             window.location.reload();
-          } 
+          }
+        } catch (err) {
+          console.log(err);
+          setLoading(false);
+        }
       }
-      if(userType === "company"){
-       let updatedTodo = await EmployerResetPasswordApi(state);
-        if (
-          updatedTodo.status === true ||
-          updatedTodo.message === "Password updated successfully"
+      if (userType === "company") {
+        try {
+          let updatedTodo = await EmployerResetPasswordApi(state);
+          if (
+            updatedTodo.status === true ||
+            updatedTodo.message === "Password updated successfully"
           ) {
             toast.success("Password updated successfully", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
             setLoading(false);
-            setState(initialFormState)
+            setState(initialFormState);
             navigate("/");
             window.location.reload();
-          } 
+          }
+        } catch (err) {
+          console.log(err);
+          setLoading(false);
+        }
       }
-      if(userType=== "admin"){
-       let updatedTodo = await AdminResetPasswordApi(state);
-        if (
-          updatedTodo.status === true ||
-          updatedTodo.message === "Password updated successfully"
+      if (userType === "admin") {
+        try {
+          let updatedTodo = await AdminResetPasswordApi(state);
+          if (
+            updatedTodo.status === true ||
+            updatedTodo.message === "Password updated successfully"
           ) {
             toast.success("Password updated successfully", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
             setLoading(false);
-            setState(initialFormState)
+            setState(initialFormState);
             navigate("/");
             window.location.reload();
-          } 
+          }
+        } catch (err) {
+          console.log(err);
+          setLoading(false);
+        }
       }
-      
-        // else if (updatedTodo.message === "Invalid Credentials") {
-          //     setLoading(false);
-    //     setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
-    //   }
-    // }
-  };}
-
-  // END USER LOGIN VALIDATION
-
+      if (userType === "agent") {
+        try {
+          let data = {
+            ...state, password: encryptPassword(state.password),
+            conf_password: encryptPassword(state.conf_password),
+          }
+          let updatedTodo = await ResetAgentPasswordApi(data);
+          if (
+            updatedTodo.status === true ||
+            updatedTodo.message === "Password updated successfully"
+          ) {
+            toast.success("Password updated successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            setLoading(false);
+            setState(initialFormState);
+            navigate("/");
+            window.location.reload();
+          }
+        } catch (err) {
+          console.log(err);
+          setLoading(false);
+        }
+      }
+    }
+  };
+  // END USER RESET PASSWORD VALIDATION
   return (
     <>
-      {/* <!-- Login --> */}
-      <link rel="stylesheet" href="http://localhost:3000/css/bootstrap.css"/>
-      <link rel="stylesheet" href="http://localhost:3000/fonts/icon-font/css/style.css"/>
-      <link rel="stylesheet" href="http://localhost:3000/fonts/fontawesome-5/css/all.css"/>
-      <link rel="stylesheet" href="http://localhost:3000/fonts/fontawesome-5/css/main.css"/>
+      {/* <!-- RESET PASSWORD --> */}
+      <link rel="stylesheet" href={`${API_URL}/css/bootstrap.css`} />
+      <link rel="stylesheet" href={`${API_URL}/fonts/icon-font/css/style.css`} />
+      <link rel="stylesheet" href={`${API_URL}/fonts/fontawesome-5/css/all.css`} />
+      <link rel="stylesheet" href={`${API_URL}/fonts/fontawesome-5/css/main.css`} />
       <div className="d-flex justify-content-center pt-21">
-        <ToastContainer/>
+
         <div className="bg-white rounded-8 overflow-hidden pt-21">
-          <div className="bg-white-2 h-100 px-11 pt-11 pb-7 ">
+          <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box ">
             <div className="pb-5 mb-5 text-center">
               <img
-                src="http://localhost:3000/image/logo-main-black.png"
+                src={`${API_URL}/image/logo-main-black.png`}
                 className="img-fluid "
                 height={200}
                 width={200}
                 alt="logo"
               />
             </div>
-            {/* user login form */}
-            <form onSubmit={onUserLoginClick}>
-            <h5 className="text-center pb-8"> Reset Password</h5>
+            {/* user RESET PASSWORD form */}
+            <form onSubmit={onUserResetPasswordClick}>
+              <h5 className="text-center pb-8"> Reset Password</h5>
               <div className="form-group">
                 <label
                   htmlFor="password"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                Password
+                  Password
                 </label>
-                <input
-                  type="password"
+                <PasswordInput
                   name="password"
                   value={state.password}
                   onChange={onInputChange}
@@ -136,7 +177,7 @@ export default function ResetPassword() {
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  placeholder="example@gmail.com"
+                  placeholder="Enter password"
                   id="password"
                 />
                 {/*----ERROR MESSAGE FOR EMAIL----*/}
@@ -155,12 +196,11 @@ export default function ResetPassword() {
                   htmlFor="conf_password"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                 Confirm Password
+                  Confirm Password
                 </label>
                 <div className="position-relative">
-                  <input
+                  <PasswordInput
                     name="conf_password"
-                    type="password"
                     value={state.conf_password}
                     onChange={onInputChange}
                     className={
@@ -168,7 +208,7 @@ export default function ResetPassword() {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Enter confirm password"
+                    placeholder="Enter password"
                     id="conf_password"
                   />
                   {/*----ERROR MESSAGE FOR CONFIRM PASSWORD----*/}
@@ -182,7 +222,6 @@ export default function ResetPassword() {
                     </span>
                   )}
                 </div>
-                
               </div>
               <div className="form-group mb-8">
                 {loading === true ? (
