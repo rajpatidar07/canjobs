@@ -34,9 +34,13 @@ export default function PaymentInvoiceTable(props) {
             "", "", 10, 1, data.document_id
         );
         let fileData = res.data.data.find((item) => item.id === data.document_id)
+        const rawUrl = fileData["@microsoft.graph.downloadUrl"];
+        const dlUrl = rawUrl
+          ? rawUrl + (rawUrl.indexOf("?") !== -1 ? "&" : "?") + "_cb=" + Date.now()
+          : rawUrl;
         // Create an anchor element dynamically
         const link = document.createElement('a');
-        link.href = fileData["@microsoft.graph.downloadUrl"];
+        link.href = dlUrl;
         link.setAttribute('download', fileData["@microsoft.graph.downloadUrl"]);
 
         // Append the link to the body

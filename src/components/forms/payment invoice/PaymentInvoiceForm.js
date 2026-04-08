@@ -132,6 +132,8 @@ const PaymentInvoiceForm = (props) => {
     if (e && e.preventDefault) e.preventDefault();
     if (validate()) {
       try {
+        const totalNum = parseFloat(state.total) || 0;
+        const duePartNum = parseFloat(state.due_amount) || 0;
         let data = {
           ...state,
           is_send_mail: send ? send : 0,
@@ -139,7 +141,7 @@ const PaymentInvoiceForm = (props) => {
             // recAmt ?
             //   parseFloat(state.due_amount) - parseFloat(recAmt)
             //   :
-            Number(parseFloat(state.due_amount) + parseFloat(state.total)).toFixed(2),
+            Number(duePartNum + totalNum).toFixed(2),
           // received_amount: parseFloat(state.received_amount||0) + parseFloat(recAmt)
           user_email: email ? email : selectedEmail,
         }

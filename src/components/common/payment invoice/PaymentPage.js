@@ -158,15 +158,20 @@ const PaymentPage = (props) => {
         }
       }
       if (res.data.status === 1) {
-        setDocLoder(false);
-        if (res.data.data.find((item) => item.id === data.document_id)) {
-          setInvoicePdf(res.data.data.find((item) => item.id === data.document_id));
-          // console.log(res.data.data.find((item) => item.id === agreementData.document_id))
+        const list = res.data.data;
+        const file = Array.isArray(list) ? list.find((item) => item.id === data.document_id) : null;
+        if (file) {
+          const url = file["@microsoft.graph.downloadUrl"];
+          const bustedUrl = url
+            ? url + (url.indexOf("?") !== -1 ? "&" : "?") + "_cb=" + Date.now()
+            : url;
+          setInvoicePdf({ ...file, "@microsoft.graph.downloadUrl": bustedUrl });
         } else if (res.data.data === "No Documents Found") {
-          setDocLoder(false);
+          setInvoicePdf("");
         } else {
-          setDocLoder(false);
+          setInvoicePdf("");
         }
+        setDocLoder(false);
       }
     } catch (Err) {
       console.log(Err);
@@ -424,6 +429,7 @@ const PaymentPage = (props) => {
             ) : null} */}
         {openViewInvoice ? (
           <ViewPdf
+            key={invoiceData?.id}
             show={openViewInvoice}
             close={() => setOpenViewInvoice(false)}
             agreementData={invoiceData}
