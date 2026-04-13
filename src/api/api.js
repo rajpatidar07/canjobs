@@ -2885,27 +2885,12 @@ export const ReadAllEmail = async (page, limit, search, email) => {
 };
 
 /*Api to reply email */
-export const ReplyToMail = async (
-  msgId,
-  type,
-  msg,
-  attachments,
-  replyAll = false,
-  toEmails = "",
-  ccEmails = ""
-) => {
+export const ReplyToMail = async (msgId, type, msg, attachments) => {
   const formData = new FormData();
   formData.append("msg_id", msgId);
   formData.append("inbox_type", type);
   formData.append("replyMsg", msg);
   formData.append("sender_id", admin_id);
-  formData.append("reply_all", replyAll ? "1" : "0");
-  if (toEmails && toEmails.trim() !== "") {
-    formData.append("to_emails", toEmails);
-  }
-  if (ccEmails && ccEmails.trim() !== "") {
-    formData.append("cc_emails", ccEmails);
-  }
   if (attachments && attachments.length > 0) {
     attachments.forEach((file, i) => {
       formData.append(`attachments[${i}]`, file);
